@@ -14,13 +14,22 @@ Ehdotus, joka ei pitäisi olla ristiriidassa OPSin kanssa:
  * Joka viikko 8 viikkotehtävää ja (ainakin) 2 extra-tehtävää
  * "Esiharkka" (tutoriaalia seuraten; tästä saa viikkotehtäväpisteitä) viikoilla 8-9
  * Varsinainen harkka viikoilla 9-12
-    - ❓Ongelma: Miten harkka tarkastetaan? Aiemmin 7 tarkastuspistettä, nyt vähemmän?
+    - ❓Ongelma: Miten harkka tarkastetaan? Aiemmin 7 tarkastuspistettä, nyt vähemmän? Voidaanko käyttää itsearviointia tai vertaisarviointia?
 
 Lisäideoita arvosanan antamiseen, en ole varma voiko näitä käyttää:
 
  * Tentti, johon voi osallistua, jos on palauttanut vähintään 40% viikkotehtävistä
  * Jos tekee 12 * 4 = 48 viikkotehtävää ja harkan, saa automaattisesti arvosanan 1
  * Jos tekee 12 * 8 = 96 viikkotehtävää ja harkan, saa automaattisesti arvosanan 5
+
+## Mihin tarvittaisiin tuntiopettajien apuja?
+
+ * Uuden "monisteen" kirjoittamiseen ja tarkastamiseen (heti)
+ * Viikkotehtävien laatimiseen ja tarkastamiseen (heti)
+ * Harjoitustyön määrittelyssä avustaminen (heti) 
+ * Harjoitustyön hyväksyntäkriteerien laatiminen (viimeistään joulu-tammikuu)
+ * Työkalujen käyttöönoton testaaminen ja ohjeistaminen (viimeistään marras-joulukuussa; vasta sitten kun harkka on määritelty)
+ * Muiden tekemien viikkotehtävien katselmointiin ja kommentointiin (viimeistään kurssin alettua)
 
 ## Viikko 1
 
@@ -312,7 +321,7 @@ Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne?.
 
 Hajota ja hallitse -periaate. Pinon käyttö rekursiossa. Mahdollisesti jotakin dynaamisesta ohjelmoinnista.
 
-<details ><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
 TODO
 
@@ -330,21 +339,17 @@ TODO
 
 </details>
 
-
 ## Viikko 8
 
- * Graafinen käyttöliittymä
- * JavaFX
- * SceneBuilder
- * Projektin rakenne
- * GitHub tai GitLab
-
-<details ><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+Graafinen käyttöliittymä, JavaFX, SceneBuilder (??). Projektin rakenne, GitHub tai GitLab. Arkkitehtuurin alkeet, MVC-malli.
+ 
+<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
 Toteutetaan pieni ohjelma käyttäen TDD-menetelmää. Ohjelmassa on graafinen käyttöliittymä, joka on toteutettu JavaFX:llä. Ohjelman rakenne noudattaa MVC-mallia (Model-View-Controller). Maven?? Versionhallintaan käytetään Git ja GitHubia.
+
 </details>
 
-<details><summary>Esimerkkejä: TODO</summary>
+<details closed><summary>Esimerkkejä: TODO</summary>
 
  * TODO
 
@@ -352,7 +357,7 @@ Toteutetaan pieni ohjelma käyttäen TDD-menetelmää. Ohjelmassa on graafinen k
 
 ## Viikko 9
 
-Koodihaju, SOLID, MVC, johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi observer.
+Koodihaju, SOLID, johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi observer.
 
 ## Viikko 10
 
