@@ -22,6 +22,10 @@ Lisäideoita arvosanan antamiseen, en ole varma voiko näitä käyttää:
  * Jos tekee 12 * 4 = 48 viikkotehtävää ja harkan, saa automaattisesti arvosanan 1
  * Jos tekee 12 * 8 = 96 viikkotehtävää ja harkan, saa automaattisesti arvosanan 5
 
+## Ajatuksia oppimateriaalin, viikkotehtävien ja harjoitustyön suhteesta
+
+Oppimateriaalissa näytettävät esimerkit voisivat ainakin osittain kytkeytyä toisiinsa, ts. muodostaisivat "jatkuvan tarinan". Viikkotehtävissä voitaisiin sitten soveltaa oppimateriaalissa opittuja asioita. Tällaisesta ideasta hyvänä esimerkkinä toimii Full Stack Open (blogisovellus vs. todo-sovellus); toki tuossa erona on se että päästään aika nopeastikin CRUDiin, kun meillä pitäisi lähteä ensin hiljalleen ensin C:stä, sitten R jne. Mutta silti tämä olisi motivoivampaa kuin pelkät irralliset tehtävät (joita toki tarvitaan myös).
+
 ## Mihin tarvittaisiin tuntiopettajien apuja?
 
  * Uuden "monisteen" kirjoittamiseen ja tarkastamiseen (heti)
