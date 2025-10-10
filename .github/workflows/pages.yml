@@ -6,8 +6,8 @@ name: Deploy mdBook site to Pages
 
 on:
   # Runs on pushes targeting the default branch
-  # push: # disabled while repository is private
-  #   branches: ["main"]
+  push: # disabled while repository is private
+     branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -29,7 +29,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      MDBOOK_VERSION: 0.4.36
+      MDBOOK_VERSION: 0.4.52
     steps:
       - uses: actions/checkout@v4
       - name: Install mdBook
