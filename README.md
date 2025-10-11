@@ -1,5 +1,9 @@
 # JYU — Ohjelmointi 2 oppimateriaali
 
+## Alustus
+
+- Asenna Rust ja Cargo (esim. rustup) TAI käytä mukana olevaa DevContaineria
+- Aja ´update-mdbook.sh´ asentaakseen tarvittavat laajennokset
 
 ## Kehittäminen
 

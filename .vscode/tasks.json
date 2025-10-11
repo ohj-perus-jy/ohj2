@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "mdbook: serve",
+      "type": "shell",
+      "command": "mdbook",
+      "args": ["serve", "-n", "0.0.0.0", "-p", "36742"],
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "shared"
+      },
+      "problemMatcher": {
+        "owner": "mdbook",
+        "pattern": [
+          {
+            "regexp": "Serving on: (http://\\S+)",
+            "kind": "file",
+            "file": 1,
+            "message": 0
+          }
+        ],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".*",
+          "endsPattern": "Serving on:"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    }
+  ]
+}

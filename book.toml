@@ -12,3 +12,16 @@ additional-css = [
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
+additional-js = [
+  "mermaid/mermaid.min.js", 
+  "mermaid/mermaid-init.js",
+  "theme/mode-java.js",
+  "theme/playground_ext.js",
+]
+
+[output.html.playground]
+editable = true
+
+[preprocessor.alerts]
+
+[preprocessor.mermaid]

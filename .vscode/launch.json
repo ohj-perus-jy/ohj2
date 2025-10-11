@@ -1,0 +1,15 @@
+
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch mdBook in Chrome",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:36742",
+      "preLaunchTask": "mdbook: serve",
+      "webRoot": "${workspaceFolder}",
+      "timeout": 20000
+    }
+  ]
+}

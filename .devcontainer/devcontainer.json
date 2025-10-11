@@ -4,7 +4,8 @@
 	"image": "mcr.microsoft.com/devcontainers/rust:1-1-bullseye",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/eitsupi/devcontainer-features/mdbook:1": {}
+		"ghcr.io/eitsupi/devcontainer-features/mdbook:1": {},
+		"ghcr.io/devcontainers/features/python:1": {}
 	},
 
 	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
@@ -21,10 +22,10 @@
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [36742],
-	"appPort": [36742]
+	"appPort": [36742],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "rustc --version",
+	"postCreateCommand": "bash ./update-mdbook.sh"
 
 	// Configure tool-specific properties.
 	// "customizations": {},

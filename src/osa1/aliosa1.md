@@ -6,7 +6,7 @@
 
 Koodiesimerkki
 
-```java
+```java,editable
 public class Main {
     public static void main(String[] args) {
         System.out.println("""It’s the job that’s never started as takes longest to finish, as my old Gaffer used to say.
@@ -18,6 +18,10 @@ public class Main {
 }
 ```
 
+```rust,editable
+println!("wew");
+```
+
 Taulukko
 
 | Avainsana | Selitys                           |
@@ -26,3 +30,25 @@ Taulukko
 | static    | staattinen — kuuluu luokalle      |
 | void      | ei palauta arvoa                  |
 
+
+Huomautus
+
+> [!NOTE]
+> Huomautus!
+
+Mermaid-tuki
+
+```mermaid
+---
+config:
+  flowchart:
+    curve: linear
+---
+flowchart TD
+    Aloitus --> EHTO{EHTO?}
+    EHTO -->|tosi| LAUSE
+    EHTO -->|epätosi| MUU[Muu koodi]
+    LAUSE --> MUU
+```
+
+Testi!
