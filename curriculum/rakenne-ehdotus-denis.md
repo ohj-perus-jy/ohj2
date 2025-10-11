@@ -60,15 +60,15 @@
 
 | Viikko | Aihe | Osaamistavoitteet |
 | --- | --- | --- |
-| 1 | Java-kielen perusteet, IO | \<ul\>\<li\>Muistaa ohjelmoinnin peruskäsitteet\</li\>\<li\>Muistaa, miten käytetään ehtoja, silmukoita, muuttujia\</li\>\<li\>Osaa avata ja lukea tiedostoja yksinkertaisesti (Files API + for each)\</li\>\</ul\> |
-| 2 | OOP-perusteet | \<ul\>\<li\>Oppii, mitä on luokka ja olio\</li\>\<li\>Ymmärtää, että oliot välittyvät viitteenä\</li\>\<li\>Ymmärtää OOP:n tarkoituksen ⇒ olioiden yhteistyö\</li\>\</ul\> |
-| 3 | OOP | \<ul\>\<li\>Ymmärtää perintää ja rajapintoja\</li\>\<li\>Ymmärtää, mitä polymorfismi tarkoittaa ja osaa soveltaa\</li\>\<li\>Osaa saada useamman luokan pelittämään toisensa kanssa\</li\>\</ul\> |
-| 4 | Algoritmit, tietorakenteet | \<ul\>\<li\>Tietorakenteet (List, HashMap)\</li\>\<li\>Tietovirrat ja scannerit\</li\>\<li\>OOP:n soveltaminen jatkuu tehtävissä\</li\>\</ul\> |
-| 5 | Algoritmit, tietorakenteet, lambdat, rekursio | \<ul\>\<li\>Javan Streams API ja siihen liittyvät kaverit (esim. Files API)\</li\>\<li\>Funktio-oliot\</li\>\<li\>Rekursio\</li\>\<li\>OOP:n soveltaminen jatkuu tehtävissä\</li\>\</ul\> |
-| 6 | Testaaminen ja lisää IO | \<ul\>\<li\>Oliopohjaisen ohjelman testaus, TDD, (ehkä pöytätestit)\</li\>\</ul\> |
-| 7 | GUI | \<ul\>\<li\>JavaFX, SceneBuilder\</li\>\<li\>Miten GUI-ohjelmat yleensä toimii (esim. MVC)\</li\>\<li\>Tapahtumat\</li\>\<li\>Tässä ehkä “tutorialin” aloitus\</li\>\</ul\> |
-| 8 | GUI | \<ul\>\<li\>Komponentteja, dialogeja, GUI:n layout\</li\>\<li\>Datan ja GUIn yhdistäminen\</li\>\</ul\> |
-| 9 | Tietorakenteet, tyyppiparametrit | \<ul\>\<li\>Osaa tehdä oman ArrayList, LinkedList, ehkä HashMap\</li\>\<li\>Osaa käyttää tyyppiparametreja (eli tehdä ArrayList\<T\>)\</li\>\</ul\> |
-| 10 | OO-pohjainen suunnittelu | \<ul\>\<li\>Oman projektin suunnittelu\</li\>\<li\>UML, CRC (class-responsibility-collaboration) -kortit\</li\>\<li\>Jotain design patterneja ehkä\</li\>\</ul\> |
-| 11 | Oma projekti | \<ul\>\<li\>Oman projektin työstäminen\</li\>\</ul\> |
-| 12 | Oma projekti | \<ul\>\<li\>Oman projektin työstäminen\</li\>\</ul\> |
+| 1 | Java-kielen perusteet, IO | <ul><li>Muistaa ohjelmoinnin peruskäsitteet</li><li>Muistaa, miten käytetään ehtoja, silmukoita, muuttujia</li><li>Osaa avata ja lukea tiedostoja yksinkertaisesti (Files API + for each)</li></ul> |
+| 2 | OOP-perusteet | <ul><li>Oppii, mitä on luokka ja olio</li><li>Ymmärtää, että oliot välittyvät viitteenä</li><li>Ymmärtää OOP:n tarkoituksen ⇒ olioiden yhteistyö</li></ul> |
+| 3 | OOP | <ul><li>Ymmärtää perintää ja rajapintoja</li><li>Ymmärtää, mitä polymorfismi tarkoittaa ja osaa soveltaa</li><li>Osaa saada useamman luokan pelittämään toisensa kanssa</li></ul> |
+| 4 | Algoritmit, tietorakenteet | <ul><li>Tietorakenteet (List, HashMap)</li><li>Tietovirrat ja scannerit</li><li>OOP:n soveltaminen jatkuu tehtävissä</li></ul> |
+| 5 | Algoritmit, tietorakenteet, lambdat, rekursio | <ul><li>Javan Streams API ja siihen liittyvät kaverit (esim. Files API)</li><li>Funktio-oliot</li><li>Rekursio</li><li>OOP:n soveltaminen jatkuu tehtävissä</li></ul> |
+| 6 | Testaaminen ja lisää IO | <ul><li>Oliopohjaisen ohjelman testaus, TDD, (ehkä pöytätestit)</li></ul> |
+| 7 | GUI | <ul><li>JavaFX, SceneBuilder</li><li>Miten GUI-ohjelmat yleensä toimii (esim. MVC)</li><li>Tapahtumat</li><li>Tässä ehkä “tutorialin” aloitus</li></ul> |
+| 8 | GUI | <ul><li>Komponentteja, dialogeja, GUI:n layout</li><li>Datan ja GUIn yhdistäminen</li></ul> |
+| 9 | Tietorakenteet, tyyppiparametrit | <ul><li>Osaa tehdä oman ArrayList, LinkedList, ehkä HashMap</li><li>Osaa käyttää tyyppiparametreja (eli tehdä ArrayList<T>)</li></ul> |
+| 10 | OO-pohjainen suunnittelu | <ul><li>Oman projektin suunnittelu</li><li>UML, CRC (class-responsibility-collaboration) -kortit</li><li>Jotain design patterneja ehkä</li></ul> |
+| 11 | Oma projekti | <ul><li>Oman projektin työstäminen</li></ul> |
+| 12 | Oma projekti | <ul><li>Oman projektin työstäminen</li></ul> |
