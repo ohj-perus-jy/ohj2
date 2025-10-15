@@ -22,26 +22,37 @@ Lisäideoita arvosanan antamiseen, en ole varma voiko näitä käyttää:
  * Jos tekee 12 * 4 = 48 viikkotehtävää ja harkan, saa automaattisesti arvosanan 1
  * Jos tekee 12 * 8 = 96 viikkotehtävää ja harkan, saa automaattisesti arvosanan 5
 
-## Ajatuksia oppimateriaalin, viikkotehtävien ja harjoitustyön suhteesta
+## Muutosloki
 
-Oppimateriaalissa näytettävät esimerkit voisivat ainakin osittain kytkeytyä toisiinsa, ts. muodostaisivat "jatkuvan tarinan". Viikkotehtävissä voitaisiin sitten soveltaa oppimateriaalissa opittuja asioita. Tällaisesta ideasta hyvänä esimerkkinä toimii Full Stack Open (blogisovellus vs. todo-sovellus); toki tuossa erona on se että päästään aika nopeastikin CRUDiin, kun meillä pitäisi lähteä ensin hiljalleen ensin C:stä, sitten R jne. Mutta silti tämä olisi motivoivampaa kuin pelkät irralliset tehtävät (joita toki tarvitaan myös).
+<details closed><summary>15.10.2025</summary>
 
-## Mihin tarvittaisiin tuntiopettajien apuja?
+Tärkeimmät muutokset viikon takaiseen versioon nähden:
 
- * Uuden "monisteen" kirjoittamiseen ja tarkastamiseen (heti)
- * Viikkotehtävien laatimiseen ja tarkastamiseen (heti)
- * Harjoitustyön määrittelyssä avustaminen (heti) 
- * Harjoitustyön hyväksyntäkriteerien laatiminen (viimeistään joulu-tammikuu)
- * Työkalujen käyttöönoton testaaminen ja ohjeistaminen (viimeistään marras-joulukuussa; vasta sitten kun harkka on määritelty)
- * Muiden tekemien viikkotehtävien katselmointiin ja kommentointiin (viimeistään kurssin alettua)
+ - Viikko 2: Pieni olioverkko, ei vielä perintää.
+ - Viikko 3: Perintä ja rajapinnat, polymorfismi
+ - Viikko 4: Abstraktit luokat, enumit, pakkaus. Tähän myös testausta mukaan. 
+ - Tietorakenteet viikolta 4 viikolle 5
+ - Viikolle 5 jonkin yksinkertaisen (tieto-)rakenteen tekeminen, joka toteuttaa jonkin rajapinnan. ArrayList??
+ - Rekursio viikolta 7 viikolle 6
+ - GUI-tutoriaali viikolta 8 viikolle 7
+ - Viikolle 9 iteraattorit ja HTTP IO
+ - SOLID ja design patterns viikolta 9 viikolle 10 (onko liian myöhään...)
+ - Viikolle 10 koodauskäytänteitä
+ - Viikolle 11 monisäikeisyyttä ja ohjelmointiparadigmoja (tässä ei mulla ollut aiemmin mitään)
 
-## Viikko 1: Java-kielen perusteet, rakenteisen ohjelmoinnin kertaus
+</details>
+
+## Viikko 1: Java-kielen perusteet, rakenteisen ohjelmoinnin kertaus, luokka ja olio
 
 Java-kielen perusteet. Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet (Ohj1-kurssin pikakertaus). Käsitellään dataa funktioiden avulla (Ohj1-kurssin tapaan); askel kohti olio-ohjelmointia
 
+Luokka ja olio, olioinstanssi. 
+
 ## Viikko 2: Olio-ohjelmoinnin perusteet
 
-Luokan ja olion käsitteet. Olioinstanssi. Olioiden välinen yhteistyö. 
+Toteutetaan olioiden yhteistyö pienessä olioverkossa. Oliot välittävät riippuvuudet toisilleen konstruktorissa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa.
+
+(Ei vielä perintää tai rajapintoja.)
 
 <details><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
@@ -52,20 +63,6 @@ Luokan ja olion käsitteet. Olioinstanssi. Olioiden välinen yhteistyö.
  * public, private
  * Representaation piilottaminen: Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutustaa voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan.
  * Invariantit (tilin saldo ei voi olla negatiivinen, ikä ei voi olla negatiivinen, jne.)
-
-</details>
-
-## Viikko 3: Olio-ohjelmointi
-
-Staattinen attribuutti ja metodi. Ylikirjoitus, final. 
-
-<details ><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
-
-Toteutetaan olioiden yhteistyö. Pienessä olioverkossa, oliot välittävät riippuvuudet toisilleen konstruktorissa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa.
-
-Viitevälitys, arvovälitys. Immutable-olio. 
-
-(Ei vielä perintää tai rajapintoja.)
 
 </details>
 
@@ -91,13 +88,26 @@ int välisumma = 0; for (var rivi:tilaus.getItems()) välisumma += rivi.summa();
 
 </details>
 
-## Viikko 4: Perintä, rajapinnat, polymorfismi, abstraktit luokat
+## Viikko 3: Perintä, rajapinnat, polymorfismi
 
-Perintä, rajapinta. Koostaminen. Polymorfismi, dynaaminen sidonta, ylikirjoitus, Liskovin korvausperiaate. Abstrakti luokka ja abstrakti metodi
+Perintä, rajapinta. Polymorfismi. Staattinen attribuutti ja metodi. Ylikirjoitus, final. 
+
+Viitevälitys, arvovälitys. Immutable-olio. 
+
+<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+
+ * Käytetään perintää ja rajapintoja olioiden yhteistyössä
+ * Testaaminen rajapintaa vasten, ei toteutusta vasten.
+ * "Moniperintä" rajapintojen avulla
+
+</details>
+
+## Viikko 4: Abstraktit luokat
+
+Abstrakti luokka ja abstrakti metodi. Koostaminen, polymorfismi (jatkuu), dynaaminen sidonta, Liskovin korvausperiaate. 
 
 <details closed><summary>Asiasisältö ja tavoitteet</summary>
 
- * Käytetään perintää ja rajapintoja olioiden yhteistyössä
  * Abstrakti luokka: Luokka, josta ei tehdä instansseja, mutta joka voi sisältää toteutettua koodia. Abstrakti luokka määrittelee rajapinnan (abstraktit metodit) ja tarjoaa osan toteutuksesta. Aliluokat täydentävät toteutuksen.
  * Ero abstraktin luokan ja rajapinnan välillä
  * Ymmärtää rajapinnan (interface) rooli ja käyttää sitä vaihtokohdissa (strategiat, palvelut).
@@ -107,8 +117,7 @@ Perintä, rajapinta. Koostaminen. Polymorfismi, dynaaminen sidonta, ylikirjoitus
  * Ylikirjoitus, `@Override`, final
  * Liskovin korvausperiaate, LSP
  * Dynaaminen sidonta: Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
- * Testaaminen rajapintaa vasten, ei toteutusta vasten. Esimerkki:
- * "Moniperintä" rajapintojen avulla
+
 </details>
 
 <details closed><summary>Esimerkkejä</summary>
@@ -194,9 +203,7 @@ Stream-rajapinta, map, filter, reduce. Funktioparametrit (?), Optional (?).
 
 Poikkeukset (checked, unchecked), try-catch, finally, heittäminen (throw, throws). Tiedosto-I/O (teksti, CSV). Yksinkertainen JSON-käsittely. Mahdollisesti GUI-asiaa jo tässä kohdassa. 
 
-Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne?.
-
-Hajota ja hallitse -periaate. Pinon käyttö rekursiossa. Mahdollisesti jotakin dynaamisesta ohjelmoinnista.
+Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne (?). Hajota ja hallitse -periaate. Pinon käyttö rekursiossa. Mahdollisesti jotakin dynaamisesta ohjelmoinnista.
 
 **Tämä viikko on aika täysi. Voisiko osan asioista siirtää aiemmaksi, ja osan myöhemmäksi?** 
 
@@ -264,3 +271,17 @@ Harkka neljäs vaihe (TODO: Speksaa mitä pitää olla valmiina).
 ## Viikko 13: Tentti
 
 Tentti
+
+
+## Ajatuksia oppimateriaalin, viikkotehtävien ja harjoitustyön suhteesta
+
+Oppimateriaalissa näytettävät esimerkit voisivat ainakin osittain kytkeytyä toisiinsa, ts. muodostaisivat "jatkuvan tarinan". Viikkotehtävissä voitaisiin sitten soveltaa oppimateriaalissa opittuja asioita. Tällaisesta ideasta hyvänä esimerkkinä toimii Full Stack Open (blogisovellus vs. todo-sovellus); toki tuossa erona on se että päästään aika nopeastikin CRUDiin, kun meillä pitäisi lähteä ensin hiljalleen ensin C:stä, sitten R jne. Mutta silti tämä olisi motivoivampaa kuin pelkät irralliset tehtävät (joita toki tarvitaan myös).
+
+## Mihin tarvittaisiin tuntiopettajien apuja?
+
+ * Uuden "monisteen" kirjoittamiseen ja tarkastamiseen (heti)
+ * Viikkotehtävien laatimiseen ja tarkastamiseen (heti)
+ * Harjoitustyön määrittelyssä avustaminen (heti) 
+ * Harjoitustyön hyväksyntäkriteerien laatiminen (viimeistään joulu-tammikuu)
+ * Työkalujen käyttöönoton testaaminen ja ohjeistaminen (viimeistään marras-joulukuussa; vasta sitten kun harkka on määritelty)
+ * Muiden tekemien viikkotehtävien katselmointiin ja kommentointiin (viimeistään kurssin alettua)
