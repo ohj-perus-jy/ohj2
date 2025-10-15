@@ -35,119 +35,37 @@ Oppimateriaalissa näytettävät esimerkit voisivat ainakin osittain kytkeytyä 
  * Työkalujen käyttöönoton testaaminen ja ohjeistaminen (viimeistään marras-joulukuussa; vasta sitten kun harkka on määritelty)
  * Muiden tekemien viikkotehtävien katselmointiin ja kommentointiin (viimeistään kurssin alettua)
 
-## Viikko 1
+## Viikko 1: Java-kielen perusteet, rakenteisen ohjelmoinnin kertaus
 
-Kerrataan lyhyesti Ohjelmointi 1 -asioita. 
+Java-kielen perusteet. Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet (Ohj1-kurssin pikakertaus). Käsitellään dataa funktioiden avulla (Ohj1-kurssin tapaan); askel kohti olio-ohjelmointia
 
-Tutkitaan miten *data ja funktiot* (Ohj1) muuttuvat *olioiksi*, joilla on *tila* ja *metodeja* (Ohj2).
+## Viikko 2: Olio-ohjelmoinnin perusteet
 
-<details><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
-
- * Perusohjelman rakenne, muuttujat, tietotyypit, operaattorit, if-lause, while-silmukka, for-silmukka, taulukot, aliohjelmat. Näistä 2-3 tehtävää..
- * Tallennetaan tietoa muuttujiin, tehdään aliohjelmia jotka muuttavat näitä (parametrien ja paluuarvojen kautta) esim. oma nimi ja pankkitilin saldo
- * Sitten koodataan pieni ohjelma, jossa on luokka, olio, attribuutit, jotka tekevät saman asian (pankkitili, jolla on nimi ja saldo, ja metodit talleta ja nosta)
- * Ero funktioiden ja metodien välillä.
-
-</details>
-
-<details><summary>Esimerkkejä</summary>
-
-
-Data ja funktiot (Ohj1)
-
-```java
-String nimi = "Matti Meikäläinen";
-double saldo = 100.0;
-double talleta(double maara) { saldo = saldo + maara; return saldo; }
-double nosta(double maara) { saldo = saldo - maara; return saldo; }
-// ...
-saldo = talleta(50.0);
-saldo = nosta(20.0);
-System.out.println("Hei " + nimi + ", tilillä on " + saldo + " euroa.");
-```
-
-Olio, jolla on tila (attribuutit) ja metodeja (Ohj2)
-
-```java
-class Pankkitili {
-  String nimi; double saldo;
-  Pankkitili(String nimi, double alkusaldo) {
-    this.nimi = nimi; this.saldo = alkusaldo;
-  }
-  double talleta(double maara) { saldo = saldo + maara; return saldo; }
-  double nosta(double maara) { saldo = saldo - maara; return saldo; }
-  // ...
-}
-
-Pankkitili tili = new Pankkitili("Matti Meikäläinen", 100.0);
-tili.talleta(50.0); tili.nosta(20.0);
-System.out.println("Hei " + tili.nimi + ", tilillä on " + tili.saldo + " euroa.");
-```
-
-</details>
-
-<details class="todo"><summary>Tehtäviä (TODO)</summary>
-
- * TODO
-
-</details>
-
-## Viikko 2
-
-Kapselointi, representaation piilottaminen, konstruktorit, yhtäsuuruus
+Luokan ja olion käsitteet. Olioinstanssi. Olioiden välinen yhteistyö. 
 
 <details><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
+ * Eteneminen "data+funktio"-ajatuksesta (Ohj1) kohti "tila+metodi"-ajatusta (Ohj2)  
  * Luokka ja olio
  * Konstruktori, metodi, attribuutti
- * this, get, set
- * public-, private
- * Kapselointi: Olion tila on yksityinen, sitä voi muuttaa vain metodien kautta. 
+ * this, get, set, kapselointi
+ * public, private
  * Representaation piilottaminen: Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutustaa voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan.
- * Vahvat invariantit (asia jonka pitää aina olla totta, esim. tilin saldo ei voi olla negatiivinen, ikä ei voi olla negatiivinen, jne.)
-    - Koska viikolla 2 ei vielä ole poikkeuksia, niin invariantin tarkastaminen voi tapahtua esimerkiksi tulosteessa (esim. nostaTililtä-metodissa tarkistetaan että saldo ei mene negatiiviseksi, ja jos menee, niin palautetaan alkuperäinen saldo; jos iban-muodossa on virhe, niin asetetaan tilin saldo nollaksi ja tulostetaan varoitus). Poikkeuksista lisää myöhemmin.
+ * Invariantit (tilin saldo ei voi olla negatiivinen, ikä ei voi olla negatiivinen, jne.)
 
 </details>
 
-<details><summary>Esimerkkejä</summary>
+## Viikko 3: Olio-ohjelmointi
 
-```java
-class Pankkitili {
-  // attribuutit ...
-
-  // konstruktori(t) ...
-
-  public double talleta(double maara) { 
-    if (maara > 0) saldo = saldo + maara;  // ei vielä poikkeuksia
-    return saldo; 
-  }
-  public double nosta(double maara) { 
-    if (maara > 0 && saldo >= maara) saldo = saldo - maara;  // ei vielä poikkeuksia
-    return saldo;
-}
-```
-
-</details>
-
-<details><summary>Tehtäviä</summary>
-
- * Yhtäsuuruus, equals...
- * Pankkitili
- * Playlist (ei vielä kokoelma-ominaisuuksia List<String> lisäksi): tee luokka Playlist, jolla on metodit lisäämiselle, poistamiselle, seuraavan kappaleen hakemiselle, kappaleiden määrän kysymiselle, ...
- * Auto, jolla on attribuutit merkki, malli, vuosimalli, ajettu matka, polttoainetankin koko, polttoaineen määrä tankissa. Metodit tankkaa, aja, kerro tiedot autosta.
- * ...
-
-</details>
-
-## Viikko 3
-
-Staattinen attribuutti ja metodi. Ylikirjoitus, `@Override`, final.
+Staattinen attribuutti ja metodi. Ylikirjoitus, final. 
 
 <details ><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
 Toteutetaan olioiden yhteistyö. Pienessä olioverkossa, oliot välittävät riippuvuudet toisilleen konstruktorissa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa.
 
-Tämä on askel ennen perintää ja rajapintoja. 
+Viitevälitys, arvovälitys. Immutable-olio. 
+
+(Ei vielä perintää tai rajapintoja.)
 
 </details>
 
@@ -173,72 +91,23 @@ int välisumma = 0; for (var rivi:tilaus.getItems()) välisumma += rivi.summa();
 
 </details>
 
-<details><summary>Tehtäviä (TODO)</summary>
+## Viikko 4: Perintä, rajapinnat, polymorfismi, abstraktit luokat
 
-  * TODO
-
-</details>
-
-## Viikko 4
-
-List, ArrayList, Set, HashSet, Map, HashMap, geneerisyys `<T>`, `<K, V>`, equals, hashCode
-
-<details><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
-
- * Kokoelmat: List, Set, Map. Oikean kokoelman valinta käyttötarkoituksen mukaan.
-   - List: järjestys, duplikaatit sallittu
-   - Set: järjestys ei ole tärkeä, duplikaatit eivät ole sallittuja
-   - Map: avain-arvo-parit
-   - ArrayList, HashSet, HashMap
-   - for-each-silmukka
-   - Collections-luokka (sort, reverse, ...)
- * Geneerisyyden perusteet, tyyppiparametrit, timanttioperaattori
-   - Käytetään geneerisiä kokoelmia tyyppiturvallisen koodin kirjoittamiseen
-   - `List<String> nimet = new ArrayList<String>();`
-   - `Map<String, Integer> sanakirja = new HashMap<String, Integer>();`
-   - `List<Tilaus> tilaukset = new ArrayList<Tilaus>();`
- * Perustellaan yhtäsuuruus (equals-metodi) Set- ja Map-kokoelmien yhteydessä
- * Lyhyesti käydään läpi vaikutukset suorituskykyyn: ArrayList, HashMap
-   - ArrayList on nopea, jos indeksi tiedetään
-   - HashMap on nopea, jos avain tiedetään
-   - List ja Set ovat hitaita, jos etsitään arvoa (koska joudutaan käymään läpi kokoelma alusta loppuun)
- * Stream-rajapinta (osa 1): map, filter, reduce; painotus kuitenkin silmukoissa edelleen
- * Viite- ja arvoparametrit, immutability
-
-</details>
-
-<details><summary>Esimerkkejä: TODO</summary>
-
- * TODO
-
-</details>
-
-<details><summary>Tehtäviä</summary>
-
- * Kirjoita funktio, joka palauttaa sanakohtaiset esiintymämäärät annetusta tekstistä Map<String,Integer>-rakenteena. Testaa vähintään: tyhjä syöte, yksi sana, useita samoja sanoja, sekalainen kirjainkoko. Sanojen vertailu on kirjainkoolla riippumatonta (esim. “Ada” == “ada”).
- * Kirjoita funktio, joka saa listan käyttäjätunnuksia (List<String>) ja palauttaa listan niistä tunnuksista, jotka esiintyvät uudelleen (duplikaatit) siinä järjestyksessä, jossa ne toisena kertana ilmestyvät. Käytä HashSet-rakennetta duplikaattien havaitsemiseen.
- * ...
-
-</details>
-
-## Viikko 5
-
-Perintä, rajapinta. Polymorfismi, dynaaminen sidonta, ylikirjoitus, Liskovin korvausperiaate. Abstrakti luokka ja abstrakti metodi
+Perintä, rajapinta. Koostaminen. Polymorfismi, dynaaminen sidonta, ylikirjoitus, Liskovin korvausperiaate. Abstrakti luokka ja abstrakti metodi
 
 <details closed><summary>Asiasisältö ja tavoitteet</summary>
 
-  * Käytetään perintää ja rajapintoja olioiden yhteistyössä
-  * instanceof, tyyppimuunnos (*cast*)
-  * Ymmärtää rajapinnan (interface) rooli ja käyttää sitä vaihtokohdissa (strategiat, palvelut).
-  * Abstrakti luokka: Luokka, josta ei tehdä instansseja, mutta joka voi sisältää toteutettua koodia. Abstrakti luokka määrittelee rajapinnan (abstraktit metodit) ja tarjoaa osan toteutuksesta. Aliluokat täydentävät toteutuksen.
-  * Rajapinta: Määrittelee vain metodien nimet ja parametrit, ei toteutusta. Luokka voi toteuttaa useita rajapintoja, mutta vain yhden luokan (Java ei tue moniperintää). Rajapinnat sopivat hyvin "sopimuksiksi" olioiden välille.
-  * Ero abstraktin luokan ja rajapinnan välillä
-  * Tunnistaa milloin perintää kannattaa käyttää, ja milloin koostaminen on parempi vaihtoehto.
-  * Tunnistaa polymorfismin merkitys olioiden yhteistyössä. Olio, joka käyttää ylätason tyyppiä (rajapinta, abstrakti luokka) voi toimia erilaisten aliluokkien kanssa.
-  * Ylikirjoitus, `@Override`, final
-  * Liskovin korvausperiaate: Aliluokan olio voidaan aina käyttää siellä missä yläluokan olio on sallittu.
-  * Dynaaminen sidonta: Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
-  * Testaaminen rajapintaa vasten, ei toteutusta vasten. Esimerkki:
+ * Käytetään perintää ja rajapintoja olioiden yhteistyössä
+ * Abstrakti luokka: Luokka, josta ei tehdä instansseja, mutta joka voi sisältää toteutettua koodia. Abstrakti luokka määrittelee rajapinnan (abstraktit metodit) ja tarjoaa osan toteutuksesta. Aliluokat täydentävät toteutuksen.
+ * Ero abstraktin luokan ja rajapinnan välillä
+ * Ymmärtää rajapinnan (interface) rooli ja käyttää sitä vaihtokohdissa (strategiat, palvelut).
+ * instanceof, tyyppimuunnos (*cast*)
+ * Tunnistaa milloin perintää kannattaa käyttää, ja milloin koostaminen on parempi vaihtoehto.
+ * Tunnistaa polymorfismin merkitys olioiden yhteistyössä. Olio, joka käyttää ylätason tyyppiä (rajapinta, abstrakti luokka) voi toimia erilaisten aliluokkien kanssa.
+ * Ylikirjoitus, `@Override`, final
+ * Liskovin korvausperiaate, LSP
+ * Dynaaminen sidonta: Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
+ * Testaaminen rajapintaa vasten, ei toteutusta vasten. Esimerkki:
  * "Moniperintä" rajapintojen avulla
 </details>
 
@@ -291,13 +160,47 @@ Sähköauto s = new Tesla(); s.lataa(); s.aja(); // ! ei voi tehdä
 ```
 </details>
 
-## Viikko 6
+## Viikko 5: Tietorakenteet
 
-Streamit (osa 2), lambda-lausekkeet, funktioparametrit (?), Optional.
+Javan kokoelmat, niiden käyttö ja rajapintojen ymmärtäminen kokoelmien yhteydessä. List, ArrayList, Set, HashSet, Map, HashMap, ... (Ei välttämättä kaikkia, osa voidaan jättää maininnan tasolle.)
+
+Geneerisyys, tyyppiparametri(t), equals, hashCode
+
+Tehdään itse yksinkertainen kokoelma, joka toteuttaa jonkin tai joitakin rajapintoja. 
+
+<details><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+
+ * Kokoelmat: List, Set, Map. Oikean kokoelman valinta käyttötarkoituksen mukaan.
+   - List: järjestys, duplikaatit sallittu
+   - Set: järjestys ei ole tärkeä, duplikaatit eivät ole sallittuja
+   - Map: avain-arvo-parit
+   - ArrayList, HashSet, HashMap
+   - for-each-silmukka
+   - Collections-luokka (sort, reverse, ...)
+ * Geneerisyyden perusteet, tyyppiparametrit, timanttioperaattori
+ * Rajapintaa vasten ohjelmointi: List, Set, Map
+   - `List<String> nimet = new ArrayList<String>();`
+   - `Map<String, Integer> sanakirja = new HashMap<String, Integer>();`
+   - `List<Tilaus> tilaukset = new ArrayList<Tilaus>();`
+ * Perustellaan yhtäsuuruus (equals-metodi) Set- ja Map-kokoelmien yhteydessä
+ * Lyhyesti käydään läpi vaikutukset suorituskykyyn: ArrayList, HashMap, List, Set
+ * Viite- ja arvoparametrit, immutability
+
+</details>
+
+## Viikko 6: Streamit, lambda-lausekkeet, rekursio, Optional, tiedosto-I/O, JSON
+
+Stream-rajapinta, map, filter, reduce. Funktioparametrit (?), Optional (?).
 
 Poikkeukset (checked, unchecked), try-catch, finally, heittäminen (throw, throws). Tiedosto-I/O (teksti, CSV). Yksinkertainen JSON-käsittely. Mahdollisesti GUI-asiaa jo tässä kohdassa. 
 
-<details ><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne?.
+
+Hajota ja hallitse -periaate. Pinon käyttö rekursiossa. Mahdollisesti jotakin dynaamisesta ohjelmoinnista.
+
+**Tämä viikko on aika täysi. Voisiko osan asioista siirtää aiemmaksi, ja osan myöhemmäksi?** 
+
+<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
  * File, Scanner
  * PrintWriter
@@ -307,45 +210,25 @@ Poikkeukset (checked, unchecked), try-catch, finally, heittäminen (throw, throw
 
 </details>
 
-<details><summary>Esimerkkejä: TODO</summary>
+## Viikko 7: GUI 1, harjoitustyö-tutoriaali
 
- * TODO 
-
-</details>
-
-<details><summary>Tehtäviä: TODO</summary>
-
- * TODO
-
-</details>
-
-## Viikko 7
-
-Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne?.
-
-Hajota ja hallitse -periaate. Pinon käyttö rekursiossa. Mahdollisesti jotakin dynaamisesta ohjelmoinnista.
+JavaFX, SceneBuilder (??). Projektin rakenne. Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. GUI-tutoriaali (Denisin ehdotus)
 
 <details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
-TODO
+  * JavaFX: Peruskomponentit (Label, Button, TextField, TextArea, ListView, ComboBox, CheckBox, RadioButton, Menu, MenuItem, Alert)
+  * Layoutit (VBox, HBox, GridPane, BorderPane)
+  * Tapahtumankäsittely (event handling), lambda-lausekkeet tapahtumakäsittelijöinä
+  * SceneBuilderin käyttö
+  * Projektin rakenne: src-kansio, resources-kansio, main-luokka
+  * Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen
+  * Yksikkötestaus JavaFX-sovelluksissa (TestFX tms. kirjasto) <-- ehkä vasta seuraavalla viikolla?
 
 </details>
 
-<details class="todo"><summary>Esimerkkejä: TODO</summary>
+## Viikko 8: GUI 2, TDD, oman harjoitustyön aloitus
 
-TODO
-
-</details>
-
-<details><summary>Tehtäviä: TODO</summary>
-
-TODO
-
-</details>
-
-## Viikko 8
-
-Graafinen käyttöliittymä, JavaFX, SceneBuilder (??). Projektin rakenne, GitHub tai GitLab. Arkkitehtuurin alkeet, MVC-malli.
+Jatketaan GUI-asiaa ja TDD:tä. Yksikkötestaus JUnit5:llä. Mocking (Mockito tms.). Harjoitustyön suunnitelma: aihe, luokkakaavio, olioiden yhteistyö. 
  
 <details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
@@ -353,24 +236,31 @@ Toteutetaan pieni ohjelma käyttäen TDD-menetelmää. Ohjelmassa on graafinen k
 
 </details>
 
-<details closed><summary>Esimerkkejä: TODO</summary>
+## Viikko 9: Iteraattorit, HTTP I/O
 
- * TODO
+ * Javan iteraattorit (= Iterable, Iterator: hasNext, next, remove)
+ * HTTP I/O: Lähinnä siitä näkökulmasta, että osataan *hakea* JSON-dataa verkosta.
 
-</details>
+Oman harjoitustyön ensimmäinen vaihe (TODO: Speksaa mitä pitää olla valmiina). 
 
-## Viikko 9
+## Viikko 10: Koodin laatu, hyvät koodauskäytänteet, johdattelua suunnittelumalleihin
 
-Koodihaju, SOLID, johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi observer.
+Koodihaju, refaktorointi, SOLID. Johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi *Observer*. Mahdollisesti UML:n perusteita. git branch, git merge. README, kommentit, git commit.
 
-## Viikko 10
+Harkka toinen vaihe (TODO: Speksaa mitä pitää olla valmiina). 
 
-Harkka 1/3. Vaatii tarkennusta (mikä osa harkasta tehdään viikolla 10, mikä myöhemmin).
+## Viikko 11: Monisäikeisyys, ohjelmointiparadigmat
 
-## Viikko 11
+Monisäikeisyyden perusteet, säikeiden luominen ja hallinta, ExecutorService, Future, CompletableFuture. (TODO: Jääkö pintapuoliseksi?)
 
-Harkka 2/3. Vaatii tarkennusta (mikä osa harkasta tehdään viikolla 11, mikä myöhemmin).
+Ohjelmointiparadigmojen vertailua: funktionaalinen, oliopohjainen
 
-## Viikko 12
+Harkka kolmas vaihe (TODO: Speksaa mitä pitää olla valmiina). 
 
-Harkka 3/3. Vaatii tarkennusta (mikä osa harkasta tehdään viikolla 12; miten tarkastetaan?).
+## Viikko 12: Oman projektin viimeistely
+
+Harkka neljäs vaihe (TODO: Speksaa mitä pitää olla valmiina). 
+
+## Viikko 13: Tentti
+
+Tentti
