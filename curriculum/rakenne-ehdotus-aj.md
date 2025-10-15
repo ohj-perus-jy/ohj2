@@ -219,7 +219,7 @@ Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne (?). Hajota ja
 
 ## Viikko 7: GUI 1, harjoitustyö-tutoriaali
 
-JavaFX, SceneBuilder (??). Projektin rakenne. Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. GUI-tutoriaali (Denisin ehdotus)
+JavaFX, SceneBuilder. Projektin rakenne. Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. GUI-tutoriaali (Denisin ehdotus)
 
 <details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
 
@@ -260,7 +260,7 @@ Harkka toinen vaihe (TODO: Speksaa mitä pitää olla valmiina).
 
 Monisäikeisyyden perusteet, säikeiden luominen ja hallinta, ExecutorService, Future, CompletableFuture. (TODO: Jääkö pintapuoliseksi?)
 
-Ohjelmointiparadigmojen vertailua: funktionaalinen, oliopohjainen
+Ohjelmointiparadigmojen vertailua (Samin ehdotus, mutta myöhemmin): funktionaalinen, oliopohjainen
 
 Harkka kolmas vaihe (TODO: Speksaa mitä pitää olla valmiina). 
 
@@ -271,7 +271,6 @@ Harkka neljäs vaihe (TODO: Speksaa mitä pitää olla valmiina).
 ## Viikko 13: Tentti
 
 Tentti
-
 
 ## Ajatuksia oppimateriaalin, viikkotehtävien ja harjoitustyön suhteesta
 
@@ -285,3 +284,4 @@ Oppimateriaalissa näytettävät esimerkit voisivat ainakin osittain kytkeytyä 
  * Harjoitustyön hyväksyntäkriteerien laatiminen (viimeistään joulu-tammikuu)
  * Työkalujen käyttöönoton testaaminen ja ohjeistaminen (viimeistään marras-joulukuussa; vasta sitten kun harkka on määritelty)
  * Muiden tekemien viikkotehtävien katselmointiin ja kommentointiin (viimeistään kurssin alettua)
+
