@@ -22,6 +22,9 @@ additional-js = [
 [output.html.playground]
 editable = true
 
+[output.html.code.hidelines]
+java = "//-"
+
 [preprocessor.alerts]
 
 [preprocessor.mermaid]

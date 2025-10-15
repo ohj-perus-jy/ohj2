@@ -1,11 +1,10 @@
-const PLAYGROUND_LANG = "java";
-
-
-function get_playgrounds() {
-    return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground))`));
-}
-
 (function codeSnippets() {
+    const PLAYGROUND_LANG = "java";
+
+    function get_playgrounds() {
+        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground))`));
+    }
+
     function fetch_with_timeout(url, options, timeout = 6000) {
         return Promise.race([
             fetch(url, options),
@@ -14,81 +13,8 @@ function get_playgrounds() {
     }
 
     const playgrounds = get_playgrounds();
-    if (playgrounds.length > 0) {
-        fetch_with_timeout('https://play.rust-lang.org/meta/crates', {
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            method: 'POST',
-            mode: 'cors',
-        })
-            .then(response => response.json())
-            .then(response => {
-            // get list of crates available in the rust playground
-                const playground_crates = response.crates.map(item => item['id']);
-                playgrounds.forEach(block => handle_crate_list_update(block, playground_crates));
-            });
-    }
 
-    function handle_crate_list_update(playground_block, playground_crates) {
-        // update the play buttons after receiving the response
-        update_play_button(playground_block, playground_crates);
-
-        // and install on change listener to dynamically update ACE editors
-        if (window.ace) {
-            const code_block = playground_block.querySelector('code');
-            if (code_block.classList.contains('editable')) {
-                const editor = window.ace.edit(code_block);
-                editor.addEventListener('change', () => {
-                    update_play_button(playground_block, playground_crates);
-                });
-                // add Ctrl-Enter command to execute rust code
-                editor.commands.addCommand({
-                    name: 'run',
-                    bindKey: {
-                        win: 'Ctrl-Enter',
-                        mac: 'Ctrl-Enter',
-                    },
-                    exec: _editor => run_rust_code(playground_block),
-                });
-            }
-        }
-    }
-
-    // updates the visibility of play button based on `no_run` class and
-    // used crates vs ones available on https://play.rust-lang.org
-    function update_play_button(pre_block, playground_crates) {
-        const play_button = pre_block.querySelector('.play-button');
-
-        // skip if code is `no_run`
-        if (pre_block.querySelector('code').classList.contains('no_run')) {
-            play_button.classList.add('hidden');
-            return;
-        }
-
-        // get list of `extern crate`'s from snippet
-        const txt = playground_text(pre_block);
-        const re = /extern\s+crate\s+([a-zA-Z_0-9]+)\s*;/g;
-        const snippet_crates = [];
-        let item;
-        // eslint-disable-next-line no-cond-assign
-        while (item = re.exec(txt)) {
-            snippet_crates.push(item[1]);
-        }
-
-        // check if all used crates are available on play.rust-lang.org
-        const all_available = snippet_crates.every(function(elem) {
-            return playground_crates.indexOf(elem) > -1;
-        });
-
-        if (all_available) {
-            play_button.classList.remove('hidden');
-        } else {
-            play_button.classList.add('hidden');
-        }
-    }
-
-    function run_rust_code(code_block) {
+    function run_code(code_block) {
         let result_block = code_block.querySelector('.result');
         if (!result_block) {
             result_block = document.createElement('code');
@@ -98,27 +24,21 @@ function get_playgrounds() {
         }
 
         const text = playground_text(code_block);
-        const classes = code_block.querySelector('code').classList;
-        let edition = '2015';
-        classes.forEach(className => {
-            if (className.startsWith('edition')) {
-                edition = className.slice(7);
-            }
-        });
-        const params = {
-            version: 'stable',
-            optimize: '0',
-            code: text,
-            edition: edition,
-        };
 
-        if (text.indexOf('#![feature') !== -1) {
-            params.version = 'nightly';
-        }
+        console.log(text);
+
+        const params = {
+            command: "run",
+            files: {
+                "": text,
+            },
+            sandbox: "java",
+            version: ""
+        };
 
         result_block.innerText = 'Running...';
 
-        fetch_with_timeout('https://play.rust-lang.org/evaluate.json', {
+        fetch_with_timeout('https://api.codapi.org/v1/exec', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -128,11 +48,12 @@ function get_playgrounds() {
         })
             .then(response => response.json())
             .then(response => {
-                if (response.result.trim() === '') {
+                let result = response.stderr || response.stdout;
+                if (result.trim() === '') {
                     result_block.innerText = 'No output';
                     result_block.classList.add('result-no-output');
                 } else {
-                    result_block.innerText = response.result;
+                    result_block.innerText = result;
                     result_block.classList.remove('result-no-output');
                 }
             })
@@ -176,14 +97,35 @@ function get_playgrounds() {
 
         buttons.insertBefore(runCodeButton, buttons.firstChild);
         runCodeButton.addEventListener('click', () => {
-            run_rust_code(pre_block);
+            run_code(pre_block);
         });
-
+        
 
         const code_block = pre_block.querySelector('code');
+
         if (window.ace && code_block.classList.contains('editable')) {
             const editor = window.ace.edit(code_block);
             editor.getSession().setMode("ace/mode/java");
+
+            // editor.addEventListener('change', () => {
+            //     update_play_button(playground_block, playground_crates);
+            // });
+            // add Ctrl-Enter command to execute rust code
+
+            let no_run = pre_block.querySelector('code').classList.contains('no_run');
+            if (no_run) {
+                runCodeButton.classList.add('hidden');
+            } else {
+                editor.commands.addCommand({
+                    name: 'run',
+                    bindKey: {
+                        win: 'Ctrl-Enter',
+                        mac: 'Ctrl-Enter',
+                    },
+                    exec: _editor => run_code(pre_block),
+                });
+            }
+            
 
             const undoChangesButton = document.createElement('button');
             undoChangesButton.className = 'fa fa-history reset-button';

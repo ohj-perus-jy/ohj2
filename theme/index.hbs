@@ -36,6 +36,8 @@
         <link rel="stylesheet" href="{{ resource "FontAwesome/css/font-awesome.css" }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aleo:wght@300;400;500;600;700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400">
+        <!-- Bootstrap Icons -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
         {{#if copy_fonts}}
         <link rel="stylesheet" href="{{ resource "fonts/fonts.css" }}">
@@ -150,10 +152,10 @@
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                            <i class="fa fa-bars"></i>
+                            <i class="bi bi-layout-sidebar"></i>
                         </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                            <i class="fa fa-paint-brush"></i>
+                            <i class="bi bi-circle-half"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
                             <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
@@ -167,7 +169,7 @@
                         </ul>
                         {{#if search_enabled}}
                         <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="fa fa-search"></i>
+                            <i class="bi bi-search"></i>
                         </button>
                         {{/if}}
                     </div>

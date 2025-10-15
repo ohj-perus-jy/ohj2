@@ -6,20 +6,39 @@
 
 Koodiesimerkki
 
-```java,editable
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("""It’s the job that’s never started as takes longest to finish, as my old Gaffer used to say.
-
-    [Samwise Gamgee; The Lord of the Rings, Bk. II, Chp. 7, The Mirror of Galadriel]
-
-— J.R.R. Tolkien""");
-    }
+```java
+void main() {
+    IO.println("Hei, maailma!");
 }
 ```
 
-```rust,editable
-println!("wew");
+```java
+//-void main() {
+//-   IO.println("summa(1, 2) => " + summa(1 , 2));
+//-}
+//-
+/**
+ * Laskee kahden kokonaisluvun summan.
+ * 
+ * @param a Ensimmäinen luku
+ * @param b Toinen luku
+ * @return Lukujen summa
+ */
+int summa(int a , int b) {
+    return a + b;
+}
+```
+
+Harjoittele tekemällä ja tulostamalla erityyppisiä muuttujia (tämä on editoitava koodausalue):
+
+```java,editable
+void main() {
+    int luku = 1;
+    double liukuluku = 1.0;
+
+    IO.println("luku = " + luku);
+    IO.println("liukuluku = " + liukuluku);
+}
 ```
 
 Taulukko
