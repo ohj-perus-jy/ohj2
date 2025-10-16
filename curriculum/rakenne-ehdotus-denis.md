@@ -11,7 +11,7 @@
 
 
 
-<details closed><summary>**Tämänhetkinen Vesan curriculum**</summary>
+<details closed><summary><b>Tämänhetkinen Vesan curriculum</b></summary>
 
 - Viikko 1: Ohjelman suunnittelu
     - Agile, Algoritmeja (lajittelualgoritmit, binäärihaku)
@@ -256,7 +256,7 @@ Aiheina:
 
 <details closed>
 <summary>
-## Curriculum v1
+<h2>Curriculum v1</h2>
 </summary>
 
 
