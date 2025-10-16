@@ -54,6 +54,16 @@
 
 ## Curriculum v2
 
+### Viikkoaiheet ja tavoitteet
+
+- Kesto: 8 + 4 viikkoa
+- Ensimmäinen osa vastaa noin 5 op
+    - Aiheina Java, OOP, TDD, I/O
+    - Osan loppupuolella Ohjelman suunnittelu ja GUI, jolloin tehdään ohjatusti jokin oma GUI-ohjelma alusta loppuun (vrt. nykyisessä Ohj2 AstiaPeli, RPN-laskin)
+- Toinen osa vastaa noin 3 op
+    - Oliopohjaisen ohjelman suunnittelun periaatteet, ArrayList, tyyppiparametrit
+    - Osassa tehdään oma projekti (esim. tutorialin laajentaminen, tai joku oma GUI-sovellus)
+
 ### Suoritustapa
 
 - Jokaisella viikolla 6-10 viikkotehtävää ja ylöspäin eriyttäviä lisätehtäviä
@@ -92,15 +102,7 @@ Lisäksi vaihtoehtona
 
 - DZ suosii vaihtoehtoa 2 tai kokeilumielessä vaihtoehto 1 ("jos tekee hyvät matskut, niin onko järkeä käydä samat asiat luennolla")
 
-### Viikkoaiheet ja tavoitteet
 
-- Kesto: 8 + 4 viikkoa
-- Ensimmäinen osa vastaa noin 5 op
-    - Aiheina Java, OOP, TDD, I/O
-    - Osan loppupuolella Ohjelman suunnittelu ja GUI, jolloin tehdään ohjatusti jokin oma GUI-ohjelma alusta loppuun (vrt. nykyisessä Ohj2 AstiaPeli, RPN-laskin)
-- Toinen osa vastaa noin 3 op
-    - Oliopohjaisen ohjelman suunnittelun periaatteet, ArrayList, tyyppiparametrit
-    - Osassa tehdään oma projekti (esim. tutorialin laajentaminen, tai joku oma GUI-sovellus)
 
 
 ### Viikot ja sisällöt
