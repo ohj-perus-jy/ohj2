@@ -8,13 +8,14 @@ Koodiesimerkki
 
 ```java
 void main() {
-    IO.println("Hei, maailma!");
+    var feature =  Runtime.version().feature();
+    IO.println("Hei, maailma! Tässä on Java " + feature);
 }
 ```
 
 ```java
 //-void main() {
-//-   IO.println("summa(1, 2) => " + summa(1 , 2));
+//-   IO.println("summa(2, 2) => " + summa(2, 2));
 //-}
 //-
 /**

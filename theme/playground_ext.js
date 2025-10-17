@@ -28,17 +28,13 @@
         console.log(text);
 
         const params = {
-            command: "run",
-            files: {
-                "": text,
-            },
-            sandbox: "java",
-            version: ""
+            language: "java",
+            code: text,
         };
 
         result_block.innerText = 'Running...';
 
-        fetch_with_timeout('https://api.codapi.org/v1/exec', {
+        fetch_with_timeout('https://tim03.it.jyu.fi/executor/execute', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -48,7 +44,7 @@
         })
             .then(response => response.json())
             .then(response => {
-                let result = response.stderr || response.stdout;
+                let result = response.errors || response.output || '';
                 if (result.trim() === '') {
                     result_block.innerText = 'No output';
                     result_block.classList.add('result-no-output');
