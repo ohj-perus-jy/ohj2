@@ -22,6 +22,8 @@
    - Kaksi projektia
    - Viikkotehtävät eivät ole pakollisia
    - Ei deadlineja versus deadlinet ja laskeva pistemäärä?
+     - Opiskelija voi valita kummalla mallilla menee
+     - Deadline-versiossa voi saada `n`-enemmän pisteitä (pieni määrä, tyyliin max 10%)
    - Ei minimi-viikkotehtäväpisteitä, aina voi tenttiä
    - 2-3 muun palautuksen vertaisarviointi valmiilla tarkistuslistalla (vrt. Hiven projekti / [Ohjelmistotestauskurssi](https://opencs.it.jyu.fi/software-testing/8-old-projects/2-practical-project-2025s/#self--and-peer-assessment))
 
@@ -32,38 +34,45 @@
 
 ### Harjoitustyö(t)
 
-- Ensimmäinen ja vahvasti ohjattu / määritetty (vk 8-10): Esim. ohjelma, joka hakee verkosta mm. numeerista dataa ja visualisoi graafisella käyttöliittymällä erilaisten kuvaajien avulla. Interaktiivisuutta napeilla esim. suodatus, eri kuvaajat yms.
-- Toinen ja vapaampi harjoitustyö (vk 10-12)
+- Ensimmäinen ja vahvasti ohjattu / määritetty (vk 6/8-10): Esim. ohjelma, joka hakee verkosta mm. numeerista dataa ja visualisoi graafisella käyttöliittymällä erilaisten kuvaajien avulla. Interaktiivisuutta napeilla esim. suodatus, eri kuvaajat yms.
+- Toinen ja vapaampi harjoitustyö (vk 10-12 + n viikkoa)
 
 Tulevaisuuden 5+5+5 mallissa voisi ensimmäinnen harjoitustyö alkaa aikaisemmin. Toisessa voisi olla lisänoppien myötä enemmän aikaa harjoitustyölle ja esim. suunnittelumalleille.
 
 ### Opetustilaisuudet
 
-Yksi tai kaksi flipped-/vastaanottotilaisuus/luento viikossa. 
+Yksi tai kaksi flipped-/vastaanottotilaisuus/luento viikossa.
 - Vastaanottoaikana väh. yksi vastuuopettaja aina fyysisesti tavoitettavissa
-- Luennolla käytäisi viikon olennaisimmat asiat läpi tiivistetysti (sekä edellisen viikon mahdollisia vaikeuksia / opiskelijoiden nostamia ongelmia). 
+- Luennolla käytäisi viikon olennaisimmat asiat läpi tiivistetysti (sekä edellisen viikon mahdollisia vaikeuksia / opiskelijoiden nostamia ongelmia).
 
 ## Viikot ja sisällöt
 
-Materiaali jaettu viikoittain. Tehtävät voisi olla lomitettuna sisällön kanssa (iframe tms) sekä erikseen omalla sivullaan (viikoille omat tehtäväsivut vai kaikki könttänä?). Tehtävää ennen aina esitetään opeteltava asia havainnollistavin esimerkein. 
+Materiaali jaettu viikoittain. Tehtävät voisi olla lomitettuna sisällön kanssa (iframe tms) sekä erikseen omalla sivullaan (viikoille omat tehtäväsivut vai kaikki könttänä?). Tehtävää ennen aina esitetään opeteltava asia havainnollistavin esimerkein.
 
 Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jatkuva tehtävä/esimerkki, joka rakentuu viikkojen yli heti alusta alkaen voisi sitoa eri osiot yhteen. Tässäkin on omat haasteensa.
+
+Huomioita: GUI ja projektien aloitus tulee ehkä liian myöhään?
+ - osissa 7 ja 8 sekä 9 ja 10 hyvin liikkumavaraa (ei juurikaan riippuvuussuhdetta onsepteissa)
 
 ### 1. Java-kielen perusteet
 
 #### Osaamistavoitteet
 
 - Tiedät miten Java-ohjelma käännetään ja ajetaan (komentoriviohjelmat `javac`, `java` ja `jshell`, IDE-säädöt)
-- Tiedät mikä on JVM
+- Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta
+  - Ei mennä syvällisesti kääntäjiin, tämä ei ole kääntäjäkurssi
 - Osaat tehdä ohjelmointi 1 -kurssin tasoisia ohjelmia Javalla
   - Tulostaminen ja syötteen lukeminen
   - Aliohjelmat
+  - Perustietotyypit ja muuttujat ja final
+  - Ehtolauseet
   - Toistolauseet, ja listatyyppiset tietorakenteet
   - Dokumentaatiokommentit
 
 #### Tehtäviä
 
 - Tulostamisesta kohti (b)rainfall-tasoista tehtävää
+- Kevyen tason monivalintoja (J)VM:stä, tavukoodista, kääntäminen vs tulkkaus jne.
 
 ### 2. Olio-ohjelmoinnin perusteet
 
@@ -72,12 +81,12 @@ Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jat
 - Ymmärrät luokkien ja olioiden roolin olio-ohjelmoinnissa
   - Tieto ja toiminnallisuus yhdessä paketissa
 - Osaat määritellä ja hyödyntää omia luokkia Javalla
-- Ymmärrät kapseloinnin ja sen hyödyt 
+- Ymmärrät kapseloinnin ja sen hyödyt
   - Decoupling/Coupling
   - näkyvyysmääreet: `public`, `private`, `protected`
 - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron (oliot ovat aina viitteen takana)
 
-### 3. Abstrahointi ja polymorfismi 
+### 3. Abstrahointi ja polymorfismi
 
 (vähemmän latinaa otsikossa parempi?)
 
@@ -103,6 +112,7 @@ Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jat
     - Javan `Object`-luokka ja sen ylikirjoitettavat `toString` sekä `equals` -metodit
     - Vertailurajapintoja (`Comparable<T>`) -> mahdollistaa Javan järjestämismetodien käytön (`Arrays.sort` jne.)
     - `Cloneable` -> mahdollistaa olion todellisen kopioinnin (vrt. viite) (**TODO:** Pitäisikö viitteet käydä tässä(kin))
+    - `Iterable<T>` -> mahdollistaa olion läpikäymisen for-each -silmukassa
     - Bonus: Vertailuluokka (`Comparator<T>`) -> mahdollistaa määrittää useita erilaisia vertailutapoja samalle luokalle
 
 ### 5: Tietorakenteita ja algoritmeja
@@ -110,19 +120,18 @@ Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jat
 #### Osaamistavoitteet:
 
 - Tunnet Java-kielen kokoelmarajapinnat ja niitä toteuttavia tietorakenteita: `List`, `Set`, `Map`
-- Templaatit luokille ja metodeille (`<T>`, "geneerinen tyyppi" käsitteenä)
     - Laajenetaan oma `ArrayList<Integer>` yleiseksi `ArrayList<T>`:ksi
 - Tunnet Java-kielen yleisimmät valmiit tietorakenteet `ArrayList`, `HashMap`, `LinkedList`, `Stack`, `Queue`
 - Ymmärrät ym. tietorakenteiden keskeisimmät operaatiot ja niiden aikakompleksisuudet
 - Ymmärrät miten rekursio toimii ja osaat mallintaa rekursiota pinon avulla
 
-(Moniulotteinen data tänne? Konseptuaalisesti sopisi, mutta tässä lienee jo tosin aika paljon asiaa) 
+(Moniulotteinen data tänne? Konseptuaalisesti sopisi, mutta tässä lienee jo tosin aika paljon asiaa)
 
 #### Tehtäviä
 
 - Tehdään oma `ArrayList<T>` taulukoilla (monimutkaisempi HashMap esimerkkinä?)
 - Rekursiotehtäviä
-- Monivalintoja tietorakenteiden operaatioista ja niiden aikakompleksisuuksista 
+- Monivalintoja tietorakenteiden operaatioista ja niiden aikakompleksisuuksista
 
 ### 6. Hyödyllisiä menetelmiä 2
 
@@ -142,7 +151,7 @@ Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jat
 #### Osaamistavoitteet
 
 - Tunnet yleisiä ohjelmointisuuntauksia ja tiedät miten niitä on mahdollista toteuttaa Javalla
-- Ymmärrät, että on monia hyviä ja perustavanlaatuisesti erilaisia tapoja toteuttaa mielivaltaisia tietokoneohjelmia 
+- Ymmärrät, että on monia hyviä ja perustavanlaatuisesti erilaisia tapoja toteuttaa mielivaltaisia tietokoneohjelmia
 - Tiedät mitä on imperatiivinen ja funktionaalinen/ohjelmointi (paradigmat konseptina voi olla hyvä ekstra-infoinakin tms mainittuna eikä osaamistavoitteina)
   - Imperatiivinen: lauseet muokkaavat ohjelman tilaa
   - Puhtaan funktion määritelmä
@@ -169,7 +178,7 @@ Tarinamainen rakenne kokonaisuudelle olisi hieno (vrt. A-J:n ehdotus). Jokin jat
 #### Tehtäviä
 
 - Monivalintoja luokkakaavioista ja UML:stä sekä koodin laadusta
-- Käytännön asiat: Yksinkertainen GUI-ohjelma esiharjoitustehtävänä vahvasti ohjattuna, esim. äänestys (osa 1 — ei GUI:ta vielä) 
+- Käytännön asiat: Yksinkertainen GUI-ohjelma esiharjoitustehtävänä vahvasti ohjattuna, esim. äänestys (osa 1 — ei GUI:ta vielä)
 
 ### 9. Graafinen käyttöliittymä 1
 
@@ -201,7 +210,7 @@ Ei pisteellisiä tehtäviä, työstetään omaa projektia
 - Suorituskyvyn optimointi
 - Monisäikeisyys
 
-### 12. Extroja 2 
+### 12. Extroja 2
 
 Ei pisteellisiä tehtäviä, työstetään omaa projektia
 
