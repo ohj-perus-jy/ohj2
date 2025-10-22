@@ -221,26 +221,30 @@ Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne (?). Hajota ja
 
 GUI, osa 1. JavaFX, SceneBuilder.
  
- * Scene–Stage–Node, layoutit, FXML/SceneBuilder, Properties & Bindings, peruskomponentit, kevyt MVVM.
- * JavaFX: Stage -> Scene -> Node
+ * FXML ja SceneBuilder
+ * Scene–Stage–Node
+ * Layoutit: VBox, HBox, GridPane, BorderPane
+ * Peruskomponentit: Label, Button, TextField, RadioButton, (TextArea, ListView, ComboBox, CheckBox, Menu, MenuItem, Alert?)
+ * Properties & Bindings: Yksisuuntainen ja kaksisuuntainen sidonta
  * Layoutit: VBox, HBox, BorderPane
- * Peruskomponentit: Label, Button, TextField, TextArea, ListView, ComboBox, CheckBox, RadioButton, Menu, MenuItem, Alert
- * FXML + SceneBuilder: Näkymä ja sen määrittely erilliseen tiedostoon
+ * Näkymä ja sen määrittely erilliseen tiedostoon
+ * ListView, ComboBox ja niiden käyttö ObservableListin kanssa
  * Layoutit (VBox, HBox, GridPane, BorderPane)
- * Tapahtumankäsittely (event handling), lambda-lausekkeet tapahtumakäsittelijöinä
- * SceneBuilderin käyttö
-
+ * Tapahtumankäsittely ja lambda-lausekkeet
+ 
 Arkkitehtuurin alkeet (MVC / MVVM) sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. 
 
 Projektin rakenne, Gradle tai Maven. Tarvittavat kansiot ja niiden kytkennät arkkitehtuuriin.
 
 GUI-tutoriaalin ensimmäinen osa. 
 
-Projekti tehdään GITiin (valikoitujen) hyvien käytäntöjen mukaisesti. 
+Tutoriaali tehdään GITiin (valikoitujen) hyvien käytäntöjen mukaisesti. 
 
 ### Esimerkkejä
 
-Login-mock: TextField + PasswordField; “Kirjaudu” aktivoituu, kun ehdot täyttyvät.
+Laskuri ja lomake, jossa "Tallenna" aktivoituu vain validina.
+
+Login-mock: TextField + PasswordField; "Kirjaudu" aktivoituu, kun ehdot täyttyvät.
 
 Haku + label: hakukenttä, jonka pituus näkyy labelissa bindingilla.
 
@@ -248,17 +252,23 @@ Haku + label: hakukenttä, jonka pituus näkyy labelissa bindingilla.
 
 GUI, osa 2. 
 
+ * Listat, taulukot ja muunnokset: Osaa näyttää ja editoida listamuotoista dataa, käyttää ObservableList, FilteredList, SortedList, cellFactory, StringConverter.
+ * Dialogit: Osaa avata modaalisia dialogeja ja käsitellä niiden paluuarvoja.
+
+MVVM
+
+ * Vastuiden erottelu: Model, View, ViewModel. Ei Nodeja ViewModelissa.
+ * Data binding ViewModelin ja Viewn välillä. Esimerkki: TextFieldin ja ViewModelin propertyn välinen sidonta.
+
 Yksikkötestaus JUnit5:llä. Mocking (Mockito tms.). 
 
 Harjoitustyön suunnitelma: aihe, luokkakaavio, olioiden yhteistyö. 
- 
-Listat, taulukot ja muunnokset: OsaA näyttää ja editoida listamuotoista dataa, käyttää ObservableList, FilteredList, SortedList, cellFactory, StringConverter.
 
 ### Esimerkkejä
 
-“Henkilölista”: Taulukko (nimi, email). Yläreunassa hakukenttä → FilteredList. Rivin kaksoisklikkaus avaa edit-dialogin, joka palauttaa muutokset.
+Henkilölista-näkymä: TableView<Person> + hakukenttä (FilteredList) + rivin kaksoisklikkaus avaa muokkausdialogin ja päivittää listan, jos käyttäjä painaa Tallenna.
 
-Lisää listaan “Lisää/Poista/Muokkaa” toiminnot: muokkaus dialogilla, lisääminen tyhjällä dialogilla, poisto vahvistus-alertilla. Tallenna lista ohjelman eliniän ajaksi (in-memory).
+Lisää listaan "Lisää/Poista/Muokkaa" toiminnot: muokkaus dialogilla, lisääminen tyhjällä dialogilla, poisto vahvistus-alertilla. Tallenna lista ohjelman eliniän ajaksi (in-memory).
 
 ## Viikko 9: Iteraattorit, HTTP I/O
 
