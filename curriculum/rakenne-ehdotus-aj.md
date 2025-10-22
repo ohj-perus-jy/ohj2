@@ -219,34 +219,58 @@ Rekursio, perus- ja induktiotapaukset, rekursiivinen tietorakenne (?). Hajota ja
 
 ## Viikko 7: GUI 1, harjoitustyö-tutoriaali
 
-JavaFX, SceneBuilder. Projektin rakenne. Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. GUI-tutoriaali (Denisin ehdotus)
+GUI, osa 1. JavaFX, SceneBuilder.
+ 
+ * Scene–Stage–Node, layoutit, FXML/SceneBuilder, Properties & Bindings, peruskomponentit, kevyt MVVM.
+ * JavaFX: Stage -> Scene -> Node
+ * Layoutit: VBox, HBox, BorderPane
+ * Peruskomponentit: Label, Button, TextField, TextArea, ListView, ComboBox, CheckBox, RadioButton, Menu, MenuItem, Alert
+ * FXML + SceneBuilder: Näkymä ja sen määrittely erilliseen tiedostoon
+ * Layoutit (VBox, HBox, GridPane, BorderPane)
+ * Tapahtumankäsittely (event handling), lambda-lausekkeet tapahtumakäsittelijöinä
+ * SceneBuilderin käyttö
 
-<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+Arkkitehtuurin alkeet (MVC / MVVM) sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen. 
 
-  * JavaFX: Peruskomponentit (Label, Button, TextField, TextArea, ListView, ComboBox, CheckBox, RadioButton, Menu, MenuItem, Alert)
-  * Layoutit (VBox, HBox, GridPane, BorderPane)
-  * Tapahtumankäsittely (event handling), lambda-lausekkeet tapahtumakäsittelijöinä
-  * SceneBuilderin käyttö
-  * Projektin rakenne: src-kansio, resources-kansio, main-luokka
-  * Arkkitehtuurin alkeet sen osalta mitä tarvitaan pienen JavaFX-sovelluksen tekemiseen
-  * Yksikkötestaus JavaFX-sovelluksissa (TestFX tms. kirjasto) <-- ehkä vasta seuraavalla viikolla?
+Projektin rakenne, Gradle tai Maven. Tarvittavat kansiot ja niiden kytkennät arkkitehtuuriin.
 
-</details>
+GUI-tutoriaalin ensimmäinen osa. 
+
+Projekti tehdään GITiin (valikoitujen) hyvien käytäntöjen mukaisesti. 
+
+### Esimerkkejä
+
+Login-mock: TextField + PasswordField; “Kirjaudu” aktivoituu, kun ehdot täyttyvät.
+
+Haku + label: hakukenttä, jonka pituus näkyy labelissa bindingilla.
 
 ## Viikko 8: GUI 2, TDD, oman harjoitustyön aloitus
 
-Jatketaan GUI-asiaa ja TDD:tä. Yksikkötestaus JUnit5:llä. Mocking (Mockito tms.). Harjoitustyön suunnitelma: aihe, luokkakaavio, olioiden yhteistyö. 
+GUI, osa 2. 
+
+Yksikkötestaus JUnit5:llä. Mocking (Mockito tms.). 
+
+Harjoitustyön suunnitelma: aihe, luokkakaavio, olioiden yhteistyö. 
  
-<details closed><summary>Asiasisältö ja tavoitteet hieman tarkemmin</summary>
+Listat, taulukot ja muunnokset: OsaA näyttää ja editoida listamuotoista dataa, käyttää ObservableList, FilteredList, SortedList, cellFactory, StringConverter.
 
-Toteutetaan pieni ohjelma käyttäen TDD-menetelmää. Ohjelmassa on graafinen käyttöliittymä, joka on toteutettu JavaFX:llä. Ohjelman rakenne noudattaa MVC-mallia (Model-View-Controller). Maven?? Versionhallintaan käytetään Git ja GitHubia.
+### Esimerkkejä
 
-</details>
+“Henkilölista”: Taulukko (nimi, email). Yläreunassa hakukenttä → FilteredList. Rivin kaksoisklikkaus avaa edit-dialogin, joka palauttaa muutokset.
+
+Lisää listaan “Lisää/Poista/Muokkaa” toiminnot: muokkaus dialogilla, lisääminen tyhjällä dialogilla, poisto vahvistus-alertilla. Tallenna lista ohjelman eliniän ajaksi (in-memory).
 
 ## Viikko 9: Iteraattorit, HTTP I/O
 
- * Javan iteraattorit (= Iterable, Iterator: hasNext, next, remove)
- * HTTP I/O: Lähinnä siitä näkökulmasta, että osataan *hakea* JSON-dataa verkosta.
+GUI, osa 3.
+
+* FileChooser / DirectoryChooser: avaa/tallenna, suodattimet.
+* Pieni Navigator (StackPane) tai TabPane-navigaatio.
+* Virheiden käsittely UI:ssa (alertit, disable-tilat),
+ 
+Javan iteraattorit (= Iterable, Iterator: hasNext, next, remove)
+
+HTTP I/O: Lähinnä siitä näkökulmasta, että osataan *hakea* JSON-dataa verkosta.
 
 Oman harjoitustyön ensimmäinen vaihe (TODO: Speksaa mitä pitää olla valmiina). 
 
