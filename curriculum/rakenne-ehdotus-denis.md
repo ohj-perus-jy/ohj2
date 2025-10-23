@@ -198,62 +198,85 @@ Aiheina:
 
 Bonus: Tietojen hakeminen verkosta (eli HTTP/2 Client API, kuten `HttpClient`, `HttpResponse`)
 
-#### Viikko 7: Graafinen käyttöliittymä
+#### Viikko 7: Projektin hallinta; GUI-alkeet
 
 Aiheina:
 
-- MVC-malli ja projektin hallinnan alkeet (Gradle (tai olisiko sittenkin Maven?), Git, projektin kansiorakenne, paketit)
-- JavaFX:n perusteet
-- Komponentit ja layoutit (SceneBuilder:n käyttö, Label, Button, TextField, TextArea, ListView, ComboBox, VBox, HBox, GridPane, jne.)
-- Tapahtumankäsittely
+- Gradel/Maven jatkuu: miten luodaan oma projekti ihan nollasta
+- Git-repon setuppaus, olennaiset tiedostot (README, LICENSE, .gitignore, ehkä .gitattributes)
+- JavaFX lisääminen projektiin ja yksinkertaisen ohjelman käynnistäminen
+- GUI:n tekeminen SceneBuilderilla, FXML-alkeet (ymmärtää kytkentä FXML<->SceneBuilder)
+   - Tähän MVC-mallista vähintään VC-osa: käyttöliittymää (FXML, "View") vastaa sitä ohjaava luokka (Java-tiedosto, "Controller"), joka vastaa käyttöliittymän ja datan välisestä kytkennästä. Data elää omissa luokissa ("Model")
+   - MVC:tä ei välttistä tässä tarvitse vielä käyttää terminä, koska ei vielä mennä siihen Model-osaan.
+   - Yksinkertaiset kontrollit: painikkeet, labelit, erilaiset syötteet
+   - Yksinkertaiset asettelut: VBox, HBox, BorderPane
+   - Tapahtumankäsittely
 
 
 Tässä viikkotehtävät kietoutuisivat "yhteen" niin, että olisi enemmän tutorial kyseessä.
 
-#### Viikko 8: Graafinen käyttöliittymä
+TODO: Pitäisikö ottaa mallia Full Stack MOOCista, jossa esimerkeillä tehdään jotain ja sitten tehtävänä on tehdä jotain samanlaista mutta ei ihan (tämä olisi se "tutorial")
+
+#### Viikko 8: MVC, Käyttöliittymän testaus
 
 Aiheina:
 
 - Dialogeja
-- MVC lisää (datan ja GUI:n liimaaminen yhteen, `Observable` pattern ja API JavaFX:ssä)
+- MVC
+   - Viimeistään tässä mainitaan terminä ja luodaan yhteys JavaFX:n ja MVC:n välillä
+   - datan ja GUI:n liimaaminen yhteen, `Observable`-suunnittelumalli
+   - datan lataaminen ja tallentaminen soveltamalla edellisen viikkojen aiheita
+- Bonus: viimeistään tässä tietojen haku netistä?
 - Testaaminen (JUnit, integraatiotestauksen perusteet)
-- Versiohallinta yhdelle henkilölle (`add`/`commit`/`push`), dokumentaatio, hyvät käytänteet
+- Versiohallinta yhdelle henkilölle (`add`/`commit`/`push`), dokumentaatio, hyvät git-käytänteet (commit-viestit, haarat)
 
-Tässä jatketaan tutorialin tekemistä ja lopuksi palautetaan opiskelijoille
+Tässä jatketaan tutorialin tekemistä ja lopuksi palautetaan. 
+Palautettu projekti joko vertaisarvioidaan tai itsearvioidaan.
 
 
-#### Viikko 9: Projektin hallinta
+#### Viikko 9: Koodin laatu, suunnittelumallit
+
+Aiheina:
+
+- SOLID
+- Koodihaju, refaktorointi
+- laadun kannalta hyödyllisiä tekniikoita
+    - Muuttumattomuus ja immutable programming, Javan `record`
+    - TDD menetelmänä ja *eräänä* tapana vaikuttaa koodin laatuun
+        - Tämä soveltuu tähän oikeastaan aika hyvin, jos puhutaan yleisesti laadusta
+   - Vastaavasti pöytätestaus myös näkökulmasta "tutkitaan ohjelman oikeellisuus"
+- Suunnittelumalleja
+  - ehkä tasolla miksi on olemassa
+  - itse mallien tutkinta ja sovellus jää oman kiinnostuksen tasolle (esim. tehtävä)
+
+
+#### Viikko 10: Projektin hallinta ryhmässä
 
 Aiheina:
 
 - Luokkakaaviot, UML
-- Johdatus suunnittelumalleihin
-- Versiohallinta usealle henkilölle (`merge`, `branch`, commit-viestit; README)
+- Git-versiohallintaa (haarat, merge, rebase)
 
 Tässä aloitetaan omatoiminen projekti. Tehtävänä suunnittelun tekeminen, GUI:n suunnittelun aloitus ja repon setuppaus.
 
-#### Viikko 10: Projektin hallinta
+#### Viikko 11: Extraa
 
-Aiheina:
+Ei pisteellisiä tehtäviä, mutta lisäaiheita omaan tutkintaan mm.
 
-- Hyvät koodauskäytänteet ja koodihajut
-- Riippuvuuksien hallinta projekteissa (pakkaukset, hyödylliset kirjastot, Gradle lisää)
-- Suunnittelumalleja
+- Moniajo (säie, virtuaalinen säie)
+- Suorituskyvyn optimointi
 
-Tässä jatketaan projektia. Tehtävänä setupata projekti jos ei ole, etsiä ja opiskella käyttää kirjastoja, joita ehkä kiinnostaisi käyttää omassa työssään.
 
-#### Viikko 11: Projektin hallinta
+#### Viikko 12: Projektin hallinta
 
-Aiheina:
+Ei pisteellisiä tehtäviä, mutta lisäaiheita omaan tutkintaan mm.
 
-- Tarvitaanko aihetta edes? Sen kun tekevät vaan työtään eteenpäin :D
-- Ehkä voi olla lisää koodihajuja ja suorituskyvyn optimointia
-
-#### Viikko 11: Projektin hallinta
-
-Aiheina:
-
-- Tarvitaanko aihetta edes? Sen kun tekevät vaan työtään eteenpäin :D
+- Ohjelmointisuuntauksia eli -paradigmoja
+    - Prototyyppipohjainen olio-ohjelmointi
+    - Metodit vs. viestit (vrt. Smalltalk, joka usein lasketaan "aidommaksi" näkemyksestä siitä, mitä olio-ohjelmointi on [Alan Kay:n määritelmän mukaan])
+- Ehkä jotain muunnelmia tai "sukulaisia" olio-ohjelmoinnille
+    - Aktorit (olio-ohjelmointi monisäikeisessä ympäristössä)
+    - ECS (nykyään käytetty paljon peleissä)
 
 
 <details closed>
