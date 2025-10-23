@@ -1,8 +1,11 @@
-# Aliosan 1 otsikko
+# Hei, Java!
 
-> 📖 Osaamistavoitteet
+> [!Osaamistavoitteet]
 >
-> - TODO
+> - Java-kielen perusteet
+> - Tiedät miten Java-ohjelma käännetään ja ajetaan (komentoriviohjelmat javac, java ja jshell, IDE-säädöt)
+> - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
+> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
 Koodiesimerkki
 
@@ -55,6 +58,20 @@ Huomautus
 
 > [!NOTE]
 > Huomautus!
+
+Toinen
+
+> [!HUOMAUTUS]
+> Huom!
+
+> [!VINKKI]
+> Tässä voit tehdä myös näin:
+> 
+> ```java
+> void main() {
+>    IO.readln("Lue rivi >");
+> }
+> ```
 
 Mermaid-tuki
 

@@ -1,0 +1,5 @@
+# Tietorakenteita ja algoritmeja
+
+> [!Osaamistavoitteet]
+>
+

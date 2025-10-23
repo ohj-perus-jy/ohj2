@@ -5,10 +5,12 @@ src = "src"
 title = "Ohjelmointi 2"
 
 [output.html]
+site-url = "/ohj2/"
 additional-css = [
   "highlight/atelier-forest-light.css",
   "highlight/twilight.css", 
-  "highlight/apprentice.css", 
+  "highlight/apprentice.css",
+  "theme/alerts-style.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"

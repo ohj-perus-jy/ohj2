@@ -1,0 +1,4 @@
+# Perintä ja rajapinnat
+
+> [!Osaamistavoitteet]
+>

@@ -1,0 +1,5 @@
+# Hyödyllisiä menetelmiä Javassa
+
+> [!Osaamistavoitteet]
+>
+

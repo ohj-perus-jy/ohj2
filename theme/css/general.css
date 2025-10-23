@@ -114,6 +114,7 @@ html:not(.js) .page-wrapper,
 .content ul { line-height: 1.45em; }
 .content a { text-decoration: none; }
 .content a:hover { text-decoration: underline; }
+.content nav a:hover { text-decoration: none; }
 .content img, .content video { max-width: 100%; }
 .content .header:link,
 .content .header:visited {
