@@ -1,28 +1,24 @@
 # Opintojakson rakenne ja tavoitteet
 
-## OPS-tason osaamistavoitteet ja sisältö
-
-Nykyinen muotoilu OPSissa kuuluu näin.
-
-> Osaamistavoitteet: Oppia ymmärtämään oliopohjaisen ohjelmoinnin perusteet. Kyky tuottaa pieniä/keskikokoisia oliopohjaisia ohjelmia. Samoin tavoitteena on "testaus ensin" (TDD) ajatuksen sisäistäminen. Kyky suunnitella ja toteuttaa graafinen käyttöliittymä.
-> Sisältö: Java-kieli, ohjelmansuunnittelun ja olio-ohjelmoinnin periaatteita, ohjelman testaaminen. Rekursio.
-
-## Suoritustapa
-
-Ehdotus, joka ei pitäisi olla ristiriidassa OPSin kanssa:  
-
- * Joka viikko 8 viikkotehtävää ja (ainakin) 2 extra-tehtävää
- * "Esiharkka" (tutoriaalia seuraten; tästä saa viikkotehtäväpisteitä) viikoilla 8-9
- * Varsinainen harkka viikoilla 9-12
-    - ❓Ongelma: Miten harkka tarkastetaan? Aiemmin 7 tarkastuspistettä, nyt vähemmän? Voidaanko käyttää itsearviointia tai vertaisarviointia?
-
-Lisäideoita arvosanan antamiseen, en ole varma voiko näitä käyttää:
-
- * Tentti, johon voi osallistua, jos on palauttanut vähintään 40% viikkotehtävistä
- * Jos tekee 12 * 4 = 48 viikkotehtävää ja harkan, saa automaattisesti arvosanan 1
- * Jos tekee 12 * 8 = 96 viikkotehtävää ja harkan, saa automaattisesti arvosanan 5
-
 ## Muutosloki
+
+<details closed><summary>24.10.2025</summary>
+
+Tärkeimmät muutokset viikon takaiseen versioon nähden:
+
+ - Viikottaisten tehtävien määrät on tarkennettu.
+ - Tutoriaaliharkan tietoja tarkennettu
+ - Lisätty luennot-osio
+ - Arvosanan muodostumisen vaihtoehtoja on tarkennettu
+ - GUI-osio alkaa viikolta 7
+ - Oman harjoitustyön suunnitelma viikolla 8
+ - Koodihaju, refaktorointi, TDD ja SOLID viikolla 9
+ - Johdanto suunnittelumalleihin bonukseksi viikolle 10
+ - **TODO**: Tutoriaaliharkan aikataulu vai aikatauluttomuus (deadlinet)?
+ - **TODO**: Mihin sijoitetaan iteraattorit (= Iterable, Iterator: hasNext, next, remove)? 
+ - **TODO**: Harkkatyön tietomalli pitää speksata. Mihin tieto tallennetaan, jos ei itse tehtyyn tietorakenteeseen?
+
+</details>
 
 <details closed><summary>15.10.2025</summary>
 
@@ -41,6 +37,44 @@ Tärkeimmät muutokset viikon takaiseen versioon nähden:
  - Viikolle 11 monisäikeisyyttä ja ohjelmointiparadigmoja (tässä ei mulla ollut aiemmin mitään)
 
 </details>
+
+## Viikottaiset tehtävät
+
+ * Viikot 1-11
+    * Jokaisessa alaosiossa mahdollista tehdä kaksi (tai kolme) tehtävää, ja yksi bonustehtävä
+    * Jokaisen pääosion lopussa yksi tai kaksi gurutehtävää
+    * Eli karkeasti (i) normaaleja tehtäviä 8 * 11 = 88, (ii) bonustehtäviä 4 * 11 = 44, (iii) gurutehtäviä 11
+    * Voi olla myös niin, että viikolla 11 viikkotehtävät liittyvät harjoitustyöhön. Tämä kylläkin rikkoo hieman tasaisen tehtävävirran ideaa. Ajatus: Supistetaanko viikkotehtävät kymmeneen viikkoon?
+    * Nice-to-have: Tehtävälinkkien yhteenveto kunkin pääosion lopussa (tai luvun pääsivulla, jos helpompi tehdä mdBookissa niin)
+ * Viikko 12 (ja "häntä" siitä eteenpäin) varattu pelkästään harjoitustyön tekemiselle
+ * Ei deadlineja, mutta **suositeltu etenemistahti** (tämä toiminut KOTEP161:llä hyvin). En tarjoaisi "joko deadline- tai ei-deadline"-vaihtoehtoja opiskelijoille, koska se hankaloittaa meidän systeemejä. 
+ * Mallivastaukset TIMin kautta. Tämä vaan tarkoittaa sitä, että opiskelijoille ei voida julkisesti vastata mitään tehtävien vastauksiin liittyvää (ks. [luennot](#luennot))
+ * Kannatan rajoitusta paloittain etenemisestä (Denisin idea/OpenCS). Opiskelija voi ehkä nähdä tehtävän aiemmin, mutta ei voi vielä tehdä sitä.  
+
+## Tutoriaaliharkka
+
+ * Viikoilla 7-8
+ * "Esiharkka" siten että tehdään tutoriaalin perusteella jokin vähän isompi harjoitus. Eli tutoriaali mutta pitää kuitenkin tehdä vähän jotain omaa. Vrt. Denisin ehdotus / Full Stack Mooc. 
+ * Esiharkka ei saa kuitenkaan olla liian iso, ts. pitää olla aikaa tehdä myös muita viikkotehtäviä
+
+## Varsinainen harkka
+
+ * Viikoilla 9-12
+
+## Arvosanan muodostuminen
+
+ * Ei pakollisia viikkotehtäviä, ts. voi tulla tenttiin vaikka ei tee yhtään tehtävää. **TODO** Maksimiarvosana tällöin?
+ * Arvosana on painotettu keskiarvo osasuoritteista
+   * (1) nykymallin kaltainen: tehtävät 40% + tentti 60% + harkka (Sami)
+   * (2) jos harkkatyön tarkastuslista saadaan speksattua riittävän tarkasti (vrt. Hive), niin käy myös tehtävät 40% + tentti 40% + harkka 20%. Prosenttiosuuksia voi hieman säätää suuntaan tai toiseen.
+
+ **TODO**: AHOT-käytänteet. Samin ehdotus on aika hyvä. Toinen ehdotus: Tentti 100%, kuitenkin minimi esim. 3. En haluaisi lähteä arvioimaan aiempaa kokemusta numeerisesti -- se voi olla jopa mahdotonta. 
+
+## Luennot
+
+Komppaan Denisin ehdotusta: Yksi varsinainen luento viikossa. Lisäksi mahdollisesti kyselytunti, MUTTA jos harjoitustehtävät ovat ilman deadlineja, niin opiskelijoille on hankala vastata mitään demotehtäviin liittyen. Jos kyselytunti pidetään, se voidaan tarvittaessa järjestää etänäkin. 
+
+Todennäköisesti ensimmäisellä kerralla tarvii valmistella myös extra-videoita katsottavaksi -- asioita joita ei luennolla ehditty tai huomattu ottaa huomioon. 
 
 ## Viikko 1: Java-kielen perusteet, rakenteisen ohjelmoinnin kertaus, luokka ja olio
 
@@ -248,7 +282,7 @@ Login-mock: TextField + PasswordField; "Kirjaudu" aktivoituu, kun ehdot täyttyv
 
 Haku + label: hakukenttä, jonka pituus näkyy labelissa bindingilla.
 
-## Viikko 8: GUI 2, TDD, oman harjoitustyön aloitus
+## Viikko 8: GUI 2, oman harjoitustyön aloitus
 
 GUI, osa 2. 
 
@@ -260,7 +294,7 @@ MVVM
  * Vastuiden erottelu: Model, View, ViewModel. Ei Nodeja ViewModelissa.
  * Data binding ViewModelin ja Viewn välillä. Esimerkki: TextFieldin ja ViewModelin propertyn välinen sidonta.
 
-Yksikkötestaus JUnit5:llä. Mocking (Mockito tms.). 
+Tutoriaaliharkan palautus ja itsearviointi. **TODO**: Käydäänkö läpi yhteisesti? Miten suhtautuu deadlineihin tai deadlinettomuuteen?
 
 Harjoitustyön suunnitelma: aihe, luokkakaavio, olioiden yhteistyö. 
 
@@ -270,7 +304,7 @@ Henkilölista-näkymä: TableView<Person> + hakukenttä (FilteredList) + rivin k
 
 Lisää listaan "Lisää/Poista/Muokkaa" toiminnot: muokkaus dialogilla, lisääminen tyhjällä dialogilla, poisto vahvistus-alertilla. Tallenna lista ohjelman eliniän ajaksi (in-memory).
 
-## Viikko 9: Iteraattorit, HTTP I/O
+## Viikko 9: GUI, HTTP I/O
 
 GUI, osa 3.
 
@@ -278,29 +312,37 @@ GUI, osa 3.
 * Pieni Navigator (StackPane) tai TabPane-navigaatio.
 * Virheiden käsittely UI:ssa (alertit, disable-tilat),
  
-Javan iteraattorit (= Iterable, Iterator: hasNext, next, remove)
-
 HTTP I/O: Lähinnä siitä näkökulmasta, että osataan *hakea* JSON-dataa verkosta.
 
-Oman harjoitustyön ensimmäinen vaihe (TODO: Speksaa mitä pitää olla valmiina). 
+Oman harjoitustyön ensimmäinen viikko (**TODO**: Speksaa mitä pitää olla valmiina). 
 
-## Viikko 10: Koodin laatu, hyvät koodauskäytänteet, johdattelua suunnittelumalleihin
+## Viikko 10: Koodin laatu, hyvät koodauskäytänteet, bonus: johdattelua suunnittelumalleihin
 
-Koodihaju, refaktorointi, SOLID. Johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi *Observer*. Mahdollisesti UML:n perusteita. git branch, git merge. README, kommentit, git commit.
+Koodihaju, refaktorointi, TDD (Denisin ehdotus), SOLID. 
 
-Harkka toinen vaihe (TODO: Speksaa mitä pitää olla valmiina). 
+Mahdollisesti UML:n perusteita. 
 
-## Viikko 11: Monisäikeisyys, ohjelmointiparadigmat
+git branch, git merge. README, kommentit, git commit.
 
-Monisäikeisyyden perusteet, säikeiden luominen ja hallinta, ExecutorService, Future, CompletableFuture. (TODO: Jääkö pintapuoliseksi?)
+Harkka toinen viikko (**TODO**: Speksaa mitä pitää olla valmiina). 
+
+Ei-pakollinen bonus: Johdantoa olioiden suunnittelumalleihin (design patterns) esimerkiksi GUI-asiaan soveltuisivat *Observer* ja *Decorator*
+
+## Viikko 11: Monisäikeisyys (?), ohjelmointiparadigmat
+
+Monisäikeisyyden perusteet, säikeiden luominen ja hallinta, ExecutorService, Future, CompletableFuture. (**TODO**: Jääkö pintapuoliseksi? Voi olla myös bonus-asia.)
 
 Ohjelmointiparadigmojen vertailua (Samin ehdotus, mutta myöhemmin): funktionaalinen, oliopohjainen
 
-Harkka kolmas vaihe (TODO: Speksaa mitä pitää olla valmiina). 
+Tähän voisi sopia myös jokin pieni katselmus mobiililaitteiden ohjelmointiin, tietokantoihin, aktoreihin tai ECS:ään (Denisin ehdotus).
+
+Harkka kolmas viikko (**TODO**: Speksaa mitä pitää olla valmiina). 
 
 ## Viikko 12: Oman projektin viimeistely
 
-Harkka neljäs vaihe (TODO: Speksaa mitä pitää olla valmiina). 
+Ei viikkotehtäviä, työstetään omaa projektia
+
+Harkka neljäs viikko (**TODO**: Speksaa mitä pitää olla valmiina). 
 
 ## Viikko 13: Tentti
 
