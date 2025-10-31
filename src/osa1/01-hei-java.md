@@ -9,8 +9,6 @@
 
 Tekstiä
 
-asoasdoilk aokd alkd alksd lkj asd ad asd as 
-
 
 ```java
 void main() {
