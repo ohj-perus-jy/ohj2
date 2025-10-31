@@ -7,7 +7,10 @@
 > - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
 > - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
-Koodiesimerkki
+Tekstiä
+
+asoasdoilk aokd alkd alksd lkj
+
 
 ```java
 void main() {
