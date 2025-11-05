@@ -24,6 +24,7 @@
  * kommentti
  */
 
+//Esimerkki dokumentaatiosta
 /**
  * Laskee kahden kokonaisluvun summan.
  * 
@@ -36,7 +37,7 @@ int summa(int a , int b) {
 }
 ```
 
-Nämä saa, kun kirjoittaa /** aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa Enter
+Dokumentaation saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
 
 ## B1
 
@@ -46,4 +47,9 @@ Nämä saa, kun kirjoittaa /** aliohjelman esittelyrivin yhtä ylemmälle rivill
 
 ## G1
 
+- Linkitetty lista käänteiseksi?
+
 ## G2
+
+- Neliömatriisin eli n x n, n $\in \mathbb{N}$ matriisin pyöräyttäminen 90-astetta. 
+- In ([[1,2],[3,4]], oikealle) --> [[3,1],[4,2]]
