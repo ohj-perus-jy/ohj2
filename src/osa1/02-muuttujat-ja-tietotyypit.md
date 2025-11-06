@@ -29,4 +29,9 @@ Javassa on seuraavat C#:stakin tutut muuttujatyypit:
 - `Float`
 - `Double`
 
-Pitäisikö mainita myös muita, kuten `LongAccumulator` dokumentaatiosta: https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html ? 
+Pitäisikö mainita myös muita, kuten `LongAccumulator` dokumentaatiosta: https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html ?
+
+## 
+
+Final 
+Static final

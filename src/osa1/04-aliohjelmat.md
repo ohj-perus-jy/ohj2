@@ -11,8 +11,10 @@
 ## Datan käsittely
 
 ## Funktiot
+public static [palautettava] 
 
-## Javan perustietotyypit ja viitetyypit
+## Javan perustietotyypin ja viitetyyppien ero funktion kutsussa
+- Kun aliohjelmakutsussa parametrina on olio, parametrina kulkee olion viite, ei itse olio.
 
 ## Kommentointi
 
@@ -40,6 +42,8 @@ int summa(int a , int b) {
 Dokumentaation saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
 
 ## B1
+
+- Verkko viikon konsepteista?
 
 ## B2
 

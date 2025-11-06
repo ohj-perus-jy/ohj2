@@ -7,85 +7,43 @@
 > - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
 > - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
+## Java-kielen perusteet
+
+Tässä esimerkki, miten Javalla voidaan kirjoittaa konsoliin:
+
+```java
+import static java.lang.System.out;
+
+public static void main() {
+    var feature =  Runtime.version().feature();
+    out.println("Hei, maailma! Tässä on Java " + feature);
+}
+```
+
+Javassa käytetään funktioiden nimeämisessä Camel Casingia, eli aloitetaan pienellä kirjaimella ja sanojen vaihtuessa ensimmäinen kirjain on isolla, eli esimerkiksi: tamaOnFunktionNimi.
+
+Pitäisikö mainita siitä, että miten javan main eroaa monesta muusta kielestä?
+
+- JVM selitystä
+- Miten main toimii, eli että pitää olla nimenomaan public static void main()
+- Ei voi olla `private`, koska muutoin JVM ei löydä mainia
+- Ei voi olla `static`, koska JVM kutsuu sitä, luomatta oliota
+- Palautuksen tyyppinä pitää olla `void`, koska muuten se ei ole JVM:n mukaan pätevä
 Koodiesimerkki
 
-```java
-void main() {
-    var feature =  Runtime.version().feature();
-    IO.println("Hei, maailma! Tässä on Java " + feature);
-}
-```
+## Java ohjelmien kääntäminen ja ajaminen
 
-```java
-//-void main() {
-//-   IO.println("summa(2, 2) => " + summa(2, 2));
-//-}
-//-
-/**
- * Laskee kahden kokonaisluvun summan.
- * 
- * @param a Ensimmäinen luku
- * @param b Toinen luku
- * @return Lukujen summa
- */
-int summa(int a , int b) {
-    return a + b;
-}
-```
+### javac
+javac on ensisijainen javan kääntäjä, joka tulee Java Development Kit:in (JDK) mukana. 
 
-Harjoittele tekemällä ja tulostamalla erityyppisiä muuttujia (tämä on editoitava koodausalue):
+### java
+java on javaohjelmien lähdekooditiedoston tiedostotyyppi.
 
-```java,editable
-void main() {
-    int luku = 1;
-    double liukuluku = 1.0;
+### jshell
+Jshell on interaktiivinen työkalu Javaohjelmoinnin ja prototyyppien opetteluun.
 
-    IO.println("luku = " + luku);
-    IO.println("liukuluku = " + liukuluku);
-}
-```
+### Kurssikohtaiset IntelliJ asetukset
+Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
-Taulukko
-
-| Avainsana | Selitys                           |
-| --------- | --------------------------------- |
-| public    | näkyvyysmodifikaattori — julkinen |
-| static    | staattinen — kuuluu luokalle      |
-| void      | ei palauta arvoa                  |
-
-
-Huomautus
-
-> [!NOTE]
-> Huomautus!
-
-Toinen
-
-> [!HUOMAUTUS]
-> Huom!
-
-> [!VINKKI]
-> Tässä voit tehdä myös näin:
-> 
-> ```java
-> void main() {
->    IO.readln("Lue rivi >");
-> }
-> ```
-
-Mermaid-tuki
-
-```mermaid
----
-config:
-  flowchart:
-    curve: linear
----
-flowchart TD
-    Aloitus --> EHTO{EHTO?}
-    EHTO -->|tosi| LAUSE
-    EHTO -->|epätosi| MUU[Muu koodi]
-    LAUSE --> MUU
-```
-
-Testi!
+## Java I/O operaatioita
+Täydentyy
