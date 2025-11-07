@@ -33,5 +33,6 @@ Pitäisikö mainita myös muita, kuten `LongAccumulator` dokumentaatiosta: https
 
 ## 
 
-Final 
-Static final
+- Mitä eroa on:
+- Final 
+- Static final

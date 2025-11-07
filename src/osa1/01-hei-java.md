@@ -45,5 +45,9 @@ Jshell on interaktiivinen työkalu Javaohjelmoinnin ja prototyyppien opetteluun.
 ### Kurssikohtaiset IntelliJ asetukset
 Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
+## (J)VM
+- Miten java toimii
+- Kääntäminen vs. tulkkaus
+
 ## Java I/O operaatioita
 Täydentyy

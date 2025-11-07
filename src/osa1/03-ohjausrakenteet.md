@@ -29,5 +29,7 @@ void main () {
 Javasta löytyy 4 eri silmukkaa for, while, do-while ja foreach
 
 ## Listat
+- Miten javassa lista toimii
 
 ## Merkkijonojen vertailu
+- verrataan `equals`-metodilla eikä `==`

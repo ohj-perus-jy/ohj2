@@ -9,12 +9,14 @@
 > - Osaat kirjoittaa Ohjelmointi 1 -kurssin tapaisia ohjelmia Javalla
 
 ## Datan käsittely
+- Taulukko, merkkijono jne.?
 
 ## Funktiot
 public static [palautettava] 
 
 ## Javan perustietotyypin ja viitetyyppien ero funktion kutsussa
 - Kun aliohjelmakutsussa parametrina on olio, parametrina kulkee olion viite, ei itse olio.
+- Jokin hyvä havainnointi
 
 ## Kommentointi
 
