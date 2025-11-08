@@ -30,3 +30,5 @@ java = "//-"
 [preprocessor.alerts]
 
 [preprocessor.mermaid]
+
+[preprocessor.katex]

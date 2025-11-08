@@ -280,10 +280,10 @@
 }
 
 .jyu-light, html:not(.js) {
-    --bg: hsl(0, 0%, 88%);
+    --bg: hsl(0, 0%, 98%);
     --fg: hsl(0, 0%, 0%);
 
-    --sidebar-bg: #dadada;
+    --sidebar-bg: #fff;
     --sidebar-fg: hsl(0, 0%, 0%);
     --sidebar-non-existant: #aaaaaa;
     --sidebar-active: #002957;

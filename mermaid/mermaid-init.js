@@ -3,8 +3,8 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 (() => {
-    const darkThemes = ['ayu', 'navy', 'coal'];
-    const lightThemes = ['light', 'rust'];
+    const darkThemes = ['jyu-dark']; // 'ayu', 'navy', 'coal', 
+    const lightThemes = ['jyu-light']; // 'light', 'rust', 
 
     const classList = document.getElementsByTagName('html')[0].classList;
 
@@ -17,7 +17,8 @@
     }
 
     const theme = lastThemeWasLight ? 'default' : 'dark';
-    mermaid.initialize({ startOnLoad: true, theme });
+    mermaid.initialize({ startOnLoad: false, theme });
+    mermaid.run();
 
     // Simplest way to make mermaid re-render the diagrams in the new theme is via refreshing the page
 
