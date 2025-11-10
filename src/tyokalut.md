@@ -321,7 +321,7 @@ Tarkista ensin, onko sinulla jo Git asennettuna.
 Jos näet git-työkalun version (esim. `git version X.XX.XX`, jossa `X.XX.XX` on työkalun tarkka versio),
 **voit ohittaa Git-työkalun asennusohjeen kokonaan.**
 
-Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
+Jos taas näet virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
 <summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
