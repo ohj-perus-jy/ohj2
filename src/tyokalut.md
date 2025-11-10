@@ -10,7 +10,7 @@
 - **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
   IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
   IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE.
-  Tällä kurssille käytämme ilmaista Community Edition -versiota.
+  Tällä kurssilla käytämme ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
