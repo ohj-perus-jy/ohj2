@@ -20,28 +20,28 @@ Tässä dokumentissa käydään läpi yllä olevien työkalujen ja ohjelmien ase
 Yllä olevat ohjelmat ovat valmiiksi asennettuna Agoran mikroluokissa.
 *Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
 Erityisesti harjoitustyön tekeminen pääteohjausten ulkopuolella on
-helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
+Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
 >
-> Tämän sivun ohjeet vaativat komentorivin avaamista ja käyttöä.  
+> Tämän sivun ohjeet vaativat komentorivin käyttöä.  
 >
-> Voit tarvittaessa kerrata komentorivin käytön perustaitoja seuraavista linkeistä:
+> Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
 >
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
 > - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
 
-Tällä sivulla olevat ohjeet riippuvat käyttämästäsi käyttöjärjestelmästä.
+Tällä sivulla olevat ohjeet riippuvat käyttöjärjestelmästäsi.
 Valitse käyttöjärjestelmäsi alta:
 
 ### [Windows](#tab/win)
 
-Valitsit Microsfot Windows -käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
+Valitsit Microsoft Windows -käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Windows 11
 - Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809)
 
-Näet käyttöjärjestelmän version suorittamalla seuraava komento PowerShell-komentorivissä:
+Näet käyttöjärjestelmän version suorittamalla seuraava komento PowerShell-komentorivillä:
 
 ```bash
 winver
@@ -71,7 +71,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## Esivalmistelu
+## Esivalmistelut
 
 ### [Windows](#tab/win)
 
@@ -80,7 +80,7 @@ Varmista, että tietokoneesi on ajan tasalla (Windows Update:ssa ei uusia päivi
 Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma asennettuna:
 
 1. Avaa PowerShell-komentorivi (*Haku-ikoni* > *Kirjoita PowerShell* > *Windows PowerShell*).
-2. Kokeile, että `winget` on asennettu suorittamalla seuraava komento:
+2. Anna seuraava komento:
 
     ```bash
     winget -v
@@ -104,14 +104,14 @@ Varmista ensin, että tietokoneesi on ajan tasalla.
 Varmista sen jälkeen, että tietokoneellasi on Homebrew-pakkaushallintaohjelma asennettuna:
 
 1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
-2. Kokeile, että Homebrew on asennettu suorittamalla seuraava komento:
+2. Anna seuraava komento:
 
     ```bash
     brew --version
     ```
 
-Jos saat yllä olevan komennon suorittamisen jälkeen virheen `command not found: brew`,
-sinun tulee asentaa Homebrew-pakkaushallintaohjelma alla olevilla ohjeilla:
+Jos saat virheen `command not found: brew`,
+sinun tulee asentaa Homebrew alla olevilla ohjeilla:
 
 <details>
 <summary>Homebrew-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
@@ -123,7 +123,7 @@ sinun tulee asentaa Homebrew-pakkaushallintaohjelma alla olevilla ohjeilla:
     xcode-select --install
     ```
     
-    Komennon suorittamisen jälkeen saatat saada seuraavanlaisen ilmoituksen:
+    Saatat nyt saada seuraavanlaisen ilmoituksen:
     *Komento "xcode-select" vaatii komentorivikehitystyökalut. Haluatko asentaa työkalut nyt?*
     (Englanniksi: *The 'xcode-select' command requires the command line developer tools. Would you like to install the tools now?*)
     
