@@ -127,7 +127,7 @@ sinun tulee asentaa Homebrew-pakkaushallintaohjelma alla olevilla ohjeilla:
     *Komento "xcode-select" vaatii komentorivikehitystyökalut. Haluatko asentaa työkalut nyt?*
     (Englanniksi: *The 'xcode-select' command requires the command line developer tools. Would you like to install the tools now?*)
     
-    Jos sellainen ilmoitus ilmestyy, valitse *Asenna*/*Install* ja odota työkalujen asentumista.
+    Jos tällainen ilmoitus ilmestyy, valitse *Asenna*/*Install* ja odota työkalujen asentumista.
     Hyväksy tarvittaessa käyttöehdot.
     Kun asennus on valmis, saat *Ohjelmisto asennettiin*/*The software was installed* -dialogin.
     Klikkaa silloin *Valmis*.
