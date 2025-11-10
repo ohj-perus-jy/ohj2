@@ -3,19 +3,19 @@
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
 
-- **Java Development Kit (JDK)** - Java-kielen *ohjelmistokehityspaketti*. Paketti sisältää kaikki Java-kielen kehittämiseen tarvittavat työkalut, kuten Java-kielen kääntäjän sekä Java-virtuaalikoneen käännettyjen ohjelmien ajamista varten. JDK sisältää myös valmiita kirjastoja yleisimpiin käyttötarkoituksiin (esim. tekstin tulostaminen näytölle, kokoelmien käsittely) ja niiden dokumentaatiot.
+- **Java Development Kit (JDK)** - Java-kielen *ohjelmistokehityspaketti*. Paketti sisältää kaikki Java-kehittämiseen tarvittavat työkalut, kuten Java-kielen kääntäjän sekä Java-virtuaalikoneen käännettyjen ohjelmien ajamista varten. JDK sisältää myös valmiita kirjastoja yleisimpiin käyttötarkoituksiin (esim. tekstin tulostaminen näytölle, kokoelmien käsittely) ja niiden dokumentaatiot.
 
 - **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
 - **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
-  IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen).
+  IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
   IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE.
   Tällä kurssille käytämme ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
 
-Tässä dokumentissa käydään läpi yllä olevien työkalujen ja ohjelmien asentamista.
+Tässä dokumentissa käydään läpi yllä olevien työkalujen ja ohjelmien asentaminen.
 
 Yllä olevat ohjelmat ovat valmiiksi asennettuna Agoran mikroluokissa.
 *Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
@@ -39,6 +39,13 @@ Valitse käyttöjärjestelmäsi alta:
 Valitsit Microsfot Windows -käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Windows 11
+- Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809)
+
+Näet käyttöjärjestelmän version suorittamalla seuraava komento PowerShell-komentorivissä:
+
+```bash
+winver
+```
 
 ***
 
@@ -82,9 +89,9 @@ Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma 
     Tuloksena pitäisi tulostua `winget`-työkalun versio. Jos sen sijaan saat virheen, jossa
     lukee *'winget' is not recognized as the name of a cmdlet, function, script file, or operable program*,
     tarkoittaa tämä, että sinulla todennäköisesti ei ole `winget`-työkalua asennettuna.
-    Kokeile siinä tapauksessa seuraavat ratkaisut:
+    Jos käyttöjärjestelmän päivitys ei auta, kokeile seuraavia ratkaisuja:
     
-    - Tarkista, että käyttöjärjestelmäsi on ajan tasalla
+    - Tarkista, että käyttöjärjestelmäsi on ajan tasalla (katso yhteensopivat käyttöjärjestelmäversiot ylempänä).
     - Kokeile ladata ja asentaa `winget`-käsin: [Lataa asennusohjelma](https://github.com/microsoft/winget-cli/releases/download/v1.11.430/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle)
       Asennuksen jälkeen sulje ja käynnistä PowerShell uudelleen.
 
@@ -92,7 +99,7 @@ Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma 
 
 ### [macOS](#tab/macos)
 
-Varmista ensin, että tietokoneesi on ajan tasalla ().
+Varmista ensin, että tietokoneesi on ajan tasalla.
 
 Varmista sen jälkeen, että tietokoneellasi on Homebrew-pakkaushallintaohjelma asennettuna:
 
@@ -173,13 +180,13 @@ sinun tulee asentaa Homebrew-pakkaushallintaohjelma alla olevilla ohjeilla:
 
 ### [Linux](#tab/linux)
 
-Alla olevat ohjeet olettaa, että sinulla on kokemusta ohjelmien asentamisesta
-sinun käyttämälläsi Linux-jakelulla.
+Alla olevissa ohjeissa oletetaan, että sinulla on kokemusta ohjelmien asentamisesta
+käyttämälläsi Linux-jakelulla.
 Linux-ohjeet toimivat täten ohjenuorana; käytä tarvittaessa omaa harkintaa.
 
 Ota huomioon seuraavat asiat seuratessa ohjeita:
 
-- Vaikka osa työkaluista löytyy jakelujen pakkaustehallinnasta, jotkin graafiset ohjelmat (erityisesti Rider ja VS Code)
+- Vaikka osa työkaluista löytyy jakelujen omasta pakkaustehallinnasta, jotkin graafiset ohjelmat (erityisesti Rider ja VS Code)
    eivät ole yleensä julkaistu jakelukohtaisissa repoissa.
    *Suosittelemme* käyttämään jakelusta riippumatonta pakkaustenhallintaa, 
    kuten [Snap](https://snapcraft.io/docs/installing-snapd) tai [Flatpak](https://flatpak.org/).
@@ -203,7 +210,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 Tarkista ensin, onko sinulla jo Git asennettuna.
 
-1. Avaa PowerShell-komentorivi ellei se ole jo.
+1. Avaa PowerShell-komentorivi.
 2. Kokeile, onko Git jo valmiiksi asennettu suorittamalla komento:
 
     ```bash
@@ -219,7 +226,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
 <details>
 <summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
 
-1. Avaa PowerShell-komentorivi ellei se ole jo
+1. Avaa PowerShell-komentorivi.
 2. Asenna Git for Windows suorittamalla alla oleva komento:
 
     ```bash
@@ -267,7 +274,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
 
 Tarkista ensin, onko sinulla jo Git asennettuna.
 
-1. Avaa Pääte ellei se ole jo.
+1. Avaa Pääte.
 2. Kokeile, onko Git jo valmiiksi asennettu suorittamalla komento:
 
     ```bash
@@ -280,7 +287,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
 <details>
 <summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
 
-1. Avaa Pääte ellei se ole jo
+1. Avaa Pääte.
 2. Git-työkalun pitäisi olla jo valmiiksi asennettu jos teit Valmistelu-vaiheessa olevat asiat. Tarkista, että Git toimii suorittamalla seuraava komento:
 
     ```bash
@@ -303,7 +310,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
 
 Tarkista ensin, onko sinulla jo Git asennettuna.
 
-1. Avaa jakelusi pääteohjelma ellei se ole jo.
+1. Avaa jakelusi pääteohjelma.
 2. Kokeile, onko Git jo valmiiksi asennettu suorittamalla komento:
 
     ```bash
@@ -319,7 +326,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
 <details>
 <summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
 
-1. Avaa jakelusi pääteohjelma ellei se ole jo
+1. Avaa jakelusi pääteohjelma.
 2. Asenna Git-pakkaus: `git`. Pakkauksen nimi on yleensä sama
    kaikissa yleisillä jakeluissa (Ubuntu, Debian, Fedora, Arch, jne.)
 3. Asennuksen jälkeen sulje ja avaa pääte uudelleen
@@ -351,7 +358,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ### [Windows](#tab/win)
 
-1. Avaa PowerShell-komentorivi ellei se ole jo
+1. Avaa PowerShell-komentorivi.
 2. Asenna IntelliJ IDEA Community Edition suorittamalla alla oleva komento:
 
     ```bash
@@ -372,7 +379,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Ensimmäisellä kerralla käynnistys saattaa kestää, sillä järjestelmä tarkistaa sovelluksen.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
+4. Jos sinulla on jo jokin muu kehitysympäristö asennettuna (JetBrains Rider tai Visual Studio Code),
    IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
 
    Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
@@ -385,7 +392,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ### [macOS](#tab/macos)
 
-1. Avaa Pääte ellei se ole jo
+1. Avaa Pääte.
 2. Asenna IntelliJ IDEA suorittamalla alla oleva komento:
 
     ```bash
@@ -394,7 +401,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
     Anna asennuksen suoriutua loppuun asti. Sinulta saatetaan pyytää
     macOS-käyttäjän salasanaa `Password:`-kentässä. Kirjoita silloin
-    salasana paikalle ja paina Enter-näppäintä.
+    salasana paikalle ja paina <kbd>Enter</kbd>.
 
 3. Tarkista, että IntelliJ IDEA toimii. Avaa Launchpad ja käynnistä sieltä *IntelliJ IDEA CE*.
 
@@ -418,7 +425,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ### [Linux](#tab/linux)
 
-1. Avaa jakelusi pääteohjelma ellei se ole jo
+1. Avaa jakelusi pääteohjelma.
 2. Asenna IntelliJ IDEA Community Edition. Asennustapa vaihtelee jakelun mukaan:
 
     - Arch: Asenna [`intellij-idea-community-edition`](https://aur.archlinux.org/packages/intellij-idea-community-edition)-pakkaus AUR:sta.
