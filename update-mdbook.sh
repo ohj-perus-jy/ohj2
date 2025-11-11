@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Check if cargo is installed
 if ! command -v cargo &> /dev/null
@@ -9,4 +9,5 @@ fi
 
 cargo install mdbook \
               mdbook-mermaid \
-              mdbook-alerts
+              mdbook-alerts \
+              mdbook-katex

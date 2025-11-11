@@ -14,7 +14,7 @@ mdbook serve --hostname 0.0.0.0 --port 3000 --open
 ```
 
 - [mdBook-ohjeet](https://rust-lang.github.io/mdBook/index.html)
-
+- [KaTeX-ohjeet](https://katex.org/docs/supported)
 
 ## License
 
@@ -27,3 +27,4 @@ Ohjelmointi 2 oppimateriaali © 2025 by Denis Zhidkikh, Sami Sarsa, Antti-Jussi 
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+

@@ -1,9 +1,17 @@
 # Summary
 
 [Aloitus](./index.md)
+[Suorittaminen](./suorittaminen.md)
 [Työkalut ja asentaminen](./tyokalut.md)
+[Tuki ja palaute](./tuki-ja-palaute.md)
+[Harjoitustyö](./harjoitustyo.md)
+[Tentti](./tentti.md)
 
 ---
+
+[Luennot](./luennot.md)
+
+--- 
 
 - [Java-kielen perusteet](./osa1/index.md)
   - [Hei, Java!](./osa1/01-hei-java.md)

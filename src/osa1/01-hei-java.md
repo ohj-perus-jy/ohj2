@@ -89,3 +89,7 @@ flowchart TD
 ```
 
 Testi!
+
+Matikkaa: $$ \nabla f(x) \in \mathbb{R}^n, $$
+
+Lisää matikkaa: $O(n)$
