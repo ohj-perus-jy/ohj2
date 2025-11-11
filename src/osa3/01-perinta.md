@@ -14,17 +14,66 @@
 
 Määritelmä
 
-*Perintä* tarkoittaa ohjelmoinnissa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen.
+*Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen.
 
-## Maastopyörä on Pyörä
+## Esimerkki
 
-Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan keksitty esimerkki henkilötietojärjestelmästä: `Opiskelija`, `Opettaja` ja `Sihteeri` voisivat kaikki olla `Henkilo`-olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on henkilöille yhteisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisella on myös yhteisiä toimintoja, kuten kirjautuminen järjestelmään. 
+Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan keksitty esimerkki henkilötietojärjestelmästä: `Opiskelija`, `Opettaja` ja `Sihteeri` voisivat kaikki olla `Henkilo`-olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on henkilöille yhteisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisella on myös yhteisiä toimintoja, kuten kirjautuminen järjestelmään.
 
-Kullakin on myös omia erityispiirteitään: `Opiskelijalla` on opiskelijanumero ja opintopisteet, `Opettajalla` on tehtävänimike ja kurssit, joita hän opettaa. `Sihteeri` on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta. 
+Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijalla on opiskelijanumero ja opintopisteet, Opettajalla on tehtävänimike ja kurssit, joita hän opettaa, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
-Jatkoa esimerkkiin... TODO: muutama metodi ja attribuutti. 
+Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. 
 
-Nyt voisimme luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. Jokaisessa luokassa määriteltäisiin kaikille henkilöille yhteiset ominaisuudet ja toiminnot. Tämä johtaisi hyvin toisteiseen koodiin ja ylläpidon vaikeutumiseen. 
+### [Opiskelija.java](#tab/tabid-opiskelija)
+
+```java
+class Opiskelija {
+    String nimi;
+    String kayttajatunnus;
+    String opiskelijanumero;
+    int opintopisteet;
+
+    void kirjaudu() {
+        // Kirjautumislogiikka
+    }
+}
+
+*** 
+
+### [Opettaja.java](#tab/tabid-opettaja)
+
+```java
+class Opettaja {
+    String nimi;
+    String kayttajatunnus;
+    String tehtavanimike;
+    List<String> opetettavatKurssit;
+
+    void kirjaudu() {
+        // Kirjautumislogiikka
+    }
+}
+```
+
+***
+
+### [Sihteeri.java](#tab/tabid-sihteeri)
+
+```java
+class Sihteeri {
+    String nimi;
+    String kayttajatunnus;
+
+    void kirjaudu() {
+        // Kirjautumislogiikka
+    }
+}
+```
+
+*** 
+
+
+Jokaisessa luokassa määriteltäisiin kaikille henkilöille yhteiset ominaisuudet ja toiminnot. Tämä johtaisi hyvin toisteiseen koodiin ja ylläpidon vaikeutumiseen. 
 
 ## Luokkahierarkia
 
