@@ -22,11 +22,10 @@ Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan ke
 
 Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijalla on opiskelijanumero ja opintopisteet, Opettajalla on tehtävänimike ja kurssit, joita hän opettaa, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
-Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. 
 
 ## Esimerkki
 
-asdf
+Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. Tutki alla olevia luokkia, niissä olevia attribuutteja ja metodeja. 
 
 ### [Opiskelija.java](#tab/opiskelija)
 
@@ -69,7 +68,7 @@ class Opettaja {
 ### [Sihteeri.java](#tab/sihteeri)
 
 **Sihteeri**
-
+ 
 ```java
 class Sihteeri {
     String nimi;
@@ -85,12 +84,14 @@ class Sihteeri {
 
 ### [Valitse](#tab/default)
 
-Valitse
+Valitse luokka
 
 *** 
 
+Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä sama metodi `kirjaudu()`. Toki näiden luokkien välillä on myös eroja, mutta tämä toisto on ongelmallista, koska:
 
-Jokaisessa luokassa määriteltäisiin kaikille henkilöille yhteiset ominaisuudet ja toiminnot. Tämä johtaisi hyvin toisteiseen koodiin ja ylläpidon vaikeutumiseen. 
+ * jokaisessa luokassa on määriteltävä samat ominaisuudet ja toiminnot erikseen, ja
+ * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän täytyy tehdä se kolmessa eri paikassa.
 
 ## Luokkahierarkia
 
