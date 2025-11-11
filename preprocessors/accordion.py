@@ -88,6 +88,17 @@ def process_chapter(chapter):
 
     return result.getvalue()
 
+
+def process_sections(sections):
+    for section in sections:
+        if 'Chapter' in section:
+            chapter = section['Chapter']
+            chapter['content'] = process_chapter(chapter['content'])
+
+            if "sub_items" in chapter:
+                process_sections(chapter['sub_items'])
+
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         if sys.argv[1] == "supports": 
@@ -95,8 +106,6 @@ if __name__ == '__main__':
 
     context, book = json.load(sys.stdin)
 
-    for i, section in enumerate(book['sections']):
-        if 'Chapter' in section:
-            section['Chapter']['content'] = process_chapter(section['Chapter']['content'])
+    process_sections(book['sections'])
 
     print(json.dumps(book))
