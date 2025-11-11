@@ -24,7 +24,13 @@ Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijall
 
 Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. 
 
-### [Opiskelija.java](#tab/tabid-opiskelija)
+## Esimerkki
+
+asdf
+
+### [Opiskelija.java](#tab/opiskelija)
+
+**Opiskelija**
 
 ```java
 class Opiskelija {
@@ -37,10 +43,13 @@ class Opiskelija {
         // Kirjautumislogiikka
     }
 }
+```
 
-*** 
+***
 
-### [Opettaja.java](#tab/tabid-opettaja)
+### [Opettaja.java](#tab/opettaja)
+
+**Opettaja**
 
 ```java
 class Opettaja {
@@ -53,11 +62,13 @@ class Opettaja {
         // Kirjautumislogiikka
     }
 }
-```
+``` 
 
 ***
 
-### [Sihteeri.java](#tab/tabid-sihteeri)
+### [Sihteeri.java](#tab/sihteeri)
+
+**Sihteeri**
 
 ```java
 class Sihteeri {
@@ -69,6 +80,12 @@ class Sihteeri {
     }
 }
 ```
+
+***
+
+### [Valitse](#tab/default)
+
+Valitse
 
 *** 
 
