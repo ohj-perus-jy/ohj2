@@ -30,7 +30,8 @@ Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelm
 
 
 Kurssilla virallisesti tuettuja käyttöjärjestelmiä ovat Windows, macOS ja Linux.
-**ChromeOS-käyttöjärjestelmää ei tueta.**
+Työkalujen asentaminen ChromeOS:ään saattaa olla mahdollista, mutta emme valitettavasti voi tarjota tukea kyseiseen käyttöjärjestelmään. 
+Tästä syystä emme suosittele ChromeOS:n käyttöä.
 
 Valitse käyttöjärjestelmäsi alta:
 
