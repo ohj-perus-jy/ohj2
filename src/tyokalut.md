@@ -15,11 +15,8 @@
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
 
-Tässä dokumentissa käydään läpi yllä olevien työkalujen ja ohjelmien asentaminen.
-
 Yllä olevat ohjelmat löytyvät valmiiksi asennettuna Agoran mikroluokissa.
 *Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
-Erityisesti harjoitustyön tekeminen pääteohjausten ulkopuolella on
 Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
@@ -31,12 +28,15 @@ Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelm
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
 > - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
 
-Tällä sivulla olevat ohjeet riippuvat käyttöjärjestelmästäsi.
+
+Kurssilla virallisesti tuettuja käyttöjärjestelmiä ovat Windows, macOS ja Linux.
+**ChromeOS-käyttöjärjestelmää ei tueta.**
+
 Valitse käyttöjärjestelmäsi alta:
 
 ### [Windows](#tab/win)
 
-Valitsit Microsoft Windows -käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
+Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Windows 11
 - Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809)
@@ -51,7 +51,7 @@ winver
 
 ### [macOS](#tab/macos)
 
-Valitsit macOS-käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
+Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - macOS 15 Sequoia
 
@@ -59,7 +59,7 @@ Valitsit macOS-käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavill
 
 ### [Linux](#tab/linux)
 
-Valitsit Linux-käyttöjärjestelmän. Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
+Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
 
