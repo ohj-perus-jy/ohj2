@@ -253,6 +253,8 @@ public final void kirjaudu() {
 
 ## Näkyvyysmääreet
 
+Lähteitä: <https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html>
+
 Java tarjoaa kolme pääasiallista näkyvyysmäärettä: `public`, `protected` ja `private`. Näkyvyysmääreet määrittelevät, mistä luokan jäseniin voidaan päästä käsiksi. 
 
 Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä tarkoittaa, että ne ovat näkyvissä vain samassa paketissa oleville luokille. Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista; Oletus-sarake viittaa `package-private`-näkyvyyteen.
