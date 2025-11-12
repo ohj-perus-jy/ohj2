@@ -4,6 +4,8 @@ import re
 import io
 import secrets
 
+from util import preprocessor_start, process_chapters
+
 """
 Format:
 
@@ -13,7 +15,13 @@ Tab contents here.
 
 ***
 """
-TAB_PATTERN = re.compile(r"(?P<header_level>#{1,5})\s+\[(?P<name>.*)\]\(#tab\/(?P<group_id>.*?)\)\s*(?P<contents>(?:.|\n)*?)\*\*\*\s*")
+TAB_PATTERN = re.compile(r"""
+(?P<header_level>\#{1,5})\s+\[(?P<name>.*)\]\(\#tab\/(?P<group_id>.*?)\)    # ### [Tab Name](#tab/group_id)
+\s*                                                                         # Whitespace
+(?P<contents>(?:.|\n)*?)                                                    # Tab contents                       
+\*{3,}                                                                      # *** separator               
+\s*                                                                         # Optional trailing whitespace               
+""", flags=re.VERBOSE)
 
 
 def write_accordion(buffer, contents):
@@ -54,7 +62,7 @@ def write_accordion(buffer, contents):
 
 def process_chapter(chapter):
     result = io.StringIO()
-    cur_contents = chapter
+    cur_contents = chapter['content']
 
     section_contents = []
 
@@ -86,26 +94,14 @@ def process_chapter(chapter):
 
     result.write(cur_contents)
 
-    return result.getvalue()
-
-
-def process_sections(sections):
-    for section in sections:
-        if 'Chapter' in section:
-            chapter = section['Chapter']
-            chapter['content'] = process_chapter(chapter['content'])
-
-            if "sub_items" in chapter:
-                process_sections(chapter['sub_items'])
+    chapter['content'] = result.getvalue()
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
-        if sys.argv[1] == "supports": 
-            sys.exit(0)
+    preprocessor_start()
 
     context, book = json.load(sys.stdin)
 
-    process_sections(book['sections'])
+    process_chapters(book['sections'], process_chapter)
 
     print(json.dumps(book))

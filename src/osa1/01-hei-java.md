@@ -33,6 +33,20 @@ int summa(int a , int b) {
 }
 ```
 
+```java
+// FILE: Ohjelma.java
+public class Ohjelma {
+
+}
+// FILE_END
+
+// FILE: Henkilo.java
+public class Henkilo {
+
+}
+// FILE_END
+```
+
 Harjoittele tekemällä ja tulostamalla erityyppisiä muuttujia (tämä on editoitava koodausalue):
 
 ```java,editable

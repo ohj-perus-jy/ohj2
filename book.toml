@@ -35,5 +35,8 @@ java = "//-"
 
 [preprocessor.katex]
 
+[preprocessor.codeblock-tabs]
+
 [preprocessor.accordion]
-command = "python3 ./preprocessors/accordion.py"
+command = "python3 ./preprocessors/python/accordion.py"
+
