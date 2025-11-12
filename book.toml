@@ -12,6 +12,7 @@ additional-css = [
   "highlight/apprentice.css",
   "theme/alerts-style.css",
   "theme/accordion.css",
+  "theme/codeblock-tabs.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
@@ -21,6 +22,7 @@ additional-js = [
   "theme/mode-java.js",
   "theme/playground_ext.js",
   "theme/accordion.js",
+  "theme/codeblock-tabs.js",
 ]
 
 [output.html.playground]

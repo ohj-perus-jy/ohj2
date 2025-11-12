@@ -34,15 +34,41 @@ int summa(int a , int b) {
 ```
 
 ```java
-// FILE: Ohjelma.java
-public class Ohjelma {
+// FILE: Henkilo.java
+public class Henkilo {
+    private String name;
 
+    public Henkilo() {
+        name = "Denis";
+    }
+
+    public String getTervehdys() {
+        return "Moi, " + name + "!";
+    }
 }
 // FILE_END
 
-// FILE: Henkilo.java
-public class Henkilo {
+// FILE: Opiskelija.java
+public class Opiskelija extends Henkilo {
+    public Opiskelija() {
+        super();
+    }
 
+    public String getTervehdys() {
+        return super.getTervehdys() + " Olen opiskelija!";
+    }
+}
+// FILE_END
+
+// FILE: main.java
+public class Ohjelma {
+    public static void main() {
+        Henkilo h = new Henkilo();
+        IO.println(h.getTervehdys());
+
+        Opiskelija o = new Opiskelija();
+        IO.println(o.getTervehdys());
+    }
 }
 // FILE_END
 ```
@@ -64,7 +90,7 @@ Taulukko
 | Avainsana | Selitys                           |
 | --------- | --------------------------------- |
 | public    | näkyvyysmodifikaattori — julkinen |
-| static    | staattinen — kuuluu luokalle      |
+| static    | staattinen wew kuuluu luokalle    |
 | void      | ei palauta arvoa                  |
 
 
