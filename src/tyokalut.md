@@ -1,4 +1,4 @@
-# Työkalut
+# Työkaluohjeet
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
@@ -9,7 +9,7 @@
 
 - **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
   IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
-  IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE.
+  IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE — se on myös ohjelmoitu suurimmalta osin Javalla.
   Tällä kurssilla käytämme ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
@@ -17,7 +17,7 @@
 
 Tässä dokumentissa käydään läpi yllä olevien työkalujen ja ohjelmien asentaminen.
 
-Yllä olevat ohjelmat ovat valmiiksi asennettuna Agoran mikroluokissa.
+Yllä olevat ohjelmat löytyvät valmiiksi asennettuna Agoran mikroluokissa.
 *Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
 Erityisesti harjoitustyön tekeminen pääteohjausten ulkopuolella on
 Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
