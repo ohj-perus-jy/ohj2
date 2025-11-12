@@ -10,7 +10,7 @@
 - **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
   IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
   IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE — se on myös ohjelmoitu suurimmalta osin Javalla.
-  Käytämme Intellij IDEA'n ilmaista Community Edition -versiota.
+  Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
@@ -380,7 +380,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
 4. Jos sinulla on jo jokin muu kehitysympäristö asennettuna (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+   IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
 
    Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
 
