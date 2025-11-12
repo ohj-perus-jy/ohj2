@@ -33,6 +33,10 @@ int summa(int a , int b) {
 }
 ```
 
+## Monen tiedoston koodialueet
+
+Ensimmäinen alue
+
 ```java
 // FILE: Henkilo.java
 public class Henkilo {
@@ -72,6 +76,37 @@ public class Ohjelma {
 }
 // FILE_END
 ```
+
+Tällä hetkellä `main.java`:n pitää sisältää pääohjelman johtuen palvelinpuolen ajoympäristön takia. Tosin tuo voitaisiin muokata niin, että pääohjelman tiedostonimi pääteltäisiin automaattisesti.
+
+Toinen koodialue testiksi, että kummatkin alueet ovat erillisiä toisistaan:
+
+```java
+// FILE: main.java
+public class Ohjelma {
+    public static void main() {
+        Kissa k = new Kissa("Snowball");
+        IO.println(k.getAani());
+    }
+}
+// FILE_END
+
+// FILE: Kissa.java
+public class Kissa {
+    private String name;
+
+    public Kissa(String name) {
+        this.name = name;
+    }
+
+    public String getAani() {
+        return "Miau!";
+    }
+}
+// FILE_END
+```
+
+## Muokattavat koodilohkot
 
 Harjoittele tekemällä ja tulostamalla erityyppisiä muuttujia (tämä on editoitava koodausalue):
 
