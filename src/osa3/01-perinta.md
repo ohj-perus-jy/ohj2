@@ -12,11 +12,7 @@
 >    - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
 >    - Tuntee hyödylliset ylikirjoitettavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
 
-Lähteitä
-
-<https://docs.oracle.com/javase/tutorial/java/concepts/inheritance.html>
-
-Määritelmä
+## Määritelmä
 
 *Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa.
 
@@ -36,13 +32,18 @@ class Opiskelija {
     String kayttajatunnus;
     List<String> kurssit;
     int opintopisteet;
+    boolean kirjautunut;
 
     void kirjaudu() {
-        // Kirjautumislogiikka
+        kirjautunut = true;
+    }
+
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
     void ilmoittauduKurssille(String kurssi) {
-        // Kurssille ilmoittautumisen logiikka
+        kurssit.add(kurssi);
     }
 }
 ```
@@ -57,13 +58,18 @@ class Opettaja {
     String kayttajatunnus;
     String tehtavanimike;
     List<String> opetettavatKurssit;
+    boolean kirjautunut;
 
     void kirjaudu() {
-        // Kirjautumislogiikka
+        kirjautunut = true;
+    }
+
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
     void lisaaKurssi(String kurssi) {
-       // Kurssin lisäämisen logiikka
+       opetettavatKurssit.add(kurssi);
     }
 }
 ``` 
@@ -76,15 +82,20 @@ class Opettaja {
 class Sihteeri {
     String nimi;
     String kayttajatunnus;
-
+    boolean kirjautunut;
 
 
     void kirjaudu() {
-        // Kirjautumislogiikka
+        kirjautunut = true;
+    }
+
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
     void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
-        // Opintosuorituksen kirjaamisen logiikka
+        // Opintosuorituksen kirjaamisen logiikka ...
+        // Jätetään tässä esimerkissä toteuttamatta
     }
 }
 ```
@@ -97,7 +108,7 @@ Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kaytta
  * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän täytyy tehdä se kolmessa eri paikassa,
  * uuden luokan lisääminen, jolla on samat ominaisuudet, vaatii saman koodin kopioimisen uudelleen taas uuteen paikkaan.
 
-Jos sitten haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että etunimi ja sukunimi tallennetaan erikseen kahteen attribuuttiin, meidän pitäisi tehdä tämä muutos kaikissa näissä luokissa. Tämä lisää virheiden mahdollisuutta ja tekee koodin ylläpidosta hyvin hankalaa. 
+Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi` ja `sukunimi` tallennetaan erikseen kahteen attribuuttiin, meidän pitäisi tehdä tämä muutos kaikissa näissä luokissa. Tämä lisää virheiden mahdollisuutta ja tekee koodin ylläpidosta hyvin hankalaa. 
 
 ## Luokkahierarkia
 
@@ -105,16 +116,20 @@ Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sis�
 
 Toteutetaan nyt yllä kuvattu tilanne uudestaan niin, että kirjoitetaan kaikissa luokissa esiintyvät ominaisuudet ja toiminnot *uuteen* `Henkilo`-luokkaan, ja muut luokat perivät kyseisen luokan.
 
-
 ### [Henkilo.java](#tab/henkilo)
 
 ```java
 class Henkilo {
     String nimi;
     String kayttajatunnus;
+    boolean kirjautunut;
 
     void kirjaudu() {
-        // Kirjautumislogiikka
+        kirjautunut = true;
+    }
+
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 }
 ```
@@ -164,7 +179,7 @@ class Sihteeri extends Henkilo {
 
 *** 
 
-Huomaa, että `Opiskelija`, `Opettaja` ja `Sihteeri`-luokat eivät enää määrittele `nimi`- ja `kayttajatunnus`-attribuutteja tai `kirjaudu()`-metodia, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. 
+Huomaa, että `Opiskelija`, `Opettaja` ja `Sihteeri`-luokat eivät enää määrittele `nimi`- ja `kayttajatunnus`-attribuutteja tai `kirjaudu()`-metodia, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää.
 
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija`, `Opettaja` ja `Sihteeri` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
@@ -199,14 +214,14 @@ class AvoinOpiskelija extends Opiskelija {
     boolean maksutSuoritettu;
 
     void suoritaMaksu(double summa) {
-        // Maksun suorittamisen logiikka
+        // Otetaan yhteys maksujärjestelmään ja käsitellään maksu ...
+        // Kun on todennettu, että maksu on suoritettu:
+        maksutSuoritettu = true;
     }
-
 }
 ```
 
 ***
-
 
 Luokkahierarkia näyttäisi nyt seuraavalta:
 
@@ -225,35 +240,100 @@ flowchart TD
     Opiskelija --- AvoinOpiskelija
 ``` 
 
+Kun luokka perii toisen luokan, tästä suhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
+
+Kuitenkin, `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
+
+## Rakentajat ja super-avainsana
+
+Kun aliluokka perii yliluokan, sen on usein tarpeen kutsua yliluokan rakentajaa alustamaan perityt ominaisuudet. Tämä tehdään käyttämällä `super`-avainsanaa aliluokan rakentajassa.
+
+Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa.
+
+### [Henkilo.java](#tab/henkilo-rakentaja)
+
+```java
+class Henkilo {
+
+    // ...
+
+    public Henkilo(String nimi, String kayttajatunnus) {
+        this.nimi = nimi;
+        this.kayttajatunnus = kayttajatunnus;
+    }
+}
+```
+
+***
+
+### [Opiskelija.java](#tab/opiskelija-rakentaja)
+
+```java
+class Opiskelija extends Henkilo {
+
+    // ...
+
+    public Opiskelija(String nimi, String kayttajatunnus) {
+        super(nimi, kayttajatunnus); // Kutsutaan yliluokan rakentajaa
+        this.kurssit = new ArrayList<>();
+        this.opintopisteet = 0;
+    }
+}
+```
+
+***
+
+Vastaavasti voisimme lisätä rakentajat myös `Opettaja`- ja `Sihteeri`-luokkiin, jotka kutsuvat `Henkilo`-luokan rakentajaa samalla tavalla. 
+
+`super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa, "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei suoraan `Henkilo`-luokan rakentajaa.
 
 ## Ylikirjoittaminen
 
 Perityn luokan metodeja voidaan *ylikirjoittaa* (override) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
 
-`@Override`
-
-Esimerkki ylikirjoittamisesta: `toString()`-metodi on määritelty Javan `Object`-luokassa, josta kaikki luokat perivät. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa luokallemme sopivan merkkijonoesityksen.
+Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Ylikirjoitetaan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
 ```java
-@Override
-public String toString() {
-    return "Opiskelija: " + nimi + ", Käyttäjätunnus: " + kayttajatunnus;
+class Opiskelija extends Henkilo {
+
+    // ...
+
+    boolean opintoOikeusVoimassa;
+
+    @Override
+    void kirjaudu() {
+        if (opintoOikeusVoimassa) {
+            super.kirjaudu(); // Kutsutaan yliluokan kirjaudu-metodia
+        } else {
+            System.out.println("Opinto-oikeus ei ole voimassa. Et voi kirjautua.");
+        }
+    }
 }
 ```
 
-`final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin ylikirjoittaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi ylikirjoittaa aliluokassa. ESimerkiksi henkilötietojärjestelmässä voisimme haluta estää `kirjaudu()`-metodin ylikirjoittamisen, jotta kaikki henkilöt käyttävät samaa kirjautumislogiikkaa.
+Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole ylikirjoitettu.
 
-Esimerkki `final`-avainsanan käytöstä metodissa:
+Yksi tyypillinen tapa käyttää ylikirjoittamista on muokata `toString()`-metodia, joka tarjoaa merkkijonoesityksen oliosta.
+`toString()`-metodi on määritelty Javan `Object`-luokassa, josta kaikki luokat perivät. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa luokallemme sopivan merkkijonoesityksen.
 
 ```java
-public final void kirjaudu() {
-    // Kirjautumislogiikka
+
+class Opiskelija extends Henkilo {
+
+    // ...
+
+    @Override
+    public String toString() {
+        return "Opiskelija: " + nimi + ", Käyttäjätunnus: " + kayttajatunnus;
+    }
 }
 ```
+
+## Final-avainsana
+
+`final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin ylikirjoittaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi ylikirjoittaa aliluokassa. 
 
 ## Näkyvyysmääreet
-
-Lähteitä: <https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html>
 
 Java tarjoaa kolme pääasiallista näkyvyysmäärettä: `public`, `protected` ja `private`. Näkyvyysmääreet määrittelevät, mistä luokan jäseniin voidaan päästä käsiksi. 
 
@@ -304,4 +384,29 @@ class JokuMuuLuokka {
 
 ## Tehtävät
 
-Tee tehtäviä...
+Tehtävä 1: Tee luokkahierarkia ajoneuvoille. Yliluokasta `Ajoneuvo` periytyvät aliluokat `Auto`, `Moottoripyora` ja `Polkupyora`. 
+
+Määrittele yhteiset ominaisuudet (`nopeus`, `paino`, `kayttovoima`, `renkaidenLukumaara`)
+ja metodit (`kiihdyta()`, `jarruta()`) `Ajoneuvo`-luokassa. 
+
+Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum?
+
+Lisää erityispiirteitä kuhunkin aliluokkaan:
+
+ * `Auto`: `ovienLukumaara`
+ * `Moottoripyora`: `sivuvaunu`
+ * `Polkupyora`: `vaihteidenLukumaara`
+
+Testaa luokkia luomalla olioita ja kutsumalla metodeja.
+
+Tehtävä 2: Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sähköauto`, joka perii `Auto`-luokasta. Lisää `Sähköauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
+
+Testaa `Sähköauto`-luokkaa luomalla olio ja kutsumalla metodeja.
+
+Bonus 1: TODO: Keksi tehtävä johon liittyy `final`-avainsanan käyttö. 
+
+## Lähteitä
+ 
+<https://docs.oracle.com/javase/tutorial/java/concepts/inheritance.html>
+
+<https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html>
