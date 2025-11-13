@@ -14,6 +14,8 @@ Abstrakti luokka on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen
 
 Älykodissa voisi olla monenlaisia laitteita, kuten valoja, termostaatteja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät, termostaatti säätää lämpötilaa, kamera tallentaa videota, kahvinkeitin keittää kahvia). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
 
+Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin säätömahdollisuuksiin myöhemmin. 
+
 ```mermaid
 classDiagram
     class Laite 
@@ -23,3 +25,119 @@ classDiagram
     Laite <|-- Turvakamera
     Laite <|-- Kahvinkeitin
 ```
+
+// Esimerkki ilman abstraktia luokkaa
+
+### [Laite.java](#tab/laite)
+
+```java
+public class Laite {
+    public void vaihdaTilaa() {
+        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
+    }
+
+    public void raportoiTila() {
+        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
+    }
+}
+```
+
+***
+
+### [Valo.java](#tab/valo)
+
+```java
+public class Valo extends Laite {
+    private int kirkkaus = 0;
+
+    @Override
+    public void vaihdaTilaa() {
+        // Vaihda kirkkaus 0 -> 50 -> 100 -> 0 ...
+        // if (kirkkaus == 0) kirkkaus = 50;
+        // else if (kirkkaus == 50) kirkkaus = 100;
+        // else kirkkaus = 0;
+        switch (kirkkaus) {
+            case 0 -> kirkkaus = 50;
+            case 50 -> kirkkaus = 100;
+            case 100 -> kirkkaus = 0;
+        }
+    }
+
+    public void raportoiTila() {
+        System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
+    }
+}
+```
+
+***
+
+### [Termostaatti.java](#tab/termostaatti)
+
+```java
+public class Termostaatti extends Laite {
+    private enum Lämpötila { MUKAVUUS, SÄÄSTÖ, POISSA }
+    private Lämpötila tila = Lämpötila.MUKAVUUS;
+
+    @Override
+    public void vaihdaTilaa() {
+        // Vaihda tila MUKAVUUS -> SÄÄSTÖ -> POISSA -> MUKAVUUS ...
+        switch (tila) {
+            case MUKAVUUS -> tila = Lämpötila.SÄÄSTÖ;
+            case SÄÄSTÖ -> tila = Lämpötila.POISSA;
+            case POISSA -> tila = Lämpötila.MUKAVUUS;
+        }
+    }
+
+    public void raportoiTila() {
+        System.out.println("Termostaatin tila on " + tila + ".");
+    }
+} 
+```
+
+***
+
+### [Turvakamera.java](#tab/turvakamera)
+
+```java
+public class Turvakamera extends Laite {
+    private boolean tallennusPäällä = false;
+
+    @Override
+    public void vaihdaTilaa() {
+        // Kytke tallennus päälle/pois
+        tallennusPäällä = !tallennusPäällä;
+    }
+
+    public void raportoiTila() {
+        String tila = tallennusPäällä ? "päällä" : "pois";
+        System.out.println("Turvakameran tallennus on " + tila + ".");
+    }
+}
+```
+
+***
+
+### [Kahvinkeitin.java](#tab/kahvinkeitin)
+
+```java
+public class Kahvinkeitin extends Laite {
+
+    private boolean kiehumassa = false;    
+
+    @Override
+    public void vaihdaTilaa() {
+        // Keitä kahvia tai kytke keitin pois päältä
+        kiehumassa = !kiehumassa;
+    }
+    public void raportoiTila() {
+        String tila = kiehumassa ? "päällä" : "pois";
+        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+    }
+}
+```
+
+***
+
+Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. 
+Ei ole järkevää, että jokin yleinen laite voisi vaihtaa tilaa tai raportoida tilansa ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse.
+Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi, eikä siitä ole tarkoitus luoda suoria ilmentymiä. Jokaisen aliluokan tulee toteuttaa nämä metodit itse. 
