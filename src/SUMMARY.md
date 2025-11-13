@@ -26,7 +26,7 @@
   - [Perintä](./osa3/01-perinta.md)
   - [Rajapinnat ja abstraktit luokat](./osa3/02-abstraktit-luokat.md)
   - [Polymorfismi](./osa3/04-polymorfismi.md)
-  - [Perintä tai rajapinta?](./osa4/01-perinta-tai-rajapinta.md)
+  - [Perintä tai rajapinta?](./osa3/04-perinta-tai-rajapinta.md)
 - [Hyödyllisiä menetelmiä olio-ohjelmoinnissa](./osa4/index.md)
   - [Geneeriset luokat](./osa4/02-geneeriset-luokat.md)
   - [Tyyppitarkistukset ja tyyppimuunnokset](./osa4/04-tyyppitarkistukset-ja-tyyppimuunnokset.md)
