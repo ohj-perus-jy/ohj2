@@ -4,6 +4,9 @@ language = "fi"
 src = "src"
 title = "Ohjelmointi 2"
 
+[build]
+create-missing = false
+
 [output.html]
 site-url = "/ohj2/"
 additional-css = [
