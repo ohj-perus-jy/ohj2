@@ -14,7 +14,11 @@
 
 ## Määritelmä
 
-*Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa.
+*Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
+
+Perivästä luokasta käytetään termiä *aliluokka* (subclass) ja peritystä luokasta termiä *yliluokka* (superclass).
+
+Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa.
 
 ## Esimerkki
 
@@ -184,16 +188,13 @@ Huomaa, että `Opiskelija`, `Opettaja` ja `Sihteeri`-luokat eivät enää määr
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija`, `Opettaja` ja `Sihteeri` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
 ```mermaid
---- 
-config:
-  flowchart:
-    curve: basis
----
-flowchart TD
-    Henkilo --- Opiskelija
-    Henkilo --- Opettaja
-    Henkilo --- Sihteeri
+classDiagram
+    Henkilo <|-- Opiskelija
+    Henkilo <|-- Opettaja
+    Henkilo <|-- Sihteeri
 ```
+
+UML-kuvauskielessä (Unified Modelling Language) kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois; palaamme UML:ään tarkemmin myöhemmissä osissa.
 
 Jatketaan vielä esimerkkiä hieman pidemmälle. Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
 
@@ -226,18 +227,13 @@ class AvoinOpiskelija extends Opiskelija {
 Luokkahierarkia näyttäisi nyt seuraavalta:
 
 ```mermaid
-
---- 
-config:
-  flowchart:
-    curve: basis
----
-flowchart TD
-    Henkilo --- Opiskelija
-    Henkilo --- Opettaja
-    Henkilo --- Sihteeri
-    Opiskelija --- TutkintoOpiskelija
-    Opiskelija --- AvoinOpiskelija
+classDiagram
+    class Henkilo
+    Henkilo <|-- Opiskelija
+    Henkilo <|-- Opettaja
+    Henkilo <|-- Sihteeri
+    Opiskelija <|-- TutkintoOpiskelija
+    Opiskelija <|-- AvoinOpiskelija
 ``` 
 
 Kun luokka perii toisen luokan, tästä suhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
