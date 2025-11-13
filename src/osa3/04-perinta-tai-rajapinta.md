@@ -1,0 +1,1 @@
+# Perintä tai rajapinta?
