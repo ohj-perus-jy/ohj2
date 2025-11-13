@@ -56,8 +56,10 @@ Dokumentaation saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin
 - Verkko viikon konsepteista?
 
 ## B2
+TODO:
 
 ## B3
+TODO:
 
 ## G1
 

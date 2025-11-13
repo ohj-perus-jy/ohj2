@@ -17,7 +17,7 @@ if (ehto) {
 } else if (ehto2) {
     tee jotain muuta
 } else {
-    
+
 }
 ```
 
@@ -118,6 +118,14 @@ void main () {
 ## Listat
 Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?
 
+Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
+
+| C#        | Java                              |
+| --------- | --------------------------------- |
+| public    | näkyvyysmodifikaattori — julkinen |
+| static    | staattinen — kuuluu luokalle      |
+| void      | ei palauta arvoa                  |
+
 ```java
 import java.util.*;
 
@@ -129,8 +137,20 @@ void main () {
     IO.println(mjonoLista.size());
     IO.println(mjonoLista.indexOf("kolmas"));
 
+    List<String> toinen = new ArrayList<>(List.of("koira", "kissa", "kala"));
+    List<String> varit = Arrays.asList("punainen", "sininen", "keltainen");
+    toinen.add("kissakala");
+
     for(String mjono : mjonoLista) {
             IO.println(mjono);
+    }
+
+    for(String mjono : toinen) {
+        IO.println(mjono);
+    }
+
+        for(String mjono : varit) {
+        IO.println(mjono);
     }
 
 }

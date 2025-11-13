@@ -47,18 +47,17 @@ Isommissa ohjelmissa kannattaa käyttää jotain Java-projektin hallintatyökalu
 `java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Javabittikoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 
 
 ### jshell
-Jshell on interaktiivinen työkalu Javaohjelmoinnin ja prototyyppien opetteluun.
+jshell on interaktiivinen työkalu Javaohjelmoinnin ja prototyyppien opetteluun. Ajamalla komennon `jshell` pääset kokeilemaan eri komentoja rivi kerrallaan ilman erillistä kääntämistä ja ajamista. Voit esimerkiksi kirjoittaa komennon `IO.println("Hei maailma!");` ja painaa `Enter`, jolloin näet heti tulostuksen komentorivillä.
+
+jshellistä poistutaan ajamalla komento `/exit`
 
 ### Kurssikohtaiset IntelliJ asetukset
 TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
 ## (J)VM
 JVM tulee sanoista **J**ava **V**irtual **M**achine joka tarkoittaa abstraktia virtuaalikonetta, jolla voidaan ajaa Javabittikoodia. Hyöty on siinä, että ohjelma joka on käännetty Javabittikoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, Apple, Linux, jne.), kunhan JVM pyörii kyseisellä alustalla. 
-- Miten java toimii
-- Kääntäminen vs. tulkkaus
 
-## WIP miten packaget toimii?
-**Pakkauksiin liittyvä tehtävä**
+- Kääntäminen vs. tulkkaus
 
 ## Java I/O operaatioita
 Täydentyy
