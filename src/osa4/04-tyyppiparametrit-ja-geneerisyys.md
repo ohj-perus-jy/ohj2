@@ -1,18 +1,22 @@
-# Geneeriset tyypit ja tyyppiparametrit
+# Tyyppiparametrit ja geneerisyys
 
 > [!Osaamistavoitteet]
 >
-> - Osaat hyödyntää geneerisiä tyyppejä ja tyyppiparametreja toteuttaaksesi yleiskäyttöisiä luokkia ja metodeja
+> - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli geneerisiä luokkia ja metodeja
 
+## Tyyppiparametrit 
+
+- Näitä on käytetty mm. listoissa `List<Integer>`
+- Mitä geneerisyydellä (generic programming / generics) tarkoitetaan?
 
 - Viittaus edellisen osan polymorfismiasiaan
   - Polymorfismi olio-ohjelmoinnissa tarkoittaa tyypillisesti nimenomaan alityypitystä
-- Geneeriset tyypit eli tyyppiparametrit ovat myös polymorfismia, sillä periaate on sama:
+- Tyyppiparametrit ja geneerisyys ovat myös polymorfismia, sillä periaate on sama:
   - Mahdollistaa, että yksi arvon tyyppi edustaa useita eri tyyppejä
     - Voi luoda luokkia, rajapintoja ja metodeita jotka hyödyntävät ulkopuolelta (muualta koodista) tulevia arvoja määrittämättä tarkkaa tyyppiä etukäteen.
   - Parametrinen polymorfismi
 
-- Miksi geneeriset tyypit aka tyyppiparametrit, kun on jo polymorfismi alityypeillä?
+- Miksi tyyppiparametrit ja geneerisiä tyyppejä (tyyppiparametrisoituja luokkia tai rajapintoja), kun on jo polymorfismi alityypeillä?
 
 - Tarkastellaan metodin parametrin yhteydessä hieman luokkaa `Object`, joka itsessään on "geneerinen", eli yleinen luokka — (kertauksena) kaikki Javan luokat perivät `Object`-luokan eli ovat tyyppiä `Object`.
 
@@ -73,7 +77,7 @@ Comparable getLargest(Comparable a, Comparable b) {
 
 -> Ajonaikainen virhe, halutaan yleensä välttää sillä näissä on aina riski päätyä loppukäyttäjälle
 
-- Geneeristen tyyppien avulla (ja niiden järkevällä käytöllä) tämänkaltainen metodin väärinkäyttö havaitaan varmasti ajoissa
+- Tyyppiparametrien avulla (ja niiden järkevällä käytöllä) tämänkaltainen metodin väärinkäyttö havaitaan varmasti ajoissa
 
 ```java
 void main() {
@@ -134,7 +138,7 @@ void main() {
 
 Tästä päästäänkiin geneerisiin luokkiin ja rajapintoihin.
 
-- Klassinen esimerkki geneerisestä tyypistä:
+- Klassinen esimerkki geneerisestä :
 
 ```java
 class Pair<T> {

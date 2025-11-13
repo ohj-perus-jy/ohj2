@@ -23,7 +23,7 @@
   - [Luetelma ja Tietue](./osa4/01-luetelma-ja-tietue.md)
   - [Tyypintarkistus ja hahmonsovitus](./osa4/02-tyypintarkistus-ja-hahmonsovitus.md)
   - [Hyödyllisiä rajapintoja](./osa4/03-hyodyllisia-rajapintoja.md)
-  - [Tyyppiparametrit](./osa4/04-geneeriset-tyypit.md)
+  - [Tyyppiparametrit ja geneerisyys](./osa4/04-tyyppiparametrit-ja-geneerisyys.md)
 - [Tietorakenteita ja algoritmeja](./osa5/index.md)
   - [Kokoelmarajapinnat](./osa5/01-kokoelmarajapinnat.md)
   - [Valmiit kokoelmat Javassa](./osa5/02-valmiit-kokoelmat-javassa.md)
