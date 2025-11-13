@@ -8,7 +8,9 @@
 
 ## Määritelmä
 
-Abstrakti luokka on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus).
+Abstrakti luokka on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). 
+
+Aliluokka, joka perii abstraktin luokan, on velvollinen toteuttamaan kaikki perimänsä abstraktit metodit, *ellei* se itse ole myös abstrakti luokka.
 
 ## Esimerkki
 
@@ -62,7 +64,7 @@ public class Valo extends Laite {
             case 100 -> kirkkaus = 0;
         }
     }
-
+    @Override
     public void raportoiTila() {
         System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
@@ -87,7 +89,7 @@ public class Termostaatti extends Laite {
             case POISSA -> tila = Lämpötila.MUKAVUUS;
         }
     }
-
+    @Override
     public void raportoiTila() {
         System.out.println("Termostaatin tila on " + tila + ".");
     }
@@ -107,7 +109,7 @@ public class Turvakamera extends Laite {
         // Kytke tallennus päälle/pois
         tallennusPäällä = !tallennusPäällä;
     }
-
+    @Override
     public void raportoiTila() {
         String tila = tallennusPäällä ? "päällä" : "pois";
         System.out.println("Turvakameran tallennus on " + tila + ".");
@@ -129,6 +131,7 @@ public class Kahvinkeitin extends Laite {
         // Keitä kahvia tai kytke keitin pois päältä
         kiehumassa = !kiehumassa;
     }
+    @Override  
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
         System.out.println("Kahvinkeittimen pannu on " + tila + ".");
@@ -141,3 +144,13 @@ public class Kahvinkeitin extends Laite {
 Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. 
 Ei ole järkevää, että jokin yleinen laite voisi vaihtaa tilaa tai raportoida tilansa ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse.
 Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi, eikä siitä ole tarkoitus luoda suoria ilmentymiä. Jokaisen aliluokan tulee toteuttaa nämä metodit itse. 
+
+Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi. 
+
+```java
+public abstract class Laite {
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
+}
+```
+
