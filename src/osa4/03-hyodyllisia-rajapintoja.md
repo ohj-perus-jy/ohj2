@@ -1,4 +1,4 @@
-# Muita hyödyllisiä rajapintoja Javassa
+# Hyödyllisiä rajapintoja
 
 > [!Osaamistavoitteet]
 >
@@ -7,3 +7,5 @@
 >    - Cloneable -> mahdollistaa olion todellisen kopioinnin (vrt. viite)
 >    - `Iterable<T>`-rajapinta ja for-each-silmukka
 >    - Bonus: Vertailuluokka (Comparator<T>) -> mahdollistaa määrittää useita erilaisia vertailutapoja samalle luokalle
+
+- Ekstra: Miksi ei miinuslaskukikkailua (Integer.MAXINT ympäri), mieluummin Integer.compare
