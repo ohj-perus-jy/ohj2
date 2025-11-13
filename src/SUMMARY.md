@@ -24,7 +24,7 @@
   - [Kapselointi](./osa2/03-kapselointi.md)
 - [Perintä ja rajapinnat](./osa3/index.md)
   - [Perintä](./osa3/01-perinta.md)
-  - [Rajapinnat ja abstraktit luokat](./osa3/02-abstraktit-luokat.md)
+  - [Rajapinnat ja abstraktit luokat](./osa3/02-rajapinnat-ja-abstraktit-luokat.md)
   - [Polymorfismi](./osa3/04-polymorfismi.md)
   - [Perintä tai rajapinta?](./osa3/04-perinta-tai-rajapinta.md)
 - [Hyödyllisiä menetelmiä olio-ohjelmoinnissa](./osa4/index.md)
