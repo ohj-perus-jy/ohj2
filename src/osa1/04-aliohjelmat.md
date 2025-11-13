@@ -12,7 +12,15 @@
 - Taulukko, merkkijono jne.?
 
 ## Funktiot
-public static [palautettava] 
+Funktion yleinen esittelyrivi javassa:
+```java.ignore
+public static [palautettava] ([parametrit]) {
+    ...
+}
+```
+
+Kuten C#:ssa, jos funktio ei palauta, mitään on palautettavan tyyppi `void`
+
 
 ## Javan perustietotyypin ja viitetyyppien ero funktion kutsussa
 - Kun aliohjelmakutsussa parametrina on olio, parametrina kulkee olion viite, ei itse olio.

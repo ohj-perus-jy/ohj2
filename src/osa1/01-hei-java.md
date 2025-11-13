@@ -7,54 +7,58 @@
 > - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
 > - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
+Lähteenä: https://dev.java/learn/
+
 ## Java-kielen perusteet
 
-Tässä esimerkki, miten Javalla voidaan kirjoittaa konsoliin:
+Tässä esimerkki, jolla kirjoitetaan konsoliin javan versio:
 
 ```java
-public static void main() {
+void main() {
     var feature =  Runtime.version().feature();
     IO.println("Hei, maailma! Tässä on Java " + feature);
 }
 ```
+- Palautuksen tyyppinä pitää olla `void`, koska muuten se ei ole JVM:n mukaan pätevä
+koodiesimerkki
+
+Kenties ensimmäisenä Javassa C#:iin verrattuna syntaksista voidaan huomata, että uuden näkyvyysalueen ilmaiseva aaltosulku alkaakin samalta riviltä, kuin esittelyrivi. Tämä on osa Javan koodauskäytäntöä. 
 
 Javassa käytetään funktioiden nimeämisessä Camel Casingia, eli aloitetaan pienellä kirjaimella ja sanojen vaihtuessa ensimmäinen kirjain on isolla, eli esimerkiksi: tamaOnFunktionNimi.
 
-Maininta siitä, että nykyään voidaan kirjoittaa Javaa luokattomasti?
-
-- Main selitystä:
-- Miten main toimii, eli että pitää olla nimenomaan public static void main()
-- Ei voi olla `private`, koska muutoin JVM ei löydä mainia
-- Ei voi olla `static`, koska JVM kutsuu sitä, luomatta oliota
-- Palautuksen tyyppinä pitää olla `void`, koska muuten se ei ole JVM:n mukaan pätevä
-Koodiesimerkki
+Tiedostot taas nimetään käyttäen Pascal Casingia, eli samoin, kuin Camel Casing, mutta myös ensimmäinen kirjain on iso. Esimerkiksi `Hei.java`
 
 ## Java ohjelmien kääntäminen ja ajaminen
-Kirjoitetaan ensin tiedosto esimerkiksi `hei.java`, jonka sisällöksi tulee
+Kirjoitetaan ensin tiedosto esimerkiksi `Hei.java`, jonka sisällöksi tulee
 
 ```java
-public static void main() {
+void main() {
     var feature =  Runtime.version().feature();
     IO.println("Hei, maailma! Tässä on Java " + feature);
 }
 ```
 
 ### javac
-javac on ensisijainen javan kääntäjä, joka tulee Java Development Kit:in (JDK) mukana. Nyt voidaan kääntää aiemmin tehty tiedosto `hei.java` ajamalla komento `javac hei.java`. Voidaan huomata, että nyt kansioon on ilmestynyt tiedosto `hei.class`
+javac on ensisijainen javan kääntäjä, joka tulee Java Development Kit:in (JDK) mukana. Nyt voidaan kääntää aiemmin tehty tiedosto `Hei.java` ajamalla komento `javac Hei.java` Javabittikoodiksi. Voidaan huomata, että nyt kansioon on ilmestynyt tiedosto `Hei.class`. Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa ().
+
+Isommissa ohjelmissa kannattaa käyttää jotain Java-projektin hallintatyökalua, kuten Gradle/Maven. Näihin tutustutaan osassa 6. 
 
 ### java
-java on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston ajamalla komennon `java hei.java`.
+`java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Javabittikoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 
 
 ### jshell
 Jshell on interaktiivinen työkalu Javaohjelmoinnin ja prototyyppien opetteluun.
 
 ### Kurssikohtaiset IntelliJ asetukset
-Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
+TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
 ## (J)VM
-JVM tulee sanoista **J**ava **V**irtual **M**achine joka tarkoittaa abstraktia virtuaalikonetta, jo
+JVM tulee sanoista **J**ava **V**irtual **M**achine joka tarkoittaa abstraktia virtuaalikonetta, jolla voidaan ajaa Javabittikoodia. Hyöty on siinä, että ohjelma joka on käännetty Javabittikoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, Apple, Linux, jne.), kunhan JVM pyörii kyseisellä alustalla. 
 - Miten java toimii
 - Kääntäminen vs. tulkkaus
+
+## WIP miten packaget toimii?
+**Pakkauksiin liittyvä tehtävä**
 
 ## Java I/O operaatioita
 Täydentyy
@@ -62,7 +66,7 @@ Täydentyy
 Javan IO-luokalla voidaan käyttäjältä lukea syötettä näin:
 
 ```java
-public static void main() {
+void main() {
         String syote = IO.readln();
         IO.println("Kirjoitit: " + syote);
 }
