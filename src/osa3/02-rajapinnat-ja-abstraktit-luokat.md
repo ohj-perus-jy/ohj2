@@ -30,16 +30,36 @@ classDiagram
 
 // Esimerkki ilman abstraktia luokkaa
 
+### [main.java](#tab/main)
+
+```java
+public class Main {
+    public static void main(String[] args) {
+        Laite[] laitteet = {
+            new Valo(),
+            new Termostaatti(),
+            new Turvakamera(),
+            new Kahvinkeitin()
+        };
+
+        for (Laite laite : laitteet) {
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+        }
+    }
+}
+```
+
+***
+
 ### [Laite.java](#tab/laite)
 
 ```java
 public class Laite {
     public void vaihdaTilaa() {
-        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
     }
 
     public void raportoiTila() {
-        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
     }
 }
 ```
@@ -141,16 +161,27 @@ public class Kahvinkeitin extends Laite {
 
 ***
 
-Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. 
-Ei ole järkevää, että jokin yleinen laite voisi vaihtaa tilaa tai raportoida tilansa ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse.
-Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi, eikä siitä ole tarkoitus luoda suoria ilmentymiä. Jokaisen aliluokan tulee toteuttaa nämä metodit itse. 
+Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Periaatteessa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
 
-Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi. 
+```java.ignore
+void main() {
+    Laite laite = new Laite();
+    laite.vaihdaTilaa(); // Ei tee mitään
+    laite.raportoiTila(); // Ei tee mitään
+}
+```
+
+Kuten nähdään, se ei tekisi mitään, ja olisi siis täysin hyödytöntä, koska niillä ei olisi mitään toiminnallisuutta.
+
+Koska ei ole järkevää, että olisi olemassa jokin yleinen laite, ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse, ei ole myöskään järkevää luoda `Laite`-luokan ilmentymiä. Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi.  
+
+Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi, jolloin aliluokkien on pakko toteuttaa ne. 
 
 ```java
 public abstract class Laite {
     public abstract void vaihdaTilaa();
     public abstract void raportoiTila();
+
 }
 ```
 
