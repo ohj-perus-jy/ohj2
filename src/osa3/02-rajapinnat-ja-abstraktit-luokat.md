@@ -30,9 +30,9 @@ classDiagram
 
 // Esimerkki ilman abstraktia luokkaa
 
-### [main.java](#tab/main)
 
 ```java
+//FILE: main.java
 public class Main {
     public static void main(String[] args) {
         Laite[] laitteet = {
@@ -48,13 +48,9 @@ public class Main {
         }
     }
 }
-```
+// FILE_END
 
-***
-
-### [Laite.java](#tab/laite)
-
-```java
+// FILE: Laite.java
 public class Laite {
     public void vaihdaTilaa() {
     }
@@ -62,13 +58,9 @@ public class Laite {
     public void raportoiTila() {
     }
 }
-```
+// FILE_END
 
-***
-
-### [Valo.java](#tab/valo)
-
-```java
+// FILE: Valo.java
 public class Valo extends Laite {
     private int kirkkaus = 0;
 
@@ -89,13 +81,9 @@ public class Valo extends Laite {
         System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }
-```
+// FILE_END
 
-***
-
-### [Termostaatti.java](#tab/termostaatti)
-
-```java
+// FILE: Termostaatti.java
 public class Termostaatti extends Laite {
     private enum Lämpötila { MUKAVUUS, SÄÄSTÖ, POISSA }
     private Lämpötila tila = Lämpötila.MUKAVUUS;
@@ -114,13 +102,9 @@ public class Termostaatti extends Laite {
         System.out.println("Termostaatin tila on " + tila + ".");
     }
 } 
-```
+// FILE_END
 
-***
-
-### [Turvakamera.java](#tab/turvakamera)
-
-```java
+// FILE: Turvakamera.java
 public class Turvakamera extends Laite {
     private boolean tallennusPäällä = false;
 
@@ -135,13 +119,9 @@ public class Turvakamera extends Laite {
         System.out.println("Turvakameran tallennus on " + tila + ".");
     }
 }
-```
+// FILE_END
 
-***
-
-### [Kahvinkeitin.java](#tab/kahvinkeitin)
-
-```java
+// FILE: Kahvinkeitin.java
 public class Kahvinkeitin extends Laite {
 
     private boolean kiehumassa = false;    
@@ -157,9 +137,8 @@ public class Kahvinkeitin extends Laite {
         System.out.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
+// FILE_END
 ```
-
-***
 
 Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Periaatteessa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
 
