@@ -10,6 +10,7 @@
 ## Ehtolauseet
 
 ### If
+TODO:
 If-lauseet toimivat samalla tavalla Javassa kuin muissakin kielissä, eli 
 ```java.ignore
 if (ehto) {
@@ -28,7 +29,7 @@ void main () {
 ```
 
 ### Switch
-
+TODO:
 
 ### Ehdollinen operaattori 
 
@@ -116,6 +117,7 @@ void main () {
 ```
 
 ## Listat
+TODO:
 Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?
 
 Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:

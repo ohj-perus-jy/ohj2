@@ -9,6 +9,7 @@
 > - Osaat kirjoittaa Ohjelmointi 1 -kurssin tapaisia ohjelmia Javalla
 
 ## Datan käsittely
+TODO:
 - Taulukko, merkkijono jne.?
 
 ## Funktiot
@@ -52,14 +53,15 @@ int summa(int a , int b) {
 Dokumentaation saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
 
 ## B1
+- (Verkko viikon konsepteista?)
 
-- Verkko viikon konsepteista?
+- Monty hall ongelman simulointi neljällä ovella
 
 ## B2
-TODO:
+- Vakioaikainen haku taulukosta. Esimerkiksi, että kuinka monta päivää on kuukaudessa?
 
 ## B3
-TODO:
+- Raa-alla voimalla sanakirjahyökkäys salasanaa vastaan?
 
 ## G1
 
