@@ -11,18 +11,8 @@
 - TODO: Pitäisiköhän olla jokin abstrakti versio siitä, mitä rakenteisella ohjelmoinnilla haetaan ja sen jälkeen jokin pieni koodiesimerkki? Pitäisikö koodiesimerkki olla pseudokoodia vai ei?
 
 ## Javan perustietotyypeistä
-Kullekin Javan perustietotyypeistä on olemassa käärijäluokka, joka on nimeltään sama kuin tyypin nimi, mutta isolla kirjaimella. Poikkeuksena `int`, jonka käärijäluokka on `Integer`.
+Kullekin Javan primitiivitietotyypeistä on olemassa käärijäluokka, joka on nimeltään sama kuin tyypin nimi, mutta isolla kirjaimella. Poikkeuksena kokonaisluku `int`, jonka käärijäluokka on `Integer` ja yksittäiselle merkille `char` on `Character` luokka. Käärijäluokasta löytyy hyödyllisiä metodeita, kuten `toString()` tai vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
 
-## boolean
-Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
-
-```java
-void main() {
-    boolean totta = true;
-    String mjonona = Boolean.toString(totta);
-    IO.println(mjonona[0]);
-}
-```
 
 ## Numeeriset muuttujat
 
@@ -39,6 +29,19 @@ void main() {
     short kaksiTavua = Short.MAX_VALUE;
     IO.println(tavu);
     IO.println(kaksiTavua);
+}
+```
+
+Numeroliteraalin tyypin saa vaihdettua 
+```java
+void main() {
+    double desimaali = (double)1/3;
+    System.out.format("1/3 on desimaalilukuna %.3f%n",desimaali);
+    int leikattu = (int)1.3;
+    IO.println(leikattu);
+    Double kaaritty = desimaali;
+    int kokonaislukuna = kaaritty.intValue();
+    IO.println(kokonaislukuna);
 }
 ```
 
@@ -78,9 +81,18 @@ void main () {
 - `StringBuilder`
 
 ## char
+Javassa voit luoda yksittäisiä merkkejä avainsanan `char` avulla: 
+
+```java
+void main() {
+    char tabulaattoriMerkki = '\u0009';
+    IO.println(Character.isWhitespace(tabulaattoriMerkki));
+}
+```
+
 
 ## String
-Jotain esimerkkejä String-luokan metodeista?
+TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
 
 ```java
 void main() {
@@ -93,7 +105,7 @@ void main() {
 
 Ylemmässä esimerkissä metodi `.concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
 
-Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
+Huomaa, että Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
 
 ```java
 void main() {
@@ -103,6 +115,7 @@ void main() {
 ```
 
 ## StringBuilder
+Jos tarvitsee muunneltavan merkkijonon, käytä StringBuilderia:
 
 ```java
 void main() {
@@ -112,6 +125,17 @@ void main() {
     IO.println(muuttuva);
     muuttuva.append(" merkkijono.");
     IO.println(muuttuva);
+}
+```
+
+## boolean
+Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
+
+```java
+void main() {
+    boolean totta = true;
+    String mjonona = Boolean.toString(totta);
+    IO.println(mjonona.charAt(0));
 }
 ```
 
