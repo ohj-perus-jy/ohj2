@@ -11,8 +11,10 @@
 - TODO: Pitäisiköhän olla jokin abstrakti versio siitä, mitä rakenteisella ohjelmoinnilla haetaan ja sen jälkeen jokin pieni koodiesimerkki? Pitäisikö koodiesimerkki olla pseudokoodia vai ei?
 
 ## Javan perustietotyypeistä
-Kullekin Javan primitiivitietotyypeistä on olemassa käärijäluokka, joka on nimeltään sama kuin tyypin nimi, mutta isolla kirjaimella. Poikkeuksena kokonaisluku `int`, jonka käärijäluokka on `Integer` ja yksittäiselle merkille `char` on `Character` luokka. Käärijäluokasta löytyy hyödyllisiä metodeita, kuten `toString()` tai vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
 
+Kullekin Javan primitiivitietotyypille on olemassa niin sanottu käärijäluokka. Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin primitiivityypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
+
+TODO: Lyhyt esimerkki käärijäluokan käytöstä.
 
 ## Numeeriset muuttujat
 
