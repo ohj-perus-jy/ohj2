@@ -4,6 +4,9 @@ language = "fi"
 src = "src"
 title = "Ohjelmointi 2"
 
+[build]
+create-missing = false
+
 [output.html]
 site-url = "/ohj2/"
 additional-css = [
@@ -11,6 +14,8 @@ additional-css = [
   "highlight/twilight.css", 
   "highlight/apprentice.css",
   "theme/alerts-style.css",
+  "theme/accordion.css",
+  "theme/codeblock-tabs.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
@@ -19,6 +24,8 @@ additional-js = [
   "mermaid/mermaid-init.js",
   "theme/mode-java.js",
   "theme/playground_ext.js",
+  "theme/accordion.js",
+  "theme/codeblock-tabs.js",
 ]
 
 [output.html.playground]
@@ -32,3 +39,9 @@ java = "//-"
 [preprocessor.mermaid]
 
 [preprocessor.katex]
+
+[preprocessor.codeblock-tabs]
+
+[preprocessor.accordion]
+command = "python3 ./preprocessors/python/accordion.py"
+

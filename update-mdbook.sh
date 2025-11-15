@@ -11,3 +11,5 @@ cargo install mdbook \
               mdbook-mermaid \
               mdbook-alerts \
               mdbook-katex
+
+cargo install --locked --path ./preprocessors/rust/mdbook-codeblock-tabs

@@ -162,8 +162,6 @@ html:not(.js) .left-buttons button {
     display: none;
 }
 
-
-
 .nav-chapters i, .mobile-nav-chapters i {    
     font-size: 2.5em;
 }
@@ -182,24 +180,26 @@ html:not(.js) .left-buttons button {
 .mobile-nav-chapters {
     text-align: center;
     text-decoration: none;
-    width: 90px;
+    min-width: 90px;
+    max-width: 120px;
     border-radius: 5px;
-    padding-bottom: 5px;
+    padding: 5px;
     background-color: var(--sidebar-bg);
+    border: 1px solid var(--sidebar-spacer);
 }
 
 /* Only Firefox supports flow-relative values */
-.previous { float: left; }
-[dir=rtl] .previous { float: right; }
+/* .previous { float: left; } */
+/* [dir=rtl] .previous { float: right; } */
 
 /* Only Firefox supports flow-relative values */
 .next {
-    float: right;
+    /*float: right;*/
     right: var(--page-padding);
 }
 [dir=rtl] .next {
-    float: left;
-    right: unset;
+    /*float: left;*/
+    /*right: unset;*/
     left: var(--page-padding);
 }
 
@@ -209,13 +209,30 @@ html:not(.js) .left-buttons button {
 
 @media only screen and (max-width: 1080px) {
     .nav-wide-wrapper { display: none; }
-    .nav-wrapper { display: block; }
+    .nav-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
+       align it to the right. */
+    .nav-wrapper:has(> .next:only-child) {
+        justify-content: flex-end;
+    }
 }
 
 /* sidebar-visible */
 @media only screen and (max-width: 1380px) {
     #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wide-wrapper { display: none; }
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper { display: block; }
+    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper { 
+        display: flex; 
+        justify-content: space-between;
+    }
+    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
+    align it to the right. */
+    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper:has(> .next:only-child) {
+        justify-content: flex-end;
+    }
 }
 
 /* Inline code */
@@ -655,7 +672,7 @@ html:not(.sidebar-resizing) .sidebar {
 
 .theme-popup {
     position: absolute;
-    left: 10px;
+    right: 10px;
     top: var(--menu-bar-height);
     z-index: 1000;
     border-radius: 4px;
@@ -739,4 +756,10 @@ html:not(.sidebar-resizing) .sidebar {
     text-align: center;
     /* mdbook's margin for h2 is way too large. */
     margin: 10px;
+}
+
+.part-icon {
+    float: right;
+    font-size: 128pt;
+    margin-top: -12pt;
 }

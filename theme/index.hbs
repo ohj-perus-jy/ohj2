@@ -154,6 +154,20 @@
                         <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="bi bi-layout-sidebar"></i>
                         </label>
+                        
+                        
+                    </div>
+
+                    <h1 class="menu-title">{{ book_title }}</h1>
+
+                    <div class="right-buttons">
+
+                        {{#if search_enabled}}
+                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        {{/if}}
+
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="bi bi-circle-half"></i>
                         </button>
@@ -161,22 +175,8 @@
                             <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="jyu-light">JYU Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="jyu-dark">JYU Dark</button></li>
-                            {{!-- <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li> --}}
                         </ul>
-                        {{#if search_enabled}}
-                        <button id="search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="searchbar">
-                            <i class="bi bi-search"></i>
-                        </button>
-                        {{/if}}
-                    </div>
 
-                    <h1 class="menu-title">{{ book_title }}</h1>
-
-                    <div class="right-buttons">
                         {{#if print_enable}}
                         <a href="{{ path_to_root }}print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
@@ -244,7 +244,7 @@
                             </a>
                         {{/next}}
 
-                        <div style="clear: both"></div>
+                        <!-- div style="clear: both"></div -->
                     </nav>
                 </div>
             </div>
