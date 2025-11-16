@@ -16,114 +16,90 @@
 
 *Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
-Perivästä luokasta käytetään termiä *aliluokka* (engl. *subclass*) ja peritystä luokasta termiä *yliluokka* (engl. *superclass*).
+Perivästä luokasta käytetään termiä *aliluokka* (subclass) ja peritystä luokasta termiä *yliluokka* (superclass).
 
 Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa.
 
 ## Esimerkki
 
-Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan keksitty esimerkki eläinklinikkajärjestelmästä: `Kissa`, `Koira` ja `Marsu` voisivat kaikki olla olioita kuvitteellisessa Kisu-klinikkajärjestelmässä. Kaikilla näillä on eläimille yhteisiä ominaisuuksia, kuten nimi, paino ja energia. Jokaisella on myös yhteisiä toimintoja, kuten syöminen (joka kasvattaa painoa ja lisää energiaa), äänteleminen (eläin kertoo nimensä) ja liikkuminen (vähentää energiaa).
+Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan keksitty esimerkki henkilötietojärjestelmästä: `Opiskelija`, `Opettaja` ja `Sihteeri` voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on henkilöille yhteisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisella on myös yhteisiä toimintoja, kuten kirjautuminen järjestelmään.
 
-Kullakin eläimellä on kuitenkin myös omia erityispiirteitään: Kissalla on hännän pituus, koiralla rotu ja säkäkorkeus, marsulla juoksupyörän koko, lempiruoka ja karvan väri. 
-Kissa saalistaa hiiriä, koira noutaa keppejä ja marsu kaivaa tunneleita. (Ominaisuudet ja toiminnot ovat tässä tietenkin vain esimerkkejä, eivätkä ole välttämättä järkeviä tai kattavia.) 
+Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijalla on lista kursseista, joille hän on ilmoittautunut, sekä opintopisteet. Opettajalla on tehtävänimike ja kurssit, joita hän opettaa, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
-Voisimme nyt luoda kolme erillistä luokkaa: `Kissa`, `Koira` ja `Marsu`. Tutki alla olevia luokkia, niissä olevia attribuutteja ja metodeja. 
+Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. Tutki alla olevia luokkia, niissä olevia attribuutteja ja metodeja. 
 
-### [Kissa.java](#tab/kissa)
+### [Opiskelija.java](#tab/opiskelija)
 
 ```java
-class Kissa {
+class Opiskelija {
     String nimi;
-    double ika;
-    double paino;
-    double energia;
+    String kayttajatunnus;
+    List<String> kurssit;
+    int opintopisteet;
+    boolean kirjautunut;
 
-    String hannanPituus;
-
-    void syo() {
-        IO.println(nimi + " syö.");
-        paino += 0.1;
-        energia += 10;
+    void kirjaudu() {
+        kirjautunut = true;
     }
 
-    void aantele() {
-        IO.println("Miau!, sanoo " + nimi + ".");
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
-    void liiku() {
-        IO.println(nimi + " loikkii aidan päällä.");
-        energia -= 5;
-    }
-
-    void saalista() {
-        IO.println(nimi + " saalistaa hiiriä.");
-        energia -= 15;
+    void ilmoittauduKurssille(String kurssi) {
+        kurssit.add(kurssi);
     }
 }
 ```
 
 ***
 
-### [Koira.java](#tab/koira)
+### [Opettaja.java](#tab/opettaja)
 
 ```java
-class Koira {
+class Opettaja {
     String nimi;
-    double ika;
-    double paino;
-    double energia;
+    String kayttajatunnus;
+    String tehtavanimike;
+    List<String> opetettavatKurssit;
+    boolean kirjautunut;
 
-    void syo() {
-        IO.println(nimi + " syö.");
-        paino += 0.1;
-        energia += 10;
+    void kirjaudu() {
+        kirjautunut = true;
     }
 
-    void aantele() {
-        IO.println("Hau!, sanoo " + nimi + ".");
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
-    void liiku() {
-        IO.println(nimi + " juoksee pihalla.");
-        energia -= 5;
-    }
-
-    void nouda() {
-        IO.println(nimi + " noutaa kepin.");
-        energia -= 10;
+    void lisaaKurssi(String kurssi) {
+       opetettavatKurssit.add(kurssi);
     }
 }
-```
+``` 
 
 ***
 
-### [Marsu.java](#tab/marsu)
+### [Sihteeri.java](#tab/sihteeri)
 
 ```java
-class Marsu {
+class Sihteeri {
     String nimi;
-    double ika;
-    double paino;
-    double energia;
+    String kayttajatunnus;
+    boolean kirjautunut;
 
-    void syo() {
-        IO.println(nimi + " syö.");
-        paino += 0.05;
-        energia += 5;
+
+    void kirjaudu() {
+        kirjautunut = true;
     }
 
-    void aantele() {
-        IO.println("Pii!, sanoo " + nimi + ".");
+    void kirjauduUlos() {
+        kirjautunut = false;
     }
 
-    void liiku() {
-        IO.println(nimi + " juoksee juoksupyörässä.");
-        energia -= 3;
-    }
-
-    void kaiva() {
-        IO.println(nimi + " kaivaa tunnelia.");
-        energia -= 8;
+    void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
+        // Opintosuorituksen kirjaamisen logiikka ...
+        // Jätetään tässä esimerkissä toteuttamatta
     }
 }
 ```
