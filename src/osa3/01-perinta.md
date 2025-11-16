@@ -237,8 +237,6 @@ classDiagram
     Henkilo <|-- Sihteeri
 ```
 
-
-
 > [!TODO]
 > Tässä esimerkissä on vielä se ongelma jatkon kannalta, että `Henkilo`-luokka itsessään on melko yleinen, eikä siitä ainakana tässä esimerkissä ole mielekästä luoda suoria ilmentymiä. Voisi olla ehkä fiksua keksiä vielä toinen esimerkki, jossa myös kantaluokka on konkreettinen ja ilmentymien tekemiselle on tarve. 
 
@@ -313,19 +311,19 @@ for (Henkilo henkilo : henkilot) {
 
 Kun aliluokka perii yliluokan, sen on usein tarpeen kutsua yliluokan rakentajaa alustamaan perityt ominaisuudet. Tämä tehdään käyttämällä `super`-avainsanaa aliluokan rakentajassa.
 
-Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa.
+Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa. Lisää vihreällä näkyvä koodi kumpaankin luokkaan.
 
 ```java.ignore
 // FILE: Henkilo.java
 class Henkilo {
 
     // ...
-
+    // HIGHLIGHT_GREEN_BEGIN
     public Henkilo(String nimi, String kayttajatunnus) {
         this.nimi = nimi;
         this.kayttajatunnus = kayttajatunnus;
     }
-
+    // HIGHLIGHT_GREEN_END
     // ...
 }
 // FILE_END
@@ -333,13 +331,13 @@ class Henkilo {
 class Opiskelija extends Henkilo {
 
     // ...
-
+    // HIGHLIGHT_GREEN_BEGIN
     public Opiskelija(String nimi, String kayttajatunnus) {
         super(nimi, kayttajatunnus); // Kutsutaan yliluokan rakentajaa
         this.kurssit = new ArrayList<>();
         this.opintopisteet = 0;
     }
-
+    // HIGHLIGHT_GREEN_END
     // ...
 }
 // FILE_END
