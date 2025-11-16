@@ -448,12 +448,15 @@ class JokuMuuLuokka {
 
 ## Tehtävät
 
-Tehtävä 1: Tee luokkahierarkia ajoneuvoille. Yliluokasta `Ajoneuvo` periytyvät aliluokat `Auto`, `Moottoripyora` ja `Polkupyora`. 
+Tehtävä 1
 
-Määrittele yhteiset ominaisuudet (`nopeus`, `paino`, `kayttovoima`, `renkaidenLukumaara`)
-ja metodit (`kiihdyta()`, `jarruta()`) `Ajoneuvo`-luokassa. 
+Tee luokkahierarkia ajoneuvoille. Yliluokasta `Ajoneuvo` periytyvät aliluokat `Auto`, `Moottoripyora` ja `Polkupyora`. 
 
-Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum?
+Määrittele yhteiset ominaisuudet (`nopeus`, `paino`) ja metodit (`kiihdyta()`, `jarruta()`) `Ajoneuvo`-luokassa. Määrittele myös renkaiden lukumäärä, jonka tulee olla vakio. 
+
+Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. 
+
+<!-- Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum? -->
 
 Lisää erityispiirteitä kuhunkin aliluokkaan:
 
@@ -461,13 +464,19 @@ Lisää erityispiirteitä kuhunkin aliluokkaan:
  * `Moottoripyora`: `sivuvaunu`
  * `Polkupyora`: `vaihteidenLukumaara`
 
-Testaa luokkia luomalla olioita ja kutsumalla metodeja.
+Testaa luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja metodit huolellisesti.
 
-Tehtävä 2: Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sähköauto`, joka perii `Auto`-luokasta. Lisää `Sähköauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
+Tehtävä 2
 
-Testaa `Sähköauto`-luokkaa luomalla olio ja kutsumalla metodeja.
+Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sähköauto`, joka perii `Auto`-luokasta. Lisää `Sähköauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
 
-Bonus 1: TODO: Keksi tehtävä johon liittyy `final`-avainsanan käyttö. 
+Testaa kumpaakin auto-luokkaa luomalla niistä olio ja kutsumalla metodeja.
+
+Bonus 1
+
+Lisää `Auto`-luokalle vakio `RANGE_MAX`, joka ilmaisee maksimietäisyyden kilometreinä, jonka auto voi kulkea yhdellä latauksella tai tankkauksella. Lisää `Auto`-luokkaan metodi `tankkaaKayttovoimaa()`, joka lisää ajoneuvolle käyttövoimaa (bensiiniä tai sähköä). 
+
+Lisää sitten `Sahkoauto`-luokkaan attribuutti `akunKunto` (prosentteina; väliltä 0-100) sekä `range` (kilometreinä). Kun autoa ladataan, akun kunto heikkenee 0.1%:lla jokaisella latauskerralla. Niinpä `range` tulee laskea akun kunnon perusteella `akunKunto` / 100 * `RANGE_MAX`.
 
 ## Lähteitä
  
