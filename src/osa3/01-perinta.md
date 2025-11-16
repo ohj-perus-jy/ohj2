@@ -28,9 +28,8 @@ Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijall
 
 Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. Tutki alla olevia luokkia, niissä olevia attribuutteja ja metodeja. 
 
-### [Opiskelija.java](#tab/opiskelija)
-
 ```java
+// FILE: Opiskelija.java
 class Opiskelija {
     String nimi;
     String kayttajatunnus;
@@ -50,13 +49,9 @@ class Opiskelija {
         kurssit.add(kurssi);
     }
 }
-```
+// FILE_END
 
-***
-
-### [Opettaja.java](#tab/opettaja)
-
-```java
+// FILE: Opettaja.java
 class Opettaja {
     String nimi;
     String kayttajatunnus;
@@ -76,13 +71,9 @@ class Opettaja {
        opetettavatKurssit.add(kurssi);
     }
 }
-``` 
+// FILE_END
 
-***
-
-### [Sihteeri.java](#tab/sihteeri)
-
-```java
+// FILE: Sihteeri.java
 class Sihteeri {
     String nimi;
     String kayttajatunnus;
@@ -102,9 +93,32 @@ class Sihteeri {
         // Jätetään tässä esimerkissä toteuttamatta
     }
 }
-```
+// FILE_END
 
-*** 
+// FILE: main
+public class Main {
+    public static void main(String[] args) {
+        Opiskelija opiskelija = new Opiskelija();
+        opiskelija.nimi = "Matti Meikäläinen";
+        opiskelija.kayttajatunnus = "matti123";
+        opiskelija.kirjaudu();
+        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
+
+        Opettaja opettaja = new Opettaja();
+        opettaja.nimi = "Maija Opettaja";
+        opettaja.kayttajatunnus = "maijaop";
+        opettaja.kirjaudu();
+        opettaja.lisaaKurssi("Ohjelmointi 1");
+        opettaja.lisaaKurssi("Ohjelmointi 2");
+
+        Sihteeri sihteeri = new Sihteeri();
+        sihteeri.nimi = "Sari Sihteeri";
+        sihteeri.kayttajatunnus = "saris";
+        sihteeri.kirjaudu();
+        sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
+    }
+}
+```
 
 Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä sama metodi `kirjaudu()`. Toki näiden luokkien välillä on myös eroja, mutta tämä toisto on ongelmallista, koska:
 
