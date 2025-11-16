@@ -76,3 +76,15 @@ noudata seuraavia ohjeita soiton varaamiseksi etäohjausten aikana:
  6. Avaa ohjauspyyntölomake: **TODO! LINKKI**
  7. Täytä omat tietosi ja HUOM Pasteta lisätietokenttään kohdassa 5 kopioimasi linkki
  8. Odota että ohjaaja tulee huoneeseesi. Saatat joutua hyväksymään hänen sisäänpääsyn (riippuu kokoushuoneesi asetuksista)
+
+## Palaute ja kehittäminen
+
+Voit antaa palautetta ja kehitysehdotuksia opintojaksosta kolmella tavalla:
+
+ 1. Keräämme jatkuvaa palautetta opintojakson aikana. Nyt, kun olemme kehittämässä opintojakson sisältöjä ja toteutusta, tämä jatkuva palaute on erityisen tärkeää. Voit antaa palautetta anonyymisti alla olevan linkin kautta: **TODO:** Norppa-linkki tähän.
+
+ 2. Mikäli havaitset materiaalissa virheen, epäselvyyden, tai muun ongelman, voit raportoida siitä
+    GitHubissa (TODO: Issue-linkki tähän), tai suoraan opettajille sähköpostitse osoitteeseen `ohj2-opet@tim.jyu.fi`.
+ 
+ 3. Opintojakson lopuksi jokainen Sisussa (tai Ilpo-portaalissa) ilmoittautunut saa henkilökohtaisen linkin kurssipalautekyselyyn, jossa voit antaa anonyymisti palautetta koko opintojaksosta.
+
