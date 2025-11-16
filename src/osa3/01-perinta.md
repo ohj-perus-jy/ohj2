@@ -30,44 +30,54 @@ Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihtee
 
 ```java
 // FILE: Opiskelija.java
+import java.util.ArrayList;
+
 class Opiskelija {
     String nimi;
     String kayttajatunnus;
-    List<String> kurssit;
+    ArrayList<String> kurssit = new ArrayList<>();
     int opintopisteet;
     boolean kirjautunut;
 
     void kirjaudu() {
+        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
     void kirjauduUlos() {
+        IO.println(kayttajatunnus + " kirjautui ulos.");
         kirjautunut = false;
     }
 
     void ilmoittauduKurssille(String kurssi) {
+        IO.println("Ilmoittauduttu kurssille: " + kurssi);
         kurssit.add(kurssi);
     }
 }
 // FILE_END
 
 // FILE: Opettaja.java
+import java.util.ArrayList;
+
 class Opettaja {
     String nimi;
     String kayttajatunnus;
     String tehtavanimike;
-    List<String> opetettavatKurssit;
+    ArrayList<String> opetettavatKurssit = new ArrayList<>();
     boolean kirjautunut;
 
     void kirjaudu() {
+        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
     void kirjauduUlos() {
+        IO.println(kayttajatunnus + " kirjautui ulos.");
         kirjautunut = false;
     }
 
     void lisaaKurssi(String kurssi) {
+       IO.println(nimi + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
        opetettavatKurssit.add(kurssi);
     }
 }
@@ -81,10 +91,12 @@ class Sihteeri {
 
 
     void kirjaudu() {
+        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
     void kirjauduUlos() {
+        IO.println(kayttajatunnus + " kirjautui ulos.");
         kirjautunut = false;
     }
 
@@ -95,9 +107,9 @@ class Sihteeri {
 }
 // FILE_END
 
-// FILE: main
+//FILE: main.java
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Opiskelija opiskelija = new Opiskelija();
         opiskelija.nimi = "Matti Meikäläinen";
         opiskelija.kayttajatunnus = "matti123";
@@ -107,6 +119,7 @@ public class Main {
         Opettaja opettaja = new Opettaja();
         opettaja.nimi = "Maija Opettaja";
         opettaja.kayttajatunnus = "maijaop";
+        opettaja.tehtavanimike = "Yliopistonlehtori";
         opettaja.kirjaudu();
         opettaja.lisaaKurssi("Ohjelmointi 1");
         opettaja.lisaaKurssi("Ohjelmointi 2");
@@ -118,6 +131,7 @@ public class Main {
         sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
     }
 }
+// FILE_END
 ```
 
 Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä sama metodi `kirjaudu()`. Toki näiden luokkien välillä on myös eroja, mutta tämä toisto on ongelmallista, koska:
@@ -134,68 +148,83 @@ Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sis�
 
 Toteutetaan nyt yllä kuvattu tilanne uudestaan niin, että kirjoitetaan kaikissa luokissa esiintyvät ominaisuudet ja toiminnot *uuteen* `Henkilo`-luokkaan, ja muut luokat perivät kyseisen luokan.
 
-### [Henkilo.java](#tab/henkilo)
-
 ```java
+// FILE: Henkilo.java
 class Henkilo {
     String nimi;
     String kayttajatunnus;
     boolean kirjautunut;
 
     void kirjaudu() {
+        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
     void kirjauduUlos() {
+        IO.println(kayttajatunnus + " kirjautui ulos.");
         kirjautunut = false;
     }
 }
-```
-
-***
-
-### [Opiskelija.java](#tab/opiskelija-extends)
-
-```java
+// FILE_END
+// FILE: Opiskelija.java
+import java.util.ArrayList;
 class Opiskelija extends Henkilo {
-    List<String> kurssit;
+    ArrayList<String> kurssit = new ArrayList<>();
     int opintopisteet;
 
     void ilmoittauduKurssille(String kurssi) {
-        // Kurssille ilmoittautumisen logiikka
+        IO.println("Ilmoittauduttu kurssille: " + kurssi);
+        kurssit.add(kurssi);
     }
 }
-```
-
-***
-
-### [Opettaja.java](#tab/opettaja-extends)
-
-```java
+// FILE_END
+// FILE: Opettaja.java
+import java.util.ArrayList;
 class Opettaja extends Henkilo {
     String tehtavanimike;
-    List<String> opetettavatKurssit;
+    ArrayList<String> opetettavatKurssit = new ArrayList<>();
 
     void lisaaKurssi(String kurssi) {
-       // Kurssin lisäämisen logiikka
+       IO.println(nimi + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
+       opetettavatKurssit.add(kurssi);
     }
 }
-``` 
-
-***
-
-### [Sihteeri.java](#tab/sihteeri-extends)
-
-```java
+// FILE_END
+// FILE: Sihteeri.java
 class Sihteeri extends Henkilo {
 
     void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
-        // Opintosuorituksen kirjaamisen logiikka
+        // Opintosuorituksen kirjaamisen logiikka ...
+        // Jätetään tässä esimerkissä toteuttamatta
     }
 }
-```    
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Opiskelija opiskelija = new Opiskelija();
+        opiskelija.nimi = "Matti Meikäläinen";
+        opiskelija.kayttajatunnus = "matti123";
+        opiskelija.kirjaudu();
+        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
 
-*** 
+        Opettaja opettaja = new Opettaja();
+        opettaja.nimi = "Maija Opettaja";
+        opettaja.kayttajatunnus = "maijaop";
+        opettaja.tehtavanimike = "Yliopistonlehtori";
+        opettaja.kirjaudu();
+        opettaja.lisaaKurssi("Ohjelmointi 1");
+        opettaja.lisaaKurssi("Ohjelmointi 2");
+
+        Sihteeri sihteeri = new Sihteeri();
+        sihteeri.nimi = "Sari Sihteeri";
+        sihteeri.kayttajatunnus = "saris";
+        sihteeri.kirjaudu();
+        sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
+    }
+}
+// FILE_END
+``` 
 
 Huomaa, että `Opiskelija`, `Opettaja` ja `Sihteeri`-luokat eivät enää määrittele `nimi`- ja `kayttajatunnus`-attribuutteja tai `kirjaudu()`-metodia, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää.
 
@@ -208,6 +237,8 @@ classDiagram
     Henkilo <|-- Sihteeri
 ```
 
+
+
 > [!TODO]
 > Tässä esimerkissä on vielä se ongelma jatkon kannalta, että `Henkilo`-luokka itsessään on melko yleinen, eikä siitä ainakana tässä esimerkissä ole mielekästä luoda suoria ilmentymiä. Voisi olla fiksua keksiä sellainen esimerkki, jossa myös kantaluokka on konkreettinen ja ilmentymien tekemiselle on tarve. 
 
@@ -215,19 +246,13 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. Unif
 
 Jatketaan vielä esimerkkiä hieman pidemmälle. Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
 
-### [TutkintoOpiskelija.java](#tab/tutkinto-opiskelija)
-
-```java
+```java.ignore
+// FILE: TutkintoOpiskelija.java
 class TutkintoOpiskelija extends Opiskelija {
     String tutkintoOhjelma;
 }
-```
-
-***
-
-### [AvoinOpiskelija.java](#tab/avoin-opiskelija)
-
-```java
+// FILE_END
+// FILE: AvoinOpiskelija.java
 class AvoinOpiskelija extends Opiskelija {
     boolean maksutSuoritettu;
 
@@ -237,9 +262,8 @@ class AvoinOpiskelija extends Opiskelija {
         maksutSuoritettu = true;
     }
 }
+// FILE_END
 ```
-
-***
 
 Luokkahierarkia näyttäisi nyt seuraavalta:
 
@@ -253,9 +277,37 @@ classDiagram
     Opiskelija <|-- AvoinOpiskelija
 ``` 
 
-Kun luokka perii toisen luokan, tästä suhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
+Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
 
-Kuitenkin, `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
+Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-tyyppisinä, kun ei ole tarpeen tietää tarkasti, minkä tyyppisiä olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä erilaisia henkilöitä yhtenä ryhmänä, esimerkiksi lisäämällä kaikki tekemämme oliot `Henkilo`-taulukkoon:
+
+```java.ignore
+Opiskelija opiskelija = new Opiskelija();
+Opettaja opettaja = new Opettaja();
+Sihteeri sihteeri = new Sihteeri();
+
+Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
+```
+
+Nyt koska `Henkilo`-luokassa on määritelty muun muassa `kirjauduUlos()`-metodi, voimme kutsua tätä metodia kaikille `henkilot`-taulukon olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita taulukossa on:
+
+```java.ignore
+for (Henkilo henkilo : henkilot) {
+    henkilo.kirjauduUlos();
+}
+```
+
+Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria:
+
+```java.ignore
+Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
+for (Henkilo henkilo : henkilot) {
+    IO.println("Käsitellään henkilöä: " + henkilo.nimi);
+    if (henkilo instanceof Opettaja) {
+        IO.println(henkilo.nimi + " on opettaja.");
+    }
+}
+```
 
 ## Rakentajat ja super-avainsana
 
@@ -263,9 +315,8 @@ Kun aliluokka perii yliluokan, sen on usein tarpeen kutsua yliluokan rakentajaa 
 
 Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa.
 
-### [Henkilo.java](#tab/henkilo-rakentaja)
-
-```java
+```java.ignore
+// FILE: Henkilo.java
 class Henkilo {
 
     // ...
@@ -274,14 +325,11 @@ class Henkilo {
         this.nimi = nimi;
         this.kayttajatunnus = kayttajatunnus;
     }
+
+    // ...
 }
-```
-
-***
-
-### [Opiskelija.java](#tab/opiskelija-rakentaja)
-
-```java
+// FILE_END
+// FILE: Opiskelija.java
 class Opiskelija extends Henkilo {
 
     // ...
@@ -291,14 +339,15 @@ class Opiskelija extends Henkilo {
         this.kurssit = new ArrayList<>();
         this.opintopisteet = 0;
     }
-}
-```
 
-***
+    // ...
+}
+// FILE_END
+```
 
 Vastaavasti voisimme lisätä rakentajat myös `Opettaja`- ja `Sihteeri`-luokkiin, jotka kutsuvat `Henkilo`-luokan rakentajaa samalla tavalla. 
 
-`super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa, "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei suoraan `Henkilo`-luokan rakentajaa.
+`super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
 ## Ylikirjoittaminen
 
@@ -306,7 +355,7 @@ Perityn luokan metodeja voidaan *ylikirjoittaa* (override) aliluokassa, mikä ta
 
 Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Ylikirjoitetaan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
-```java
+```java.ignore
 class Opiskelija extends Henkilo {
 
     // ...
@@ -326,11 +375,9 @@ class Opiskelija extends Henkilo {
 
 Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole ylikirjoitettu.
 
-Yksi tyypillinen tapa käyttää ylikirjoittamista on muokata `toString()`-metodia, joka tarjoaa merkkijonoesityksen oliosta.
-`toString()`-metodi on määritelty Javan `Object`-luokassa, josta kaikki luokat perivät. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa luokallemme sopivan merkkijonoesityksen.
+Yksi tyypillinen tapa käyttää ylikirjoittamista on muokata `toString()`-metodia, joka tarjoaa merkkijonoesityksen oliosta. `toString()`-metodi on määritelty Javan `Object`-luokassa, josta kaikki luokat perivät. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa luokallemme sopivan merkkijonoesityksen.
 
-```java
-
+```java.ignore
 class Opiskelija extends Henkilo {
 
     // ...
