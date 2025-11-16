@@ -65,8 +65,8 @@ Liitämme sinut viimeistään seuraavana arkipäivänä.
 
 ## Etäohjauksiin osallistuminen ilman Teamsia
 
-Jos et millään onnistu kirjautumaan Teamsiin tai et halua olla Teams-kanavalla, 
-noudata seuraavia ohjeita soiton varaamiseksi etäohjausten aikana:
+Jos et millään onnistu kirjautumaan Teamsiin tai et halua olla Teams-kanavalla,
+voit pyytää etäohjausta Zoomin kautta seuraavasti: 
 
  1. Asenna Zoom sovellus koneellesi osoitteesta <https://zoom.us/download> (muut kuin tutkinto-opiskelijat) tai <https://jyufi.zoom.us> (tutkinto-opiskelijat; Valitse Download Client ihan alhaalta)
  2. Kirjaudu Zoomiin valitsemallasi tilillä, esim. Google-kirjautumista käyttäen (muut kuin tutkinto-opiskelijat) tai Single Sign-on / SSO -toiminnolla (tutkinto-opiskelijat; käytä company domainia `jyufi`)
