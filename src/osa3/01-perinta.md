@@ -33,14 +33,22 @@ Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihtee
 import java.util.ArrayList;
 
 class Opiskelija {
-    String nimi;
-    String kayttajatunnus;
-    ArrayList<String> kurssit = new ArrayList<>();
-    int opintopisteet;
-    boolean kirjautunut;
+    private String nimi;
+    private String kayttajatunnus;
+    private boolean kirjautunut;
+    private int opintopisteet;
+    private ArrayList<String> kurssit;
+
+    public Opiskelija(String nimi, String kayttajatunnus) {
+        this.nimi = nimi;
+        this.kayttajatunnus = kayttajatunnus;
+        this.kirjautunut = false;
+        this.opintopisteet = 0;
+        this.kurssit = new ArrayList<>();
+    }
 
     void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
+        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
@@ -50,7 +58,7 @@ class Opiskelija {
     }
 
     void ilmoittauduKurssille(String kurssi) {
-        IO.println("Ilmoittauduttu kurssille: " + kurssi);
+        IO.println(kayttajatunnus + " ilmoittautui kurssille: " + kurssi);
         kurssit.add(kurssi);
     }
 }
@@ -60,14 +68,22 @@ class Opiskelija {
 import java.util.ArrayList;
 
 class Opettaja {
-    String nimi;
-    String kayttajatunnus;
-    String tehtavanimike;
-    ArrayList<String> opetettavatKurssit = new ArrayList<>();
-    boolean kirjautunut;
+    private String nimi;
+    private String kayttajatunnus;
+    private boolean kirjautunut;
+    private String tehtavanimike;
+    private ArrayList<String> opetettavatKurssit;
+
+    public Opettaja(String nimi, String kayttajatunnus, String tehtavanimike) {
+        this.nimi = nimi;
+        this.kayttajatunnus = kayttajatunnus;
+        this.tehtavanimike = tehtavanimike;
+        this.kirjautunut = false;
+        this.opetettavatKurssit = new ArrayList<>();
+    }
 
     void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
+        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
@@ -76,8 +92,12 @@ class Opettaja {
         kirjautunut = false;
     }
 
+    void naytaOpetettavatKurssit() {
+        String kurssit = String.join(", ", opetettavatKurssit);
+        IO.println(nimi + " opettaa kursseja: " + kurssit);
+    }
+
     void lisaaKurssi(String kurssi) {
-       IO.println(nimi + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
        opetettavatKurssit.add(kurssi);
     }
 }
@@ -85,13 +105,18 @@ class Opettaja {
 
 // FILE: Sihteeri.java
 class Sihteeri {
-    String nimi;
-    String kayttajatunnus;
-    boolean kirjautunut;
+    private String nimi;
+    private String kayttajatunnus;
+    private boolean kirjautunut;
 
+    public Sihteeri(String nimi, String kayttajatunnus) {
+        this.nimi = nimi;
+        this.kayttajatunnus = kayttajatunnus;
+        this.kirjautunut = false;
+    }
 
     void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjältunnuksella: " + kayttajatunnus);
+        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
         kirjautunut = true;
     }
 
@@ -110,23 +135,17 @@ class Sihteeri {
 //FILE: main.java
 public class Main {
     public static void main() {
-        Opiskelija opiskelija = new Opiskelija();
-        opiskelija.nimi = "Matti Meikäläinen";
-        opiskelija.kayttajatunnus = "matti123";
+        Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen", "matti123");
         opiskelija.kirjaudu();
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
 
-        Opettaja opettaja = new Opettaja();
-        opettaja.nimi = "Maija Opettaja";
-        opettaja.kayttajatunnus = "maijaop";
-        opettaja.tehtavanimike = "Yliopistonlehtori";
+        Opettaja opettaja = new Opettaja("Maija Opettaja", "maijaope", "Yliopistonlehtori");
         opettaja.kirjaudu();
         opettaja.lisaaKurssi("Ohjelmointi 1");
         opettaja.lisaaKurssi("Ohjelmointi 2");
+        opettaja.naytaOpetettavatKurssit();
 
-        Sihteeri sihteeri = new Sihteeri();
-        sihteeri.nimi = "Sari Sihteeri";
-        sihteeri.kayttajatunnus = "saris";
+        Sihteeri sihteeri = new Sihteeri("Sari Sihteeri", "saris");
         sihteeri.kirjaudu();
         sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
     }
@@ -148,12 +167,20 @@ Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sis�
 
 Toteutetaan nyt yllä kuvattu tilanne uudestaan niin, että kirjoitetaan kaikissa luokissa esiintyvät ominaisuudet ja toiminnot *uuteen* `Henkilo`-luokkaan, ja muut luokat perivät kyseisen luokan.
 
+> [!VAROITUS]
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti attribuuttien näkyvyysmääreet jätetään toistaiseksi oletusasetukseen (package-private) yksinkertaisuuden vuoksi. Korjaamme asian esimerkin edetessä.
+
 ```java
 // FILE: Henkilo.java
 class Henkilo {
     String nimi;
     String kayttajatunnus;
-    boolean kirjautunut;
+    private boolean kirjautunut = false;
+
+    public String getNimi()
+    {
+        return nimi;
+    }
 
     void kirjaudu() {
         IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
@@ -170,11 +197,15 @@ class Henkilo {
 import java.util.ArrayList;
 class Opiskelija extends Henkilo {
     ArrayList<String> kurssit = new ArrayList<>();
-    int opintopisteet;
+    int opintopisteet = 0;
 
     void ilmoittauduKurssille(String kurssi) {
-        IO.println("Ilmoittauduttu kurssille: " + kurssi);
         kurssit.add(kurssi);
+    }
+
+    public void naytaKurssit(){
+        String kaikkiKurssit = String.join(", ", kurssit);
+        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
     }
 }
 // FILE_END
@@ -185,8 +216,12 @@ class Opettaja extends Henkilo {
     ArrayList<String> opetettavatKurssit = new ArrayList<>();
 
     void lisaaKurssi(String kurssi) {
-       IO.println(nimi + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
-       opetettavatKurssit.add(kurssi);
+        opetettavatKurssit.add(kurssi);
+    }
+
+    void naytaOpetettavatKurssit() {
+        String kurssit = String.join(", ", opetettavatKurssit);
+        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
     }
 }
 // FILE_END
@@ -207,14 +242,15 @@ public class Main {
         opiskelija.kayttajatunnus = "matti123";
         opiskelija.kirjaudu();
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
+        opiskelija.naytaKurssit();
 
         Opettaja opettaja = new Opettaja();
         opettaja.nimi = "Maija Opettaja";
-        opettaja.kayttajatunnus = "maijaop";
-        opettaja.tehtavanimike = "Yliopistonlehtori";
+        opettaja.kayttajatunnus = "maijaope";
         opettaja.kirjaudu();
         opettaja.lisaaKurssi("Ohjelmointi 1");
         opettaja.lisaaKurssi("Ohjelmointi 2");
+        opettaja.naytaOpetettavatKurssit();
 
         Sihteeri sihteeri = new Sihteeri();
         sihteeri.nimi = "Sari Sihteeri";
@@ -242,17 +278,159 @@ classDiagram
 
 Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. Unified Modelling Language). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
 
-Jatketaan vielä esimerkkiä hieman pidemmälle. Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
+## Rakentajat ja super-avainsana
+
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, emme määritelleet rakentajia (konstruktoreita) missään luokissa, joten kaikki luokat käyttävät oletusrakentajaa, joka ei alusta mitään attribuutteja. 
+Asetimmekin nimen ja käyttäjätunnuksen arvot pääohjelmasta käsin. Tämä ei ole hyvä käytäntö, sillä se rikkoo kapseloinnin periaatetta, ja altistaa luokan sisäisen tilan virheelliselle käytölle. Vaikka nimi ja käyttäjätunnus teoreettisesti voivatkin vaihtua, noiden attribuuttien näkyvyysmääreiden pitäisi estää niiden suora asettaminen luokan ulkopuolelta.
+
+Lisätään aluksi `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja alustaa luokan attribuutit. Asetetaan samalla nuo attribuutit yksityisiksi. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+
+```java,noplayground
+// FILE: Henkilo.java
+class Henkilo {
+
+    // HIGHLIGHT_GREEN_BEGIN
+    private String nimi;
+    private String kayttajatunnus;
+    private boolean kirjautunut;
+
+    public Henkilo(String nimi, String kayttajatunnus) {
+        this.nimi = nimi;
+        this.kayttajatunnus = kayttajatunnus;
+        this.kirjautunut = false;
+    }
+    // HIGHLIGHT_GREEN_END
+
+    void kirjaudu() {
+        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
+        kirjautunut = true;
+    }
+
+    void kirjauduUlos() {
+        IO.println(kayttajatunnus + " kirjautui ulos.");
+        kirjautunut = false;
+    }
+}
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main() {
+        // HIGHLIGHT_GREEN_BEGIN
+        Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen", "matti123");        
+        // HIGHLIGHT_GREEN_END
+        // HIGHLIGHT_RED_BEGIN
+        opiskelija.nimi = "Matti Meikäläinen";
+        opiskelija.kayttajatunnus = "matti123";
+        // HIGHLIGHT_RED_END
+        opiskelija.kirjaudu();
+        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
+        opiskelija.naytaKurssit();
+
+        // ...
+    }
+}
+// FILE_END
+```
+
+Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka ottaa parametreja, Java ei enää luo oletusrakentajaa automaattisesti, mikä aiheuttaa käännösvirheen. 
+Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa.
+Tämän vuoksi meidän on lisättävä myös `Opiskelija`, `Opettaja` ja `Sihteeri`-luokkiin rakentajat vastaamaan tätä muutosta. 
+
+Toisaalta nyt kun määrittelimme `nimi`- ja `kayttajatunnus`-attribuutit yksityisiksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
+
+```java,noplayground
+class Opiskelija extends Henkilo {
+    public Opiskelija(String nimi, String kayttajatunnus) {
+        this.nimi = nimi;               
+        this.kayttajatunnus = kayttajatunnus; 
+        // Käännösvirhe: nimi ja kayttajatunnus ovat yksityisiä!
+    }
+}
+```
+
+Ainoa tapa tallentaa arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa
+ja välittämällä tuossa kutsussa tarvittavat parametrit.
+Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kaikkiin kolmeen aliluokkaan.
+
+```java,noplayground
+// FILE: Opiskelija.java
+import java.util.ArrayList;
+class Opiskelija extends Henkilo {
+    private ArrayList<String> kurssit;
+    private int opintopisteet = 0;
+
+    public Opiskelija(String nimi, String kayttajatunnus) {
+        super(nimi, kayttajatunnus);
+        this.kurssit = new ArrayList<>();
+        this.opintopisteet = 0;
+    }
+
+    public void ilmoittauduKurssille(String kurssi) {
+        IO.println("Ilmoittauduttu kurssille: " + kurssi);
+        kurssit.add(kurssi);
+    }
+
+    public void naytaKurssit(){
+        String kaikkiKurssit = String.join(", ", kurssit);
+        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
+    }
+}
+// FILE_END
+// FILE: Opettaja.java
+import java.util.ArrayList;
+class Opettaja extends Henkilo {
+    private String tehtavanimike;
+    private ArrayList<String> opetettavatKurssit;
+
+    public Opettaja(String nimi, String kayttajatunnus, String tehtavanimike) {
+        super(nimi, kayttajatunnus);
+        this.tehtavanimike = tehtavanimike;
+        this.opetettavatKurssit = new ArrayList<>();
+    }
+
+    public void lisaaKurssi(String kurssi) {
+        IO.println(this.getNimi() + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
+        opetettavatKurssit.add(kurssi);
+    }
+
+    public void naytaOpetettavatKurssit() {
+        String kurssit = String.join(", ", opetettavatKurssit);
+        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
+    }
+}
+// FILE_END
+// FILE: Sihteeri.java
+class Sihteeri extends Henkilo {
+
+    public Sihteeri(String nimi, String kayttajatunnus) {
+        super(nimi, kayttajatunnus);
+    }
+
+    public void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
+        // Opintosuorituksen kirjaamisen logiikka ...
+        // Jätetään tässä esimerkissä toteuttamatta
+    }
+}
+// FILE_END
+```
+
+Jatketaan vielä esimerkkiä hieman pidemmälle. 
+
+Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
 
 ```java,noplayground
 // FILE: TutkintoOpiskelija.java
 class TutkintoOpiskelija extends Opiskelija {
-    String tutkintoOhjelma;
+    private String tutkintoOhjelma;
+    
+    // Rakentaja tässä välissä... (jätetty pois tilan säästämiseksi)
 }
 // FILE_END
 // FILE: AvoinOpiskelija.java
 class AvoinOpiskelija extends Opiskelija {
-    boolean maksutSuoritettu;
+    private boolean maksutSuoritettu;
+
+    // Rakentaja tässä välissä... (jätetty pois tilan säästämiseksi)
 
     void suoritaMaksu(double summa) {
         // Otetaan yhteys maksujärjestelmään ja käsitellään maksu ...
@@ -307,45 +485,7 @@ for (Henkilo henkilo : henkilot) {
 }
 ```
 
-## Rakentajat ja super-avainsana
-
-Kun aliluokka perii yliluokan, sen on usein tarpeen kutsua yliluokan rakentajaa alustamaan perityt ominaisuudet. Tämä tehdään käyttämällä `super`-avainsanaa aliluokan rakentajassa.
-
-Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa. Lisää vihreällä näkyvä koodi kumpaankin luokkaan.
-
-```java,noplayground
-// FILE: Henkilo.java
-class Henkilo {
-
-    // ...
-    // HIGHLIGHT_GREEN_BEGIN
-    public Henkilo(String nimi, String kayttajatunnus) {
-        this.nimi = nimi;
-        this.kayttajatunnus = kayttajatunnus;
-    }
-    // HIGHLIGHT_GREEN_END
-    // ...
-}
-// FILE_END
-// FILE: Opiskelija.java
-class Opiskelija extends Henkilo {
-
-    // ...
-    // HIGHLIGHT_GREEN_BEGIN
-    public Opiskelija(String nimi, String kayttajatunnus) {
-        super(nimi, kayttajatunnus); // Kutsutaan yliluokan rakentajaa
-        this.kurssit = new ArrayList<>();
-        this.opintopisteet = 0;
-    }
-    // HIGHLIGHT_GREEN_END
-    // ...
-}
-// FILE_END
-```
-
-Vastaavasti voisimme lisätä rakentajat myös `Opettaja`- ja `Sihteeri`-luokkiin, jotka kutsuvat `Henkilo`-luokan rakentajaa samalla tavalla. 
-
-`super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
+Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
 ## Ylikirjoittaminen
 
