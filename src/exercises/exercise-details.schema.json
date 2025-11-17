@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Tehtävän määrittely",
+  "anyOf": [
+    {
+      "title": "Koodaustehtävän määrittely",
+      "type": "object",
+      "properties": {
+        "exercise_type": {
+          "title": "Tehtävän tyyppi",
+          "description": "Tehtävän tyyppi. Sallitut arvot ovat TIMin plugintyypit sekä aliakset.",
+          "type": "string",
+          "enum": [
+            "code"
+          ]
+        },
+        "grading": {
+          "title": "Arviointiasetukset",
+          "description": "Miten tehtävä arvostellaan ja miten pisteitä lasketaan",
+          "anyOf": [
+            {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "format": "double"
+                },
+                {
+                  "title": "Arviointiasetukset",
+                  "description": "Miten tehtävä arvostellaan ja miten pisteitä lasketaan",
+                  "type": "object",
+                  "properties": {
+                    "expected_output": {
+                      "title": "Pisteet tulosteesta",
+                      "description": "Kuinka monta pistettä annetaan, jos opiskelijan ohjelman ajon tuloste täsmää\n`test/expected_output.txt` -dokumentin sisällön kanssa\nSallitut arvot:\n- `auto` - 1 jos expected_output.txt -tiedosto on olemassa, muutoin 0\n- desimaaliluku - kiinteä pistemäärä",
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            {
+                              "type": "string",
+                              "enum": [
+                                "auto"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    },
+                    "read_from_program": {
+                      "title": "Pisteet ohjelmasta",
+                      "description": "Luetaanko pisteet ohjelman tulosteesta.\nJos `true`, tehtävän tulosteesta etsitään pisteet regexilla `RANDOMCHECK: (.*)\\n`.\nOhjelmasta saatu pistemäärä skaalataan automaattisesti points-kentässä olevaan pistemäärään",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "self_grading": {
+                      "title": "Itsearviointi",
+                      "description": "Voiko opiskelija asettaa ja muokata pisteet itse",
+                      "type": "boolean",
+                      "default": false
+                    },
+                    "unit_test": {
+                      "title": "Yksikkötestit",
+                      "description": "Kuinka monta pistettä annetaan testeistä\nSallitut arvot:\n- desimaaliluku - kiinteä pistemäärä\n- objekti - yksikkötestien asetukset",
+                      "anyOf": [
+                        {
+                          "anyOf": [
+                            {
+                              "type": "number",
+                              "format": "double"
+                            },
+                            {
+                              "title": "Yksikkötestien asetukset",
+                              "type": "object",
+                              "properties": {
+                                "points": {
+                                  "title": "Pisteet yksikkötesteistä",
+                                  "description": "Kuinka monta pistettä annetaan yksikkötesteistä",
+                                  "type": "number",
+                                  "format": "double"
+                                },
+                                "source": {
+                                  "title": "Yksikkötestien lähde",
+                                  "description": "- Jos 'teacher', testit määritellään opettajan toimesta ja näytetään \"Aja opettajan testit\" -painike.\n- Jos 'student', testit määritellään opiskelijan toimesta ja näytetään \"Aja omat testit\" -painike.",
+                                  "type": "string",
+                                  "enum": [
+                                    "teacher",
+                                    "student"
+                                  ]
+                                }
+                              },
+                              "required": [
+                                "source",
+                                "points"
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "points": {
+          "title": "Tehtävän pisteet",
+          "description": "Kuinka monta pistettä tehtävästä voi saada",
+          "type": "number",
+          "format": "double"
+        },
+        "title": {
+          "title": "Tehtävän nimi",
+          "description": "Tehtävän nimi, joka näytetään opiskelijoille",
+          "type": "string"
+        },
+        "type": {
+          "title": "Koodaustehtävän tarkistin",
+          "description": "Koodaustehtävän tarkistin. Sallitut arvot ovat TIMin csPlugin-tyypit sekä aliakset.\nYleisimpiä arvoja:\n  - `csharp` - C# konsolitehtävä\n  - `java`   - Java konsolitehtävä\n  - `jypeli` - C# Jypeli-tehtävä",
+          "type": "string"
+        },
+        "view_collapsed_code": {
+          "title": "Näytetäänkö koodi tiivistettynä",
+          "description": "Näytetäänkö \"Näytä koko koodi\" -painikkeella piilotettu koodi aina",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "exercise_type",
+        "title",
+        "points",
+        "type"
+      ]
+    }
+  ]
+}
