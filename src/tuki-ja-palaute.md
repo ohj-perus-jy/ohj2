@@ -1,4 +1,4 @@
-# <span class="part-icon">🤝</span>Tuki ja palaute
+# Tuki ja palaute
 
 Kevään 2026 ohjauskauden (10.1.-30.4.) aikana on tarjolla seuraavat tukikanavat:
 
