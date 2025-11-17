@@ -294,6 +294,8 @@
 
     --icons: #002957;
     --icons-hover: #00295777;
+    --icons-text: var(--bg);
+    --icons-text-hover: var(--fg);
 
     --links: #20609f;
 
@@ -331,8 +333,6 @@
     --footnote-highlight: #7e7eff;
 
     --overlay-bg: rgba(200, 200, 205, 0.4);
-
-    --code-bg: #f1efee;
 }
 
 .jyu-dark {
@@ -350,6 +350,8 @@
     /* --icons: #737480; */
     --icons: #c29a5baa;
     --icons-hover: rgb(178.5,190.8,204.6, 0.77);
+    --icons-text: var(--bg);
+    --icons-text-hover: var(--bg);
 
     --links: #36a;
 
@@ -388,8 +390,6 @@
     --footnote-highlight: #4079ae;
 
     --overlay-bg: rgba(33, 40, 48, 0.4);
-
-    --code-bg: #1e1e1e;
 }
 
 @media (prefers-color-scheme: dark) {
