@@ -244,7 +244,7 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. Unif
 
 Jatketaan vielä esimerkkiä hieman pidemmälle. Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
 
-```java.ignore
+```java,noplayground
 // FILE: TutkintoOpiskelija.java
 class TutkintoOpiskelija extends Opiskelija {
     String tutkintoOhjelma;
@@ -279,7 +279,7 @@ Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmeki
 
 Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-tyyppisinä, kun ei ole tarpeen tietää tarkasti, minkä tyyppisiä olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä erilaisia henkilöitä yhtenä ryhmänä, esimerkiksi lisäämällä kaikki tekemämme oliot `Henkilo`-taulukkoon:
 
-```java.ignore
+```java,noplayground
 Opiskelija opiskelija = new Opiskelija();
 Opettaja opettaja = new Opettaja();
 Sihteeri sihteeri = new Sihteeri();
@@ -289,7 +289,7 @@ Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
 
 Nyt koska `Henkilo`-luokassa on määritelty muun muassa `kirjauduUlos()`-metodi, voimme kutsua tätä metodia kaikille `henkilot`-taulukon olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita taulukossa on:
 
-```java.ignore
+```java,noplayground
 for (Henkilo henkilo : henkilot) {
     henkilo.kirjauduUlos();
 }
@@ -297,7 +297,7 @@ for (Henkilo henkilo : henkilot) {
 
 Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria:
 
-```java.ignore
+```java,noplayground
 Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
 for (Henkilo henkilo : henkilot) {
     IO.println("Käsitellään henkilöä: " + henkilo.nimi);
@@ -313,7 +313,7 @@ Kun aliluokka perii yliluokan, sen on usein tarpeen kutsua yliluokan rakentajaa 
 
 Yllä olevassa esimerkissämme emme kirjoittaneet rakentajia, joten ne sisälsivät vain parametrittoman oletusrakentajan. Lisätään nyt `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja päivitetään `Opiskelija`-luokan rakentaja kutsumaan tätä yliluokan rakentajaa. Lisää vihreällä näkyvä koodi kumpaankin luokkaan.
 
-```java.ignore
+```java,noplayground
 // FILE: Henkilo.java
 class Henkilo {
 
@@ -353,7 +353,7 @@ Perityn luokan metodeja voidaan *ylikirjoittaa* (override) aliluokassa, mikä ta
 
 Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Ylikirjoitetaan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
-```java.ignore
+```java,noplayground
 class Opiskelija extends Henkilo {
 
     // ...
@@ -379,7 +379,7 @@ Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoi
 
 Yksi tyypillinen tapa käyttää ylikirjoittamista on muokata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei ole kovin informatiivista. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. Lisätään `toString()`-metodi `Henkilo`-luokkaan.
 
-```java.ignore
+```java,noplayground
 class Henkilo {
 
     // ...
