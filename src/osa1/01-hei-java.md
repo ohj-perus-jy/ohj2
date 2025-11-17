@@ -16,6 +16,26 @@ void main() {
 }
 ```
 
+```java,ignore
+public class Kissa {
+  private String name; 
+
+  // HIGHLIGHT_GREEN_BEGIN
+  public Kissa(String name) {
+    this.name = name;
+  }
+// HIGHLIGHT_GREEN_END
+
+// HIGHLIGHT_RED_BEGIN
+  public String getAani() { 
+// HIGHLIGHT_RED_END
+// HIGHLIGHT_YELLOW_BEGIN
+    return "Miau!";
+// HIGHLIGHT_YELLOW_END
+  } 
+}
+```
+
 ```java
 //-void main() {
 //-   IO.println("summa(2, 2) => " + summa(2, 2));

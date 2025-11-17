@@ -305,15 +305,7 @@
         });
     }
 
-    /**
-     * Returns true if the code element represents a Java block, including variants
-     * such as `java.ignore` that mdBook may encode as `language-java.ignore`.
-     */
-    function isJavaCodeBlock(code) {
-        return Array.from(code.classList).some(cls => /^language-java($|[^a-z0-9])/i.test(cls));
-    }
-
-    Array.from(document.querySelectorAll('pre > code'))
-        .filter(isJavaCodeBlock)
+     document
+        .querySelectorAll('pre > code.language-java')
         .forEach(processCodeBlock);
 })();
