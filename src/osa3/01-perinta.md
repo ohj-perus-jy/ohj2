@@ -277,10 +277,10 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. Unif
 
 ## Rakentajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, emme määritelleet rakentajia (konstruktoreita) missään luokissa, joten kaikki luokat käyttävät oletusrakentajaa, joka ei alusta mitään attribuutteja. 
-Asetimmekin nimen ja käyttäjätunnuksen arvot pääohjelmasta käsin. Tämä ei ole hyvä käytäntö, sillä se rikkoo kapseloinnin periaatetta, ja altistaa luokan sisäisen tilan virheelliselle käytölle. Vaikka nimi ja käyttäjätunnus teoreettisesti voivatkin vaihtua, noiden attribuuttien näkyvyysmääreiden pitäisi estää niiden suora asettaminen luokan ulkopuolelta.
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, emme määritelleet rakentajia missään luokissa, joten kaikki luokat käyttävät oletusrakentajaa, joka ei alusta mitään attribuutteja. 
+Asetimmekin nimen ja käyttäjätunnuksen arvot pääohjelmasta käsin. Tämä ei ole hyvä käytäntö, sillä se rikkoo kapseloinnin periaatetta, ja altistaa luokan sisäisen tilan virheelliselle käytölle. Vaikka nimi ja käyttäjätunnus teoreettisesti voivatkin kyllä järjestelmän eliniän aikana toki vaihtua, noiden attribuuttien näkyvyysmääreiden pitäisi estää niiden suora asettaminen luokan ulkopuolelta.
 
-Lisätään aluksi `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja alustaa luokan attribuutit. Asetetaan samalla nuo attribuutit yksityisiksi. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja alustaa attribuuttien arvot vastaavasti. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
 
 ```java,noplayground
 // FILE: Henkilo.java

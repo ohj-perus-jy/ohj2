@@ -126,7 +126,7 @@ html:not(.js) .page-wrapper,
 }
 
 table {
-    margin: 0 auto;
+    margin: auto auto 3em auto;
     border-collapse: collapse;
 }
 table td {
