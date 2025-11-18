@@ -486,7 +486,7 @@ Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan vä
 
 ## Ylikirjoittaminen
 
-Perityn luokan metodeja voidaan *ylikirjoittaa* (override) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
+Perityn luokan metodeja voidaan *ylikirjoittaa* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
 
 Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Ylikirjoitetaan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
@@ -509,6 +509,15 @@ class Opiskelija extends Henkilo {
 ```
 
 Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole ylikirjoitettu.
+
+Voidaan ajatella, että ylikirjoitettu metodi korvaa tai piilottaa yliluokan metodin aliluokassa. Tähän liittyy pari sääntöä: 
+
+ * Ylikirjoittaminen korvaa aina hierarkiassa lähimmän yliluokan metodin.
+ * Aliluokassa metodin kutsuminen viittaa aina lähimpään ylikirjoitettuun versioon.
+
+Alla oleva kuva havainnollistaa ylikirjoittamisen periaatetta:
+
+![](images/override_.svg)
 
 ## Object-luokka
 
