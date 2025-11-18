@@ -1,40 +1,38 @@
 # Suorittaminen
 
-## Suoritustapa 1: Tentti, harjoitustehtävät, harjoitustyö aikataulussa.
+## Suoritustapa 1
 
-Opiskelija tekee...
+*Tentti, harjoitustehtävät, harjoitustyö aikataulussa*
 
- * jokaisesta osasta (osat 1-11) vähintään pakolliset harjoitustehtävät ("tähtitehtävät"),
- * (Sisäinen huomio: Samin ehdotuksessa yläpuolinen kohta puuttui. Jos tähtitehtävät kuitenkin lisätään tähän mukaan, niin niillä voidaan säätää tutoriaaliharkan ja vertaisarvioinnin pakollisuutta ilman että tarvitsee tässä listassa niitä mainita.)
- * harjoitustyön aikataulussa ja
- * tentin hyväksytysti.
+Arvosana muodostuu harjoitustehtävistä kerätyistä pisteistä ja tentistä kerätyistä pisteistä. 
 
-Arvosana muodostuu
+Harjoitustehtävien pisterajat: 
 
- * tentin arvosanasta 60%
- * harjoitustehtävillä kerätyistä pisteistä 40% (Samin ehdotus; Lähellä nykyistä Ohj1 mallia.)
- 
-Esimerkki: TODO!
+| Kerättyjä pisteitä enintään | Arvosana |
+|-------------------|----------|
+| 26                | 1        |
+| 31                | 2        |
+| 36                | 3        |
+| 41                | 4        |
+| >=46              | 5        |
 
-(Sisäinen huomio: Mahdollinen tutoriaaliharkka voidaan merkitä tähtitehtäväksi, jolloin se lasketaan osaksi harjoitustehtävien pisteitä, eikä sitä tarvitse tässä muutoin erikseen mainita.)
+DL-BONUS: Ensimmäisen kuuden osan kohdalla: Jos teet osasta vähintään 3 pistettä osan takarajaan mennessä, lisätään kyseisen osan harjoitustehtävien pistemäärään 0,5 pistettä.
 
-(Sisäinen huomio: Mahdolliset vertaisarvioinnit voidaan nekin merkitä tähtitehtäviksi.)
+TODO: Opiskelijalle näytettävä etenemissivulla kerättyjen tehtäväpisteidän määrä sekä DL-BONUS-pisteet erikseen, jotta on helppo verrata yo. taulukkoon omia pisteitään. 
 
-(Sisäinen huomio: Tarkistettava että voiko pelkällä tentillä saada arvosanan 5.)
+Harjoitustehtävistä ja tentistä lasketaan arvosana painotettuna keskiarvona siten, että harjoitustehtävistä saatua arvosanaa painotetaan 40% ja tentistä saatua arvosanaa painotetaan 60%. Sekä harjoitustehtävistä että tentistä täytyy saada vähintään arvosana 1, jotta kurssista voi saada hyväksytyn arvosanan.
 
-## Suoritustapa 2: 105% harjoitustehtävistä, suullinen kuulustelu harjoitustyöstä, harjoitustyö aikataulussa.
+Pari esimerkkiä: TODO
 
-Opiskelija tekee...
+## Suoritustapa 2
 
- * jokaisesta osasta kaikki harjoitustehtävät (bonus- ja gurutehtävät eivät ole pakollisia)
- * harjoitustyön aikataulussa,
- * suullisen kuulustelun harjoitustyöstä hyväksytysti.
+*105% harjoitustehtävistä, suullinen kuulustelu harjoitustyöstä, harjoitustyö aikataulussa*
 
-Arvosana on tällöin 1. Arvosanaa voi korottaa osallistumalla tenttiin. 
+"105% harjoitustehtävistä": Jos keräät vähintään 52 pistettä harjoitustehtävistä (kaikista osista yhteensä) **JA** keräät kaikki DL-BONUS-pisteet (6 * 0.5 = 3 pistettä), olet oikeutettu suoritustapaan 2 ("105% harjoitusehtävistä"). 
 
-Esimerkki: TODO!
+## Suoritustapa 3
 
-## Suoritustapa 3: Harjoitustyö ja loppukoe.
+*Harjoitustyö ja loppukoe.*
 
 Opiskelija tekee...
 
@@ -42,3 +40,4 @@ Opiskelija tekee...
  * tasokokeen tapaisen loppukokeen (tämä on eri asia kuin tentti)
   
 Arvosana muodostuu loppukokeen arvosanasta.
+
