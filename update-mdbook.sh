@@ -7,7 +7,7 @@ then
     exit 1
 fi
 
-cargo install mdbook \
+cargo install mdbook@0.4.52 \
               mdbook-mermaid \
               mdbook-alerts \
               mdbook-katex
