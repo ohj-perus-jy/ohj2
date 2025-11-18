@@ -28,9 +28,6 @@ void main () {
 }
 ```
 
-### Switch
-TODO:
-
 ### Ehdollinen operaattori 
 
 Syntaksi ? operaattorille (engl. *ternary operator*) on: ehto ? tosi : epätosi
@@ -43,6 +40,26 @@ void main () {
     int suurempi = (luku1 > luku2) ? luku1 : luku2;
 
     IO.println("Suurempi luvuista on: " + suurempi);
+}
+```
+
+### Switch
+switch/case-syntaksi auttaa parantamaan koodin luettavuutta ja switch saattaa olla nopeampi ajaa Javassa (hyppytaulukoiden) ansiosta, jos (casena) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. Tästä seuraavaksi esimerkki:
+
+```java,editable
+void main () {
+    int kuukausi = 13;
+    int vuosi = 2000;
+
+    IO.println(
+        switch(kuukausi) {
+            case 1, 3, 5, 7, 8, 10, 12 -> 31;
+            case 4, 6, 9, 11 -> 30;
+            case 2 -> (vuosi % 4 == 0 && (vuosi % 100 != 0 || vuosi % 400 == 0)) ? 29 : 28; 
+            default -> -1;
+        }
+    );
+
 }
 ```
 
