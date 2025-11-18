@@ -14,22 +14,20 @@ Aliluokka, joka perii abstraktin luokan, on velvollinen toteuttamaan kaikki peri
 
 ## Esimerkki
 
-Älykodissa voisi olla monenlaisia laitteita, kuten valoja, termostaatteja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät, termostaatti säätää lämpötilaa, kamera tallentaa videota, kahvinkeitin keittää kahvia). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
+Älykodissa voisi olla monenlaisia laitteita, kuten valoja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät, kamera tallentaa videota, kahvinkeitin keittää kahvia). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
 
-Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin säätömahdollisuuksiin myöhemmin. 
+Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin laitteiden säätömahdollisuuksiin myöhemmin. 
 
 ```mermaid
 classDiagram
     class Laite 
 
     Laite <|-- Valo
-    Laite <|-- Termostaatti
     Laite <|-- Turvakamera
     Laite <|-- Kahvinkeitin
 ```
 
 // Esimerkki ilman abstraktia luokkaa
-
 
 ```java
 //FILE: main.java
@@ -37,7 +35,6 @@ public class Main {
     public static void main(String[] args) {
         Laite[] laitteet = {
             new Valo(),
-            new Termostaatti(),
             new Turvakamera(),
             new Kahvinkeitin()
         };
@@ -67,9 +64,6 @@ public class Valo extends Laite {
     @Override
     public void vaihdaTilaa() {
         // Vaihda kirkkaus 0 -> 50 -> 100 -> 0 ...
-        // if (kirkkaus == 0) kirkkaus = 50;
-        // else if (kirkkaus == 50) kirkkaus = 100;
-        // else kirkkaus = 0;
         switch (kirkkaus) {
             case 0 -> kirkkaus = 50;
             case 50 -> kirkkaus = 100;
@@ -81,27 +75,6 @@ public class Valo extends Laite {
         System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }
-// FILE_END
-
-// FILE: Termostaatti.java
-public class Termostaatti extends Laite {
-    private enum Lämpötila { MUKAVUUS, SÄÄSTÖ, POISSA }
-    private Lämpötila tila = Lämpötila.MUKAVUUS;
-
-    @Override
-    public void vaihdaTilaa() {
-        // Vaihda tila MUKAVUUS -> SÄÄSTÖ -> POISSA -> MUKAVUUS ...
-        switch (tila) {
-            case MUKAVUUS -> tila = Lämpötila.SÄÄSTÖ;
-            case SÄÄSTÖ -> tila = Lämpötila.POISSA;
-            case POISSA -> tila = Lämpötila.MUKAVUUS;
-        }
-    }
-    @Override
-    public void raportoiTila() {
-        System.out.println("Termostaatin tila on " + tila + ".");
-    }
-} 
 // FILE_END
 
 // FILE: Turvakamera.java
@@ -140,7 +113,7 @@ public class Kahvinkeitin extends Laite {
 // FILE_END
 ```
 
-Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Periaatteessa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
+Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Teoriassa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
 
 ```java.ignore
 void main() {
@@ -150,17 +123,23 @@ void main() {
 }
 ```
 
-Kuten nähdään, se ei tekisi mitään, ja olisi siis täysin hyödytöntä, koska niillä ei olisi mitään toiminnallisuutta.
+Kuten nähdään, mitään ei tapahdu näitä `laite`-olion metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä, koska niillä ei olisi mitään toiminnallisuutta. Niinpä ei ole järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi.
 
-Koska ei ole järkevää, että olisi olemassa jokin yleinen laite, ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse, ei ole myöskään järkevää luoda `Laite`-luokan ilmentymiä. Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi.  
+Javassa tällaista luokkaa kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
 
-Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi, jolloin aliluokkien on pakko toteuttaa ne. 
-
-```java
+```java,ignore
 public abstract class Laite {
     public abstract void vaihdaTilaa();
     public abstract void raportoiTila();
+}
+```
 
+Nyt `Laite`-luokasta ei voi enää luoda ilmentymiä, ja yritettäessä tehdä niin, kääntäjä antaa virheen:
+
+```java.ignore
+void main() {
+    Laite laite = new Laite(); 
+    // Virhe! Cannot instantiate the type Laite
 }
 ```
 
