@@ -4,6 +4,7 @@
   padding: 0 16px !important;
   padding-block-end: 16px !important;
   margin-block-end: 16px;
+  margin-bottom: 1.5em !important;
   border-inline-start: 0.25em solid var(--mdbook-alerts-color);
   background-color: var(--quote-bg);
 }

@@ -1,6 +1,7 @@
 .codeblock-tabs {
     display: flex;
     flex-direction: column;
+    margin-block-start: 1.5em;
 }
 
 .codeblock-tabs-titles {

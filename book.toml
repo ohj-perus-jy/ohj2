@@ -16,6 +16,7 @@ additional-css = [
   "theme/alerts-style.css",
   "theme/accordion.css",
   "theme/codeblock-tabs.css",
+  "theme/code-highlights.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
@@ -26,6 +27,7 @@ additional-js = [
   "theme/playground_ext.js",
   "theme/accordion.js",
   "theme/codeblock-tabs.js",
+  "theme/code-highlights.js",
 ]
 
 [output.html.playground]
@@ -44,4 +46,3 @@ java = "//-"
 
 [preprocessor.accordion]
 command = "python3 ./preprocessors/python/accordion.py"
-

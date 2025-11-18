@@ -3,7 +3,7 @@
     const DATA_URI_PATTERN = /@@@DATA_URI_BEGIN@@@(.+)@@@DATA_URI_END@@@/g;
 
     function get_playgrounds() {
-        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground))`));
+        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground):not(.ignore))`));
     }
 
     function fetch_with_timeout(url, options, timeout = 6000) {
