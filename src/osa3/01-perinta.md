@@ -153,7 +153,7 @@ public class Main {
 // FILE_END
 ```
 
-Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä sama metodi `kirjaudu()`. Toki näiden luokkien välillä on myös eroja, mutta tämä toisto on ongelmallista, koska:
+Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä metodit `kirjaudu()` ja `kirjauduUlos()`. Näiden luokkien välillä on toki myös eroja, mutta tämä toisto on ongelmallista, koska:
 
  * jokaisessa luokassa on määriteltävä samat ominaisuudet ja toiminnot uudelleen, 
  * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän täytyy tehdä se kolmessa eri paikassa,
