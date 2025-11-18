@@ -336,11 +336,11 @@
 }
 
 .jyu-dark {
-    --bg: #1c1c1c;
-    --fg: #aaaaaa;
+    --bg: #161616;
+    --fg: #e2e2e2;
 
     --sidebar-bg: #00295730;
-    --sidebar-fg: #bbbbbb;
+    --sidebar-fg: #e2e2e2;
     --sidebar-non-existant: #555;
     --sidebar-active: #c29a5bee;
     --sidebar-spacer: #2d334f;

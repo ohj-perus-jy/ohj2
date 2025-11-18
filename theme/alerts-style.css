@@ -1,10 +1,12 @@
 /* This partially overwrites the mdbook-alerts style that is imported inline and is not layered (hence the !important tags) */
 
 .mdbook-alerts {
-  padding: 0 16px !important;
+  padding: 8px 16px !important;
+  border-radius: 0.5em;  
   padding-block-end: 16px !important;
   margin-block-end: 16px;
   margin-bottom: 1.5em !important;
+  border-left: 0.45em solid var(--mdbook-alerts-color) !important;
   border-inline-start: 0.25em solid var(--mdbook-alerts-color);
   background-color: var(--quote-bg);
 }
@@ -29,7 +31,7 @@
   padding-inline: 16px;
   padding-block: 8px;
   /* lighten the alerts-color by making it more transparent */
-  background-color: color-mix(in srgb, var(--mdbook-alerts-color) 20%, transparent);
+  /*background-color: color-mix(in srgb, var(--mdbook-alerts-color) 20%, transparent);*/
 }
 
 .mdbook-alerts-icon {
