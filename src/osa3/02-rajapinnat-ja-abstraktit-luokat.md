@@ -30,25 +30,37 @@ classDiagram
 
 // Esimerkki ilman abstraktia luokkaa
 
-### [Laite.java](#tab/laite)
 
 ```java
+//FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Laite[] laitteet = {
+            new Valo(),
+            new Termostaatti(),
+            new Turvakamera(),
+            new Kahvinkeitin()
+        };
+
+        for (Laite laite : laitteet) {
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+        }
+    }
+}
+// FILE_END
+
+// FILE: Laite.java
 public class Laite {
     public void vaihdaTilaa() {
-        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
     }
 
     public void raportoiTila() {
-        // Mitä kantaluokassa pitäisi tehdä tässä kohden?
     }
 }
-```
+// FILE_END
 
-***
-
-### [Valo.java](#tab/valo)
-
-```java
+// FILE: Valo.java
 public class Valo extends Laite {
     private int kirkkaus = 0;
 
@@ -69,13 +81,9 @@ public class Valo extends Laite {
         System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }
-```
+// FILE_END
 
-***
-
-### [Termostaatti.java](#tab/termostaatti)
-
-```java
+// FILE: Termostaatti.java
 public class Termostaatti extends Laite {
     private enum Lämpötila { MUKAVUUS, SÄÄSTÖ, POISSA }
     private Lämpötila tila = Lämpötila.MUKAVUUS;
@@ -94,13 +102,9 @@ public class Termostaatti extends Laite {
         System.out.println("Termostaatin tila on " + tila + ".");
     }
 } 
-```
+// FILE_END
 
-***
-
-### [Turvakamera.java](#tab/turvakamera)
-
-```java
+// FILE: Turvakamera.java
 public class Turvakamera extends Laite {
     private boolean tallennusPäällä = false;
 
@@ -115,13 +119,9 @@ public class Turvakamera extends Laite {
         System.out.println("Turvakameran tallennus on " + tila + ".");
     }
 }
-```
+// FILE_END
 
-***
-
-### [Kahvinkeitin.java](#tab/kahvinkeitin)
-
-```java
+// FILE: Kahvinkeitin.java
 public class Kahvinkeitin extends Laite {
 
     private boolean kiehumassa = false;    
@@ -137,20 +137,30 @@ public class Kahvinkeitin extends Laite {
         System.out.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
+// FILE_END
 ```
 
-***
+Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Periaatteessa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
 
-Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. 
-Ei ole järkevää, että jokin yleinen laite voisi vaihtaa tilaa tai raportoida tilansa ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse.
-Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi, eikä siitä ole tarkoitus luoda suoria ilmentymiä. Jokaisen aliluokan tulee toteuttaa nämä metodit itse. 
+```java.ignore
+void main() {
+    Laite laite = new Laite();
+    laite.vaihdaTilaa(); // Ei tee mitään
+    laite.raportoiTila(); // Ei tee mitään
+}
+```
 
-Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi. 
+Kuten nähdään, se ei tekisi mitään, ja olisi siis täysin hyödytöntä, koska niillä ei olisi mitään toiminnallisuutta.
+
+Koska ei ole järkevää, että olisi olemassa jokin yleinen laite, ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse, ei ole myöskään järkevää luoda `Laite`-luokan ilmentymiä. Niinpä `Laite`-luokka on oikeastaan tarkoitettu vain perittäväksi.  
+
+Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi, jolloin aliluokkien on pakko toteuttaa ne. 
 
 ```java
 public abstract class Laite {
     public abstract void vaihdaTilaa();
     public abstract void raportoiTila();
+
 }
 ```
 
