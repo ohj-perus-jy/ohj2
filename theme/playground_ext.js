@@ -1,8 +1,9 @@
 (function codeSnippets() {
     const PLAYGROUND_LANG = "java";
+    const DATA_URI_PATTERN = /@@@DATA_URI_BEGIN@@@(.+)@@@DATA_URI_END@@@/g;
 
     function get_playgrounds() {
-        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground))`));
+        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground):not(.ignore))`));
     }
 
     function fetch_with_timeout(url, options, timeout = 6000) {
@@ -14,22 +15,76 @@
 
     const playgrounds = get_playgrounds();
 
+    function get_codeblock_id(code_area) {
+        const code_area_classes = [...code_area.classList.values()];
+        const codeBlockIdClass = code_area_classes.find(cls => cls.startsWith('codeblock-id-'));
+        let codeBlockId = null;
+        if (codeBlockIdClass) {
+            codeBlockId = codeBlockIdClass.substring('codeblock-id-'.length);
+        }
+        return codeBlockId;
+    }
+
     function run_code(code_block) {
-        let result_block = code_block.querySelector('.result');
+        let code_area = code_block.querySelector("code");
+        const code_area_classes = [...code_area.classList.values()];
+        
+        const code_block_id = get_codeblock_id(code_area);
+        
+
+        let result_block_parent = code_block;
+
+        if (code_block_id) {
+            const codeblock_tabs = document.querySelector(`#${code_block_id}.codeblock-tabs`);
+
+            const pre_block = codeblock_tabs.querySelector('pre.codeblock-result');
+            if (pre_block) {
+                result_block_parent = pre_block;
+            } else { 
+                const pre_block = document.createElement('pre');
+                pre_block.className = 'codeblock-result';
+                codeblock_tabs.appendChild(pre_block);
+                result_block_parent = pre_block;    
+            }
+        }
+
+        
+        let result_block = result_block_parent.querySelector('.result');
         if (!result_block) {
             result_block = document.createElement('code');
             result_block.className = 'result hljs language-bash';
 
-            code_block.append(result_block);
+            result_block_parent.append(result_block);
+        }
+        result_block_parent.querySelectorAll('.result-image').forEach(img => img.remove());
+
+        let text;
+        let multifile = false;
+        
+        if (code_block_id) {
+            const file_names = [...document.querySelectorAll(`#${code_block_id}.codeblock-tabs > .codeblock-tabs-titles a`).values()].map(el => el.textContent.trim());
+            const code_blocks = [...document.querySelectorAll(`#${code_block_id}.codeblock-tabs > .codeblock-tabs-contents > section > pre`).values()].map(el => playground_text(el));
+
+            const code_dict = Object.fromEntries(file_names.map((_, i) => [file_names[i], code_blocks[i]]));
+
+            text = JSON.stringify(code_dict);
+            multifile = true;
+        } else {
+            text = playground_text(code_block);
+        }
+        
+        let language = PLAYGROUND_LANG;
+
+        for (const cls of code_area_classes) {
+            if (cls.startsWith('feature-')) {
+                language += `-${cls.substring('feature-'.length)}`;
+            }
         }
 
-        const text = playground_text(code_block);
-
-        console.log(text);
-
         const params = {
-            language: "java",
+            language: language,
             code: text,
+            multifile: multifile,
         };
 
         result_block.innerText = 'Running...';
@@ -45,6 +100,21 @@
             .then(response => response.json())
             .then(response => {
                 let result = response.errors || response.output || '';
+
+                const dataUris = result.match(DATA_URI_PATTERN);
+                if (dataUris) {
+                    dataUris.forEach(dataUri => {
+                        const uriContent = dataUri
+                            .replace('@@@DATA_URI_BEGIN@@@', '')
+                            .replace('@@@DATA_URI_END@@@', '');
+                        const img = document.createElement('img');
+                        img.src = uriContent;
+                        img.className = 'result-image';
+                        result_block.parentElement.appendChild(img);
+                        result = result.replace(dataUri, '');
+                    });
+                }
+
                 if (result.trim() === '') {
                     result_block.innerText = 'No output';
                     result_block.classList.add('result-no-output');

@@ -16,6 +16,26 @@ void main() {
 }
 ```
 
+```java,ignore
+public class Kissa {
+  private String name; 
+
+  // HIGHLIGHT_GREEN_BEGIN
+  public Kissa(String name) {
+    this.name = name;
+  }
+// HIGHLIGHT_GREEN_END
+
+// HIGHLIGHT_RED_BEGIN
+  public String getAani() { 
+// HIGHLIGHT_RED_END
+// HIGHLIGHT_YELLOW_BEGIN
+    return "Miau!";
+// HIGHLIGHT_YELLOW_END
+  } 
+}
+```
+
 ```java
 //-void main() {
 //-   IO.println("summa(2, 2) => " + summa(2, 2));
@@ -33,19 +53,80 @@ int summa(int a , int b) {
 }
 ```
 
-```java
-// FILE: Ohjelma.java
-public class Ohjelma {
+## Monen tiedoston koodialueet
 
+Ensimmäinen alue
+
+```java
+// FILE: Henkilo.java
+public class Henkilo {
+    private String name;
+
+    public Henkilo() {
+        name = "Denis";
+    }
+
+    public String getTervehdys() {
+        return "Moi, " + name + "!";
+    }
 }
 // FILE_END
 
-// FILE: Henkilo.java
-public class Henkilo {
+// FILE: Opiskelija.java
+public class Opiskelija extends Henkilo {
+    public Opiskelija() {
+        super();
+    }
 
+    public String getTervehdys() {
+        return super.getTervehdys() + " Olen opiskelija!";
+    }
+}
+// FILE_END
+
+// FILE: main.java
+public class Ohjelma {
+    public static void main() {
+        Henkilo h = new Henkilo();
+        IO.println(h.getTervehdys());
+
+        Opiskelija o = new Opiskelija();
+        IO.println(o.getTervehdys());
+    }
 }
 // FILE_END
 ```
+
+Tällä hetkellä `main.java`:n pitää sisältää pääohjelman johtuen palvelinpuolen ajoympäristön takia. Tosin tuo voitaisiin muokata niin, että pääohjelman tiedostonimi pääteltäisiin automaattisesti.
+
+Toinen koodialue testiksi, että kummatkin alueet ovat erillisiä toisistaan:
+
+```java
+// FILE: main.java
+public class Ohjelma {
+    public static void main() {
+        Kissa k = new Kissa("Snowball");
+        IO.println(k.getAani());
+    }
+}
+// FILE_END
+
+// FILE: Kissa.java
+public class Kissa {
+    private String name;
+
+    public Kissa(String name) {
+        this.name = name;
+    }
+
+    public String getAani() {
+        return "Miau!";
+    }
+}
+// FILE_END
+```
+
+## Muokattavat koodilohkot
 
 Harjoittele tekemällä ja tulostamalla erityyppisiä muuttujia (tämä on editoitava koodausalue):
 
@@ -64,7 +145,7 @@ Taulukko
 | Avainsana | Selitys                           |
 | --------- | --------------------------------- |
 | public    | näkyvyysmodifikaattori — julkinen |
-| static    | staattinen — kuuluu luokalle      |
+| static    | staattinen wew kuuluu luokalle    |
 | void      | ei palauta arvoa                  |
 
 

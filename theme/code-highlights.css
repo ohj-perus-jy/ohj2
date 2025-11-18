@@ -1,0 +1,26 @@
+:root {
+    --code-highlight-green: rgba(72, 187, 120, 0.422);
+    --code-highlight-yellow: rgba(255, 214, 102, 0.398);
+    --code-highlight-red: rgba(255, 138, 138, 0.418);
+    --code-highlight-blue: rgba(129, 212, 250, 0.32);
+    --code-highlight-border: rgba(0, 0, 0, 0.05);
+}
+
+html.jyu-dark {
+    --code-highlight-green: rgba(13, 81, 41, 0.543);
+    --code-highlight-yellow: rgba(180, 135, 11, 0.503);
+    --code-highlight-red: rgba(154, 33, 33, 0.497);
+    --code-highlight-blue: rgba(129, 212, 250, 0.65);
+    --code-highlight-border: rgba(255, 255, 255, 0.18);
+}
+
+.code-highlight-inline {
+    display: inline-block;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: var(--code-highlight-green);
+    border-radius: 0.35rem;
+    /*margin: 0 -0.4em;*/
+    padding: 0.12em 0;
+    box-shadow: inset 2px 0 0 0 var(--code-highlight-border);
+}

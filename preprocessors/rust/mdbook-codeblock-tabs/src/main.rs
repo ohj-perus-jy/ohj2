@@ -3,7 +3,7 @@ use mdbook::book::{Book, Chapter};
 use mdbook::errors::Result;
 use mdbook::preprocess::{CmdPreprocessor, Preprocessor, PreprocessorContext};
 use nanoid::nanoid;
-use pulldown_cmark::{CodeBlockKind, Event, Parser, Tag, TagEnd};
+use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag, TagEnd};
 use regex::Regex;
 use std::io;
 use std::sync::LazyLock;
@@ -55,7 +55,7 @@ fn process_codeblock_event<'a>(lang: &str, code: &str) -> Vec<Event<'a>> {
 
     let mut result = Vec::new();
     let mut filenames = Vec::new();
-    let codeblock_id = nanoid!(10);
+    let codeblock_id = format!("{}{}", nanoid!(2, &('a'..='z').into_iter().collect::<Vec<_>>()), nanoid!(10)); // first character is a letter to ensure valid HTML id
 
     for (i, capture) in FILE_PATTERN.captures_iter(&code).enumerate() {
         let filename = capture.name("filename").unwrap().as_str();
@@ -69,11 +69,22 @@ fn process_codeblock_event<'a>(lang: &str, code: &str) -> Vec<Event<'a>> {
             "{},codeblock-id-{},codeblock-file-num-{}",
             lang, codeblock_id, i
         );
+
+        result.push(Event::Start(Tag::HtmlBlock));
+        result.push(Event::Html(format!(
+            r#"<section id="codeblock-{codeblock_id}-file-{i}" role="tabpanel" data-codeblock-id="{codeblock_id}" data-file-num="{i}" {}>
+                <strong class="codeblock-tabs-title-print">{filename}</strong>{}"#,
+            if i == 0 { r#"aria-hidden="false""# } else { r#"aria-hidden="true" hidden"# }, "\n")
+         .into()));
+        result.push(Event::End(TagEnd::HtmlBlock));
         result.push(Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(
             custom_lang.to_string().into(),
         ))));
         result.push(Event::Text(file_code.to_string().into()));
         result.push(Event::End(TagEnd::CodeBlock));
+        result.push(Event::Start(Tag::HtmlBlock));
+        result.push(Event::Html("</section>\n".into()));
+        result.push(Event::End(TagEnd::HtmlBlock));
     }
 
     if !result.is_empty() {
@@ -85,8 +96,12 @@ fn process_codeblock_event<'a>(lang: &str, code: &str) -> Vec<Event<'a>> {
 
         for (i, filename) in filenames.iter().enumerate() {
             html_header.push_str(&format!(
-                r#"<li class="codeblock-tab-title" data-codeblock-file-num="{}">{}</li>"#,
-                i, filename
+                r##"<li role="presentation">
+                <a href="#codeblock-{codeblock_id}-file-{i}" role="tab" aria-controls="codeblock-{codeblock_id}-file-{i}" data-codeblock-id="{codeblock_id}" data-file-num="{i}" {}>
+                {filename}
+                </a>
+                </li>"##,
+                if i == 0 { r#"aria-selected="true" tabindex="0""# } else { r#"aria-selected="false" tabindex="-1""# },
             ));
         }
 
@@ -116,8 +131,14 @@ fn process_codeblock_event<'a>(lang: &str, code: &str) -> Vec<Event<'a>> {
 
 fn create_tabbed_codeblocks(chapter: &mut Chapter) {
     let mut buf = String::with_capacity(chapter.content.len());
-    let parser = Parser::new(&chapter.content);
     let mut current_codeblock_lang = None;
+
+    let mut opts = Options::empty();
+    opts.insert(Options::ENABLE_TABLES);
+    opts.insert(Options::ENABLE_FOOTNOTES);
+    opts.insert(Options::ENABLE_STRIKETHROUGH);
+    opts.insert(Options::ENABLE_TASKLISTS);
+    let parser = Parser::new_ext(&chapter.content, opts);
 
     let parser = parser.flat_map(|event| match &event {
         Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(lang))) => {
