@@ -213,9 +213,11 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Uni
 
 ## Rakentajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen seurauksena `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä nimen asettaminen suoraan luokan ulkopuolelta ei pitäisi olla sallittua, vaan se pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen seurauksena `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta (ts. mistä tahansa luokan ulkopuolelta) ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
 
-Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
+
+Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
 
 ```java,noplayground
 // FILE: Henkilo.java
@@ -258,9 +260,9 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka ottaa parametreja, Java ei enää luo oletusrakentajaa automaattisesti, mikä aiheuttaa käännösvirheen. 
-Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa.
-Tämän vuoksi meidän on lisättävä myös `Opiskelija`, `Opettaja` ja `Sihteeri`-luokkiin rakentajat vastaamaan tätä muutosta. 
+Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka *ottaa* parametreja, Java ei enää luo oletusrakentajaa (siis sellaista, jossa ei ole parametreja) automaattisesti, mikä aiheuttaa käännösvirheen. 
+
+Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa. Tämän vuoksi meidän on lisättävä myös `Opiskelija` ja `Opettaja`-luokkiin rakentajat vastaamaan tätä muutosta. 
 
 Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
 
@@ -356,6 +358,8 @@ public class Main {
 }
 // FILE_END
 ```
+
+Oletusrakentajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
 
 Jatketaan vielä esimerkkiä hieman pidemmälle. 
 
