@@ -34,8 +34,8 @@ Lähdetään kuitenkin aluksi liikkeelle pienesti -- opiskelijasta ja opettajast
 import java.util.ArrayList;
 
 class Opiskelija {
-    private String nimi;
-    private ArrayList<String> kaynnissaOlevatKurssit;
+    String nimi;
+    ArrayList<String> kaynnissaOlevatKurssit;
 
     public Opiskelija() {
         this.kaynnissaOlevatKurssit = new ArrayList<>();
@@ -66,8 +66,8 @@ class Opiskelija {
 import java.util.ArrayList;
 
 class Opettaja {
-    private String nimi;
-    private ArrayList<String> opetettavatKurssit;
+    String nimi;
+    ArrayList<String> opetettavatKurssit;
 
     public Opettaja() {
         this.opetettavatKurssit = new ArrayList<>();
@@ -143,7 +143,7 @@ public class Henkilo {
 import java.util.ArrayList;
 
 class Opiskelija extends Henkilo {
-    private ArrayList<String> kaynnissaOlevatKurssit;
+    ArrayList<String> kaynnissaOlevatKurssit;
 
     public Opiskelija() {
         this.kaynnissaOlevatKurssit = new ArrayList<>();
@@ -164,7 +164,7 @@ class Opiskelija extends Henkilo {
 import java.util.ArrayList;
 
 class Opettaja extends Henkilo {
-    private ArrayList<String> opetettavatKurssit;
+    ArrayList<String> opetettavatKurssit;
 
     public Opettaja() {
         this.opetettavatKurssit = new ArrayList<>();
@@ -267,14 +267,50 @@ Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myö
 ```java,noplayground
 class Opiskelija extends Henkilo {
     public Opiskelija(String nimi) {
-        this.nimi = nimi;               
-        // Käännösvirhe: nimi ja kayttajatunnus ovat yksityisiä!
+        // HIGHLIGHT_YELLOW_BEGIN
+        this.nimi = nimi;
+        // HIGHLIGHT_YELLOW_END
+        // Käännösvirhe: nimi on yksityinen muuttuja
     }
 }
 ```
 
-Ainoa tapa tallentaa arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa ja välittämällä tuossa kutsussa tarvittavat parametrit.
-Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan.
+Ainoa tapa tallentaa ja lukea arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
+
+```java,noplayground
+import java.util.ArrayList;
+class Opiskelija extends Henkilo {
+    // HIGHLIGHT_GREEN_BEGIN
+    private ArrayList<String> kaynnissaOlevatKurssit;
+    // HIGHLIGHT_GREEN_END
+
+    // HIGHLIGHT_GREEN_BEGIN
+    public Opiskelija(String nimi) {
+        super(nimi);
+        kaynnissaOlevatKurssit = new ArrayList<>();
+    }
+    // HIGHLIGHT_GREEN_END
+    // ...
+}
+```
+
+Tee vastaava muutos myös `Opettaja`-luokkaan.
+
+Tämän jälkeen ohjelma ei kuitenkaan vielä käänny, koska perivissä luokissa emme edelleenkään pääse käsiksi yliluokan yksityiseen `nimi`-attribuuttiin.
+
+```java,noplayground
+class Opiskelija extends Henkilo {
+    void naytaOpintoOhjelma() {
+        String kurssit = String.join(", ", kaynnissaOlevatKurssit);
+        // HIGHLIGHT_YELLOW_BEGIN
+        IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
+        // HIGHLIGHT_YELLOW_END
+        // Käännösvirhe: nimi on yksityinen muuttuja
+    }
+}
+```
+
+Ainoa tapa päästä käsiksi `nimi`-attribuuttiin on kutsua yliluokan `getNimi()`-metodia -- sehän on julkinen. Tehdään tämä muutos kaikkiin kohtiin, joissa `nimi`-attribuuttiin viitataan suoraan perivissä luokissa.
 
 ```java
 // FILE: Henkilo.java
@@ -295,16 +331,12 @@ class Henkilo {
 // FILE: Opiskelija.java
 import java.util.ArrayList;
 class Opiskelija extends Henkilo {
-    // HIGHLIGHT_GREEN_BEGIN
-    private ArrayList<String> kaynnissaOlevatKurssit;
-    // HIGHLIGHT_GREEN_END
+    ArrayList<String> kaynnissaOlevatKurssit;
 
-    // HIGHLIGHT_GREEN_BEGIN
     public Opiskelija(String nimi) {
         super(nimi);
         kaynnissaOlevatKurssit = new ArrayList<>();
     }
-    // HIGHLIGHT_GREEN_END
 
     void ilmoittauduKurssille(String kurssi) {
         kaynnissaOlevatKurssit.add(kurssi);
@@ -312,24 +344,20 @@ class Opiskelija extends Henkilo {
 
     public void naytaKurssit(){
         String kaikkiKurssit = String.join(", ", kaynnissaOlevatKurssit);
-        IO.println(this.nimi + " opiskelee kursseilla: " + kaikkiKurssit);
+        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
     }
 }
 // FILE_END
 // FILE: Opettaja.java
 import java.util.ArrayList;
 class Opettaja extends Henkilo {
-    // HIGHLIGHT_GREEN_BEGIN
     private ArrayList<String> opetettavatKurssit;
-    // HIGHLIGHT_GREEN_END
 
-    // HIGHLIGHT_GREEN_BEGIN
     public Opettaja(String nimi)
     {
         super(nimi);
         this.opetettavatKurssit = new ArrayList<>();
     }
-    // HIGHLIGHT_GREEN_END
 
     void lisaaKurssi(String kurssi) {
         opetettavatKurssit.add(kurssi);
@@ -337,7 +365,7 @@ class Opettaja extends Henkilo {
 
     void naytaOpetettavatKurssit() {
         String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
+        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
     }
 }
 // FILE_END
@@ -359,32 +387,8 @@ public class Main {
 
 Oletusrakentajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
 
-Jatketaan vielä esimerkkiä hieman pidemmälle. 
-
-Oletetaan, että järjestelmässämme olisi kahdenlaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. Toteutetaan nämä luokat perimällä `Opiskelija`-luokasta.
-
-```java,noplayground
-// FILE: TutkintoOpiskelija.java
-class TutkintoOpiskelija extends Opiskelija {
-    private String tutkintoOhjelma;
-    
-    // Rakentaja tässä välissä... (jätetty pois tilan säästämiseksi)
-}
-// FILE_END
-// FILE: AvoinOpiskelija.java
-class AvoinOpiskelija extends Opiskelija {
-    private boolean maksutSuoritettu;
-
-    // Rakentaja tässä välissä... (jätetty pois tilan säästämiseksi)
-
-    void suoritaMaksu(double summa) {
-        // Otetaan yhteys maksujärjestelmään ja käsitellään maksu ...
-        // Kun on todennettu, että maksu on suoritettu:
-        maksutSuoritettu = true;
-    }
-}
-// FILE_END
-```
+Esimerkkiä voitaisiin jatkaa vielä pidemmälle. Meillä voisi olla myös `Sihteeri`, joka voi kirjata opintosuorituksia. `Sihteeri` peritään `Henkilo`-luokasta. 
+Voisimme tehdä myös kahdenlaisia erilaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
 
 Luokkahierarkia näyttäisi nyt seuraavalta:
 
@@ -398,6 +402,10 @@ classDiagram
     Opiskelija <|-- AvoinOpiskelija
 ``` 
 
+Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
+
+## is-a-suhde
+
 Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
 
 Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-tyyppisinä, kun ei ole tarpeen tietää tarkasti, minkä tyyppisiä olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä erilaisia henkilöitä yhtenä ryhmänä, esimerkiksi lisäämällä kaikki tekemämme oliot `Henkilo`-taulukkoon:
@@ -408,6 +416,35 @@ Opettaja opettaja = new Opettaja();
 Sihteeri sihteeri = new Sihteeri();
 
 Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
+```
+
+Lisätään vielä `Henkilo`-luokkaan metodit `kirjaudu()` ja `kirjauduUlos()`, jotka kaikki henkilöt perivät. 
+
+```java,noplayground
+class Henkilo {
+    // HIGHLIGHT_GREEN_BEGIN
+    private boolean kirjautunut;
+    // HIGHLIGHT_GREEN_END
+
+    public Henkilo(String nimi) {
+        // ...
+        // HIGHLIGHT_GREEN_BEGIN
+        this.kirjautunut = false;
+        // HIGHLIGHT_GREEN_END
+        // ..
+    }
+
+    // HIGHLIGHT_GREEN_BEGIN
+    void kirjaudu() {
+        this.kirjautunut = true;
+        IO.println(this.getNimi() + " kirjautui sisään.");
+    }
+    void kirjauduUlos() {
+        this.kirjautunut = false;
+        IO.println(this.getNimi() + " kirjautui ulos.");
+    }
+    // HIGHLIGHT_GREEN_END
+}
 ```
 
 Nyt koska `Henkilo`-luokassa on määritelty muun muassa `kirjauduUlos()`-metodi, voimme kutsua tätä metodia kaikille `henkilot`-taulukon olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita taulukossa on:
@@ -485,9 +522,11 @@ class Henkilo {
 }
 ```
 
-## Final-avainsana
+## final-avainsana
 
 `final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin ylikirjoittaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi ylikirjoittaa aliluokassa. 
+
+Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan suoraan tekemistä perinnän kanssa. 
 
 ## Näkyvyysmääreet
 
@@ -507,36 +546,6 @@ Ensimmäinen sarake ilmaisee, onko luokalla itsellään pääsy määritellyn n�
 Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa, näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla, jolla olet suunnitellut sen käytettävän. 
 Pääsääntö on, että ohjelmoijan tulisi käyttää mahdollisimman rajoittavaa näkyvyysmäärettä -- mielellään `private`-määrettä -- ellei ole erityistä syytä käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään tahalliset tai tahattomat väärinkäytökset luokan jäseniin. 
 Vältä julkisia kenttiä, ellei kyseessä ole vakio. (Tässä materiaalissa saatetaan käyttää esimerkinomaisesti julkisia kenttiä. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti, mutta sitä ei suositella tuotantokoodissa.) 
-
-... 
-
-Muutetaan Henkilo-luokan `nimi`- ja `kayttajatunnus`-attribuutit `protected`-määritteisiksi:
-
-```java
-class Henkilo {
-    public String nimi;
-    protected String kayttajatunnus;
-
-    public void kirjaudu() {
-        // Kirjautumislogiikka
-    }
-
-    protected void muutaKayttajatunnus(String uusiTunnus) {
-        this.kayttajatunnus = uusiTunnus;
-    }
-}
-```
-
-Nyt `nimi`-attribuutti näkyy myös muissa luokissa. Kuitenkin `kayttajatunnus`-attribuutin sisältämän arvon käyttäminen jostain muusta luokasta, joka ei ole `Henkilo`-luokan aliluokka, saamme käännösvirheen:
-
-```java
-class JokuMuuLuokka { 
-    void jokuMetodi() {
-        Henkilo henkilo = new Henkilo();
-        henkilo.muutaKayttajatunnus("uusiTunnus"); // Käännösvirhe: ei pääsyä protected-jäseneen
-    }
-}
-```
 
 ## Tehtävät
 
