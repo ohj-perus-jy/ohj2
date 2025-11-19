@@ -29,8 +29,7 @@ void main () {
 ```
 
 ### Ehdollinen operaattori 
-
-Syntaksi ? operaattorille (engl. *ternary operator*) on: ehto ? tosi : epätosi
+Syntaksi ehdolliselle ? operaattorille (engl. *ternary operator*) on: ehto ? tosi : epätosi. Sopii erityisesti tapauksiin, joissa vaihtoehtoja on kaksi. 
 
 Koodiesimerkki:
 ```java,editable
@@ -40,11 +39,11 @@ void main () {
     int suurempi = (luku1 > luku2) ? luku1 : luku2;
 
     IO.println("Suurempi luvuista on: " + suurempi);
-}
+}, joka nostaa luettavuutta enti
 ```
 
 ### Switch
-switch/case-syntaksi auttaa parantamaan koodin luettavuutta ja switch saattaa olla nopeampi ajaa Javassa (hyppytaulukoiden) ansiosta, jos (casena) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. Tästä seuraavaksi esimerkki:
+switch/case-syntaksi auttaa parantamaan koodin luettavuutta ja switch saattaa olla nopeampi ajaa Javassa (hyppytaulukoiden) ansiosta, jos (casena(keissinä, tapauksena?)) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
 
 ```java,editable
 void main () {
@@ -139,11 +138,13 @@ Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin teht
 
 Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
 
-| C#        | Java                              |
-| --------- | --------------------------------- |
-| public    | näkyvyysmodifikaattori — julkinen |
-| static    | staattinen — kuuluu luokalle      |
-| void      | ei palauta arvoa                  |
+| C#                     | Java                              |
+| ---------------------- | --------------------------------- |
+| list[indeksi]          | list.get(indeksi)                 |
+| list.Count             | list.size()                       |
+| list.RemoveAt(indeksi) | list.remove(indeksi)              |
+
+Lisäksi Javassa metodille `.add()` on kaksi toteutusta, joista `.add(lisättava)` lisää listan loppuun ja `.add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `.remove()` metodille on kaksi optiota, joista `.remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `.remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy (Pitäisikö kuitenkin puhua poistettavista olioista?). 
 
 ```java
 import java.util.*;
@@ -151,7 +152,7 @@ import java.util.*;
 void main () {
     List<String> mjonoLista = new ArrayList<>();
     mjonoLista.add("eka");
-    mjonoLista.add("toka");
+    mjonoLista.add(0, "toka");
     mjonoLista.add("kolmas");
     IO.println(mjonoLista.size());
     IO.println(mjonoLista.indexOf("kolmas"));
@@ -174,6 +175,8 @@ void main () {
 
 }
 ```
+
+Muista metodeista voi lukea dokumentaatiosta: https://docs.oracle.com/javase/8/docs/api/java/util/List.html
 
 ## Merkkijonojen vertailu
 Javassa merkkijonojen sisältöjen vertailu tapahtuu String-luokan metodilla `.equals()`. (Sisäisesti `==` Java vertaa, että viittaavatko molemmat samaan objektiin)
