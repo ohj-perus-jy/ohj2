@@ -22,138 +22,97 @@ Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa.
 
 ## Esimerkki
 
-Käytännössä olioilla on usein yhteisiä piirteitä ja toimintoja. Otetaan keksitty esimerkki henkilötietojärjestelmästä: `Opiskelija`, `Opettaja` ja `Sihteeri` voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on henkilöille yhteisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisella on myös yhteisiä toimintoja, kuten kirjautuminen järjestelmään.
+Käytännössä olioilla on usein yhteisiä piirteitä. Otetaan keksitty esimerkki henkilötietojärjestelmästä: Maija Opiskelija, Olli Opettaja ja Satu Sihteeri voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on kaikille käyttäjille tyypillisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisen pitäisi myös päästä kirjautumaan sisään järjestelmään ja sieltä ulos. 
 
-Kullakin henkilöllä on kuitenkin myös omia erityispiirteitään: Opiskelijalla on lista kursseista, joille hän on ilmoittautunut, sekä opintopisteet. Opettajalla on tehtävänimike ja kurssit, joita hän opettaa, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
+Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelijalla voisi olla lista kursseista, joille hän on ilmoittautunut, sekä hänen suorittamansa opintopisteet. Opettajalla on kurssit, joita hän opettaa sekä tehtävänimike, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
-Voisimme nyt luoda kolme erillistä luokkaa: `Opiskelija`, `Opettaja` ja `Sihteeri`. Tutki alla olevia luokkia, niissä olevia attribuutteja ja metodeja. 
+Lähdetään kuitenkin aluksi liikkeelle pienesti -- opiskelijasta ja opettajasta. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.
+
+> [!VAROITUS]
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia. Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo kapseloinnin periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
 
 ```java
-// FILE: Opiskelija.java
+// FILE: Opiskelija.java  
 import java.util.ArrayList;
 
 class Opiskelija {
     private String nimi;
-    private String kayttajatunnus;
-    private boolean kirjautunut;
-    private int opintopisteet;
-    private ArrayList<String> kurssit;
+    private ArrayList<String> kaynnissaOlevatKurssit;
 
-    public Opiskelija(String nimi, String kayttajatunnus) {
+    public Opiskelija() {
+        this.kaynnissaOlevatKurssit = new ArrayList<>();
+    }
+
+    String getNimi() {
+        return this.nimi;
+    }
+
+    void setNimi(String nimi) {
         this.nimi = nimi;
-        this.kayttajatunnus = kayttajatunnus;
-        this.kirjautunut = false;
-        this.opintopisteet = 0;
-        this.kurssit = new ArrayList<>();
     }
 
-    void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
-        kirjautunut = true;
-    }
-
-    void kirjauduUlos() {
-        IO.println(kayttajatunnus + " kirjautui ulos.");
-        kirjautunut = false;
+    void naytaOpintoOhjelma() {
+        String kurssit = String.join(", ", kaynnissaOlevatKurssit);
+        IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
     }
 
     void ilmoittauduKurssille(String kurssi) {
-        IO.println(kayttajatunnus + " ilmoittautui kurssille: " + kurssi);
-        kurssit.add(kurssi);
+        IO.println(this.nimi + " ilmoittautui kurssille: " + kurssi);
+        kaynnissaOlevatKurssit.add(kurssi);
     }
-}
-// FILE_END
 
-// FILE: Opettaja.java
+}
+// FILE_END  
+
+// FILE: Opettaja.java  
 import java.util.ArrayList;
 
 class Opettaja {
     private String nimi;
-    private String kayttajatunnus;
-    private boolean kirjautunut;
-    private String tehtavanimike;
     private ArrayList<String> opetettavatKurssit;
 
-    public Opettaja(String nimi, String kayttajatunnus, String tehtavanimike) {
-        this.nimi = nimi;
-        this.kayttajatunnus = kayttajatunnus;
-        this.tehtavanimike = tehtavanimike;
-        this.kirjautunut = false;
+    public Opettaja() {
         this.opetettavatKurssit = new ArrayList<>();
     }
 
-    void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
-        kirjautunut = true;
+    String getNimi() {
+        return this.nimi;
     }
 
-    void kirjauduUlos() {
-        IO.println(kayttajatunnus + " kirjautui ulos.");
-        kirjautunut = false;
+    void setNimi(String nimi) {
+        this.nimi = nimi;
     }
 
     void naytaOpetettavatKurssit() {
         String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(nimi + " opettaa kursseja: " + kurssit);
+        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
     }
 
     void lisaaKurssi(String kurssi) {
-       opetettavatKurssit.add(kurssi);
+        opetettavatKurssit.add(kurssi);
     }
 }
-// FILE_END
 
-// FILE: Sihteeri.java
-class Sihteeri {
-    private String nimi;
-    private String kayttajatunnus;
-    private boolean kirjautunut;
+// FILE_END  
 
-    public Sihteeri(String nimi, String kayttajatunnus) {
-        this.nimi = nimi;
-        this.kayttajatunnus = kayttajatunnus;
-        this.kirjautunut = false;
-    }
-
-    void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
-        kirjautunut = true;
-    }
-
-    void kirjauduUlos() {
-        IO.println(kayttajatunnus + " kirjautui ulos.");
-        kirjautunut = false;
-    }
-
-    void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
-        // Opintosuorituksen kirjaamisen logiikka ...
-        // Jätetään tässä esimerkissä toteuttamatta
-    }
-}
-// FILE_END
-
-//FILE: main.java
+//FILE: main.java  
 public class Main {
     public static void main() {
-        Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen", "matti123");
-        opiskelija.kirjaudu();
+        Opiskelija opiskelija = new Opiskelija();
+        opiskelija.setNimi("Olli Opiskelija");
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
 
-        Opettaja opettaja = new Opettaja("Maija Opettaja", "maijaope", "Yliopistonlehtori");
-        opettaja.kirjaudu();
+        Opettaja opettaja = new Opettaja();
+        opettaja.setNimi("Maija Opettaja");
         opettaja.lisaaKurssi("Ohjelmointi 1");
         opettaja.lisaaKurssi("Ohjelmointi 2");
         opettaja.naytaOpetettavatKurssit();
-
-        Sihteeri sihteeri = new Sihteeri("Sari Sihteeri", "saris");
-        sihteeri.kirjaudu();
-        sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
     }
 }
-// FILE_END
+// FILE_END  
 ```
 
-Huomaat, että kaikissa kolmessa luokassa on samat attribuutit `nimi` ja `kayttajatunnus`, sekä metodit `kirjaudu()` ja `kirjauduUlos()`. Näiden luokkien välillä on toki myös eroja, mutta tämä toisto on ongelmallista, koska:
+Huomaat, että kummassakin luokassa on samat attribuutti `nimi` sekä metodit `getNimi` ja `setNimi`. Näiden luokkien välillä on toki myös eroja, mutta nimen omaan toisto on ongelmallista, koska:
 
  * jokaisessa luokassa on määriteltävä samat ominaisuudet ja toiminnot uudelleen, 
  * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän täytyy tehdä se kolmessa eri paikassa,
@@ -163,74 +122,63 @@ Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi
 
 ## Luokkahierarkia
 
-Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten `Opiskelija`, `Opettaja` ja `Sihteeri` voivat *periä* `Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin aliluokkaan ilman koodin toistamista.
+Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten `Opiskelija` ja `Opettaja` voivat *periä* `Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin aliluokkaan ilman koodin toistamista.
 
 Toteutetaan nyt yllä kuvattu tilanne uudestaan niin, että kirjoitetaan kaikissa luokissa esiintyvät ominaisuudet ja toiminnot *uuteen* `Henkilo`-luokkaan, ja muut luokat perivät kyseisen luokan.
 
-> [!VAROITUS]
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti attribuuttien näkyvyysmääreet jätetään toistaiseksi oletusasetukseen (package-private) yksinkertaisuuden vuoksi. Korjaamme asian esimerkin edetessä.
-
 ```java
 // FILE: Henkilo.java
-class Henkilo {
+public class Henkilo {
     String nimi;
-    String kayttajatunnus;
-    private boolean kirjautunut = false;
 
-    public String getNimi()
+    String getNimi()
     {
-        return nimi;
+        return this.nimi;
     }
 
-    void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
-        kirjautunut = true;
-    }
-
-    void kirjauduUlos() {
-        IO.println(kayttajatunnus + " kirjautui ulos.");
-        kirjautunut = false;
+    void setNimi(String nimi) {
+        this.nimi = nimi;
     }
 }
 // FILE_END
 // FILE: Opiskelija.java
 import java.util.ArrayList;
-class Opiskelija extends Henkilo {
-    ArrayList<String> kurssit = new ArrayList<>();
-    int opintopisteet = 0;
 
-    void ilmoittauduKurssille(String kurssi) {
-        kurssit.add(kurssi);
+class Opiskelija extends Henkilo {
+    private ArrayList<String> kaynnissaOlevatKurssit;
+
+    public Opiskelija() {
+        this.kaynnissaOlevatKurssit = new ArrayList<>();
     }
 
-    public void naytaKurssit(){
-        String kaikkiKurssit = String.join(", ", kurssit);
-        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
+    void naytaOpintoOhjelma() {
+        String kurssit = String.join(", ", kaynnissaOlevatKurssit);
+        IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
+    }
+
+    void ilmoittauduKurssille(String kurssi) {
+        IO.println(this.nimi + " ilmoittautui kurssille: " + kurssi);
+        kaynnissaOlevatKurssit.add(kurssi);
     }
 }
 // FILE_END
 // FILE: Opettaja.java
 import java.util.ArrayList;
-class Opettaja extends Henkilo {
-    String tehtavanimike;
-    ArrayList<String> opetettavatKurssit = new ArrayList<>();
 
-    void lisaaKurssi(String kurssi) {
-        opetettavatKurssit.add(kurssi);
+class Opettaja extends Henkilo {
+    private ArrayList<String> opetettavatKurssit;
+
+    public Opettaja() {
+        this.opetettavatKurssit = new ArrayList<>();
     }
 
     void naytaOpetettavatKurssit() {
         String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
+        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
     }
-}
-// FILE_END
-// FILE: Sihteeri.java
-class Sihteeri extends Henkilo {
 
-    void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
-        // Opintosuorituksen kirjaamisen logiikka ...
-        // Jätetään tässä esimerkissä toteuttamatta
+    void lisaaKurssi(String kurssi) {
+        opetettavatKurssit.add(kurssi);
     }
 }
 // FILE_END
@@ -238,75 +186,55 @@ class Sihteeri extends Henkilo {
 public class Main {
     public static void main() {
         Opiskelija opiskelija = new Opiskelija();
-        opiskelija.nimi = "Matti Meikäläinen";
-        opiskelija.kayttajatunnus = "matti123";
-        opiskelija.kirjaudu();
+        opiskelija.setNimi("Olli Opiskelija");
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
-        opiskelija.naytaKurssit();
 
         Opettaja opettaja = new Opettaja();
-        opettaja.nimi = "Maija Opettaja";
-        opettaja.kayttajatunnus = "maijaope";
-        opettaja.kirjaudu();
+        opettaja.setNimi("Maija Opettaja");
         opettaja.lisaaKurssi("Ohjelmointi 1");
         opettaja.lisaaKurssi("Ohjelmointi 2");
         opettaja.naytaOpetettavatKurssit();
-
-        Sihteeri sihteeri = new Sihteeri();
-        sihteeri.nimi = "Sari Sihteeri";
-        sihteeri.kayttajatunnus = "saris";
-        sihteeri.kirjaudu();
-        sihteeri.kirjaaOpintosuoritus("matti123", "Ohjelmoinnin perusteet");
     }
 }
 // FILE_END
 ``` 
 
-Huomaa, että `Opiskelija`, `Opettaja` ja `Sihteeri`-luokat eivät enää määrittele `nimi`- ja `kayttajatunnus`-attribuutteja tai `kirjaudu()`-metodia, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää.
+Huomaa, että `Opiskelija`- ja `Opettaja`-luokat eivät enää määrittele `nimi`--attribuuttia tai `getNimi`- ja `setNimi`-metodeja, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää.
 
-Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija`, `Opettaja` ja `Sihteeri` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
+Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija` ja `Opettaja` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
 ```mermaid
 classDiagram
     Henkilo <|-- Opiskelija
     Henkilo <|-- Opettaja
-    Henkilo <|-- Sihteeri
 ```
 
-Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. Unified Modelling Language). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
+Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified Modelling Language*). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
 
 ## Rakentajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, emme määritelleet rakentajia missään luokissa, joten kaikki luokat käyttävät oletusrakentajaa, joka ei alusta mitään attribuutteja. 
-Asetimmekin nimen ja käyttäjätunnuksen arvot pääohjelmasta käsin. Tämä ei ole hyvä käytäntö, sillä se rikkoo kapseloinnin periaatetta, ja altistaa luokan sisäisen tilan virheelliselle käytölle. Vaikka nimi ja käyttäjätunnus teoreettisesti voivatkin kyllä järjestelmän eliniän aikana toki vaihtua, noiden attribuuttien näkyvyysmääreiden pitäisi estää niiden suora asettaminen luokan ulkopuolelta.
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen seurauksena `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä nimen asettaminen suoraan luokan ulkopuolelta ei pitäisi olla sallittua, vaan se pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
 
-Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`- ja `kayttajatunnus`-parametrit, ja alustaa attribuuttien arvot vastaavasti. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta.
+Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
 
 ```java,noplayground
 // FILE: Henkilo.java
 class Henkilo {
 
-    // HIGHLIGHT_GREEN_BEGIN
     private String nimi;
-    private String kayttajatunnus;
-    private boolean kirjautunut;
 
-    public Henkilo(String nimi, String kayttajatunnus) {
+    public Henkilo(String nimi) {
         this.nimi = nimi;
-        this.kayttajatunnus = kayttajatunnus;
-        this.kirjautunut = false;
-    }
-    // HIGHLIGHT_GREEN_END
-
-    void kirjaudu() {
-        IO.println("Kirjautuminen onnistui käyttäjätunnuksella: " + kayttajatunnus);
-        kirjautunut = true;
     }
 
-    void kirjauduUlos() {
-        IO.println(kayttajatunnus + " kirjautui ulos.");
-        kirjautunut = false;
+    public String getNimi() {
+        return this.nimi;
     }
+
+
+
+
 }
 // FILE_END
 // FILE: main.java
