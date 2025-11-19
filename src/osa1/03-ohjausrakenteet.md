@@ -7,10 +7,11 @@
 > - Toistolauseet (`for`, `while`, `do-while`), ja listatyyppiset tietorakenteet
 > - Tiedostat, että Javassa merkkijonot verrataan `equals`-aliohjelmalla eikä `==`
 
+TODO: Pitäisikö tässä sanoa jotain muuta rakenteisesta ohjelmoinnista, kuin luvussa 1.2?
+
 ## Ehtolauseet
 
 ### If
-TODO:
 If-lauseet toimivat samalla tavalla Javassa kuin muissakin kielissä, eli 
 ```java.ignore
 if (ehto) {
@@ -18,13 +19,7 @@ if (ehto) {
 } else if (ehto2) {
     tee jotain muuta
 } else {
-
-}
-```
-
-```java
-void main () {
-    bool =
+    oletustoiminto
 }
 ```
 
@@ -134,7 +129,7 @@ void main () {
 
 ## Listat
 TODO:
-Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?
+(Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?)d
 
 Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
 
@@ -154,13 +149,12 @@ void main () {
     mjonoLista.add("eka");
     mjonoLista.add(0, "toka");
     mjonoLista.add("kolmas");
-    IO.println(mjonoLista.size());
-    IO.println(mjonoLista.indexOf("kolmas"));
 
+    //Kaksi esimerkkiä kuinka luoda listaan heti sisältöä
     List<String> toinen = new ArrayList<>(List.of("koira", "kissa", "kala"));
     List<String> varit = Arrays.asList("punainen", "sininen", "keltainen");
-    toinen.add("kissakala");
 
+    //For-Each on hyvä listojen tulostamiseen
     for(String mjono : mjonoLista) {
             IO.println(mjono);
     }

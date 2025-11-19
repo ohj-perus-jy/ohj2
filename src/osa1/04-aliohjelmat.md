@@ -10,22 +10,40 @@
 
 ## Datan käsittely
 TODO:
-- Taulukko, merkkijono jne.?
+- Taulukko, merkkijono jne? Millaista dataa ja miten?
 
 ## Funktiot
-Funktion yleinen esittelyrivi javassa:
+Funktion yleinen esittelyrivi Javassa:
 ```java.ignore
 public static [palautettava] ([parametrit]) {
     ...
 }
 ```
 
-Kuten C#:ssa, jos funktio ei palauta, mitään on palautettavan tyyppi `void`
+Jos funktio ei palauta, mitään on palautettavan tyyppi `void`. Palautettava voi olla tyypiltään jokin Javan perustietotyyppi tai olio. 
 
 
 ## Javan perustietotyypin ja viitetyyppien ero funktion kutsussa
-- Kun aliohjelmakutsussa parametrina on olio, parametrina kulkee olion viite, ei itse olio.
-- Jokin hyvä havainnointi
+Javassa funktion olioparametrit kulkevat aina viitteinä. Se tarkoittaa, että funktiossa olioon tehdyt muutokset näkyvät myös sitä kutsuvassa ohjelmassa, eli funktio aiheuttaa sivuvaikutuksia. Tämä kannattaa pitää mielessä, kun haluaa ohjelmoida sivuvaikutuksettomia puhtaita funktioita. 
+
+(TODO: Onko mainin paikalle tiedostossa mitään ohjeistusta? Onko se ensimmäisenä vai c:n tapaan viimeisenä?)
+```java
+void main() {
+    StringBuilder muuttuva = new StringBuilder("Esimerkki");
+    int luku = 1;
+
+    lisaaJaTulosta(muuttuva, luku);
+    IO.println(muuttuva);
+    IO.println(luku);
+}
+
+public static void lisaaJaTulosta(StringBuilder mjono, int luku){
+    luku += 1;
+    mjono.append(" 1");
+    IO.println(mjono);
+    IO.println(luku);
+}
+```
 
 ## Kommentointi
 
@@ -50,7 +68,7 @@ int summa(int a , int b) {
 }
 ```
 
-Dokumentaation saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
+Dokumentaatiorungon saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
 
 ## B1
 - (Verkko viikon konsepteista?)

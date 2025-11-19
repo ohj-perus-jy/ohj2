@@ -12,7 +12,7 @@
 
 ## Javan perustietotyypeistä
 
-Kullekin Javan primitiivitietotyypille on olemassa niin sanottu käärijäluokka. Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin primitiivityypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
+Kullekin Javan primitiivitietotyypille (TODO: Vai perustietotyyppi) on olemassa niin sanottu käärijäluokka. Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin primitiivityypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
 
 TODO: Lyhyt esimerkki käärijäluokan käytöstä.
 
@@ -47,6 +47,71 @@ void main() {
 }
 ```
 
+## Yksittäinen merkki ja merkkijonot
+
+- `char`
+- `String`
+- `StringBuilder`
+
+### char
+Javassa voit luoda yksittäisiä merkkejä avainsanan `char` avulla: 
+
+```java
+void main() {
+    char tabulaattoriMerkki = '\u0009';
+    IO.println(Character.isWhitespace(tabulaattoriMerkki));
+}
+```
+
+
+### String
+TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
+
+```java
+void main() {
+    String muuttumaton = "Tämä on muuttumaton";
+    IO.println(muuttumaton);
+    muuttumaton.concat(" merkkijono.");
+    IO.println(muuttumaton);
+}
+```
+
+Ylemmässä esimerkissä metodi `.concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
+
+Huomaa, että Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
+
+```java
+void main() {
+    String mjono = "esimerkki";
+    IO.println(mjono.charAt(0));
+}
+```
+
+### StringBuilder
+Jos tarvitsee muunneltavan merkkijonon, käytä StringBuilderia:
+
+```java
+void main() {
+    Byte tavu;
+    IO.println(tavu);
+    StringBuilder muuttuva = new StringBuilder("Tämä on muuttuva");
+    IO.println(muuttuva);
+    muuttuva.append(" merkkijono.");
+    IO.println(muuttuva);
+}
+```
+
+## boolean
+Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
+
+```java
+void main() {
+    boolean totta = true;
+    String mjonona = Boolean.toString(totta);
+    IO.println(mjonona.charAt(0));
+}
+```
+
 Javan dokumentaatiosta löytyy myös esimerkkejä muista perustietotyypeistä, joita on tarjolla Javassa: https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html ?
 
 
@@ -73,71 +138,6 @@ void main () {
     luvut[0] = 'a';
     IO.println(luvut[0]);
     IO.println(luvut[1]);
-}
-```
-
-## Yksittäinen merkki ja merkkijonot
-
-- `char`
-- `String`
-- `StringBuilder`
-
-## char
-Javassa voit luoda yksittäisiä merkkejä avainsanan `char` avulla: 
-
-```java
-void main() {
-    char tabulaattoriMerkki = '\u0009';
-    IO.println(Character.isWhitespace(tabulaattoriMerkki));
-}
-```
-
-
-## String
-TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
-
-```java
-void main() {
-    String muuttumaton = "Tämä on muuttumaton";
-    IO.println(muuttumaton);
-    muuttumaton.concat(" merkkijono.");
-    IO.println(muuttumaton);
-}
-```
-
-Ylemmässä esimerkissä metodi `.concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
-
-Huomaa, että Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
-
-```java
-void main() {
-    String mjono = "esimerkki";
-    IO.println(mjono.charAt(0));
-}
-```
-
-## StringBuilder
-Jos tarvitsee muunneltavan merkkijonon, käytä StringBuilderia:
-
-```java
-void main() {
-    Byte tavu;
-    IO.println(tavu);
-    StringBuilder muuttuva = new StringBuilder("Tämä on muuttuva");
-    IO.println(muuttuva);
-    muuttuva.append(" merkkijono.");
-    IO.println(muuttuva);
-}
-```
-
-## boolean
-Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
-
-```java
-void main() {
-    boolean totta = true;
-    String mjonona = Boolean.toString(totta);
-    IO.println(mjonona.charAt(0));
 }
 ```
 
