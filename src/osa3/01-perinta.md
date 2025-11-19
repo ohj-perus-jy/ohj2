@@ -215,26 +215,29 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Uni
 
 Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen seurauksena `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä nimen asettaminen suoraan luokan ulkopuolelta ei pitäisi olla sallittua, vaan se pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
 
-Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta.
-Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+Asetetaan aluksi nuo `Henkilo`-luokan attribuutit yksityisiksi. Lisätään sitten `Henkilo`-luokkaan rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta. Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
 
 ```java,noplayground
 // FILE: Henkilo.java
 class Henkilo {
 
+    // HIGHLIGHT_GREEN_BEGIN
     private String nimi;
 
     public Henkilo(String nimi) {
         this.nimi = nimi;
     }
+    // HIGHLIGHT_GREEN_END
+
+    // HIGHLIGHT_RED_BEGIN
+    void setNimi(String nimi) {
+        this.nimi = nimi;
+    }
+    // HIGHLIGHT_RED_END
 
     public String getNimi() {
         return this.nimi;
     }
-
-
-
-
 }
 // FILE_END
 // FILE: main.java
@@ -244,10 +247,8 @@ public class Main {
         Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen", "matti123");        
         // HIGHLIGHT_GREEN_END
         // HIGHLIGHT_RED_BEGIN
-        opiskelija.nimi = "Matti Meikäläinen";
-        opiskelija.kayttajatunnus = "matti123";
+        opiskelija.setNimi("Matti Meikäläinen");
         // HIGHLIGHT_RED_END
-        opiskelija.kirjaudu();
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
         opiskelija.naytaKurssit();
 
@@ -261,79 +262,96 @@ Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka ottaa parametreja, 
 Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa.
 Tämän vuoksi meidän on lisättävä myös `Opiskelija`, `Opettaja` ja `Sihteeri`-luokkiin rakentajat vastaamaan tätä muutosta. 
 
-Toisaalta nyt kun määrittelimme `nimi`- ja `kayttajatunnus`-attribuutit yksityisiksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
+Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
-    public Opiskelija(String nimi, String kayttajatunnus) {
+    public Opiskelija(String nimi) {
         this.nimi = nimi;               
-        this.kayttajatunnus = kayttajatunnus; 
         // Käännösvirhe: nimi ja kayttajatunnus ovat yksityisiä!
     }
 }
 ```
 
-Ainoa tapa tallentaa arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa
-ja välittämällä tuossa kutsussa tarvittavat parametrit.
-Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kaikkiin kolmeen aliluokkaan.
+Ainoa tapa tallentaa arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa ja välittämällä tuossa kutsussa tarvittavat parametrit.
+Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan.
 
-```java,noplayground
+```java
+// FILE: Henkilo.java
+class Henkilo {
+    private String nimi;
+
+    public Henkilo(String nimi)
+    {
+        this.nimi = nimi;
+    }
+
+    public String getNimi()
+    {
+        return nimi;
+    }
+}
+// FILE_END
 // FILE: Opiskelija.java
 import java.util.ArrayList;
 class Opiskelija extends Henkilo {
-    private ArrayList<String> kurssit;
-    private int opintopisteet = 0;
+    // HIGHLIGHT_GREEN_BEGIN
+    private ArrayList<String> kaynnissaOlevatKurssit;
+    // HIGHLIGHT_GREEN_END
 
-    public Opiskelija(String nimi, String kayttajatunnus) {
-        super(nimi, kayttajatunnus);
-        this.kurssit = new ArrayList<>();
-        this.opintopisteet = 0;
+    // HIGHLIGHT_GREEN_BEGIN
+    public Opiskelija(String nimi) {
+        super(nimi);
+        kaynnissaOlevatKurssit = new ArrayList<>();
     }
+    // HIGHLIGHT_GREEN_END
 
-    public void ilmoittauduKurssille(String kurssi) {
-        IO.println("Ilmoittauduttu kurssille: " + kurssi);
-        kurssit.add(kurssi);
+    void ilmoittauduKurssille(String kurssi) {
+        kaynnissaOlevatKurssit.add(kurssi);
     }
 
     public void naytaKurssit(){
-        String kaikkiKurssit = String.join(", ", kurssit);
-        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
+        String kaikkiKurssit = String.join(", ", kaynnissaOlevatKurssit);
+        IO.println(this.nimi + " opiskelee kursseilla: " + kaikkiKurssit);
     }
 }
 // FILE_END
 // FILE: Opettaja.java
 import java.util.ArrayList;
 class Opettaja extends Henkilo {
-    private String tehtavanimike;
+    // HIGHLIGHT_GREEN_BEGIN
     private ArrayList<String> opetettavatKurssit;
+    // HIGHLIGHT_GREEN_END
 
-    public Opettaja(String nimi, String kayttajatunnus, String tehtavanimike) {
-        super(nimi, kayttajatunnus);
-        this.tehtavanimike = tehtavanimike;
+    // HIGHLIGHT_GREEN_BEGIN
+    public Opettaja(String nimi)
+    {
+        super(nimi);
         this.opetettavatKurssit = new ArrayList<>();
     }
+    // HIGHLIGHT_GREEN_END
 
-    public void lisaaKurssi(String kurssi) {
-        IO.println(this.getNimi() + " (" + tehtavanimike + ") opettaa nyt kurssia: " + kurssi);
+    void lisaaKurssi(String kurssi) {
         opetettavatKurssit.add(kurssi);
     }
 
-    public void naytaOpetettavatKurssit() {
+    void naytaOpetettavatKurssit() {
         String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
+        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
     }
 }
 // FILE_END
-// FILE: Sihteeri.java
-class Sihteeri extends Henkilo {
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Opiskelija opiskelija = new Opiskelija("Olli Opiskelija");
+        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
+        opiskelija.naytaKurssit();
 
-    public Sihteeri(String nimi, String kayttajatunnus) {
-        super(nimi, kayttajatunnus);
-    }
-
-    public void kirjaaOpintosuoritus(String opiskelija, String kurssi) {
-        // Opintosuorituksen kirjaamisen logiikka ...
-        // Jätetään tässä esimerkissä toteuttamatta
+        Opettaja opettaja = new Opettaja("Maija Opettaja");
+        opettaja.lisaaKurssi("Ohjelmointi 1");
+        opettaja.lisaaKurssi("Ohjelmointi 2");
+        opettaja.naytaOpetettavatKurssit();
     }
 }
 // FILE_END
