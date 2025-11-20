@@ -64,6 +64,26 @@ Tällaista ajonaikaista tyyppitarkistusta kutsutaan _dynaamiseksi tyypintarkistu
 
 > Tehtävä
 
+## switch-lause
+switch/case-syntaksi auttaa parantamaan koodin luettavuutta. switch saattaa olla nopeampi ajaa Javassa hakutauluujen (engl. *lookup table*) ansiosta, jos `case`n arvona käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
+
+```java,editable
+void main () {
+    int kuukausi = 13;
+    int vuosi = 2000;
+
+    IO.println(
+        switch(kuukausi) {
+            case 1, 3, 5, 7, 8, 10, 12 -> 31;
+            case 4, 6, 9, 11 -> 30;
+            case 2 -> (vuosi % 4 == 0 && (vuosi % 100 != 0 || vuosi % 400 == 0)) ? 29 : 28; 
+            default -> -1;
+        }
+    );
+
+}
+```
+
 ## Hahmonsovitus
 
 Hahmonsovitus (engl. pattern matching) on ohjelmointitekniikka, jossa annettua lausekkeen arvoa verrataan _hahmoihin_  eli kuvauksiin arvon tyypistä, rakenteesta tai muista ominaisuuksista. Hahmonsovituksella voidaan sekä tarkistaa vastaako arvo tiettyä hahmoa että määritellä uusia muuttujia sovitetusta hahmosta.
