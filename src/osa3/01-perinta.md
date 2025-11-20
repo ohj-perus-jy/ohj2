@@ -12,8 +12,6 @@
 >    - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
 >    - Tuntee hyödylliset ylikirjoitettavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
 
-## Määritelmä
-
 *Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
 Perivästä luokasta käytetään termiä *aliluokka* (subclass) ja peritystä luokasta termiä *yliluokka* (superclass).
@@ -24,7 +22,7 @@ Käytännössä olioilla on usein yhteisiä piirteitä. Otetaan keksitty esimerk
 
 Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelijalla voisi olla lista kursseista, joille hän on ilmoittautunut, sekä hänen suorittamansa opintopisteet. Opettajalla on kurssit, joita hän opettaa sekä tehtävänimike, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
-Lähdetään kuitenkin aluksi liikkeelle pienesti -- opiskelijasta ja opettajasta. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.
+Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
 
 > [!VAROITUS]
 > Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia. Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo kapseloinnin periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
