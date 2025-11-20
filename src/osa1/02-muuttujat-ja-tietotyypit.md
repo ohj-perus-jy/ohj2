@@ -142,7 +142,7 @@ void main () {
 ```
 
 ## Vakiot
-Vakiot esitellään javassa käyttäen avainsanaa `final` ja tyyliin kuuluu, että kaikki kirjaimet kirjoitetaan isolla ja sanat erotellaan toisistaan alaviivalla. Esimerkiksi;
+Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että `final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan alaviivalla.
 
 ```java.ignore
 final int PAIVIA_VIIKOSSA = 7;
