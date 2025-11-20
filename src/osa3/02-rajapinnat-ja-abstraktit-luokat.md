@@ -6,7 +6,7 @@
 > - Abstraktit luokat (abstrakti metodi)
 > - Ymmärrät, että abstraktista luokasta ei voi luoda luokan ilmentymiä
 
-## Määritelmä
+## Määritelmä, abstrakti luokka
 
 *Abstrakti luokka* (engl. *abstract class*) on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). 
 
@@ -213,30 +213,34 @@ public abstract class Laite {
 </details>
 
 
-## Rajapinta (interface)
+## Määritelmä, rajapinta
 
-Rajapinta (interface) on puhtaasti sopimus: se kertoo, mitä metodeja joku luokka lupaa tarjota, mutta ei sisällä toteutusta. Luokka *toteuttaa* (`implements`) rajapinnan ja sitoutuu tarjoamaan sen metodit. Yksi luokka voi toteuttaa useita rajapintoja.
+*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. Rajapinta ei kuitenkaan (lähtökohtaisesti) sisällä kyseisten metodien toteutuksia. Luokka *toteuttaa* (`implements`) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
 
-```java
-public interface Raportoiva {
-    void raportoiTila();
-    String muodostaTilaviesti();
+## Esimerkki
+
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa jonkin arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän toimimmekin esimerkin `Valo`-luokassa, jossa kirkkaus vaihtuu kolmessa tilassa. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
+
+Määritellään tällaiselle toiminnallisuudelle rajapinta `Säädettävä`, jossa on metodi `asetaArvo(int arvo)`.
+
+```java,noplayground
+// FILE: Saadettava.java
+public interface Saadettava {
+    void asetaArvo(int arvo);
 }
+// FILE_END
 ```
 
-Nyt mikä tahansa luokka, oli se sitten `Laite`, `Huone` tai `Palvelin`, voi toteuttaa `Raportoiva`-rajapinnan, kunhan se kirjoittaa molemmat metodit. Tämä antaa meille mahdollisuuden käsitellä kohteita geneerisesti:
+Huomaa, että metodilla ei ole toteutusta, vaan ainoastaan määrittelyrivi. Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
+
+Lisätään `Valo`-luokkaan rajapinnan toteutus:
 
 ```java
-public class Main {
-    public static void tulostaRaportit(List<Raportoiva> kohteet) {
-        for (Raportoiva kohde : kohteet) {
-            kohde.raportoiTila();
-        }
-    }
-}
+// FILE: Valo.java
+// FILE_END
 ```
 
-Rajapinta keskittyy vain ulkoiseen käyttäytymiseen, ei sisäiseen toteutukseen.
+<!-- Rajapinta keskittyy vain ulkoiseen käyttäytymiseen, ei sisäiseen toteutukseen.-->
 
 ## Abstrakti luokka vai rajapinta?
 
