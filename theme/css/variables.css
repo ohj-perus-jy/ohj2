@@ -337,7 +337,7 @@
 
 .jyu-dark {
     --bg: #1c1c1c;
-    --fg: #aaaaaa;
+    --fg: #b6b9be;
 
     --sidebar-bg: #00295730;
     --sidebar-fg: #bbbbbb;
@@ -353,7 +353,7 @@
     --icons-text: var(--bg);
     --icons-text-hover: var(--bg);
 
-    --links: #36a;
+    --links: #59c;
 
     --inline-code-color: #c5c8c6;
 
