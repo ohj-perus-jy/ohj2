@@ -16,7 +16,7 @@ Kullekin Javan primitiivitietotyypille (TODO: Vai perustietotyyppi) on olemassa 
 
 TODO: Lyhyt esimerkki käärijäluokan käytöstä.
 
-## Numeeriset muuttujat
+## Numeeriset tietotyypit
 
 Javassa on seuraavat C#:stakin tutut numeeriset muuttujatyypit:
 
