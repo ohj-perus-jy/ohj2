@@ -122,7 +122,7 @@ Javan taulukot esitellään syntaksilla
 ```java.ignore
 Tyyppi[] nimi = new Tyyppi[koko];
 ```
-Tai jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan syntaksilla
+Tai jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
 
 ```java.ignore
 void main () {
