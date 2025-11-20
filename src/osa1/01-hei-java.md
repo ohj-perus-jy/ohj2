@@ -190,7 +190,7 @@ Matikkaa: $$ \nabla f(x) \in \mathbb{R}^n, $$
 Lisää matikkaa: $O(n)$
 
 <task>
-  <task-title>Ydintehtävä: Tulosta luvut 1-10 <points>1 p.</points> </task-title>
+  <task-title>Tehtävä: Tulosta luvut 1-10 <points>1 p.</points> </task-title>
   <handout>
 
   {{#include ../exercises/1-1-1-esimerkki/handout.md}}
