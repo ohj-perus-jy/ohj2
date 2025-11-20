@@ -11,7 +11,7 @@ Lähteenä: https://dev.java/learn/
 
 ## Java-kielen perusteet
 
-Tässä esimerkki, jolla kirjoitetaan konsoliin javan versio:
+Lähdetäänpä liikkeelle esimerkillä, jossa kirjoitetaan konsoliin Javan versio.
 
 ```java
 void main() {
