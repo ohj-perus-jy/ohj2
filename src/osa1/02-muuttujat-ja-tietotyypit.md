@@ -120,7 +120,7 @@ TODO: mitä käytetään (sulut, [], {}?) merkitsemään, että jokin pitää va
 
 Javan taulukot esitellään syntaksilla 
 ```java.ignore
-(tyyppi)[] (nimi) = new (tyyppi)[(koko)];
+Tyyppi[] nimi = new Tyyppi[koko];
 ```
 Tai jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan syntaksilla
 
