@@ -83,6 +83,10 @@ details {
     overflow: hidden;
 } 
 
+details summary:hover {
+    cursor: pointer;
+}
+
 /* Animate opening and closing of details */
 details::details-content {
   block-size: 0;
