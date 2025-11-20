@@ -14,8 +14,6 @@
 
 *Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
-Perivästä luokasta käytetään termiä *aliluokka* (subclass) ja peritystä luokasta termiä *yliluokka* (superclass).
-
 ## Esimerkki
 
 Käytännössä olioilla on usein yhteisiä piirteitä. Otetaan keksitty esimerkki henkilötietojärjestelmästä: Maija Opiskelija, Olli Opettaja ja Satu Sihteeri voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on kaikille käyttäjille tyypillisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisen pitäisi myös päästä kirjautumaan sisään järjestelmään ja sieltä ulos. 
@@ -118,7 +116,7 @@ Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi
 
 ## Luokkahierarkia
 
-Toistamisen välttämiseksi voimme luoda yliluokan nimeltä `Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten `Opiskelija` ja `Opettaja` voivat *periä* `Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin aliluokkaan ilman koodin toistamista.
+Toistamisen välttämiseksi voimme luoda yliluokan (engl. *superclass*) nimeltä `Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten alaluokat (engl. *subclass*) `Opiskelija` ja `Opettaja` voivat *periä* `Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin aliluokkaan ilman koodin toistamista.
 
 Toteutetaan nyt yllä kuvattu tilanne uudestaan niin, että kirjoitetaan kaikissa luokissa esiintyvät ominaisuudet ja toiminnot *uuteen* `Henkilo`-luokkaan, ja `Opiskelija` ja `Opettaja` perivät kyseisen luokan. Javassa perintä toteutetaan käyttämällä `extends`-avainsanaa. Esimerkiksi `class Opiskelija extends Henkilo` tarkoittaa, että `Opiskelija`-luokka perii `Henkilo`-luokan. Tehdään tämä muutos koodissamme.
 
@@ -195,7 +193,9 @@ public class Main {
 // FILE_END
 ``` 
 
-Huomaa, että `Opiskelija`- ja `Opettaja`-luokat eivät enää määrittele `nimi`--attribuuttia tai `getNimi`- ja `setNimi`-metodeja, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää.
+Huomaa, että `Opiskelija`- ja `Opettaja`-luokat eivät enää määrittele `nimi`--attribuuttia tai `getNimi`- ja `setNimi`-metodeja, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää. Perinnällä siis määritetään *yksi* yliluokka (tässä `Henkilo`) ja aliluokka tai aliluokat (tässä `Opiskelija` ja `Opettaja`), jotka laajentavat (engl. *extend*) `Henkilo`-luokan lisätiedoilla ja -toiminnallisuuksilla opiskelijasta ja opettajasta. 
+
+Toisin sanoen, `Opiskelija` ja `Opettaja` saavat itselleen samat (ei-yksityiset) attribuutit ja (ei-yksityiset) metodit kuin Henkilo-luokka ilman sitä, että ne pitää erikseen määritellä aliluokissa. 
 
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija` ja `Opettaja` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
@@ -209,7 +209,9 @@ Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Uni
 
 ## Rakentajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen seurauksena `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta (ts. mistä tahansa luokan ulkopuolelta) ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
+
+Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta (ts. mistä tahansa luokan ulkopuolelta) ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
 
 Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
 
@@ -268,10 +270,22 @@ class Opiskelija extends Henkilo {
         // HIGHLIGHT_YELLOW_BEGIN
         this.nimi = nimi;
         // HIGHLIGHT_YELLOW_END
-        // Käännösvirhe: nimi on yksityinen muuttuja
     }
 }
 ```
+
+```
+Opiskelija.java:6:5
+java: constructor Henkilo in class Henkilo cannot be applied to given types;
+  required: java.lang.String
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+
+Opiskelija.java:8:13
+java: nimi has private access in Henkilo
+```
+
+Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole oletusrakentajaa. Palaamme tähän asiaan hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
 
 Ainoa tapa tallentaa ja lukea arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
 
@@ -308,7 +322,8 @@ class Opiskelija extends Henkilo {
 }
 ```
 
-Ainoa tapa päästä käsiksi `nimi`-attribuuttiin on kutsua yliluokan `getNimi()`-metodia -- sehän on julkinen. Tehdään tämä muutos kaikkiin kohtiin, joissa `nimi`-attribuuttiin viitataan suoraan perivissä luokissa.
+Ainoa tapa päästä käsiksi `nimi`-attribuuttiin on kutsua yliluokan `getNimi()`-metodia, sillä se on julkinen. Tehdään tämä muutos kaikkiin kohtiin, joissa `nimi`-attribuuttiin viitataan suoraan perivissä luokissa.  
+
 
 ```java
 // FILE: Henkilo.java
@@ -584,8 +599,3 @@ Lisää `Auto`-luokalle vakio `RANGE_MAX`, joka ilmaisee maksimietäisyyden kilo
 
 Lisää sitten `Sahkoauto`-luokkaan attribuutti `akunKunto` (prosentteina; väliltä 0-100) sekä `range` (kilometreinä). Kun autoa ladataan, akun kunto heikkenee 0.1%:lla jokaisella latauskerralla. Niinpä `range` tulee laskea akun kunnon perusteella `akunKunto` / 100 * `RANGE_MAX`.
 
-## Lähteitä
- 
-<https://docs.oracle.com/javase/tutorial/java/concepts/inheritance.html>
-
-<https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html>
