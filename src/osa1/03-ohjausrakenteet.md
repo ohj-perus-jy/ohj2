@@ -64,16 +64,14 @@ Javasta löytyy 4 eri silmukkaa For, While, Do-While ja For-Each
 Sopii erityisesti silloin, kun tiedät etukäteen kuinka monta operaatiota tulee suorittaa.
 
 ```java
-void main () {
-    int[] luvut = {1,2,3,4};
-    int summa = 0;
-
-    for (int i = 0; i < luvut.length: i += 2) {
-        luvut[i]++;
-    }
-    IO.println(summa);
+//-void main () {
+int[] luvut = {1,2,3,4};
+int summa = 0;
+for (int i = 0; i < luvut.length: i += 2) {
+    luvut[i]++;
 }
-```
+IO.println(summa);
+//-}
 
 Seuraavissa esimerkeissä silmukoita koskien `luvut` ja `summa` pysyvät samanlaisina kuin yllä olevassa esimerkissä.
 
