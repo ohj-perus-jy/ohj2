@@ -76,11 +76,25 @@ h6:target::before {
 details {
     background: var(--sidebar-bg);
     /* add drop shadow to details to make it stand out */
-    /*box-shadow: 0 4px 4px var(--table-border-color);*/
+    /* box-shadow: 0 4px 4px var(--table-border-color); */
     border-radius: 4px;
     border: 2px solid var(--details-border);
     padding: 1em;
+    overflow: hidden;
+} 
+
+/* Animate opening and closing of details */
+details::details-content {
+  block-size: 0;
+  transition: block-size 1s, content-visibility 1s;
+  transition-behavior: allow-discrete;
 }
+
+/* When open, let the details content take up as much space as it needs */
+details:open::details-content {
+  block-size: auto;
+}
+
 
 /* This is broken on Safari as of version 14, but is fixed
    in Safari Technology Preview 117 which I think will be Safari 14.2.

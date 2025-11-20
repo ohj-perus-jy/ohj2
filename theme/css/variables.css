@@ -12,6 +12,9 @@
     --mono-font: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
     --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
     --searchbar-margin-block-start: 5px;
+
+    /* Enable smooth scaling of size-related CSS variables */
+    interpolate-size: allow-keywords;
 }
 
 /* Themes */
