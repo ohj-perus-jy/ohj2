@@ -39,7 +39,16 @@ void main() {
 ```
 
 ### javac
-javac on ensisijainen javan kääntäjä, joka tulee Java Development Kit:in (JDK) mukana. Nyt voidaan kääntää aiemmin tehty tiedosto `Hei.java` ajamalla komento `javac Hei.java` Javabittikoodiksi. Javabittikoodi on eri asia kuin alustakohtainen konekieli. Voidaan huomata, että nyt kansioon on ilmestynyt tiedosto `Hei.class`. Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
+Java on *käännettävä* ohjelmointikieli, joten lähdekoodi tulee kääntää, jotta se voidaan ajaa. 
+[Tähän väliin voisi HYVIN lyhyesti selittää .java -> .class -> virtuaalikone -> konekielinen ohjelma.]
+Jotta tämä prosessi olisi mahdollista, täytyy tietokoneelle asentaa Java-kehitysympäristö, joka tunnetaan nimellä *Java Development Kit* (JDK). 
+Kokeillaan seuraavaksi ohjelmamme kääntämistä JDK:n sisältämällä `javac`-kääntäjäohjelmalla.
+
+Avaa komentorivi ja siirry siihen kansioon, johon tallensit `Hei.java`-ohjelman. Kirjoita komento `javac Hei.java`.
+
+Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedosto `Hei.class`. 
+Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe 
+Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
 
 Isommissa ohjelmissa kannattaa käyttää jotain Java-projektin hallintatyökalua, kuten Gradle/Maven. Näihin tutustutaan osassa 6. 
 
