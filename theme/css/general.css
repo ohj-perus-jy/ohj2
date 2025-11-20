@@ -130,7 +130,7 @@ table {
     border-collapse: collapse;
 }
 table td {
-    padding: 3px 20px;
+    padding: 5px 20px;
     border: 1px var(--table-border-color) solid;
 }
 table thead {
