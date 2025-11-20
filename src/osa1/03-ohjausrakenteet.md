@@ -34,7 +34,7 @@ void main () {
     int suurempi = (luku1 > luku2) ? luku1 : luku2;
 
     IO.println("Suurempi luvuista on: " + suurempi);
-}, joka nostaa luettavuutta enti
+}
 ```
 
 ### switch-lause
