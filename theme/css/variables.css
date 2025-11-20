@@ -283,7 +283,7 @@
 }
 
 .jyu-light, html:not(.js) {
-    --bg: hsl(0, 0%, 96%);
+    --bg: hsl(0, 0%, 98%);
     --fg: hsl(0, 0%, 0%);
 
     --sidebar-bg: #fff;
