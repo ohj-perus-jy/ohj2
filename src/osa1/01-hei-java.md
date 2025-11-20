@@ -19,7 +19,15 @@ void main() {
     IO.println("Hei, maailma! Tässä on Java " + feature);
 }
 ```
-Mainin palautuksen tyyppinä pitää olla `void`, koska muuten se ei ole JVM:n mukaan pätevä
+Käydään tämä esimerkki paloittain läpi. 
+
+`java,ignore
+void main() {
+`
+
+Kaikissa Java-ohjelmissa tulee olla `main`-metodi, joka toimii ohjelman aloituspisteenä. 
+
+jne...
 koodiesimerkki
 
 Kenties ensimmäisenä Javassa C#:iin verrattuna syntaksista voidaan huomata, että uuden näkyvyysalueen ilmaiseva aaltosulku alkaakin samalta riviltä, kuin esittelyrivi. Tämä on osa Javan koodauskäytäntöä. 
