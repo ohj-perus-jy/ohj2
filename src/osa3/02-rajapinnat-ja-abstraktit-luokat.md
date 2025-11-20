@@ -8,9 +8,11 @@
 
 ## Määritelmä
 
-Abstrakti luokka on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). 
+*Abstrakti luokka* (engl. *abstract class*) on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). 
 
 Aliluokka, joka perii abstraktin luokan, on velvollinen toteuttamaan kaikki perimänsä abstraktit metodit, *ellei* se itse ole myös abstrakti luokka.
+
+*Rajapinta* (engl. *interface*) on eräänlainen sopimus, joka määrittelee joukon metodeja, jotka luokan tulee toteuttaa. Rajapinnat eivät tyypillisesti sisällä toteutusta, vaan ainoastaan metodien esittelyrivit. Luokka voi toteuttaa useita rajapintoja. Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
 
 ## Esimerkki
 
@@ -46,7 +48,6 @@ public class Main {
     }
 }
 // FILE_END
-
 // FILE: Laite.java
 public class Laite {
     public void vaihdaTilaa() {
@@ -56,7 +57,6 @@ public class Laite {
     }
 }
 // FILE_END
-
 // FILE: Valo.java
 public class Valo extends Laite {
     private int kirkkaus = 0;
@@ -72,11 +72,10 @@ public class Valo extends Laite {
     }
     @Override
     public void raportoiTila() {
-        System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }
 // FILE_END
-
 // FILE: Turvakamera.java
 public class Turvakamera extends Laite {
     private boolean tallennusPäällä = false;
@@ -89,22 +88,21 @@ public class Turvakamera extends Laite {
     @Override
     public void raportoiTila() {
         String tila = tallennusPäällä ? "päällä" : "pois";
-        System.out.println("Turvakameran tallennus on " + tila + ".");
+        IO.println("Turvakameran tallennus on " + tila + ".");
     }
 }
 // FILE_END
-
 // FILE: Kahvinkeitin.java
 public class Kahvinkeitin extends Laite {
 
-    private boolean kiehumassa = false;    
+    private boolean kiehumassa = false;
 
     @Override
     public void vaihdaTilaa() {
         // Keitä kahvia tai kytke keitin pois päältä
         kiehumassa = !kiehumassa;
     }
-    @Override  
+    @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
         System.out.println("Kahvinkeittimen pannu on " + tila + ".");
@@ -123,9 +121,9 @@ void main() {
 }
 ```
 
-Kuten nähdään, mitään ei tapahdu näitä `laite`-olion metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä, koska niillä ei olisi mitään toiminnallisuutta. Niinpä ei ole järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi.
+Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä; niillä ei olisi mitään toiminnallisuutta. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
 
-Javassa tällaista luokkaa kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi, ja määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
+Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
 
 ```java,ignore
 public abstract class Laite {
@@ -145,7 +143,7 @@ void main() {
 
 ## Miksi abstrakti luokka on hyödyllinen?
 
-Abstrakti luokka ei ole vain "instanssikielto". Sen ensisijainen tarkoitus on:
+Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijainen tarkoitus on:
 
 - määritellä yhteinen sopimus: mitä metodeja kaikkien aliluokkien pitää tarjota
 - tarjota yhteisiä ominaisuuksia ja tarvittaessa myös toteutuksia, jotta aliluokat keskittyvät vain olennaiseen
@@ -182,11 +180,13 @@ public abstract class Laite {
 // FILE_END
 ```
 
-Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen erityiset toiminnallisuudet. Tämä tuo laatua (kukaan ei voi unohtaa määrittää `raportoiTila()`-metodia) ja vähentää duplikaattikoodia.
+Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen erityiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
 
-## Abstrakti luokka voi ohjata työnkulkua
+<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja *template method* -kaava </summary>
 
-Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan usein *template method* -kaavaksi, koska abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
+Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan *template method* -kaavaksi, koska abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
+
+
 
 ```java
 // FILE: Laite.java
@@ -208,8 +208,10 @@ public abstract class Laite {
 
 `suoritaPaivitys()` on nyt valmis "resep­ti", jota aliluokat eivät voi muuttaa (`final`). Sen sijaan ne täydentävät reseptin tarvitsemansa tavoilla toteuttamalla abstraktit metodit.
 
-> [!Pohdi]
-> Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? `final` on hyödyllinen silloin, kun haluat lukita algoritmin rungon ja ennen kaikkea varmistaa, että perusrutiinit (kuten kytkeminen päälle ja pois) tapahtuvat aina tietyssä järjestyksessä.
+🤔 Pohdittavaksi: Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? 
+
+</details>
+
 
 ## Rajapinta (interface)
 
@@ -238,11 +240,12 @@ Rajapinta keskittyy vain ulkoiseen käyttäytymiseen, ei sisäiseen toteutukseen
 
 ## Abstrakti luokka vai rajapinta?
 
-| Kysymys                           | Abstrakti luokka                              | Rajapinta                                                       |
-| --------------------------------- | --------------------------------------------- | --------------------------------------------------------------- |
-| Voiko sisältää toteutusta?        | Kyllä (kenttiä, konkreettisia metodeja)       | Ei (Java 8+: default-metodit, mutta niitä käytetään säästellen) |
-| Kuinka monta voi periä/toteuttaa? | Luokka voi periä vain yhden abstraktin luokan | Luokka voi toteuttaa useita rajapintoja                         |
-| Käyttötarkoitus                   | Yhteinen runko ja osittainen toteutus         | Yhteinen sopimus käyttäytymisestä                               |
+| Kysymys                              | Abstrakti luokka                              | Rajapinta                                                 |
+| ------------------------------------ | --------------------------------------------- | --------------------------------------------------------- |
+| Voiko sisältää attribuutteja?        | Kyllä                                         | Ei                                                        |
+| Voiko sisältää metodien toteutuksia? | Kyllä                                         | Ei (Java v8 alkaen mahdollisuus ns. `default`-metodeihin) |
+| Kuinka monta voi periä/toteuttaa?    | Luokka voi periä vain yhden abstraktin luokan | Luokka voi toteuttaa useita rajapintoja                   |
+| Käyttötarkoitus                      | Yhteinen runko ja osittainen toteutus         | Yhteinen sopimus käyttäytymisestä                         |
 
 Monesti molemmat yhdistyvät: abstrakti luokka tarjoaa rungon ja toteuttaa yhden tai useampia rajapintoja.
 
