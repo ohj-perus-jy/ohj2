@@ -306,6 +306,8 @@
     --quote-bg: #ffffff;
     --quote-border: #eeeeee;
 
+    --details-border: #cccccc;
+
     --warning-border: #ff8e00;
 
     --table-border-color: hsl(0, 0%, 95%);
@@ -362,6 +364,9 @@
 
     --quote-bg: #2c2c2c;
     --quote-border: #222222;
+
+    --details-border: #737480;
+
 
     --warning-border: #ff8e00;
 
