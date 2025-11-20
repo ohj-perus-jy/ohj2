@@ -189,7 +189,7 @@ Matikkaa: $$ \nabla f(x) \in \mathbb{R}^n, $$
 
 Lisää matikkaa: $O(n)$
 
-```plantuml,inline
+```plantuml
 skinparam dpi 200
 skinparam backgroundColor transparent
 @startuml
@@ -203,7 +203,7 @@ skinparam backgroundColor transparent
       BorderColor Black
   }
   hide members
-  
+
   class Eläin {
       {abstract} + ääntele() : void
   }
