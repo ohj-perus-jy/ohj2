@@ -25,7 +25,7 @@ Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelij
 Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
 
 > [!VAROITUS]
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia. Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo kapseloinnin periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia (ks. [Luku 2.1](../osa2/03-kapselointi.md)). Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo kapseloinnin periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
 
 ```java
 // FILE: Opiskelija.java  
