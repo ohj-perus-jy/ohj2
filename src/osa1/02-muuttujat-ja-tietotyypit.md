@@ -10,9 +10,11 @@
 - Syntyi alun perin poistamaan tarpeen `goto`-lauseille
 - TODO: Pitäisiköhän olla jokin abstrakti versio siitä, mitä rakenteisella ohjelmoinnilla haetaan ja sen jälkeen jokin pieni koodiesimerkki? Pitäisikö koodiesimerkki olla pseudokoodia vai ei?
 
-## Javan perustietotyypeistä
+## Javan alkeistietotyypeistä
 
-Kullekin Javan primitiivitietotyypille (TODO: Vai perustietotyyppi) on olemassa niin sanottu käärijäluokka. Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin primitiivityypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` primitiivityyppien käsittelyyn.
+Kullekin Javan alkeistietotyypille (engl. *primitive data types*) on olemassa niin sanottu käärijäluokka (engl. *wrapper class*). Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin alkeistietotyypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` alkeistietotyyppien käsittelyyn.
+
+Java käyttää staattista tyypitystä, eli muuttujan ja olion tyyppi tarkistetaan käännöshetkellä. Lisäksi Java on vahvasti tyypitetty, joten eri tyyppisiä arvoja ei voi sekoittaa tai muuntaa toiseksi ilman nimenomaista ja turvallista tyyppimuunnosta.
 
 TODO: Lyhyt esimerkki käärijäluokan käytöstä.
 
@@ -78,7 +80,7 @@ void main() {
 
 Ylemmässä esimerkissä metodi `.concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
 
-Huomaa, että Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
+Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
 
 ```java
 void main() {
