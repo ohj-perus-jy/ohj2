@@ -186,22 +186,36 @@ Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteut
 
 Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan *template method* -kaavaksi, koska abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
 
-
-
 ```java
 // FILE: Laite.java
 public abstract class Laite {
     public final void suoritaPaivitys() {
         kytkePaalle();
-        valmistelut();
-        vaihdaTilaa(); // Abstrakti askel
-        raportoiTila(); // Abstrakti askel
+        valmistelePaivitys(); // Abstrakti askel, jonka aliluokka toteuttaa
+        paivitys();    
         kytkePois();
     }
 
-    protected abstract void valmistelut();
-    public abstract void vaihdaTilaa();
-    public abstract void raportoiTila();
+    protected abstract void valmistelePaivitys();
+    
+    private void paivitys() {
+        IO.println("Haetaan uusin päivitys verkosta...");
+        IO.println("Laite päivitetään...");
+    }
+
+    // ...
+}
+// FILE_END
+// FILE: Valo.java
+public class Valo extends Laite {
+    @Override
+    protected void valmistelePaivitys() {
+        IO.println("Valmistellaan valoa päivitystä varten.");
+        IO.println("Tarkistetaan, että valo on kytkettynä.");
+        IO.println("Asetetaan valo kirkkauteen 0%.");        
+    }
+
+    // ...
 }
 // FILE_END
 ```
