@@ -12,6 +12,9 @@
     --mono-font: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
     --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
     --searchbar-margin-block-start: 5px;
+
+    /* Enable smooth scaling of size-related CSS variables */
+    interpolate-size: allow-keywords;
 }
 
 /* Themes */
@@ -306,6 +309,8 @@
     --quote-bg: #ffffff;
     --quote-border: #eeeeee;
 
+    --details-border: #cccccc;
+
     --warning-border: #ff8e00;
 
     --table-border-color: hsl(0, 0%, 95%);
@@ -351,7 +356,7 @@
     --icons: #c29a5baa;
     --icons-hover: rgb(178.5,190.8,204.6, 0.77);
 
-    --links: #36a;
+    --links: #59c;
 
     --inline-code-color: #c5c8c6;
 
@@ -362,6 +367,9 @@
 
     --quote-bg: #2c2c2c;
     --quote-border: #222222;
+
+    --details-border: #737480;
+
 
     --warning-border: #ff8e00;
 
