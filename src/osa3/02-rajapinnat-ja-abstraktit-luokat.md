@@ -6,13 +6,9 @@
 > - Abstraktit luokat (abstrakti metodi)
 > - Ymmärrät, että abstraktista luokasta ei voi luoda luokan ilmentymiä
 
-## Määritelmä, abstrakti luokka
+## Abstrakti luokka
 
-*Abstrakti luokka* (engl. *abstract class*) on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan abstrakti luokka toimii pohjana muille luokille, jotka perivät sen ja toteuttavat sen määrittelemät abstraktit metodit. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). 
-
-Aliluokka, joka perii abstraktin luokan, on velvollinen toteuttamaan kaikki perimänsä abstraktit metodit, *ellei* se itse ole myös abstrakti luokka.
-
-*Rajapinta* (engl. *interface*) on eräänlainen sopimus, joka määrittelee joukon metodeja, jotka luokan tulee toteuttaa. Rajapinnat eivät tyypillisesti sisällä toteutusta, vaan ainoastaan metodien esittelyrivit. Luokka voi toteuttaa useita rajapintoja. Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
+*Abstrakti luokka* (engl. *abstract class*) on sellainen luokka, josta ei voi luoda suoria ilmentymiä. Sen sijaan se toimii pohjana muille luokille, jotka perivät sen. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). Perivän luokan tulee sitten toteuttaa nuo abstraktit metodit, *ellei* perivä luokka ole myös abstrakti.
 
 ## Esimerkki
 
@@ -226,16 +222,17 @@ public class Valo extends Laite {
 
 </details>
 
+## Rajapinta
 
-## Määritelmä, rajapinta
+*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. Rajapinta ei kuitenkaan (tyypillisesti) sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
 
-*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. Rajapinta ei kuitenkaan (lähtökohtaisesti) sisällä kyseisten metodien toteutuksia. Luokka *toteuttaa* (`implements`) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
+Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
 
 ## Esimerkki
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa jonkin arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän toimimmekin esimerkin `Valo`-luokassa, jossa kirkkaus vaihtuu kolmessa tilassa. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen tilan välillä. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
 
-Määritellään tällaiselle toiminnallisuudelle rajapinta `Säädettävä`, jossa on metodi `asetaArvo(int arvo)`.
+Määritellään tällaiselle toiminnallisuudelle rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
 
 ```java,noplayground
 // FILE: Saadettava.java
@@ -245,13 +242,58 @@ public interface Saadettava {
 // FILE_END
 ```
 
-Huomaa, että metodilla ei ole toteutusta, vaan ainoastaan määrittelyrivi. Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
+Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla luokalla tulee olla `asetaArvo`-metodi.
+
+Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 
 Lisätään `Valo`-luokkaan rajapinnan toteutus:
 
 ```java
+// FILE: Main.java
+public class Main {
+    public static void main(String[] args) {
+        Valo valo = new Valo();
+        valo.asetaArvo(33);
+        valo.raportoiTila();
+    }
+}
+// FILE_END
 // FILE: Valo.java
+public class Valo extends Laite implements Saadettava {
+    private int kirkkaus = 0;
 
+    @Override
+    public void asetaArvo(int arvo)
+    {
+        if (arvo < 0) arvo = 0;
+        if (arvo > 100) arvo = 100;
+        this.kirkkaus = arvo;
+    }
+
+    @Override
+    public void vaihdaTilaa() {
+        // Yksinkertainen päälle-pois
+        if (kirkkaus == 100) kirkkaus = 0;
+        else kirkkaus = 100;
+    }
+
+    @Override
+    public void raportoiTila() {
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
+    }
+}
+// FILE_END
+// FILE: Laite.java
+public abstract class Laite {
+    abstract public void vaihdaTilaa();
+
+    abstract public void raportoiTila();
+}
+// FILE_END
+// FILE: Saadettava.java
+public interface Saadettava {
+    void asetaArvo(int arvo);
+}
 // FILE_END
 ```
 
