@@ -73,6 +73,33 @@ h6:target::before {
     width: 30px;
 }
 
+details {
+    background: var(--sidebar-bg);
+    /* add drop shadow to details to make it stand out */
+    /* box-shadow: 0 4px 4px var(--table-border-color); */
+    border-radius: 4px;
+    border: 2px solid var(--details-border);
+    padding: 1em;
+    overflow: hidden;
+} 
+
+details summary:hover {
+    cursor: pointer;
+}
+
+/* Animate opening and closing of details */
+details::details-content {
+  block-size: 0;
+  transition: block-size 1s, content-visibility 1s;
+  transition-behavior: allow-discrete;
+}
+
+/* When open, let the details content take up as much space as it needs */
+details:open::details-content {
+  block-size: auto;
+}
+
+
 /* This is broken on Safari as of version 14, but is fixed
    in Safari Technology Preview 117 which I think will be Safari 14.2.
    https://bugs.webkit.org/show_bug.cgi?id=218076
@@ -130,7 +157,7 @@ table {
     border-collapse: collapse;
 }
 table td {
-    padding: 3px 20px;
+    padding: 5px 20px;
     border: 1px var(--table-border-color) solid;
 }
 table thead {

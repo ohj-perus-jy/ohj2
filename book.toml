@@ -46,3 +46,6 @@ java = "//-"
 
 [preprocessor.accordion]
 command = "python3 ./preprocessors/python/accordion.py"
+
+[preprocessor.plantuml]
+plantuml-cmd="https://www.plantuml.com/plantuml"
