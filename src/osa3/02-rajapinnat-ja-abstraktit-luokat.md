@@ -251,6 +251,7 @@ Lisätään `Valo`-luokkaan rajapinnan toteutus:
 
 ```java
 // FILE: Valo.java
+
 // FILE_END
 ```
 
