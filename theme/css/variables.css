@@ -341,41 +341,36 @@
 }
 
 .jyu-dark {
-    --bg: #161616;
-    --fg: #e2e2e2;
+    --bg: hsl(210, 25%, 8%);
+    --fg: #c5c5c5;
 
-    --sidebar-bg: #00295730;
-    --sidebar-fg: #e2e2e2;
-    --sidebar-non-existant: #555;
-    --sidebar-active: #c29a5bee;
+    --sidebar-bg: #14191f;
+    --sidebar-fg: #c8c9db;
+    --sidebar-non-existant: #5c6773;
+    --sidebar-active: #C29A5B;
     --sidebar-spacer: #2d334f;
 
     --scrollbar: var(--sidebar-fg);
 
-    /* --icons: #737480; */
-    --icons: #c29a5baa;
-    --icons-hover: rgb(178.5,190.8,204.6, 0.77);
+    --icons: #737480;
+    --icons-hover: #C29A5B;
 
-    --links: #59c;
+    --links: #0096cf;
 
-    --inline-code-color: #c5c8c6;
+    --inline-code-color: #C29A5B;
 
-    --theme-popup-bg: #161923;
-    --theme-popup-border: #737480;
-    /* --theme-hover: #282e40; */
-    --theme-hover: #222222;
+    --theme-popup-bg: #14191f;
+    --theme-popup-border: #5c6773;
+    --theme-hover: #191f26;
 
-    --quote-bg: #2c2c2c;
-    --quote-border: #222222;
-
-    --details-border: #737480;
-
+    --quote-bg: hsl(226, 15%, 17%);
+    --quote-border: hsl(226, 15%, 22%);
 
     --warning-border: #ff8e00;
 
-    --table-border-color: #000;
-    --table-header-bg: #3f3f49;
-    --table-alternate-bg: #2c2c2c;
+    --table-border-color: hsl(210, 25%, 13%);
+    --table-header-bg: hsl(210, 25%, 28%);
+    --table-alternate-bg: hsl(210, 25%, 11%);
 
     --searchbar-border-color: #848484;
     --searchbar-bg: #424242;
@@ -384,20 +379,20 @@
     --searchresults-header-fg: #666;
     --searchresults-border-color: #888;
     --searchresults-li-bg: #252932;
-    --search-mark-bg: #e3b171;
+    --search-mark-bg: #C29A5B;
 
     --color-scheme: dark;
 
     /* Same as `--icons` */
-    --copy-button-filter: invert(51%) sepia(10%) saturate(393%) hue-rotate(198deg) brightness(86%) contrast(87%);
+    --copy-button-filter: invert(45%) sepia(6%) saturate(621%) hue-rotate(198deg) brightness(99%) contrast(85%);
     /* Same as `--sidebar-active` */
-    --copy-button-filter-hover: invert(46%) sepia(20%) saturate(1037%) hue-rotate(176deg) brightness(65%) contrast(80%);
+    --copy-button-filter-hover: invert(68%) sepia(55%) saturate(531%) hue-rotate(341deg) brightness(104%) contrast(101%);
 
-    --footnote-highlight: #4079ae;
+    --footnote-highlight: #2668a6;
 
     --overlay-bg: rgba(33, 40, 48, 0.4);
 
-    --code-bg: #1e1e1e;
+    --code-bg: #191f26;
 }
 
 @media (prefers-color-scheme: dark) {
