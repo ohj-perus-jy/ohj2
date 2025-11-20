@@ -476,11 +476,11 @@ Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan vä
 
 Javassa luokka voi periä vain yhden yliluokan. Esimerkiksi Kisu-järjestelmässämme saattaisi tulla eteen tilanne, jossa opiskelija toimisi tuntiopettajana jollakin kurssilla, ja tällöin hänellä pitäisi olla sekä opiskelijan että opettajan ominaisuudet ja toiminnot. Kuitenkin tekemämme `Opiskelija` *ei* voi periä samanaikaisesti sekä `Henkilo`- että `Opettaja`-luokkaa. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden yliluokan. Moniperinnän käyttö on kuitenkin joissain tilanteissa ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interfaces*), joita käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
 
-## Ylikirjoittaminen
+## Korvaaminen
 
-Perityn luokan metodeja voidaan *ylikirjoittaa* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
+Perityn luokan metodeja voidaan *korvata* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
 
-Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Ylikirjoitetaan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
+Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Korvataan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
@@ -500,14 +500,14 @@ class Opiskelija extends Henkilo {
 }
 ```
 
-Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole ylikirjoitettu.
+Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole korvattu.
 
-Voidaan ajatella, että ylikirjoitettu metodi korvaa tai piilottaa yliluokan metodin aliluokassa. Tähän liittyy pari sääntöä: 
+Voidaan ajatella, että korvattu metodi korvaa yliluokan metodin aliluokassa. Tähän liittyy pari sääntöä: 
 
- * Ylikirjoittaminen korvaa aina hierarkiassa lähimmän yliluokan metodin.
- * Aliluokassa metodin kutsuminen viittaa aina lähimpään ylikirjoitettuun versioon.
+ * Korvaaminen koskee aina hierarkiassa *lähintä* yliluokan metodia. 
+ * Aliluokassa metodin kutsuminen viittaa aina lähimpään korvattuun versioon.
 
-Alla oleva kuva havainnollistaa ylikirjoittamisen periaatetta:
+Alla oleva kuva havainnollistaa korvaamisen periaatetta:
 
 ![](images/override_.svg)
 
