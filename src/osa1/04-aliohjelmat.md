@@ -45,31 +45,6 @@ public static void lisaaJaTulosta(StringBuilder mjono, int luku){
 }
 ```
 
-## Kommentointi
-
-```java
-// Tämä on yhden rivin kommentti
-
-/*
- * Tämä on usean rivin
- * kommentti
- */
-
-//Esimerkki dokumentaatiosta
-/**
- * Laskee kahden kokonaisluvun summan.
- * 
- * @param a Ensimmäinen luku
- * @param b Toinen luku
- * @return Lukujen summa
- */
-int summa(int a , int b) {
-    return a + b;
-}
-```
-
-Dokumentaatiorungon saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
-
 ## B1
 - (Verkko viikon konsepteista?)
 

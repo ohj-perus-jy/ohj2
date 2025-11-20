@@ -15,20 +15,29 @@ Lähdetäänpä liikkeelle esimerkillä, jossa kirjoitetaan konsoliin Javan vers
 
 ```java
 void main() {
-    var feature =  Runtime.version().feature();
-    IO.println("Hei, maailma! Tässä on Java " + feature);
+    int versioNumero = Runtime.version().feature();
+    IO.println("Hei, maailma! Tässä on Java " + versioNumero);
 }
 ```
 Käydään tämä esimerkki paloittain läpi. 
 
-`java,ignore
-void main() {
-`
+```java.ignore
+void main() { ...
+```
 
-Kaikissa Java-ohjelmissa tulee olla `main`-metodi, joka toimii ohjelman aloituspisteenä. 
+Kaikissa Java-ohjelmissa tulee olla `main`-metodi, joka toimii ohjelman aloituspisteenä. Pääohjelman palautuksen tyyppinä tulee olla `void`, eli pääohjelma ei palauta mitään. Nyt pääohjelma ei ota vastaan parametreja, joten jätetään sulut tyhjäksi. 
 
-jne...
-koodiesimerkki
+```java.ignore
+int versioNumero = Runtime.version().feature();
+```
+Tällä rivillä otetaan kokonaislukutyyppiseen muuttujaan `int` talteen Javan ajonaikainen versionumero.
+
+```java.ignore
+IO.println("Hei, maailma! Tässä on Java " + versioNumero);
+```
+Tulostetaan konsoliin teksti ja versionumero
+
+## Javan koodauskäytänteistä
 
 Kenties ensimmäisenä Javassa C#:iin verrattuna syntaksista voidaan huomata, että uuden näkyvyysalueen ilmaiseva aaltosulku alkaakin samalta riviltä, kuin esittelyrivi. Tämä on osa Javan koodauskäytäntöä. 
 
@@ -48,7 +57,7 @@ Kokeillaan seuraavaksi ohjelmamme kääntämistä JDK:n sisältämällä `javac`
 Avaa komentorivi ja siirry siihen kansioon, johon tallensit `Hei.java`-ohjelman. Kirjoita komento `javac Hei.java`.
 
 Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedosto `Hei.class`. 
-Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe 
+Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe. 
 Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
 
 Isommissa ohjelmissa kannattaa käyttää jotain Java-projektin hallintatyökalua, kuten Gradle/Maven. Näihin tutustutaan osassa 6. 
@@ -87,3 +96,28 @@ void main() {
         IO.print(" riville");
 }
 ```
+
+## Kommentointi
+
+```java
+// Tämä on yhden rivin kommentti
+
+/*
+ * Tämä on usean rivin
+ * kommentti
+ */
+
+//Esimerkki dokumentaatiosta
+/**
+ * Laskee kahden kokonaisluvun summan.
+ * 
+ * @param a Ensimmäinen luku
+ * @param b Toinen luku
+ * @return Lukujen summa
+ */
+int summa(int a , int b) {
+    return a + b;
+}
+```
+
+Dokumentaatiorungon saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä

@@ -36,8 +36,6 @@ void main () {
 ```
 
 ### switch-lause
-switch/case-syntaksi auttaa parantamaan koodin luettavuutta ja switch saattaa olla nopeampi ajaa Javassa (hyppytaulukoiden) ansiosta, jos (casena(keissinä, tapauksena?)) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
-### Switch
 switch/case-syntaksi auttaa parantamaan koodin luettavuutta. switch saattaa olla nopeampi ajaa Javassa hakutauluujen (engl. *lookup table*) ansiosta, jos `case`n arvona(keissinä, tapauksena?)) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
 
 ```java,editable
