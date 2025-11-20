@@ -7,8 +7,6 @@
 > - Toistolauseet (`for`, `while`, `do-while`), ja listatyyppiset tietorakenteet
 > - Tiedostat, että Javassa merkkijonot verrataan `equals`-aliohjelmalla eikä `==`
 
-TODO: Pitäisikö tässä sanoa jotain muuta rakenteisesta ohjelmoinnista, kuin luvussa 1.2?
-
 ## Ehtolauseet
 
 ### If
@@ -39,6 +37,8 @@ void main () {
 
 ### switch-lause
 switch/case-syntaksi auttaa parantamaan koodin luettavuutta ja switch saattaa olla nopeampi ajaa Javassa (hyppytaulukoiden) ansiosta, jos (casena(keissinä, tapauksena?)) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
+### Switch
+switch/case-syntaksi auttaa parantamaan koodin luettavuutta. switch saattaa olla nopeampi ajaa Javassa hakutauluujen (engl. *lookup table*) ansiosta, jos `case`n arvona(keissinä, tapauksena?)) käytetään primitiivisiä tyyppejä tai enumeja. Java 25:sen mukana tuli nuolisyntaksi, joka nostaa luettavuutta entisestään. (Pitäisikö selittää syntaksista enemmänkin?). Tästä seuraavaksi esimerkki:
 
 ```java,editable
 void main () {
@@ -58,7 +58,7 @@ void main () {
 ```
 
 ## Silmukat
-Javasta löytyy 4 eri silmukkaa For, While, Do-While ja For-Each
+Javasta löytyy 4 eri silmukkaa for, while, do-while ja for-each
 
 ### For
 Sopii erityisesti silloin, kun tiedät etukäteen kuinka monta operaatiota tulee suorittaa.
@@ -76,7 +76,7 @@ IO.println(summa);
 Seuraavissa esimerkeissä silmukoita koskien `luvut` ja `summa` pysyvät samanlaisina kuin yllä olevassa esimerkissä.
 
 ### For-Each
-For-Each silmukka sopii erityisen hyvin, kun halutaan käydä läpi kaikki joukon alkiot (mikä olisi hyvä tapa ilmaista tämä? Kertoisi mistä on todella kyse?)
+for-each silmukka sopii erityisen hyvin, kun halutaan käydä läpi kaikki joukon alkiot. Pitää kuitenkin huomioida, että for-each silmukassa ei ole mahdollista muuttaa alkioita silmukan sisällä, eikä ole myöskään tietoa missä kohden tietorakennetta ollaan menossa (indeksiä).
 
 ```java
 void main () {
@@ -131,13 +131,13 @@ TODO:
 
 Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
 
-| C#                     | Java                              |
+| Java                   | C#                                |
 | ---------------------- | --------------------------------- |
-| list[indeksi]          | list.get(indeksi)                 |
-| list.Count             | list.size()                       |
-| list.RemoveAt(indeksi) | list.remove(indeksi)              |
+| list.get(indeksi)      | list[indeksi]                     |
+| list.size()            | list.Count                        |
+| list.remove(indeksi)   | list.RemoveAt(indeksi)            |
 
-Lisäksi Javassa metodille `.add()` on kaksi toteutusta, joista `.add(lisättava)` lisää listan loppuun ja `.add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `.remove()` metodille on kaksi optiota, joista `.remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `.remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy (Pitäisikö kuitenkin puhua poistettavista olioista?). 
+Lisäksi Javassa metodille `add()` on kaksi toteutusta, joista `add(lisättava)` lisää listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi optiota, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy (Pitäisikö kuitenkin puhua poistettavista olioista?). 
 
 ```java
 import java.util.*;

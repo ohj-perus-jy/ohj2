@@ -37,14 +37,7 @@ Javassa käytetään funktioiden nimeämisessä Camel Casingia, eli aloitetaan p
 Tiedostot taas nimetään käyttäen Pascal Casingia, eli samoin, kuin Camel Casing, mutta myös ensimmäinen kirjain on iso. Esimerkiksi `Hei.java`
 
 ## Java ohjelmien kääntäminen ja ajaminen
-Kirjoitetaan ensin tiedosto esimerkiksi `Hei.java`, jonka sisällöksi tulee
-
-```java
-void main() {
-    var feature =  Runtime.version().feature();
-    IO.println("Hei, maailma! Tässä on Java " + feature);
-}
-```
+Tallenna yllä oleva esimerkki tietokoneellesi tiedostonimellä Hei.java
 
 ### javac
 Java on *käännettävä* ohjelmointikieli, joten lähdekoodi tulee kääntää, jotta se voidaan ajaa. 

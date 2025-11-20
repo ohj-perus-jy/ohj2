@@ -84,6 +84,7 @@ Huomaa, että Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa
 void main() {
     String mjono = "esimerkki";
     IO.println(mjono.charAt(0));
+    IO.println(mjono[0]);
 }
 ```
 

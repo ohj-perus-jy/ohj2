@@ -78,6 +78,8 @@ Dokumentaatiorungon saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittely
 ## B2
 - Vakioaikainen haku taulukosta. Esimerkiksi, että kuinka monta päivää on kuukaudessa?
 
+(Teoriatausta se, että laskennallista nopeutta voidaan lisätä käyttämällä enemmän muistia. Tähän esimerkiksi HashMap perustuu)
+
 ## B3
 - Raa-alla voimalla sanakirjahyökkäys salasanaa vastaan?
 
