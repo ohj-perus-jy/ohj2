@@ -469,6 +469,10 @@ for (Henkilo henkilo : henkilot) {
 
 Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
+## Huomautus moniperinnän puuttumisesta
+
+Javassa luokka voi periä vain yhden yliluokan. Esimerkiksi Kisu-järjestelmässämme saattaisi tulla eteen tilanne, jossa opiskelija toimisi tuntiopettajana jollakin kurssilla, ja tällöin hänellä pitäisi olla sekä opiskelijan että opettajan ominaisuudet ja toiminnot. Kuitenkin tekemämme `Opiskelija` *ei* voi periä samanaikaisesti sekä `Henkilo`- että `Opettaja`-luokkaa. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden yliluokan. Moniperinnän käyttö on kuitenkin joissain tilanteissa ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interfaces*), joita käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
+
 ## Ylikirjoittaminen
 
 Perityn luokan metodeja voidaan *ylikirjoittaa* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
