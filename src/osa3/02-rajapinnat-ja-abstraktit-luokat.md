@@ -249,11 +249,14 @@ Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 Lisätään `Valo`-luokkaan rajapinnan toteutus:
 
 ```java
-// FILE: Main.java
+// FILE: main.java
 public class Main {
     public static void main(String[] args) {
         Valo valo = new Valo();
         valo.asetaArvo(33);
+        valo.raportoiTila();
+
+        valo.vaihdaTilaa();
         valo.raportoiTila();
     }
 }
