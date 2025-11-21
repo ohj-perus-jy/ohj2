@@ -4,4 +4,4 @@
 >
 > - Build-työkalut (Gradle/Maven)
 > - Kolmannen osapuolen riippuvuuksia (miten etsitään ja lisätään kirjasto)
-> - Pakkaukset Javassa
+> - Pakkaukset Javassa? (Vai jo luvussa 2?)
