@@ -78,7 +78,7 @@ details {
     /* add drop shadow to details to make it stand out */
     /* box-shadow: 0 4px 4px var(--table-border-color); */
     border-radius: 4px;
-    border: 2px solid var(--details-border);
+    border: 2px solid var(--code-bg);
     padding: 1em;
     overflow: hidden;
 } 
