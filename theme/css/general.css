@@ -83,20 +83,29 @@ details {
     overflow: hidden;
 } 
 
+details summary {
+    user-select: none;
+}
+
 details summary:hover {
     cursor: pointer;
 }
 
-/* Animate opening and closing of details */
-details::details-content {
-  block-size: 0;
-  transition: block-size 1s, content-visibility 1s;
-  transition-behavior: allow-discrete;
-}
+/* Not all browsers support this animation yet; see https://caniuse.com/?search=calc-size() */
+@supports (interpolate-size: allow-keywords) {
+    :root {
+        interpolate-size: allow-keywords;
+    }
 
-/* When open, let the details content take up as much space as it needs */
-details:open::details-content {
-  block-size: auto;
+    ::details-content {
+        transition: height 0.3s ease, content-visibility 0.3s ease allow-discrete;
+        height: 0;
+        overflow: clip;
+    }
+
+    [open]::details-content {
+        height: auto;
+    }
 }
 
 
