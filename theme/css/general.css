@@ -52,8 +52,8 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 .hide-boring .boring { display: none; }
 .hidden { display: none !important; }
 
-h2, h3 { margin-block-start: 2.5em; }
-h4, h5 { margin-block-start: 2em; }
+h2, h3 { margin-block-start: 2em; }
+h4, h5 { margin-block-start: 1.5em; }
 
 .header + .header h3,
 .header + .header h4,
@@ -72,6 +72,42 @@ h6:target::before {
     margin-inline-start: -30px;
     width: 30px;
 }
+
+details {
+    background: var(--sidebar-bg);
+    /* add drop shadow to details to make it stand out */
+    /* box-shadow: 0 4px 4px var(--table-border-color); */
+    border-radius: 4px;
+    border: 2px solid var(--details-border);
+    padding: 1em;
+    overflow: hidden;
+} 
+
+details summary {
+    user-select: none;
+}
+
+details summary:hover {
+    cursor: pointer;
+}
+
+/* Not all browsers support this animation yet; see https://caniuse.com/?search=calc-size() */
+@supports (interpolate-size: allow-keywords) {
+    :root {
+        interpolate-size: allow-keywords;
+    }
+
+    ::details-content {
+        transition: height 0.3s ease, content-visibility 0.3s ease allow-discrete;
+        height: 0;
+        overflow: clip;
+    }
+
+    [open]::details-content {
+        height: auto;
+    }
+}
+
 
 /* This is broken on Safari as of version 14, but is fixed
    in Safari Technology Preview 117 which I think will be Safari 14.2.
@@ -126,11 +162,11 @@ html:not(.js) .page-wrapper,
 }
 
 table {
-    margin: 0 auto;
+    margin: auto auto 1.5em auto;
     border-collapse: collapse;
 }
 table td {
-    padding: 3px 20px;
+    padding: 5px 20px;
     border: 1px var(--table-border-color) solid;
 }
 table thead {

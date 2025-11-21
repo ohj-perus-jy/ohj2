@@ -12,6 +12,9 @@
     --mono-font: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
     --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
     --searchbar-margin-block-start: 5px;
+
+    /* Enable smooth scaling of size-related CSS variables */
+    interpolate-size: allow-keywords;
 }
 
 /* Themes */
@@ -280,10 +283,10 @@
 }
 
 .jyu-light, html:not(.js) {
-    --bg: hsl(0, 0%, 88%);
+    --bg: hsl(0, 0%, 96%);
     --fg: hsl(0, 0%, 0%);
 
-    --sidebar-bg: #dadada;
+    --sidebar-bg: #fff;
     --sidebar-fg: hsl(0, 0%, 0%);
     --sidebar-non-existant: #aaaaaa;
     --sidebar-active: #002957;
@@ -303,8 +306,10 @@
     --theme-popup-border: #cccccc;
     --theme-hover: #dadada;
 
-    --quote-bg: #fafafa;
+    --quote-bg: #ffffff;
     --quote-border: #eeeeee;
+
+    --details-border: #cccccc;
 
     --warning-border: #ff8e00;
 
@@ -331,11 +336,13 @@
     --footnote-highlight: #7e7eff;
 
     --overlay-bg: rgba(200, 200, 205, 0.4);
+
+    --code-bg: #f1efee;
 }
 
 .jyu-dark {
     --bg: #1c1c1c;
-    --fg: #aaaaaa;
+    --fg: #b6b9be;
 
     --sidebar-bg: #00295730;
     --sidebar-fg: #bbbbbb;
@@ -349,7 +356,7 @@
     --icons: #c29a5baa;
     --icons-hover: rgb(178.5,190.8,204.6, 0.77);
 
-    --links: #36a;
+    --links: #59c;
 
     --inline-code-color: #c5c8c6;
 
@@ -360,6 +367,9 @@
 
     --quote-bg: #2c2c2c;
     --quote-border: #222222;
+
+    --details-border: #737480;
+
 
     --warning-border: #ff8e00;
 
@@ -386,6 +396,8 @@
     --footnote-highlight: #4079ae;
 
     --overlay-bg: rgba(33, 40, 48, 0.4);
+
+    --code-bg: #1e1e1e;
 }
 
 @media (prefers-color-scheme: dark) {
