@@ -186,7 +186,6 @@ table tbody tr:nth-child(2n) {
     background: var(--table-alternate-bg);
 }
 
-
 blockquote {
     margin: 20px 0;
     padding: 0 20px;
@@ -240,6 +239,14 @@ sup {
        for an explanation.
     */
     line-height: 0;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5em;
+    border-top: 2px solid var(--theme-popup-border);    
+    margin-top: 2.5em;
+    color: var(--fg);
 }
 
 .footnote-definition {
