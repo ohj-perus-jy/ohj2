@@ -2,15 +2,15 @@
 
 > [!Osaamistavoitteet]
 >
-> - Perintä ("Kissa on Eläin", metodin ylikirjoitus, protected, luokkahierarkia)
+> - Perintä ("Kissa on Eläin", metodin korvaaminen, protected, luokkahierarkia)
 > - Käytetään perintää olioiden yhteistyössä
 > - Ymmärrät miten luokat ja oliot voivat periä toistensa ominaisuuksia
-> - Ymmärrät miten metodeja voi ylikirjoittaa luokan sisällä ja luokkien yli
-> - Ylikirjoitus, @Override, final
-> - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan ja ylikirjoittaa sen metodeja
-> - Konkreettinen esimerkki: Javan Object-luokka ja sen ylikirjoitettavat metodit
+> - Ymmärrät miten metodeja voi korvata luokan sisällä ja luokkien yli
+> - Korvaaminen, @Override, final
+> - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan ja korvaa sen metodeja
+> - Konkreettinen esimerkki: Javan Object-luokka ja sen korvattavat metodit
 >    - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
->    - Tuntee hyödylliset ylikirjoitettavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
+>    - Tuntee hyödylliset korvattavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
 
 *Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
@@ -528,9 +528,9 @@ Alla oleva kuva havainnollistaa korvaamisen periaatetta:
 
 ## Object-luokka
 
-Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan ylikirjoittaa aliluokissa.
+Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
 
-Yksi tyypillinen tapa käyttää ylikirjoittamista on muokata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei ole kovin informatiivista. Voimme ylikirjoittaa tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. Lisätään `toString()`-metodi `Henkilo`-luokkaan.
+Yksi tyypillinen tapa käyttää korvata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei välttämättä ole kovin informatiivista. Voimme korvata tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. Lisätään `toString()`-metodi `Henkilo`-luokkaan.
 
 ```java,noplayground
 class Henkilo {
@@ -539,14 +539,14 @@ class Henkilo {
 
     @Override
     public String toString() {
-        return "Henkilö: " + nimi + ", Käyttäjätunnus: " + kayttajatunnus;
+        return "Henkilö: " + this.getNimi()";
     }
 }
 ```
 
-## final-avainsana
+## Perimisen tai korvaamisen estäminen (final-avainsana)
 
-`final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin korvaaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi korvata aliluokassa. 
+Luokan periminen tai metodin korvaaminen voidaan estää käyttämällä `final`-avainsanaa. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi korvata aliluokassa. 
 
 Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan tekemistä perinnän kanssa. 
 
