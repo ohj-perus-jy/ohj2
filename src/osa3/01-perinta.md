@@ -23,7 +23,7 @@ Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelij
 Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
 
 > [!VAROITUS]
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia (ks. [Luku 2.1](../osa2/03-kapselointi.md)). Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo kapseloinnin periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä, kuten tiedon kapselointia (ks. [Luku 2.1](../osa2/03-kapselointi.md)). Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo tiedon piilottamisen periaatetta. Korjaamme tämän asian kuitenkin esimerkin edetessä.
 
 ```java
 // FILE: Opiskelija.java  
@@ -45,7 +45,7 @@ class Opiskelija {
         this.nimi = nimi;
     }
 
-    void naytaOpintoOhjelma() {
+    void naytaOpintosuunnitelma() {
         String kurssit = String.join(", ", kaynnissaOlevatKurssit);
         IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
     }
@@ -145,7 +145,7 @@ class Opiskelija extends Henkilo {
         this.kaynnissaOlevatKurssit = new ArrayList<>();
     }
 
-    void naytaOpintoOhjelma() {
+    void naytaOpintosuunnitelma() {
         String kurssit = String.join(", ", kaynnissaOlevatKurssit);
         IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
     }
@@ -312,7 +312,7 @@ Tämän jälkeen ohjelma ei kuitenkaan vielä käänny, koska perivissä luokiss
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
-    void naytaOpintoOhjelma() {
+    void naytaOpintosuunnitelma() {
         String kurssit = String.join(", ", kaynnissaOlevatKurssit);
         // HIGHLIGHT_YELLOW_BEGIN
         IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
@@ -420,7 +420,7 @@ Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmis
 
 Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
 
-Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-tyyppisinä, kun ei ole tarpeen tietää tarkasti, minkä tyyppistä oliota käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä henkilöitä yhtenä ryhmänä. 
+Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina, kun ei ole tarpeen tietää tarkasti, minkä aliluokan olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä henkilöitä yhtenä ryhmänä. 
 
 Lisätään kaikki tekemämme oliot `Henkilo`-taulukkoon:
 
@@ -487,7 +487,9 @@ Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan vä
 
 ## Huomautus moniperinnän puuttumisesta
 
-Javassa luokka voi periä vain yhden yliluokan. Esimerkiksi Kisu-järjestelmässämme saattaisi tulla eteen tilanne, jossa opiskelija toimisi tuntiopettajana jollakin kurssilla, ja tällöin hänellä pitäisi olla sekä opiskelijan että opettajan ominaisuudet ja toiminnot. Kuitenkin tekemämme `Opiskelija` *ei* voi periä samanaikaisesti sekä `Henkilo`- että `Opettaja`-luokkaa. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden yliluokan. Moniperinnän käyttö on kuitenkin joissain tilanteissa ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interfaces*), joita käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
+Javassa luokka voi periä vain yhden yliluokan. Esimerkiksi Kisu-järjestelmässämme saattaisi tulla eteen tilanne, jossa opiskelija toimisi tuntiopettajana jollakin kurssilla, ja tällöin hänellä pitäisi olla sekä opiskelijan että opettajan ominaisuudet ja toiminnot. Kuitenkin tekemämme `Opiskelija` *ei* voi periä samanaikaisesti sekä `Henkilo`- että `Opettaja`-luokkaa. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden yliluokan. Moniperinnän käyttö on kuitenkin joissain tilanteissa ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
+
+Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interfaces*), joita käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
 
 ## Korvaaminen
 
@@ -544,15 +546,15 @@ class Henkilo {
 
 ## final-avainsana
 
-`final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin ylikirjoittaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi ylikirjoittaa aliluokassa. 
+`final`-avainsanaa voidaan käyttää estämään luokan periminen tai metodin korvaaminen. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi korvata aliluokassa. 
 
-Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan suoraan tekemistä perinnän kanssa. 
+Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan tekemistä perinnän kanssa. 
 
 ## Näkyvyysmääreet
 
 Java tarjoaa kolme pääasiallista näkyvyysmäärettä: `public`, `protected` ja `private`. Näkyvyysmääreet määrittelevät, mistä luokan jäseniin voidaan päästä käsiksi. 
 
-Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä tarkoittaa, että ne ovat näkyvissä vain samassa paketissa oleville luokille. Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista; Oletus-sarake viittaa `package-private`-näkyvyyteen.
+Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä tarkoittaa, että ne ovat näkyvissä vain samassa pakkauksessa oleville luokille. Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista; Oletus-sarake viittaa `package-private`-näkyvyyteen.
 
 |                            | Luokka | Pakkaus | Aliluokka | Muu maailma |
 | -------------------------- | ------ | ------- | --------- | ----------- |
