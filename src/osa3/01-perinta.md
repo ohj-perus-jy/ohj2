@@ -471,17 +471,7 @@ for (Henkilo henkilo : henkilot) {
 
 Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
 
-Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria:
 
-```java,noplayground
-Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
-for (Henkilo henkilo : henkilot) {
-    IO.println("Käsitellään henkilöä: " + henkilo.nimi);
-    if (henkilo instanceof Opettaja) {
-        IO.println(henkilo.nimi + " on opettaja.");
-    }
-}
-```
 
 Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
@@ -591,7 +581,7 @@ Testaa luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja met
 
 Tehtävä 2
 
-Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sähköauto`, joka perii `Auto`-luokasta. Lisää `Sähköauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
+Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sahkoauto`, joka perii `Auto`-luokasta. Lisää `Sahkoauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
 
 Testaa kumpaakin auto-luokkaa luomalla niistä olio ja kutsumalla metodeja.
 
