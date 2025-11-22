@@ -241,11 +241,11 @@ sup {
     line-height: 0;
 }
 
+
 footer {
     text-align: center;
-    padding: 1.5em;
-    border-top: 2px solid var(--theme-popup-border);    
-    margin-top: 2.5em;
+    padding: 2em;
+    margin-top: 3em;
     color: var(--fg);
 }
 
