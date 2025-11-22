@@ -366,6 +366,8 @@
     --quote-bg: hsl(226, 15%, 17%);
     --quote-border: hsl(226, 15%, 22%);
 
+    --details-border: #55565d;
+
     --warning-border: #ff8e00;
 
     --table-border-color: hsl(210, 25%, 13%);
