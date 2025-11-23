@@ -2,7 +2,7 @@
 
 > [!Osaamistavoitteet]
 >
-> - Perintä ("Opiskelija on Henkilo", metodin korvaaminen, protected, luokkahierarkia)
+> - Perintä: "Opiskelija on Henkilo", metodin korvaaminen, protected, luokkahierarkia
 > - Käytetään perintää olioiden yhteistyössä
 > - Ymmärrät miten luokat ja oliot voivat periä toistensa ominaisuuksia
 > - Ymmärrät miten metodeja voi korvata luokan sisällä ja luokkien yli
