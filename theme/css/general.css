@@ -74,11 +74,10 @@ h6:target::before {
 }
 
 details {
-    background: var(--sidebar-bg);
+    background: var(--code-bg);
     /* add drop shadow to details to make it stand out */
-    /* box-shadow: 0 4px 4px var(--table-border-color); */
-    border-radius: 4px;
-    border: 2px solid var(--details-border);
+    /* box-shadow: 0 2px 2px var(--details-border); */    
+    border: 1px solid var(--details-border);
     padding: 1em;
     overflow: hidden;
 } 
@@ -98,7 +97,7 @@ details summary:hover {
     }
 
     ::details-content {
-        transition: height 0.3s ease, content-visibility 0.3s ease allow-discrete;
+        transition: height 0.25s ease, content-visibility 0.25s ease allow-discrete;
         height: 0;
         overflow: clip;
     }

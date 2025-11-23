@@ -168,6 +168,19 @@ Toinen
 > }
 > ```
 
+
+> [!ESIMERKKI]
+>
+> Tämä on esimerkkilohko
+
+> [!VAROITUS]
+>
+> Tämä on esimerkkilohko
+
+> [!VARO]
+>
+> Tämä on esimerkkilohko
+
 Mermaid-tuki
 
 ```mermaid
