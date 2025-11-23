@@ -510,12 +510,40 @@ Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()
 Voidaan ajatella, että korvattu metodi korvaa yliluokan metodin aliluokassa. Tähän liittyy pari sääntöä: 
 
  * Korvaaminen koskee aina hierarkiassa *lähintä* yliluokan metodia. 
- * Aliluokassa metodin kutsuminen viittaa aina lähimpään korvattuun versioon.
+ * Kun aliluokan olion metodia kutsutaan, kutsu viittaa aina hierarkiassa lähimpään korvattuun versioon.
 
-Alla oleva kuva havainnollistaa korvaamisen periaatetta:
+Alla oleva koodi havainnollistaa korvaamista ja kutsujen välittymistä luokkahierarkiassa.
 
-![](images/override_.svg)
-
+```java
+// FILE: A.java
+class A {  
+    public void hei() { IO.println("A-olio sanoo hei."); }  
+    public void moikka() { IO.println("A-olio sanoo moikka."); }  
+    public void huhhuh() { IO.println("A-olio sanoo huh huh!!."); }  
+}  
+// FILE_END
+// FILE: B.java
+class B extends A {  
+    public void moikka() { IO.println("B-olio huutaa moikka!"); }  
+    public void huhhuh() { IO.println("B-olio huutaa huh huh!!"); }  
+}  
+// FILE_END
+// FILE: C.java
+class C extends B {  
+    public void huhhuh() { IO.println("C-olio huhuilee...."); }  
+}  
+// FILE_END
+// FILE: main.java
+public class KokeillaanKorvaamista {  
+  public static void main(String args[]) {  
+    C c = new C();  
+    c.hei();
+    c.moikka();  
+    c.huhhuh();  
+  }  
+}  
+// FILE_END
+```
 ## Object-luokka
 
 Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
@@ -557,7 +585,7 @@ Ensimmäinen sarake ilmaisee, onko luokalla itsellään pääsy määritellyn n�
 
 Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa, näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla, jolla olet suunnitellut sen käytettävän. 
 Pääsääntö on, että ohjelmoijan tulisi käyttää mahdollisimman rajoittavaa näkyvyysmäärettä -- mielellään `private`-määrettä -- ellei ole erityistä syytä käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään tahalliset tai tahattomat väärinkäytökset luokan jäseniin. 
-Vältä julkisia kenttiä, ellei kyseessä ole vakio. (Tässä materiaalissa saatetaan käyttää esimerkinomaisesti julkisia kenttiä. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti, mutta sitä ei suositella tuotantokoodissa.) 
+Vältä julkisia attribuutteja, ellei kyseessä ole vakio. (Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti, mutta sitä ei suositella tuotantokoodissa.) 
 
 ## Tehtävät
 
