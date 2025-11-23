@@ -477,7 +477,7 @@ Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan vä
 
 Javassa luokka voi periä vain yhden luokan. Esimerkiksi Kisu-järjestelmässämme saattaisi tulla eteen tilanne, jossa opiskelija toimisi tuntiopettajana jollakin kurssilla, ja tällöin hänellä pitäisi olla sekä opiskelijan että opettajan ominaisuudet ja toiminnot. Tekemämme `Opiskelija` ei voi kuitenkaan periä samanaikaisesti sekä `Henkilo`- että `Opettaja`-luokkia. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden yliluokan. Moniperinnän käyttö on kuitenkin joissain tilanteissa ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
 
-Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interfaces*), joita käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
+Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interface*). Kysymys on kuitenkin monin tavoin eri asiasta. Rajapintoja käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
 
 ## Korvaaminen
 
