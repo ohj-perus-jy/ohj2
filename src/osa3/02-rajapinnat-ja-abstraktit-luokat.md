@@ -382,40 +382,120 @@ public class Main {
 
 Aliluokat perivät nyt päälle- ja pois-kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen omat, oliokohtaiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: Tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
 
-<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja *template method* -malli </summary>
+<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja operaatiorunko-malli </summary>
 
-Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan *template method* -malliksi. Abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
+Abstraktissa luokassa voi olla myös konkreettinen metodi, jonka toteutuksessa kutsutaan abstraktia metodia. Tällaista toteutusta kutsutaan ohjelmistosuunnittelussa *operaatiorunko*-suunnittelumalliksi. Abstrakti luokka määrittelee toimenpiteelle "kaavan", mutta abstrahoi osan vaiheista, jotka aliluokka sitten toteuttaa.
 
-```java
+```java,playground
 // FILE: Laite.java
 public abstract class Laite {
+    private String nimi;
+    private boolean kytketty;
+
+    protected Laite(String nimi) {
+        this.nimi = nimi;
+    }
+
     public final void suoritaPaivitys() {
         kytkePaalle();
         valmistelePaivitys(); // Abstrakti askel, jonka aliluokka toteuttaa
-        paivitys();    
+        paivitys();
         kytkePois();
     }
 
     protected abstract void valmistelePaivitys();
-    
+
     private void paivitys() {
         IO.println("Haetaan uusin päivitys verkosta...");
         IO.println("Laite päivitetään...");
     }
 
-    // ...
+    public void kytkePaalle() {
+        if (!kytketty) {
+            kytketty = true;
+            System.out.println(nimi + " käynnistyy.");
+        }
+    }
+
+    public void kytkePois() {
+        if (kytketty) {
+            kytketty = false;
+            System.out.println(nimi + " sammuu.");
+        }
+    }
+
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
 }
 // FILE_END
 // FILE: Valo.java
 public class Valo extends Laite {
+    private int kirkkaus = 0;
+
+//-    public Valo(String nimi)
+//-    {
+//-        super(nimi);
+//-    }
+//-
     @Override
     protected void valmistelePaivitys() {
-        IO.println("Valmistellaan valoa päivitystä varten.");
-        IO.println("Tarkistetaan, että valo on kytkettynä.");
-        IO.println("Asetetaan valo kirkkauteen 0%.");        
+        IO.println("Valmistellaan valoa päivitystä varten...");
+        IO.println("Asetetaan valo kirkkauteen 0%...");
     }
 
-    // ...
+    @Override
+    public void vaihdaTilaa() {
+        // Vaihda kirkkaus 0 -> 50 -> 100 -> 0 ...
+        switch (kirkkaus) {
+            case 0 -> kirkkaus = 50;
+            case 50 -> kirkkaus = 100;
+            case 100 -> kirkkaus = 0;
+        }
+    }
+    @Override
+    public void raportoiTila() {
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
+    }
+}
+// FILE_END
+// FILE: Kahvinkeitin.java
+public class Kahvinkeitin extends Laite {
+
+    private boolean kiehumassa = false;
+
+    public Kahvinkeitin(String nimi)
+    {
+        super(nimi);
+    }
+
+    @Override
+    protected void valmistelePaivitys() {
+        IO.println("Valmistellaan keitintä päivitystä varten...");
+        IO.println("Keskeytä kiehuminen...");
+    }
+
+    @Override
+    public void vaihdaTilaa() {
+        // Keitä kahvia tai kytke keitin pois päältä
+        kiehumassa = !kiehumassa;
+    }
+    @Override
+    public void raportoiTila() {
+        String tila = kiehumassa ? "päällä" : "pois";
+        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+    }
+}
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Valo hue =  new Valo("PhilipsHue");
+        Kahvinkeitin mocca = new Kahvinkeitin("MoccaMaster");
+
+        hue.suoritaPaivitys();
+        // Kokeile myös:
+        // mocca.suoritaPaivitys();
+    }
 }
 // FILE_END
 ```
