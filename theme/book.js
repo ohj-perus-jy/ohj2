@@ -395,8 +395,8 @@ aria-label="Show hidden lines"></button>';
             stylesheets.ayuHighlight.disabled = false;
             ace_theme = 'ace/theme/tomorrow_night';
         } else if (theme === 'jyu-dark') {
-            stylesheets.twilight.disabled = false;
-            ace_theme = 'ace/theme/tomorrow_night'; //
+            stylesheets.ayuHighlight.disabled = false;
+            ace_theme = 'ace/theme/tomorrow_night';
         } else if (theme === 'jyu-light') {
             stylesheets.atelierForestLight.disabled = false;
             ace_theme = 'ace/theme/tomorrow_night';
