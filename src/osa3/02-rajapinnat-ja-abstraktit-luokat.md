@@ -107,16 +107,16 @@ public class Kahvinkeitin extends Laite {
 Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Teoriassa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
 
 ```java,ignore
-void main() {
-    Laite laite = new Laite();
-    laite.vaihdaTilaa(); // Ei tee mitään
-    laite.raportoiTila(); // Ei tee mitään
-}
+Laite laite = new Laite();
+laite.vaihdaTilaa(); // Ei tee mitään
+laite.raportoiTila(); // Ei tee mitään
 ```
 
-Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä; niillä ei olisi mitään toiminnallisuutta. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
+Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
 
-Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
+Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. 
+
+Muutetaan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi. Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
 
 ```java
 // FILE: Laite.java
@@ -195,7 +195,7 @@ public class Main {
 // FILE_END
 ```
 
-Nyt `Laite`-luokasta ei voi enää luoda ilmentymiä, ja yritettäessä tehdä niin, kääntäjä antaa virheen:
+Nyt `Laite`-luokasta ei voi enää luoda ilmentymiä. Yritettäessä tehdä niin, kääntäjä antaa virheen:
 
 ```java,ignore
 Laite laite = new Laite(); 
@@ -209,37 +209,83 @@ java: Laite is abstract; cannot be instantiated
 
 Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijainen tarkoitus on:
 
-- määritellä yhteinen sopimus: mitä metodeja kaikkien aliluokkien pitää tarjota
-- tarjota yhteisiä ominaisuuksia ja tarvittaessa myös toteutuksia, jotta aliluokat keskittyvät vain olennaiseen
+- määritellä yhteinen sopimus siitä, mitä metodeja kaikkien aliluokkien pitää tarjota, ja 
+- tarjota yhteisiä ominaisuuksia ja tarvittaessa myös toteutuksia, jotta aliluokat keskittyvät vain olennaiseen. 
 
 Kun `Laite` on abstrakti, voimme lisätä sille attribuutteja ja metodien valmiita toteutuksia, joita kaikki aliluokat käyttävät. 
 
-Lisätään `Laite`-luokkaan attribuutti `nimi`, joka kertoo laitteen nimen, sekä attribuutti `kytkettyna`, joka kertoo, onko laite päällä vai pois päältä. Sellainen attribuutti on hyödyllinen kaikille laitteille, joten se sopii hyvin abstraktiin luokkaan. 
+Lisätään `Laite`-luokkaan attribuutti `nimi`, joka kertoo laitteen nimen, sekä attribuutti `kytketty`, joka kertoo, onko laite päällä vai pois päältä. Sellainen attribuutti on hyödyllinen kaikille laitteille, joten se sopii hyvin abstraktiin luokkaan. 
 
 Jos kyse olisi verkkolaitteesta, hyödyllisiä tai jopa pakollisia attribuutteja voisivat olla muun muassa MAC-osoite ja IP-osoite. Pidämme kuitenkin tämän esimerkin yksinkertaisena, joten tyydymme tässä vain nimeen ja kytketty-tilan seuraamiseen.
 
 Lisätään myös metodit `kytkePaalle()` ja `kytkePois()`, jotka sisältävät yleisen logiikan laitteen käynnistämiseen ja sammuttamiseen, jota kaikki laitteet voivat noudattavat. 
 
-```java
-// FILE: Laite.java
+```java,ignore
 public abstract class Laite {
-    private final String nimi;
-    private boolean kytkettyna;
+    private String nimi;
+    private boolean kytketty;
 
     protected Laite(String nimi) {
         this.nimi = nimi;
     }
 
     public void kytkePaalle() {
-        if (!kytkettyna) {
-            kytkettyna = true;
+        if (!kytketty) {
+            kytketty = true;
             System.out.println(nimi + " käynnistyy.");
         }
     }
 
     public void kytkePois() {
-        if (kytkettyna) {
-            kytkettyna = false;
+        if (kytketty) {
+            kytketty = false;
+            System.out.println(nimi + " sammuu.");
+        }
+    }
+
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
+}
+```
+
+Huomaa, että koska päätimme, että joka laitteella on oltava nimi, siitä seuraa, että nimi on asetettava rakentajan parametrin kautta. Tämän seurauksena emme voi enää luoda ilmentymiä oletusrakentajan avulla. 
+
+```java,ignore
+// ...
+Valo valo = new Valo();
+// ...
+```
+
+```
+Valo.java
+java: constructor Laite in class Laite cannot be applied to given types;
+  required: java.lang.String
+  found:    no arguments
+  reason: actual and formal argument lists differ in length
+```
+
+Rakentajan kutsuminen vaatii nyt nimen välittämisen, esimerkiksi `new Valo("PhilipsHue")`. Niinpä kussakin aliluokan rakentajassa on kutsuttava yliluokan rakentajaa. Tehdään tämä muutos kaikkiin aliluokkiin.
+
+```java
+// FILE: Laite.java
+public abstract class Laite {
+    private String nimi;
+    private boolean kytketty;
+
+    protected Laite(String nimi) {
+        this.nimi = nimi;
+    }
+
+    public void kytkePaalle() {
+        if (!kytketty) {
+            kytketty = true;
+            System.out.println(nimi + " käynnistyy.");
+        }
+    }
+
+    public void kytkePois() {
+        if (kytketty) {
+            kytketty = false;
             System.out.println(nimi + " sammuu.");
         }
     }
@@ -248,9 +294,93 @@ public abstract class Laite {
     public abstract void raportoiTila();
 }
 // FILE_END
+// FILE: Valo.java
+public class Valo extends Laite {
+    private int kirkkaus = 0;
+
+    public Valo(String nimi)
+    {
+        super(nimi);
+    }
+
+    @Override
+    public void vaihdaTilaa() {
+        // Vaihda kirkkaus 0 -> 50 -> 100 -> 0 ...
+        switch (kirkkaus) {
+            case 0 -> kirkkaus = 50;
+            case 50 -> kirkkaus = 100;
+            case 100 -> kirkkaus = 0;
+        }
+    }
+    @Override
+    public void raportoiTila() {
+        System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
+    }
+}
+// FILE_END
+// FILE: Turvakamera.java
+public class Turvakamera extends Laite {
+    private boolean tallennusPaalla = false;
+
+    public Turvakamera(String nimi)
+    {
+        super(nimi);
+    }
+
+    @Override
+    public void vaihdaTilaa() {
+        // Kytke tallennus päälle/pois
+        tallennusPaalla = !tallennusPaalla;
+    }
+    @Override
+    public void raportoiTila() {
+        String tila = tallennusPaalla ? "päällä" : "pois";
+        System.out.println("Turvakameran tallennus on " + tila + ".");
+    }
+}
+// FILE_END
+// FILE: Kahvinkeitin.java
+public class Kahvinkeitin extends Laite {
+    private boolean kiehumassa = false;
+
+    public Kahvinkeitin(String nimi)
+    {
+        super(nimi);
+    }
+
+    @Override
+    public void vaihdaTilaa() {
+        // Keitä kahvia tai kytke keitin pois päältä
+        kiehumassa = !kiehumassa;
+    }
+    @Override
+    public void raportoiTila() {
+        String tila = kiehumassa ? "päällä" : "pois";
+        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+    }
+}
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Laite[] laitteet = {
+                new Valo("PhilipsHue"),
+                new Kahvinkeitin("Moccamaster"),
+                new Turvakamera("Reolink")
+        };
+
+        for (Laite laite : laitteet) {
+            laite.kytkePaalle();
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+            laite.kytkePois();
+        }
+    }
+}
+// FILE_END
 ```
 
-Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen erityiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: Tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
+Aliluokat perivät nyt päälle- ja pois-kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen omat, oliokohtaiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: Tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
 
 <details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja *template method* -malli </summary>
 
@@ -428,6 +558,10 @@ public class Termostaatti extends SaadettavaLaite {
 ```
 
 `Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan, mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten abstrakti luokka ja rajapinta täydentävät toisiaan.
+
+## Esimerkit
+
+Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E32-alkuiset kansiot).
 
 ## Harjoitusidea
 
