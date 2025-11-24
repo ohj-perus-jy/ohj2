@@ -227,7 +227,7 @@ public class Valo extends Laite {
 *Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. 
 Yksi rajapintojen keskeisistä käyttötarkoituksista on määritellä yhteinen käyttäytyminen erilaisille luokille, jotka eivät välttämättä ole periytyneet samasta yliluokasta. Kun käyttäjä käsittelee olioita rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa rajapintansa mukaisen toiminnallisuuden, riippumatta siitä, miten toiminnallisuus on toteutettu.
 
-Rajapinta ei (tyypillisesti) sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
+Rajapinta ei tyypillisesti sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
 
 Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
 
