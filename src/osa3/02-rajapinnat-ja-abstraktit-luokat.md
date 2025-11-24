@@ -25,8 +25,6 @@ classDiagram
     Laite <|-- Kahvinkeitin
 ```
 
-// Esimerkki ilman abstraktia luokkaa
-
 ```java
 //FILE: main.java
 public class Main {
@@ -51,6 +49,80 @@ public class Laite {
 
     public void raportoiTila() {
     }
+}
+// FILE_END
+// FILE: Valo.java
+public class Valo extends Laite {
+    private int kirkkaus = 0;
+
+    @Override
+    public void vaihdaTilaa() {
+        switch (kirkkaus) {
+            case 0 -> kirkkaus = 50;
+            case 50 -> kirkkaus = 100;
+            case 100 -> kirkkaus = 0;
+        }
+    }
+    @Override
+    public void raportoiTila() {
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
+    }
+}
+// FILE_END
+// FILE: Turvakamera.java
+public class Turvakamera extends Laite {
+    private boolean tallennusPäällä = false;
+
+    @Override
+    public void vaihdaTilaa() {
+        // Kytke tallennus päälle/pois
+        tallennusPäällä = !tallennusPäällä;
+    }
+    @Override
+    public void raportoiTila() {
+        String tila = tallennusPäällä ? "päällä" : "pois";
+        IO.println("Turvakameran tallennus on " + tila + ".");
+    }
+}
+// FILE_END
+// FILE: Kahvinkeitin.java
+public class Kahvinkeitin extends Laite {
+
+    private boolean kiehumassa = false;
+
+    @Override
+    public void vaihdaTilaa() {
+        // Keitä kahvia tai kytke keitin pois päältä
+        kiehumassa = !kiehumassa;
+    }
+    @Override
+    public void raportoiTila() {
+        String tila = kiehumassa ? "päällä" : "pois";
+        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+    }
+}
+// FILE_END
+```
+
+Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Teoriassa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
+
+```java,ignore
+void main() {
+    Laite laite = new Laite();
+    laite.vaihdaTilaa(); // Ei tee mitään
+    laite.raportoiTila(); // Ei tee mitään
+}
+```
+
+Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä; niillä ei olisi mitään toiminnallisuutta. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
+
+Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
+
+```java
+// FILE: Laite.java
+public abstract class Laite {
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
 }
 // FILE_END
 // FILE: Valo.java
@@ -105,36 +177,32 @@ public class Kahvinkeitin extends Laite {
     }
 }
 // FILE_END
-```
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Laite[] laitteet = {
+            new Valo(),
+            new Turvakamera(),
+            new Kahvinkeitin()
+        };
 
-Jos katsotaan `Laite`-luokkaa, huomataan, että sen metodit `vaihdaTilaa()` ja `raportoiTila()` eivät tee mitään. Teoriassa voisimme luoda myös `Laite`-luokasta ilmentymän ja kutsua sen metodeja:
-
-```java.ignore
-void main() {
-    Laite laite = new Laite();
-    laite.vaihdaTilaa(); // Ei tee mitään
-    laite.raportoiTila(); // Ei tee mitään
+        for (Laite laite : laitteet) {
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+        }
+    }
 }
-```
-
-Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä; niillä ei olisi mitään toiminnallisuutta. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
-
-Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. Muokataan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi.  Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
-
-```java,ignore
-public abstract class Laite {
-    public abstract void vaihdaTilaa();
-    public abstract void raportoiTila();
-}
+// FILE_END
 ```
 
 Nyt `Laite`-luokasta ei voi enää luoda ilmentymiä, ja yritettäessä tehdä niin, kääntäjä antaa virheen:
 
-```java.ignore
-void main() {
-    Laite laite = new Laite(); 
-    // Virhe! Cannot instantiate the type Laite
-}
+```java,ignore
+Laite laite = new Laite(); 
+```
+
+```
+java: Laite is abstract; cannot be instantiated
 ```
 
 ## Miksi abstrakti luokka on hyödyllinen?
@@ -144,7 +212,13 @@ Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijaine
 - määritellä yhteinen sopimus: mitä metodeja kaikkien aliluokkien pitää tarjota
 - tarjota yhteisiä ominaisuuksia ja tarvittaessa myös toteutuksia, jotta aliluokat keskittyvät vain olennaiseen
 
-Kun `Laite` on abstrakti, voimme myös lisätä sille kenttiä ja valmiita metodeja, joita kaikki aliluokat käyttävät.
+Kun `Laite` on abstrakti, voimme lisätä sille attribuutteja ja metodien valmiita toteutuksia, joita kaikki aliluokat käyttävät. 
+
+Lisätään `Laite`-luokkaan attribuutti `nimi`, joka kertoo laitteen nimen, sekä attribuutti `kytkettyna`, joka kertoo, onko laite päällä vai pois päältä. Sellainen attribuutti on hyödyllinen kaikille laitteille, joten se sopii hyvin abstraktiin luokkaan. 
+
+Jos kyse olisi verkkolaitteesta, hyödyllisiä tai jopa pakollisia attribuutteja voisivat olla muun muassa MAC-osoite ja IP-osoite. Pidämme kuitenkin tämän esimerkin yksinkertaisena, joten tyydymme tässä vain nimeen ja kytketty-tilan seuraamiseen.
+
+Lisätään myös metodit `kytkePaalle()` ja `kytkePois()`, jotka sisältävät yleisen logiikan laitteen käynnistämiseen ja sammuttamiseen, jota kaikki laitteet voivat noudattavat. 
 
 ```java
 // FILE: Laite.java
