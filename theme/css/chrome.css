@@ -267,8 +267,6 @@ pre > .buttons {
 
     color: var(--sidebar-fg);
     cursor: pointer;
-    visibility: hidden;
-    opacity: 0;
     transition: visibility 0.1s linear, opacity 0.1s linear;
 }
 pre:hover > .buttons {
