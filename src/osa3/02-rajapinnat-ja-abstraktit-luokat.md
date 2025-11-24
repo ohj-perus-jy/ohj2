@@ -176,11 +176,11 @@ public abstract class Laite {
 // FILE_END
 ```
 
-Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen erityiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
+Aliluokat perivät kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen erityiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: Tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
 
-<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja *template method* -kaava </summary>
+<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja *template method* -malli </summary>
 
-Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan *template method* -kaavaksi, koska abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
+Abstraktilla luokalla voi olla myös valmiita metodeja, jotka kutsuvat abstrakteja metodeja. Tätä kutsutaan *template method* -malliksi. Abstrakti luokka määrittelee toimenpiteen "kaavan", mutta jättää vaiheet aliluokille.
 
 ```java
 // FILE: Laite.java
@@ -216,7 +216,7 @@ public class Valo extends Laite {
 // FILE_END
 ```
 
-`suoritaPaivitys()` on nyt valmis "resep­ti", jota aliluokat eivät voi muuttaa (`final`). Sen sijaan ne täydentävät reseptin tarvitsemansa tavoilla toteuttamalla abstraktit metodit.
+`suoritaPaivitys()` on nyt ikään kuin valmis resep­ti, jota aliluokat eivät voi muuttaa (`final`). Sen sijaan ne täydentävät reseptin tarvitsemansa tavoilla toteuttamalla abstraktit metodit.
 
 🤔 Pohdittavaksi: Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? 
 
@@ -224,13 +224,16 @@ public class Valo extends Laite {
 
 ## Rajapinta
 
-*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. Rajapinta ei kuitenkaan (tyypillisesti) sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
+*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. 
+Yksi rajapintojen keskeisistä käyttötarkoituksista on määritellä yhteinen käyttäytyminen erilaisille luokille, jotka eivät välttämättä ole periytyneet samasta yliluokasta. Kun käyttäjä käsittelee olioita rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa rajapintansa mukaisen toiminnallisuuden, riippumatta siitä, miten toiminnallisuus on toteutettu.
+
+Rajapinta ei (tyypillisesti) sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
 
 Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
 
 ## Esimerkki
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen tilan välillä. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
 
 Määritellään tällaiselle toiminnallisuudelle rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
 
@@ -326,7 +329,7 @@ public abstract class SaadettavaLaite extends Laite implements Saadettava {
 
     @Override
     public void raportoiTila() {
-        System.out.println("Nykyinen arvo: " + nykyinenArvo);
+        IO.println("Nykyinen arvo: " + nykyinenArvo);
     }
 }
 // FILE_END
