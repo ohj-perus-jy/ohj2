@@ -800,7 +800,7 @@ public class Main {
 // FILE_END
 ```
 
-Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin [GitHubista]().
+Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E32_Rajapinnat2/src).
 
 ## Abstrakti luokka vai rajapinta?
 
