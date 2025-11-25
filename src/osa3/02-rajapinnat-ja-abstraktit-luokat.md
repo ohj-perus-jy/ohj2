@@ -28,7 +28,7 @@ classDiagram
 ```java
 //FILE: main.java
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Laite[] laitteet = {
             new Valo(),
             new Turvakamera(),
@@ -179,7 +179,7 @@ public class Kahvinkeitin extends Laite {
 // FILE_END
 // FILE: main.java
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Laite[] laitteet = {
             new Valo(),
             new Turvakamera(),
@@ -362,7 +362,7 @@ public class Kahvinkeitin extends Laite {
 // FILE_END
 // FILE: main.java
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Laite[] laitteet = {
                 new Valo("PhilipsHue"),
                 new Kahvinkeitin("Moccamaster"),
@@ -489,7 +489,7 @@ public class Kahvinkeitin extends Laite {
 // FILE_END
 // FILE: main.java
 public class Main {
-    public static void main(String[] args) {
+    public static void main() {
         Valo hue =  new Valo("PhilipsHue");
         Kahvinkeitin mocca = new Kahvinkeitin("MoccaMaster");
 
@@ -509,25 +509,22 @@ public class Main {
 
 ## Rajapinta
 
-*Rajapinta* (engl. *interface*) on sopimus: se kertoo, mitä metodeja kyseisen rajapinnan toteuttavan luokan tulee tarjota. 
-Yksi rajapintojen keskeisistä käyttötarkoituksista on määritellä yhteinen käyttäytyminen erilaisille luokille, jotka eivät välttämättä ole periytyneet samasta yliluokasta. Kun käyttäjä käsittelee olioita rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa rajapintansa mukaisen toiminnallisuuden, riippumatta siitä, miten toiminnallisuus on toteutettu.
+*Rajapinta* on kuin sopimus: se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
-Rajapinta ei tyypillisesti sisällä kyseisten metodien toteutuksia, vaan ainoastaan metodien esittelyrivit. Luokka *toteuttaa* (engl. *implements*) rajapinnan ja siten sitoutuu tarjoamaan rajapinnan määrittelemät metodit. Yksi luokka voi toteuttaa useita rajapintoja. 
+Tärkeä ero perintään on se, että luokka *toteuttaa* (engl. *implements*) rajapinnan, ei peri sitä. Tämän ansiosta yksi luokka voi toteuttaa useita eri rajapintoja samanaikaisesti. 
 
 Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
 
 ## Esimerkki
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 75%), sen sijaan, että pitäisi painaa nappia useita kertoja.
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
 
-Määritellään tällaiselle toiminnallisuudelle rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
+Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`. Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
 
-```java,noplayground
-// FILE: Saadettava.java
+```java,ignore
 public interface Saadettava {
     void asetaArvo(int arvo);
 }
-// FILE_END
 ```
 
 Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla luokalla tulee olla `asetaArvo`-metodi.
@@ -537,18 +534,6 @@ Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 Lisätään `Valo`-luokkaan rajapinnan toteutus:
 
 ```java
-// FILE: main.java
-public class Main {
-    public static void main(String[] args) {
-        Valo valo = new Valo();
-        valo.asetaArvo(33);
-        valo.raportoiTila();
-
-        valo.vaihdaTilaa();
-        valo.raportoiTila();
-    }
-}
-// FILE_END
 // FILE: Valo.java
 public class Valo extends Laite implements Saadettava {
     private int kirkkaus = 0;
@@ -586,9 +571,236 @@ public interface Saadettava {
     void asetaArvo(int arvo);
 }
 // FILE_END
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Valo valo = new Valo();
+        valo.asetaArvo(33);
+        valo.raportoiTila();
+
+        valo.vaihdaTilaa();
+        valo.raportoiTila();
+    }
+}
+// FILE_END
 ```
 
-<!-- Rajapinta keskittyy vain ulkoiseen käyttäytymiseen, ei sisäiseen toteutukseen.-->
+## Usean rajapinnan toteuttaminen
+
+Luokka voi toteuttaa useita rajapintoja. 
+
+Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja `Klikattava`. Näiden rajapintojen avulla voidaan määritellä, millaisia komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja korostaa itsensä, kun hiiri on sen päällä. 
+
+```java,ignore
+// FILE: Piirrettava.java
+/**
+ * Käyttöliittymään piirrettävä komponentti.
+ */
+public interface Piirrettava {
+    public void piirra();
+}
+// FILE_END
+// FILE: Klikattava.java
+/**
+ * Käyttöliittymän komponentti, jota voi klikata.
+ */
+public interface Klikattava {
+    public void klikattu();
+
+    public void asetaKorostus(boolean korostus);
+}
+// FILE_END
+```
+
+Huomaa, että emme tiedä emmekä välitä siitä, miten nämä metodit aikanaan toteutetaan. Piirto voi tapahtua graafisella käyttöliittymällä, tekstipohjaisella käyttöliittymällä tai vaikkapa tulostamalla tiedostoon. Meille riittää, että tiedämme, että jokaisella `Piirrettävä`-rajapinnan toteuttavalla luokalla on `piirra()`-metodi, ja jokaisella `Klikattava`-rajapinnan toteuttavalla luokalla on `klikattu()`- ja `asetaKorostus(boolean korostus)`-metodit.
+
+Mennään eteenpäin. Toteutetaan `Teksti`, joka on pelkkää tekstiä näyttävä käyttöliittymäkomponentti.
+
+```java,ignore
+/**
+ * Pelkkää tekstiä esittävä piirrettävä komponentti.
+ */
+public class Teksti implements Piirrettava {
+    private String sisalto;
+    public Teksti(String sisalto)
+    {
+        this.sisalto = sisalto;
+    }
+
+    @Override
+    public void piirra() {
+        // Piirretään vain pelkkä tekstisisältö ilman kehyksiä
+        IO.println(sisalto);
+    }
+}
+```
+
+Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että `piirra()`-metodi on ainoa metodi, jota `Piirrettava`-rajapinta tarjoaa. Nyt kuitenkin voimme luoda toisen komponentin, `Painike`, joka on laatikon näköinen klikkattava painike, jossa on tekstiä. `Painike`-luokka toteuttaa molemmat rajapinnat: `Piirrettävä` ja `Klikattava`.
+
+```java,ignore
+/**
+ * Laatikon näköinen klikkattava painike,
+ * jossa on tekstiä.
+ */
+/**
+ * Laatikon näköinen klikkattava painike,
+ * jossa on tekstiä.
+ */
+public class Painike implements Piirrettava, Klikattava {
+
+    private String sisalto;
+    private boolean korostettu;
+
+    public Painike(String sisalto)
+    {
+        this.sisalto = sisalto;
+        this.korostettu = false;
+    }
+
+    @Override
+    public void piirra() {
+        // Piirretään suorakulmio ja teksti
+        if (!korostettu) {
+            IO.println("[ " + sisalto + " ]");
+        } else {
+            IO.println("[*" + sisalto + "*]");
+        }
+    }
+
+    @Override
+    /**
+     * Käsitellään klikkaustapahtuma
+     */
+    public void klikattu() {
+        IO.println("(Klikattiin painiketta, jossa lukee \"" + sisalto + "\")");
+    }
+
+    @Override
+    /**
+     * Asetetaan korostustila. Jos tila muuttuu, piirretään komponentti uudestaan.
+     */
+    public void asetaKorostus(boolean korostus) {
+        if (this.korostettu == korostus) {
+            return;
+        }
+        this.korostettu = korostus;
+        this.piirra();
+    }
+}
+
+```
+
+Nyt meillä on kaksi erilaista käyttöliittymäkomponenttia, jotka molemmat voidaan piirtää näytölle. `Painike`-komponentti on lisäksi klikattava. Käytetään näitä komponentteja pääohjelmassa.
+
+```java
+// FILE: Piirrettava.java
+/**
+ * Käyttöliittymään piirrettävä komponentti.
+ */
+public interface Piirrettava {
+    public void piirra();
+}
+// FILE_END
+// FILE: Klikattava.java
+/**
+ * Käyttöliittymän komponentti, jota voi klikata.
+ */
+public interface Klikattava {
+    public void klikattu();
+
+    public void asetaKorostus(boolean korostus);
+}
+// FILE_END
+// FILE: Teksti.java
+/**
+ * Pelkkää tekstiä näyttävä komponentti.
+ */
+public class Teksti implements Piirrettava {
+    private String sisalto;
+    public Teksti(String sisalto)
+    {
+        this.sisalto = sisalto;
+    }
+
+    @Override
+    public void piirra() {
+        // Piirretään vain pelkkä tekstisisältö ilman kehyksiä
+        IO.println(sisalto);
+    }
+}
+// FILE_END
+// FILE: Painike.java
+/**
+ * Laatikon näköinen klikkattava painike,
+ * jossa on tekstiä.
+ */
+/**
+ * Laatikon näköinen klikkattava painike,
+ * jossa on tekstiä.
+ */
+public class Painike implements Piirrettava, Klikattava {
+
+    private String sisalto;
+    private boolean korostettu;
+
+    public Painike(String sisalto)
+    {
+        this.sisalto = sisalto;
+        this.korostettu = false;
+    }
+
+    @Override
+    public void piirra() {
+        // Piirretään suorakulmio ja teksti
+        if (!korostettu) {
+            IO.println("[ " + sisalto + " ]");
+        } else {
+            IO.println("[*" + sisalto + "*]");
+        }
+    }
+
+    @Override
+    /**
+     * Käsitellään klikkaustapahtuma
+     */
+    public void klikattu() {
+        IO.println("(Klikattiin painiketta, jossa lukee \"" + sisalto + "\")");
+    }
+
+    @Override
+    /**
+     * Asetetaan korostustila. Jos tila muuttuu, piirretään komponentti uudestaan.
+     */
+    public void asetaKorostus(boolean korostus) {
+        if (this.korostettu == korostus) {
+            return;
+        }
+        this.korostettu = korostus;
+        this.piirra();
+    }
+}
+
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Teksti otsikko = new Teksti("Haluatko aloittaa rajapintojen opiskelun?");
+        otsikko.piirra();
+
+        Painike okPainike = new Painike("OK!");
+        okPainike.piirra();
+
+        // Simuloidaan hiiren vieminen painikkeen päälle
+        okPainike.asetaKorostus(true);
+        
+        // Simuloidaan klikkaus
+        okPainike.klikattu();
+    }
+}
+// FILE_END
+```
+
+Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin [GitHubista]().
 
 ## Abstrakti luokka vai rajapinta?
 
