@@ -738,6 +738,10 @@ public class Teksti implements Piirrettava {
  * Laatikon näköinen klikkattava painike,
  * jossa on tekstiä.
  */
+/**
+ * Laatikon näköinen klikkattava painike,
+ * jossa on tekstiä.
+ */
 public class Painike implements Piirrettava, Klikattava {
 
     private String sisalto;
@@ -769,21 +773,16 @@ public class Painike implements Piirrettava, Klikattava {
 
     @Override
     /**
-     * Asetetaan korostustila. Jos tila muuttuu, piirretään komponentti uudestaan.
+     * Asetetaan korostustila.
      */
     public void asetaKorostus(boolean korostus) {
-        if (this.korostettu == korostus) {
-            return;
-        }
         this.korostettu = korostus;
-        this.piirra();
     }
 }
-
 // FILE_END
 // FILE: main.java
 public class Main {
-    public static void main() {
+    public static void main(String[] args) {
         Teksti otsikko = new Teksti("Haluatko aloittaa rajapintojen opiskelun?");
         otsikko.piirra();
 
@@ -791,8 +790,10 @@ public class Main {
         okPainike.piirra();
 
         // Simuloidaan hiiren vieminen painikkeen päälle
+        // Korostamisen jälkeen piirretään painike uudestaan
         okPainike.asetaKorostus(true);
-        
+        okPainike.piirra();
+
         // Simuloidaan klikkaus
         okPainike.klikattu();
     }
