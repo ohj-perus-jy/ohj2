@@ -642,10 +642,6 @@ Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että `
  * Laatikon näköinen klikkattava painike,
  * jossa on tekstiä.
  */
-/**
- * Laatikon näköinen klikkattava painike,
- * jossa on tekstiä.
- */
 public class Painike implements Piirrettava, Klikattava {
 
     private String sisalto;
@@ -734,14 +730,6 @@ public class Teksti implements Piirrettava {
  * Laatikon näköinen klikkattava painike,
  * jossa on tekstiä.
  */
-/**
- * Laatikon näköinen klikkattava painike,
- * jossa on tekstiä.
- */
-/**
- * Laatikon näköinen klikkattava painike,
- * jossa on tekstiä.
- */
 public class Painike implements Piirrettava, Klikattava {
 
     private String sisalto;
@@ -753,9 +741,6 @@ public class Painike implements Piirrettava, Klikattava {
         this.korostettu = false;
     }
 
-    /**
-     * Piirretään painike Piirturi-olion avulla.
-     */
     @Override
     public void piirra() {
         // Piirretään suorakulmio ja teksti
