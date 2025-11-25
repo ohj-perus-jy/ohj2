@@ -667,18 +667,18 @@ public class Painike implements Piirrettava, Klikattava {
         }
     }
 
-    @Override
     /**
      * Käsitellään klikkaustapahtuma
      */
+    @Override
     public void klikattu() {
         IO.println("(Klikattiin painiketta, jossa lukee \"" + sisalto + "\")");
     }
 
-    @Override
     /**
      * Asetetaan korostustila. Jos tila muuttuu, piirretään komponentti uudestaan.
      */
+    @Override
     public void asetaKorostus(boolean korostus) {
         if (this.korostettu == korostus) {
             return;
@@ -687,8 +687,8 @@ public class Painike implements Piirrettava, Klikattava {
         this.piirra();
     }
 }
-
 ```
+
 
 Nyt meillä on kaksi erilaista käyttöliittymäkomponenttia, jotka molemmat voidaan piirtää näytölle. `Painike`-komponentti on lisäksi klikattava. Käytetään näitä komponentteja pääohjelmassa.
 
@@ -753,6 +753,9 @@ public class Painike implements Piirrettava, Klikattava {
         this.korostettu = false;
     }
 
+    /**
+     * Piirretään painike Piirturi-olion avulla.
+     */
     @Override
     public void piirra() {
         // Piirretään suorakulmio ja teksti
@@ -763,18 +766,18 @@ public class Painike implements Piirrettava, Klikattava {
         }
     }
 
-    @Override
     /**
      * Käsitellään klikkaustapahtuma
      */
+    @Override
     public void klikattu() {
         IO.println("(Klikattiin painiketta, jossa lukee \"" + sisalto + "\")");
     }
 
-    @Override
     /**
      * Asetetaan korostustila.
      */
+    @Override
     public void asetaKorostus(boolean korostus) {
         this.korostettu = korostus;
     }
@@ -802,6 +805,133 @@ public class Main {
 ```
 
 Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E32_Rajapinnat2/src).
+
+<details closed><summary>✨ Valinnaista lisätietoa: Piirtämisvastuun siirtäminen pois komponenteista </summary>
+
+Yllä oleva esimerkkimme on siinä mielessä aavistuksen epätodellinen, että käyttöliittymäkomponentit eivät yleensä huolehdi itse itsensä piirtämisestä, vaan piirtämisvastuu on usein erotettu muuhun osaan järjestelmää. Tällöin komponentit vain tarjoavat tiedot, jotka tarvitaan piirtämiseen, ja joku muu osa järjestelmää huolehtii siitä, että komponentit piirretään oikein näytölle (tai muuhun esitystapaan).
+
+Muokataan esimerkkiämme tämän ajatuksen mukaisesti. Tehdään `Naytto`-luokka, joka pitää kirjaa kaikista näytöllä näkyvistä käyttöliittymäkomponenteista. 
+
+```java,ignore
+/**
+ * Naytto-luokka hallinnoi piirrettäviä komponentteja.
+ */
+public class Naytto {
+    private ArrayList<Piirrettava> komponentit = new ArrayList<>();
+
+    public void lisaaKomponentti(Piirrettava p) {
+        komponentit.add(p);
+    }
+
+    public void poistaKomponentti(Piirrettava p) {
+        komponentit.remove(p);
+    }
+}
+```
+
+Tehdään myös `Piirturi`-luokka, joka toimii välikerroksena `Naytto`-luokan ja käyttöliittymäkomponenttien välillä. `Piirturi`-luokka huolehtii siitä, että komponentit piirretään oikein näytölle. Tässä esimerkissä ne tulostetaan konsolille, mutta oikeassa käyttöliittymässä ne piirrettäisiin graafiselle näytölle.
+
+```java,ignore
+/**
+ * Piirturi-luokka vastaa piirtoalueen piirtämisestä.
+ */
+public class Piirturi {
+    public void piirraPainike(String teksti, boolean korostettu) {
+        if (!korostettu) {
+            IO.println("[ " + teksti + " ]");
+        } else {
+            IO.println("[*" + teksti + "*]");
+        }
+    }
+
+    public void piirraTeksti(String teksti) {
+            IO.println(teksti);
+    }
+
+    public void tyhjaa() {
+        IO.println("Tyhjennetään piirtoalue");
+        // Jätetään tässä toteuttamatta        
+    }
+}
+```
+
+Nyt `Naytto`-luokka voi käyttää `Piirturi`-luokkaa piirtämään ne tarvittaessa. Lisätään `Naytto`-luokkaan metodi `paivita()`, joka käy läpi kaikki näytöllä olevat komponentit ja pyytää niitä piirtämään itsensä `Piirturi`-olion avulla.
+
+```java,ignore
+import java.util.ArrayList;
+
+/**
+ * Naytto-luokka hallinnoi piirrettäviä komponentteja.
+ */
+public class Naytto {
+    private ArrayList<Piirrettava> komponentit = new ArrayList<>();
+    // HIGHLIGHT_GREEN_BEGIN
+    private Piirturi piirturi = new Piirturi();
+    // HIGHLIGHT_GREEN_END
+
+    public void lisaaKomponentti(Piirrettava p) {
+        komponentit.add(p);
+    }
+
+    public void poistaKomponentti(Piirrettava p) {
+        komponentit.remove(p);
+    }
+
+    // HIGHLIGHT_GREEN_BEGIN
+    public void paivita() {
+        piirturi.tyhjaa();
+        for (Piirrettava p : komponentit) {
+            p.piirra(piirturi);
+        }
+    }
+    // HIGHLIGHT_GREEN_END
+}
+```
+
+Huomaa, että `Piirrettava`-rajapinnan `piirra()`-metodin tulee nyt ottaa parametrina `Piirturi`-olio. Tämän avulla komponentit voivat käyttää `Piirturi`-oliota piirtämiseen.
+
+```java,ignore
+public interface Piirrettava {
+    // HIGHLIGHT_GREEN_BEGIN
+    public void piirra(Piirturi piirturi);
+    // HIGHLIGHT_GREEN_END
+}
+```
+
+Ja nyt se oleellinen kohta: Tämän seurauksena `Teksti`- ja `Painike`-luokkien `piirra()`-metodit eivät enää itse tulosta mitään, vaan ne kutsuvat `Piirturi`-olion metodeja.
+
+```java,ignore
+/**
+ * Pelkkää tekstiä esittävä piirrettävä komponentti.
+ */
+public class Teksti implements Piirrettava {
+    private String sisalto;
+    public Teksti(String sisalto)
+    {
+        this.sisalto = sisalto;
+    }
+
+    /**
+     * Piirrä komponentti
+     * @param piirturi Piirturi
+     */
+    @Override
+    // HIGHLIGHT_GREEN_BEGIN
+    public void piirra(Piirturi piirturi) {
+        piirturi.piirraTeksti(sisalto);
+    }
+    // HIGHLIGHT_GREEN_END
+}
+```
+
+Vastaava muutos tulee tehdä `Painike`-luokkaan.
+
+Tässä meidän yksinkertaisessa esimerkissämme kaikki tietysti tapahtuu konsolille tulostamalla, mutta oikeassa graafisessa käyttöliittymässä `Piirturi`-luokka voisi käyttää jotain graafista kirjastoa, kuten JavaFX:ää tai Swingiä.
+
+Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E32_Rajapinnat3/src).
+
+</details>
+
 
 ## Abstrakti luokka vai rajapinta?
 
