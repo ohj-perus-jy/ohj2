@@ -10,10 +10,72 @@
 ## Kehittäminen
 
 ```bash
+bash ./start.sh
+```
+
+tai
+
+```bash
+bash ./update-mdbook.sh
 mdbook serve --hostname 0.0.0.0 --port 3000 --open
 ```
 
+## Monen tiedoston koodialueet
+
+```java
+// FILE: main.java
+public class Ohjelma {
+    public static void main() {
+        Kissa k = new Kissa("Snowball");
+        IO.println(k.getAani());
+    }
+}
+// FILE_END
+// FILE: Kissa.java
+public class Kissa {
+    private String name;
+
+    public Kissa(String name) {
+        this.name = name;
+    }
+
+    public String getAani() {
+        return "Miau!";
+    }
+}
+// FILE_END
+```
+
+## Koodin korostukset
+
+Käytä merkintöjä `// HIGHLIGHT_COLOR_BEGIN` ja `// HIGHLIGHT_COLOR_END`, jossa COLOR on jokin seuraavista: `GREEN`, `YELLOW`, `RED`, `BLUE`.
+
+```java
+public class Kissa {
+  private String name; 
+
+  // HIGHLIGHT_GREEN_BEGIN
+  public Kissa(String name) {
+    this.name = name;
+  }
+// HIGHLIGHT_GREEN_END
+
+// HIGHLIGHT_RED_BEGIN
+  public String getAani() { 
+// HIGHLIGHT_RED_END
+// HIGHLIGHT_YELLOW_BEGIN
+    return "Miau!";
+// HIGHLIGHT_YELLOW_END
+  } 
+}
+```  
+
+![](src/images/highlight.png)
+
+## Katso myös
+
 - [mdBook-ohjeet](https://rust-lang.github.io/mdBook/index.html)
+- [KaTeX-ohjeet](https://katex.org/docs/supported)
 
 
 ## License
@@ -27,3 +89,4 @@ Ohjelmointi 2 oppimateriaali © 2025 by Denis Zhidkikh, Sami Sarsa, Antti-Jussi 
 [cc-by-sa-image]: https://licensebuttons.net/l/by-sa/4.0/88x31.png
 
 [cc-by-sa-shield]: https://img.shields.io/badge/License-CC%20BY--SA%204.0-lightgrey.svg
+

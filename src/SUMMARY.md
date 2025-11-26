@@ -1,9 +1,17 @@
 # Summary
 
 [Aloitus](./index.md)
+[Suorittaminen](./suorittaminen.md)
 [Työkalut ja asentaminen](./tyokalut.md)
+[Tuki ja palaute](./tuki-ja-palaute.md)
+[Harjoitustyö](./harjoitustyo.md)
+[Tentti](./tentti.md)
 
 ---
+
+[Luennot](./luennot.md)
+
+--- 
 
 - [Java-kielen perusteet](./osa1/index.md)
   - [Hei, Java!](./osa1/01-hei-java.md)
@@ -16,7 +24,7 @@
   - [Kapselointi](./osa2/03-kapselointi.md)
 - [Perintä ja rajapinnat](./osa3/index.md)
   - [Perintä](./osa3/01-perinta.md)
-  - [Rajapinnat ja abstraktit luokat](./osa3/02-abstraktit-luokat.md)
+  - [Rajapinnat ja abstraktit luokat](./osa3/02-rajapinnat-ja-abstraktit-luokat.md)
   - [Polymorfismi](./osa3/03-polymorfismi.md)
   - [Perintä tai rajapinta?](./osa3/04-perinta-tai-rajapinta.md)
 - [Lisää tyypeistä](./osa4/index.md)
