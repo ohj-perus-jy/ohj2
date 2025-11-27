@@ -9,19 +9,17 @@
 
 *Polymorfismi* viittaa olio-ohjelmoinnissa kykyyn käsitellä erilaisia olioita yhtenäisellä tavalla. Kun metodia kutsutaan, päätös siitä, mikä metodi tosiasiallisesti suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella. Polymorfismi mahdollistaa joustavan koodin kirjoittamisen, jossa uusia olioita voidaan lisätä ilman, että olemassa olevaa koodia tarvitsee muuttaa.
 
-Polymorfismi jaetaan yleensä kahteen päätyyppiin: käännösaikaiseen polymorfismiin ja ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa metodin kuormitusta (engl. *method overloading*), jota on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin. 
+Polymorfismi jaetaan yleensä kahteen päätyyppiin: (1) käännösaikaiseen polymorfismiin, jota kutsutaan myös *dynaamiseksi sidonnaksi* (engl. *dynamic binding*) ja (2) ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa aliohjelman kuormitusta (engl. *method overloading*). Asiaa on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin, mutta lyhyesti: aliohjelman kuormitus tarkoittaa sitä, että aliohjelmalla voi olla useita samannimisiä toteutuksia, jotka eroavat toisistaan parametrien lukumäärän, parametrien tyyppien tai aliohjelman paluuarvon perusteella. Lue lisää Ohjelmointi 1 -kurssin materiaalista. (TODO: Linkki)
 
-## Polymorfismin tyypit
+## Esimerkki
 
-Polymorfismi voidaan jakaa kahteen päätyyppiin:
+Tarkastellaan abstraktia `Muoto`-luokkaa, jolla on metodi `laskeAla()`. 
 
-1. *Käännösaikainen polymorfismi* (compile-time polymorphism), joka tunnetaan myös nimellä *staattinen polymorfismi*. Tämä saavutetaan yleensä metodin ylikuormituksella (method overloading) tai operatorin ylikuormituksella (operator overloading). Käännösaikaisessa polymorfismissa päätös siitä, mikä metodi tai operaatio suoritetaan, tehdään käännösaikana.
-
-2. *Ajon aikainen polymorfismi* (run-time polymorphism), joka tunnetaan myös nimellä *dynaaminen polymorfismi*. Tämä saavutetaan yleensä perinnän ja metodin ylikirjoittamisen (method overriding) kautta. Ajon aikaisessa polymorfismissa päätös siitä, mikä metodi suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella.
-
-## Dynaaminen sidonta
-
-Polymorfismi toteutuu usein dynaamisen sidonnan (engl. *dynamic binding*) kautta. Dynaaminen sidonta tarkoittaa sitä, että metodikutsun sitominen tiettyyn metodin toteutukseen tapahtuu ajon aikana, ei käännösaikana. Tämä mahdollistaa sen, että sama metodikutsu voi johtaa eri toteutuksiin riippuen siitä, minkä tyyppinen olio sitä kutsuu.
+```java
+public abstract class Muoto {
+    public abstract double laskeAla();
+}
+```
 
 ## Huomautus instanceof-operaattorista
 
