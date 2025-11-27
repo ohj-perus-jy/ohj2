@@ -917,6 +917,11 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 
 </details>
 
+**TODO: Muuttujan tyyppinä rajapinta**
+
+Lista olioita jotka toteuttavat rajapinnan. Oliot voisivat olla toisiinsa liittymättömiä. 
+
+**TODO: Parametrina rajapinta-tyyppi**
 
 ## Abstrakti luokka vai rajapinta?
 
