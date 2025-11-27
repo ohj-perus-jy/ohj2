@@ -21,6 +21,108 @@ public abstract class Muoto {
 }
 ```
 
+Tehdään konkreettiset aliluokat `Suorakulmio` ja `Ympyra`, jotka toteuttavat `laskeAla()`-metodin.
+
+```java,ignore
+// FILE: Suorakulmio.java
+public class Suorakulmio extends Muoto {
+    private double leveys;
+    private double korkeus;
+
+    public Suorakulmio(double leveys, double korkeus) {
+        this.leveys = leveys;
+        this.korkeus = korkeus;
+    }
+
+    @Override
+    public double laskeAla() {
+        return leveys * korkeus;
+    }
+}
+// FILE_END
+// FILE: Ympyra.java
+public class Ympyra extends Muoto {
+    private double sade;
+
+    public Ympyra(double sade) {
+        this.sade = sade;
+    }
+
+    @Override
+    public double laskeAla() {
+        return Math.PI * sade * sade;
+    }
+}
+// FILE_END
+```
+
+Kuten olemme nähneet, perivissä luokissa voidaan korvata abstraktin luokan metodeja omilla toteutuksillaan. 
+
+Nyt voimme kirjoittaa koodia, joka käsittelee `Muoto`-olioita ilman, että tarvitsee tietää, onko kyseessä `Suorakulmio` vai `Ympyra`. 
+
+```java
+// FILE: main.java
+public class Main {
+    public static void main()
+    {
+        Muoto muoto1 = new Ympyra(5);
+        Muoto muoto2 = new Suorakulmio(5, 7);
+
+        IO.println(muoto1.laskeAla());
+        IO.println(muoto2.laskeAla());
+    }
+}
+// FILE_END
+// FILE: Muoto.java
+public abstract class Muoto {
+    public abstract double laskeAla();
+}
+// FILE_END
+// FILE: Suorakulmio.java
+public class Suorakulmio extends Muoto {
+    private double leveys;
+    private double korkeus;
+
+    public Suorakulmio(double leveys, double korkeus) {
+        this.leveys = leveys;
+        this.korkeus = korkeus;
+    }
+
+    @Override
+    public double laskeAla() {
+        return leveys * korkeus;
+    }
+}
+// FILE_END
+// FILE: Ympyra.java
+public class Ympyra extends Muoto {
+    private double sade;
+
+    public Ympyra(double sade) {
+        this.sade = sade;
+    }
+
+    @Override
+    public double laskeAla() {
+        return Math.PI * sade * sade;
+    }
+}
+// FILE_END
+```
+
+## Miksi polymorfismia tarvitaan?
+
+Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoittamisen. Olio-ohjelmoinnissa polymorfismia tarvitaan erityisesti seuraavista syistä.
+
+1. Yhtenäisen rajapinnan tarjoaminen erilaisille olioille
+
+Kun useat luokat perivät saman yliluokan tai toteuttavat saman rajapinnan, ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
+
+ * kaikkia ajoneuvoja (`Ajoneuvo`), vaikka ne olisivatkin erilaisia, kuten autoja, polkupyöriä ja lentokoneita
+ * kaikkia eläimiä (`Elain`), kuten koiria, kissoja ja lintuja
+ * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
+ * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
+
 ## Huomautus instanceof-operaattorista
 
 Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria. Esimerkiksi:
