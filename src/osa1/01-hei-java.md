@@ -213,8 +213,9 @@ skinparam backgroundColor transparent
       AttributeIconSize 0
       BackgroundColor AliceBlue
       ArrowColor Black
-      BorderColor Black
+      BorderColor Black      
   }
+  skinparam roundCorner 0
   hide members
 
   class Eläin {
