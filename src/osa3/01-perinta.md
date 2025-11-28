@@ -416,61 +416,6 @@ classDiagram
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
 
-## is-a-suhde
-
-Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
-
-Tämän ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina, kun ei ole tarpeen tietää tarkasti, minkä aliluokan olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä henkilöitä yhtenä ryhmänä. 
-
-Lisätään kaikki tekemämme oliot `Henkilo`-taulukkoon:
-
-```java,noplayground
-Opiskelija opiskelija = new Opiskelija();
-Opettaja opettaja = new Opettaja();
-Sihteeri sihteeri = new Sihteeri();
-
-Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
-```
-
-Jotta esimerkkimme olisi vähän mielekkäämpi, lisätään vielä `Henkilo`-luokkaan metodit `kirjaudu()` ja `kirjauduUlos()`. Nyt siis kaikki henkilöt perivät nämä metodit.
-
-```java,noplayground
-class Henkilo {
-    // HIGHLIGHT_GREEN_BEGIN
-    private boolean kirjautunut;
-    // HIGHLIGHT_GREEN_END
-
-    public Henkilo(String nimi) {
-        // ...
-        // HIGHLIGHT_GREEN_BEGIN
-        this.kirjautunut = false;
-        // HIGHLIGHT_GREEN_END
-        // ..
-    }
-
-    // HIGHLIGHT_GREEN_BEGIN
-    void kirjaudu() {
-        this.kirjautunut = true;
-        IO.println(this.getNimi() + " kirjautui sisään.");
-    }
-    void kirjauduUlos() {
-        this.kirjautunut = false;
-        IO.println(this.getNimi() + " kirjautui ulos.");
-    }
-    // HIGHLIGHT_GREEN_END
-}
-```
-
-Voimme nyt kutsua vaikkapa `kirjauduUlos()`-metodia kaikille `henkilot`-taulukon olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita taulukossa on:
-
-```java,noplayground
-for (Henkilo henkilo : henkilot) {
-    henkilo.kirjauduUlos();
-}
-```
-
-Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
-
 Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
 ## Huomautus moniperinnän puuttumisesta
@@ -479,69 +424,6 @@ Javassa luokka voi periä vain yhden luokan. Joissain muissa ohjelmointikieliss�
 
 Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interface*). Kysymys on kuitenkin monin tavoin eri asiasta. Rajapintoja käsitellään osassa [3.2 Rajapinnat ja abstraktit luokat](02-rajapinnat-ja-abstraktit-luokat.md). 
 
-## Korvaaminen
-
-Perityn luokan metodeja voidaan *korvata* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa.
-
-Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Korvataan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
-
-```java,noplayground
-class Opiskelija extends Henkilo {
-
-    // ...
-
-    boolean opintoOikeusVoimassa;
-
-    @Override
-    void kirjaudu() {
-        if (opintoOikeusVoimassa) {
-            super.kirjaudu(); // Kutsutaan yliluokan kirjaudu-metodia
-        } else {
-            System.out.println("Opinto-oikeus ei ole voimassa. Et voi kirjautua.");
-        }
-    }
-}
-```
-
-Muissa `Henkilo`-luokan aliluokissa, kuten `Opettaja` ja `Sihteeri`, `kirjaudu()`-metodi toimii edelleen alkuperäisellä tavalla, koska niitä ei ole korvattu.
-
-Voidaan ajatella, että korvattu metodi korvaa yliluokan metodin aliluokassa. Tähän liittyy pari sääntöä: 
-
- * Korvaaminen koskee aina hierarkiassa *lähintä* yliluokan metodia. 
- * Kun aliluokan olion metodia kutsutaan, kutsu viittaa aina hierarkiassa lähimpään korvattuun versioon.
-
-Alla oleva koodi havainnollistaa korvaamista ja kutsujen välittymistä luokkahierarkiassa.
-
-```java
-// FILE: A.java
-class A {  
-    public void hei() { IO.println("A-olio sanoo hei."); }  
-    public void moikka() { IO.println("A-olio sanoo moikka."); }  
-    public void huhhuh() { IO.println("A-olio sanoo huh huh!!."); }  
-}  
-// FILE_END
-// FILE: B.java
-class B extends A {  
-    public void moikka() { IO.println("B-olio huutaa moikka!"); }  
-    public void huhhuh() { IO.println("B-olio huutaa huh huh!!"); }  
-}  
-// FILE_END
-// FILE: C.java
-class C extends B {  
-    public void huhhuh() { IO.println("C-olio huhuilee...."); }  
-}  
-// FILE_END
-// FILE: main.java
-public class KokeillaanKorvaamista {  
-  public static void main(String args[]) {  
-    C c = new C();  
-    c.hei();
-    c.moikka();  
-    c.huhhuh();  
-  }  
-}  
-// FILE_END
-```
 ## Object-luokka
 
 Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
