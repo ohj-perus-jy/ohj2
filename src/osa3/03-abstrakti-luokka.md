@@ -24,7 +24,7 @@ double ala = muoto.laskeAla();
 IO.println("Muodon ala on " + ala); // 0.0
 ```
 
-Tässä ei kuitenkaan ole mitään järkeä. `Muoto`-olio ei edusta mitään konkreettista muotoa, vaan se on vain yleinen käsite, josta konkreettiset muodot, kuten `Ympyrä` ja `Suorakulmio`, periytyvät. Tämä on ilmeistä viimeistään siinä, kun yritämme tulostaa tämän yleisen muodon pinta-alaa. Näin ollen `Muoto`-luokka on tarkoitettu vain perittäväksi, eikä siitä ole mielekästä luoda ilmentymiä. Muutetaan `Muoto`-luokka abstraktiksi luokaksi, ja muutetaan myös `laskeAla()`-metodi abstraktiksi metodiksi.
+Tässä ei kuitenkaan ole mitään järkeä. `Muoto`-olio ei edusta mitään konkreettista muotoa, vaan se on vain yleinen käsite, josta konkreettiset muodot, kuten `Ympyrä` ja `Suorakulmio`, periytyvät. Tämä on ilmeistä viimeistään siinä vaiheessa, kun yritämme tulostaa tämän yleisen muodon pinta-alaa. Näin ollen `Muoto`-luokka on tarkoitettu vain perittäväksi, eikä siitä ole mielekästä luoda ilmentymiä. Muutetaan `Muoto`-luokka abstraktiksi luokaksi, ja muutetaan myös `laskeAla()`-metodi abstraktiksi metodiksi.
 
 ```java,ignore
 public abstract class Muoto {

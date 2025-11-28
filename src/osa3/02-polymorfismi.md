@@ -146,7 +146,7 @@ public class Muoto {
 }
 ```
 
-Huomaamm, että `laskeAla()`-metodin toteutus on vähän hassu. Tämä johtuu siitä, että ei ole oikeastaan mitään ns. yleistä muotoa, vaan `Muoto`-luokan edustajan tulee aina olla jokin konkreettinen muoto, kuten suorakulmio tai ympyrä, joilla on omat tavat laskea pinta-ala. Palaamme tähän dilemmaan osassa [3.3 Abstraktit luokat](03-abstraktit-luokat.md).
+Huomaamme, että `laskeAla()`-metodin toteutus on vähän hassu. Tämä johtuu siitä, että ei ole oikeastaan mitään ns. yleistä muotoa, vaan `Muoto`-luokan edustajan tulee aina olla jokin konkreettinen muoto, kuten suorakulmio tai ympyrä, joilla on omat tavat laskea pinta-ala. Palaamme tähän dilemmaan osassa [3.3 Abstraktit luokat](03-abstraktit-luokat.md).
 
 Tehdään nyt aliluokat `Suorakulmio` ja `Ympyra`. Koska näiden muotojen pinta-alat ovat luonnollisesti keskenään erilaisia, tulee kummallakin olla oma toteutus `laskeAla()`-metodille.
 
@@ -239,11 +239,9 @@ public class Ympyra extends Muoto {
 
 ## Miksi polymorfismia tarvitaan?
 
-Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoittamisen. Olio-ohjelmoinnissa polymorfismia tarvitaan erityisesti seuraavista syistä.
+Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoittamisen. Olio-ohjelmoinnissa polymorfismia tarvitaan erityisesti siksi, että sen avulla voimme tarjota yhtenäisen tavan käsitellä keskenään hyvinkin erilaisia olioita.
 
-1. Yhtenäisen rajapinnan tarjoaminen erilaisille olioille
-
-Kun useat luokat perivät saman yliluokan tai toteuttavat saman rajapinnan, ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
+Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme tähän luvussa [3.3 Rajapinnat]()), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
 
  * kaikkia ajoneuvoja (`Ajoneuvo`), vaikka ne olisivatkin erilaisia, kuten autoja, polkupyöriä ja lentokoneita
  * kaikkia eläimiä (`Elain`), kuten koiria, kissoja ja lintuja
@@ -251,6 +249,8 @@ Kun useat luokat perivät saman yliluokan tai toteuttavat saman rajapinnan, ne v
  * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
 
 ## Huomautus instanceof-operaattorista
+
+TODO: Samilla oli tähän oma branch. Alla oleva teksti on vanhaa, ja poistunee sellaisenaan. 
 
 Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria. Esimerkiksi:
 
