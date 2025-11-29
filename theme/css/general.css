@@ -125,6 +125,13 @@ details summary:hover {
 .page-wrapper {
     box-sizing: border-box;
     background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Fallback for browsers that don't support svh */
+    min-height: 100svh;
+}
+.page-wrapper > footer {
+    margin-top: auto;
 }
 html:not(.js) .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
