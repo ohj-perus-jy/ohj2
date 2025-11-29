@@ -1,7 +1,8 @@
 # TIEP111 Ohjelmointi 2
 
-## Tietoja opintojaksosta
+Tämä on Jyväskylän yliopiston järjestämän **TIEP111 Ohjelmointi 2** -opintojakson oppimateriaali. 
 
+## ℹ️ Tietoja opintojaksosta
 
 <!-- OPS:sta -->
 <!-- Sisältö: Java-kieli, ohjelmansuunnittelun ja olio-ohjelmoinnin periaatteita, ohjelman testaaminen. Rekursio. -->
@@ -17,19 +18,26 @@ Opintojaksolla opit
 - erilaisia ohjelmoijan työkaluja ja tekniikoita
   - ml. rekursio, geneeriset tyypit, funktionaalinen ohjelmointi
 
-## Esitiedot
+## 📚 Esitiedot
 
-- Ohjelmointi 1. tai vastaava
+- Ohjelmointi 1 tai vastaava
 
+## 🧭 Navigointi tässä materiaalissa
 
-## 🫡 Haluatko parannella tätä dokumenttia?
+Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
 
-Jos löydät tästä dokumentista virheitä tai haluat antaa parannusehdotuksen, toimi seuraavasti:
+ * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi bi-layout-sidebar"></i>.
+ * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
+ * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
 
-  1. Kirjaudu GitLabiin ja toimi seuraavasti: 
-  2. Klikkaa tässä tiedostossa Edit -> Edit Single File -> Fork, tee haluamasi muutokset, lisää alle commit-teksti -> Commit changes. 
-  3. Create merge request. 
-   
-Vaihtoehtoisesti voit [🔗 tehdä ns. issuen tähän repoon](https://gitlab.jyu.fi/tie/ohj1/2025k/yhteenveto/-/issues/new?issuable_template=kertaus).
+##  🫡 Haluatko parannella tätä materiaalia?
 
-Mutta -- lähdetäänpä sitte liikkeelle varsinaiseen asiaan!
+Jos löydät materiaalista virheitä, voit ehdottaa korjauksia tai parannuksia klikkaamalla sivun alareunasta. Ehdotuksen tekemiseksi tarvitset GitHub-tilin.
+
+## 👨 Tekijät ja lisenssi
+
+Ohjelmointi 2 oppimateriaali © 2025 by Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen. 
+
+Kiitos Jonne Itkoselle palautteesta ja parannusehdotuksista.
+
+Materiaali on julkaistu CC-BY-SA-4.0-lisenssillä. Tarkemmat tiedot löydät [materiaalin GitHub-sivulta](https://github.com/ohj-perus-jy/ohj2).
