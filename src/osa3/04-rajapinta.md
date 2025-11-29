@@ -107,6 +107,8 @@ Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `A
  * `Cloneable`-rajapinta sallii olion kloonauksen eli kopioinnin.
  * `Serializable`-rajapinta sallii olion tallentamisen tiedostoon tai lähettämiseen verkon yli.
 
+Toisaalta myös Javan `Date`-luokka toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään `ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
+
 Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttaa molemmat rajapinnat.
 
 Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja `Klikattava`. Näiden rajapintojen avulla voitaisiin määritellä, millaisia komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja korostaa itsensä, kun hiiri on sen päällä. 
@@ -450,13 +452,14 @@ public interface Verkkovirtalaite {
 }
 ```
 
-Nyt `Sirkkeli` ja `Leivanpaahdin` ovat aivan eri puolelta luokkahierarkiaa (toinen on työkalu, toinen keittiölaite), mutta molemmat reagoivat virtaan omalla tavallaan.
+Nyt vaikkapa `Leivanpaahdin` ja `Sirkkeli` voisivat olla luokkia, jotka ovat aivan eri puolella luokkahierarkiaa (toinen on keittiölaite, toinen työkalu), mutta molemmat reagoivat sähkövirran kytkemiseen omalla tavallaan.
 
-`Tyokalu` ja `Keittiolaite` jätetään tässä esimerkissä määrittelmättä, mutta ne voisivat olla abstrakteja luokkia, jotka tarjoavat perustan työkalu- ja keittiölaitteille.
+> [!HUOMAUTUS]
+> Jotta esimerkki ei leviäisi käsiin, oletamme tässä, että `Leivanpaahdin` ja `Sirkkeli`-luokat peritään jostakin järkevistä yliluokista, kuten `Keittiolaite` ja `Tyokalu`. Näitä yliluokkia ei ole määritelty tässä esimerkissä, koska ne eivät ole olennaisia rajapinnan kannalta ja vain monimutkaistaisivat esimerkkiä. Oleellista on, että ne edustavat eri puolilta luokkahierarkiaa olevia olioita, jotka molemmat toteuttavat saman rajapinnan.
 
 ```java,ignore
 // Sirkkeli on Työkalu, joka toimii verkkovirralla
-public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
+public class Sirkkeli implements Verkkovirtalaite {
     
     @Override
     public void kytkeVirta() {
@@ -466,7 +469,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
 }
 
 // Leivänpaahdin on Keittiölaite, joka toimii verkkovirralla
-public class Leivanpaahdin extends Keittiolaite implements Verkkovirtalaite {
+public class Leivanpaahdin implements Verkkovirtalaite {
     
     @Override
     public void kytkeVirta() {
@@ -487,7 +490,7 @@ public class Pistorasia {
         System.out.println("--- Pistorasia antaa sähköä ---");
         
         // Pistorasia kutsuu sopimuksen mukaista metodia.
-        // Tässä tapahtuu polymorfismi: 
+        // Tässä toteutuu polymorfismi: 
         // laite reagoi oikealla, sille ominaisella tavalla.
         laite.kytkeVirta();
     }
@@ -498,8 +501,6 @@ public class Pistorasia {
 
 Jotta `Pistorasia`-luokka pääsisi tositoimiin, tarvitsemme vielä pääohjelman, jossa luomme `Pistorasia`-olion ja kytkemme siihen erilaisia laitteita. Luodaan nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
 
-> [!HUOMAUTUS]
-> Jotta esimerkki ei leviäisi käsiin, oletamme tässä, että `Leivanpaahdin` ja `Sirkkeli`-luokat peritään jostakin järkevistä yliluokista, kuten `Keittiolaite` ja `Tyokalu`. Näitä yliluokkia ei ole määritelty tässä esimerkissä, koska ne eivät ole olennaisia rajapinnan kannalta ja vain monimutkaistaisivat esimerkkiä. Oleellista on, että ne edustavat eri puolilta luokkahierarkiaa olevia olioita, jotka molemmat toteuttavat saman rajapinnan.
 
 ```java
 // FILE: main.java
@@ -641,7 +642,7 @@ for (Tyokalu t : tyokalut) {
 
 Toinen syy on helppo vaihdettavuus, josta käytetään englanninkielistä termiä *loose coupling*. Kun koodi käyttää rajapintaa muuttujan tyyppinä, se ei ole sidottu tiettyyn toteutukseen. Tämä tarkoittaa, että voimme helposti vaihtaa yhden toteutuksen toiseen ilman, että meidän tarvitsee muuttaa koodia, joka käyttää kyseistä rajapintaa.
 
-Kuvitellaan, että teemme ohjelmaa, joka testaa sähkölaitteita. Kun muuttuja määritellään rajapintana, voimme helposti luoda erilaisia testilaitteita, jotka toteuttavat saman rajapinnan, ja käyttää niitä testauksessa ilman, että meidän tarvitsee muuttaa testikoodia.
+Kuvitellaan, että teemme ohjelmaa, joka testaa sähkölaitteita. 
 
 ```java,ignore
 Leivanpaahdin testattavaLaite = new Leivanpaahdin();
@@ -652,7 +653,7 @@ Leivanpaahdin testattavaLaite = new Leivanpaahdin();
 testattavaLaite = new Sirkkeli(); // Ei onnistu, koska tyypit eivät täsmää
 ```
 
-Sen sijaan, jos määrittelemme muuttujan tyypiksi rajapinnan, voimme vaihtaa konkreettisen toteutuksen vapaasti.
+Kun muuttuja määritellään rajapintana, voimme helposti luoda erilaisia testilaitteita, jotka toteuttavat saman rajapinnan, ja voimme vaihtaa konkreettisen toteutuksen vapaasti.
 
 ```java,ignore
 Verkkovirtalaite testattavaLaite = new Leivanpaahdin();
