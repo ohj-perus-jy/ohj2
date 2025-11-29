@@ -10,7 +10,7 @@
 ## Ehtolauseet
 
 ### If
-If-lauseet toimivat samalla tavalla Javassa kuin muissakin kielissä, eli 
+If-lauseiden syntaksi Javassa on seuraavanlainen: 
 ```java.ignore
 if (ehto) {
     tee jotain
@@ -22,7 +22,7 @@ if (ehto) {
 ```
 
 ### Ehdollinen operaattori 
-Syntaksi ehdolliselle ? operaattorille (engl. *ternary operator*) on: ehto ? tosi : epätosi. Sopii erityisesti tapauksiin, joissa vaihtoehtoja on kaksi. 
+Syntaksi kolmiarvoiselle operaattorille `?` (engl. *ternary operator*) on: [ehto ? tosi : epätosi]. Sopii erityisesti tapauksiin, joissa vaihtoehtoja on kaksi. 
 
 Koodiesimerkki:
 ```java,editable
