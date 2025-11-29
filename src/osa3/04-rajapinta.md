@@ -100,7 +100,14 @@ public class Main {
 
 ## Usean rajapinnan toteuttaminen
 
-Luokka voi toteuttaa useita rajapintoja. 
+Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `ArrayList`-luokka toteuttaa rajapintoja: `List`, `RandomAccess`, `Cloneable` ja `Serializable` (ks. myös [`ArrayList`-luokan dokumentaatio](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)).
+
+ * `List`-rajapinta määrittelee listan perustoiminnot, kuten elementtien lisäämisen, poistamisen ja hakemisen.
+ * `RandomAccess`-rajapinta määrittelee, että listan alkioihin tulee päästä käsiksi nopeasti indeksien avulla. 
+ * `Cloneable`-rajapinta sallii olion kloonauksen eli kopioinnin.
+ * `Serializable`-rajapinta sallii olion tallentamisen tiedostoon tai lähettämiseen verkon yli.
+
+Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttaa molemmat rajapinnat.
 
 Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja `Klikattava`. Näiden rajapintojen avulla voitaisiin määritellä, millaisia komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja korostaa itsensä, kun hiiri on sen päällä. 
 
@@ -125,7 +132,7 @@ public interface Klikattava {
 // FILE_END
 ```
 
-Huomaa, että emme tiedä emmekä välitä siitä, miten nämä metodit aikanaan toteutetaan. Piirto voi tapahtua graafisella käyttöliittymällä, tekstipohjaisella käyttöliittymällä tai vaikkapa tulostamalla tiedostoon. Meille riittää, että tiedämme, että jokaisella `Piirrettävä`-rajapinnan toteuttavalla luokalla on `piirra()`-metodi, ja jokaisella `Klikattava`-rajapinnan toteuttavalla luokalla on `klikattu()`- ja `asetaKorostus(boolean korostus)`-metodit.
+Huomaa, että emme tiedä emmekä välitä siitä, miten nämä metodit aikanaan toteutetaan. Piirto voi tapahtua graafisella käyttöliittymällä, tekstipohjaisella käyttöliittymällä tai vaikkapa tulostamalla tiedostoon. Meille riittää, että tiedämme, että jokaisella `Pirrettava`-rajapinnan toteuttavalla luokalla on `piirra()`-metodi, ja jokaisella `Klikattava`-rajapinnan toteuttavalla luokalla on `klikattu()`- ja `asetaKorostus(boolean korostus)`-metodit.
 
 Mennään eteenpäin. Toteutetaan `Teksti`, joka on pelkkää tekstiä näyttävä käyttöliittymäkomponentti.
 
@@ -148,7 +155,7 @@ public class Teksti implements Piirrettava {
 }
 ```
 
-Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että `piirra()`-metodi on ainoa metodi, jota `Piirrettava`-rajapinta tarjoaa. Nyt kuitenkin voimme luoda toisen komponentin, `Painike`, joka on laatikon näköinen klikkattava painike, jossa on tekstiä. `Painike`-luokka toteuttaa molemmat rajapinnat: `Piirrettävä` ja `Klikattava`.
+Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että `piirra()`-metodi on ainoa metodi, jota `Piirrettava`-rajapinta tarjoaa. Nyt kuitenkin voimme luoda toisen komponentin, `Painike`, joka on laatikon näköinen klikkattava painike, jossa on tekstiä. `Painike`-luokka toteuttaa molemmat rajapinnat: `Pirrettava` ja `Klikattava`.
 
 ```java,ignore
 /**
