@@ -99,6 +99,8 @@ void main() {
 
 ## Kommentointi
 
+
+
 ```java
 // Tämä on yhden rivin kommentti
 
@@ -120,4 +122,4 @@ int summa(int a , int b) {
 }
 ```
 
-Dokumentaatiorungon saa aliohjelmalle, kun kirjoittaa `/**` aliohjelman esittelyrivin yhtä ylemmälle riville ja painaa `Enter` IntelliJ:ssä
+Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti sovelluskehittimessä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa merkit `/**` ja painaa `Enter`. 
