@@ -16,7 +16,7 @@ void main() {
 }
 ```
 
-```java,ignore
+```java,noplayground
 public class Kissa {
   private String name; 
 

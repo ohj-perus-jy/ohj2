@@ -9,6 +9,7 @@ create-missing = false
 
 [output.html]
 site-url = "/ohj2/"
+edit-url-template = "https://github.com/ohj-perus-jy/ohj2/edit/main/{path}"
 additional-css = [
   "highlight/atelier-forest-light.css",
   "highlight/twilight.css", 
