@@ -7,6 +7,21 @@
 > - Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
 > - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkienvälisen riippuvuuden välttämiseksi 
 
+Kuvitellaan tilanne, jossa ohjelmassa on erilaisia soittimia: `Kitara`, `Piano` ja `Rumpusetti`. Jokainen niistä osaa soittaa, mutta eri tavoin. Haluamme pystyä kirjoittamaan ohjelmaan toiminnon, jonka avulla voi soittaa soitinta. Yksi mahdollisuus olisi kirjoittaa jokaiselle soittimelle oma metodi soittamista varten, kuten:
+
+```java,noplayground
+Kitara kitara = new Kitara();
+kitara.soitaKitaraa();
+Piano piano = new Piano();
+piano.soitaPianoa();
+Rumpusetti rumpusetti = new Rumpusetti();
+rumpusetti.soitaRumpuja();
+```
+
+Jos tavoitteena on kuitenkin vain saada soitin soimaan, tämä lähestymistapa ei ole laajennettavissa: jokaisen uuden soittimen lisääminen vaatisi muutoksia moniin paikkoihin.
+
+Sen sijaan usein haluamme pystyä soittimia (ja olioita yleisemminkin) yhtenäisenä joukkona ja kutsumaan vain yhtä metodia – kuten `soita()` – oli kyseessä mikä soitin tahansa. Tätä varten tarvitsemme polymorfismia.
+
 *Polymorfismi* viittaa olio-ohjelmoinnissa kykyyn käsitellä erilaisia olioita yhtenäisellä tavalla. Kun metodia kutsutaan, päätös siitä, mikä metodi tosiasiallisesti suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella. Polymorfismi mahdollistaa joustavan koodin kirjoittamisen, jossa uusia olioita voidaan lisätä ilman, että olemassa olevaa koodia tarvitsee muuttaa.
 
 Polymorfismi jaetaan yleensä kahteen päätyyppiin: (1) käännösaikaiseen polymorfismiin, jota kutsutaan myös *dynaamiseksi sidonnaksi* (engl. *dynamic binding*) ja (2) ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa aliohjelman kuormitusta (engl. *method overloading*). Asiaa on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin, mutta lyhyesti: aliohjelman kuormitus tarkoittaa sitä, että aliohjelmalla voi olla useita samannimisiä toteutuksia, jotka eroavat toisistaan parametrien lukumäärän, parametrien tyyppien tai aliohjelman paluuarvon perusteella. Lue lisää Ohjelmointi 1 -kurssin materiaalista. (TODO: Linkki)
