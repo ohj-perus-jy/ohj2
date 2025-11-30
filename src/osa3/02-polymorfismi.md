@@ -7,7 +7,9 @@
 > - Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
 > - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkienvälisen riippuvuuden välttämiseksi 
 
-Kuvitellaan tilanne, jossa ohjelmassa on erilaisia soittimia: `Kitara`, `Piano` ja `Rumpusetti`. Jokainen niistä osaa soittaa, mutta eri tavoin. Haluamme pystyä kirjoittamaan ohjelmaan toiminnon, jonka avulla voi soittaa soitinta. Yksi mahdollisuus olisi kirjoittaa jokaiselle soittimelle oma metodi soittamista varten, kuten:
+![Bändi](images/band.png)
+
+Kuvitellaan tilanne, jossa ohjelmassa on erilaisia soittimia: `Kitara`, `Piano` ja `Rumpusetti`. Jokainen niistä osaa soittaa, mutta eri tavoin. Haluamme, että soittimia voi soittaa. Yksi mahdollisuus olisi kirjoittaa jokaiselle soittimelle oma metodi soittamista varten, kuten:
 
 ```java,noplayground
 Kitara kitara = new Kitara();
@@ -20,9 +22,11 @@ rumpusetti.soitaRumpuja();
 
 Jos tavoitteena on kuitenkin vain saada soitin soimaan, tämä lähestymistapa ei ole laajennettavissa: jokaisen uuden soittimen lisääminen vaatisi muutoksia moniin paikkoihin.
 
-Sen sijaan usein haluamme pystyä soittimia (ja olioita yleisemminkin) yhtenäisenä joukkona ja kutsumaan vain yhtä metodia – kuten `soita()` – oli kyseessä mikä soitin tahansa. Tätä varten tarvitsemme polymorfismia.
+Sen sijaan usein haluamme pystyä käsittelemään soittimia (ja olioita yleisemminkin) yhtenäisenä joukkona ja kutsumaan vain yhtä metodia – kuten `soita()` – oli kyseessä mikä soitin tahansa. Tätä varten tarvitsemme polymorfismia.
 
 *Polymorfismi* viittaa olio-ohjelmoinnissa kykyyn käsitellä erilaisia olioita yhtenäisellä tavalla. Kun metodia kutsutaan, päätös siitä, mikä metodi tosiasiallisesti suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella. Polymorfismi mahdollistaa joustavan koodin kirjoittamisen, jossa uusia olioita voidaan lisätä ilman, että olemassa olevaa koodia tarvitsee muuttaa.
+
+
 
 Polymorfismi jaetaan yleensä kahteen päätyyppiin: (1) käännösaikaiseen polymorfismiin, jota kutsutaan myös *dynaamiseksi sidonnaksi* (engl. *dynamic binding*) ja (2) ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa aliohjelman kuormitusta (engl. *method overloading*). Asiaa on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin, mutta lyhyesti: aliohjelman kuormitus tarkoittaa sitä, että aliohjelmalla voi olla useita samannimisiä toteutuksia, jotka eroavat toisistaan parametrien lukumäärän, parametrien tyyppien tai aliohjelman paluuarvon perusteella. Lue lisää Ohjelmointi 1 -kurssin materiaalista. (TODO: Linkki)
 
@@ -83,9 +87,7 @@ Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkaki
 
 ## Korvaaminen ja polymorfismi
 
-Edellisessä esimerkissä näimme, että kaikki aliluokan edustajat perivät yliluokan metodit sellaisenaan, jolloin niitä ei tarvitse määritellä uudelleen aliluokassa.
-
-Perityn luokan metodeja voidaan kuitenkin myös *korvata* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Tämä on hyödyllistä, kun haluamme muuttaa perityn metodin käyttäytymistä aliluokassa. Toisaalta tämä on hyödyllistä, koska se mahdollistaa polymorfismin, eli sen, että saman niminen metodi voi toimia eri olioilla toimia eri tavoin riippuen siitä, minkä tyyppinen olio on kyseessä.
+Edellisessä esimerkissä kaikki aliluokan edustajat perivät yliluokan metodit sellaisenaan, jolloin niitä ei tarvitse määritellä uudelleen aliluokassa. Perityn luokan metodeja voidaan kuitenkin myös *korvata* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Juuri tämä mahdollistaa polymorfismin, ja sen, että voimme muuttaa perityn metodin käyttäytymistä aliluokassa. 
 
 ## Esimerkki 1
 
@@ -258,6 +260,7 @@ Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoi
 
 Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme tähän luvussa [3.3 Rajapinnat]()), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
 
+ * kaikkia soittimia (`Soitin`), kuten kitarat, pianot ja rummut
  * kaikkia ajoneuvoja (`Ajoneuvo`), vaikka ne olisivatkin erilaisia, kuten autoja, polkupyöriä ja lentokoneita
  * kaikkia eläimiä (`Elain`), kuten koiria, kissoja ja lintuja
  * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
