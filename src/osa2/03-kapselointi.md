@@ -7,6 +7,8 @@
 > - julkisuusmääreet `public` ja `private`, getterit ja setterit, metodi pääasiallisena tapana olioille "viestiä"
 > - Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutusta voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan.
 
+![Autoa ajetaan, vaikka emme tiedä miten moottori toimii](images/auto.png)
+
 Julkisuusmääreet ja niiden merkitys Javassa
 - attribuutit, metodit ja luokat
 - koodiesimerkki
