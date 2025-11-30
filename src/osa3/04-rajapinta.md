@@ -5,6 +5,8 @@
 > - Osaat määritellä ja käyttää rajapintoja Javassa.
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
 
+![alt text](images/interfaces.png)
+
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
 Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan.
