@@ -544,4 +544,21 @@ public class Main {
 
 🤔 Pohdittavaksi: Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? 
 
-</details
+
+## Tehtävät
+
+</details>
+
+
+
+<task>
+  <task-title>Tehtävä 3.5: Abstraktit luokat. <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/3-5-abstrakti-luokka-1/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava4">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+.

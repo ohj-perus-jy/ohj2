@@ -728,16 +728,4 @@ Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.
 
 Kesken.
 
-<task>
-  <task-title>Tehtävä 3.4: Abstraktit luokat. <points>1 p.</points> </task-title>
-  <handout>
-
-  {{#include ../exercises/3-4-abstrakti-luokka-1/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava4">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-.
-
 Suunnittele `Hälytettävä`-rajapinta, jossa on metodit `trigger()` ja `reset()`. Toteuta rajapintaa hyödyntävä abstrakti `HälytinLaite`, joka pitää kirjaa siitä, montako kertaa hälytys on aktivoitu. Luo kaksi konkreettista laitetta (esim. `SavuHälytin` ja `VesivuotoHälytin`). Mieti, missä kohtaa sijoitat yhteisen lokituksen: rajapintaan (ei mahdollista) vai abstraktiin luokkaan?
