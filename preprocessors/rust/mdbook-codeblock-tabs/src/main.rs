@@ -63,7 +63,7 @@ fn process_codeblock_event<'a>(lang: &str, code: &str) -> Vec<Event<'a>> {
 
         filenames.push(filename.to_string());
 
-        eprintln!("Found file block: {} with code:\n{}", filename, file_code);
+        // eprintln!("Found file block: {} with code:\n{}", filename, file_code);
 
         let custom_lang = format!(
             "{},codeblock-id-{},codeblock-file-num-{}",
@@ -139,6 +139,8 @@ fn create_tabbed_codeblocks(chapter: &mut Chapter) {
     opts.insert(Options::ENABLE_STRIKETHROUGH);
     opts.insert(Options::ENABLE_TASKLISTS);
     let parser = Parser::new_ext(&chapter.content, opts);
+    
+    let mut text_buf = String::new();
 
     let parser = parser.flat_map(|event| match &event {
         Event::Start(Tag::CodeBlock(CodeBlockKind::Fenced(lang))) => {
@@ -146,16 +148,19 @@ fn create_tabbed_codeblocks(chapter: &mut Chapter) {
             vec![]
         }
         Event::Text(text) => match &current_codeblock_lang {
-            Some(lang) => {
-                eprintln!("Got code block with lang = {}", lang);
-                process_codeblock_event(lang, text)
+            Some(_) => {
+                // eprintln!("Got code block with lang = {}", lang);
+                text_buf.push_str(text);
+                vec![]
             }
             None => vec![event],
         },
         Event::End(TagEnd::CodeBlock) => match &current_codeblock_lang {
-            Some(_) => {
+            Some(lang) => {
+                let code_block = process_codeblock_event(lang, &text_buf);
                 current_codeblock_lang = None;
-                vec![]
+                text_buf.clear();
+                code_block
             }
             None => vec![event],
         },

@@ -16,7 +16,7 @@ void main() {
 }
 ```
 
-```java,ignore
+```java,noplayground
 public class Kissa {
   private String name; 
 
@@ -168,6 +168,19 @@ Toinen
 > }
 > ```
 
+
+> [!ESIMERKKI]
+>
+> Tämä on esimerkkilohko
+
+> [!VAROITUS]
+>
+> Tämä on esimerkkilohko
+
+> [!VARO]
+>
+> Tämä on esimerkkilohko
+
 Mermaid-tuki
 
 ```mermaid
@@ -188,3 +201,37 @@ Testi!
 Matikkaa: $$ \nabla f(x) \in \mathbb{R}^n, $$
 
 Lisää matikkaa: $O(n)$
+
+```plantuml
+skinparam dpi 200
+skinparam backgroundColor transparent
+@startuml
+  hide circles
+  skinparam shadowing false
+  skinparam shadowing false
+  skinparam class {
+      AttributeIconSize 0
+      BackgroundColor AliceBlue
+      ArrowColor Black
+      BorderColor Black
+  }
+  hide members
+
+  class Eläin {
+      {abstract} + ääntele() : void
+  }
+
+  Koira --|> Eläin
+  Kissa --|> Eläin
+  Lammas --|> Eläin
+  class Koira {
+    + ääntele() : void
+  }
+  class Kissa {
+    + ääntele() : void
+  }
+  class Lammas {
+    + ääntele() : void
+  }
+@enduml
+```
