@@ -11,17 +11,11 @@
 
 ## Abstrakti luokka
 
-![Abstrakti luokka](images/abstract-class.png)
-
-
-![Toinen abstrakti luokka](images/abstract-class2.png)
+![Abstraktin luokan ajatusta voidaan havainnollistaa tuoleilla: Puutuoli, keinutuoli ja työtuoli ovat kaikki tuoleja, jotka erikoistavat "istuin"-käsitettä.](images/abstract-class2.png)
 
 Suunnitellessamme ohjelman luokkahierarkiaa -- eli millaisia ali- ja yliluokkasuhteita ohjelman luokilla tulisi olla -- vastaan voi tulla käsite, jolle on hyödyllistä tehdä yhteistä toiminnallisuutta määrittävä yliluokka, josta itsestään ei kuitenkaan ole mielekästä luoda ilmentymiä eli olioita.
 
-> [!HUOMAUTUS]
-> Huomautus opettajille: Tämä kohta kirjoitetaan siinä uskossa, että polymorfismi-luku siirtyy heti perintä-luvun perään, ja abstraktit luokat esitellään polymorfismi-luvun jälkeen.
-
-Otetaan konkreettinen esimerkki. Jatketaan edellisessä luvussa esitettyä `Muoto`-esimerkkiä. Voisimme periaatteessa luoda `Muoto`-luokan ilmentymän ja kutsua sen `laskeAla()`-metodia.
+Jatketaan edellisessä luvussa esitettyä `Muoto`-esimerkkiä. Voisimme periaatteessa luoda `Muoto`-luokan ilmentymän ja kutsua sen `laskeAla()`-metodia.
 
 ```java,ignore
 Muoto muoto = new Muoto();
@@ -52,7 +46,7 @@ java: Muoto is abstract; cannot be instantiated
 > [!HUOMAUTUS]
 > Tässä kohtaa voi pysähtyä hetkeksi miettimään tarvitaanko edellisen osion (3.1.) henkilötietojärjestelmä-esimerkissä laisinkaan henkilö-olioita, vai ovatko kaikki henkilöt jotain muutakin kuin henkilöitä, kuten opiskelijoita tai opettajia.
 
-## Esimerkki 2
+## Esimerkki: Älykoti
 
 Älykodissa voisi olla monenlaisia laitteita, kuten valoja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät, kamera tallentaa videota, kahvinkeitin keittää kahvia). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
 
@@ -237,7 +231,7 @@ public class Main {
 // FILE_END
 ```
 
-Nyt `Laite`-luokasta ei voi enää luoda ilmentymiä. Yritettäessä tehdä niin, kääntäjä antaa virheen:
+Vastaavasti kuin aiemmassa `Muoto`-esimerkissä, nyt `Laite`-luokasta ei voi enää luoda ilmentymiä. 
 
 ```java,ignore
 Laite laite = new Laite(); 
