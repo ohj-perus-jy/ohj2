@@ -199,13 +199,27 @@ Toisin sanoen, `Opiskelija` ja `Opettaja` saavat itselleen samat (ei-yksityiset)
 
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija` ja `Opettaja` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
-```mermaid
-classDiagram
-    Henkilo <|-- Opiskelija
-    Henkilo <|-- Opettaja
-```
+```plantuml
+@startuml
+' --- Style: square corners, no compartments, theme-safe colors ---
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
+}
+skinparam arrowColor   #888888
 
-Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified Modelling Language*). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto kunkin näiden näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
+class Henkilo
+class Opiskelija
+class Opettaja
+
+Henkilo <|-- Opiskelija
+Henkilo <|-- Opettaja
+@enduml
+``` 
+
+Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified Modelling Language*). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto kunkin näiden näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
 
 ## Rakentajat ja super-avainsana
 
@@ -404,14 +418,32 @@ Esimerkkiä voitaisiin jatkaa vielä pidemmälle. Meillä voisi olla myös `Siht
 
 Luokkahierarkia näyttäisi nyt seuraavalta:
 
-```mermaid
-classDiagram
-    class Henkilo
-    Henkilo <|-- Opiskelija
-    Henkilo <|-- Opettaja
-    Henkilo <|-- Sihteeri
-    Opiskelija <|-- TutkintoOpiskelija
-    Opiskelija <|-- AvoinOpiskelija
+```plantuml
+@startuml
+' --- Style: square corners, no compartments, theme-safe colors ---
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
+}
+skinparam arrowColor   #888888
+
+class Henkilo
+class Opiskelija
+class Opettaja
+class Sihteeri
+class TutkintoOpiskelija
+class AvoinOpiskelija
+
+Henkilo <|-- Opiskelija
+Henkilo <|-- Opettaja
+Henkilo <|-- Sihteeri
+Opiskelija <|-- TutkintoOpiskelija
+Opiskelija <|-- AvoinOpiskelija
+
+@enduml
+
 ``` 
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
