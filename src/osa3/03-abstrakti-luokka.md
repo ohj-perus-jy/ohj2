@@ -13,6 +13,9 @@
 
 ![Abstrakti luokka](images/abstract-class.png)
 
+
+![Toinen abstrakti luokka](images/abstract-class2.png)
+
 Suunnitellessamme ohjelman luokkahierarkiaa -- eli millaisia ali- ja yliluokkasuhteita ohjelman luokilla tulisi olla -- vastaan voi tulla käsite, jolle on hyödyllistä tehdä yhteistä toiminnallisuutta määrittävä yliluokka, josta itsestään ei kuitenkaan ole mielekästä luoda ilmentymiä eli olioita.
 
 > [!HUOMAUTUS]
