@@ -18,9 +18,11 @@ Opintojaksolla opit
 - erilaisia ohjelmoijan työkaluja ja tekniikoita
   - ml. rekursio, geneeriset tyypit, funktionaalinen ohjelmointi
 
+Tarkemmat tiedot löydät opintojakson [Sisu-esitteestä](https://sisu.jyu.fi/student/courseunit/otm-4bc61fed-4013-4982-9158-48a4a198a4f2/brochure). 
+
 ## 📚 Esitiedot
 
-- Ohjelmointi 1 tai vastaava
+- Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
 
 ## 🧭 Navigointi tässä materiaalissa
 

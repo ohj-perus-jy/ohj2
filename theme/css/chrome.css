@@ -126,7 +126,7 @@ html:not(.js) .left-buttons button {
 .menu-bar i:hover,
 .menu-bar .icon-button:hover,
 .nav-chapters:hover,
-.mobile-nav-chapters i:hover {
+.mobile-nav-chapters:hover {
     color: var(--icons-hover);
 }
 
