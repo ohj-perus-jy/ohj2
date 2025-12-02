@@ -20,7 +20,9 @@ bash ./update-mdbook.sh
 mdbook serve --hostname 0.0.0.0 --port 3000 --open
 ```
 
-## Monen tiedoston koodialueet
+## Pikaohje mdBookin syntaksiin
+
+### Monen tiedoston koodialueet
 
 ```java
 // FILE: main.java
@@ -46,7 +48,7 @@ public class Kissa {
 // FILE_END
 ```
 
-## Koodin korostukset
+### Koodin korostukset
 
 Käytä merkintöjä `// HIGHLIGHT_COLOR_BEGIN` ja `// HIGHLIGHT_COLOR_END`, jossa COLOR on jokin seuraavista: `GREEN`, `YELLOW`, `RED`, `BLUE`.
 
@@ -72,7 +74,21 @@ public class Kissa {
 
 ![](src/images/highlight.png)
 
-## Katso myös
+### Tehtävälohko
+
+````md
+<task>
+  <task-title>Ydintehtävä: Tulostaminen <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/1-1-1-tulostaminen/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
+</task>
+````
+
+### Katso myös
 
 - [mdBook-ohjeet](https://rust-lang.github.io/mdBook/index.html)
 - [KaTeX-ohjeet](https://katex.org/docs/supported)

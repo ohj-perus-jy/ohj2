@@ -124,10 +124,13 @@ html:not(.js) .left-buttons button {
 }
 
 .menu-bar i:hover,
-.menu-bar .icon-button:hover,
-.nav-chapters:hover,
-.mobile-nav-chapters i:hover {
+.menu-bar .icon-button:hover {
     color: var(--icons-hover);
+}
+
+.nav-chapters:hover,
+.mobile-nav-chapters:hover {
+    color: var(--theme-hover-text);
 }
 
 /* Nav Icons */
@@ -256,6 +259,8 @@ pre {
     position: relative;
 }
 pre > .buttons {
+    display: flex;
+    flex-wrap: nowrap;
     position: absolute;
     z-index: 100;
     right: 0px;
@@ -265,8 +270,6 @@ pre > .buttons {
 
     color: var(--sidebar-fg);
     cursor: pointer;
-    visibility: hidden;
-    opacity: 0;
     transition: visibility 0.1s linear, opacity 0.1s linear;
 }
 pre:hover > .buttons {

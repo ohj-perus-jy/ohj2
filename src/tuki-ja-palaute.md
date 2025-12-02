@@ -55,7 +55,7 @@ Lähetä sähköpostilla alla oleva pyyntö osoitteeseen `ohj2-opet@tim.jyu.fi`.
 Hei,
 
 opiskelen Ohjelmointi 2 -kurssilla ei-tutkintoon johtavassa koulutuksessa.
-Pyydän liittämään minut Ohjelmointi 1 -kurssin Teams-ryhmään vieraana. 
+Pyydän liittämään minut opintojakson Teams-ryhmään vieraana. 
 Teamsissa käyttämäni sähköpostiosoite on: [oma sähköposti tähän].
 
 Terveisin, [oma nimi]
