@@ -16,7 +16,7 @@ void main() {
 }
 ```
 
-```java,ignore
+```java,noplayground
 public class Kissa {
   private String name; 
 
@@ -168,6 +168,19 @@ Toinen
 > }
 > ```
 
+
+> [!ESIMERKKI]
+>
+> Tämä on esimerkkilohko
+
+> [!VAROITUS]
+>
+> Tämä on esimerkkilohko
+
+> [!VARO]
+>
+> Tämä on esimerkkilohko
+
 Mermaid-tuki
 
 ```mermaid
@@ -198,3 +211,37 @@ Lisää matikkaa: $O(n)$
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissa</a></task-link>
 </task>
+
+```plantuml
+skinparam dpi 200
+skinparam backgroundColor transparent
+@startuml
+  hide circles
+  skinparam shadowing false
+  skinparam shadowing false
+  skinparam class {
+      AttributeIconSize 0
+      BackgroundColor AliceBlue
+      ArrowColor Black
+      BorderColor Black
+  }
+  hide members
+
+  class Eläin {
+      {abstract} + ääntele() : void
+  }
+
+  Koira --|> Eläin
+  Kissa --|> Eläin
+  Lammas --|> Eläin
+  class Koira {
+    + ääntele() : void
+  }
+  class Kissa {
+    + ääntele() : void
+  }
+  class Lammas {
+    + ääntele() : void
+  }
+@enduml
+```

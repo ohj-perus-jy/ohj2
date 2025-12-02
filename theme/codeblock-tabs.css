@@ -59,6 +59,7 @@ pre.codeblock-result {
 
 .codeblock-tabs-contents > section > pre > code {
     height: calc(100% - 2 * 1em);
+    padding: 1em !important;
 }
 
 .codeblock-tabs-title-print {

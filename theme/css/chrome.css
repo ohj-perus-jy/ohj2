@@ -256,6 +256,8 @@ pre {
     position: relative;
 }
 pre > .buttons {
+    display: flex;
+    flex-wrap: nowrap;
     position: absolute;
     z-index: 100;
     right: 0px;
