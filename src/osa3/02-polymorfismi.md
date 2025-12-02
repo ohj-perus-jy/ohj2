@@ -266,6 +266,33 @@ Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; pan
  * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
  * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
 
+## Object-luokka
+
+Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
+
+Yksi tyypillinen tapa käyttää korvata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei välttämättä ole kovin informatiivista. Voimme korvata tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. Lisätään `toString()`-metodi `Henkilo`-luokkaan.
+
+```java,noplayground
+class Henkilo {
+
+    // ...
+
+    @Override
+    public String toString() {
+        return "Henkilö: " + this.getNimi()";
+    }
+}
+```
+
+Tutki omatoimisesti muita `Object`-luokan metodeja [Javan dokumentaatiosta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html).
+
+## Perimisen tai korvaamisen estäminen (final-avainsana)
+
+Luokan periminen tai metodin korvaaminen voidaan estää käyttämällä `final`-avainsanaa. Kun luokka on merkitty `final`-avainsanalla, sitä ei voi periä. Vastaavasti, kun metodi on merkitty `final`-avainsanalla, sitä ei voi korvata aliluokassa. 
+
+Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan tekemistä perinnän kanssa. 
+
+
 ## Huomautus instanceof-operaattorista
 
 TODO: Samilla oli tähän oma branch. Alla oleva teksti on vanhaa, ja poistunee sellaisenaan. 
