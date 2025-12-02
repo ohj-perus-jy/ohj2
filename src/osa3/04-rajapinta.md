@@ -4,6 +4,15 @@
 > - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
 > - Osaat määritellä ja käyttää rajapintoja Javassa.
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
+> - 👇Nämä tavoitteet siirretty luvusta 3.5 "Perintä vai rajapinta", koska mielestäni tässä alaluvussa nämä katetaan jo👇
+> - Ymmärtää rajapinnan (interface) rooli ja käyttää sitä vaihtokohdissa (strategiat, palvelut).
+> - Rajapinnat ("Kissa osaa Puhua, Kävellä, Hyppiä...")
+> - abstrakti luokka vs. rajapinta (rajapintametodin oletustoteutus)
+> - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhdestä luokasta
+> - Käytetään perintää ja rajapintoja olioiden yhteistyössä
+> - 👇 Tämä jätetty toistaiseksi pois 👇
+> - Testaaminen rajapintaa vasten, ei toteutusta vasten.
+
 
 ![alt text](images/interfaces.png)
 
@@ -724,7 +733,7 @@ class HarjoitusPiano implements Soitin {
     @Override
     public void soita() {
         // Toteutus, joka tekee sinänsä jotain "järkevää", mutta rikkoo sopimuksen.
-        System.out.println("Soitin harjoittelee kuulokkeilla – yleisö ei kuule mitään.");
+        System.out.println("Harjoitellaan kuulokkeilla. Yleisö ei kuule mitään.");
     }
 }
 ``` 
@@ -748,6 +757,8 @@ Koodi kyllä sinänsä toimii teknisesti. Silti `HarjoitusPiano` rikkoo `Soitin`
 
 
 ## Abstrakti luokka vai rajapinta?
+
+Alla on lyhyt yhteenvetotaulukko, joka tiivistää abstraktin luokan ja rajapinnan keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 | Kysymys                              | Abstrakti luokka                              | Rajapinta                                                 |
 | ------------------------------------ | --------------------------------------------- | --------------------------------------------------------- |
