@@ -52,13 +52,25 @@ java: Muoto is abstract; cannot be instantiated
 
 Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin laitteiden säätömahdollisuuksiin myöhemmin. 
 
-```mermaid
-classDiagram
-    class Laite 
+```plantuml
+@startuml
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
+}
+skinparam arrowColor   #888888
 
-    Laite <|-- Valo
-    Laite <|-- Turvakamera
-    Laite <|-- Kahvinkeitin
+class Laite 
+class Valo
+class Turvakamera
+class Kahvinkeitin
+
+Laite <|-- Valo
+Laite <|-- Turvakamera
+Laite <|-- Kahvinkeitin
+@enduml
 ```
 
 ```java
@@ -155,6 +167,22 @@ Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiks
 Muutetaan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi. Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
 
 ```java
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Laite[] laitteet = {
+            new Valo(),
+            new Turvakamera(),
+            new Kahvinkeitin()
+        };
+
+        for (Laite laite : laitteet) {
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+        }
+    }
+}
+// FILE_END
 // FILE: Laite.java
 public abstract class Laite {
     public abstract void vaihdaTilaa();
@@ -213,22 +241,6 @@ public class Kahvinkeitin extends Laite {
     }
 }
 // FILE_END
-// FILE: main.java
-public class Main {
-    public static void main() {
-        Laite[] laitteet = {
-            new Valo(),
-            new Turvakamera(),
-            new Kahvinkeitin()
-        };
-
-        for (Laite laite : laitteet) {
-            laite.vaihdaTilaa();
-            laite.raportoiTila();
-        }
-    }
-}
-// FILE_END
 ```
 
 Vastaavasti kuin aiemmassa `Muoto`-esimerkissä, nyt `Laite`-luokasta ei voi enää luoda ilmentymiä. 
@@ -252,6 +264,19 @@ Kun `Laite` on abstrakti, voimme lisätä sille attribuutteja ja metodien valmii
 
 Lisätään `Laite`-luokkaan attribuutti `nimi`, joka kertoo laitteen nimen, sekä attribuutti `kytketty`, joka kertoo, onko laite päällä vai pois päältä. Sellainen attribuutti on hyödyllinen kaikille laitteille, joten se sopii hyvin abstraktiin luokkaan. 
 
+```java,ignore
+public abstract class Laite {
+
+    // HIGHLIGHT_GREEN_BEGIN
+    private String nimi;
+    private boolean kytketty;
+    // HIGHLIGHT_GREEN_END
+
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
+}
+```
+
 Jos kyse olisi verkkolaitteesta, hyödyllisiä tai jopa pakollisia attribuutteja voisivat olla muun muassa MAC-osoite ja IP-osoite. Pidämme kuitenkin tämän esimerkin yksinkertaisena, joten tyydymme tässä vain nimeen ja kytketty-tilan seuraamiseen.
 
 Lisätään myös metodit `kytkePaalle()` ja `kytkePois()`, jotka sisältävät yleisen logiikan laitteen käynnistämiseen ja sammuttamiseen, jota kaikki laitteet voivat noudattavat. 
@@ -261,8 +286,11 @@ public abstract class Laite {
     private String nimi;
     private boolean kytketty;
 
+
+    // HIGHLIGHT_GREEN_BEGIN
     protected Laite(String nimi) {
         this.nimi = nimi;
+        this.kytketty = false; // oletus
     }
 
     public void kytkePaalle() {
@@ -278,6 +306,7 @@ public abstract class Laite {
             System.out.println(nimi + " sammuu.");
         }
     }
+    // HIGHLIGHT_GREEN_END
 
     public abstract void vaihdaTilaa();
     public abstract void raportoiTila();
@@ -287,9 +316,7 @@ public abstract class Laite {
 Huomaa, että koska päätimme, että joka laitteella on oltava nimi, siitä seuraa, että nimi on asetettava rakentajan parametrin kautta. Tämän seurauksena emme voi enää luoda ilmentymiä oletusrakentajan avulla. 
 
 ```java,ignore
-// ...
 Valo valo = new Valo();
-// ...
 ```
 
 ```
@@ -303,6 +330,24 @@ java: constructor Laite in class Laite cannot be applied to given types;
 Rakentajan kutsuminen vaatii nyt nimen välittämisen, esimerkiksi `new Valo("PhilipsHue")`. Niinpä kussakin aliluokan rakentajassa on kutsuttava yliluokan rakentajaa. Tehdään tämä muutos kaikkiin aliluokkiin.
 
 ```java
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Laite[] laitteet = {
+                new Valo("PhilipsHue"),
+                new Kahvinkeitin("Moccamaster"),
+                new Turvakamera("Reolink")
+        };
+
+        for (Laite laite : laitteet) {
+            laite.kytkePaalle();
+            laite.vaihdaTilaa();
+            laite.raportoiTila();
+            laite.kytkePois();
+        }
+    }
+}
+// FILE_END
 // FILE: Laite.java
 public abstract class Laite {
     private String nimi;
@@ -393,24 +438,6 @@ public class Kahvinkeitin extends Laite {
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
         System.out.println("Kahvinkeittimen pannu on " + tila + ".");
-    }
-}
-// FILE_END
-// FILE: main.java
-public class Main {
-    public static void main() {
-        Laite[] laitteet = {
-                new Valo("PhilipsHue"),
-                new Kahvinkeitin("Moccamaster"),
-                new Turvakamera("Reolink")
-        };
-
-        for (Laite laite : laitteet) {
-            laite.kytkePaalle();
-            laite.vaihdaTilaa();
-            laite.raportoiTila();
-            laite.kytkePois();
-        }
     }
 }
 // FILE_END
@@ -541,12 +568,9 @@ public class Main {
 
 🤔 Pohdittavaksi: Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? 
 
-
-## Tehtävät
-
 </details>
 
-
+## Tehtävät
 
 <task>
   <task-title>Tehtävä 3.5: Abstraktit luokat. <points>1 p.</points> </task-title>
@@ -555,7 +579,7 @@ public class Main {
   {{#include ../exercises/3-5-abstrakti-luokka-1/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava4">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 .
