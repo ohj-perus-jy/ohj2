@@ -202,6 +202,16 @@ Matikkaa: $$ \nabla f(x) \in \mathbb{R}^n, $$
 
 Lisää matikkaa: $O(n)$
 
+<task>
+  <task-title>Tehtävä: Tulosta luvut 1-10 <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/1-1-esimerkki/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissa</a></task-link>
+</task>
+
 ```plantuml
 skinparam dpi 200
 skinparam backgroundColor transparent
