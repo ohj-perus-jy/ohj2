@@ -338,6 +338,8 @@
     --footnote-highlight: #7e7eff;
 
     --overlay-bg: rgba(200, 200, 205, 0.4);
+
+    --code-bg: #f1efee;
 }
 
 .jyu-dark {
