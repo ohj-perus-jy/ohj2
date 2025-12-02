@@ -1,7 +1,8 @@
 # TIEP111 Ohjelmointi 2
 
-## Tietoja opintojaksosta
+Tämä on Jyväskylän yliopiston järjestämän **TIEP111 Ohjelmointi 2** -opintojakson oppimateriaali. 
 
+## ℹ️ Tietoja opintojaksosta
 
 <!-- OPS:sta -->
 <!-- Sisältö: Java-kieli, ohjelmansuunnittelun ja olio-ohjelmoinnin periaatteita, ohjelman testaaminen. Rekursio. -->
@@ -17,19 +18,28 @@ Opintojaksolla opit
 - erilaisia ohjelmoijan työkaluja ja tekniikoita
   - ml. rekursio, geneeriset tyypit, funktionaalinen ohjelmointi
 
-## Esitiedot
+Tarkemmat tiedot löydät opintojakson [Sisu-esitteestä](https://sisu.jyu.fi/student/courseunit/otm-4bc61fed-4013-4982-9158-48a4a198a4f2/brochure). 
 
-- Ohjelmointi 1. tai vastaava
+## 📚 Esitiedot
 
+- Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
 
-## 🫡 Haluatko parannella tätä dokumenttia?
+## 🧭 Navigointi tässä materiaalissa
 
-Jos löydät tästä dokumentista virheitä tai haluat antaa parannusehdotuksen, toimi seuraavasti:
+Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
 
-  1. Kirjaudu GitLabiin ja toimi seuraavasti: 
-  2. Klikkaa tässä tiedostossa Edit -> Edit Single File -> Fork, tee haluamasi muutokset, lisää alle commit-teksti -> Commit changes. 
-  3. Create merge request. 
-   
-Vaihtoehtoisesti voit [🔗 tehdä ns. issuen tähän repoon](https://gitlab.jyu.fi/tie/ohj1/2025k/yhteenveto/-/issues/new?issuable_template=kertaus).
+ * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi bi-layout-sidebar"></i>.
+ * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
+ * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
 
-Mutta -- lähdetäänpä sitte liikkeelle varsinaiseen asiaan!
+##  🫡 Haluatko parannella tätä materiaalia?
+
+Jos löydät materiaalista virheitä, voit ehdottaa korjauksia tai parannuksia klikkaamalla sivun alareunasta. Ehdotuksen tekemiseksi tarvitset GitHub-tilin.
+
+## 👨 Tekijät ja lisenssi
+
+Ohjelmointi 2 oppimateriaali © 2025 by Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen. 
+
+Kiitos Jonne Itkoselle palautteesta ja parannusehdotuksista.
+
+Materiaali on julkaistu CC-BY-SA-4.0-lisenssillä. Tarkemmat tiedot löydät [materiaalin GitHub-sivulta](https://github.com/ohj-perus-jy/ohj2).

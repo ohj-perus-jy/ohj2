@@ -12,7 +12,7 @@
 > - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
 > - Tuntee hyödylliset korvattavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
 
-*Perintä* tarkoittaa mekanismia, jossa luokkaan voidaan sisällyttää toisen luokan ominaisuuksia ja toiminnallisuuksia. Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
+*Perintä* tarkoittaa mekanismia, jossa luokka sisällyttää itseensä toisen luokan ominaisuudet (attribuutit) ja toiminnallisuudet (metodit). Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
 ## Esimerkki
 
@@ -416,6 +416,8 @@ classDiagram
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
 
+Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
+
 ## is-a-suhde
 
 Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
@@ -470,8 +472,6 @@ for (Henkilo henkilo : henkilot) {
 ```
 
 Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
-
-Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
 
 ## Huomautus moniperinnän puuttumisesta
 
@@ -568,34 +568,36 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 
 ## Tehtävät
 
-Tehtävä 1
+<task>
+  <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
+  <handout>
 
-Tee luokkahierarkia ajoneuvoille. Yliluokasta `Ajoneuvo` periytyvät aliluokat `Auto`, `Moottoripyora` ja `Polkupyora`. 
+  {{#include ../exercises/3-1-luokkahierarkia/handout.md}}
 
-Määrittele yhteiset ominaisuudet (`nopeus`, `paino`) ja metodit (`kiihdyta()`, `jarruta()`) `Ajoneuvo`-luokassa. 
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava1">Tee tehtävä TIMissä</a></task-link>
+</task>
 
-<!-- Tämä ei toimi, koska meillä ei ole vielä abstrakteja luokkia: Määrittele myös renkaiden lukumäärä, jonka tulee olla vakio.  -->
+.
 
-Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. 
+<task>
+  <task-title>Tehtävä 3.2: Luokkahierarkia, osa 2. <points>1 p.</points> </task-title>
+  <handout>
 
-<!-- Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum? -->
+  {{#include ../exercises/3-2-luokkahierarkia/handout.md}}
 
-Lisää erityispiirteitä kuhunkin aliluokkaan:
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava2">Tee tehtävä TIMissä</a></task-link>
+</task>
 
- * `Auto`: `ovienLukumaara`
- * `Moottoripyora`: `sivuvaunu`
- * `Polkupyora`: `vaihteidenLukumaara`
+.
 
-Testaa luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja metodit huolellisesti.
+<task>
+  <task-title>✨ Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <handout>
 
-Tehtävä 2
+  {{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}
 
-Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sahkoauto`, joka perii `Auto`-luokasta. Lisää `Sahkoauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
-
-Testaa kumpaakin auto-luokkaa luomalla niistä olio ja kutsumalla metodeja.
-
-Bonus 1
-
-Lisää `Auto`-luokalle vakio `TOIMINTASADE_MAX`, joka ilmaisee maksimietäisyyden kilometreinä, jonka auto voi kulkea yhdellä latauksella tai tankkauksella. Lisää `Auto`-luokkaan metodi `tankkaaKayttovoimaa()`, joka lisää ajoneuvolle käyttövoimaa (bensiiniä tai sähköä). 
-
-Lisää sitten `Sahkoauto`-luokkaan attribuutti `akunKunto` (prosentteina; väliltä 0-100) sekä `toimintasade` (kilometreinä). Kun autoa ladataan, akun kunto heikkenee (ja siten toimintasäde) 0.1%:lla jokaisella latauskerralla. Niinpä `toimintasade` tulee laskea akun kunnon perusteella `akunKunto` / 100 * `TOIMINTASADE_MAX`.
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava3">Tee tehtävä TIMissä</a></task-link>
+</task>
