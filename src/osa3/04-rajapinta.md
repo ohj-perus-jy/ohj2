@@ -689,6 +689,64 @@ testattavaLaite = new Sirkkeli();
 
 Kolmas syy liittyy ohjelmiston suunnitteluun ja käytännön kirjoittamiseen. Kun määrittelet muuttujan tyypiksi `Verkkovirtalaite`, kääntäjä estää sinua kutsumasta metodeja, jotka ovat spesifejä vain leivänpaahtimille (kuten `saadaKuumuus()`) tai sirkkelille (kuten `asetaTeranKorkeus()`). Vaikka tällainen itsensä rajoittaminen saattaa tuntua oudolta, se auttaa pitämään koodin selkeänä ja estää virheitä, joissa yritetään käyttää laitetta tavalla, joka ei ole yhteensopiva sen rajapinnan kanssa. 
 
+
+## Liskovin korvausperiaate
+
+*Liskovin korvausperiaate* (engl. *Liskov Substitution Principle*, LSP) on olio-ohjelmoinnin periaate, jonka mukaan, että olion tulee olla korvattavissa sellaisella oliolla, joka toteuttaa saman rajapinnan tai sovitun sopimuksen ilman, että ohjelman käyttäytyminen muuttuu. Niinpä esimerkiksi aliluokan tulee noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan määrittelemiä sopimuksia.
+
+Palataan vielä aiempaan soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka määrittelee yleisölle musiikkia metodin `soita()`. 
+
+```java,noplayground
+public interface Soitin {
+    /**
+     * Esittää kappaleen yleisölle.
+     */
+    void soita();
+}
+```
+
+Kaikki soittimet, kuten `Kitara`, `Piano` ja `Rumpusetti`, toteuttavat tämän rajapinnan. Konsertin järjestäjä haluaa varmistaa, että kaikki soittimet voivat soittaa huolimatta siitä, minkä tyyppisiä soittimia ne ovat. Tehdään `Konsertti`-luokka, jonka `soitaKaikkiaSoittimia()`-metodi laittaa kaikki soittimet soimaan.
+
+```java,noplayground
+public class Konsertti {
+    public void soitaKaikkiaSoittimia(Soitin[] soittimet) {
+        for (Soitin soitin : soittimet) {
+            soitin.soita();
+        }
+    }
+}
+```
+
+Tehdään nyt uusi soitin, `HarjoitusPiano`, jolla voi soittaa vain kuulokkeilla, jolloin yleisö ei kuule mitään. Tämäkin soitin toteuttaa `Soitin`-rajapinnan, mutta sen käyttäytyminen poikkeaa muista soittimista. 
+
+```java,noplayground
+class HarjoitusPiano implements Soitin {
+    @Override
+    public void soita() {
+        // Toteutus, joka tekee sinänsä jotain "järkevää", mutta rikkoo sopimuksen.
+        System.out.println("Soitin harjoittelee kuulokkeilla – yleisö ei kuule mitään.");
+    }
+}
+``` 
+
+Kootaan nyt "konsertti" pääohjelmaan.
+
+```java,noplayground
+void main() {
+    Soitin[] soittimet = {
+        new Kitara(),
+        new Piano(),
+        new HarjoitusPiano()
+    };
+
+    Konsertti konsertti = new Konsertti();
+    konsertti.soitaKaikkiaSoittimia(soittimet);
+}
+```
+
+Koodi kyllä sinänsä toimii teknisesti. Silti `HarjoitusPiano` rikkoo `Soitin`-rajapinnan sopimusta: sen `soita()` ei "esitä kappaletta yleisölle", vaan vain soittajalle itselleen. Aliluokan toiminta voisi olla järkevää jossain toisessa kontekstissa (tässä, harjoittelutilanteessa). Hyvin suunnitellussa luokkahierarkiassa kuitenkin jokainen olio noudattaa yliluokan tai rajapinnan lupaamaa sopimusta. Tällöin polymorfismia voidaan käyttää luotettavasti ilman, että ohjelman käyttäjän tarvitsee tuntea kaikkia konkreettisia aliluokkia erikseen.
+
+
 ## Abstrakti luokka vai rajapinta?
 
 | Kysymys                              | Abstrakti luokka                              | Rajapinta                                                 |
