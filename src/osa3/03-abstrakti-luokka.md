@@ -52,6 +52,8 @@ java: Muoto is abstract; cannot be instantiated
 
 Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin laitteiden säätömahdollisuuksiin myöhemmin. 
 
+Luokkakaaviomme voisi näyttää seuraavanlaiselta. Lisätään luokkien ja niiden välisten perintäsuhteiden lisäksi kaavioon tietoja luokkien attribuuteista ja metodeista. Attribuutit tyyppeineen merkitään luokan nimen alle, ja metodit vastaavasti ihan alimmaiseksi. Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi, ja punainen neliö, että kyseessä on yksityinen.
+
 ```plantuml
 @startuml
 hide empty members
@@ -62,10 +64,24 @@ skinparam class {
 }
 skinparam arrowColor   #888888
 
-class Laite 
-class Valo
-class Turvakamera
-class Kahvinkeitin
+class Laite {
+    +vaihdaTilaa(): void
+}
+class Valo {
+    -kirkkaus: int
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+class Turvakamera {
+    -tallennusPaalla: boolean
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+class Kahvinkeitin {
+    -kiehumassa: boolean
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
 
 Laite <|-- Valo
 Laite <|-- Turvakamera
@@ -119,16 +135,16 @@ public class Valo extends Laite {
 // FILE_END
 // FILE: Turvakamera.java
 public class Turvakamera extends Laite {
-    private boolean tallennusPäällä = false;
+    private boolean tallennusPaalla = false;
 
     @Override
     public void vaihdaTilaa() {
         // Kytke tallennus päälle/pois
-        tallennusPäällä = !tallennusPäällä;
+        tallennusPaalla = !tallennusPaalla;
     }
     @Override
     public void raportoiTila() {
-        String tila = tallennusPäällä ? "päällä" : "pois";
+        String tila = tallennusPaalla ? "päällä" : "pois";
         IO.println("Turvakameran tallennus on " + tila + ".");
     }
 }
@@ -210,16 +226,16 @@ public class Valo extends Laite {
 // FILE_END
 // FILE: Turvakamera.java
 public class Turvakamera extends Laite {
-    private boolean tallennusPäällä = false;
+    private boolean tallennusPaalla = false;
 
     @Override
     public void vaihdaTilaa() {
         // Kytke tallennus päälle/pois
-        tallennusPäällä = !tallennusPäällä;
+        tallennusPaalla = !tallennusPaalla;
     }
     @Override
     public void raportoiTila() {
-        String tila = tallennusPäällä ? "päällä" : "pois";
+        String tila = tallennusPaalla ? "päällä" : "pois";
         IO.println("Turvakameran tallennus on " + tila + ".");
     }
 }
@@ -251,6 +267,43 @@ Laite laite = new Laite();
 
 ```
 java: Laite is abstract; cannot be instantiated
+```
+
+Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi A-kirjaimella, ja sen metodit on merkitty abstrakteiksi metodeiksi. UML-kaaviossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla.
+
+```plantuml
+@startuml
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
+}
+skinparam arrowColor   #888888
+
+abstract class Laite {
+    +vaihdaTilaa(): void {abstract}
+}
+class Valo {
+    -kirkkaus: int
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+class Turvakamera {
+    -tallennusPaalla: boolean
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+class Kahvinkeitin {
+    -kiehumassa: boolean
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+
+Laite <|-- Valo
+Laite <|-- Turvakamera
+Laite <|-- Kahvinkeitin
+@enduml
 ```
 
 ## Miksi abstrakti luokka on hyödyllinen?

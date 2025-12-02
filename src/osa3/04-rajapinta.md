@@ -26,10 +26,6 @@ Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttä
 
 Toteutamme tämän esimerkin koodina hieman myöhemmin, mutta otetaan ensin hieman toisenlainen esimerkki.
 
-> [!HUOMAUTUS]
-> TODO : Toistaiseksi jätetty mainitsematta: 
->  - Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia.
-
 ## Älykoti
 
 Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
@@ -98,6 +94,29 @@ public class Main {
     }
 }
 // FILE_END
+```
+
+Luokkakaaviona esimerkkimme näyttäisi tältä.
+
+```plantuml
+@startuml
+hide empty members
+interface Saadettava {
+    +asetaArvo(arvo: int): void
+}
+abstract class Laite {
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+
+class Valo {
+    -kirkkaus: int
+    +asetaArvo(arvo: int): void
+    +vaihdaTilaa(): void
+    +raportoiTila(): void
+}
+Laite <|-- Valo
+Laite <|-- Saadettava
 ```
 
 ## Usean rajapinnan toteuttaminen
@@ -723,6 +742,10 @@ public class Termostaatti extends SaadettavaLaite {
 ## Esimerkit
 
 Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E32-alkuiset kansiot).
+
+## Huomautuksia
+
+✨ Valinnaista lisätietoa: Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia. Ominaisuus saattaa olla hyödyllinen esimerkiksi tilanteissa, jossa halutaan lisätä uusi metodi olemassa olevaan rajapintaan rikkomatta vanhoja toteutuksia. Lue aiheesta lisää [Javan dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
 
 ## Tehtävät
 
