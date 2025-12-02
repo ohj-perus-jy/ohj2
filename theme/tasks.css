@@ -4,7 +4,7 @@ task {
     display: flex;
     flex-direction: column;
     background-color: var(--quote-bg);
-    border-inline-start: 0.4em solid var(--main-color);
+    border-inline-start: 0.4em solid var(--task-bg);
 
     margin-block: 1em;
 }
@@ -15,15 +15,15 @@ task > task-title {
     font-size: 1.25em;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
     font-weight: 400;
-    background: var(--main-color);
+    background: var(--task-bg);
     color: white;
     padding: 16px;
-    user-select: none;
 }
 
 task-title > points {
     margin-inline-start: auto;
     text-wrap: nowrap;
+    user-select: none;
 }
 
 task > task-link {
@@ -34,16 +34,17 @@ task > task-link {
 
 task > task-link > a {
     padding: 12px 24px;
-    background-color: var(--icons);
+    background-color: var(--task-bg);
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
-    color: var(--icons-text) !important;
+    color: var(--task-bg-text) !important;
     text-decoration: none !important;
     transition: background-color 0.2s, color 0.2s;
+    user-select: none;
 }
 
 task > task-link > a:hover {
-    background-color: var(--icons-hover) !important;
-    color: var(--icons-text-hover) !important;
+    background-color: var(--task-bg-hover) !important;
+    color: var(--task-bg-hover-text) !important;
 }
 
 task > task-title::before {
