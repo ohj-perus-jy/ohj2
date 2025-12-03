@@ -272,7 +272,7 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka *ottaa* parametreja, Java ei enää luo oletusrakentajaa (siis sellaista, jossa ei ole parametreja) automaattisesti, mikä aiheuttaa käännösvirheen. 
+Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka *ottaa* parametreja, Java ei enää luo oletusrakentajaa—siis sellaista, jossa ei ole parametreja—automaattisesti, mikä aiheuttaa käännösvirheen. 
 
 Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa. Tämän vuoksi meidän on lisättävä myös `Opiskelija` ja `Opettaja`-luokkiin rakentajat vastaamaan tätä muutosta. 
 
