@@ -7,8 +7,6 @@
 > - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
 > - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
-Lähteenä: https://dev.java/learn/
-
 ## Java-kielen perusteet
 
 Lähdetäänpä liikkeelle esimerkillä, jossa kirjoitetaan konsoliin Javan versio.
@@ -83,8 +81,8 @@ Javan IO-luokalla voidaan käyttäjältä lukea syötettä näin:
 
 ```java
 void main() {
-        String syote = IO.readln();
-        IO.println("Kirjoitit: " + syote);
+    String syote = IO.readln();
+    IO.println("Kirjoitit: " + syote);
 }
 ```
 
@@ -92,26 +90,61 @@ Yllä opittiinkin jo kirjoittamaan konsoliin rivinvaihdollisesti. IO-luokasta l�
 
 ```java
 void main() {
-        IO.print("Samalle");
-        IO.print(" riville");
+    IO.print("Samalle");
+    IO.print(" riville");
 }
 ```
 
 ## Kommentointi ja dokumentointi
 
-
 Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan selittää sitä. Tällaista selitystekstiä on kahdentyyppisiä: (1) koodin sekaan kirjoitettavia kommentteja (nimitetään näitä lyhyesti *kommenteiksi*) sekä (2) dokumentaatiokommentteja. 
 
-Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application programming interface*) kautta. 
+Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application programming interface*) kautta.
+
+### Yhden rivin kommentointi
+Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi merkitsemään TODO-kohtia koodissa.
+
 ```java
-// Tämä on yhden rivin kommentti
+void main() {
+    // TODO: Tarkista millaisia ongelmia tästä ratkaisusta voi tulla
+    String syote = IO.readln();
+    IO.println("Kirjoitit: " + syote);
+}
+```
 
-/*
- * Tämä on usean rivin
- * kommentti
- */
+Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka selittää itse itseään, jolloin tarvetta erityisesti yhden rivin kommentoinnille ei olisi. Tämä tarkoittaa, että muuttujat pyritään nimeämään järkevästi, jolloin yhden rivin kommentointi ei ole tarpeellista. Joskus tältä ei voi välttyä, kun ei voida olettaa jonkin operaation olevan itsestäänselvää ja muuttujan nimestä tulisi todella pitkä:
 
-//Esimerkki dokumentaatiosta
+```java,editable
+void main() {
+    int n = 9;
+    // Pyöristää alaspäin lähimpään neljällä jaolliseen lukuun
+    int pyoristetty = n & ~3; 
+    IO.println(pyoristetty);
+}
+```
+Nyt muuttujan `pyoristetty` tilalla voisi olla `pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein järkevä vaihtoehto.
+
+### Monirivinen kommentti
+
+Javassa monirivinen kommentti tulee `/*` ja  `*/` väliin. Tällaista suositellaan käytettäväksi, kun jokin monimutkaisempi logiikka vaatii tarkempaa avaamista ja/tai on järkevää selittää miksi juuri kyseinen ratkaisu on valittu. Tätä kommenteissa olevaa tarkempaa avaamista ei kuitenkaan ole tarkoitus näyttää koodin käyttäjille.
+
+```java.ignore
+if (kayttaja.kayttaaVanhaa) {
+    /* 
+     * Vanhat käyttäjät (rekisteröityneet ennen vuotta 2022) käyttävät 
+     * toistaiseksi vanhaa käyttöoikeusmallia.
+     * Älä poista tarkistusta, ennen kuin kaikki tilit on siirretty.
+     */
+    return kaytaVanhojaKayttooikeuksia(kayttaja);
+}
+```
+
+### Dokumentaatiokommentti
+
+TODO: (pitäisikö laittaa seuraava teksti johonkin huomiotaherättävämpään versioon?)
+Huomaa nyt, että dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
+
+```java
 /**
  * Laskee kahden kokonaisluvun summan.
  * 
