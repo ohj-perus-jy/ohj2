@@ -41,18 +41,18 @@ Muoto muoto = new Muoto();
 java: Muoto is abstract; cannot be instantiated
 ```
 
-*Abstrakti luokka* (engl. *abstract class*) on luokka, jonka avulla tällainen käsitteen piirre voidaan tehdä selväksi koodin tasolla luokkahierarkiassa. Abstratkista luokasta ei voi luoda suoria ilmentymiä, vaan se toimii ainoastaan pohjana muille luokille, jotka perivät sen. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). Perivän luokan tulee sitten toteuttaa nuo abstraktit metodit, *ellei* perivä luokka ole myös abstrakti.
+*Abstrakti luokka* (engl. *abstract class*) on luokka, jonka avulla tällainen käsitteen piirre voidaan tehdä selväksi koodin tasolla luokkahierarkiassa. Abstraktista luokasta ei voi luoda suoria ilmentymiä, vaan se toimii ainoastaan pohjana muille luokille, jotka perivät sen. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). Perivän luokan tulee sitten toteuttaa nuo abstraktit metodit, *ellei* perivä luokka ole myös abstrakti.
   
 > [!HUOMAUTUS]
 > Tässä kohtaa voi pysähtyä hetkeksi miettimään tarvitaanko edellisen osion (3.1.) henkilötietojärjestelmä-esimerkissä laisinkaan henkilö-olioita, vai ovatko kaikki henkilöt jotain muutakin kuin henkilöitä, kuten opiskelijoita tai opettajia.
 
 ## Esimerkki: Älykoti
 
-Älykodissa voisi olla monenlaisia laitteita, kuten valoja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät, kamera tallentaa videota, kahvinkeitin keittää kahvia). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
+Älykodissa voisi olla monenlaisia laitteita, kuten valoja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät tai sammuvat, kamera aloittaa tai päättää videon tallennuksen, kahvinkeitin aloittaa tai lopettaa kahvin keittämisen). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
 
-Lähdemme tässä liikkeelle yksinkertaisesta esimerkistä, jossa laite voi vain vaihtaa tilaa, eikä esimerkiksi valita jotain erityistä tilaa. Palaamme monimutkaisempiin laitteiden säätömahdollisuuksiin myöhemmin. 
+Lähdemme aluksi liikkeelle yksinkertaisesta esimerkistä, jossa voi vain vaihtaa laitteen tilaa kahden mahdollisen tilan välillä. Palaamme monimutkaisempiin säätömahdollisuuksiin myöhemmin. 
 
-Luokkakaaviomme voisi näyttää seuraavanlaiselta. Lisätään luokkien ja niiden välisten perintäsuhteiden lisäksi kaavioon tietoja luokkien attribuuteista ja metodeista. Attribuutit tyyppeineen merkitään luokan nimen alle, ja metodit vastaavasti ihan alimmaiseksi. Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi, ja punainen neliö, että kyseessä on yksityinen.
+Luokkakaaviomme voisi näyttää seuraavanlaiselta. Lisätään luokkien ja niiden välisten perintäsuhteiden lisäksi kaavioon tietoja luokkien attribuuteista ja metodeista UML-notaation mukaisesti. Attribuutit tyyppeineen merkitään luokan nimen alle, ja metodit vastaavasti ihan alimmaiseksi. Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi, ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi.
 
 ```plantuml
 @startuml
@@ -178,8 +178,6 @@ laite.raportoiTila(); // Ei tee mitään
 
 Kuten nähdään, mitään ei tapahdu näitä metodeja kutsuttaessa, ja sikäli `Laite`-luokasta tehdyt oliot ovat tavallaan hyödyttömiä. Ei ole oikeastaan järkevää, että olisi olemassa jokin "yleinen laite", ilman, että tiedetään tarkemmin, minkä tyyppisestä laitteesta on kyse. Näin ollen `Laite`-luokka on oikeastaan tarkoitettu *vain* perittäväksi. 
 
-Javassa luokkaa, joka on tarkoitettu vain perittäväksi, kutsutaan *abstraktiksi luokaksi*. 
-
 Muutetaan `Laite`-luokka abstraktiksi luokaksi. Koska myös metodit on tarkoitettu toteutettavaksi perivissä luokissa, määritellään myös metodit abstrakteiksi. Kaikkien perivien luokkein on toteutettava nämä metodit, kuten ne esimerkissämme jo tekevätkin.
 
 ```java
@@ -269,7 +267,7 @@ Laite laite = new Laite();
 java: Laite is abstract; cannot be instantiated
 ```
 
-Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi A-kirjaimella, ja sen metodit on merkitty abstrakteiksi metodeiksi. UML-kaaviossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla.
+Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi A-kirjaimella, ja sen metodit on merkitty abstrakteiksi metodeiksi. UML-notaatiossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla.
 
 ```plantuml
 @startuml
@@ -308,7 +306,7 @@ Laite <|-- Kahvinkeitin
 
 ## Miksi abstrakti luokka on hyödyllinen?
 
-Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijainen tarkoitus on:
+Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijainen tarkoitus on
 
 - määritellä yhteinen sopimus siitä, mitä metodeja kaikkien aliluokkien pitää tarjota, ja 
 - tarjota yhteisiä ominaisuuksia ja tarvittaessa myös toteutuksia, jotta aliluokat keskittyvät vain olennaiseen. 
@@ -497,6 +495,16 @@ public class Kahvinkeitin extends Laite {
 ```
 
 Aliluokat perivät nyt päälle- ja pois-kytkemislogiikan sellaisenaan, mutta niiden on *pakko* toteuttaa laitteen omat, oliokohtaiset toiminnallisuudet. Tämä luo tasapainoa joustavuuden ja pakollisen rakenteen välille: Tilan vaihtaminen ja tilan raportointi ovat pakollisia, mutta niiden toteutus on vapaa. Toisaalta laitteen käynnistys- ja sammutuslogiikka on yhteinen kaikille laitteille.
+
+## Abstraktin luokan metodien näkyvyys
+
+Abstraktin luokan metodien näkyvyys määritellään samojen periaatteiden mukaan kuin muidenkin metodien. Abstraktit metodit määritellään joko `public`- tai `protected`-metodeina, jotta aliluokat voivat toteuttaa ne. Jos metodia kutsuu koodi, joka luo olion, metodin tulee olla `public`. Jos metodia kutsutaan vain perivästä luokasta, riittää että metodi on `protected`. 
+
+Konkreettiset metodit voivat olla myös `private`: tällöin kyseessä on vain abstraktin luokan sisäinen apumetodi, jota aliluokat eivät näe.
+
+Abstraktia metodia ei voi määritellä `private`-määreellä. 
+
+## Huomautuksia
 
 <details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja operaatiorunko-malli </summary>
 

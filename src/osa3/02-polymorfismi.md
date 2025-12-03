@@ -313,4 +313,3 @@ On kuitenkin niin, että `instanceof`-operaattorin käyttö tarkoittaa varsin us
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
-.
