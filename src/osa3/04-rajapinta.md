@@ -18,12 +18,11 @@
 
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
-Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan.
+Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan. 
 
-Tässä analogiassa rajapinta on se standardi (sopimus), jonka laitteen täytyy täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin päin, että *jos* laitteessa on standariin pistorasiaan sopiva pistotulppa, niin sillä *täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
+Tässä analogiassa rajapinta on se standardi eli sopimus, jonka laitteen täytyy täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin päin, että *jos* laitteessa on pistorasiaan sopiva pistotulppa, niin sillä *täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
 
-Pistorasiaa ei kiinnosta, kytketkö siihen pölynimurin vai leivänpaahtimen.
-Laitteet ovat itse asiassa täysin erilaisia, eikä niillä ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla kuin vaikkapa Auto ja Moottoripyörä voisivat periä luokan Ajoneuvo. Toinen tekee ruokaa, toinen siivoaa. Ainoa pölynimuria ja leivänpaahdinta yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
+Pistorasiaa ei kiinnosta, kytketkö siihen pölynimurin vai leivänpaahtimen. Laitteet ovat itse asiassa täysin erilaisia, eikä niillä ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla, kuin vaikkapa Auto ja Moottoripyörä voisivat periä luokan Ajoneuvo. Toinen tekee ruokaa, toinen siivoaa. Ainoa pölynimuria ja leivänpaahdinta yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
 
 Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun haluaisimme käyttää vaikkapa pölynimuria. Onko pölynimuri `Sähkölaite`, `Siivouslaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä kahta yliluokkaa. 
 
@@ -35,15 +34,15 @@ Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttä
 
 Toteutamme tämän esimerkin koodina hieman myöhemmin, mutta otetaan ensin hieman toisenlainen esimerkki.
 
-## Älykoti
+## Älykoti: säädettävät laitteet
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niillä voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
 
 Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`. Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
 
 ```java,ignore
 public interface Saadettava {
-    void asetaArvo(int arvo);
+    public void asetaArvo(int arvo);
 }
 ```
 
@@ -51,10 +50,22 @@ Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla 
 
 Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 
-Lisätään `Valo`-luokkaan rajapinnan toteutus:
+Lisätään `Valo`-luokkaan rajapinnan toteutus (klikkaa `Valo.java`-tiedostoa):
 
 ```java
-// FILE: Valo.java
+// FILE: main.java
+public class Main {
+    public static void main() {
+        Valo valo = new Valo();
+        valo.asetaArvo(33);
+        valo.raportoiTila();
+
+        valo.vaihdaTilaa();
+        valo.raportoiTila();
+    }
+}
+// FILE_END
+// // FILE: Valo.java
 public class Valo extends Laite implements Saadettava {
     private int kirkkaus = 0;
 
@@ -91,28 +102,16 @@ public interface Saadettava {
     void asetaArvo(int arvo);
 }
 // FILE_END
-// FILE: main.java
-public class Main {
-    public static void main() {
-        Valo valo = new Valo();
-        valo.asetaArvo(33);
-        valo.raportoiTila();
-
-        valo.vaihdaTilaa();
-        valo.raportoiTila();
-    }
-}
-// FILE_END
 ```
 
-Luokkakaaviona esimerkkimme näyttäisi tältä.
+Luokkakaaviona esimerkkimme näyttäisi tältä. I-kirjain ilmaisee, että kyseessä on rajapinta. Abstraktin luokan tapaan rajapinta on merkitty kursiivilla. Rajapinnan toteuttaminen esitetään katkoviivalla, jossa on avoin nuoli kohti rajapintaa.
 
 ```plantuml
 @startuml
-hide empty members
 interface Saadettava {
     +asetaArvo(arvo: int): void
 }
+
 abstract class Laite {
     +vaihdaTilaa(): void
     +raportoiTila(): void
@@ -124,8 +123,10 @@ class Valo {
     +vaihdaTilaa(): void
     +raportoiTila(): void
 }
+
 Laite <|-- Valo
-Laite <|-- Saadettava
+Saadettava <|.. Valo
+@enduml
 ```
 
 ## Usean rajapinnan toteuttaminen
