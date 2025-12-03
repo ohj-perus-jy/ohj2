@@ -131,14 +131,14 @@ Saadettava <|.. Valo
 
 ## Usean rajapinnan toteuttaminen
 
-Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `ArrayList`-luokka toteuttaa rajapintoja: `List`, `RandomAccess`, `Cloneable` ja `Serializable` (ks. myös [`ArrayList`-luokan dokumentaatio](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)).
+Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `ArrayList`-luokka toteuttaa rajapintoja: `List`, `RandomAccess`, `Cloneable` ja `Serializable` (ks. [`ArrayList`-luokan dokumentaatio](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)).
 
  * `List`-rajapinta määrittelee listan perustoiminnot, kuten elementtien lisäämisen, poistamisen ja hakemisen.
  * `RandomAccess`-rajapinta määrittelee, että listan alkioihin tulee päästä käsiksi nopeasti indeksien avulla. 
  * `Cloneable`-rajapinta sallii olion kloonauksen eli kopioinnin.
  * `Serializable`-rajapinta sallii olion tallentamisen tiedostoon tai lähettämiseen verkon yli.
 
-Toisaalta myös Javan `Date`-luokka toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään `ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
+Toisaalta myös [Javan `Date`-luokka](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html) toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään `ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
 
 Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttaa molemmat rajapinnat.
 
@@ -809,11 +809,67 @@ public class Termostaatti extends SaadettavaLaite {
 
 `Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan, mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten abstrakti luokka ja rajapinta täydentävät toisiaan.
 
+## Rajapinnan periminen
+
+Rajapinta voi myös laajentaa (periä) toista rajapintaa. Syntaktisesti tämä tapahtuu käyttämällä `extends`-avainsanaa, kuten luokkien perinnässä. 
+Luokkien perinnästä poiketen rajapinta voi periä useita rajapintoja. 
+Alirajapinta saa kaikki ylirajapinnan metodit. Alla synteettinen esimerkki. 
+
+```java
+// FILE: A.java
+public interface A {
+    void metodiA();
+}
+// FILE_END
+// FILE: B.java
+public interface B {
+    void metodiB();
+}
+// FILE_END
+// FILE: C.java
+public interface C extends A, B {
+    void metodiC();
+}
+// FILE_END
+// FILE: D.java
+public class D implements C {
+    @Override
+    public void metodiA() {
+        IO.println("Toteutus metodille A");
+    }
+
+    @Override
+    public void metodiB() {
+        IO.println("Toteutus metodille B");
+    }
+
+    @Override
+    public void metodiC() {
+        IO.println("Toteutus metodille C");
+    }
+}
+// FILE_END
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        D olioD = new D();
+        olioD.metodiA();
+        olioD.metodiB();
+        olioD.metodiC();
+    }
+}
+// FILE_END
+```
+
 ## Esimerkit
 
-Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E32-alkuiset kansiot).
+Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E34-alkuiset kansiot).
+
+
 
 ## Huomautuksia
+
+
 
 ✨ Valinnaista lisätietoa: Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia. Ominaisuus saattaa olla hyödyllinen esimerkiksi tilanteissa, jossa halutaan lisätä uusi metodi olemassa olevaan rajapintaan rikkomatta vanhoja toteutuksia. Lue aiheesta lisää [Javan dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
 
