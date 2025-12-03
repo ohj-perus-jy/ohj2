@@ -498,7 +498,7 @@ Aliluokat perivät nyt päälle- ja pois-kytkemislogiikan sellaisenaan, mutta ni
 
 ## Abstraktin luokan metodien näkyvyys
 
-Abstraktin luokan metodien näkyvyys määritellään samojen periaatteiden mukaan kuin muidenkin metodien. Abstraktit metodit määritellään joko `public`- tai `protected`-metodeina, jotta aliluokat voivat toteuttaa ne. Jos metodia kutsuu koodi, joka luo olion, metodin tulee olla `public`. Jos metodia kutsutaan vain perivästä luokasta, riittää että metodi on `protected`. 
+Abstraktin luokan metodien näkyvyys määritellään samojen periaatteiden mukaan kuin muidenkin metodien. Abstraktit metodit määritellään joko `public`- tai `protected`-metodeina, jotta aliluokat voivat toteuttaa ne. Jos metodia kutsuu koodi, joka luo olion, metodin tulee olla `public`. Jos metodia kutsutaan vain perivästä luokasta, riittää että metodi on `protected`. On kuitenkin huomattava, että aliluokan toteuttaman metodin näkyvyys ei voi olla rajoittavampi kuin abstraktin metodin näkyvyys. Esimerkiksi `public`-abstraktia metodia ei voi toteuttaa `protected`-metodina aliluokassa.
 
 Konkreettiset metodit voivat olla myös `private`: tällöin kyseessä on vain abstraktin luokan sisäinen apumetodi, jota aliluokat eivät näe.
 
