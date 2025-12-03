@@ -43,12 +43,3 @@ Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mi
 Ensimmäinen sarake ilmaisee, onko luokan oliolla itsellään pääsy määritellyn näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin jäseniinsä. Toinen sarake ilmaisee, onko muilla samassa pakkauksessa olevilla oliolla pääsy jäseneen. Kolmas sarake ilmaisee, onko luokasta perityillä aliluokan olioilla, jotka sijaitsevat pakkauksen ulkopuolella, pääsy jäseneen. Neljäs sarake ilmaisee, onko millä tahansa oliolla pääsy jäseneen.
 
 Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa, näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla, jolla olet suunnitellut sen käytettävän. Pääsääntö on, että ohjelmoijan tulisi käyttää mahdollisimman rajoittavaa näkyvyysmäärettä, ellei ole erityistä syytä käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Vältä julkisia attribuutteja, ellei kyseessä ole vakio. (Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti, mutta sitä ei suositella tuotantokoodissa.) 
-
-
-## Tehtäviä
-
-Perustaidot:
-- korjaa ongelmallinen esimerkkiohjelma niin, että luokat eivät riipu toistensa toteutusyksityiskohdista
-
-Bonus:
--

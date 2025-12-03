@@ -91,7 +91,9 @@ Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmi
 
 TODO: Linkki kurssiin, linkkejä vapaaehtoiseen luettavaan, SOLID, ym?
 
-TODO: Jos puhutaan olio-ohjelmoinnin oikeista hyödyistä, motivaationa voisi lyhyesti mainita polymorfismin, perinnän ym. Näihin tutustutaan tarkemmin seuraavassa osassa.
+TODO: Jos puhutaan olio-ohjelmoinnin oikeista hyödyistä, motivaationa voisi lyhyesti mainita polymorfismin, perinnän ym, ja että näihin tutustutaan tarkemmin seuraavassa osassa.
+
+TODO: Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle voi tehdä koodista helpommin ymmärrettävää ja siten hallittavaa, mutta se ei toki ole olio-ohjelmoinnin ainoa etu. Tutustumme seuraavassa osassa polymorfismiin, perintään ja rajapintoihin. Käyttämällä näitä ominaisuuksia voidaan vähentää toistoa ... 
 
 ## Pääohjelma Javassa
 
