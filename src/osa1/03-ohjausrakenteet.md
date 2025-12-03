@@ -21,7 +21,7 @@ if (ehto) {
 }
 ```
 
-### Ehdollinen operaattori 
+### Kolmiarvoinen operaattori
 Syntaksi kolmiarvoiselle operaattorille `?` (engl. *ternary operator*) on: [ehto ? tosi : epätosi]. Sopii erityisesti tapauksiin, joissa vaihtoehtoja on kaksi. 
 
 Koodiesimerkki:
@@ -51,10 +51,12 @@ for (int i = 0; i < luvut.length: i += 2) {
 IO.println(summa);
 //-}
 
+```
+
 Seuraavissa esimerkeissä silmukoita koskien `luvut` ja `summa` pysyvät samanlaisina kuin yllä olevassa esimerkissä.
 
 ### For-Each
-for-each silmukka sopii erityisen hyvin, kun halutaan käydä läpi kaikki joukon alkiot. Pitää kuitenkin huomioida, että for-each silmukassa ei ole mahdollista muuttaa alkioita silmukan sisällä, eikä ole myöskään tietoa missä kohden tietorakennetta ollaan menossa (indeksiä).
+for-each silmukka sopii erityisen hyvin, kun halutaan käydä läpi kaikki joukon alkiot. Pitää kuitenkin huomioida, että for-each silmukassa ei ole mahdollista muuttaa alkioita silmukan sisällä, eikä for-each silmukassa ole myöskään tietoa missä kohden tietorakennetta ollaan menossa (indeksiä).
 
 ```java
 void main () {
@@ -105,7 +107,7 @@ void main () {
 
 ## Listat
 TODO:
-(Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?)d
+(Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?)
 
 Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
 
@@ -115,7 +117,7 @@ Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
 | list.size()            | list.Count                        |
 | list.remove(indeksi)   | list.RemoveAt(indeksi)            |
 
-Lisäksi Javassa metodille `add()` on kaksi toteutusta, joista `add(lisättava)` lisää listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi optiota, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy (Pitäisikö kuitenkin puhua poistettavista olioista?). 
+Lisäksi Javassa metodille `add()` on kaksi toteutusta, joista `add(lisättava)` lisää listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi toteutusta, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy. 
 
 ```java
 import java.util.*;
@@ -149,7 +151,7 @@ void main () {
 Muista metodeista voi lukea dokumentaatiosta: https://docs.oracle.com/javase/8/docs/api/java/util/List.html
 
 ## Merkkijonojen vertailu
-Javassa merkkijonojen sisältöjen vertailu tapahtuu String-luokan metodilla `.equals()`. (Sisäisesti `==` Java vertaa, että viittaavatko molemmat samaan objektiin)
+Javassa merkkijonojen sisältöjen vertailu tapahtuu String-luokan metodilla `equals()`. (Sisäisesti `==` Java vertaa, että viittaavatko molemmat samaan objektiin)
 
 ```java
 void main () {

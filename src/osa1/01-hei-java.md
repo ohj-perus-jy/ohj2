@@ -32,25 +32,13 @@ Tässä olennaisimmat Javan koodauskäytänteet, joita on hyvä pitää mieless�
 
 - Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen kirjain on pienellä ja seuraavat sanat aloitetaan isolla kirjaimella. Esimerkiksi `tamaOnFunktionNimi`. Samaa tyyliä käytetään myös muuttujien nimeämisessä.
 
-- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, (TODO: vaihda esimerkit myöhemmin kurssilla vastaan tuleviin esimerkkeihin) `public class Opiskelija {...`, `public interface Elain {...` tai `public enum Viikonpaiva { ...`.
+- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, (TODO: vaihda enum esimerkki kurssilla esitellyyn) `public class Opiskelija {...`, `public interface Saadettava {...` tai `public enum Viikonpaiva { ...`.
+
+### Kurssikohtaiset IntelliJ asetukset
+TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
 ## Java ohjelmien kääntäminen ja ajaminen
 Tallenna yllä oleva esimerkki tietokoneellesi tiedostonimellä Hei.java
-
-### javac
-Java on *käännettävä* ohjelmointikieli, joten lähdekoodi tulee kääntää, jotta se voidaan ajaa. 
-[Tähän väliin voisi HYVIN lyhyesti selittää .java -> .class -> virtuaalikone -> konekielinen ohjelma.]
-Jotta tämä prosessi olisi mahdollista, täytyy tietokoneelle asentaa Java-kehitysympäristö, joka tunnetaan nimellä *Java Development Kit* (JDK). 
-Kokeillaan seuraavaksi ohjelmamme kääntämistä JDK:n sisältämällä `javac`-kääntäjäohjelmalla.
-
-Avaa komentorivi ja siirry siihen kansioon, johon tallensit `Hei.java`-ohjelman. Kirjoita komento `javac Hei.java`.
-
-Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedosto `Hei.class`. 
-Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe. 
-Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
-
-Isommissa Java-ohjelmissa käytetään usein myös erillisiä hallintatyökaluja, kuten
-Gradle tai Maven. Näihin tutustutaan osassa 6 (TODO: Linkki?).
 
 ### java
 `java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Java-tavukoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 
@@ -60,8 +48,22 @@ jshell on interaktiivinen tulkki Javaohjelmoinnin opetteluun. Interaktiivisuus t
 
 jshellistä poistutaan ajamalla komento `/exit`
 
-### Kurssikohtaiset IntelliJ asetukset
-TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
+<details closed><summary>Extra: javac </summary>
+Java on <i>käännettävä</i> ohjelmointikieli, joten lähdekoodi tulee kääntää, jotta se voidaan ajaa.
+
+Jotta tämä prosessi olisi mahdollista, täytyy tietokoneelle asentaa Java-kehitysympäristö, joka tunnetaan nimellä <i>Java Development Kit</i> (JDK). 
+Kokeillaan seuraavaksi ohjelmamme kääntämistä JDK:n sisältämällä <code>javac</code> -kääntäjäohjelmalla.
+
+Avaa komentorivi ja siirry siihen kansioon, johon tallensit <code>Hei.java</code>-ohjelman. Kirjoita komento <code>javac Hei.java</code>.
+
+Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedosto <code>Hei.class</code>. 
+Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe. 
+Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
+
+Isommissa Java-ohjelmissa käytetään usein myös erillisiä hallintatyökaluja, kuten
+Gradle tai Maven. Näihin tutustutaan osassa 6 (TODO: Linkki?).
+
+</details>
 
 ## (J)VM
 JVM tulee sanoista **J**ava **V**irtual **M**achine joka tarkoittaa abstraktia virtuaalikonetta, jolla voidaan ajaa Java-tavukoodia. Hyöty on siinä, että ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan JVM pyörii kyseisellä alustalla. Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
@@ -94,7 +96,7 @@ Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan seli
 Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application programming interface*) kautta.
 
 ### Yhden rivin kommentointi
-Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi merkitsemään TODO-kohtia koodissa.
+Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi merkitsemään TODO-kohtia koodissa:
 
 ```java
 void main() {
@@ -104,7 +106,7 @@ void main() {
 }
 ```
 
-Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka selittää itse itseään, jolloin tarvetta erityisesti yhden rivin kommentoinnille ei olisi. Tämä tarkoittaa, että muuttujat pyritään nimeämään järkevästi, jolloin yhden rivin kommentointi ei ole tarpeellista. Joskus tältä ei voi välttyä, kun ei voida olettaa jonkin operaation olevan itsestäänselvää ja muuttujan nimestä tulisi todella pitkä:
+Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka selittää itse itseään. Tällöin asiat, jotka voidaan nimetä (kuten muuttujat, luokat, funktiot), pyritään nimeämään mahdollisimman kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Joskus tältä ei voi välttyä, koska jotakin operaatiota ei voida olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
 
 ```java,editable
 void main() {
@@ -133,8 +135,8 @@ if (kayttaja.kayttaaVanhaa) {
 
 ### Dokumentaatiokommentti
 
-TODO: (pitäisikö laittaa seuraava teksti johonkin huomiotaherättävämpään versioon?)
-Huomaa nyt, että dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
+> [!Huomautus]
+> Dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
 
 ```java
 /**
@@ -144,9 +146,17 @@ Huomaa nyt, että dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli
  * @param b Toinen luku
  * @return Lukujen summa
  */
-int summa(int a , int b) {
+public int summa(int a , int b) {
     return a + b;
 }
 ```
 
 Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti sovelluskehittimessä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa merkit `/**` ja painaa `Enter`. 
+
+<details closed><summary>Extra: miltä Javan dokumentaatio näyttää? </summary>
+Oletetaan nyt, että tallennat ylläolevan tiedostoon <code>Summa.java</code> ja ajat sen jälkeen komennon <code>javadoc Summa.java</code>. Nyt voit avata luodun <code>index.html</code> -tiedoston selaimessa, klikata selaimessa luokkaa <code>Summa</code> ja pääset seuraavanlaiseen näkymään:
+
+![Juuri tehdystä dokumentaatiosta kuva, joka voi näyttää tutulta jos on käynyt tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
+
+Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html)
+</details>

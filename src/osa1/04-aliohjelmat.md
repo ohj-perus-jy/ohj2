@@ -15,7 +15,7 @@ TODO:
 ## Funktiot
 Funktion yleinen esittelyrivi Javassa:
 ```java.ignore
-public static [palautettava] ([parametrit]) {
+public static tyyppi ([parametrit]) {
     ...
 }
 ```

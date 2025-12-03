@@ -7,7 +7,7 @@
 
 ## Rakenteisesta ohjelmoinnista
 - Rakenteinen ohjelmointi on ohjelmointiparadigma joka painottaa ohjelman hajottamista lohkoihin, jotta ohjelman järjestyslogiikkaa on helpompi ymmärtää. 
-- Syntyi alun perin poistamaan tarpeen `goto`-lauseille
+- Syntyi alun perin poistamaan tarpeen `goto` -lauseille
 - TODO: Pitäisiköhän olla jokin abstrakti versio siitä, mitä rakenteisella ohjelmoinnilla haetaan ja sen jälkeen jokin pieni koodiesimerkki? Pitäisikö koodiesimerkki olla pseudokoodia vai ei?
 
 ## Javan alkeistietotyypeistä
@@ -16,7 +16,17 @@ Kullekin Javan alkeistietotyypille (engl. *primitive data types*) on olemassa ni
 
 Java käyttää staattista tyypitystä, eli muuttujan ja olion tyyppi tarkistetaan käännöshetkellä. Lisäksi Java on vahvasti tyypitetty, joten eri tyyppisiä arvoja ei voi sekoittaa tai muuntaa toiseksi ilman nimenomaista ja turvallista tyyppimuunnosta.
 
-TODO: Lyhyt esimerkki käärijäluokan käytöstä.
+```java
+void main() {
+    byte tavu = Byte.MAX_VALUE;
+    short kaksiTavua = Short.MAX_VALUE;
+    IO.println(tavu);
+    IO.println(kaksiTavua);
+    IO.println(Short.toString(kaksiTavua).charAt(0));
+}
+```
+
+Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja sen jälkeen tulostetaan merkkijonon ensimmäinen merkki.
 
 ## Numeeriset tietotyypit
 
@@ -27,14 +37,7 @@ Javassa on seuraavat C#:stakin tutut numeeriset muuttujatyypit:
 - `float`
 - `double`
 
-```java
-void main() {
-    byte tavu = Byte.MAX_VALUE;
-    short kaksiTavua = Short.MAX_VALUE;
-    IO.println(tavu);
-    IO.println(kaksiTavua);
-}
-```
+
 
 Numeroliteraalin tyypin saa vaihdettua 
 ```java
@@ -48,6 +51,8 @@ void main() {
     IO.println(kokonaislukuna);
 }
 ```
+
+Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä.
 
 ## Yksittäinen merkki ja merkkijonot
 
@@ -65,9 +70,12 @@ void main() {
 }
 ```
 
+TODO: esimerkkejä hyödyllisistä char-luokan metodeista
+
 
 ### String
-TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
+
+Monissa kielissä merkkijono on muuttumaton muistin tehokkuuden, säikeiden turvallisuuden ja paremman suorituskyvyn takia. Myös Javassa `String` on muuttumaton, eli jos jos yrität suorittaa jonkin operaation merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono täten muuttunut. Katsotaan tästä esimerkki:
 
 ```java
 void main() {
@@ -78,7 +86,7 @@ void main() {
 }
 ```
 
-Ylemmässä esimerkissä metodi `.concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
+Esimerkissä metodi `concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
 
 Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
 
@@ -89,6 +97,8 @@ void main() {
     IO.println(mjono[0]);
 }
 ```
+
+TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
 
 ### StringBuilder
 Jos tarvitsee muunneltavan merkkijonon, käytä StringBuilderia:
@@ -104,7 +114,11 @@ void main() {
 }
 ```
 
+TODO: StringBuilderin hyödyllisiä metodeja
+
 ## boolean
+Binääristä `boolean` -muuttujaa käytetään merkityksen selkeyttämiseen, vähentämään virheitä, luettavuuden parantamiseen, optimisaatioon, automaattisia työkaluja varten ja ovat luonnollinen tapa esittää binäärisiä tiloja. Esimerkiksi jokin on päällä tai pois päältä.
+
 Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
 
 ```java
@@ -115,11 +129,27 @@ void main() {
 }
 ```
 
-Javan dokumentaatiosta löytyy myös esimerkkejä muista perustietotyypeistä, joita on tarjolla Javassa: https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html ?
+Klassinen esimerkki `boolean` -muuttujien käytöstä jossain ohjelmassa:
+
+```java
+boolean ohjelmaOnPaalla = true;
+
+while (ohjelmaOnPaalla) {
+    // Tehdään ohjelmaan liittyviä asioita
+    if (/* Jokin lopettamiseen liittyvä ehto */) {
+        ohjelmaOnPaalla = false;
+    }
+}
+```
+
+## Muut perustietotyypit
+
+Javan dokumentaatiosta löytyy myös esimerkkejä [muista perustietotyypeistä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html), joita on tarjolla Javassa.
 
 
 ## Taulukot
-TODO: mitä käytetään (sulut, [], {}?) merkitsemään, että jokin pitää vaihtaa johonkin arvoon?
+
+Taulukkoja käytetään tallentamaan joukkoa samantyyppisiä alkioita muuttujaan, joka helpottaa datan tehokasta hallintaa ja organisointia.  
 
 Javan taulukot esitellään syntaksilla 
 ```java.ignore
@@ -133,7 +163,7 @@ void main () {
 }
 ```
 
-Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla olevassa TODO: (ikkunassa)? kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot. 
+Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla olevassa TODO: (ikkunassa)? kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot vaihtamalla `char` tilalle esimerkiksi `int` tai `double`. 
 
 ```java,editable
 void main () {
@@ -150,3 +180,11 @@ Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään kä
 ```java.ignore
 final int PAIVIA_VIIKOSSA = 7;
 ```
+
+Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähentämiseksi, luotettavuuden parantamiseksi, parantamaan suorituskykyä jne. Kuvitellaan, että olet luomassa jotain järjestelmää, jossa tarvitaan tietokantayhteyttä ja saat kehittäessä virheen `2001`. Mitä sen olisi tarkoitus tarkoittaa? Oletetaan nyt, että joku on ajatellut asiaa etukäteen ja nimennyt virhekoodin järkevästi. Käyt lukemassa koodipohjaa ja löydät sieltä rivin:
+
+```java.ignore
+final int VIRHE_TIETOKANTAYHTEYDESSA = 2001;
+```
+
+Nyt on selvää, että kyseessä on nimenomaan virhe tietokantayhteydessä, eikä jokin muu virhe. Toisaalta ehkä koodipohjassa on useampi tilanne, jossa halutaan käyttää kyseistä virhettä. Ei olisi fiksua käyttää literaalia `2001`.
