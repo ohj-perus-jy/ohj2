@@ -9,31 +9,21 @@
 
 ## Java-kielen perusteet
 
-Lähdetäänpä liikkeelle esimerkillä, jossa kirjoitetaan konsoliin Javan versio.
+Lähdetäänpä liikkeelle perinteisellä 'Hei, maailma' -esimerkillä kirjoittamalla se Javalla:
 
 ```java
-void main() {
-    int versioNumero = Runtime.version().feature();
-    IO.println("Hei, maailma! Tässä on Java " + versioNumero);
-}
+/* 1 */ void main() {
+/* 2 */     IO.println("Hei, maailma!");
+/* 3 */ }
 ```
-Käydään tämä esimerkki paloittain läpi. 
+Käydään läpi ohjelma rivi riviltä:
 
-```java.ignore
-void main() { ...
-```
+1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void` tarkoittaa, että aliohjelma ei palauta mitään arvoja.
+Javassa samalla rivillä aloitetaan myös aliohjelman runko aaltosululla`{`.
 
-Kaikissa Java-ohjelmissa tulee olla `main`-metodi, joka toimii ohjelman aloituspisteenä. Pääohjelman palautuksen tyyppinä tulee olla `void`, eli pääohjelma ei palauta mitään. Nyt pääohjelma ei ota vastaan parametreja, joten jätetään sulut tyhjäksi. 
+2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen onnistuu `IO.println`-metodilla.
 
-```java.ignore
-int versioNumero = Runtime.version().feature();
-```
-Tällä rivillä otetaan kokonaislukutyyppiseen muuttujaan `int` talteen Javan ajonaikainen versionumero.
-
-```java.ignore
-IO.println("Hei, maailma! Tässä on Java " + versioNumero);
-```
-Tulostetaan konsoliin teksti ja versionumero
+3. Aliohjelman runko lopetetaan aaltosululla `}`.
 
 ## Javan koodauskäytänteistä
 
