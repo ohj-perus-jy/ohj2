@@ -18,8 +18,7 @@ Lähdetäänpä liikkeelle perinteisellä 'Hei, maailma' -esimerkillä kirjoitta
 ```
 Käydään läpi ohjelma rivi riviltä:
 
-1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void` tarkoittaa, että aliohjelma ei palauta mitään arvoja.
-Javassa samalla rivillä aloitetaan myös aliohjelman runko aaltosululla`{`.
+1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void` tarkoittaa, että aliohjelma ei palauta mitään arvoja. Koska pääohjelma ei ota parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä aloitetaan myös aliohjelman runko aaltosululla`{`.
 
 2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen onnistuu `IO.println`-metodilla.
 
@@ -27,11 +26,13 @@ Javassa samalla rivillä aloitetaan myös aliohjelman runko aaltosululla`{`.
 
 ## Javan koodauskäytänteistä
 
-Kenties ensimmäisenä Javassa C#:iin verrattuna syntaksista voidaan huomata, että uuden näkyvyysalueen ilmaiseva aaltosulku alkaakin samalta riviltä, kuin esittelyrivi. Tämä on osa Javan koodauskäytäntöä. 
+Tässä olennaisimmat Javan koodauskäytänteet, joita on hyvä pitää mielessä:
 
-Javassa käytetään funktioiden nimeämisessä camelCasingia, eli aloitetaan pienellä kirjaimella ja sanojen vaihtuessa ensimmäinen kirjain on isolla, eli esimerkiksi: `tamaOnFunktionNimi`.
+- Aliohjelman runkoa aloittava aaltosulku `{` laitetaan yleensä samalle riville kuin aliohjelman määrittely. Sama pätee muille rakenteille, jossa käytetään aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
 
-Tiedostot taas nimetään käyttäen PascalCasingia, eli samoin, kuin camelCasing, mutta myös ensimmäinen kirjain on iso. Esimerkiksi `Hei.java`
+- Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen kirjain on pienellä ja seuraavat sanat aloitetaan isolla kirjaimella. Esimerkiksi `tamaOnFunktionNimi`. Samaa tyyliä käytetään myös muuttujien nimeämisessä.
+
+- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, (TODO: vaihda esimerkit myöhemmin kurssilla vastaan tuleviin esimerkkeihin) `public class Opiskelija {...`, `public interface Elain {...` tai `public enum Viikonpaiva { ...`.
 
 ## Java ohjelmien kääntäminen ja ajaminen
 Tallenna yllä oleva esimerkki tietokoneellesi tiedostonimellä Hei.java
@@ -48,7 +49,8 @@ Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedos
 Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe. 
 Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
 
-Isommissa ohjelmissa kannattaa käyttää jotain Java-projektin hallintatyökalua, kuten Gradle/Maven. Näihin tutustutaan osassa 6. 
+Isommissa Java-ohjelmissa käytetään usein myös erillisiä hallintatyökaluja, kuten
+Gradle tai Maven. Näihin tutustutaan osassa 6 (TODO: Linkki?).
 
 ### java
 `java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Java-tavukoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 
