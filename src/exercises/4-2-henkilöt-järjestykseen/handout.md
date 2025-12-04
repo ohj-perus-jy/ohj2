@@ -4,11 +4,11 @@ Muokkaa `Henkilo`-luokkaa niin, että `List<Henkilo>`-tyyppiset listat voidaan j
 
 Esimerkiksi listan
 
-```java
+```java,noplayground
 List<Henkilo> henkilot = Arrays.asList(
     new Henkilo("Joukahainen"),
     new Henkilo("Ilmatar"),
-    new Henkilo("Kyllikki")
+    new Henkilo("Kyllikki"),
     new Henkilo("Kokko")
 );
 ```

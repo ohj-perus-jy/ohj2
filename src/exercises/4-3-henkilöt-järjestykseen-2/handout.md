@@ -6,11 +6,10 @@ Esimerkiksi listan
 
 ```java
 List<Henkilo> henkilot = Arrays.asList(
-    new Henkilo("Pacius", "Fredrik"),
-    new Henkilo("Mozart", "Wolfgang Amadeus"),
-    new Henkilo("Mozart", "Leopold"),
-    new Henkilo("Chopin", "Frédéric"),
-
+        new Henkilo("Pacius", "Fredrik"),
+        new Henkilo("Mozart", "Wolfgang Amadeus"),
+        new Henkilo("Mozart", "Leopold"),
+        new Henkilo("Chopin", "Frédéric")
 );
 ```
 
