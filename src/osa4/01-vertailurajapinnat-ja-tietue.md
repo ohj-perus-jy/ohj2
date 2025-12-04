@@ -359,7 +359,7 @@ void main() {
 >   <task-title>Tehtävä 4.3: Henkilöt järjestykseen 2. <points>0.5 p.</points> </task-title>
 >   <handout>
 >
->   {{#include ../exercises/4-3-henkilöt-järjestykseen/handout.md}}
+>   {{#include ../exercises/4-3-henkilöt-järjestykseen-2/handout.md}}
 >
 >   </handout>
 >   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>

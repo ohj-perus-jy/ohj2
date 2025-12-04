@@ -75,6 +75,8 @@ Comparable getLargest(Comparable a, Comparable b) {
 }
 ```
 
+- Jos Stream API käyty, heitto [sorted()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#sorted--)-metodiin, jolle kelpaa mikä tahansa tyyppi `olio.stream().sorted().toList()` -> vasta ajonaikainen eikä käännöksenaikainen virhe
+
 -> Ajonaikainen virhe, halutaan yleensä välttää sillä näissä on aina riski päätyä loppukäyttäjälle
 
 - Tyyppiparametrien avulla (ja niiden järkevällä käytöllä) tämänkaltainen metodin väärinkäyttö havaitaan varmasti ajoissa
@@ -213,7 +215,13 @@ class Pair<T, U> {
 - Esimerkkejä milloin geneeriset tyypit ovat kivoja luokissa
 - Geneerisen luokan syntaksi
 
-- Tehtäviä geneerisitä luokista
+- Tehtäviä geneerisistä luokista
+
+- Ekstrana: jokerimerkki `?` tyyppiparametreissa
+  - rajoitetut jokerimerkit
+    - `extends` ja `super`
+  - `?` sama kuin `? extends Object`
+  - Tutkitaan mitä `Collections.sort`
 
 - Ekstramaininta: Javassa geneeriset tyypit muuten ohjelman kääntämisen aikana rajoituksen tyypiksi tai tyypiksi `Object`
 - Ekstramaininta: (koska vain Java -asia): Geneerinen tyyppi ei voi olla primitiivi
