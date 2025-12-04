@@ -8,6 +8,8 @@
 > - `final` attribuuttien kanssa
 > - Osaat määritellä ja hyödyntää omia luokkia Javalla
 
+TODO: Koodiesimerkit; siistimistä, multifile ja ehkä jaa pidempiä useammaksi esimerkiksi (yksi asia kerrallaan)
+
 ## Luokka
 
 Ensimmäinen askel olio-ohjelmointiin on luokan määritteleminen. Luokkaa voi ajatella kaavana tai muottina, jonka pohjalta olioita luodaan. Luokka kertoo, mitä tietoja olio sisältää (attribuutit) ja mitä se voi tehdä (metodit). 
@@ -27,15 +29,15 @@ public class Rakennus {
 }
 ```
 
-### Attribuutit
+## Attribuutit
 
 Luokan sisällä esiteltyjä muuttujia kutsutaan *attribuuteiksi*. 
 
 Attribuutit ovat käytännössä aivan kuin tavallisetkin muuttujat, eli samat säännöt pätevät niihinkin; attribuutti voi olla alkeistietotyyppi tai viitemuuttuja ja se nimetään kuin muuttujat yleensä. Attribuuteilla on kuitenkin muutama erikoisominaisuus - esimerkiksi näkyvyysmääreet. Attribuutit ovat aina näkyvissä saman luokan sisällä, mutta näkyvyys niiden oman luokan ulkopuolelle on hallittavissa - palaamme tähän pian, kun tutustumme tarkemmin näkyvyysmääreisiin.
 
-Jokaisella samasta luokasta tehdyllä oliolla on aina samat attribuutit, mutta niillä omat arvot, sillä jokaisella oliolla on oma tila. Olion tilan voidaan siis ajatella olevan tallessa sen attribuuteissa. Attribuuttien elinikä on sama kuin olion, sillä olion tilan täytyy olla olemassa olion tuhoutumiseen asti. Attribuutille voidaan antaa oletusarvo, jolloin luokasta luodut oliot saavat sen myös oman attribuuttinsa alkuarvoksi.
+Samasta luokasta tehdyillä olioilla on aina samat attribuutit. Olioilla on kuitenkin näille attribuuteille eri arvot, sillä jokaisella oliolla on oma tila. Olion tilan voidaan siis ajatella olevan tallessa sen attribuuteissa. Attribuuttien elinikä on sama kuin olion, sillä olion tilan täytyy olla olemassa olion tuhoutumiseen asti. Attribuutille voidaan antaa oletusarvo, jolloin luokasta luodut oliot saavat sen myös oman attribuuttinsa alkuarvoksi.
 
-Huom! Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole attribuutteja, vaan aliohjelman *lokaaleja muuttujia*. Vain suoraan luokan alla olevat muuttujat ovat attribuutteja. Lokaalien muuttujien sisältämä tieto katoaa aliohjelman päätyttyä, eli ne eivät ole osa olion tilaa. Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla. Jos aliohjelman näkyvissä on saman niminen attribuutti ja paikallinen muuttuja, käytetään ensisijaisesti paikallista muuttujaa - paikallinen muuttuja siis peittää attribuutin. Tässä tapauksessa attribuuttiin päästään käsiksi käyttämällä `this`-viitettä. Palaamme tähän myöhemmin tässä osassa.
+Huom! Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole attribuutteja, vaan aliohjelman *lokaaleja muuttujia*. Vain suoraan luokan alla olevat muuttujat ovat attribuutteja. Lokaalien muuttujien sisältämä tieto katoaa aliohjelman suorituksen lopussa, eli ne eivät ole osa olion tilaa. Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos attribuutilla ja lokaalilla muuttujalla on sama nimi, käytetään lausekkeissa ensisijaisesti lokaalia muuttujaa. Voimme silti päästä käsiksi olion attribuuttiin `this`-viitteen kautta. Palaamme tähän aiheeseen pian.
 
 ```java
 public class Rakennus {
@@ -54,9 +56,9 @@ public class Rakennus {
 }
 ```
 
-TODO: Siisti esimerkkiä
+## Metodit
 
-### Metodit
+TODO: Javassa termit class method (static) ja instance method (dynamic)
 
 Luokassa määriteltyjä, olion tilaan käsiksi pääseviä aliohjelmia kutsutaan *metodeiksi*. Jos attribuutti on olion sisältämää tietoa, metodeja voisi kuvailla olion kyvyiksi tehdä jotain. Metodien määrittely ei syntaksiltaan juurikaan eroa muista aliohjelmista ja niissä käytetään myös samanlaisia nimeämiskäytänteitä. Kuten yleensä aliohjelmia tehdessä, metodin tehtävä on yleensä suorittaa jokin yksi asia. Liian suuret tehtävät on hyvä jakaa pienempiin osiin. Metodeja voi myös kuormittaa aivan kuin muitakin aliohjelmia. Olio-ohjelmoinnissa uutena ominaisuutena tulee olemassa olevan metodin toteutuksen korvaaminen uudella. Tämä ilmaistaan `@Override`-notaatiota käyttämällä. Palaamme tähän aiheeseen, kun lähdemme tutustumaan perintään ja rajapintoihin seuraavassa osassa.
 
@@ -95,9 +97,95 @@ void main() {
 
 TODO: Onko tarpeen enää kerrata tässä olioviitteen välittämistä aliohjelmalle?
 
-### Muodostaja eli konstruktori
+## This-viite
 
-TODO: Konstruktori, parametriton, parametrisoitu, copy-konstruktori
+Käytimme aikaisemmissa esimerkeissä `this`-viitettä lukeaksemme olion attribuutteja. Tämä viite on automaattisesti käytettävissä aina, kun kutsumme jonkin olion metodia. Metodikutsun yhteydessä `this` asetetaan viittaamaan metodin suorituksen sisällä siihen olioon, jonka metodia kutsuttiin, ja viitteen kautta metodi pääsee käsiksi juuri oikean olion tilaan. Olion metodien sisällä `this`-viitettä käytetään implisiittisesti, jos samalla näkyvyysalueella ei ole konfliktia tunnisteissa - esimerkiksi attribuutin kanssa samaa nimeä käyttävää lokaalia muuttujaa. Meidän ei siis tarvitse kirjoittaa aina attribuutin tai metodikutsun eteen `this`, sillä kääntäjä osaa päätellä sen itse. Voimme sen kuitenkin lisätä aina, kun se on tarpeen tai selkeämpää.
+
+Jos aliohjelma ei liity yhteenkään olioon, ei siinä silloin voi olla `this`-viitettä. Tällaisia ovat esimerkiksi `static`-avainsanalla määritellyt *staattiset* metodit, joihin tutustumme seuraavaksi.
+
+Katsotaan kuitenkin ensiksi muutama esimerkki `this`-viitteen käytöstä.
+
+```java
+public class Rakennus {
+    private String omistaja;
+    private String väri;
+
+    public void setVäri(String väri) {
+        // Käytämme tässä this-viitettä, sillä attribuutilla ja parametrilla on sama nimi. Lokaalia muuttujaa käytettäisiin muuten ensisijaisesti.
+        this.väri = väri; 
+    }
+
+    public String getVäri() {
+        // Tässä this ei olisi pakollinen. Samalla näkyvyysalueella ei ole muita "väri" nimisiä muuttujia, joten sekaannusta ei tapahdu.
+        // this-viitteen käyttö on kuitenkin täysin sallittua.
+        return this.väri;
+    }
+
+    // Huom! Teimme tästä metodista virheellisesti staattisen, eli vaikka kutsumme sitä jonkin olion kautta, sen sisällä ei ole tietoa oliosta.
+    public static String tulosta() {
+        // Kumpikaan alla olevista ei onnistu, sillä emme voi päästä 'this' viitteen kautta olion tilaan käsiksi, eikä metodissa ola lokaalija muuttujaa 'omistaja'.
+        // IO.println(omistaja);
+        // IO.println(this.omistaja);
+
+        IO.println("?");
+    }
+}
+
+void main() {
+    Rakennus talo = new Rakennus();
+    Rakennus autotalli = new Rakennus();
+
+    // Kutsumme 'talo' viitteen kautta löytyvän olion setVäri-metodia, joten tämän 
+    // metodikutsun suorituksessa 'this' viittaa siis samaan olioon kuin tässä 'talo'.
+    talo.setVäri("harmaa"); 
+
+    // Tämän metodikutsun sisällä 'this' viittaa samaan olioon kuin 'autotalli'.
+    autotalli.setVäri("valkoinen");
+
+}
+```
+
+## Staattisuus ja oliot
+
+Havainnollistimme tämän osan alussa luokkia ja olioita näin:
+
+TODO: Koodi ja siitä kuva
+
+```java
+
+```
+
+![Luokka ja oliot](images/luokka_ja_oliot.png)
+
+Jokainen kuvassa esiintyvä olio sisältää omat, luokassa määriteltyä rakennetta vastaavat attribuutit ja metodit. Jokaisella oliolla on oma tila, eli omat attribuuttien arvot. Voimme määritellä luokkaan myös muuttujia ja aliohjelmia, joiden *ei* ole tarkoitus olla kiinnitetty minkään yhden olion tilaan. Tämä onnistuu `static`-avainsanaa käyttämällä, eli tekemällä muuttujista tai aliohjelmista *staattisia*.
+
+Staattisia aliohjelmia ja muuttujia voidaan käyttää ilman luokan ilmentymiä eli olioita, sillä ne eivät ole osa minkään yksittäisen olion tilaa. Voimme havainnolistaa tätä niin, että nämä attribuutit ja metodit sijaitsevat vain luokassa - ja niitä yleensä kutsutaankin *luokan* muuttujiksi ja aliohjelmiksi.
+
+Lisätään esimerkkiin nyt *staattinen* attribuutti ja metodi.
+
+TODO: Koodi ja siitä kuva
+
+```java
+
+```
+
+![Luokka, oliot ja staattisuus](images/luokka_ja_oliot_static.png)
+
+Tämäkään havainnollistus ei täysin vastaa todellisuutta, mutta se auttaa toivottavasti ymmärtämään staattisuuden käsitettä paremmin ainakin olioiden osalta.
+
+Oliot pääsevät käsiksi aina oman luokkansa staattisiin muuttujiin ja aliohjelmiin. Staattiset muuttujat ovat kuitenkin jaettuja kaikkien olioiden kesken, sillä ne eivät kuulu yhdellekään oliolle. Jos yksi olio muuttaa luokkansa staattisen muuttujan arvoa, tämä muutos näkyy kaikissa olioissa. Vastaavasti staattiset aliohjelmat eivät voi nähdä yksittäisen olion tilaa edes silloin, kun niitä kutsutaan jonkin olion sisältä, sillä ne eivät kuulu yhdellekään oliolle. Staattiset aliohjelmat pääsevät toki käsiksi kaikkiin staattisiin muuttujiin, sillä ne kuuluvat luokalle. Koska staattiset aliohjelmat eivät liity mihinkään olioon, niiden sisällä ei myöskään voi käyttää `this`-viitettä.
+
+Staattisuutta voi ajatella yksinkertaistettuna niin, että staattisesta muuttujasta on ohjelman muistissa vain yksi ilmentymä, eikä siitä koskaan voida tehdä enempää, joten se täytyy jakaa kaikkien kesken. Staattisia aliohjelmia voisi myös ajatella olevan vain se yksi kappale, jota ei voi kiinnittää minkään yhden olion tilaan.
+
+Katsotaan vielä muutamaa esimerkkiä staattisten muuttujien ja aliohjelmien käytöstä.
+
+TODO:
+
+```java
+
+```
+
+## Muodostaja eli konstruktori
 
 Muodostaja eli konstruktori on erikoismetodi, jota kutsutaan automaattisesti uuden olion luomisen yhteydessä ja jolla voidaan asettaa olion alkuperäinen tila. Muodostajilla ei ole palautustyyppiä ja niiden nimen täytyy olla sama kuin luokan. 
 
@@ -166,7 +254,7 @@ void main() {
 }
 ```
 
-Voimme lopuksi vielä lisätä hieman erikoisemman muodostajan, joka ottaa vastaan toisen saman luokan olion ja kopioi sen arvot muodostettavalle oliolle. Tällaista muodostajaa kutsutaan usein copy-muodostajaksi.
+Voimme lopuksi vielä lisätä hieman erikoisemman muodostajan, joka ottaa vastaan toisen saman luokan olion ja kopioi sen arvot muodostettavalle oliolle. Tällaisesta muodostajasta puhuttaessa käytetään usein termiä *copy constructor*.
 
 ```java
 public class Rakennus {
@@ -195,7 +283,7 @@ void main() {
 }
 ```
 
-### Muita erikoismetodeja
+## Muita erikoismetodeja
 
 Oletusmuodostajan lisäksi kaikilla Javan olioilla on myös muita metodeja olemassa, vaikka emme näitä omaan luokkaamme määrittelisi. Voimme kuitenkin muuttaa näiden toimintaa oman luokkamme osalta kirjoittamalle niille uuden toteutuksen. Palaamme näihin metodeihin ja siihen, mistä nämä kaikkiin olioihin tulevat seuraavassa osassa, kun tutustumme luokkien perintään.
 
@@ -227,37 +315,7 @@ void main() {
 }
 ```
 
-TODO: `equals` ja `hashCode`
-
-## Static-määrite
-
-Havainnollistimme tämän osan alussa luokkia ja olioita näin:
-
-![Luokka ja oliot](images/luokka_ja_oliot.png)
-
-Jokainen kuvassa esiintyvä olio sisältää omat, luokassa määriteltyä rakennetta vastaavat attribuutit ja metodit. Jokaisella oliolla on oma tila, eli omat attribuuttien arvot. Voimme määritellä luokkaan myös muuttujia ja aliohjelmia, joiden *ei* ole tarkoitus olla kiinnitetty minkään yhden olion tilaan. Tämä onnistuu `static`-avainsanaa käyttämällä, eli tekemällä muuttujista tai aliohjelmista *staattisia*.
-
-Staattisia aliohjelmia ja muuttujia voidaan käyttää ilman luokan ilmentymiä eli olioita, sillä ne eivät ole osa minkään yksittäisen olion tilaa. Voimme havainnolistaa tätä niin, että nämä attribuutit ja metodit sijaitsevat vain luokassa - ja niitä yleensä kutsutaankin *luokan* muuttujiksi ja aliohjelmiksi.
-
-![Luokka, oliot ja staattisuus](images/luokka_ja_oliot_static.png)
-
-Tämäkään havainnollistus ei täysin vastaa todellisuutta, mutta se auttaa toivottavasti ymmärtämään staattisuuden käsitettä olioiden osalta.
-
-Oliot pääsevät käsiksi aina oman luokkansa staattisiin muuttujiin ja aliohjelmiin. Staattiset muuttujat ovat kuitenkin jaettuja kaikkien olioiden kesken, sillä ne eivät kuulu yhdellekään oliolle. Jos yksi olio muuttaa luokkansa staattisen muuttujan arvoa, tämä muutos näkyy kaikissa olioissa. Vastaavasti staattiset aliohjelmat eivät voi nähdä yksittäisen olion tilaa edes silloin, kun niitä kutsutaan jonkin olion sisältä, sillä ne eivät kuulu yhdellekään oliolle. Staattiset aliohjelmat pääsevät toki käsiksi kaikkiin staattisiin muuttujiin.
-
-Staattisuutta voi ajatella yksinkertaistettuna niin, että staattisesta muuttujasta on ohjelman muistissa vain yksi ilmentymä, eikä siitä koskaan voida tehdä enempää, joten se täytyy jakaa kaikkien kesken. Staattisia aliohjelmia voisi myös ajatella olevan vain se yksi kappale, jota ei voi kiinnittää minkään olion tilaan.
-
-Katsotaan muutamaa esimerkkiä.
-
-```java
-
-```
-
-Koska staattiset aliohjelmat eivät kuulu millekään oliolle, niiden sisällä ei myöskään voi käyttää `this`-viitettä. Tutustutaan tähän seuraavaksi.
-
-## this-viite
-
-TODO:
+TODO: `equals` ja `hashCode` ja niiden välinen yhteys
 
 ## Olion elinkaari
 
@@ -457,13 +515,13 @@ void main() {
 
 Joidenkin Javan sisäänrakennettujen oliotyyppien tapauksessa `==`-operaattori *voi* toimia, vaikka edellä mainitun perusteella sen ei pitäisi. Esimerkiksi kokonaislukujen oliotyyppi `Integer` sekä erityisesti merkkijono `String`. Java pyrkii välttämään täysin samanlaisten olioiden luomista turhaan uudelleenkäyttämällä saman sisällön omaavia, muuttumattomia olioita parhaansa mukaan. Tämä on melko yleinen ominaisuus ohjelmointikielissä. Voit halutessasi lukea lisää aiheesta täältä; [*string interning*](https://www.geeksforgeeks.org/java/interning-of-string/). Varmuuden vuoksi on paras käyttää aina olion `equals`-metodia tai `Objects.equals`-funktiota.
 
-TODO: HUOM! Jos toteutamme oman `equals`-metodin, meidän täytyy toteuttaa myös luokalle oma `toHash`-metodi.
+TODO: Jos toteutamme oman `equals`-metodin, meidän täytyisi toteuttaa myös luokalle oma `toHash`-metodi.
 
 TODO: compareTo ja Objects.compare
 
 TODO: getClass() ja instanceOf
 
-### Olioiden yhteistoiminta
+## Olioiden yhteistoiminta
 
 TODO: Siirrä osan 2.3 loppuun, käytetään kapselointia ja näkyvyysmääritteitä
 
