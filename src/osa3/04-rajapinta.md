@@ -12,7 +12,7 @@
 > - Käytetään perintää ja rajapintoja olioiden yhteistyössä
 > - 👇 Tämä jätetty toistaiseksi pois 👇
 > - Testaaminen rajapintaa vasten, ei toteutusta vasten.
-
+> - "Moniperintä" rajapintojen avulla
 
 ![alt text](images/interfaces.png)
 
@@ -128,6 +128,16 @@ Laite <|-- Valo
 Saadettava <|.. Valo
 @enduml
 ```
+
+<task>
+  <task-title>Tehtävä 3.6: Rajapinta, osa 1. <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/3-6-rajapinta-1/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## Usean rajapinnan toteuttaminen
 
@@ -468,6 +478,18 @@ Tässä meidän yksinkertaisessa esimerkissämme kaikki tietysti tapahtuu konsol
 Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E32_Rajapinnat3/src).
 
 </details>
+
+
+<task>
+  <task-title>Tehtävä 3.7: Rajapinta, osa 2. <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/3-7-rajapinta-2/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä</a></task-link>
+</task>
+
 
 ## Rajapinta aliohjelman parametrina
 

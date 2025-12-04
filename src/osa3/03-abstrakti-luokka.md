@@ -631,8 +631,6 @@ public class Main {
 
 </details>
 
-## Tehtävät
-
 <task>
   <task-title>Tehtävä 3.5: Abstraktit luokat. <points>1 p.</points> </task-title>
   <handout>
@@ -642,5 +640,3 @@ public class Main {
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>
-
-.
