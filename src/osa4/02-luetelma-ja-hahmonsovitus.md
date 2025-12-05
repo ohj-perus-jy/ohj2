@@ -1,17 +1,168 @@
-# Luetelma ja tietue
+# Luetelma ja hahmonsovitus
 
 > [!Osaamistavoitteet]
 >
-> - Tyyppitarkistukset ja tyyppimuunnokset (instanceof, casting)
-> - `switch`-lauseke, tyyppikaava sovitus
+> - Tiedät mikä on luetelma tyyppinä ja ymmärrät sen hyödyt
+> - Tiedät mitä on hahmonsovitus ja milloin sitä kannattaa käyttää
 
+## Luetelma rajatuille joukoille
 
-## Luetelma tyyppinä
+Luetelma (eng. enum/enumeration) on erityinen tyyppi, jolla voidaan rajoittaa muuttujan arvoja tiettyyn, ennalta määrättyyn arvojoukkoon. Usein mainittuja hyviä esimerkkejä luetelmille ovat viikonpäivät tai ilmansuunnat, jotka tunnetusti ovat hyvin määritettyä pieniä joukkoja. Luetelman ei tarvitse kuitenkaan vastata yleisesti tunnettua käsitettä. Olennaista on voida olettaa luetelman arvojoukon pysyvän samana, eli vakiona, koko ohjelman käytön ajan.
 
-- Luetelma (eng. enum/enumeration) on erityinen luokkatyyppi, jolla on ennaltamäärätyt arvot
-  - Kätevää, kun halutaan muuttuja, jonka mahdollinen arvojoukko on hyvin määritelty ja muuttumaton eli vakio, esim. viikonpäivät tai perusvärit.
+Jatketaan edellisen osan `Kerailykortti`-luokalla. Katsotaan nyt tapausta, jossa meillä on tiedot `nimi` ja `tunnistenumero`, sekä näiden lisäksi `harvinaisuusaste`, jonka tarkoitus on kertoa esimerkiksi millä todennäköisyydellä kortin voi löytää keräilypakasta. Sovitaan, että meillä on viisi harvinaisuusastetta, joista 1 on yleisin ja 5 harvinaisin.
 
-- Luetelma määritetään luokan tavoin ja yksinkertaisimmillaan sisältäen vain luetelman mahdolliset arvot vakioina.
+```java
+// FILE: Kerailykortti.java
+class Kerailykortti {
+    private String nimi;
+    private int tunnistenumero;
+    private int harvinaisuusaste; // 1-5
+
+    public Kerailykortti(String nimi, int tunnistenumero, int harvinaisuusaste) {
+        this.nimi = nimi;
+        this.tunnistenumero = tunnistenumero;
+        this.harvinaisuusaste = harvinaisuusaste;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("#%s %s [%d]", tunnistenumero, nimi, harvinaisuusaste);
+    }
+}
+// FILE_END
+// FILE: main.java
+void main() {
+    Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, 1);
+    Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, 3);
+    Kerailykortti kortti3 = new Kerailykortti("Lentävä Lehmä", 1, 5);
+
+    IO.println(kortti1);
+    IO.println(kortti2);
+    IO.println(kortti3);
+}
+// FILE_END
+```
+
+Tässä on hyvä huomata heti potentiaalinen ongelma. Mitä jos jossain päin koodia luodaankin kortti, jonka harvinaisuusaste on 0 tai 6? Tai vaikka -1 tai 100? Mikäli ohjelma on rakennettu olettaman päälle, että harvinaisuusaste on aina välillä 1-5, voi tämä johtaa odottamattomiin virheisiin ohjelman suorituksen aikana.
+
+Myöskään pelkkä numero tässä tapauksessa ei ole kovin kuvaava. Mikäli joku lukee koodia, jossa luodaan kortti harvinaisuusasteella 1 tai 3, ei ole heti selvää, mitä tämä tarkoittaa vaan tähän tarvitaan selitys muualta — kumpi on harvinaisempi, 1 vai 3?
+
+Ratkaisuksi ongelmaan, voimme luoda luetelma-tyypin harvinaisuusasteista, ja käyttää sitä kokonaisluvun sijaan. Luetelma määritetään luokan tavoin ja yksinkertaisimmillaan sisältäen vain luetelman mahdolliset arvot nimettyinä vakioina.
+
+```java,noplayground
+enum Harvinaisuusaste {
+    PERUS,
+    YLEINEN,
+    HARVINAINEN,
+    ERITTAN_HARVINAINEN,
+    TARUNOMAINEN;
+}
+```
+
+Vakiintunut tyyli on kirjoittaa luetelman nimetyt vakiot, kuten muutkin vakiot, isoin kirjaimin. Näin ero muuttujien ja vakioiden välillä näkyy koodissa selkeästi.
+Huomaa myös, että luetelman vakioiden erottimena toimii pilkku ja lopussa tulee olla puolipiste.
+
+Luetelman `Harvinaisuusaste` kanssa `Kerailykortti`-luokka voisi näyttää seuraavalta.
+
+```java
+// FILE: Kerailykortti.java
+class Kerailykortti {
+    private String nimi;
+    private int tunnistenumero;
+    private Harvinaisuusaste harvinaisuusaste;
+
+    //HIGHLIGHT_GREEN_BEGIN
+    public Kerailykortti(
+            String nimi,
+            int tunnistenumero,
+            Harvinaisuusaste harvinaisuusaste
+    ) {
+        this.nimi = nimi;
+        this.tunnistenumero = tunnistenumero;
+        this.harvinaisuusaste = harvinaisuusaste;
+    }
+    //HIGHLIGHT_GREEN_END
+
+    @Override
+    public String toString() {
+        return String.format("#%s %s [%s]", tunnistenumero, nimi, harvinaisuusaste);
+    }
+}
+// FILE_END
+// FILE: Harvinaisuusaste.java
+enum Harvinaisuusaste {
+    PERUS,
+    YLEINEN,
+    HARVINAINEN,
+    ERITTAN_HARVINAINEN,
+    TARUNOMAINEN;
+}
+// FILE_END
+// FILE: main.java
+void main() {
+    Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, Harvinaisuusaste.PERUS);
+    Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, Harvinaisuusaste.HARVINAINEN);
+    Kerailykortti kortti3 = new Kerailykortti("Lentävä Lehmä", 1, Harvinaisuusaste.TARUNOMAINEN);
+
+    IO.println(kortti1);
+    IO.println(kortti2);
+    IO.println(kortti3);
+}
+// FILE_END
+```
+
+<!-- Olisikohan tässä kivempi jos monen tiedoston esimerkki olisi purettu osiin ja lopuksi tulisi vasta yhdistetty ajettava versio? -->
+
+Kun katsomme vielä `main.java`-tiedostoa, huomaamme miten saamme luetelman vakion käyttöön kirjoittamalla esimerkiksi `Harvinaisuusaste.PERUS`, eli luetelman nimen ja halutun vakion nimen pisteellä erotettuna. Koodista tulee näin hieman pidempää, mutta samalla selkeämpää ja erityisesti turvallisempaa kehittää, sillä kääntäjä pystyy paremmin ilmoittamaan milloin koodissa yritetään tehdä jotain muuta kuin mihin ohjelma on suunniteltu.
+
+```java
+// FILE: main.java
+void main() {
+    //HIGHLIGHT_GREEN_BEGIN
+    Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, Harvinaisuusaste.PERUS);
+    Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, Harvinaisuusaste.HARVINAINEN);
+    Kerailykortti kortti3 = new Kerailykortti("Lentävä Lehmä", 1, Harvinaisuusaste.TARUNOMAINEN);
+    //HIGHLIGHT_GREEN_END
+
+    IO.println(kortti1);
+    IO.println(kortti2);
+    IO.println(kortti3);
+}
+// FILE_END
+// FILE: Kerailykortti.java
+class Kerailykortti {
+    private String nimi;
+    private int tunnistenumero;
+    private Harvinaisuusaste harvinaisuusaste;
+
+    public Kerailykortti(
+            String nimi,
+            int tunnistenumero,
+            Harvinaisuusaste harvinaisuusaste
+    ) {
+        this.nimi = nimi;
+        this.tunnistenumero = tunnistenumero;
+        this.harvinaisuusaste = harvinaisuusaste;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("#%s %s [%s]", tunnistenumero, nimi, harvinaisuusaste);
+    }
+}
+// FILE_END
+// FILE: Harvinaisuusaste.java
+enum Harvinaisuusaste {
+    PERUS,
+    YLEINEN,
+    HARVINAINEN,
+    ERITTAN_HARVINAINEN,
+    TARUNOMAINEN;
+}
+// FILE_END
+```
+
+- Lyhyt maininta luetelmasta ja compareTo-metodista johonkin väliin
 
 ```java
 enum Arvosana {
@@ -36,8 +187,7 @@ enum ViikonPaivat {
 }
 ```
 
-
-Voimme määritellä esimerkiksi luetelman sienten syötävyysmerkinnöille. 
+Voimme määritellä esimerkiksi luetelman sienten syötävyysmerkinnöille.
 
 ```java
 enum SienenSyotavyys {
@@ -50,9 +200,6 @@ enum SienenSyotavyys {
     TAPPAVAN_MYRKYLLINEN;
 }
 ```
-
-- Huomaa luetelman vakioiden erottimena pilkku ja lopuksi puolipiste
-
 
 Kattavaan merkintäluetelmaan tarvitsisimme vielä arvot esikäsiteltäville sienille. Yksinkertaisuuden vuoksi jätämme ne tässä esimerkissä huomiotta.
 
