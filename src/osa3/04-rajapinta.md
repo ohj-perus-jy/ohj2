@@ -16,6 +16,12 @@
 
 ![alt text](images/interfaces.png)
 
+> [!TODO]
+> Lisää monivalintakysymyksiä /-tehtäviä rajapinnoista. Mahdollisesti "ihan oikeita tehtäviä" pisteiden kera? Voisiko olla esim 4 * 0.25 pisteen kysymystä -> 1 pisteen tehtävä?
+
+> [!TODO]
+> Erota Perintä/Rajapinta-luku alkuperäisen suunnitelman mukaisesti omaksi luvukseen. 
+
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
 Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan. 
