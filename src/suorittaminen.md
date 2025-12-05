@@ -45,6 +45,8 @@ Lopullinen arvosana muodostuu harjoitustehtävien arvosanan ja tentin arvosanan 
 | Painotettu keskiarvo                     | 1.8   | 4.4   | 4.6   |
 | Pyöristetty arvosana                     | 2     | 4     | 5     |
 
+Harjoitustehtävistä saatu arvosana otetaan lukuun **kolmeen ensimmäiseen tenttiin**, jotka opiskelija suorittaa, ja enintään yhden vuoden sisällä opintojakson viimeisestä suorituspäivästä. 
+
 ## Suoritustapa 2
 
 *105% harjoitustehtävistä, suullinen kuulustelu harjoitustyöstä, harjoitustyö aikataulussa*
