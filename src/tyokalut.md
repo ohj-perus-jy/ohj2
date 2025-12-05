@@ -2,28 +2,19 @@
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
-
-- **Java Development Kit (JDK)** - Java-kielen *ohjelmistokehityspaketti*. Paketti sisältää kaikki Java-kehittämiseen tarvittavat työkalut, kuten Java-kielen kääntäjän sekä Java-virtuaalikoneen käännettyjen ohjelmien ajamista varten. JDK sisältää myös valmiita kirjastoja yleisimpiin käyttötarkoituksiin (esim. tekstin tulostaminen näytölle, kokoelmien käsittely) ja niiden dokumentaatiot.
+- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista varten. 
 
 - **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
-- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
-  IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
-  IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE — se on myös ohjelmoitu suurimmalta osin Javalla.
-  Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
+- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE), jolla voi kehittää ja debugata muun muassa Java-ohjelmia. (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys). Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
-
-Yllä olevat ohjelmat löytyvät valmiiksi asennettuna Agoran mikroluokissa.
-*Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
-Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
+Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja 2. kerros). Jos sinulla on oma tietokone, suosittelemme, että asennat ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
 >
-> Tämän sivun ohjeet vaativat komentorivin käyttöä.  
->
-> Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
+> Tämän sivun ohjeet vaativat komentorivin käyttöä. Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
 >
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
 > - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
@@ -115,7 +106,7 @@ Jos saat virheen `command not found: brew`,
 sinun tulee asentaa Homebrew alla olevilla ohjeilla:
 
 <details>
-<summary>Homebrew-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Homebrew-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
 2. Asenna ensin macOS:n kehitystyökalut suorittamalla alla oleva komento:
@@ -225,7 +216,7 @@ Jos näet git-työkalun version (esim. `git version X.XX.XX`, jossa `X.XX.XX` on
 Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa PowerShell-komentorivi.
 2. Asenna Git for Windows suorittamalla alla oleva komento:
@@ -286,7 +277,7 @@ Tarkista ensin, onko sinulla jo Git asennettuna.
 Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa Pääte.
 2. Git-työkalun pitäisi olla jo valmiiksi asennettu jos teit Valmistelu-vaiheessa olevat asiat. Tarkista, että Git toimii suorittamalla seuraava komento:
@@ -325,7 +316,7 @@ Jos näet git-työkalun version (esim. `git version X.XX.XX`, jossa `X.XX.XX` on
 Jos taas näet virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa jakelusi pääteohjelma.
 2. Asenna Git-pakkaus: `git`. Pakkauksen nimi on yleensä sama
@@ -381,9 +372,8 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
 4. Jos sinulla on jo jokin muu kehitysympäristö asennettuna (JetBrains Rider tai Visual Studio Code),
-   IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
-
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+   IDEA saattaa kysyä, haluatko tuoda (engl. *import*) asetuksia niistä. Voit 
+   halutessasi tuoda asetukset, voit tehdä asetukset myös myöhemmin ja painaa *Skip Import*.
 
 5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
    Ohjelman asennus on valmis!
@@ -413,7 +403,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
 4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+   IntelliJ IDEA voi kysyä, haluatko tuoda (engl. *import*) asetuksia niistä.
 
    Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
 
@@ -449,7 +439,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
 4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+   IntelliJ IDEA voi kysyä, haluatko tuoda (engl. *import*) asetuksia niistä.
 
    Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
 
