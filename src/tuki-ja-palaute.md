@@ -8,7 +8,12 @@ Kevään 2026 ohjauskauden (10.1.-30.4.) aikana on tarjolla seuraavat tukikanava
 | Etäohjaus                                            | ke 10-16, to 8-18, pe 10-16  | [Ohjelmointi 2 Teams-kanava](#ohjeet-teams-ohjauksiin-liittymiseksi-tutkinto-opiskelijat)                                        |
 | Vastuuopettajien ja tuntiopettajien sähköpostiosoite | Jatkuva                      | ohj2-opet@tim.jyu.fi                                                                                                             |
 
-<details closed><summary>Miten saan Sisun kalenteriin ohjausaikoja näkyviin? (Avaa ohje klikkaamalla) </summary>
+Ohjaukset ovat yhteisiä ITKP102 Ohjelmointi 1- ja ITKA2004 Tietokannat ja tiedonhallinta -opintojaksojen kanssa. Ohjaajat auttavat kummankin kurssin opiskelijoita.
+
+Ohjausaikoja saatetaan lisätä tai poistaa kysynnän mukaan; kerro aikatoiveistasi
+opettajille sähköpostitse. 
+
+<details closed><summary>Haluatko Sisun kalenteriin ohjausaikoja näkyviin? (Avaa ohje klikkaamalla) </summary>
 
 1. Kirjaudu Sisuun
 2. Jos olet jo ilmoittautunut kurssille, klikkaa ylhäällä välilehteä *Opintokalenteri* tai klikkaa sitä hampurilaisvalikosta
@@ -24,9 +29,6 @@ Kevään 2026 ohjauskauden (10.1.-30.4.) aikana on tarjolla seuraavat tukikanava
 
 </details>
 
-Ohjausaikoja saatetaan lisätä tai poistaa kysynnän mukaan; kerro aikatoiveistasi
-opettajille sähköpostitse. 
-
 ## Ohjeet Teams-ohjauksiin liittymiseksi (tutkinto-opiskelijat)
 
 1. Kirjaudu yliopiston tunnuksellasi Microsoft Teamsiin osoitteessa
@@ -40,11 +42,11 @@ opettajille sähköpostitse.
     ensin tukeeko Microsoft sitä 
     [täältä](https://learn.microsoft.com/en-us/microsoftteams/teams-client-web#prerequisites).
 
- 3. Teams-sovelluksessa klikkaa *Teams* -> *Join or create team* -> *Join a team with a code*
+ 3. Teams-sovelluksessa klikkaa *Teams* &rarr; *Join or create team* &rarr; *Join a team with a code*
 
  4. Syötä koodi `nnobn49` 
 
- 5. Testaa vaikka kaverin kanssa, että puhelu ja ruudun jakaminen toimii. Sinun tulee
+ 5. Testaa kaverin kanssa, että puhelu ja ruudun jakaminen toimii. Sinun tulee
 tarvittaessa sallia oikeudet käyttöjärjestelmäsi asetuksista. 
 
 ## Ohjeet Teams-ohjauksiin liittymiseksi (avoin yliopisto, erilliset opinto-oikeudet)
@@ -71,20 +73,21 @@ voit pyytää etäohjausta Zoomin kautta seuraavasti:
  1. Asenna Zoom sovellus koneellesi osoitteesta <https://zoom.us/download> (muut kuin tutkinto-opiskelijat) tai <https://jyufi.zoom.us> (tutkinto-opiskelijat; Valitse Download Client ihan alhaalta)
  2. Kirjaudu Zoomiin valitsemallasi tilillä, esim. Google-kirjautumista käyttäen (muut kuin tutkinto-opiskelijat) tai Single Sign-on / SSO -toiminnolla (tutkinto-opiskelijat; käytä company domainia `jyufi`)
  3. Aloita kokous New meeting toiminnolla
- 4. Testaa Audio -> Test speaker & mikrofone toiminnolla että äänet pelittää
- 5. Ota kokouslinkki talteen Participants -> Copy invite link
- 6. Avaa ohjauspyyntölomake: **TODO! LINKKI**
+ 4. Testaa Audio &rarr; Test speaker & mikrofone toiminnolla että äänet pelittää
+ 5. Ota kokouslinkki talteen Participants &rarr; Copy invite link
+ 6. Avaa ohjauspyyntölomake: [https://forms.gle/5QULUPBHjjqS4ndf6](https://forms.gle/5QULUPBHjjqS4ndf6)
  7. Täytä omat tietosi ja HUOM Pasteta lisätietokenttään kohdassa 5 kopioimasi linkki
- 8. Odota että ohjaaja tulee huoneeseesi. Saatat joutua hyväksymään hänen sisäänpääsyn (riippuu kokoushuoneesi asetuksista)
+ 8. Odota, että ohjaaja tulee huoneeseesi. Saatat joutua hyväksymään hänen sisäänpääsyn (riippuu kokoushuoneesi asetuksista)
 
 ## Palaute ja kehittäminen
 
+Olemme erittäin kiitollisia kaikesta palautteesta, joka auttaa meitä kehittämään opintojaksoa edelleen!
 Voit antaa palautetta ja kehitysehdotuksia opintojaksosta kolmella tavalla:
 
  1. Keräämme jatkuvaa palautetta opintojakson aikana. Nyt, kun olemme kehittämässä opintojakson sisältöjä ja toteutusta, tämä jatkuva palaute on erityisen tärkeää. Voit antaa palautetta anonyymisti alla olevan linkin kautta: **TODO:** Norppa-linkki tähän.
 
  2. Mikäli havaitset materiaalissa virheen, epäselvyyden, tai muun ongelman, voit raportoida siitä
-    GitHubissa (TODO: Issue-linkki tähän), tai suoraan opettajille sähköpostitse osoitteeseen `ohj2-opet@tim.jyu.fi`.
+    GitHubissa klikkaamalla kunkin sivun alareunassa olevia linkkejä. Voit myös ilmoittaa puutteista suoraan opettajille sähköpostitse osoitteeseen `ohj2-opet@tim.jyu.fi`.
  
  3. Opintojakson lopuksi jokainen Sisussa (tai Ilpo-portaalissa) ilmoittautunut saa henkilökohtaisen linkin kurssipalautekyselyyn, jossa voit antaa anonyymisti palautetta koko opintojaksosta.
 

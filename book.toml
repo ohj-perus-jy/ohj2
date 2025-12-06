@@ -18,6 +18,7 @@ additional-css = [
   "theme/accordion.css",
   "theme/codeblock-tabs.css",
   "theme/code-highlights.css",
+  "theme/tasks.css"
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
