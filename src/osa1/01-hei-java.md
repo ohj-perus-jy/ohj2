@@ -38,7 +38,7 @@ Tässä olennaisimmat Javan koodauskäytänteet, joita on hyvä pitää mieless�
 TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
 
 ## Java ohjelmien kääntäminen ja ajaminen
-Tallenna yllä oleva esimerkki tietokoneellesi tiedostonimellä Hei.java
+Lähdetäänpä katsomaan mitä "konepellin alla tapahtuu", kun painat aja -näppäintä:
 
 ### java
 `java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Java-tavukoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 

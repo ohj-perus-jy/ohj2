@@ -109,13 +109,13 @@ void main () {
 TODO:
 (Kuinka tarkkaan metodeja tulisi käydä läpi? Vai mieluummin tekisi jonkin tehtävän, jossa joutuu kahlaamaan dokumentaatiota, että löytää sopivat metodit?)
 
-Huomaa ainakin nämä erot Javan ja C# välillä listoja käytettäessä:
+Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä:
 
-| Java                   | C#                                |
-| ---------------------- | --------------------------------- |
-| list.get(indeksi)      | list[indeksi]                     |
-| list.size()            | list.Count                        |
-| list.remove(indeksi)   | list.RemoveAt(indeksi)            |
+| Java                   | C#                                | Python                            |
+| ---------------------- | --------------------------------- | --------------------------------- |
+| list.get(indeksi)      | list[indeksi]                     | list[indeksi]                     |
+| list.size()            | list.Count                        | len(list)                         |
+| list.remove(indeksi)   | list.RemoveAt(indeksi)            | list.pop(indeksi)                 |
 
 Lisäksi Javassa metodille `add()` on kaksi toteutusta, joista `add(lisättava)` lisää listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi toteutusta, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy. 
 

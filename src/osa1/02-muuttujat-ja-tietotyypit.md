@@ -37,8 +37,6 @@ Javassa on seuraavat C#:stakin tutut numeeriset muuttujatyypit:
 - `float`
 - `double`
 
-
-
 Numeroliteraalin tyypin saa vaihdettua 
 ```java
 void main() {
@@ -52,7 +50,7 @@ void main() {
 }
 ```
 
-Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä.
+Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla et (välttämättä) tarvitse muita kuin yllä mainittuja.
 
 ## Yksittäinen merkki ja merkkijonot
 
