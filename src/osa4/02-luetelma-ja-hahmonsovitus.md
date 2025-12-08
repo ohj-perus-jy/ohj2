@@ -7,7 +7,7 @@
 
 ## Luetelma rajatuille joukoille
 
-Luetelma (eng. enum/enumeration) on erityinen tyyppi, jolla voidaan rajoittaa muuttujan mahdolliset arvot tiettyyn joukkoon nimettyjä vakioita. Usein mainittuja hyviä esimerkkejä luetelmille ovat viikonpäivät (ma, ti, ke, to, pe, la, su) tai ilmansuunnat (pohjoinen, itä, etelä, länsi).
+Luetelma (eng. enum/enumeration) on erityinen tyyppi, jolla voidaan rajoittaa muuttujan mahdolliset arvot tiettyyn joukkoon nimettyjä vakioita. Usein mainittuja esimerkkejä luetelmille ovat esimerkiksi viikonpäivät (ma, ti, ke, to, pe, la, su) tai ilmansuunnat (pohjoinen, itä, etelä, länsi) sekä pelikorttien maat (hertta, ruutu, risti, pata).
 
 <!-- Olennaista on voida olettaa luetelman arvojoukon pysyvän samana, eli vakiona, koko ohjelman käytön ajan. -->
 
@@ -47,7 +47,7 @@ void main() {
 // FILE_END
 ```
 
-> ![Vinkki]
+> [!Vinkki]
 > Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1-5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
 
 Tässä on hyvä huomata heti potentiaalinen ongelma. Mitä jos jossain päin koodia luodaankin kortti, jonka arvoluokka on 0 tai 6? Tai vaikka -1 tai 100? Mikäli ohjelma on rakennettu sillä oletuksella, että arvoluokka on aina välillä 1-5, voi seurata odottamattia virheitä ohjelman suorituksen aikana, jos oletus ei jostain syystä pädekään. Yllä olevassa esimerkissä mikään ei estä luomasta korttia, jonka arvoluokka on vaikkapa 10.
@@ -107,24 +107,6 @@ enum Arvoluokka {
 // FILE_END
 // FILE: main.java
 void main() {
-    Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, Arvoluokka.PERUS);
-    Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, Arvoluokka.HARVINAINEN);
-    Kerailykortti kortti3 = new Kerailykortti("Lentävä Lehmä", 1, Arvoluokka.TARUNOMAINEN);
-
-    IO.println(kortti1);
-    IO.println(kortti2);
-    IO.println(kortti3);
-}
-// FILE_END
-```
-
-<!-- Olisikohan tässä kivempi jos monen tiedoston esimerkki olisi purettu osiin ja lopuksi tulisi vasta yhdistetty ajettava versio? -->
-
-Kun katsomme vielä `main.java`-tiedostoa, huomaamme miten saamme luetelman vakion käyttöön kirjoittamalla esimerkiksi `Arvoluokka.PERUS`, eli luetelman nimen ja halutun vakion nimen pisteellä erotettuna. Koodista tulee näin hieman pidempää, mutta samalla selkeämpää ja erityisesti turvallisempaa kehittää; kääntäjä pystyy paremmin ilmoittamaan milloin koodissa yritetään tehdä jotain muuta kuin mihin ohjelma on suunniteltu.
-
-```java
-// FILE: main.java
-void main() {
     //HIGHLIGHT_GREEN_BEGIN
     Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, Arvoluokka.PERUS);
     Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, Arvoluokka.HARVINAINEN);
@@ -136,38 +118,11 @@ void main() {
     IO.println(kortti3);
 }
 // FILE_END
-// FILE: Kerailykortti.java
-class Kerailykortti {
-    private String nimi;
-    private int tunnistenumero;
-    private Arvoluokka arvoluokka;
-
-    public Kerailykortti(
-            String nimi,
-            int tunnistenumero,
-            Arvoluokka arvoluokka
-    ) {
-        this.nimi = nimi;
-        this.tunnistenumero = tunnistenumero;
-        this.arvoluokka = arvoluokka;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("#%s %s [%s]", tunnistenumero, nimi, arvoluokka);
-    }
-}
-// FILE_END
-// FILE: Arvoluokka.java
-enum Arvoluokka {
-    PERUS,
-    YLEINEN,
-    HARVINAINEN,
-    ERITTAN_HARVINAINEN,
-    TARUNOMAINEN;
-}
-// FILE_END
 ```
+
+<!-- Olisikohan tässä kivempi jos monen tiedoston esimerkki olisi purettu osiin ja lopuksi tulisi vasta yhdistetty ajettava versio? -->
+
+Kun katsomme vielä ylläolevan esimerkin `main.java`-tiedostoa, huomaamme miten saamme luetelman vakion käyttöön kirjoittamalla esimerkiksi `Arvoluokka.PERUS`, eli luetelman nimen ja halutun vakion nimen pisteellä erotettuna. Koodista tulee näin hieman pidempää, mutta samalla selkeämpää ja erityisesti turvallisempaa kehittää; kääntäjä pystyy paremmin ilmoittamaan milloin koodissa yritetään tehdä jotain muuta kuin mihin ohjelma on suunniteltu.
 
 > [!Huomautus]
 >
@@ -185,7 +140,7 @@ enum Arvoluokka {
 
 ## Luetelmalle ominaisuuksia ja toiminnallisuutta
 
-Luetelma voi olla enemmänkin kuin tietotyyppi joukolle nimettyjä vakioita. Voimme Javassa käyttää luetelmia monin samoin tavoin kuin tavallisia luokkia, kuten määrittää luetelman vakioille dataa attribuuteilla ja konstruktoreilla, sekä toteuttaa toiminnallisuutta metodeilla.
+Voimme Javassa käyttää luetelmia monin samoin tavoin kuin tavallisia luokkia, kuten määrittää luetelman vakioille dataa attribuuteilla ja konstruktoreilla, sekä toteuttaa toiminnallisuutta metodeilla.
 
 Katsotaan seuraavaksi esimerkkiä, jossa luomme luettelon `Suunta`, joka sisältää neljä suuntaa: ylös, alas, vasen ja oikea. Jokaisella suunnalla on lisäksi kaksi attribuuttia: `xMuutos` ja `yMuutos`, jotka määrittävät kuinka paljon kyseinen suunta muuttaa koordinaatteja x- ja y-akselilla.
 
@@ -519,7 +474,17 @@ Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:
 > [!Vinkki]
 > Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
 
-### Hahmonsovitus muuttujiin ja rajattu sovitus
+<task>
+  <task-title>Tehtävä 4.8: Hahmonsovitus 2<points>0.25 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+### Hahmonsovitus muuttujiin
 
 Hahmonsovituksen määritelmässä mainittiin, että hahmonsovituksella voidaan määritellä uusia muuttujia sovitetusta hahmosta. Javan `switch`-lausekkeessa tämä onnistuu lisäämällä haluttu muuttujan nimi hahmon määritelmään, jolloin muuttujaa voidaan hyödyntää haarassa.
 
@@ -556,7 +521,9 @@ void main() {
 
 Jokaisessa haarassa, oletushaara poislukien, määritetään uudentyyppinen muuttuja. Esimerkiksi toisessa haarassa `case Float luku` määritellään uusi `numero`-muuttuja, joka on tyyppiä `Float`. Muuttuja sisältää saman arvon kuin käsiteltävällä lausekkeella, mutta uuden muuttujan tyyppi on tarkempi, jolloin meillä on enemmän toiminnallisuutta tarjolla kuin yleisemmillä luokilla. Tässä tapauksessa käytämme `Math.round`-metodia pyöristämään liukuluvun kokonaisluvuksi.
 
-Hahmonsovituksen muuttujille voi määrittää myös ehtoja, joka tapahtuu Javan `switch`-lausekkeessa `when`-avainsanan avulla. Tätä kutsutaan rajatuksi sovitukseksi (engl. _guarded pattern matching_).
+### Rajattu sovitus
+
+Hahmonsovituksen haaroille voi määrittää myös ehtoja, joka tapahtuu Javan `switch`-lausekkeessa `when`-avainsanan avulla. Tätä kutsutaan rajatuksi sovitukseksi (engl. _guarded pattern matching_).
 
 Voisimme esimerkiksi jakaa aiemman karkausvuoden tarkistuksen suoraan `switch`-lausekkeeseen rajatun sovituksen avulla seuraavasti:
 
@@ -588,7 +555,7 @@ void main() {
 }
 ```
 
-Katsotaan vielä hieman laajempaa esimerkkiä mäkihypyn kontekstissa, missä mitataan muun muassa hypyn pituutta ja pituudesta saatavat pisteet riippuvat mäen pituudesta. Jokaisella mäkihyppymäellä on määritelty k-piste eli mäen loiventumiskohta, joka määrää montako pistettä hyppysuorituksesta pituudesta saa per metri.
+Katsotaan vielä hieman laajempaa esimerkkiä mäkihypyn kontekstissa. Jokaisella virallisella mäkihyppymäellä on määritelty k-piste eli mäen loiventumiskohta, ja hyppysuorituksen pituudesta saatavat pisteet riippuvat hypätyn mäen k-pisteestä.
 
 Alla on taulukko, joka listaa hyppypituuden pisteytyksen mäen k-pisteen mukaan (lähde: [kansainvälinen hiihtoliitto FIS](https://assets.fis-ski.com/f/252177/x/c0404a825e/icr-ski-jumping-2024_e_markedup.pdf)):
 
@@ -634,3 +601,13 @@ void main() {
     IO.println("K-pisteellä " + kPoint + " pisteet per metri: " + pisteet);
 }
 ```
+
+<task>
+  <task-title>Tehtävä 4.8: Hahmonsovitus 2<points>0.25 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
+</task>
