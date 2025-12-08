@@ -2,8 +2,8 @@
 
 > [!Osaamistavoitteet]
 >
-> - Ymmärrät vertailurajapintojen merkityksen Javassa ja osaat järjestää kokoelmia niiden avulla
-> - Tunnet Javan Tietue-luokkatyypin ja ymmärrät sen
+> - Ymmärrät vertailurajapintojen merkityksen Javassa
+> - Osaat hyödyntää vertailurajapintoja itsetehtyjen tyyppien järjestämiseen kokoelmissa
 
 ## Vertailurajapinnat
 
@@ -120,13 +120,13 @@ Lisäksi Javasta löytyy vielä [`AbstractCollection`](https://docs.oracle.com/e
 
 </details>
 
-> <task>
+<task>
   <task-title>Tehtävä 4.1: Miksi Comparable? <points>1 p.</points> </task-title>
   <handout>
->
-> {{#include ../exercises/4-1-miksi-comparable/handout.md}}
->
->   </handout>
+
+{{#include ../exercises/4-1-miksi-comparable/handout.md}}
+
+  </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
 </task>
 
@@ -259,6 +259,16 @@ Huomaa, että `implements Comparable<Kerailykortti>`-osa luokan määrittelyssä
 >
 > Olennainen syy miksi `Integer.compare`-metodia kannattaa käyttää on, että se käsittelee oikein myös erikoistapaukset kuten ylivuodot, joita voi syntyä suoran vähennyslaskun avulla tehtävässä vertailussa: `this.tunnistenumero - other.tunnistenumero` — mieti mikä on `compareTo`:n antama järjestys, jos `this.tunnistenumero` on `int`:n pienin mahdollinen arvo ja `other.tunnistenumero` on `1` (vihje: ei mitä sen pitäisi olla eli negatiivinen).
 
+<task>
+  <task-title>Tehtävä 4.2: Henkilöt järjestykseen. <points>0.5 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-2-henkilöt-järjestykseen/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
+</task>
+
 ### Useamman kentän vertailu
 
 Katsotaan vielä hieman monimutkaisempaa tapausta, missä meillä on keräilykortissa vielä tieto kortin sarjasta (esim. "Eläimet", "Ajoneuvot" jne.).
@@ -364,23 +374,14 @@ void main() {
 // FILE_END
 ```
 
-> <task>
-  <task-title>Tehtävä 4.2: Henkilöt järjestykseen. <points>0.5 p.</points> </task-title>
-  <handout>
->
-> {{#include ../exercises/4-2-henkilöt-järjestykseen/handout.md}}
->
->   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
-</task>
 
-> <task>
+<task>
   <task-title>Tehtävä 4.3: Henkilöt järjestykseen 2. <points>0.5 p.</points> </task-title>
   <handout>
->
-> {{#include ../exercises/4-3-henkilöt-järjestykseen-2/handout.md}}
->
->   </handout>
+
+{{#include ../exercises/4-3-henkilöt-järjestykseen-2/handout.md}}
+
+  </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
 </task>
 
@@ -505,13 +506,13 @@ class Kerailykortti {
 
 Olennainen ero `Collections.sort`:iin verrattuna on, että `List.sort`:lle täytyy antaa `Comparator` parametrina.
 
-> <task>
+<task>
   <task-title>Tehtävä 4.4: Kortit harvinaisuuden mukaan. <points>0.5 p.</points> </task-title>
   <handout>
->
-> {{#include ../exercises/4-4-kortit-comparator/handout.md}}
->
->   </handout>
+
+{{#include ../exercises/4-4-kortit-comparator/handout.md}}
+
+  </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
 </task>
 
@@ -527,3 +528,6 @@ Olennainen ero `Collections.sort`:iin verrattuna on, että `List.sort`:lle täyt
   - equals-metodi, joka palauttaa true, jos oliot ovat samaa luokkaa ja kaikki kentät ovat samat
   - hashCode-metodi, joka palauttaa saman arvon, kun kaikki kentät ovat samat (ja mahdollisesti muulloinkin — törmäykset ovat mahdollisia)
   - toString-metodi, joka sisältää luokan nimen sekä jokaisen kentän nimen ja sen vastaavan arvon
+
+- Miksi Javassa on haluttu tehdä tietue muuttumattomaksi?
+- Mitä hyötyä ja mahdollista harmia tästä on?
