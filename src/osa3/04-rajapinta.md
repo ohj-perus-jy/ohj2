@@ -499,13 +499,13 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 
 
 <task>
-  <task-title>Tehtävä 3.7: Seikkailupeli. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 3.8: Seikkailupeli. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-7-seikkailupeli/handout.md}}
+  {{#include ../exercises/3-8-seikkailupeli/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava8">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 
