@@ -7,38 +7,229 @@
 > - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
 > - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
 
+Ohjelmointi 2 -kurssilla käytämme Java-ohjelmointikieltä. Java on
+yleiskäyttöinen olio-ohjelmointia tukeva kieli, joka on tarkoitettu alustasta
+riippumattomien ohjelmien kirjoittamiseen. Java on suosittujen
+ohjelmointikielten kärkilistoilla (ks. esim. 
+[TIOBE index](https://www.tiobe.com/tiobe-index/), 
+[StackOverflow 2025 developer survey](https://survey.stackoverflow.co/2025/technology), 
+[suosituimmat kielet GitHub-palvelussa](https://madnight.github.io/githut)). 
+Javan syntaksi on hyvin samankaltainen 
+[Ohjelmointi 1 -kurssilla](https://ohjelmointi1.it.jyu.fi)
+käytettyyn C#-kieleen.
+
 ## Java-kielen perusteet
 
-Lähdetäänpä liikkeelle perinteisellä 'Hei, maailma' -esimerkillä kirjoittamalla se Javalla:
+Lähdetään liikkeelle perinteisellä 'Hei, maailma' -esimerkillä Javalla:
 
 ```java
 /* 1 */ void main() {
 /* 2 */     IO.println("Hei, maailma!");
 /* 3 */ }
 ```
+
 Käydään läpi ohjelma rivi riviltä:
 
-1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void` tarkoittaa, että aliohjelma ei palauta mitään arvoja. Koska pääohjelma ei ota parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä aloitetaan myös aliohjelman runko aaltosululla`{`.
+1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void`
+   tarkoittaa, että aliohjelma ei palauta mitään arvoja. Koska pääohjelma ei ota
+   parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä
+   aloitetaan myös aliohjelman runko aaltosululla`{`.
 
-2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen onnistuu `IO.println`-metodilla.
+2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen
+   onnistuu `IO.println`-metodilla.
 
 3. Aliohjelman runko lopetetaan aaltosululla `}`.
 
 ## Javan koodauskäytänteistä
 
-Tässä olennaisimmat Javan koodauskäytänteet, joita on hyvä pitää mielessä:
+Kuten eri kielissä on tapana, Javassa on oma joukko vakiintuneita
+koodauskäytänteitä. Tutustumme erilaisiin käytänteisiin tämän materiaalin
+edetessä. Mainittakoon, että Javan koodauskäytänteet poikkeavat hieman C#-kielen
+käytänteistä aliohjelmien nimeämisessä ja aaltosulkujen asettamisessa.
 
-- Aliohjelman runkoa aloittava aaltosulku `{` laitetaan yleensä samalle riville kuin aliohjelman määrittely. Sama pätee muille rakenteille, jossa käytetään aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
+Tässä olennaisimmat Javan koodauskäytänteet, joita on tässä vaiheessa hyvä pitää
+mielessä:
 
-- Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen kirjain on pienellä ja seuraavat sanat aloitetaan isolla kirjaimella. Esimerkiksi `tamaOnFunktionNimi`. Samaa tyyliä käytetään myös muuttujien nimeämisessä.
+- Aliohjelman runkoa aloittava aaltosulku `{` laitetaan yleensä samalle riville
+  kuin aliohjelman määrittely. Sama pätee muille rakenteille, jossa käytetään
+  aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
 
-- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, (TODO: vaihda enum esimerkki kurssilla esitellyyn) `public class Opiskelija {...`, `public interface Saadettava {...` tai `public enum Viikonpaiva { ...`.
+- Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen
+  kirjain on pienellä ja seuraavat sanat aloitetaan isolla kirjaimella.
+  Esimerkiksi `tamaOnFunktionNimi`. Samaa tyyliä käytetään myös muuttujien
+  nimeämisessä.
 
-### Kurssikohtaiset IntelliJ asetukset
-TODO: Tähän täydentyy kurssikohtaiset asetukset IntelliJ-ideä varten
+- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset
+  nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, `public class
+  Opiskelija {...`, `public interface Saadettava {...` tai `public enum
+  Viikonpaiva { ...`.
 
-## Java ohjelmien kääntäminen ja ajaminen
-Tallenna yllä oleva esimerkki tietokoneellesi tiedostonimellä Hei.java
+
+## Opas: Java ohjelmien kääntäminen ja ajaminen
+
+> [!TÄRKEÄÄ]
+>
+> Tässä osiossa tarvitset opintojakson työkaluja. Käy ensin asentamassa kaikki
+> työkalut [Työkaluohjeesta](../tyokalut.md).
+
+Tässä materiaalissa käytämme IntelliJ IDEA -kehitysympäristöä Java-ohjelmien
+luomiseen, ajamiseen ja virheenjäljitykseen.
+
+### Luo uusi Java projekti
+
+Luodaan seuraavaksi yksinkertainen Java-projekti IDEAssa.
+Projekti on IDEA-kehitysympäristön tapa koostaa lähdekooditiedostoja,
+testeja, kirjastoja ja muita lisätiedostoja yhteen kokonaisuuteen.
+
+Tee seuraavasti:
+
+1. Avaa IntelliJ IDEA ja avaa uuden projektin dialogi.
+
+    Jos sinulle avautui *Welcome to IntelliJ IDEA*, valitse
+    **New Project**.
+    
+    Jos sinulle avautui jokin valmis Java-projekti, valitse yläpalkissa 
+      **File** <i class="bi bi-chevron-right"></i>
+      **New** <i class="bi bi-chevron-right"></i>
+      **Project**.
+      
+      <img src="images/intellij-new-project.png" width="500">
+
+      Yläpalkin valinnat saattavat olla hampurilaisvalikkopainikkeen (<i class="bi bi-list"></i>) takana.
+
+2. Uuden projektin dialogissa aseta seuraavat tiedot:
+
+    * Valitse vasemmalla puolella olevasta listasta projektityypiksi **Java**.
+
+    * Aseta projektin nimeksi **Name**-kenttään `HelloWorld`. Projektien nimet yleensä
+      kirjoitetaan ilman välilyöntejä.
+
+    * Aseta projektin sijainti **Location**-kentässä. Klikkaa kentän oikealla puolella 
+      olevaa kansiokuvaketta (<i class="bi bi-folder2"></i>) ja valitse
+      projektille sopiva kansio. Valitse sellainen kansio, jonka löydät tulevaisuudessakin
+      helposti omalta tietokoneelta.
+
+    * Valitse **Build system**-rivillä **IntelliJ**.  
+      Tutustumme muihin projektien rakennusjärjestelmiin myöhemmissä osissa.
+
+    * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#java-development-kit-jdk).
+
+    * Laita ruksi **Add sample code** pois päältä. Lisäämme kooditiedoston itse.
+
+    * Laita ruksi **Create Git repository** pois päältä. Emme tarvitse vielä versiohallintaa tässä vaiheessa.
+
+    Yllä olevien muutosten jälkeen tuloksen pitäisi näyttää seuraavalta:
+
+    <img src="images/intellij-new-project-dialog.png" width="600">
+    
+3. Paina **Create**. Tämän jälkeen IDEA luo uuden projektin valitsemaasi kansioon.
+
+    Käydään pikaisesti läpi IDEAn olennaisimmat osat:
+
+    <img src="images/intellij-main-view-parts.png" width="600">
+
+
+    1. **Koodialue**: projektissa olevien tiedostojen sisällöt näkyvät tässä, kun ne avataan.
+       Kukin avattu tiedosto avautuu omaan välilehteen.
+    2. **Projektiselain**: projektissa olevat kansiot ja tiedostot näkyvät tässä.
+       Selaimen kautta voidaan lisätä, poistaa, siirtää tai uudelleennimetä tiedostoja ja kansioita.
+    3. **Projektin ajaminen ja debuggaus**: tässä näkyy ajettavan Java-ohjelman nimi,
+       ohjelman ajopainike (<i class="bi bi-play-fill"></i>) ja debuggauspainike (<i class="bi bi-bug"></i>).
+    4. **Valikot ja näkymät**: IDEAssa on erilaisia näkymiä, jotka ovat oletuksella piilossa.
+       Sivupalkin avulla voidaan avata ja piilottaa näkymät tarpeen mukaan. Esimerkiksi
+       projektiselaimen voi piilottaa painamalla sivupalkissa olevasta kansiokuvakkeesta (<i class="bi bi-folder2"></i>).
+
+### Luo lähdekooditiedosto
+
+IntelliJ-projektissa kaikki koodi laitetaan `src`-kansioon.
+Luodaan seuraavaksi yksinkertainen Java-lähdekooditiedosto, johon
+voidaan kirjoittaa koodi.
+
+Tee seuraavasti:
+
+1. Projektiselaimessa klikkaa oikealla hiiren painikkeella `src` kansiosta
+   ja valitse **New** <i class="bi bi-chevron-right"></i> **Java Compact File**.
+
+2. Aseta avautuneessa dialogissa lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
+
+<video src="images/intellij-new-java-file.mp4" controls></video>
+
+IDEA luo uuden `Ohjelma.java`-nimisen tiedoston `src`-kansioon. IDEA myös lisää
+automaattisesti `main`-aliohjelman määrittelyn lähdekooditiedostoon.
+
+Samalla IDEA avaa lähdekooditiedoston koodialueelle. Voit jatkossa avata
+tiedoston myös klikkaamalla se kahdesti projektinäkymästä.
+
+### Kirjoita koodi
+
+Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma" ohjelma alusta alkaen
+juuri luotuun `Ohjelma.java`-tiedostoon.
+
+Tee seuraavasti:
+
+1. Poista kaikki koodi `Ohjelma.java` -tiedostosta.
+
+   IDEA lisää yleensä valmista pohjakoodia uusiin lähdekooditiedostoihin.
+   Tätä harjoitusta varten kirjoitamme kuitenkin koodia itse.
+
+2. *Kirjoita* seuraava koodi `Ohjelma.java` -tiedostoon:
+
+    ```java,noplayground
+    void main() {
+        IO.println("Hei, maailma!");
+    }
+    ```
+
+    *Vältä kopioimasta koodia*, vaan kirjoita se itse. Kirjoittaminen itse
+    usein auttaa muistamaan, mistä eri ohjelmoinnissa käytettävät merkit,
+    kuten aaltosulut, kaarisulut ja puolipiste löytyvät.
+
+<details>
+<summary>Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
+
+IDEA tarjoaa lisäksi erilaisia aikaa säästäviä täydennysominaisuuksia, 
+joiden käyttöä on hyvä harjoitella.
+
+Voit kokeilla seuraavia täydennysominaisuuksia:
+
+* `main`-pääohjelman automaattinen lisääminen: Aloita kirjoittamalla `main`.
+    Paina sen jälkeen <kbd>Ctrl</kbd>+<kbd>Space</kbd> (macOS: <kbd>⌘</kbd>+<kbd>Space</kbd>).
+    Valitse nuolinäppäimillä `main`-pohja ja paina <kbd>Enter</kbd>:
+
+    <video src="images/intellij-main-template.mp4" controls></video>
+    
+    IDEA sisältää erilaisia valmiita pohjia, jotka nopeuttavat
+    koodin kirjoittamista ja helpottavat yleisempien rakenteiden muistamista.
+    Näet kaikki koodipohjat painamalla <kbd>Ctrl</kbd>+<kbd>J</kbd>
+    (macOS: <kbd>⌘</kbd>+<kbd>J</kbd>).
+
+* `println`-aliohjelman automaattinen täydentäminen: Siirrä kursori 
+`main`-pääohjelmaan tyhjälle riville. 
+
+Kirjoita alkuun kirjain `I`, minkä jälkeen IDEA automaattisesti näyttää
+kaikki kursorin kohdalle sopivat rakenteet, jotka alkavat kirjaimella I.
+Valitse nuolipainikkeilla `IO` ja paina <kbd>Enter</kbd>. Tämä 
+täydentää `IO` kursorin kohdalle.
+
+Kirjoita sen jälkeen `.` (piste), minkä jälkeen IDEA automaattisesti näyttää
+kaikki `IO`-luokassa olevat aliohjelmat. Siirry listassa nuolipainikkeilla
+`println`-aliohjelman kohdalle ja paina <kbd>Enter</kbd>.
+Tämä täydentää `printl`-tekstin kursorin kohdalle.
+
+Kirjoita sen jälkeen kaarisulku `(`. IDEA automaattisesti täydentää
+lopettavan kaarisulun `)`. Siirry nuolipainikkeilla kaarisulkujen väliin
+ja kirjoita `"Hei, maailma!"`. Lopuksi siirry rivin loppuun painamalla <kbd>End</kbd>
+tai nuolinäppäimiä käyttäen ja lisää loppuun puolipiste `;`.
+
+<video src="images/intellij-auto-completion.mp4" controls></video>
+
+IDEA osaa automaattisesti siis ehdottaa luokkien ja aliohjelmien nimiä
+konteksin perusteella. Voit myös aina erikseen avata automaattisen
+täydennyksen painamalla
+
+</details>
+        
+
 
 ### java
 `java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Hei.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Java-tavukoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut bittikooditiedostot. 
