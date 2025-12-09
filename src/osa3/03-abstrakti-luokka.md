@@ -304,6 +304,8 @@ Laite <|-- Kahvinkeitin
 @enduml
 ```
 
+Abstraktin luokan "vastakohtana" voidaan pitää konkreettista luokkaa, josta voi luoda ilmentymiä. Esimerkiksi `Valo`, `Turvakamera` ja `Kahvinkeitin` ovat konkreettisia luokkia, koska niistä voi luoda ilmentymiä.
+
 ## Miksi abstrakti luokka on hyödyllinen?
 
 Abstrakti luokka ei ole vain kielto tehdä luokasta ilmentymiä. Sen ensisijainen tarkoitus on
