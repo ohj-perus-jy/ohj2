@@ -6,7 +6,6 @@
 > - Käytetään perintää olioiden yhteistyössä
 > - Ymmärrät miten luokat ja oliot voivat periä toistensa ominaisuuksia
 > - Ymmärrät miten metodeja voi korvata luokan sisällä ja luokkien yli
-> - Korvaaminen, @Override, final
 > - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan ja korvaa sen metodeja
 > - Object-luokka ja sen korvattavat metodit
 > - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
@@ -14,13 +13,18 @@
 
 *Perintä* tarkoittaa mekanismia, jossa luokka sisällyttää itseensä toisen luokan ominaisuudet (attribuutit) ja toiminnallisuudet (metodit). Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
-## Esimerkki
+## Opintotietojärjestelmä
 
 Käytännössä olioilla on usein yhteisiä piirteitä. Otetaan keksitty esimerkki henkilötietojärjestelmästä: Maija Opiskelija, Olli Opettaja ja Satu Sihteeri voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on kaikille käyttäjille tyypillisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisen pitäisi myös päästä kirjautumaan sisään järjestelmään ja sieltä ulos. 
 
 Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelijalla voisi olla lista kursseista, joille hän on ilmoittautunut, sekä hänen suorittamansa opintopisteet. Opettajalla on kurssit, joita hän opettaa sekä tehtävänimike, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
 
 Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
+
+> [!VAROITUS]
+> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit, tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta, sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei ole välttämättä tarpeen. Dokumentaatiokommentit on kuitenkin kirjoitettu mukaan GitHubissa olevan esimerkkikoodin tiedostoihin.
+>
+> Lisää omaan koodiisi kuitenkin aina asianmukaiset dokumentaatiokommentit!
 
 > [!VAROITUS]
 > Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti nimen asettaminen julkisella `setNimi`-metodilla rikkoo tiedon piilottamisen periaatetta (ks. [Luku 2.1](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin edetessä.
