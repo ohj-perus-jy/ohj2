@@ -29,7 +29,7 @@
   - [Polymorfismi](./osa3/02-polymorfismi.md)
   - [Abstrakti luokka](./osa3/03-abstrakti-luokka.md)
   - [Rajapinta](./osa3/04-rajapinta.md)
-  - [Perintä tai rajapinta?](./osa3/05-perinta-tai-rajapinta.md)
+  - [Perintä ja rajapinta olioiden yhteistyössä](./osa3/05-perinta-tai-rajapinta.md)
   - [Osan kaikki tehtävät](./osa3/06-tehtavat.md)
 - [Hyödyllisiä menetelmiä olio-ohjelmoinnissa](./osa4/index.md)
   - [Geneeriset luokat](./osa4/02-geneeriset-luokat.md)
