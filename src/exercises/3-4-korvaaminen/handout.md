@@ -6,14 +6,19 @@ Luokkarakenteen tulee olla seuraava:
 
 ```plantuml
 @startuml```
-class Ajoneuvo {
-} 
-class Auto {
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
 }
-class Polkupyora {
-}
-class KuormaAuto {
-}
+skinparam arrowColor   #888888
+
+class Ajoneuvo
+class Auto
+class Polkupyora
+class KuormaAuto
+
 Ajoneuvo <|-- Auto
 Ajoneuvo <|-- Polkupyora
 Auto <|-- KuormaAuto
