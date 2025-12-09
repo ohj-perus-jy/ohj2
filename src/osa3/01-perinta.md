@@ -225,15 +225,15 @@ Henkilo <|-- Opettaja
 
 Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified Modelling Language*). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto kunkin näiden näkyvyydestä. Jätämme ne kuitenkin tässä esimerkissä yksinkertaisuuden vuoksi pois ja käytämme UML:ää tässä sopivasti soveltaen; palaamme UML:ään tarkemmin myöhemmissä osissa.
 
-## Rakentajat ja super-avainsana
+## Muodostajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole rakentajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
+Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole muodostajaa, nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se asetetaan erikseen. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
 
 Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen  julkisen metodin kautta, eli niin, että mikä tahansa olio voisi kutsua minkä tahansa `Henkilo`-olion metodia nimen muuttamiseksi, ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
 
-Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten rakentaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain rakentajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
+Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten muodostaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain muodostajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
 
-Muutetaan olioiden rakentaminen pääohjelmassa vastaamaan tätä uutta rakentajaa.
+Muutetaan olioiden rakentelu pääohjelmassa vastaamaan tätä uutta muodostajaa.
 
 ```java,noplayground
 // FILE: Henkilo.java
@@ -276,9 +276,9 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty rakentaja, joka *ottaa* parametreja, Java ei enää luo oletusrakentajaa—siis sellaista, jossa ei ole parametreja—automaattisesti, mikä aiheuttaa käännösvirheen. 
+Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo oletusmuodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti, mikä aiheuttaa käännösvirheen. 
 
-Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen rakentajaa. Tämän vuoksi meidän on lisättävä myös `Opiskelija` ja `Opettaja`-luokkiin rakentajat vastaamaan tätä muutosta. 
+Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen muodostajaa. Tämän vuoksi meidän on lisättävä myös `Opiskelija` ja `Opettaja`-luokkiin muodostajat vastaamaan tätä muutosta. 
 
 Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
 
@@ -303,9 +303,9 @@ Opiskelija.java:8:13
 java: nimi has private access in Henkilo
 ```
 
-Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole oletusrakentajaa. Palaamme tähän asiaan hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
+Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole oletusmuodostajaa. Palaamme tähän asiaan hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
 
-Ainoa tapa tallentaa ja lukea arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan rakentajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
+Ainoa tapa tallentaa ja lukea arvot näihin attribuutteihin on tehdä se kutsumalla aliluokasta yliluokan muodostajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
 
 ```java,noplayground
 import java.util.ArrayList;
@@ -416,7 +416,7 @@ public class Main {
 // FILE_END
 ```
 
-Oletusrakentajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
+Oletusmuodostajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
 
 Esimerkkiä voitaisiin jatkaa vielä pidemmälle. Meillä voisi olla myös `Sihteeri`, joka voi kirjata opintosuorituksia. `Sihteeri` peritään `Henkilo`-luokasta. Voisimme tehdä myös kahdenlaisia erilaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla on oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyy suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
 
@@ -452,7 +452,7 @@ Opiskelija <|-- AvoinOpiskelija
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
 
-Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan rakentaja voisi kutsua vain `Opiskelija`-luokan rakentajaa, ei `Henkilo`-luokan rakentajaa.
+Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan muodostaja voisi kutsua vain `Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
 
 ## Huomautus moniperinnän puuttumisesta
 
