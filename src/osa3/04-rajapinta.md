@@ -4,15 +4,8 @@
 > - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
 > - Osaat määritellä ja käyttää rajapintoja Javassa.
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
-> - 👇Nämä tavoitteet siirretty luvusta 3.5 "Perintä vai rajapinta", koska mielestäni tässä alaluvussa nämä katetaan jo👇
-> - Ymmärtää rajapinnan (interface) rooli ja käyttää sitä vaihtokohdissa (strategiat, palvelut).
 > - Rajapinnat ("Kissa osaa Puhua, Kävellä, Hyppiä...")
-> - abstrakti luokka vs. rajapinta (rajapintametodin oletustoteutus)
 > - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhdestä luokasta
-> - Käytetään perintää ja rajapintoja olioiden yhteistyössä
-> - 👇 Tämä jätetty toistaiseksi pois 👇
-> - Testaaminen rajapintaa vasten, ei toteutusta vasten.
-> - "Moniperintä" rajapintojen avulla
 
 ![alt text](images/interfaces.png)
 
@@ -24,31 +17,18 @@
 
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
-Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan. 
-
-Tässä analogiassa rajapinta on se standardi eli sopimus, jonka laitteen täytyy täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin päin, että *jos* laitteessa on pistorasiaan sopiva pistotulppa, niin sillä *täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
-
-Pistorasiaa ei kiinnosta, kytketkö siihen pölynimurin vai leivänpaahtimen. Laitteet ovat itse asiassa täysin erilaisia, eikä niillä ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla, kuin vaikkapa Auto ja Moottoripyörä voisivat periä luokan Ajoneuvo. Toinen tekee ruokaa, toinen siivoaa. Ainoa pölynimuria ja leivänpaahdinta yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
-
-Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun haluaisimme käyttää vaikkapa pölynimuria. Onko pölynimuri `Sähkölaite`, `Siivouslaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä kahta yliluokkaa. 
-
-Rajapinta ratkaisee tämän ongelman tyylikkäästi: 
- * `Pölynimuri` on `Siivouslaite` (perintä), mutta se myös *toteuttaa*  `Verkkovirtalaite`-rajapinnan. 
- * Samoin `Leivänpaahdin` voisi olla vaikkapa `Keittiölaite` (perintä), joka myöskin toteuttaa saman `Verkkovirtalaite`-rajapinnan.
-
-Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttävät sopimuksen eli toteuttavat rajapinnan vaatiman kytkennän.
-
-Toteutamme tämän esimerkin koodina hieman myöhemmin, mutta otetaan ensin hieman toisenlainen esimerkki.
-
-## Älykoti: säädettävät laitteet
+## Älykoti: säädettävät laitteet{#alykoti-saadettava}
 
 Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
 
 Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`. Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
 
 ```java,ignore
+/**
+ * Laite, jonka voi säätää suoraan haluttuun arvoon.
+ */
 public interface Saadettava {
-    public void asetaArvo(int arvo);
+    void asetaArvo(int arvo);
 }
 ```
 
@@ -56,13 +36,13 @@ Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla 
 
 Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 
-Lisätään `Valo`-luokkaan rajapinnan toteutus (klikkaa `Valo.java`-tiedostoa):
+Lisätään `Valo`-luokkaan rajapinnan toteutus (klikkaa `Valo.java`-tiedostoa). Jätämme `Kahvinkeitin`- ja `Turvakamera`-luokat tässä vaiheessa esimerkistä pois, koska päätämme yksinkertaisuuden vuoksi, että ne eivät ole säädettäviä laitteita.
 
 ```java
 // FILE: main.java
 public class Main {
     public static void main() {
-        Valo valo = new Valo();
+        Valo valo = new Valo("PhilipsHue");
         valo.asetaArvo(33);
         valo.raportoiTila();
 
@@ -71,9 +51,18 @@ public class Main {
     }
 }
 // FILE_END
-// // FILE: Valo.java
+// FILE: Saadettava.java
+public interface Saadettava {
+    void asetaArvo(int arvo);
+}
+// FILE_END
+// FILE: Valo.java
 public class Valo extends Laite implements Saadettava {
     private int kirkkaus = 0;
+
+    protected Valo(String nimi) {
+        super(nimi);
+    }
 
     @Override
     public void asetaArvo(int arvo)
@@ -98,14 +87,29 @@ public class Valo extends Laite implements Saadettava {
 // FILE_END
 // FILE: Laite.java
 public abstract class Laite {
-    abstract public void vaihdaTilaa();
+    private final String nimi;
+    private boolean kytketty;
 
-    abstract public void raportoiTila();
-}
-// FILE_END
-// FILE: Saadettava.java
-public interface Saadettava {
-    void asetaArvo(int arvo);
+    protected Laite(String nimi) {
+        this.nimi = nimi;
+    }
+
+    public void kytkePaalle() {
+        if (!kytketty) {
+            kytketty = true;
+            System.out.println(nimi + " käynnistyy.");
+        }
+    }
+
+    public void kytkePois() {
+        if (kytketty) {
+            kytketty = false;
+            System.out.println(nimi + " sammuu.");
+        }
+    }
+
+    public abstract void vaihdaTilaa();
+    public abstract void raportoiTila();
 }
 // FILE_END
 ```
@@ -136,13 +140,24 @@ Saadettava <|.. Valo
 ```
 
 <task>
-  <task-title>Tehtävä 3.6: Rajapinta, osa 1. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 3.6: Muunnin. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-6-rajapinta-1/handout.md}}
+{{#include ../exercises/3-6-muunnin/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+  <task-title>Tehtävä 3.7 Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/3-7-salakirjoitus/handout.md}}
+
+  </handout>
+    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä </a></task-link>
 </task>
 
 ## Usean rajapinnan toteuttaminen
@@ -487,355 +502,15 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 
 
 <task>
-  <task-title>Tehtävä 3.7: Rajapinta, osa 2. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 3.7: Seikkailupeli. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-7-rajapinta-2/handout.md}}
+  {{#include ../exercises/3-7-seikkailupeli/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä</a></task-link>
 </task>
 
-
-## Rajapinta aliohjelman parametrina
-
-Palataan nyt alussa esitettyyn `Verkkovirtalaite`-ajatukseen. 
-
-Yksinkertaisimmillaan `Verkkovirtalaite`-rajapinnan sisältö olisi määritelmä siitä, että laitteen on pystyttävä reagoimaan siihen, kun se kytketään pistorasiaan ja virta alkaa kulkea johdossa. 
-
-```java,ignore
-public interface Verkkovirtalaite {
-    // Tämä metodi on "pistotulppa". 
-    // Kun pistorasia aktivoi tämän, laite saa sähköä.
-    void kytkeVirta();
-}
-```
-
-Nyt vaikkapa `Leivanpaahdin` ja `Sirkkeli` voisivat olla luokkia, jotka ovat aivan eri puolella luokkahierarkiaa (toinen on keittiölaite, toinen työkalu), mutta molemmat reagoivat sähkövirran kytkemiseen omalla tavallaan.
-
-> [!HUOMAUTUS]
-> Jotta esimerkki ei leviäisi käsiin, oletamme tässä, että `Leivanpaahdin` ja `Sirkkeli`-luokat peritään jostakin järkevistä yliluokista, kuten `Keittiolaite` ja `Tyokalu`. Näitä yliluokkia ei ole määritelty tässä esimerkissä, koska ne eivät ole olennaisia rajapinnan kannalta ja vain monimutkaistaisivat esimerkkiä. Oleellista on, että ne edustavat eri puolilta luokkahierarkiaa olevia olioita, jotka molemmat toteuttavat saman rajapinnan.
-
-```java,ignore
-// Sirkkeli on Työkalu, joka toimii verkkovirralla
-public class Sirkkeli implements Verkkovirtalaite {
-    
-    @Override
-    public void kytkeVirta() {
-        // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
-    }
-}
-
-// Leivänpaahdin on Keittiölaite, joka toimii verkkovirralla
-public class Leivanpaahdin implements Verkkovirtalaite {
-    
-    @Override
-    public void kytkeVirta() {
-        // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
-    }
-}
-```
-
-Tämä on tärkein kohta ymmärryksen kannalta. Pistorasia on luokka, joka **käyttää** rajapintaa.
-
-```java,ignore
-public class Pistorasia {
-    
-    // Pistorasiaan voi kytkeä MINKÄ TAHANSA verkkovirtalaitteen.
-    // Pistorasiaa ei kiinnosta, onko se sirkkeli vai paahdin.
-    public void kytkeLaite(Verkkovirtalaite laite) {
-        System.out.println("--- Pistorasia antaa sähköä ---");
-        
-        // Pistorasia kutsuu sopimuksen mukaista metodia.
-        // Tässä toteutuu polymorfismi: 
-        // laite reagoi oikealla, sille ominaisella tavalla.
-        laite.kytkeVirta();
-    }
-}
-```
-
-## Rajapinta muuttujan tyyppinä
-
-Jotta `Pistorasia`-luokka pääsisi tositoimiin, tarvitsemme vielä pääohjelman, jossa luomme `Pistorasia`-olion ja kytkemme siihen erilaisia laitteita. Luodaan nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
-
-
-```java
-// FILE: main.java
-public class KodinSahkot {
-
-    public static void main(String[] args) {
-
-        // 1. Luodaan infrastruktuuri: Pistorasia
-        // Tässä kohtaa Pistorasia-olio syntyy tietokoneen muistiin.
-        Pistorasia keittionPistoke = new Pistorasia();
-
-        // 2. Luodaan laitteet
-        Leivanpaahdin paahdin = new Leivanpaahdin();
-        Sirkkeli sirkkeli = new Sirkkeli();
-
-        // 3. Käytetään laitteita pistorasian kautta
-        System.out.println("--- Aamu keittiössä ---");
-
-        // Kytketään paahdin seinään
-        keittionPistoke.kytkeLaite(paahdin);
-        System.out.println("\n--- Remontti alkaa ---");
-
-        // Kytketään sirkkeli SAMAAN pistorasiaan
-        // Koska yhdessä pistorasiassa voi olla yksi laite kerrallaan,
-        // paahdin irrotetaan, vaikka sitä ei erikseen
-        // tässä esitetäkään.
-        keittionPistoke.kytkeLaite(sirkkeli);
-    }
-}
-// FILE_END
-// FILE: Verkkovirtalaite.java
-public interface Verkkovirtalaite {
-    void kytkeVirta();
-}
-// FILE_END
-// FILE: Leivanpaahdin.java
-// Leivänpaahdin on Keittiölaite, joka toimii verkkovirralla
-public class Leivanpaahdin implements Verkkovirtalaite {
-
-    @Override
-    public void kytkeVirta() {
-        // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
-    }
-}
-// FILE_END
-// FILE: Sirkkeli.java
-// Sirkkeli on Työkalu, joka toimii verkkovirralla
-public class Sirkkeli implements Verkkovirtalaite {
-
-    @Override
-    public void kytkeVirta() {
-        // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
-    }
-}
-// FILE_END
-// FILE: Pistorasia.java
-public class Pistorasia {
-
-    // Pistorasiaan voi kytkeä MINKÄ TAHANSA (yhden) verkkovirtalaitteen.
-    // Pistorasiaa ei kiinnosta, onko se sirkkeli vai paahdin.
-    public void kytkeLaite(Verkkovirtalaite laite) {
-        System.out.println("--- Pistorasia antaa sähköä ---");
-
-        // Pistorasia kutsuu sopimuksen mukaista metodia.
-        // Tässä tapahtuu polymorfismi: oikea laite reagoi oikealla tavalla.
-        laite.kytkeVirta();
-    }
-}
-// FILE_END
-```
-
-Meidän ei olisi kuitenkaan pakko määritellä `paahdin`- ja `sirkkeli`-muuttujia omiksi tyypeikseen. Voisimme määritellä ne molemmat `Verkkovirtalaite`-tyyppisiksi, koska meitä kiinnostaa pistorasiaan kytkemisen näkökulmasta vain se, että ne toteuttavat kyseisen rajapinnan.
-
-```java,ignore
-public class KodinSahkot {
-
-    public static void main(String[] args) {
-
-        // 1. Luodaan infrastruktuuri: Pistorasia
-        // Tässä kohtaa Pistorasia-olio syntyy tietokoneen muistiin.
-        Pistorasia keittionPistoke = new Pistorasia();
-
-        // 2. Luodaan laitteet
-        // HIGHLIGHT_GREEN_BEGIN
-        Verkkovirtalaite paahdin = new Leivanpaahdin();
-        Verkkovirtalaite sirkkeli = new Sirkkeli();
-        // HIGHLIGHT_GREEN_END
-
-        // 3. Käytetään laitteita pistorasian kautta
-        System.out.println("--- Aamu keittiössä ---");
-
-        // Kytketään paahdin seinään
-        keittionPistoke.kytkeLaite(paahdin);
-        System.out.println("\n--- Remontti alkaa ---");
-
-        // Kytketään sirkkeli SAMAAN pistorasiaan
-        // Koska yhdessä pistorasiassa voi olla yksi laite kerrallaan,
-        // paahdin irrotetaan, vaikka sitä ei erikseen
-        // tässä esitetäkään.
-        keittionPistoke.kytkeLaite(sirkkeli);
-    }
-}
-```
-
-Miksi on hyödyllistä määritellä rajapinta muuttujan tyypiksi? Yksi syy on se, että voimme nyt käsitellä erilaisia laitteita yhtenäisenä joukkona. Voimme esimerkiksi luoda listan erilaisista verkkovirtalaitteista ja kytkeä ne kaikki pistorasiaan silmukassa.
-
-```java,ignore
-List<Verkkovirtalaite> laitteet = List.of(
-    new Leivanpaahdin(),
-    new Sirkkeli(),
-    new Imuri()
-);
-
-Pistorasia pistorasia = new Pistorasia();
-
-for (Verkkovirtalaite v : laitteet) {
-    pistorasia.kytkeLaite(v);
-}
-```
-
-Jos jokainen laite olisi määritelty omaksi tyypikseen, meidän täytyisi kirjoittaa seuraavasti (oletetaan jälleen, että `Keittiolaite` ja `Tyokalu` ovat olemassa olevia yliluokkia).
-
-```java,ignore
-List<Keittiolaite> keittionLaitteet = ...;
-List<Tyokalu> tyokalut = ...;
-
-Pistorasia pistorasia = new Pistorasia();
-
-for (Keittiolaite k : keittionLaitteet) {
-    pistorasia.kytkeLaite(k);
-}
-
-for (Tyokalu t : tyokalut) {
-    pistorasia.kytkeLaite(t);
-}
-```
-
-Toinen syy on helppo vaihdettavuus, josta käytetään englanninkielistä termiä *loose coupling*. Kun koodi käyttää rajapintaa muuttujan tyyppinä, se ei ole sidottu tiettyyn toteutukseen. Tämä tarkoittaa, että voimme helposti vaihtaa yhden toteutuksen toiseen ilman, että meidän tarvitsee muuttaa koodia, joka käyttää kyseistä rajapintaa.
-
-Kuvitellaan, että teemme ohjelmaa, joka testaa sähkölaitteita. 
-
-```java,ignore
-Leivanpaahdin testattavaLaite = new Leivanpaahdin();
-
-// .. suoritetaan laitteen testaus ..
-
-// Vaihdetaan testattava laite toiseen toteutukseen
-testattavaLaite = new Sirkkeli(); // Ei onnistu, koska tyypit eivät täsmää
-```
-
-Kun muuttuja määritellään rajapintana, voimme helposti luoda erilaisia testilaitteita, jotka toteuttavat saman rajapinnan, ja voimme vaihtaa konkreettisen toteutuksen vapaasti.
-
-```java,ignore
-Verkkovirtalaite testattavaLaite = new Leivanpaahdin();
-// .. suoritetaan laitteen testaus ..
-
-// Vaihdetaan testattava laite toiseen toteutukseen
-testattavaLaite = new Sirkkeli(); 
-
-// Tämä onnistuu, koska molemmat toteuttavat 
-// Verkkovirtalaite-rajapinnan
-```
-
-Kolmas syy liittyy ohjelmiston suunnitteluun ja käytännön kirjoittamiseen. Kun määrittelet muuttujan tyypiksi `Verkkovirtalaite`, kääntäjä estää sinua kutsumasta metodeja, jotka ovat spesifejä vain leivänpaahtimille (kuten `saadaKuumuus()`) tai sirkkelille (kuten `asetaTeranKorkeus()`). Vaikka tällainen itsensä rajoittaminen saattaa tuntua oudolta, se auttaa pitämään koodin selkeänä ja estää virheitä, joissa yritetään käyttää laitetta tavalla, joka ei ole yhteensopiva sen rajapinnan kanssa. 
-
-
-## Liskovin korvausperiaate
-
-*Liskovin korvausperiaate* (engl. *Liskov Substitution Principle*, LSP) on olio-ohjelmoinnin periaate, jonka mukaan, että olion tulee olla korvattavissa sellaisella oliolla, joka toteuttaa saman rajapinnan tai sovitun sopimuksen ilman, että ohjelman käyttäytyminen muuttuu. Niinpä esimerkiksi aliluokan tulee noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan määrittelemiä sopimuksia.
-
-Palataan vielä aiempaan soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka määrittelee yleisölle musiikkia metodin `soita()`. 
-
-```java,noplayground
-public interface Soitin {
-    /**
-     * Esittää kappaleen yleisölle.
-     */
-    void soita();
-}
-```
-
-Kaikki soittimet, kuten `Kitara`, `Piano` ja `Rumpusetti`, toteuttavat tämän rajapinnan. Konsertin järjestäjä haluaa varmistaa, että kaikki soittimet voivat soittaa huolimatta siitä, minkä tyyppisiä soittimia ne ovat. Tehdään `Konsertti`-luokka, jonka `soitaKaikkiaSoittimia()`-metodi laittaa kaikki soittimet soimaan.
-
-```java,noplayground
-public class Konsertti {
-    public void soitaKaikkiaSoittimia(Soitin[] soittimet) {
-        for (Soitin soitin : soittimet) {
-            soitin.soita();
-        }
-    }
-}
-```
-
-Tehdään nyt uusi soitin, `HarjoitusPiano`, jolla voi soittaa vain kuulokkeilla, jolloin yleisö ei kuule mitään. Tämäkin soitin toteuttaa `Soitin`-rajapinnan, mutta sen käyttäytyminen poikkeaa muista soittimista. 
-
-```java,noplayground
-class HarjoitusPiano implements Soitin {
-    @Override
-    public void soita() {
-        // Toteutus, joka tekee sinänsä jotain "järkevää", mutta rikkoo sopimuksen.
-        System.out.println("Harjoitellaan kuulokkeilla. Yleisö ei kuule mitään.");
-    }
-}
-``` 
-
-Kootaan nyt "konsertti" pääohjelmaan.
-
-```java,noplayground
-void main() {
-    Soitin[] soittimet = {
-        new Kitara(),
-        new Piano(),
-        new HarjoitusPiano()
-    };
-
-    Konsertti konsertti = new Konsertti();
-    konsertti.soitaKaikkiaSoittimia(soittimet);
-}
-```
-
-Koodi kyllä sinänsä toimii teknisesti. Silti `HarjoitusPiano` rikkoo `Soitin`-rajapinnan sopimusta: sen `soita()` ei "esitä kappaletta yleisölle", vaan vain soittajalle itselleen. Aliluokan toiminta voisi olla järkevää jossain toisessa kontekstissa (tässä, harjoittelutilanteessa). Hyvin suunnitellussa luokkahierarkiassa kuitenkin jokainen olio noudattaa yliluokan tai rajapinnan lupaamaa sopimusta. Tällöin polymorfismia voidaan käyttää luotettavasti ilman, että ohjelman käyttäjän tarvitsee tuntea kaikkia konkreettisia aliluokkia erikseen.
-
-
-## Abstrakti luokka vai rajapinta?
-
-Alla on lyhyt yhteenvetotaulukko, joka tiivistää abstraktin luokan ja rajapinnan keskeiset erot syntaktin ja käyttötarkoituksen osalta.
-
-| Kysymys                              | Abstrakti luokka                              | Rajapinta                                                 |
-| ------------------------------------ | --------------------------------------------- | --------------------------------------------------------- |
-| Voiko sisältää attribuutteja?        | Kyllä                                         | Ei                                                        |
-| Voiko sisältää metodien toteutuksia? | Kyllä                                         | Ei (Java v8 alkaen mahdollisuus ns. `default`-metodeihin) |
-| Kuinka monta voi periä/toteuttaa?    | Luokka voi periä vain yhden abstraktin luokan | Luokka voi toteuttaa useita rajapintoja                   |
-| Käyttötarkoitus                      | Yhteinen runko ja osittainen toteutus         | Yhteinen sopimus käyttäytymisestä                         |
-
-Monesti molemmat yhdistyvät: abstrakti luokka tarjoaa rungon ja toteuttaa yhden tai useampia rajapintoja.
-
-```java
-// FILE: Säädettävä.java
-public interface Saadettava {
-    void asetaArvo(int arvo);
-}
-// FILE_END
-
-// FILE: SaadettavaLaite.java
-public abstract class SaadettavaLaite extends Laite implements Saadettava {
-    protected int nykyinenArvo = 0;
-
-    @Override
-    public void raportoiTila() {
-        IO.println("Nykyinen arvo: " + nykyinenArvo);
-    }
-}
-// FILE_END
-
-// FILE: Termostaatti.java
-public class Termostaatti extends SaadettavaLaite {
-    public Termostaatti() {
-        super("Termostaatti");
-    }
-
-    @Override
-    public void vaihdaTilaa() {
-        nykyinenArvo = (nykyinenArvo + 1) % 5;
-    }
-
-    @Override
-    public void asetaArvo(int arvo) {
-        nykyinenArvo = Math.max(0, Math.min(arvo, 4));
-    }
-}
-// FILE_END
-```
-
-`Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan, mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten abstrakti luokka ja rajapinta täydentävät toisiaan.
 
 ## Rajapinnan periminen
 
@@ -893,11 +568,7 @@ public class Main {
 
 Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E34-alkuiset kansiot).
 
-
-
 ## Huomautuksia
-
-
 
 ✨ Valinnaista lisätietoa: Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia. Ominaisuus saattaa olla hyödyllinen esimerkiksi tilanteissa, jossa halutaan lisätä uusi metodi olemassa olevaan rajapintaan rikkomatta vanhoja toteutuksia. Lue aiheesta lisää [Javan dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
 
