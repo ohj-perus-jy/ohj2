@@ -380,7 +380,7 @@ java: constructor Laite in class Laite cannot be applied to given types;
   reason: actual and formal argument lists differ in length
 ```
 
-muodostajan kutsuminen vaatii nyt nimen välittämisen, esimerkiksi `new Valo("PhilipsHue")`. Niinpä kussakin aliluokan muodostajassa on kutsuttava yliluokan muodostajaa. Tehdään tämä muutos kaikkiin aliluokkiin.
+Muodostajan kutsuminen vaatii nyt nimen välittämisen, esimerkiksi `new Valo("PhilipsHue")`. Niinpä kussakin aliluokan muodostajassa on kutsuttava yliluokan muodostajaa. Tehdään tämä muutos kaikkiin aliluokkiin.
 
 ```java
 // FILE: main.java
