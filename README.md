@@ -81,12 +81,14 @@ public class Kissa {
   <task-title>Ydintehtävä: Tulostaminen <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/1-1-1-tulostaminen/handout.md}}
+{{#include ../exercises/1-1-1-tulostaminen/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
 </task>
 ````
+
+`include`-makro kannattaa kirjoittaa ihan vasempaan reunaan Markdown-ladonnan ongelmien ehkäisemiseksi. 
 
 ### Katso myös
 
