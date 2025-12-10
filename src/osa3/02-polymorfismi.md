@@ -10,6 +10,12 @@
 
 ![Bändi](images/band.png)
 
+*Polymorfismi* viittaa olio-ohjelmoinnissa kykyyn käsitellä erilaisia olioita yhtenäisellä tavalla. Kun metodia kutsutaan, päätös siitä, mikä metodi tosiasiallisesti suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella. Polymorfismi mahdollistaa joustavan koodin kirjoittamisen, jossa uusia olioita voidaan lisätä ilman, että olemassa olevaa koodia tarvitsee muuttaa.
+
+Polymorfismi jaetaan yleensä kahteen päätyyppiin: (1) käännösaikaiseen polymorfismiin, jota kutsutaan myös *dynaamiseksi sidonnaksi* (engl. *dynamic binding*) ja (2) ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa aliohjelman kuormitusta (engl. *method overloading*). Asiaa on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin, mutta lyhyesti: aliohjelman kuormitus tarkoittaa sitä, että aliohjelmalla voi olla useita samannimisiä toteutuksia, jotka eroavat toisistaan parametrien lukumäärän, parametrien tyyppien tai aliohjelman paluuarvon perusteella. Lue lisää Ohjelmointi 1 -kurssin materiaalista. (TODO: Linkki)
+
+## Metodin korvaaminen ja dynaaminen sidonta
+
 Kuvitellaan tilanne, jossa ohjelmassa on erilaisia soittimia: `Kitara`, `Piano` ja `Rumpusetti`. Haluamme, että soittimia voi soittaa. Yksi mahdollisuus olisi kirjoittaa jokaiselle soittimelle oma metodi soittamista varten, kuten:
 
 ```java,noplayground
@@ -21,23 +27,104 @@ Rumpusetti rumpusetti = new Rumpusetti();
 rumpusetti.soitaRumpuja();
 ```
 
-Jos tavoitteena on kuitenkin vain saada soitin soimaan, tämä lähestymistapa ei ole laajennettavissa: jokaisen uuden soittimen lisääminen vaatisi muutoksia moniin paikkoihin.
+Tämä lähestymistapa ei ole laajennettavissa. Jos yrittäisimme käsitellä soittimia yhtenäisenä joukkona, esimerkiksi listana, joutuisimme tekemään hankalia ja virheherkkiä tyyppitarkastuksia vain saadaksemme selville, mitä soittometodia kutsua. Ratkaisu tähän on löytää yhteinen nimittäjä kaikille soittimille. Sekä kitara että piano ovat loppujen lopuksi Soittimia. Luodaan yliluokka `Soitin`, joka sisältää toiminnon, jonka jokaisen soittimen pitäisi pystyä tekemään: `soita()`.
 
-Sen sijaan usein haluamme pystyä käsittelemään soittimia (ja olioita yleisemminkin) yhtenäisenä joukkona ja kutsumaan vain yhtä metodia – kuten `soita()` – oli kyseessä mikä soitin tahansa. Tätä varten tarvitsemme polymorfismia.
+> [!HUOMAUTUS]
+> Soitin-luokka määritellään tässä tavallisena luokkana, mutta se voisi olla myös abstrakti luokka, ja se olisikin tässä tapauksessa luontevaa. 
+> Koska abstrakti luokka käsitellään vasta luvussa 3.3 Abstraktit luokat, määrittelemme Soittimen tässä tavallisena luokkana.
 
-*Polymorfismi* viittaa olio-ohjelmoinnissa kykyyn käsitellä erilaisia olioita yhtenäisellä tavalla. Kun metodia kutsutaan, päätös siitä, mikä metodi tosiasiallisesti suoritetaan, tehdään ajon aikana olion todellisen tyypin perusteella. Polymorfismi mahdollistaa joustavan koodin kirjoittamisen, jossa uusia olioita voidaan lisätä ilman, että olemassa olevaa koodia tarvitsee muuttaa.
+```java,ignore
+public class Soitin {
+    // Kaikilla soittimilla on soita()-metodi
+    public void soita() {
+        System.out.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
+    }
+}
+```
 
+Nyt voimme määritellä `Kitara`- ja `Piano`-luokat perimään `Soitin`-luokan.
 
+```java,ignore
+public class Kitara extends Soitin {
+    // ...
+}
+public class Piano extends Soitin {
+    // ...
+}
+```
 
-Polymorfismi jaetaan yleensä kahteen päätyyppiin: (1) käännösaikaiseen polymorfismiin, jota kutsutaan myös *dynaamiseksi sidonnaksi* (engl. *dynamic binding*) ja (2) ajon aikaiseen polymorfismiin. Käännösaikaisella polymorfismilla tarkoitetaan Javassa aliohjelman kuormitusta (engl. *method overloading*). Asiaa on käsitelty Ohjelmointi 1 -kurssilla, emmekä sitä tässä käsittele tarkemmin, mutta lyhyesti: aliohjelman kuormitus tarkoittaa sitä, että aliohjelmalla voi olla useita samannimisiä toteutuksia, jotka eroavat toisistaan parametrien lukumäärän, parametrien tyyppien tai aliohjelman paluuarvon perusteella. Lue lisää Ohjelmointi 1 -kurssin materiaalista. (TODO: Linkki)
+Nyt meillä on kyllä yhtenäinen tapa kutsumista varten, mutta jos kutsuisimme nyt `Kitara`- tai `Piano`-olion `soita()`-metodia, ne molemmat suorittaisivat yliluokan (`Soitin`) oletustoteutuksen: *"Tuntematon soitin soi."* Tämä ei riitä! Haluamme, että kukin soitin soi itselleen ominaisella tavalla. Tätä varten aliluokassa voidaan korvata (engl. *override*) yliluokan `soita()`-metodi omalla, spesifillä toteutuksellaan.
+
+```java,ignore
+public class Kitara extends Soitin {
+    // Korvataan yliluokan Soitin.soita()
+    @Override
+    public void soita() {
+        System.out.println("Kitara soi ja kieliä näppäillään.");
+    }
+}
+
+public class Piano extends Soitin {
+    // Korvataan yliluokan Soitin.soita()
+    @Override
+    public void soita() {
+        System.out.println("Piano soi ja koskettimia painellaan.");
+    }
+}
+```
+
+Perintä antoi meille yhteisen tyypin (Soitin). Metodin korvaaminen antoi meille mahdollisuuden toteuttaa toiminto olioittain. Nyt nämä kaksi mekanismia yhdessä mahdollistavat polymorfismin (nk. *monimuotoisuuden*). Kun kutsumme metodia yliluokan tyyppiä käyttäen, ohjelma valitsee automaattisesti oikean, korvatun metodin sen perusteella, mikä on olion todellinen tyyppi suoritusajankohdalla.
+
+Tämä mahdollistaa yhtenäisen käsittelyn, jota lähdimme hakemaan:
+
+```java
+// FILE: main.java
+void main() {
+    ArrayList<Soitin> orkesteri = new ArrayList<>();
+    orkesteri.add(new Kitara());
+    orkesteri.add(new Piano());
+    // Rumpusetti voitaisiin toteuttaa samoin
+    // orkesteri.add(new Rumpusetti()); 
+
+    // Kutsumme kaikille samaa soita()-metodia...
+    for (Soitin soitin : orkesteri) {
+        soitin.soita(); 
+    }
+}
+// FILE_END
+// FILE: Soitin.java
+public class Soitin {
+    // Kaikilla soittimilla on soita()-metodi
+    public void soita() {
+        System.out.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
+    }
+}
+// FILE_END
+// FILE: Kitara.java
+public class Kitara extends Soitin {
+    // Korvataan yliluokan Soitin.soita()
+    @Override
+    public void soita() {
+        System.out.println("Kitara soi ja kieliä näppäillään.");
+    }
+}
+// FILE_END
+// FILE: Piano.java
+public class Piano extends Soitin {
+    // Korvataan yliluokan Soitin.soita()
+    @Override
+    public void soita() {
+        System.out.println("Piano soi ja koskettimia painellaan.");
+    }
+}
+// FILE_END
+```
 
 ## is-a-suhde
 
-Perintäsuhteesta käytetään englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
+Perintäsuhteesta käytetään myös englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
 
-Polymorfismin ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina, kun ei ole tarpeen tietää tarkasti, minkä aliluokan olioita käsittelemme. Tämä on hyödyllistä esimerkiksi silloin, kun haluamme käsitellä henkilöitä yhtenä ryhmänä. 
-
-Lisätään kaikki tekemämme oliot `Henkilo`-taulukkoon:
+Kuten edellä opimme, polymorfismin ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina. Lisätään kaikki tekemämme oliot `Henkilo`-taulukkoon:
 
 ```java,noplayground
 Opiskelija opiskelija = new Opiskelija();
@@ -85,12 +172,6 @@ for (Henkilo henkilo : henkilot) {
 ```
 
 Huomionarvoista on *is-a*-suhteen suunta; `Opettaja` ei ole `Sihteeri`, vaikkakin molemmat perivät `Henkilo`-luokan. 
-
-## Korvaaminen ja polymorfismi
-
-Edellisessä esimerkissä kaikki aliluokan edustajat perivät yliluokan metodit sellaisenaan, jolloin niitä ei tarvitse määritellä uudelleen aliluokassa. Perityn luokan metodeja voidaan kuitenkin myös *korvata* (engl. *override*) aliluokassa, mikä tarkoittaa, että aliluokka voi määritellä oman version peritystä metodista. Juuri tämä mahdollistaa polymorfismin, ja sen, että voimme muuttaa perityn metodin käyttäytymistä aliluokassa. 
-
-## Esimerkki 1
 
 Lisätään yllä olevaan `Opiskelija`-esimerkkimme attribuutti `boolean opintoOikeusVoimassa`, joka ilmaisee, onko opiskelijalla voimassa oleva opinto-oikeus. Jos opinto-oikeus ei ole voimassa, opiskelija ei voi kirjautua järjestelmään. Korvataan `kirjaudu()`-metodi `Opiskelija`-luokassa tarkistamaan tämä ehto ennen kirjautumista.
 
@@ -152,9 +233,9 @@ class C extends B {
 // FILE_END
 ```
 
-## Esimerkki 2
+## Esimerkki: Muoto-luokka
 
-Tarkastellaan `Muoto`-luokkaa, jolla on metodi `laskeAla()`. 
+Otetaan vielä yksi esimerkki. Tarkastellaan `Muoto`-luokkaa, jolla on metodi `laskeAla()`. 
 
 ```java
 public class Muoto {
@@ -164,7 +245,7 @@ public class Muoto {
 }
 ```
 
-Huomaamme, että `laskeAla()`-metodin toteutus on vähän hassu. Tämä johtuu siitä, että ei ole oikeastaan mitään ns. yleistä muotoa, vaan `Muoto`-luokan edustajan tulee aina olla jokin konkreettinen muoto, kuten suorakulmio tai ympyrä, joilla on omat tavat laskea pinta-ala. Palaamme tähän dilemmaan osassa [3.3 Abstraktit luokat](03-abstraktit-luokat.md).
+Huomaamme, että `laskeAla()`-metodin toteutus on vähän hassu. Tämä johtuu siitä, että ei ole oikeastaan mitään ns. yleistä muotoa, vaan `Muoto`-luokan edustajan tulee aina olla jokin konkreettinen muoto, kuten suorakulmio tai ympyrä, joilla on omat tavat laskea pinta-ala. Kuten jo Soitin-esimerkissä mainitsimme, palaamme tähän dilemmaan osassa [3.3 Abstraktit luokat](03-abstraktit-luokat.md).
 
 Tehdään nyt aliluokat `Suorakulmio` ja `Ympyra`. Koska näiden muotojen pinta-alat ovat luonnollisesti keskenään erilaisia, tulee kummallakin olla oma toteutus `laskeAla()`-metodille.
 
@@ -267,7 +348,7 @@ Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; pan
  * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
  * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
 
-## Object-luokka
+## Object-luokan metodien korvaaminen
 
 Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
 
