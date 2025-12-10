@@ -2,7 +2,7 @@
 
 Tämä on Jyväskylän yliopiston järjestämän **TIEP111 Ohjelmointi 2** -opintojakson oppimateriaali. 
 
-## ℹ️ Tietoja opintojaksosta
+## Tietoja opintojaksosta
 
 <!-- OPS:sta -->
 <!-- Sisältö: Java-kieli, ohjelmansuunnittelun ja olio-ohjelmoinnin periaatteita, ohjelman testaaminen. Rekursio. -->
@@ -18,23 +18,28 @@ Opintojaksolla opit
 - erilaisia ohjelmoijan työkaluja ja tekniikoita
   - ml. rekursio, geneeriset tyypit, funktionaalinen ohjelmointi
 
-## 📚 Esitiedot
+Tarkemmat tiedot löydät opintojakson [Sisu-esitteestä](https://sisu.jyu.fi/student/courseunit/otm-4bc61fed-4013-4982-9158-48a4a198a4f2/brochure). 
 
-- Ohjelmointi 1 tai vastaava
+## Esitiedot
 
-## 🧭 Navigointi tässä materiaalissa
+Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
 
-Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
+## Navigointi tässä materiaalissa
+
+Tässä muutama pikavinkki tässä materiaalissa navigoimiseen.
 
  * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi bi-layout-sidebar"></i>.
  * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
  * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
 
-##  🫡 Haluatko parannella tätä materiaalia?
+> [!HUOMAUTUS]
+> Teemme kokonaisvaltaisen uudistuksen oppimateriaaliin sekä tehtäviin kevään 2026 aikana. Osa materiaalista julkaistaan kurssin edetessä. Uudistamisesta johtuen sisällössä voi olla myös keskeneräisyyksiä ja virheitä. Pahoittelemme tästä mahdollisesti aiheutuvaa haittaa. Pyydämme, että ilmoitat virheistä tai parannusehdotuksista GitHubin kautta (katso alla) tai suoraan opettajien sähköpostiin <opet@TODO>.
+
+## Haluatko parannella tätä materiaalia?
 
 Jos löydät materiaalista virheitä, voit ehdottaa korjauksia tai parannuksia klikkaamalla sivun alareunasta. Ehdotuksen tekemiseksi tarvitset GitHub-tilin.
 
-## 👨 Tekijät ja lisenssi
+## Tekijät ja lisenssi
 
 Ohjelmointi 2 oppimateriaali © 2025 by Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen. 
 

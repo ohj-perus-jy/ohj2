@@ -178,9 +178,11 @@
                         </ul>
 
                         {{#if print_enable}}
+                        <button type="button" title="Print this book" aria-label="Print this book" id="print-button-mobile" class="icon-button">
                         <a href="{{ path_to_root }}print.html" title="Print this book" aria-label="Print this book">
-                            <i id="print-button" class="fa fa-print"></i>
+                            <i class="bi bi-printer" id="print-button"></i>
                         </a>
+                        </button>
                         {{/if}}
                         <!--{{#if git_repository_url}}
                         <a href="{{git_repository_url}}" title="Git repository" aria-label="Git repository">
