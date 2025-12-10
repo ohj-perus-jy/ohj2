@@ -32,6 +32,9 @@ Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
  * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
  * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
 
+> [!HUOMAUTUS]
+> Teemme kokonaisvaltaisen uudistuksen oppimateriaaliin sekä tehtäviin kevään 2026 aikana. Osa materiaalista julkaistaan kurssin edetessä. Uudistamisesta johtuen sisällössä voi olla myös keskeneräisyyksiä ja virheitä. Pahoittelemme tästä mahdollisesti aiheutuvaa haittaa. Pyydämme, että ilmoitat virheistä tai parannusehdotuksista GitHubin kautta (katso alla) tai suoraan opettajien sähköpostiin <opet@TODO>.
+
 ## Haluatko parannella tätä materiaalia?
 
 Jos löydät materiaalista virheitä, voit ehdottaa korjauksia tai parannuksia klikkaamalla sivun alareunasta. Ehdotuksen tekemiseksi tarvitset GitHub-tilin.
