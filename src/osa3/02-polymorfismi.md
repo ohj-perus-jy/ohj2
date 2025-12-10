@@ -352,19 +352,87 @@ Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; pan
 
 Javassa kaikilla luokilla on yhteinen yliluokka nimeltä `Object`. Tämä tarkoittaa, että kaikki luokat perivät automaattisesti `Object`-luokan ominaisuudet ja metodit, ellei toisin määritellä. `Object`-luokassa on useita hyödyllisiä metodeja, joita voidaan korvata aliluokissa.
 
-Yksi tyypillinen tapa käyttää korvata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei välttämättä ole kovin informatiivista. Voimme korvata tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. Lisätään `toString()`-metodi `Henkilo`-luokkaan.
+Yksi tyypillinen tapa käyttää korvata `Object`-luokan [`toString()`-metodia](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html#toString--), joka tarjoaa olion merkkijonoesityksen. Oletusarvoisesti `toString()` palauttaa olion luokan nimen ja sen hajautusarvon, mikä ei välttämättä ole kovin informatiivista. Voimme korvata tämän metodin omassa luokassamme, jotta se palauttaa juuri meidän tarpeisiimme sopivan merkkijonoesityksen. 
 
-```java,noplayground
-class Henkilo {
+Tehdään vaikkapa `Vektori3D`-luokka, joka edustaa kolmiulotteista vektoria. Tehdään pääohjelmassa muutama `Vektori3D`-olio ja tulostetaan niiden arvot.
 
-    // ...
-
-    @Override
-    public String toString() {
-        return "Henkilö: " + this.getNimi()";
+```java
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Vektori3D v1 = new Vektori3D(1.0, 2.0, 3.0);
+        Vektori3D v2 = new Vektori3D(4.0, 5.0, 6.0);
+        System.out.println("Vektori 1: (" + v1.getX() + ", " + v1.getY() + ", " + v1.getZ() + ")");
+        System.out.println("Vektori 2: (" + v2.getX() + ", " + v2.getY() + ", " + v2.getZ() + ")");
     }
 }
+// FILE_END
+// FILE: Vektori3D.java
+class Vektori3D {
+    private double x;
+    private double y;
+    private double z;
+    public Vektori3D(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public double getZ() {
+        return z;
+    }
+}
+// FILE_END
 ```
+
+Vaikka tulostaminen kyllä toimii, olisi varsin mukavaa, jos voisimme yksinkertaisesti kirjoittaa `System.out.println("Vektori 1: " + v1);` ilman, että meidän tarvitsee erikseen hakea koordinaatteja ja yhdistellä String-olioita toisiinsa. Tätä varten voimme korvata `toString()`-metodin `Vektori3D`-luokassa. 
+
+```java
+// FILE: main.java
+public class Main {
+    public static void main(String[] args) {
+        Vektori3D v1 = new Vektori3D(1.0, 2.0, 3.0);
+        Vektori3D v2 = new Vektori3D(4.0, 5.0, 6.0);
+        System.out.println("Vektori 1: " + v1);
+        System.out.println("Vektori 2: " + v2);
+    }
+}
+// FILE_END
+// FILE: Vektori3D.java
+class Vektori3D {
+    private double x;
+    private double y;
+    private double z;
+    public Vektori3D(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+    public double getX() {
+        return x;
+    }
+    public double getY() {
+        return y;
+    }
+    public double getZ() {
+        return z;
+    }
+    // HIGHLIGHT_GREEN_BEGIN
+    @Override    
+    public String toString() {
+        return "(" + x + ", " + y + ", " + z + ")";
+    }
+    // HIGHLIGHT_GREEN_END
+}
+// FILE_END
+```
+
+Pääohjelma näyttää nyt huomattavasti siistimmältä.
 
 Tutki omatoimisesti muita `Object`-luokan metodeja [Javan dokumentaatiosta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html).
 
