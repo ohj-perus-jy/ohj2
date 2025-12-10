@@ -455,7 +455,7 @@ Opiskelija <|-- AvoinOpiskelija
 
 Koska nuoli `TutkintoOpiskelija`-luokasta osoittaa `Opiskelija`-luokkaan ja sieltä edelleen `Henkilo`-luokkaan, niin `TutkintoOpiskelija`-luokasta muodostettu olio perii sekä  `Opiskelija`-luokan ominaisuudet ja metodit, että `Henkilo`-luokan ominaisuudet ja metodit. Vastaavasti `AvoinOpiskelija`-luokasta tehty olio perii myös molemmat luokat.
 
-Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Vaihe3/src).
+Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Kisu_vaihe4/src).
 
 Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan muodostaja voisi kutsua vain `Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
 
