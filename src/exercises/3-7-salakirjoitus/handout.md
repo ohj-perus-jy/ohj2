@@ -29,4 +29,4 @@ Korvaa 'o' -> '0'
 jne. 
 ```
 
-Tässä harjoituksessa ei tarvitse huolehtia ö-kirjaimen pyörähtämisestä ympäri ellei halua. Tehtävässä ei myöskään tarvitse huolehtia siitä, että alkuperäinen viesti säilyisi täysin muuttumattomana salauksen ja purkamisen jälkeen. Esimerkiksi jos `Hakkeri`-muuntajaa käytettäessä alkuperäisessä viestissä on oikeasti merkki `@`, pura-metodi muuttaa sen kirjaimeksi `a`. Tämä ei haittaa tässä, mutta tietenkin oikeassa salauksessa pitäisi varmistaa, ettei tietoa katoa tai muutu vahingossa.
+Tässä harjoituksessa ei tarvitse huolehtia ö-kirjaimen pyörähtämisestä ympäri, ellei halua. Tehtävässä ei myöskään tarvitse huolehtia siitä, että salauksen ja purkamisen jälkeen saatu viesti ei välttämättä ole samanlainen kuin alkuperäinen viesti. Esimerkiksi jos `Hakkeri`-muuntajaa käytettäessä alkuperäisessä viestissä on oikeasti merkki `@`, pura-metodi antaa tulokseksi tuohon paikalle merkin `a`. Tämä ei haittaa tässä, mutta tietenkin oikeassa salauksessa pitäisi varmistaa, ettei tietoa katoa tai muutu vahingossa.
