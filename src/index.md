@@ -22,11 +22,11 @@ Tarkemmat tiedot löydät opintojakson [Sisu-esitteestä](https://sisu.jyu.fi/st
 
 ## Esitiedot
 
-- Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
+Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
 
 ## Navigointi tässä materiaalissa
 
-Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
+Tässä muutama pikavinkki tässä materiaalissa navigoimiseen.
 
  * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi bi-layout-sidebar"></i>.
  * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
