@@ -467,7 +467,9 @@ void main() {
 
 TODO: Tämä osio pitää vielä siistiä.
 
-Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Tyypiltään sopiva viitemuuttuja asetetaan osoittamaan tähän muistipaikkaan. Olioon päästään käsiksi viitemuuttujan kautta ja sen tilaa voidaan tarkastella ja muokata metodien avulla. Viitemuuttujat tuhoutuvat, kun niiden näkyvyysalue loppuu. Kun olioon ei enää ole yhtään viitettä olemassa, myös olio tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
+Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Tyypiltään sopiva viitemuuttuja asetetaan osoittamaan tähän muistipaikkaan. Olioon päästään käsiksi viitemuuttujan kautta ja sen tilaa voidaan tarkastella ja muokata metodien avulla. 
+
+Viitemuuttujat tuhoutuvat, kun niiden näkyvyysalue loppuu. Kun olioon ei enää ole yhtään viitettä olemassa, myös olio tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
 
 Käydään vielä olion koko elinkaari läpi esimerkkien avulla. Tarvitsemme olioiden luomista varten ensimmäiseksi luokan. Tehdään esimerkkejä varten yksinkertainen luokka `Henkilo`, johon voimme tallentaa henkilön nimen ja syntymävuoden.
 
