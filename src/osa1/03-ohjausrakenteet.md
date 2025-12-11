@@ -89,7 +89,11 @@ void main () {
 ```
 
 ### Do-While
-Toimintaperiaatteeltaan samanlainen kuin while-silmukka, mutta suoritetaan ainakin kerran. Syntaksista kannattaa huomata, että while avainsanan sisältävän rivin loppuun tuolee puolipiste `;`
+Toimintaperiaatteeltaan samanlainen kuin while-silmukka, mutta suoritetaan ainakin kerran. 
+
+> [!Huomautus]
+> while avainsanan sisältävän rivin loppuun tuolee puolipiste `;`
+
 
 ```java
 void main () {

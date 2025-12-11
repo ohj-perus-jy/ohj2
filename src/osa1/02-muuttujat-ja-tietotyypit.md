@@ -6,9 +6,8 @@
 > - Muuttujat ja vakiot (perustyypit, `final`, String)
 
 ## Rakenteisesta ohjelmoinnista
-- Rakenteinen ohjelmointi on ohjelmointiparadigma joka painottaa ohjelman hajottamista lohkoihin, jotta ohjelman järjestyslogiikkaa on helpompi ymmärtää. 
-- Syntyi alun perin poistamaan tarpeen `goto` -lauseille
-- TODO: Pitäisiköhän olla jokin abstrakti versio siitä, mitä rakenteisella ohjelmoinnilla haetaan ja sen jälkeen jokin pieni koodiesimerkki? Pitäisikö koodiesimerkki olla pseudokoodia vai ei?
+- Rakenteinen ohjelmointi on ohjelmointiparadigma, joka painottaa ohjelman hajottamista lohkoihin, jotta ohjelman järjestyslogiikkaa on helpompi ymmärtää. Tätä olet jo oppinut ohjelmointi 1 -kurssilla.
+- Rakenteinen ohjelmointiparadigma syntyi alun perin poistamaan tarpeen `goto` -lauseille, joista lisää kurssilla "ITKA2030 Käyttöjärjestelmien ja pilvipalveluiden perusteet"
 
 ## Javan alkeistietotyypeistä
 
@@ -30,20 +29,67 @@ Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja 
 
 ## Numeeriset tietotyypit
 
-Javassa on seuraavat C#:stakin tutut numeeriset muuttujatyypit:
+Javassa on seuraavat tutut numeeriset muuttujatyypit:
 
-- `int`
-- `long`
-- `float`
-- `double`
+- `int` $\in$[$-2^{31}, 2^{31}-1$]
+- `long` $\in$[$-2^{63}, 2^{63}-1$]
+- `float` IEEE 754 yksinkertainen tarkkuus (TODO: vai pitäisikö jättää mainitsematta?)
+- `double` IEEE 754 kaksinkertainen tarkkuus
+
+Javassa numeeriset alkeistietotyypit ovat aina etumerkillisiä, eli niistä jokaisella pystyy esittämään myös negatiivisia lukuja. Lisäksi ne ovat kahden komplementteja, eli ylivuodossa pyörähdetään lukuvälin ympäri. Havainnoidaan näitä esimerkillä: (TODO: KA hyvä esimerkki vai ei?)
+
+```java
+void main() {
+    int maksimi = Integer.MAX_VALUE;
+    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int tyyppiseen muuttujaan" );
+    int ylivuoto = Integer.MAX_VALUE + 1;
+    IO.println(ylivuoto + " Tapahtui ylivuoto");
+    int n = 2;
+    int keskiarvo = (ylivuoto) / n;
+    IO.println(keskiarvo + " Saatiin, vaikka odotettiin lukua 1073741824");
+}
+```
+Huomataan nyt, että kun yritettiin sijoittaa `int` -tyyppiseen muuttujaan `ylivuoto` yhtä suurempi kokonaisluku kuin mitä Javassa 32-bittisellä kokonaisluvulla pystytään esittämään, päädyttiin lukuun `Integer.MIN_VALUE` $= -2147483648 = -2^{31}$.
+
+Koska Java käyttää IEEE 754 standardia desimaalilukujen`double` ja `float` esittämiseen, niillä on muutama mielenkiintoinen ja kenties yllättävä ominaisuus:
+
+```java
+void main() {
+    float negatiivinenAarettomyys = -1.0f / 0.0f;
+    IO.println(negatiivinenAarettomyys);
+    double positiivinenAarettomyys = 1.0 / 0.0;
+    IO.println(positiivinenAarettomyys);
+    double nan = 0.0 / 0.0;
+    IO.println(nan);
+}
+```
+
+Eli desimaaliluvuille on erikseen määritelty $-\infty, \infty$ ja `NaN` = **N**ot **A** **N**umber. Huomaa myös, että jos haluat erikseen `float` tyyppisen desimaaliluvun, luvun perässä pitää olla `f`. Muutoin se tulkitaan `double`ksi.
+
+```java,editable
+void main() {
+    long neljakymmentaMiljardia = 40000000000L;
+    IO.println(neljakymmentaMiljardia);
+    int inttina = (int)neljakymmentaMiljardia;
+    IO.println(inttina);
+}
+```
+Huomaa, että Java tulkitsee luvun `40 000 000 000` (neljäkymmentä miljardia) `int` -tyyppisenä, jos luvun perässä ei ole isoa `L` -kirjainta, eikä koodi tällöin edes käänny. 
+
+Nyt `40 000 000 000` (neljäkymmentä miljardia) on binäärilukuna tavun kokoisiin pätkiin jaoteltuna `00001001 01010000 00101111 10010000 00000000`. 
+
+| Tyyppi | 5        | 4        | 3        | 2        | 1        |
+| ------ | -------- | -------- | -------- | -------- | -------- |
+| long   | 00001001 | 01010000 | 00101111 | 10010000 | 00000000 |
+| int    |          | 01010000 | 00101111 | 10010000 | 00000000 |
+
+Ylläolevasta taulukosta huomataan, että kun `40 000 000 000` muunnetaan `int` -tyyppiseksi kokonaisluvuksi, siitä huomioidaan vain neljä ensimmäistä tavua oikealta laskettuna, eli `01010000 00101111 10010000 00000000` = 1345294336
 
 Numeroliteraalin tyypin saa vaihdettua 
 ```java
 void main() {
-    double desimaali = (double)1/3;
+    double desimaali = (double)1/3; //tai 1.0/3 tai 1/3.0
     System.out.format("1/3 on desimaalilukuna %.3f%n",desimaali);
-    int leikattu = (int)1.3;
-    IO.println(leikattu);
     Double kaaritty = desimaali;
     int kokonaislukuna = kaaritty.intValue();
     IO.println(kokonaislukuna);
@@ -59,12 +105,28 @@ Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/doc
 - `StringBuilder`
 
 ### char
-Javassa voit luoda yksittäisiä merkkejä avainsanan `char` avulla: 
+Sisäisesti Javassa yksittäiset merkit `char` ovat 16-bittisiä luonnollisia lukuja (välillä [0-65535]). Tätä voidaan havainnoida esimerkiksi seuraavasti:
+
+```java
+void main() {
+    IO.println((int)'A'); //Muunnetaan merkki A kokonaisluvuksi
+    IO.println((char)65535); //Muunnetaan kokonaisluku merkiksi
+}
+```
+Javassa `char` on yksittäinen 16-bittinen Unicode-merkki, joita käytetään tyypillisesti yksittäisen merkin tallentamiseen muuttujaan tai kun tarkastelet merkkijonoa merkki kerrallaan 
 
 ```java
 void main() {
     char tabulaattoriMerkki = '\u0009';
     IO.println(Character.isWhitespace(tabulaattoriMerkki));
+}
+```
+
+Aritmeettiset operaatiot ovat Javassa mahdollisia `char` -tyypille:
+```java
+void main() {
+    char a = 'A';
+    IO.println(Character(a + 1));
 }
 ```
 
@@ -93,6 +155,15 @@ void main() {
     String mjono = "esimerkki";
     IO.println(mjono.charAt(0));
     IO.println(mjono[0]);
+}
+```
+
+Entä jos sinun tarvitsee kuitenkin tulostaa merkkejä, jotka eivät mahdu yhteen 16-bittiseen `char` muuttujaan?
+```java
+void main() {
+    IO.println("\uD83D\uDE00");
+    // Tai vaihtoehtoisesti:
+    IO.println(new String(Character.toChars(0x1F600)));
 }
 ```
 
@@ -185,4 +256,4 @@ Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähe
 final int VIRHE_TIETOKANTAYHTEYDESSA = 2001;
 ```
 
-Nyt on selvää, että kyseessä on nimenomaan virhe tietokantayhteydessä, eikä jokin muu virhe. Toisaalta ehkä koodipohjassa on useampi tilanne, jossa halutaan käyttää kyseistä virhettä. Ei olisi fiksua käyttää literaalia `2001`.
+Nyt on selvää, että kyseessä on nimenomaan virhe tietokantayhteydessä, eikä jokin muu virhe. Toisaalta ehkä koodipohjassa on useampi tilanne, jossa halutaan käyttää kyseistä virhettä. Ei olisi fiksua käyttää literaalia `2001` (TODO: Onko tämä oikea ongelma, koska säännölliset lausekkeet?).
