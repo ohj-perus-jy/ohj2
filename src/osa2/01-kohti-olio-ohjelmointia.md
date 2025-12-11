@@ -87,7 +87,9 @@ void main() {
 
 Jotkin esimerkeissä esiintyvät rakenteet ja käsitteet voivat tässä vaiheessa tuntua vielä vierailta. Lähdemme tutustumaan näihin tarkemmin heti osassa 2.2.
 
-Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin sille omistetulla kurssilla. Käymme tällä kurssilla läpi tarpeellisimmat asiat, että voimme käyttää olioita käytännössä ohjelmointiongelmien ratkaisemiseen. Suosittelemme lämpimästi myös tutustumaan aiheeseen liittyvään kirjallisuuteen.
+Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin esimerkiksi opintojaksolla [TIEA1130 Oliosuuntautunut suunnittelu ja ohjelmointi](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiea1130/). Käymme tällä kurssilla läpi olio-ohjelmoinnin teoriaa valikoidusti erityisesti tämän opintojakson tarpeita ajatellen. 
+
+Jos haluat tutustua olio-ohjelmointiin syvällisemmin, suosittelemme lämpimästi tutustumaan aiheeseen liittyvään kirjallisuuteen.
 
 TODO: Linkki kurssiin, linkkejä vapaaehtoiseen luettavaan, SOLID, ym?
 
