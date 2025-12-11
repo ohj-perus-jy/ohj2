@@ -553,6 +553,9 @@ Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti
 IDEA-kehitysympäristössä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa
 merkit `/**` ja painaa <kbd>Enter</kbd>. 
 
+<video src="images/intellij-docstring.mp4" controls></video>
+
+
 <details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
 
 Oletetaan nyt, että tallennat ylläolevan tiedostoon `Summa.java`
