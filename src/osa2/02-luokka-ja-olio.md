@@ -124,6 +124,10 @@ void main() {
 
 ## Static
 
+Tähän muistiin tällainen "määritelmäteksti". Siirrä tai muokkaa tarpeen mukaan. Voit myös lainata tekstiä täältä (minun kirjoittama teksti): https://tim.jyu.fi/view/kurssit/tie/ohj1/materiaali/staattiset
+
+Attribuutti tai metodi voidaan määritellä *staattiseksi* käyttämällä `static`-sanaa. Staattisuus tarkoittaa Java-kielen yhteydessä sitä, että kyseinen attribuutti tai metodi määritellään kuuluvaksi luokalle itselleen, ei olioinstanssille. Staattinen jäsen on siis tavallaan yhteinen kaikille luokan olioille.
+
 Attribuuttien ja metodien yhteydessä tuli esille staattisuuden käsite. Tämä käsite aiheuttaa usein alussa hieman sekaannusta. Jos haluamme tehdä esimerkiksi attribuutista yhteisen kaikille luokan olioille niin, että jokaisella oliolla ei voi olla omaa arvoa, voimme tehdä siitä staattisen. Sekä attribuutit että metodit voidaan määritellä staattiseksi `static`-määritteellä, jolloin ne kuuluvat luokalle, eikä niistä tehdä "kopioita" jokaiselle oliolle. Nämä *luokan* attribuutit ja metodit ovat edelleen saman luokan olioiden käytettävissä, mutta ne eivät ole osa olioiden tilaa; luokan attribuutista ei ole jokaisella oliolla omaa "versiota" eikä luokan metodi voi päästä minkään olion tilaan suoraan käsiksi, sillä sitä ei kiinnitetä mihinkään olioon.
 
 
