@@ -72,7 +72,7 @@ public class Rakennus {
 
 ## Metodit
 
-Luokassa määriteltyjä aliohjelmia kutsutaan *metodeiksi*. Jos attribuutti on olion sisältämää tietoa, metodia voisi kuvailla olion kyvyksi tehdä jotain.
+Luokassa määriteltyjä aliohjelmia kutsutaan *metodeiksi*. Siinä missä attribuutti voisi kuvailla niin, että se muodostaa olion sisäisen tilan, metodia voisi kuvailla olion kyvyksi tehdä jotain.
 
 Metodien määrittely ei syntaksiltaan eroa muista aliohjelmista, ja niiden nimeämisessä käytetään myös samanlaisia käytänteitä. Kuten yleensä aliohjelmia tehdessä, metodin tulisi suorittaa tehtävä, jota sen nimi kuvastaa. Liian suuret tehtävät on hyvä jakaa pienempiin osiin eli useammaksi metodiksi. Metodeja voidaan myös kuormittaa kuin muitakin aliohjelmia. Javassa erikoista on se, että kaikki aliohjelmat ovat itse asiassa aina *jonkin* luokan sisällä ja siten metodeja.
 
