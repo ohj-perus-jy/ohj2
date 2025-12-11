@@ -74,7 +74,7 @@ public class Rakennus {
 
 ## Metodit
 
-Luokassa määriteltyjä aliohjelmia kutsutaan *metodeiksi*. Siinä missä attribuutti voisi kuvailla niin, että se muodostaa olion sisäisen tilan, metodia voisi kuvailla olion kyvyksi tehdä jotain.
+Luokassa määriteltyjä aliohjelmia kutsutaan *metodeiksi*. Siinä missä attribuuttia voisi kuvailla niin, että se muodostaa olion sisäisen tilan, metodia voisi kuvailla olion kyvyksi tehdä jotain.
 
 Metodien määrittely ei syntaksiltaan eroa muista aliohjelmista, ja niiden nimeämisessä käytetään myös samanlaisia käytänteitä. Kuten yleensä aliohjelmia tehdessä, metodin tulisi suorittaa tehtävä, jota sen nimi kuvastaa. Liian suuret tehtävät on hyvä jakaa pienempiin osiin eli useammaksi metodiksi. Metodeja voidaan myös kuormittaa kuin muitakin aliohjelmia. Javassa erikoista on se, että kaikki aliohjelmat ovat itse asiassa aina *jonkin* luokan sisällä ja siten metodeja.
 
@@ -122,6 +122,16 @@ void main() {
 // FILE_END
 ```
 
+## Tehtävä 2.X
+
+<task>
+  <task-title>Tehtävä 2.X: Ensimmäinen luokka<points>1 p.</points></task-title>
+  <handout>
+  TODO: Tehdään oma luokka attribuuteilla ja metodeilla (yksinkertaiset saantimetodit riittävät). Pääohjelmassa luodaan olio, jonka tilaa muutetaan metodien avulla.
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+</task>
+
 ## Static
 
 Tähän muistiin tällainen "määritelmäteksti". Siirrä tai muokkaa tarpeen mukaan. Voit myös lainata tekstiä täältä (minun kirjoittama teksti): https://tim.jyu.fi/view/kurssit/tie/ohj1/materiaali/staattiset
@@ -129,7 +139,6 @@ Tähän muistiin tällainen "määritelmäteksti". Siirrä tai muokkaa tarpeen m
 Attribuutti tai metodi voidaan määritellä *staattiseksi* käyttämällä `static`-sanaa. Staattisuus tarkoittaa Java-kielen yhteydessä sitä, että kyseinen attribuutti tai metodi määritellään kuuluvaksi luokalle itselleen, ei olioinstanssille. Staattinen jäsen on siis tavallaan yhteinen kaikille luokan olioille.
 
 Attribuuttien ja metodien yhteydessä tuli esille staattisuuden käsite. Tämä käsite aiheuttaa usein alussa hieman sekaannusta. Jos haluamme tehdä esimerkiksi attribuutista yhteisen kaikille luokan olioille niin, että jokaisella oliolla ei voi olla omaa arvoa, voimme tehdä siitä staattisen. Sekä attribuutit että metodit voidaan määritellä staattiseksi `static`-määritteellä, jolloin ne kuuluvat luokalle, eikä niistä tehdä "kopioita" jokaiselle oliolle. Nämä *luokan* attribuutit ja metodit ovat edelleen saman luokan olioiden käytettävissä, mutta ne eivät ole osa olioiden tilaa; luokan attribuutista ei ole jokaisella oliolla omaa "versiota" eikä luokan metodi voi päästä minkään olion tilaan suoraan käsiksi, sillä sitä ei kiinnitetä mihinkään olioon.
-
 
 Havainnollistimme tämän osan alussa luokkia ja olioita näin:
 
@@ -191,6 +200,16 @@ HUOM! Staattisuutta voisi ajatella yksinkertaistettuna niin, että staattisesta 
 TODO: Staattinen luokka? Voi olla vain sisäinen luokka. Ei hirveän hyödyllinen kurssin osaamistavoitteiden kannalta.
 
 Koska staattiset metodit eivät liity mihinkään olioon, niiden sisällä ei myöskään voi käyttää `this`-viitettä. Tutustutaan tähän seuraavaksi.
+
+## Tehtävä 2.X
+
+<task>
+  <task-title>Tehtävä 2.X: Staattisuus<points>1 p.</points></task-title>
+  <handout>
+  TODO: Joko teoriatehtävä (useampi monivalinta) tai ohjelmointitehtävä, jossa lisätään luokkaan staattinen attribuutti ja metodi. Pääohjelmassa kokeillaan, että staattisen attribuutin muuttaminen yhdessä oliossa vaikuttaa kaikkiin olioihin.
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## This-viite
 
@@ -431,6 +450,16 @@ void main() {
 }
 // FILE_END
 ```
+
+## Tehtävä 2.X
+
+<task>
+  <task-title>Tehtävä 2.X: Muodostajat<points>1 p.</points></task-title>
+  <handout>
+  TODO: Lisätään luokkaan sopivat muodostajat, että annettu pääohjelma toimii oikein.
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## Olion elinkaari
 
