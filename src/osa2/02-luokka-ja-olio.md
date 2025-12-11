@@ -306,7 +306,7 @@ Voimme käyttää `this`-avainsanaa olion luomisen yhteydessä hieman eri tavall
 
 ## Muodostaja eli konstruktori
 
-Muodostaja eli konstruktori on erikoismetodi, jota kutsutaan automaattisesti uuden olion luomisen yhteydessä ja jolla voidaan asettaa olion alkuperäinen tila. Muodostajan nimi on aina sama kuin luokan nimi ja sille ei voi määrittää palautustyyppiä, sillä se palauttaa aina viitteen muodostettuun olioon.
+Muodostaja eli konstruktori on erikoismetodi, jota kutsutaan automaattisesti uuden olion luomisen yhteydessä ja jolla voidaan asettaa olion alkuperäinen tila. Muodostajan nimi on aina sama kuin luokan nimi ja sille ei voi määrittää paluuarvon tyyppiä, sillä muodostaja palauttaa aina viitteen muodostettuun olioon.
 
 Luokassa täytyy olla ainakin parametriton muodostaja, jota kutsumme perusmuodostajaksi. Olemme kuitenkin tähän asti tehneet luokan olioita määrittelemättä luokkaan muodostajaa. Tämä onnistuu, sillä Java lisää tässä tapauksessa automaattisesti parametrittoman oletusmuodostajan, joka luo olion alustamatta sen tilaa sen enempää. Tätä oletusmuodostajaa ei kuitenkaan luoda automaattisesti silloin, kun määrittelemme luokkaan yhdenkin muodostajan itse. Muodostajan nimen täytyy olla aina sama, joten teemme siis muodostajia lisätessämme metodin kuormitusta erilaisilla parametreilla. Jos luokalla on useampi muodostaja eri parametreilla, oikea muodostaja valitaan kääntäjän toimesta automaattisesti olion luomisen yhteydessä annettujen argumenttien perusteella.
 
