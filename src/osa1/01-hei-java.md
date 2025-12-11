@@ -569,3 +569,21 @@ tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
 Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon
 IO-luokasta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html)
 </details>
+
+## Tehtävät
+
+<task>
+<task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
+<handout>
+
+Tee uusi IDEA-projekti nimeltään `OmatTiedot`. Lisää projektiin uusi
+Java-tiedosto (Java Compact File) nimeltään `OmatTiedot.java`
+ja kirjoita ohjelma, joka tulostaa *kullekin eri riville*
+
+- Nimesi
+- Puhelimesi merkin
+- Puhelimesi mallin
+
+</handout>
+<task-link><a href="#">Tee tehtävä TIMissä</a></task-link>
+</task>
