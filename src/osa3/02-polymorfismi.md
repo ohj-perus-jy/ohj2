@@ -33,7 +33,7 @@ Tämä lähestymistapa ei ole laajennettavissa. Jos yrittäisimme käsitellä so
 
 > [!HUOMAUTUS]
 > Soitin-luokka määritellään tässä tavallisena luokkana, mutta se voisi olla myös abstrakti luokka, ja se olisikin tässä tapauksessa luontevaa. 
-> Koska abstrakti luokka käsitellään vasta luvussa 3.3 Abstraktit luokat, määrittelemme Soittimen tässä tavallisena luokkana.
+> Koska abstrakti luokka käsitellään vasta luvussa [3.3 Abstraktit luokat](03-abstrakti-luokka.md), määrittelemme Soittimen tässä tavallisena luokkana.
 
 ```java,ignore
 public class Soitin {
@@ -121,6 +121,8 @@ public class Piano extends Soitin {
 }
 // FILE_END
 ```
+
+TODO: Tarvitaanko tähän väliin UML-kaavio?
 
 ## is-a-suhde
 
@@ -234,6 +236,8 @@ class C extends B {
 }  
 // FILE_END
 ```
+
+TODO: Tarvitaanko tähän väliin UML-kaavio?
 
 ## Esimerkki: Muoto-luokka
 
