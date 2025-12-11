@@ -184,8 +184,8 @@ Tee seuraavasti:
     usein auttaa muistamaan, mistä eri ohjelmoinnissa käytettävät merkit,
     kuten aaltosulut, kaarisulut ja puolipiste löytyvät.
 
-<details>
-<summary>Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
+<details closed>
+<summary><i class="bi bi-stars jyu-gold"></i> Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
 
 IDEA tarjoaa lisäksi erilaisia aikaa säästäviä täydennysominaisuuksia, 
 joiden käyttöä on hyvä harjoitella.
@@ -229,27 +229,193 @@ täydennyksen painamalla
 
 </details>
         
+### Ohjelman ajaminen
 
-## Java ohjelmien kääntäminen ja ajaminen
-Lähdetäänpä katsomaan mitä "konepellin alla tapahtuu", kun painat aja -näppäintä :
+Kooditiedostoja, jotka sisältävät `main`-aliohjelman, voidaan suorittaa.
+Suorittaminen onnistuu ajopainikkeella (<i class="bi bi-play-fill"></i>),
+joka sijaitsee `main`-aliohjelman vieressä sekä IDEA:n yläpalkissa.
 
-### java
-`java` on komento, jolla ajetaan .java päätteisiä tiedostoja. Voit nyt ajaa kääntämäsi tiedoston komentorivillä ajamalla komennon `java Ohjelma.java`. Java 11:sta jälkeen on ollut mahdollista ajaa komennolla `java` javalähdekooditiedostoja ilman, että ensin kääntää lähdekooditiedostoa Java-tavukoodiksi. Sisäisesti JVM siis tarkistaa, että onko lähdetiedosto(i)sta olemassa käännöksiä, jos ei, kääntää ja sen jälkeen ajaa saadut tavukooditiedostot.
+Tee seuraavasti:
 
-<details closed><summary>Extra: javac </summary>
-Java on <i>käännettävä</i> ohjelmointikieli, joten lähdekoodi tulee kääntää, jotta se voidaan ajaa.
+1. Klikkaa `main`-aliohjelman vasemmalla puolella olevaa ajopainiketta (<i class="bi bi-play-fill"></i>).
 
-Jotta tämä prosessi olisi mahdollista, täytyy tietokoneelle asentaa Java-kehitysympäristö, joka tunnetaan nimellä <i>Java Development Kit</i> (JDK). 
-Kokeillaan seuraavaksi ohjelmamme kääntämistä JDK:n sisältämällä <code>javac</code> -kääntäjäohjelmalla.
+   IDEA ensin kääntää ohjelmasi. Kun ohjelma on käännetty, koodieditorin alapuolelle
+   avautuu **Run**-ikkuna, ja IDEA ajaa ohjelmasi.
 
-Avaa komentorivi ja siirry siihen kansioon, johon tallensit <code>Hei.java</code>-ohjelman. Kirjoita komento <code>javac Hei.java</code>.
+   Ensimmäinen rivi ikkunassa näyttää komennon, jota IDEA käytti käännetyn tiedoston
+   ajamiseksi.
+   Seuraavalla rivillä näet ohjelman tulosteen, tässä tapauksessa
+   `IO.printl`-aliohjelmalla tulostettu `Hei, maailma!`.
+   Viimeinen rivi näyttää poistumiskoodin `0` sen merkiksi, että ohjelman suoritus
+   päättyi ilman virheitä.
 
-Kääntämisen seurauksena syntyy niin sanottua *tavukoodia* sisältävä tiedosto <code>Hei.class</code>. 
-Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe. 
-Java 11:sta mukana tuli mahdollisuus kirjoittaa Javaohjelmia ilman luokkaa, niinkuin yllä olevassa esimerkissä. javac komennon jälkeen huomataan kuitenkin, että ohjelma kääritään käännettäessä silti luokkaan. Mahdollisuus tuotiin Javaan, jotta yhden tiedoston lähdekoodiohjelmat olisivat helpompia kirjoittaa.
+   <video src="images/intellij-run-gutter.mp4" controls></video>
 
-Isommissa Java-ohjelmissa käytetään usein myös erillisiä hallintatyökaluja, kuten
-Gradle tai Maven. Näihin tutustutaan osassa 6 (TODO: Linkki?).
+2. Kokeile vielä ohjelman ajamista luodulla ajokonfiguraatiolla.
+
+   Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo erikoisen 
+   *ajokonfiguraation*, jonka perusteella koodi käännetään ja ajetaan.
+   
+   Kun ajokonfiguraatio on luotu ensimmäisen ajon jälkeen, voit jatkossa
+   ajaa koodin aina IDEA:n yläpalkissa olevalla ajopainikkeella. Tällä tavoin
+   voit helposti ajaa samoja ohjelmia ilman, että kooditiedostoa tarvitsisi
+   erikseen avata.
+
+   IDEAn yläpalkissa pitäisi nyt näkyä `Ohjelma`-konfiguraation nimi,
+   jonka vieressä on ajopainike (<i class="bi bi-play-fill"></i>).
+   Kokeile sulkea `Ohjelma.java` ja suorittaa ohjelma yläpalkin kautta.
+
+   <video src="images/intellij-run-config.mp4" controls></video>
+
+   Ajokonfiguraatioiden avulla voit kirjoittaa useita ohjelmia samaan kansioon
+   ilman, että tarvitsisi tehdä uusia projekteja.
+   Myöhemmin materiaalissa tutustumme lisäksi Gradle-hallintatyökaluun,
+   jonka avulla teemme muun muassa erillisiä ajokonfiguraatioita projektin
+   ajamiselle, testaamiselle ja kääntämiselle.
+
+
+## Miten Java-ohjelmat ajetaan?
+
+Java on lähtökohtaisesti *käännettävä* ohjelmointikieli: ennen kuin
+IDEA varsinaisesti ajaa ohjelman, se käännettään ajettavaan muotoon.
+Tutkitaan seuraavaksi, mitä tämä käytännössä tarkoittaa kääntämällä
+ja ajamalla ohjelma suoraan komentoriviltä.
+
+
+<details closed><summary>Miten voin seurata mukana?</summary>
+
+Tee alkuun yksinkertainen ohjelma [yllä olevan oppaan](#opas-java-ohjelmien-kääntäminen-ja-ajaminen)
+mukaisesti IDEA-kehitysympäristössä.
+
+Sen jälkeen avaa IDEA:n vasemassata näkymäpalkista komentorivi painamalla komentorivipainikkeesta 
+(<i class="bi bi-terminal"></i>).
+Tämä avaa käyttöjärjestelmän komentorivin (zsh macOS:lla, Powershell Windowsilla,
+oletuskomentorivi Linuxilla).
+
+Jos latasit Java-kehitysmpäristön seuraamalla [työkaluohjeita](../tyokalut.md#java-development-kit-jdk),
+komentorivi ei löydä mitään Javan kääntämiseen tarkoitettuja työkaluja.
+Ota työkalut käyttöön kopioimalla ja liittämällä alla oleva komento:
+
+#### [Windows](#tab/win)
+
+```bash
+Get-ChildItem -Path "$env:USERPROFILE\.jdks" -Directory | Sort-Object Name -Descending | Select-Object -First 1 | ForEach-Object { $env:JAVA_HOME = $_.FullName; $env:PATH = "$_.FullName\bin;$env:PATH" }
+```
+
+***
+
+#### [macOS](#tab/macos)
+
+```bash
+export JAVA_HOME=$(/usr/libexec/java_home) && export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+***
+
+### [Linux](#tab/linux)
+
+```bash
+export JAVA_HOME=$(printf "%s\n" ~/.jdks/* | sort -V | tail -n 1) && export PATH="$JAVA_HOME/bin:$PATH"
+```
+
+***
+
+### [Valitse](#tab/default)
+
+Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
+
+***
+
+</details>
+
+Avataan nyt komentorivi ja siirrytään alkuun projektikansioon.
+Tarkastellaan vielä, mitä tiedostoja projektista löytyy:
+
+<asciinema src="images/rec_ls_files.cast" rows="3" poster="npt:2"></asciinema>
+
+Koska käytössämme on IntellJ-projekti, sieltä löytyy vain muutama olennainen tiedosto ja kansio:
+
+- `HelloWorl.iml` on projektin konfiguraatio, jolla IDEA tunnistaa kansion olevan Java-projekti
+- `src` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsee
+- `out` on kansio, joka sisältää käännettyt ohjelmat
+
+Siirrytään nyt `src` kansioon ja tarkastellaan sen sisältö:
+
+<asciinema src="images/rec_cd_project.cast" rows="4" poster="npt:5"></asciinema>
+
+`.java`-tiedostopäätettä käytettävät tiedostot ovat Javan *lähdekooditiedostoja*.
+Ne sisältävät ohjelman lähdekoodia tekstinä eivätkä ne ole vielä suoraan
+ajettavissa.
+
+Jotta ohjelma voidaan ajaa, se pitää kääntää.
+Javan-lähdekoodin kääntäminen onnistuu Java-kehitysympäristön (Java Development Kit, JDK)
+kanssa tulleen `javac`-kääntäjäohjelman avulla.
+Kokeillaan kääntää `Ohjelma.java`:
+
+<asciinema src="images/rec_javac.cast" rows="2" poster="npt:5"></asciinema>
+
+`javac`-komento ei tulosta oletuksella mitään, jos kääntäminen tapahtuu 
+onnistuneesti.
+Tutkitaan vielä kansion rakenne `ls`-komennolla:
+
+<asciinema src="images/rec_javac_ls.cast" rows="3" poster="npt:5"></asciinema>
+
+Kääntämisen seurauksena siis syntyy `.class`-päätteinen tiedosto.
+Tämä tiedosto sisältää ns. *tavukoodia*, joka on tiedoston käännetty muoto.
+Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe.
+Tavukoodia voidaan kuitenkin suorittaa Javan virtuaalikoneella (JVM, Java Virtual Machine),
+joka on erillinen ohjelma, joka osaa tulkita ja suorittaa tavukoodia.
+Vaikka tämä voi kuulostaa turhan monimutkaiselta, hyöty on siinä, että 
+ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan JVM on toteutettu kyseisellä alustalla. 
+JVM voi puolestaan optimoida tavukoodia juuri alustalle ja prosessorille
+sopivaan muotoon tai tarvittaessa tulkata tavukoodia suoraan 
+ns. skriptauskielten tapaan, kuten Python tai Lua.
+Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
+
+<!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
+Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin, että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
+
+JDK:n kanssa tulee myös valmiiksi Java-virtuaalikone sekä Javan ajoympäristö (JRE, Java Runtime Environment), joka sisältää yleisempiä toimintoja, joita Java-ohjelma saattaa käyttää.
+Tavukooditiedoston voidaan ajaa JVM:llä käyttäen `java`-komentoa:
+
+<asciinema src="images/rec_java.cast" rows="3" poster="npt:5"></asciinema>
+
+Huomaa, että `java`-komentoa antaessa kirjoitetaan tavukooditiedoston nimi
+ilman `.class`-päätettä.
+Myöhemmin materiaalissa tutustumma Gradle-projektinhallintaohjelmaan, jolla
+pystyy kääntämään useita lähdekooditiedostoja yhteen `.jar`-tiedostoon, johon
+voidaan pakata kaikki ohjelman ajamiseen tarvittavat tiedostot.
+Myös `.jar`-tiedostot voidaan suorittaa `java`-komennolla.
+
+> [!VINKKI]
+>
+> Alkaen Javan versiosta 11 `java`-komento osaa myös automaattisesti kääntää 
+> ja suorittaa `.java`-lähdekooditiedostot ilman erillistä `javac`-kääntäjän
+> ajamista.
+>
+> Lisäksi tässä materiaalissa käytämme pääosin IDEA-kehitysympäristöä, joka
+> hoitaa lähdekooditiedostojen kääntämisen automaattisesti ja tehokkaasti.
+
+<details closed>
+<summary><i class="bi bi-stars jyu-gold"></i> Bonus: <code>jshell</code>-tulkkiohjelma</summary>
+
+Vaikka Java lasketaan käännettäväksi kieleksi, toisinaan voi olla hyödyllistä
+kokeilla Java-ohjelmien kirjoittamista interaktiivisesti ilman jatkuvaa
+kääntämistä.
+Interaktiivisuus tässä tarkoittaa, että voit kokeilla eri komentoja rivi/lohko
+kerrallaan ilman erillistä kääntämistä ja ajamista, luokkia tai `main`-pääohjelmaa.
+
+Tätä varten JDK sisältää `jshell`-ohjelman, joka on Java-ohjelman 
+komentorivitulkki eli ns. REPL-tulkki (read-evaluate-print-loop).
+
+`jshell` tarjoaa useita hyödyllisiä toimintoja, kuten:
+
+- Luokkien ja aliohjelmien nimien täydennys ja haku <kbd>Tab</kbd>-painikkeella
+- Lausekkeiden suorittaminen ilman tarvetta `main`-aliohjelmalle
+
+`jshell`-ohjelmasta voi poistua `/exit`-komennolla.
+
+<asciinema src="images/rec_jshell.cast" rows="25" poster="npt:60" controls></asciinema>
 
 </details>
 
@@ -258,38 +424,61 @@ jshell on interaktiivinen tulkki Javaohjelmoinnin opetteluun. Interaktiivisuus t
 
 jshellistä poistutaan ajamalla komento `/exit`
 
-## (J)VM
-JVM tulee sanoista **J**ava **V**irtual **M**achine joka on spesifikaatio teoreettisesta tietokoneesta. Tämän spesifikaation toteutuksella voidaan ajaa Java-tavukoodia. Hyöty on siinä, että ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan toteutus pyörii kyseisellä alustalla. Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
+## Tekstin tulostaminen ja lukeminen
 
-Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin, että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä.
+Jatkossa voi olla hyödyllistä tulostaa erilaisia asioita komentoriviin
+ja toisaalta lukea tietoa sieltä.  
+Javan `IO`-luokka tarjoaa kolme perustoimintoa tekstin tulostamiseen ja lukemiseen
+komentorivillä:
 
-## Java I/O operaatioita
-Javan IO-luokalla voidaan käyttäjältä lukea syötettä näin:
+| Aliohjelma | Esimerkki                       | Selitys                                                                  |
+| ---------- | ------------------------------- | ------------------------------------------------------------------------ |
+| `println`  | `[java] IO.println("Moi!");`           | Tulostaa parametrina annetun arvon ja lisää loppuun rivinvaihdon         |
+|            | `[java] IO.println();`                 | Tulostaa rivinvaihdon                                                    |
+| `print`    | `[java] IO.print("Samalla rivillä!");` | Tulostaa parametrina annetun arvon ilman rivinvaihtoa                    |
+| `readln`   | `[java] IO.readln();`                  | Lukee käyttäjän syötettä komentoriviltä rivinvaihtoon asti               |
+|            | `[java] IO.readln("Anna sana > ");`    | Sama kuin `readln`, mutta tulostaa ensin annetun tekstin ennen syötettä. |
 
-```java
+
+Katsotaan vielä näiden yhteistoimintaa.
+Voit muokata alla olevaa esimerkkiä vapaasti ja kokeilla, miten erilainen
+tulostus toimii.
+
+```java,editable
 void main() {
-    String syote = IO.readln();
-    IO.println("Kirjoitit: " + syote);
-}
-```
+    String nimi = IO.readln("Anna nimesi: > ");
+    IO.println();
+    IO.println("Moi, " + nimi + "!");
 
-Yllä opittiinkin jo kirjoittamaan konsoliin rivinvaihdollisesti. IO-luokasta löytyy myös perinteinen `print`, joka kirjoittaa standardiin ulostuloon tekstiä ilman rivinvaihtoa. Esimerkiksi:
-
-```java
-void main() {
-    IO.print("Samalle");
+    IO.print("Tämä teksti");
+    IO.print(" menee samalle");
     IO.print(" riville");
+    
+    IO.println(); // Kokeile ottaa tämä pois ja katso, mitä tapahtuu
+
+    IO.println("Tervetuloa Ohjelmointi 2 -kurssille!");
 }
 ```
 
 ## Kommentointi ja dokumentointi
 
-Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan selittää sitä. Tällaista selitystekstiä on kahdentyyppisiä: (1) koodin sekaan kirjoitettavia kommentteja (nimitetään näitä lyhyesti *kommenteiksi*) sekä (2) dokumentaatiokommentteja. 
+Ennen kuin päästään varsinaisesti koodaamaan, otetaan vielä kertaus koodin
+kommentoinnista.
 
-Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application programming interface*) kautta.
+Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan
+selittää sitä. Tällaista selitystekstiä on kahdentyyppisiä: (1) koodin sekaan
+kirjoitettavia kommentteja (nimitetään näitä lyhyesti *kommenteiksi*) sekä (2)
+dokumentaatiokommentteja. 
+
+Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät
+sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on
+palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle
+itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application
+programming interface*) kautta.
 
 ### Yhden rivin kommentointi
-Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi merkitsemään TODO-kohtia koodissa:
+Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi
+merkitsemään TODO-kohtia koodissa:
 
 ```java
 void main() {
@@ -299,9 +488,14 @@ void main() {
 }
 ```
 
-Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka selittää itse itseään. Tällöin asiat, jotka voidaan nimetä (kuten muuttujat, luokat, funktiot), pyritään nimeämään mahdollisimman kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Joskus tältä ei voi välttyä, koska jotakin operaatiota ei voida olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
+Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka
+selittää itse itseään. Tällöin asiat, jotka voidaan nimetä (kuten muuttujat,
+luokat, funktiot), pyritään nimeämään mahdollisimman kuvaavasti, jolloin
+yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Joskus tältä ei voi
+välttyä, koska jotakin operaatiota ei voida olettaa itsestäänselväksi tai
+muuttujan nimestä tulisi kohtuuttoman pitkä:
 
-```java,editable
+```java
 void main() {
     int n = 9;
     // Pyöristää alaspäin lähimpään neljällä jaolliseen lukuun
@@ -309,13 +503,20 @@ void main() {
     IO.println(pyoristetty);
 }
 ```
-Nyt muuttujan `pyoristetty` tilalla voisi olla `pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein järkevä vaihtoehto.
+
+Nyt muuttujan `pyoristetty` tilalla voisi olla
+`pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein
+järkevä vaihtoehto.
 
 ### Monirivinen kommentti
 
-Javassa monirivinen kommentti tulee `/*` ja  `*/` väliin. Tällaista suositellaan käytettäväksi, kun jokin monimutkaisempi logiikka vaatii tarkempaa avaamista ja/tai on järkevää selittää miksi juuri kyseinen ratkaisu on valittu. Tätä kommenteissa olevaa tarkempaa avaamista ei kuitenkaan ole tarkoitus näyttää koodin käyttäjille.
+Javassa monirivinen kommentti tulee `/*` ja  `*/` väliin. Tällaista suositellaan
+käytettäväksi, kun jokin monimutkaisempi logiikka vaatii tarkempaa avaamista
+ja/tai on järkevää selittää miksi juuri kyseinen ratkaisu on valittu. Tätä
+kommenteissa olevaa tarkempaa avaamista ei kuitenkaan ole tarkoitus näyttää
+koodin käyttäjille.
 
-```java.ignore
+```java,noplayground
 if (kayttaja.kayttaaVanhaa) {
     /* 
      * Vanhat käyttäjät (rekisteröityneet ennen vuotta 2022) käyttävät 
@@ -328,10 +529,14 @@ if (kayttaja.kayttaaVanhaa) {
 
 ### Dokumentaatiokommentti
 
-> [!Huomautus]
-> Dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
+Dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat
+syntaksiltaan hyvin lähellä monirivistä kommenttia.
 
 ```java
+//- void main() {
+//-   IO.println("summa(1, 2) ==> " + summa(1, 2));
+//- }
+//-
 /**
  * Laskee kahden kokonaisluvun summan.
  * 
@@ -344,12 +549,41 @@ public int summa(int a , int b) {
 }
 ```
 
-Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti sovelluskehittimessä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa merkit `/**` ja painaa `Enter`. 
+Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti
+IDEA-kehitysympäristössä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa
+merkit `/**` ja painaa <kbd>Enter</kbd>. 
 
-<details closed><summary>Extra: miltä Javan dokumentaatio näyttää? </summary>
-Oletetaan nyt, että tallennat ylläolevan tiedostoon <code>Summa.java</code> ja ajat sen jälkeen komennon <code>javadoc Summa.java</code>. Nyt voit avata luodun <code>index.html</code> -tiedoston selaimessa, klikata selaimessa luokkaa <code>Summa</code> ja pääset seuraavanlaiseen näkymään:
+<video src="images/intellij-docstring.mp4" controls></video>
 
-![Juuri tehdystä dokumentaatiosta kuva, joka voi näyttää tutulta jos on käynyt tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
 
-Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html)
+<details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
+
+Oletetaan nyt, että tallennat ylläolevan tiedostoon `Summa.java`
+ja ajat sen jälkeen komennon `javadoc Summa.java`
+Nyt voit avata luodun `index.html` -tiedoston selaimessa, 
+klikata selaimessa luokkaa `Summa` ja pääset seuraavanlaiseen näkymään:
+
+![Juuri tehdystä dokumentaatiosta kuva, joka voi näyttää tutulta jos on käynyt
+tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
+
+Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon
+IO-luokasta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html)
 </details>
+
+## Tehtävät
+
+<task>
+<task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
+<handout>
+
+Tee uusi IDEA-projekti nimeltään `OmatTiedot`. Lisää projektiin uusi
+Java-tiedosto (Java Compact File) nimeltään `OmatTiedot.java`
+ja kirjoita ohjelma, joka tulostaa *kullekin eri riville*
+
+- Nimesi
+- Puhelimesi merkin
+- Puhelimesi mallin
+
+</handout>
+<task-link><a href="#">Tee tehtävä TIMissä</a></task-link>
+</task>

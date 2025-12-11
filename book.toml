@@ -18,7 +18,8 @@ additional-css = [
   "theme/accordion.css",
   "theme/codeblock-tabs.css",
   "theme/code-highlights.css",
-  "theme/tasks.css"
+  "theme/tasks.css",
+  "theme/asciinema-player.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
@@ -30,6 +31,8 @@ additional-js = [
   "theme/accordion.js",
   "theme/codeblock-tabs.js",
   "theme/code-highlights.js",
+  "theme/asciinema-player.min.js",
+  "theme/asciinema-component.js",
 ]
 
 [output.html.playground]
@@ -51,3 +54,5 @@ command = "python3 ./preprocessors/python/accordion.py"
 
 [preprocessor.plantuml]
 plantuml-cmd="https://www.plantuml.com/plantuml"
+
+[preprocessor.inline-highlighting]

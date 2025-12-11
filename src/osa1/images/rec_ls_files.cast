@@ -1,0 +1,7 @@
+{"version":3,"term":{"cols":80,"rows":4,"type":"xterm-kitty","version":"kitty(0.44.0)","theme":{"fg":"#e1e2e8","bg":"#111418","palette":"#4f5153:#4f5d72:#857375:#b4705b:#79879a:#aba19b:#fa9566:#f4c2aa:#ab8777:#4f5d72:#857375:#b4705b:#79879a:#aba19b:#fa9566:#f4c2aa"}},"timestamp":1765448119,"idle_time_limit":1.0,"command":"PS1='$ ' bash --norc","env":{"SHELL":"/usr/bin/bash"}}
+[0.003, "o", "\u001b[?2004h$ "]
+[2.336, "o", "l"]
+[0.303, "o", "s"]
+[0.657, "o", "\r\n\u001b[?2004l\r"]
+[0.000, "o", "HelloWorld.iml\tout  src\r\n\u001b[?2004h$ "]
+[0.000, "x", "0"]
