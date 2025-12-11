@@ -306,9 +306,11 @@ Voimme käyttää `this`-avainsanaa olion luomisen yhteydessä hieman eri tavall
 
 ## Muodostaja eli konstruktori
 
-Muodostaja eli konstruktori on erikoismetodi, jota kutsutaan automaattisesti uuden olion luomisen yhteydessä ja jolla voidaan asettaa olion alkuperäinen tila. Muodostajan nimi on aina sama kuin luokan nimi ja sille ei voi määrittää paluuarvon tyyppiä, sillä muodostaja palauttaa aina viitteen muodostettuun olioon.
+Muodostaja eli konstruktori on erikoismetodi, jota kutsutaan automaattisesti uuden olion luomisen yhteydessä ja jolla voidaan asettaa olion alkuperäinen tila. Muodostajan nimi on aina sama kuin luokan nimi ja se kirjoitetaan isolla alkukirjaimella, mikä poikkeaa muiden metodien nimeämistyylistä. Muodostajalle ei määritetä paluuarvon tyyppiä, vaan muodostaja palauttaa aina viitteen muodostettuun olioon.
 
-Luokassa täytyy olla ainakin parametriton muodostaja, jota kutsumme perusmuodostajaksi. Olemme kuitenkin tähän asti tehneet luokan olioita määrittelemättä luokkaan muodostajaa. Tämä onnistuu, sillä Java lisää tässä tapauksessa automaattisesti parametrittoman oletusmuodostajan, joka luo olion alustamatta sen tilaa sen enempää. Tätä oletusmuodostajaa ei kuitenkaan luoda automaattisesti silloin, kun määrittelemme luokkaan yhdenkin muodostajan itse. Muodostajan nimen täytyy olla aina sama, joten teemme siis muodostajia lisätessämme metodin kuormitusta erilaisilla parametreilla. Jos luokalla on useampi muodostaja eri parametreilla, oikea muodostaja valitaan kääntäjän toimesta automaattisesti olion luomisen yhteydessä annettujen argumenttien perusteella.
+Luokassa täytyy olla ainakin yksi muodostaja. Olemme kuitenkin tähän asti tehneet luokan olioita määrittelemättä luokkaan muodostajaa. Tämä onnistuu Javassa, sillä jos luokkaan *ei* ole tehty yhtään muodostajaa, luokkaan syntyy automaattisesti parametriton muodostaja. Automaattisesti luotu parametriton muodostaja on toteutukseltaan tyhjä siinä mielessä, että se ei sisällä yhtään lausetta. 
+
+Parametritonta muodostajaa ei kuitenkaan luoda automaattisesti silloin, kun määrittelemme luokkaan itse yhdenkin muodostajan. Muodostajan nimen täytyy olla aina sama, joten teemme siis muodostajia lisätessämme metodin kuormitusta erilaisilla parametreilla. Jos luokalla on useampi muodostaja eri parametreilla, oikea muodostaja valitaan kääntäjän toimesta automaattisesti olion luomisen yhteydessä annettujen argumenttien perusteella.
 
 Käytimme aikaisemmassa esimerkissä `Rakennus`-luokkaa määrittelemättä muodostajaa. Otetaan metodit hetkeksi pois selkeyden vuoksi ja katsotaan, mitä olioita luodessa tapahtuu.
 
