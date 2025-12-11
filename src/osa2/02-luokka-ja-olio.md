@@ -194,6 +194,8 @@ Koska staattiset metodit eivät liity mihinkään olioon, niiden sisällä ei my
 
 ## This-viite
 
+Sana `this` viittaa olioon itseensä. Se toimii viitteenä "tähän olioon", jonka kontekstissa koodia suoritetaan. 
+
 Käytimme tämän osan alun esimerkeissä `this`-viitettä lukeaksemme olion attribuutteja näin:
 
 ```java
