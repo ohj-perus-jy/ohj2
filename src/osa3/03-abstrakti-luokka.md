@@ -366,7 +366,7 @@ public abstract class Laite {
 }
 ```
 
-Huomaa, että koska päätimme, että joka laitteella on oltava nimi, siitä seuraa, että nimi on asetettava muodostajan parametrin kautta. Tämän seurauksena emme voi enää luoda ilmentymiä oletusmuodostajan avulla. 
+Huomaa, että koska päätimme, että joka laitteella on oltava nimi, siitä seuraa, että nimi on asetettava muodostajan parametrin kautta. Tämän seurauksena emme voi enää luoda ilmentymiä ei-parametrisen muodostajan avulla. 
 
 ```java,ignore
 Valo valo = new Valo();

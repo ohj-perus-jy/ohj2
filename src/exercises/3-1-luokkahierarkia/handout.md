@@ -4,7 +4,7 @@ Määrittele yhteiset ominaisuudet (`nopeus`, `paino`) ja metodit (`kiihdyta()`,
 
 <!-- Tämä ei toimi, koska meillä ei ole vielä abstrakteja luokkia: Määrittele myös renkaiden lukumäärä, jonka tulee olla vakio.  -->
 
-Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. 
+Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. Mitä raskaampi ajoneuvo on, sitä hitaammin se kiihtyy (vaikkapa kaavalla `nopeus += 1000 / paino;`) ja sitä tehokkaammin se jarruttaa (kaavalla `nopeus = nopeus - 1000 / paino`). Nopeus ei saa mennä negatiiviseksi.
 
 <!-- Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum? -->
 

@@ -29,7 +29,7 @@ Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Ope
 > Lisää omaan koodiisi kuitenkin aina asianmukaiset dokumentaatiokommentit!
 
 > [!VAROITUS]
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku 2.1](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin edetessä.
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku 2.3](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin edetessä.
 
 ```java
 // FILE: Opiskelija.java  
@@ -231,11 +231,13 @@ Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa
 
 ## Muodostajat ja super-avainsana
 
-Yllä olevassa esimerkissämme on pari ongelmaa. Ensinnäkin, `Henkilo`-luokassa ei ole muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tämän seurauksena olioiden luomisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
+Yliluokan muodostajia voidaan kutsua aliluokista käyttäen `super`-avainsanaa. Katsotaan esimerkin kautta, missä tällainen kutsu on tarpeen.
 
-Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen  julkisen metodin kautta, eli niin, että mikä tahansa olio voisi kutsua minkä tahansa `Henkilo`-olion metodia nimen muuttamiseksi, ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
+Yllä olevassa esimerkissämme on pari ongelmaa. `Henkilo`-luokassa ei ole muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tästä seuraa, että `Henkilo`-olion muodostamisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
 
-Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten muodostaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain muodostajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
+Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta, eli niin, että mikä tahansa olio voisi kutsua minkä tahansa `Henkilo`-olion metodia nimen muuttamiseksi, ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
+
+Korjataan tilanne. Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten muodostaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain muodostajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
 
 Muutetaan olioiden rakentelu pääohjelmassa vastaamaan tätä uutta muodostajaa.
 
@@ -266,13 +268,13 @@ class Henkilo {
 public class Main {
     public static void main() {
         // HIGHLIGHT_GREEN_BEGIN
-        Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen", "matti123");        
+        Opiskelija opiskelija = new Opiskelija("Matti Meikäläinen");        
         // HIGHLIGHT_GREEN_END
         // HIGHLIGHT_RED_BEGIN
         opiskelija.setNimi("Matti Meikäläinen");
         // HIGHLIGHT_RED_END
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
-        opiskelija.naytaKurssit();
+        opiskelija.naytaOpintosuunnitelma();
 
         // ...
     }
@@ -280,9 +282,26 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo oletusmuodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen. 
+Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo ei-parametrista muodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen&mdash;valitettavasti hieman kryptisen sellaisen.
 
-Tässä tuleekin tärkeä huomio: Ne luokat, jotka perivät `Henkilo`-luokan, eivät peri sen muodostajia. Tämän vuoksi meidän on lisättävä myös `Opiskelija` ja `Opettaja`-luokkiin muodostajat vastaamaan tätä muutosta. 
+```
+java: constructor Opiskelija in class Opiskelija cannot be applied to given types;
+  required: no arguments
+  found:    java.lang.String
+  reason: actual and formal argument lists differ in length
+```
+
+Virheilmoituksen pointti on, että `Opiskelija`-olion muodostaja ei vastaa sitä, miten yritämme luoda olion pääohjelmassa. 
+
+Tässä tuleekin tärkeä huomio: Luokat eivät peri muodostajia yliluokiltaan. Esimerkiksi `Opiskelija`-luokka ei peri `Henkilo`-luokan muodostajia, vaan ne täytyy määritellä erikseen jokaisessa aliluokassa. Tehdään `Opiskelija` ja `Opettaja`-luokkiin muodostajat vastaamaan tätä vaatimusta. Esimerkiksi `Opiskelija`-luokassa muodostajan alku näyttäisi tältä.
+
+```java,noplayground
+class Opiskelija extends Henkilo {
+    public Opiskelija(String nimi) {
+        // Muodostajan runko tulee tähän
+    }
+}
+```
 
 Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
 
@@ -307,9 +326,9 @@ Opiskelija.java:8:13
 java: nimi has private access in Henkilo
 ```
 
-Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole oletusmuodostajaa. Korjaamme tämän hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
+Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole ei-parametrista muodostajaa. Korjaamme tämän hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
 
-Koska poistimme `setNimi`-metodin, niin ainoa tapa asettaa nimen arvo on tehdä se kutsumalla aliluokasta yliluokan muodostajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan käyttämällä `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
+Koska poistimme `setNimi`-metodin, niin ainoa tapa asettaa nimen arvo on tehdä se kutsumalla aliluokasta muodostajasta käsin yliluokan muodostajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
 
 ```java,noplayground
 import java.util.ArrayList;
@@ -419,7 +438,7 @@ public class Main {
 // FILE_END
 ```
 
-Oletusmuodostajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
+Ei-parametrista muodostajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
 
 Luokkahierarkia voi olla enemmänkin kuin kaksi tasoa syvä. Meillä voisi olla myös `Sihteeri`, joka voi kirjata opintosuorituksia. `Sihteeri` peritään `Henkilo`-luokasta. Voisimme tehdä myös kahdenlaisia erilaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla voisi olla oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyisi suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
 
