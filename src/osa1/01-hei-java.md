@@ -372,6 +372,9 @@ sopivaan muotoon tai tarvittaessa tulkata tavukoodia suoraan
 ns. skriptauskielten tapaan, kuten Python tai Lua.
 Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
 
+<!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
+Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin, että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
+
 JDK:n kanssa tulee myös valmiiksi Java-virtuaalikone sekä Javan ajoympäristö (JRE, Java Runtime Environment), joka sisältää yleisempiä toimintoja, joita Java-ohjelma saattaa käyttää.
 Tavukooditiedoston voidaan ajaa JVM:llä käyttäen `java`-komentoa:
 
@@ -415,6 +418,11 @@ komentorivitulkki eli ns. REPL-tulkki (read-evaluate-print-loop).
 <asciinema src="images/rec_jshell.cast" rows="25" poster="npt:60" controls></asciinema>
 
 </details>
+
+### jshell
+jshell on interaktiivinen tulkki Javaohjelmoinnin opetteluun. Interaktiivisuus tarkoittaa, että voit kokeilla eri komentoja rivi/lohko kerrallaan ilman erillistä kääntämistä ja ajamista, luokkia tai `main`-metodia. Pääset kokeilemaan jshelliä ajamalla komennon `jshell`. Nyt voit esimerkiksi kirjoittaa komennon `IO.println("Hei maailma!");` ja painaa `Enter`, jolloin näet heti tulostuksen komentorivillä. Vastaavasti voit luoda muuttujia ja näet heti, mitä niihin on sijoitettu.
+
+jshellistä poistutaan ajamalla komento `/exit`
 
 ## Tekstin tulostaminen ja lukeminen
 
