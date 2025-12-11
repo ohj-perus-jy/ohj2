@@ -20,7 +20,7 @@ TODO: Muodostaja vai this ensin?
 
 ## Luokka
 
-Ensimmäinen askel olio-ohjelmointiin on luokan määritteleminen `class`-avainsanaa käyttäen. Luokkaa voi ajatella kaavana tai muottina, jonka pohjalta olioita luodaan. Luokka kertoo, mitä tietoja olio sisältää (attribuutit) ja mitä se voi tehdä (metodit).
+Ensimmäinen askel olio-ohjelmointiin on luokan määritteleminen `class`-avainsanaa käyttäen. Luokkaa voi ajatella kaavana tai muottina, jonka pohjalta olioita luodaan. Luokka kertoo, mitä tietoja olio sisältää (attribuutit) ja mitä se voi tehdä (metodit). Luokassa määriteltyjä attribuutteja ja metodeja kutsutaan myös *luokan jäseniksi* (engl. *class member*).
 
 Esimerkiksi yhden rakennuspiirustuksen pohjalta voidaan rakentaa monta rakennusta. Ne olisivat rakenteeltaan samanlaisia, sillä ne ovat saman kaavan mukaan tehty, mutta jokaisella rakennuksella olisi kuitenkin oma tila; eri omistaja, väri, sisustus, jne. Rakennuspiirustus on kuin luokka ja rakennukset sen pohjalta tehtyjä olioita. Luokan nimi kertoo, *mikä* olio on, joten jos tekisimme luokan rakennuksille, sen nimeksi sopisi `Rakennus`. Huomaa, että Javassa on tapana aloittaa luokkien nimet aina isolla kirjaimella.
 
