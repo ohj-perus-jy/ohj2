@@ -31,7 +31,7 @@ public interface Verkkovirtalaite {
 }
 ```
 
-Nyt `Leivanpaahdin` ja `Sirkkeli` voisivat olla luokkia, jotka toteuttavat tämän rajapinnan.
+Nyt `Leivanpaahdin` ja `Sirkkeli` voivat toteuttaa tämän rajapinnan.
 
 ```java,ignore
 public class Leivanpaahdin implements Verkkovirtalaite {
