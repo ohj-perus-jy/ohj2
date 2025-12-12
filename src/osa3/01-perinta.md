@@ -282,7 +282,7 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo ei-parametrista muodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen&mdash;valitettavasti hieman kryptisen sellaisen.
+Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo oletusmuodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen&mdash;valitettavasti hieman kryptisen sellaisen.
 
 ```
 java: constructor Opiskelija in class Opiskelija cannot be applied to given types;
