@@ -26,3 +26,11 @@ github.com
 
 ## Haarat (branch)
 
+Haarat (branches) mahdollistavat kehitystyön tekemisen rinnakkain ilman, että eri ominaisuuksien kehitys häiritsee toisiaan. Haaroja voidaan käyttää esimerkiksi uusien ominaisuuksien kehittämiseen, virheiden korjaamiseen tai kokeelliseen kehitykseen.
+
+Luet seuraavan XYZ materiaali haaroista ja niiden käytöstä Gitissä: [Linkki materiaaliin]() ja katsot videon: [Linkki videoon]().
+
+Tällä kurssilla käytetään harjoitustyön kehittämisessä haaroja seuraavasti:
+
+...
+
