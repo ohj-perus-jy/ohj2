@@ -121,13 +121,15 @@ Lisäksi Javasta löytyy vielä [`AbstractCollection`](https://docs.oracle.com/e
 </details>
 
 <task>
-  <task-title>Tehtävä 4.1: Miksi Comparable? <points>1 p.</points> </task-title>
-  <handout>
+<task-title>Tehtävä 4.1: Miksi Comparable? <points>1 p.</points></task-title>
+<handout>
 
 {{#include ../exercises/4-1-miksi-comparable/handout.md}}
 
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
+</handout>
+<task-link>
+<a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a>
+</task-link>
 </task>
 
 ### Oma toteutus Comparable-rajapinnalle
