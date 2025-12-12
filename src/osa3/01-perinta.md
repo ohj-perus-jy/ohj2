@@ -201,7 +201,7 @@ public class Main {
 
 Huomaa, että `Opiskelija`- ja `Opettaja`-luokat eivät enää määrittele `nimi`-attribuuttia tai `getNimi`- ja `setNimi`-metodeja, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää. Perinnällä siis määritetään *yksi* yliluokka (tässä `Henkilo`) ja aliluokka tai aliluokat (tässä `Opiskelija` ja `Opettaja`), jotka laajentavat (engl. *extend*) `Henkilo`-luokan lisätiedoilla ja -toiminnallisuuksilla opiskelijasta ja opettajasta. 
 
-Toisin sanoen, `Opiskelija` ja `Opettaja` saavat itselleen samat (ei-yksityiset) attribuutit ja (ei-yksityiset) metodit kuin Henkilo-luokka ilman sitä, että ne pitää erikseen määritellä aliluokissa. 
+Toisin sanoen, `Opiskelija` ja `Opettaja` saavat itselleen samat (ei-yksityiset) attribuutit ja (ei-yksityiset) metodit kuin `Henkilo`-luokka ilman sitä, että ne pitää erikseen määritellä aliluokissa. 
 
 Kirjallisuudessa käytetään joskus yliluokka- ja aliluokka-termeistä myös nimityksiä kantaluokka (engl. *base class*) ja johdettu luokka (engl. *derived class*). Myös muita nimityksiä on käytössä. Näillä termeillä tarkoitetaan samaa asiaa kuin yliluokka- ja aliluokka-termeillä. Käytämme tässä materiaalissa kuitenkin pääasiassa yliluokka- ja aliluokka-termejä.
 
