@@ -14,9 +14,9 @@ ohjelmointikielten kärkilistoilla (ks. esim.
 [TIOBE index](https://www.tiobe.com/tiobe-index/), 
 [StackOverflow 2025 developer survey](https://survey.stackoverflow.co/2025/technology), 
 [suosituimmat kielet GitHub-palvelussa](https://madnight.github.io/githut)). 
-Javan syntaksi on hyvin samankaltainen 
+Javan syntaksi muistuttaa paljon 
 [Ohjelmointi 1 -kurssilla](https://ohjelmointi1.it.jyu.fi)
-käytettyyn C#-kieleen.
+käytettyä C#-kieltä.
 
 ## Java-kielen perusteet
 
@@ -30,10 +30,10 @@ Lähdetään liikkeelle perinteisellä 'Hei, maailma' -esimerkillä Javalla:
 
 Käydään läpi ohjelma rivi riviltä:
 
-1. Java-ohjeman suoritus alkaa `main`-nimisestä aliohjelmasta. `void`
+1. Java-ohjelman suoritus alkaa `main`-nimisestä aliohjelmasta. `void`
    tarkoittaa, että aliohjelma ei palauta mitään arvoja. Koska pääohjelma ei ota
    parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä
-   aloitetaan myös aliohjelman runko aaltosululla`{`.
+   aloitetaan myös aliohjelman runko aaltosululla `{`.
 
 2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen
    onnistuu `IO.println`-metodilla.
@@ -51,7 +51,7 @@ Tässä olennaisimmat Javan koodauskäytänteet, joita on tässä vaiheessa hyv�
 mielessä:
 
 - Aliohjelman runkoa aloittava aaltosulku `{` laitetaan yleensä samalle riville
-  kuin aliohjelman määrittely. Sama pätee muille rakenteille, jossa käytetään
+  kuin aliohjelman määrittely. Sama pätee muihin rakenteisiin, joissa käytetään
   aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
 
 - Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen
@@ -60,12 +60,12 @@ mielessä:
   nimeämisessä.
 
 - Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset
-  nimitetään PascalCasing-tyylillä, Esimerkiksi `HeiMaailma.java`, `public class
+  nimetään PascalCasing-tyylillä. Esimerkiksi `HeiMaailma.java`, `public class
   Opiskelija {...`, `public interface Saadettava {...` tai `public enum
   Viikonpaiva { ...`.
 
 
-## Opas: Java ohjelmien kääntäminen ja ajaminen
+## Opas: Java-ohjelmien kääntäminen ja ajaminen
 
 > [!TÄRKEÄÄ]
 >
@@ -75,7 +75,7 @@ mielessä:
 Tässä materiaalissa käytämme IntelliJ IDEA -kehitysympäristöä Java-ohjelmien
 luomiseen, ajamiseen ja virheenjäljitykseen.
 
-### Luo uusi Java projekti
+### Luo uusi Java-projekti
 
 Luodaan seuraavaksi yksinkertainen Java-projekti IDEAssa.
 Projekti on IDEA-kehitysympäristön tapa koostaa lähdekooditiedostoja,
@@ -104,7 +104,7 @@ Tee seuraavasti:
     * Aseta projektin nimeksi **Name**-kenttään `HelloWorld`. Projektien nimet yleensä
       kirjoitetaan ilman välilyöntejä.
 
-    * Aseta projektin sijainti **Location**-kentässä. Klikkaa kentän oikealla puolella 
+    * Aseta projektin sijainti **Location**-kenttään. Klikkaa kentän oikealla puolella 
       olevaa kansiokuvaketta (<i class="bi bi-folder2"></i>) ja valitse
       projektille sopiva kansio. Valitse sellainen kansio, jonka löydät tulevaisuudessakin
       helposti omalta tietokoneelta.
@@ -147,7 +147,7 @@ voidaan kirjoittaa koodi.
 
 Tee seuraavasti:
 
-1. Projektiselaimessa klikkaa oikealla hiiren painikkeella `src` kansiosta
+1. Projektiselaimessa klikkaa oikealla hiiren painikkeella `src`-kansiosta
    ja valitse **New** <i class="bi bi-chevron-right"></i> **Java Compact File**.
 
 2. Aseta avautuneessa dialogissa lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
@@ -162,7 +162,7 @@ tiedoston myös klikkaamalla se kahdesti projektinäkymästä.
 
 ### Kirjoita koodi
 
-Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma" ohjelma alusta alkaen
+Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma" -ohjelma alusta alkaen
 juuri luotuun `Ohjelma.java`-tiedostoon.
 
 Tee seuraavasti:
@@ -214,7 +214,7 @@ täydentää `IO` kursorin kohdalle.
 Kirjoita sen jälkeen `.` (piste), minkä jälkeen IDEA automaattisesti näyttää
 kaikki `IO`-luokassa olevat aliohjelmat. Siirry listassa nuolipainikkeilla
 `println`-aliohjelman kohdalle ja paina <kbd>Enter</kbd>.
-Tämä täydentää `printl`-tekstin kursorin kohdalle.
+Tämä täydentää `println`-tekstin kursorin kohdalle.
 
 Kirjoita sen jälkeen kaarisulku `(`. IDEA automaattisesti täydentää
 lopettavan kaarisulun `)`. Siirry nuolipainikkeilla kaarisulkujen väliin
@@ -224,7 +224,7 @@ tai nuolinäppäimiä käyttäen ja lisää loppuun puolipiste `;`.
 <video src="images/intellij-auto-completion.mp4" controls></video>
 
 IDEA osaa automaattisesti siis ehdottaa luokkien ja aliohjelmien nimiä
-konteksin perusteella. Voit myös aina erikseen avata automaattisen
+kontekstin perusteella. Voit myös aina erikseen avata automaattisen
 täydennyksen painamalla
 
 </details>
@@ -245,7 +245,7 @@ Tee seuraavasti:
    Ensimmäinen rivi ikkunassa näyttää komennon, jota IDEA käytti käännetyn tiedoston
    ajamiseksi.
    Seuraavalla rivillä näet ohjelman tulosteen, tässä tapauksessa
-   `IO.printl`-aliohjelmalla tulostettu `Hei, maailma!`.
+   `IO.println`-aliohjelmalla tulostettu `Hei, maailma!`.
    Viimeinen rivi näyttää poistumiskoodin `0` sen merkiksi, että ohjelman suoritus
    päättyi ilman virheitä.
 
@@ -277,7 +277,7 @@ Tee seuraavasti:
 ## Miten Java-ohjelmat ajetaan?
 
 Java on lähtökohtaisesti *käännettävä* ohjelmointikieli: ennen kuin
-IDEA varsinaisesti ajaa ohjelman, se käännettään ajettavaan muotoon.
+IDEA varsinaisesti ajaa ohjelman, se käännetään ajettavaan muotoon.
 Tutkitaan seuraavaksi, mitä tämä käytännössä tarkoittaa kääntämällä
 ja ajamalla ohjelma suoraan komentoriviltä.
 
@@ -287,12 +287,12 @@ ja ajamalla ohjelma suoraan komentoriviltä.
 Tee alkuun yksinkertainen ohjelma [yllä olevan oppaan](#opas-java-ohjelmien-kääntäminen-ja-ajaminen)
 mukaisesti IDEA-kehitysympäristössä.
 
-Sen jälkeen avaa IDEA:n vasemassata näkymäpalkista komentorivi painamalla komentorivipainikkeesta 
+Sen jälkeen avaa IDEA:n vasemmasta näkymäpalkista komentorivi painamalla komentorivipainikkeesta 
 (<i class="bi bi-terminal"></i>).
 Tämä avaa käyttöjärjestelmän komentorivin (zsh macOS:lla, Powershell Windowsilla,
 oletuskomentorivi Linuxilla).
 
-Jos latasit Java-kehitysmpäristön seuraamalla [työkaluohjeita](../tyokalut.md#java-development-kit-jdk),
+Jos latasit Java-kehitysympäristön seuraamalla [työkaluohjeita](../tyokalut.md#java-development-kit-jdk),
 komentorivi ei löydä mitään Javan kääntämiseen tarkoitettuja työkaluja.
 Ota työkalut käyttöön kopioimalla ja liittämällä alla oleva komento:
 
@@ -333,11 +333,11 @@ Tarkastellaan vielä, mitä tiedostoja projektista löytyy:
 
 <asciinema src="images/rec_ls_files.cast" rows="3" poster="npt:2"></asciinema>
 
-Koska käytössämme on IntellJ-projekti, sieltä löytyy vain muutama olennainen tiedosto ja kansio:
+Koska käytössämme on IntelliJ-projekti, sieltä löytyy vain muutama olennainen tiedosto ja kansio:
 
-- `HelloWorl.iml` on projektin konfiguraatio, jolla IDEA tunnistaa kansion olevan Java-projekti
-- `src` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsee
-- `out` on kansio, joka sisältää käännettyt ohjelmat
+- `HelloWorld.iml` on projektin konfiguraatio, jolla IDEA tunnistaa kansion olevan Java-projekti
+- `src` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsevat
+- `out` on kansio, joka sisältää käännetyt ohjelmat
 
 Siirrytään nyt `src` kansioon ja tarkastellaan sen sisältö:
 
@@ -348,7 +348,7 @@ Ne sisältävät ohjelman lähdekoodia tekstinä eivätkä ne ole vielä suoraan
 ajettavissa.
 
 Jotta ohjelma voidaan ajaa, se pitää kääntää.
-Javan-lähdekoodin kääntäminen onnistuu Java-kehitysympäristön (Java Development Kit, JDK)
+Java-lähdekoodin kääntäminen onnistuu Java-kehitysympäristön (Java Development Kit, JDK)
 kanssa tulleen `javac`-kääntäjäohjelman avulla.
 Kokeillaan kääntää `Ohjelma.java`:
 
@@ -373,16 +373,16 @@ ns. skriptauskielten tapaan, kuten Python tai Lua.
 Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
 
 <!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
-Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin, että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
+Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
 
 JDK:n kanssa tulee myös valmiiksi Java-virtuaalikone sekä Javan ajoympäristö (JRE, Java Runtime Environment), joka sisältää yleisempiä toimintoja, joita Java-ohjelma saattaa käyttää.
-Tavukooditiedoston voidaan ajaa JVM:llä käyttäen `java`-komentoa:
+Tavukooditiedosto voidaan ajaa JVM:llä käyttäen `java`-komentoa:
 
 <asciinema src="images/rec_java.cast" rows="3" poster="npt:5"></asciinema>
 
 Huomaa, että `java`-komentoa antaessa kirjoitetaan tavukooditiedoston nimi
 ilman `.class`-päätettä.
-Myöhemmin materiaalissa tutustumma Gradle-projektinhallintaohjelmaan, jolla
+Myöhemmin materiaalissa tutustumme Gradle-projektinhallintaohjelmaan, jolla
 pystyy kääntämään useita lähdekooditiedostoja yhteen `.jar`-tiedostoon, johon
 voidaan pakata kaikki ohjelman ajamiseen tarvittavat tiedostot.
 Myös `.jar`-tiedostot voidaan suorittaa `java`-komennolla.
@@ -419,10 +419,10 @@ komentorivitulkki eli ns. REPL-tulkki (read-evaluate-print-loop).
 
 </details>
 
-### jshell
-jshell on interaktiivinen tulkki Javaohjelmoinnin opetteluun. Interaktiivisuus tarkoittaa, että voit kokeilla eri komentoja rivi/lohko kerrallaan ilman erillistä kääntämistä ja ajamista, luokkia tai `main`-metodia. Pääset kokeilemaan jshelliä ajamalla komennon `jshell`. Nyt voit esimerkiksi kirjoittaa komennon `IO.println("Hei maailma!");` ja painaa `Enter`, jolloin näet heti tulostuksen komentorivillä. Vastaavasti voit luoda muuttujia ja näet heti, mitä niihin on sijoitettu.
+<!-- ### jshell
+jshell on interaktiivinen tulkki Java-ohjelmoinnin opetteluun. Interaktiivisuus tarkoittaa, että voit kokeilla eri komentoja rivi/lohko kerrallaan ilman erillistä kääntämistä ja ajamista, luokkia tai `main`-metodia. Pääset kokeilemaan jshelliä ajamalla komennon `jshell`. Nyt voit esimerkiksi kirjoittaa komennon `IO.println("Hei maailma!");` ja painaa `Enter`, jolloin näet heti tulostuksen komentorivillä. Vastaavasti voit luoda muuttujia ja näet heti, mitä niihin on sijoitettu.
 
-jshellistä poistutaan ajamalla komento `/exit`
+jshellistä poistutaan ajamalla komento `/exit` -->
 
 ## Tekstin tulostaminen ja lukeminen
 
@@ -558,7 +558,7 @@ merkit `/**` ja painaa <kbd>Enter</kbd>.
 
 <details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
 
-Oletetaan nyt, että tallennat ylläolevan tiedostoon `Summa.java`
+Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java`
 ja ajat sen jälkeen komennon `javadoc Summa.java`
 Nyt voit avata luodun `index.html` -tiedoston selaimessa, 
 klikata selaimessa luokkaa `Summa` ja pääset seuraavanlaiseen näkymään:
