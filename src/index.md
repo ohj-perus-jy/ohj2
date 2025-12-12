@@ -22,15 +22,18 @@ Tarkemmat tiedot löydät opintojakson [Sisu-esitteestä](https://sisu.jyu.fi/st
 
 ## Esitiedot
 
-- Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
+Ohjelmoinnin perustiedot, kuten [Ohjelmointi 1](https://sisu.jyu.fi/student/courseunit/otm-9ac9fb08-418a-4e0e-bc40-ba96e481c384/brochure) tai vastaavat tiedot
 
 ## Navigointi tässä materiaalissa
 
-Tässä muutama pikavinkki tässä materiaalissa navigoimiseen:
+Tässä muutama pikavinkki tässä materiaalissa navigoimiseen.
 
  * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi bi-layout-sidebar"></i>.
  * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi bi-arrow-right-circle"></i>.
  * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
+
+> [!HUOMAUTUS]
+> Teemme kokonaisvaltaisen uudistuksen oppimateriaaliin sekä tehtäviin kevään 2026 aikana. Osa materiaalista julkaistaan kurssin edetessä. Uudistamisesta johtuen sisällössä voi olla myös keskeneräisyyksiä ja virheitä. Pahoittelemme tästä mahdollisesti aiheutuvaa haittaa. Pyydämme, että ilmoitat virheistä tai parannusehdotuksista GitHubin kautta (katso alla) tai suoraan opettajien sähköpostiin <opet@TODO>.
 
 ## Haluatko parannella tätä materiaalia?
 
