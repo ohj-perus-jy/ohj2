@@ -168,7 +168,7 @@ Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `A
 
 Toisaalta myös [Javan `Date`-luokka](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html) toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään `ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
 
-Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttaa molemmat rajapinnat.
+Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttavat molemmat rajapinnat.
 
 Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja `Klikattava`. Näiden rajapintojen avulla voitaisiin määritellä, millaisia komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja korostaa itsensä, kun hiiri on sen päällä. 
 
