@@ -11,9 +11,8 @@ Luetelma (eng. enum/enumeration) on erityinen tyyppi, jolla voidaan rajoittaa mu
 
 <!-- Olennaista on voida olettaa luetelman arvojoukon pysyvän samana, eli vakiona, koko ohjelman käytön ajan. -->
 
-Jatketaan edellisen osan `Kerailykortti`-luokalla. Katsotaan tapausta, jossa meillä on tiedot `nimi` ja `tunnistenumero`, sekä näiden lisäksi `arvoluokka`, jonka tarkoitus on kertoa kuinka arvokas tai harvinainen kortti on.
+Jatketaan edellisen osan `Kerailykortti`-luokalla. Katsotaan tapausta, jossa meillä on tiedot `nimi` ja `tunnistenumero`, sekä näiden lisäksi `arvoluokka`, jonka tarkoitus on kertoa kuinka arvokas tai harvinainen kortti on. Olkoon arvoluokkia tasan viisi, joista 1 on yleisin ja 5 harvinaisin.
 
-Sovitaan, että meillä on viisi arvoluokkaa, joista 1 on yleisin ja 5 harvinaisin.
 
 ```java
 // FILE: Kerailykortti.java
@@ -27,6 +26,19 @@ class Kerailykortti {
         this.tunnistenumero = tunnistenumero;
         this.arvoluokka = arvoluokka;
     }
+
+    // getterit...
+//-    public String nimi() {
+//-        return nimi;
+//-    }
+//-
+//-    public int tunnistenumero() {
+//-        return tunnistenumero;
+//-    }
+//-
+//-    public int arvoluokka() {
+//-        return arvoluokka;
+//-    }
 
     @Override
     public String toString() {
@@ -47,14 +59,77 @@ void main() {
 // FILE_END
 ```
 
-> [!Vinkki]
+Yllä olevasta `Kerailykortti`-luokan koodista on hyvä huomata heti potentiaalinen ongelma. Mitä jos jossain päin koodia luodaankin kortti, jonka arvoluokka on 0 tai 6? Tai vaikka -1 tai 100? Mikäli ohjelma on rakennettu sillä oletuksella, että arvoluokka on aina välillä 1-5, voi seurata odottamattomia virheitä ohjelman suorituksen aikana tai ohjelman kaatuminen, jos oletus ei jostain syystä pädekään. Esimerkin luokassa mikään ei estä luomasta korttia, jonka arvoluokka on vaikkapa 10:
+
+```java
+// FILE: main.java
+String[] arvoluokkienKuvaukset = {
+    "Perus",
+    "Yleinen",
+    "Harvinainen",
+    "Erittäin harvinainen",
+    "Tarunomainen"
+};
+
+void tulostaArvoluokka(Kerailykortti kortti) {
+    // Tulostaa arvoluokan kuvauksen ongelmitta, kun arvoluokka on välillä 1-5
+    String arvoluokkaKuvaus = arvoluokkienKuvaukset[kortti.arvoluokka() - 1];
+    IO.println(arvoluokkaKuvaus);
+}
+
+void main() {
+    Kerailykortti kortti1 = new Kerailykortti("Veikeä Vasikka", 42, 1);
+    Kerailykortti kortti2 = new Kerailykortti("Pinkeä Pingviini", 7, 3);
+    Kerailykortti kortti3 = new Kerailykortti("Lentävä Lehmä", 1, 5);
+    Kerailykortti kortti4 = new Kerailykortti("Viheliäinen Varis", 99, 10);
+
+    tulostaArvoluokka(kortti1);
+    tulostaArvoluokka(kortti2);
+    tulostaArvoluokka(kortti3);
+    tulostaArvoluokka(kortti4);
+}
+// FILE_END
+// FILE: Kerailykortti.java
+class Kerailykortti {
+    private String nimi;
+    private int tunnistenumero;
+    private int arvoluokka; // 1-5
+
+    public Kerailykortti(String nimi, int tunnistenumero, int arvoluokka) {
+        this.nimi = nimi;
+        this.tunnistenumero = tunnistenumero;
+        this.arvoluokka = arvoluokka;
+    }
+
+    // getterit...
+//-    public String nimi() {
+//-        return nimi;
+//-    }
+//-
+//-    public int tunnistenumero() {
+//-        return tunnistenumero;
+//-    }
+//-
+//-    public int arvoluokka() {
+//-        return arvoluokka;
+//-    }
+
+    @Override
+    public String toString() {
+        return String.format("#%s %s [%d]", tunnistenumero, nimi, arvoluokka);
+    }
+}
+// FILE_END
+```
+
+> [!Tärkeää — invariantti]
 > Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1-5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
+>
+> Invarianttien ymmärtäminen (mitä oletamme koodistamme todeksi?) ja varmistaminen on tärkeä osa ohjelmiston suunnittelua ja toteutusta. Mikäli emme ole hyvin perillä siitä, mitä oletuksia koodistamme voimme tehdä, on vaarallisen helppoa kirjoittaa koodia, joka pettää tosipaikan tullen.
 
-Tässä on hyvä huomata heti potentiaalinen ongelma. Mitä jos jossain päin koodia luodaankin kortti, jonka arvoluokka on 0 tai 6? Tai vaikka -1 tai 100? Mikäli ohjelma on rakennettu sillä oletuksella, että arvoluokka on aina välillä 1-5, voi seurata odottamattia virheitä ohjelman suorituksen aikana, jos oletus ei jostain syystä pädekään. Yllä olevassa esimerkissä mikään ei estä luomasta korttia, jonka arvoluokka on vaikkapa 10.
+Pelkkä numero ei myöskään ole erityisen kuvaava tunniste, kun numerolla on muukin merkitys kuin numero itse. Mikäli joku lukee koodia, jossa luodaan kortti arvoluokalla 1 tai 3, ei ole heti selvää, mitä tämä tarkoittaa vaan tähän tarvitaan selitys muualta — kumpi on harvinaisempi, 1 vai 3?
 
-Myöskään pelkkä numero tässä tapauksessa ei ole kovin kuvaava. Mikäli joku lukee koodia, jossa luodaan kortti arvoluokalla 1 tai 3, ei ole heti selvää, mitä tämä tarkoittaa vaan tähän tarvitaan selitys muualta — kumpi on harvinaisempi, 1 vai 3?
-
-Ratkaisuksi ongelmaan, voimme luoda luetelma-tyypin arvoluokista, ja käyttää sitä kokonaisluvun sijaan. Luetelma määritetään luokan tavoin ja yksinkertaisimmillaan sisältäen vain luetelman mahdolliset arvot nimettyinä vakioina.
+Ratkaisuksi edellämainittuihin ongelmiin, voimme luoda uuden luetelma-tyypin arvoluokille, ja käyttää sitä kokonaisluvun sijaan. Luetelma määritetään luokan tavoin ja yksinkertaisimmillaan sisältäen vain luetelman mahdolliset arvot nimettyinä vakioina.
 
 ```java,noplayground
 enum Arvoluokka {
@@ -172,15 +247,26 @@ enum Suunta {
 Voimme nyt käyttää `Suunta`-luetteloa esimerkiksi pelin hahmon liikuttamiseen koordinaatistossa.
 
 ```java
-// FILE Hahmo.java
+// FILE: main.java
+void main() {
+    Hahmo hahmo = new Hahmo(0, 0);
+    IO.println(hahmo);
+    hahmo.liiku(Suunta.YLOS);
+    IO.println(hahmo);
+    hahmo.liiku(Suunta.OIKEA);
+    IO.println(hahmo);
+    hahmo.liiku(Suunta.ALAS);
+    IO.println(hahmo);
+    hahmo.liiku(Suunta.VASEN);
+    IO.println(hahmo);
+}
+// FILE_END
+// FILE: Hahmo.java
 class Hahmo {
     private int x;
     private int y;
 
     public Hahmo(int x, int y) {
-    public int loytymisTodennakoisyys() {
-        return this.maaraRaja;
-    }
         this.x = x;
         this.y = y;
     }
@@ -192,22 +278,32 @@ class Hahmo {
 
     @Override
     public String toString() {
-        return String.format("Hahmo sijaitsee (%d, %d)", x, y);
+        return String.format("Hahmon sijainti: (%d, %d)", x, y);
     }
 }
 // FILE_END
-// FILE main.java
-void main() {
-    Hahmo hahmo = new Hahmo(0, 0);
-    IO.println(hahmo);
-    hahmo.liiku(suunta.YLOS);
-    IO.println(hahmo);
-    hahmo.liiku(suunta.OIKEA);
-    IO.println(hahmo);
-    hahmo.liiku(suunta.ALAS);
-    IO.println(hahmo);
-    hahmo.liiku(suunta.VASEN);
-    IO.println(hahmo);
+// FILE: Suunta.java
+enum Suunta {
+    YLOS(0, 1),
+    ALAS(0, -1),
+    VASEN(-1, 0),
+    OIKEA(1, 0);
+
+    private final int xMuutos;
+    private final int yMuutos;
+
+    Suunta(int xMuutos, int yMuutos) {
+        this.xMuutos = xMuutos;
+        this.yMuutos = yMuutos;
+    }
+
+    public int xMuutos() {
+        return xMuutos;
+    }
+
+    public int yMuutos() {
+        return yMuutos;
+    }
 }
 // FILE_END
 ```
@@ -231,13 +327,13 @@ Java-kielessä hahmonsovitus on olennaista erityisesti `switch`-lausekkeissa, jo
 ```java
 // FILE: main.java
 void main() {
-    suunta suunta = suunta.OIKEA;
+    Suunta suunta = Suunta.OIKEA;
 
     String suuntaKuvaus = switch (suunta) {
         case YLOS -> "Suunta on ylös";
         case ALAS -> "Suunta on alas";
         case VASEN -> "Suunta on vasemmalle";
-        case OIKEA -> "Suunta on oikealle"
+        case OIKEA -> "Suunta on oikealle";
     };
 
     IO.println(suuntaKuvaus);
@@ -276,7 +372,7 @@ Hahmoja voi niputtaa pilkulla erotettuna samaan haaraan, mikäli halutaan käsit
 ```java
 // FILE: main.java
 void main() {
-    suunta suunta = suunta.OIKEA;
+    Suunta suunta = Suunta.OIKEA;
 
     String suuntaKuvaus = switch (suunta) {
         case YLOS, ALAS -> "Suunta on pystyakselilla";
@@ -315,8 +411,9 @@ enum Suunta {
 Huomionarvoista on, että haarojen tulee olla _kattavia_, eli kaikki mahdolliset käsiteltävän lausekkeen arvot tulee olla katettuina jossain haarassa. Mikäli näin ei ole, kääntäjä antaa virheen.
 
 ```java
+// FILE: main.java
 void main() {
-    suunta suunta = suunta.OIKEA;
+    Suunta suunta = Suunta.OIKEA;
 
     String suuntaKuvaus = switch (suunta) {
         case YLOS, ALAS -> "Suunta on pystyakselilla";
@@ -356,7 +453,7 @@ Mikäli kaikkia arvoja ei voida tai haluta käsitellä erikseen, voidaan käytt�
 ```java
 // FILE: main.java
 void main() {
-    suunta suunta = suunta.OIKEA;
+    Suunta suunta = Suunta.OIKEA;
 
     String suuntaKuvaus = switch (suunta) {
         case YLOS, ALAS -> "Suunta on pystyakselilla";
@@ -442,7 +539,7 @@ void main() {
 }
 ```
 
-> ![Huomautus]
+> [!todo]
 > Alla oleva erikoisuus lisäinfoksi?
 
 Yllä olevassa esimerkissä olemme eriyttäneet karkausvuoden tarkistuksen omaan `onKarkausvuosi`-funktioon, jota käytämme `helmikuunPaivat`-funktiossa. Voisimme kuitenkin kirjoittaa karkausvuoden tarkistuksen suoraan `switch`-lausekkeeseen, kuten alla olevassa esimerkissä:
@@ -469,7 +566,7 @@ void main() {
 }
 ```
 
-Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:n sijaan. Javassa `yield`-avainsanaa käytetään palauttamaan arvo `switch`-lausekkeen haarasta, kun kyseinen haara on määritelty aaltosulkeiden sisällä. Tämä mahdollistaa monimutkaisempien laskelmien tekemisen ennen arvon palauttamista.
+Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:n sijaan. Javassa `yield`-avainsanaa käytetään palauttamaan arvo `switch`-lausekkeen haarasta, kun kyseinen haara on määritelty aaltosulkeiden sisällä. Tämä mahdollistaa palautettavan lausekkeen jakamisen useampaan lauseeseen, ja voimme käyttää muun muassa apumuuttujia luettavuuden parantamiseksi.
 
 > [!Vinkki]
 > Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
@@ -523,9 +620,7 @@ Jokaisessa haarassa, oletushaara poislukien, määritetään uudentyyppinen muut
 
 ### Rajattu sovitus
 
-Hahmonsovituksen haaroille voi määrittää myös ehtoja, joka tapahtuu Javan `switch`-lausekkeessa `when`-avainsanan avulla. Tätä kutsutaan rajatuksi sovitukseksi (engl. _guarded pattern matching_).
-
-Voisimme esimerkiksi jakaa aiemman karkausvuoden tarkistuksen suoraan `switch`-lausekkeeseen rajatun sovituksen avulla seuraavasti:
+Hahmonsovituksen haaroille voi määrittää myös ehtoja itse hahmon lisäksi. Tätä kutsutaan rajatuksi sovitukseksi (engl. _guarded pattern matching_) ja onnistuu Javassa `when`-avainsanan avulla muuttujan määrityksen yhteydessä mallilla `case <hahmo> <muuttuja> when <ehto> -> <lauseke>` eli esimerkiksi `case Float liukuluku when liukuluku > 0 -> IO.println(liukuluku + "on tyyppiä Float ja suurempi kuin 0")`. Rajatulla hahmonsovituksella voisimme muun muassa toteuttaa aiemman karkausvuoden tarkistuksen seuraavasti:
 
 ```java
 boolean onKarkausvuosi(int vuosi) {
@@ -535,13 +630,11 @@ boolean onKarkausvuosi(int vuosi) {
 int kuukaudenPaivat(int kuukausi, int vuosi) {
     boolean karkaus = onKarkausvuosi(vuosi);
 
-    int paivat = switch (kuukausi) {
-        case 1, 3, 5, 7, 8, 10, 12 -> 31;
-        case 4, 6, 9, 11 -> 30;
-        // HIGHLIGHT_GREEN_BEGIN
-        case 2 when karkaus -> 29;
-        case 2 -> 28;
-        // HIGHLIGHT_GREEN_END
+    int paivat = switch ((Integer) kuukausi) {
+        case Integer k when Set.of(1, 3, 5, 7, 8, 10, 12).contains(k) -> 31;
+        case Integer k when Set.of(4, 6, 9, 11).contains(k) -> 30;
+        case Integer k when k == 2 && karkaus -> 29;
+        case Integer k when k == 2 -> 28;
         default -> -1; // Virheellinen kuukausi
     };
 
@@ -555,9 +648,11 @@ void main() {
 }
 ```
 
-Katsotaan vielä hieman laajempaa esimerkkiä mäkihypyn kontekstissa. Jokaisella virallisella mäkihyppymäellä on määritelty k-piste eli mäen loiventumiskohta, ja hyppysuorituksen pituudesta saatavat pisteet riippuvat hypätyn mäen k-pisteestä.
+Javan hahmonsovituksessa on valitettavasti merkittäviä rajoituksia. Jokaisessa ylläolevan esimerkin haarassa on määritettynä uusi `Integer k`-muuttuja, sillä Javan rajattu sovitus toimii vain muuttujien sovittamisen yhteydessä (Java ei esimerkiksi salli haaraa `case 2 when karkaus -> 29`). Vastaavasti `switch`-lausekkeen käsiteltävä lauseke muunnetaan eksplisiittisesti oliotyypiksi `Integer`, sillä rajattu Javan hahmonsovitus ei toimi alkeistyyppien, kuten `int`, kanssa.
 
-Alla on taulukko, joka listaa hyppypituuden pisteytyksen mäen k-pisteen mukaan (lähde: [kansainvälinen hiihtoliitto FIS](https://assets.fis-ski.com/f/252177/x/c0404a825e/icr-ski-jumping-2024_e_markedup.pdf)):
+Rajatun hahmonsovitukset hyödyt eivät kuitenkaan vielä oikein näy kuukauden päivät -esimerkin tapauksessa, kun sitä vertaa aiempaan alkeistyyppiseen hahmonsovitukseen (`case 1, 3, 5...`), joka on kyseiseen tarkoitukseen täysin riittävä ja yksinkertaisuutensa puolesta erinomaisesti sopiva ratkaisu.
+
+Katsotaan vielä hieman laajempaa esimerkkiä, missä rajattua hahmonsovitusta kaivataan enemmän, nyt mäkihypyn kontekstissa. Jokaisella virallisella mäkihyppymäellä on määritelty k-piste eli mäen loiventumiskohta, ja hyppysuorituksen pituudesta saatavat pisteet riippuvat hypätyn mäen k-pisteestä. Alla on taulukko, joka listaa hyppypituuden pisteytyksen mäen k-pisteen mukaan (lähde: [kansainvälinen hiihtoliitto FIS](https://assets.fis-ski.com/f/252177/x/c0404a825e/icr-ski-jumping-2024_e_markedup.pdf)):
 
 | K-piste (m) | Pisteet per metri |
 | ----------- | ----------------- |
@@ -574,7 +669,7 @@ Alla on taulukko, joka listaa hyppypituuden pisteytyksen mäen k-pisteen mukaan 
 | 135 - 180   | 1.6               |
 | 180+        | 1.2               |
 
-Toteutetaan metodi `pisteetPerMetri`, joka palauttaa pisteet per metri k-pisteen perusteella käyttäen `switch`-lauseketta ja rajattua sovitusta.
+Toteutetaan metodi `pisteetPerMetri`, joka palauttaa pisteet per metri k-pisteen perusteella käyttäen `switch`-lauseketta ja rajattua sovitusta yllä olevan taulukon mukaisesti.
 
 ```java,editable
 double pisteetPerMetri(double kPoint) {
@@ -598,7 +693,7 @@ double pisteetPerMetri(double kPoint) {
 void main() {
     double kPoint = 120.0;
     double pisteet = pisteetPerMetri(kPoint);
-    IO.println("K-pisteellä " + kPoint + " pisteet per metri: " + pisteet);
+    IO.println("Hypystä saa " + pisteet + " pistettä per metri, kun mäen k-piste on " + kPoint + " metrissä.");
 }
 ```
 
