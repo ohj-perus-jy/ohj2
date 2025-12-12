@@ -134,7 +134,7 @@ Lisäksi Javasta löytyy vielä [`AbstractCollection`](https://docs.oracle.com/e
 
 ### Oma toteutus Comparable-rajapinnalle
 
-Katsotaan seuraavaksi `Comparable`-rajapinnan toteuttamista itsetehdylle luokalle. Otetaan esimerkiksi luokka `Kerailykortti`, joka sisältää keräilykortin nimen ja yksilöivän ykkösestä alkavan tunnistenumeron.
+Toteutetaan `Comparable`-rajapinta omassa luokassamme. Otetaan esimerkiksi luokka `Kerailykortti`, joka sisältää keräilykortin nimen ja yksilöivän, ykkösestä alkavan tunnistenumeron.
 
 ```java
 // FILE: Kerailykortti.java
@@ -167,7 +167,7 @@ void main() {
 // FILE_END
 ```
 
-Mikäli yritämme järjestää `Kerailykortti`-olioita `Collections.sort`-metodilla, saamme käännöksenaikaisen virheen. Tämä johtuu kaikessa yksinkertaisuudessaan, monimutkaista virheviestiä sen enempää avaamatta, siitä että `Kerailykortti`-luokka ei toteuta `Comparable`-rajapintaa — `Collections.sort` ei saa sen tarvitsemaa tietoa mikä on `Kerailykortti`-olioiden luonnollinen järjestys.
+Mikäli yritämme järjestää `Kerailykortti`-olioita `Collections.sort()`-metodilla, saamme käännöksenaikaisen virheen. Klikkaa play-painiketta nähdäksesi virheen.
 
 ```java
 // FILE: main.java
@@ -204,6 +204,8 @@ class Kerailykortti {
 }
 // FILE_END
 ```
+
+Virheilmoitus on vähintäänkin kryptinen, mutta vapaa suomennos kuuluu, että `Collections.sort()` ei voi meidän puolestamme arvata, mikä on `Kerailykortti`-olioiden luonnollinen järjestys. Onko se kenties kortin nimen aakkosjärjestys vai kenties numerotunnisteen mukainen nouseva järjestys? Vastataksemme tähän kysymykseen meidän täytyy toteuttaa `Comparable`-rajapinta `Kerailykortti`-luokalle.
 
 Kun lähdemme toteuttamaan `Comparable`-rajapintaa keräilykortille, joudumme heti pohtimaan mikä on luonnollinen järjestys keräilykorteillemme. Aakkosjärjestys voi olla hyödyllinen, mutta mikäli korteilla on yksilöivät ykkösestä alkavat numerotunnisteet, se lienee loppupeleissä useimpien mielestä luonnollisemman tuntuinen ja yhtälailla tarpeellinen. Oletusjärjestystä kannattaa myös pohtia puhtaasti sovelluksen tarpeen mukaan — mitä rajapinnan käyttäjät (eli rajapintaa hyödyntävät koodit tai niiden ohjelmoijat) kaipaavat?
 
