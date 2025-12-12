@@ -16,8 +16,6 @@ TODO: Koodiesimerkit; siistimistä (liian pitkät rivit), multifile ja ehkä jaa
 
 TODO: Onko osaamistavoitteiden kannalta tarpeellista: luokka on käännosaikainen/staattinen käsite (olio ajonaikainen/dynaaminen), luokalle varataan muistia (metadata ja staattiset osat)?
 
-TODO: Muodostaja vai this ensin?
-
 ## Luokka
 
 Ensimmäinen askel olio-ohjelmointiin on luokan määritteleminen `class`-avainsanaa käyttäen. Luokkaa voi ajatella kaavana tai muottina, jonka pohjalta olioita luodaan. Luokka kertoo, mitä tietoja olio sisältää (attribuutit) ja mitä se voi tehdä (metodit). Luokassa määriteltyjä attribuutteja ja metodeja kutsutaan myös *luokan jäseniksi* (engl. *class member*).
@@ -31,6 +29,17 @@ class Rakennus {
     // Luokan sisällä määritellään rakenne, jota luokasta tehdyt oliot vastaavat.
 }
 ```
+
+Voimme luoda luokasta olioita käyttämällä avainsanaa `new`. Tämä varaa muistista oliolle sopivan tilan, valitsee ja suorittaa sopivan muodostajan, ja palauttaa viitteen juuri luotuun olioon. Sijoitamme tämän viitten muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Viitemuuttujan tyyppi kertoo, _minkälainen_ olio muistisijainnissa täytyy olla - eli mitä _luokkaa_ se edustaa. Käytämme siis luokkaa muuttujan tyyppinä.
+
+```java
+void main() {
+    // 'new Rakennus()' luo olion ja palauttaa viitteen siihen. Sijoitamme tämän viitteen muuttujaan 'rakennus'.
+    Rakennus rakennus = new Rakennus();
+}
+```
+
+HUOM! On tärkeää pitää mielessä, että viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Sen ei kuitenkaan ole pakko osoittaa mihinkään, jolloin sen arvo on null. Olio on vastaavasti mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen osoittaa eri olioon. Tämä onkin täysin tavallista, kun teemme listan "olioista".
 
 ## Attribuutit
 
@@ -467,9 +476,9 @@ void main() {
 
 TODO: Tämä osio pitää vielä siistiä.
 
-Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Tyypiltään sopiva viitemuuttuja asetetaan osoittamaan tähän muistipaikkaan. Olioon päästään käsiksi viitemuuttujan kautta ja sen tilaa voidaan tarkastella ja muokata metodien avulla. 
+Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Tyypiltään sopiva viitemuuttuja asetetaan osoittamaan tähän muistipaikkaan. Olioon päästään käsiksi viitemuuttujan kautta ja sen tilaa voidaan tarkastella ja muokata metodien avulla.
 
-Viitemuuttujat tuhoutuvat, kun niiden näkyvyysalue loppuu. Kun olioon ei enää ole yhtään viitettä olemassa, myös olio tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
+Kun olioon ei enää ole yhtään viitettä olemassa, myös olio tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
 
 Käydään vielä olion koko elinkaari läpi esimerkkien avulla. Tarvitsemme olioiden luomista varten ensimmäiseksi luokan. Tehdään esimerkkejä varten yksinkertainen luokka `Henkilo`, johon voimme tallentaa henkilön nimen ja syntymävuoden.
 
@@ -507,16 +516,12 @@ public class Henkilo {
 }
 ```
 
-Olion luominen tapahtuu new-avainsanalla. Se varaa muistista oliolle sopivan tilan, valitsee ja suorittaa sopivan muodostajan, ja palauttaa viitteen juuri luotuun olioon. Sijoitamme tämän viitten muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Viitemuuttujan tyyppi kertoo, _minkälainen_ olio muistisijainnissa täytyy olla - eli mitä _luokkaa_ se edustaa. Käytämme siis luokkaa muuttujan tyyppinä.
-
-On tärkeää pitää mielessä, että viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Sen ei kuitenkaan ole pakko osoittaa mihinkään, jolloin sen arvo on null. Olio on vastaavasti mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen osoittaa eri olioon. Tämä onkin täysin tavallista, kun teemme listan "olioista".
-
-Määrittelimme `Henkilo`-luokassa, että parametriton muodostaja antaa oletusasetukset, kun taas parametrillinen muodostaja alustaa tilan annettujen arvojen perusteella. Käytetään molempia muodostajia luomaan eri olioita ja kerrataan samalla hieman viitemuuttujien käyttöä:
+Määrittelimme `Henkilo`-luokassa, että parametriton muodostaja ei alusta olion tilaa, kun taas parametrillinen muodostaja alustaa tilan argumentteina annettujen arvojen perusteella. Käytetään molempia muodostajia luomaan eri olioita ja kerrataan samalla hieman viitemuuttujien käyttöä:
 
 ```java
 void main() {
     // Voimme luoda viitemuuttujan ilman että se viittaa mihinkään olioon. Oliota ei tässä luoda.
-    Henkilo h0 = null;
+    Henkilo h0;
 
     // Tässä luodaan olio ja sijoitetaan viite h0-muuttujaan. Kääntäjä valitsee käytettäväksi parametrittoman perusmuodostajan, sillä muodostajalle ei anneta argumentteja.
     h0 = new Henkilo(); 
@@ -664,6 +669,6 @@ void main() {
 }
 ```
 
-Joidenkin Javan sisäänrakennettujen oliotyyppien tapauksessa `==`-operaattori *voi* toimia, vaikka edellä mainitun perusteella sen ei pitäisi. Esimerkiksi kokonaislukujen oliotyyppi `Integer` sekä erityisesti merkkijono `String`. Java pyrkii välttämään täysin samanlaisten olioiden luomista turhaan uudelleenkäyttämällä saman sisällön omaavia, muuttumattomia olioita parhaansa mukaan. Tämä on melko yleinen ominaisuus ohjelmointikielissä. Voit halutessasi lukea lisää aiheesta täältä; [*string interning*](https://www.geeksforgeeks.org/java/interning-of-string/). Varmuuden vuoksi on paras käyttää aina olion `equals`-metodia tai `Objects.equals`-funktiota.
+Joidenkin Javan sisäänrakennettujen oliotyyppien tapauksessa `==`-operaattori *voi* toimia, vaikka edellä mainitun perusteella sen ei pitäisi. Tästä hyvä esimerkki on `String` olioiden vertailu. Java pyrkii välttämään täysin samanlaisten olioiden luomista turhaan uudelleenkäyttämällä saman sisällön omaavia, muuttumattomia olioita parhaansa mukaan. Tämä on melko yleinen ominaisuus ohjelmointikielissä. Voit halutessasi lukea lisää aiheesta täältä; [*string interning*](https://www.geeksforgeeks.org/java/interning-of-string/). Varmuuden vuoksi on paras käyttää aina olion `equals`-metodia tai `Objects.equals`-funktiota.
 
 TODO: Jos toteutamme oman `equals`-metodin, meidän täytyisi toteuttaa myös luokalle oma `toHash`-metodi.
