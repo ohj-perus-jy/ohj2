@@ -92,6 +92,7 @@ class Rengas {
 Lisätään lopuksi moottori ja lista renkaista `Auto`-luokan attribuuteiksi. Nämä sisältävät viitteitä moottori- ja rengasolioihin. Muistetaan, että viitteet eivät oletuksena osoita mihinkään, vaan meidän täytyy luoda myös oliot ja asettaa viitteet osoittamaan niihin. Lisätään nyt myös pieni pääohjelma, jossa voimme luoda yhden auton oletusarvoilla ja tulostaa sen tietoja. Käytämme tässä vielä olion attribuuttien arvoja suoraan, mikä ei ole hyvän tavan mukaista. Teemme pian tämän paremmin.
 
 ```java
+// FILE: Moottori.java
 class Moottori {
     String malli;
     double kierrosluku;
