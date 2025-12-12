@@ -273,6 +273,8 @@ Tee seuraavasti:
    jonka avulla teemme muun muassa erillisiä ajokonfiguraatioita projektin
    ajamiselle, testaamiselle ja kääntämiselle.
 
+TODO: Usean moduulin luominen  
+TODO: Yleiset pikanäppäimet, tai mistä löytää
 
 ## Miten Java-ohjelmat ajetaan?
 
