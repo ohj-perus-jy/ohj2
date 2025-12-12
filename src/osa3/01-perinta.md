@@ -347,6 +347,8 @@ class Opiskelija extends Henkilo {
 }
 ```
 
+Huomaa, että järjestys on oltava nimen omaan tämä: `super`-kutsu tulee ensimmäisenä muodostajan rungossa. Vasta sen jälkeen voidaan tehdä muita alustuksia.
+
 Tee vastaava muutos myös `Opettaja`-luokkaan.
 
 Tämän jälkeen ohjelma ei kuitenkaan vielä käänny, koska perivissä luokissa emme edelleenkään pääse käsiksi yliluokan yksityiseen `nimi`-attribuuttiin.
