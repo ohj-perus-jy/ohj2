@@ -6,15 +6,6 @@
 > - Proseduraalisesta ohjelmoinnista ("data+funktio") olio-ohjelmointiin ("tila+metodi+viestit")
 > - Ymmärrät luokkien ja olioiden roolin olio-ohjelmoinnissa (Tieto ja toiminnallisuus yhdessä paketissa)
 
-Hahmotelma:
-
-Perusasiat lyhyesti:
-- mitä olio-ohjelmointi on? Mikä on olio?
-- mitä olio-ohjelmoinnilla voi saavuttaa?
-- olion tila ja metodit (vrt. proseduraalinen ohjelmonti)
-Esimerkki: yksinkertainen esimerkki; luokka ja oliot
-Esimerkki: proseduraalinen ohjelma verrattuna olio-ohjelmointia hyödyntävään ohjelmaan
-
 ## Olio-ohjelmointi
 
 Tähän mennessä olemme tehneet enimmäkseen ohjelmia, joissa dataa tallennetaan ohjelman muuttujiin ja käsitellään funktioiden avulla. Tällaista ohjelmointityyliä&mdash;tai hienosti kutsuttunua ohjelmointiparadigmaa&mdash;kutsutaan 
@@ -53,7 +44,7 @@ Esimerkissä määritellään ensin `Kissa`-luokka ja luodaan sitten pääohjelm
 
 Tästä yksinkertaisesta esimerkistä näemme, kuinka data voidaan ryhmitellä olioiden sisälle. Tässä tapauksessa olion ainoa attribuutti `nimi` on suoraan käsiteltävissä metodien kautta, mutta olioilla voi toki olla myös attribuutteja, joiden ei ole tarkoituskaan olla muiden nähtävissä tai saatavissa.
 
-Kuinka voimme käyttää olioita hyödyksi ohjelmoinnissa? Mietitään esimerkiksi tilannetta, jossa haluaisimme tallentaa tietoa kilpailussa mukana olevista kilpailijoista. Kilpailijoita voi olla useita ja jokaisesta pitäisi tallentaa ainakin nimi, kilpailijanumero ja pisteet. Olioiden avulla voimme pitää yhden kilpailijan tiedot ja niiden muokkaamiseen liittyvät toiminnallisuudet saman rakenteen sisällä, mikä helpottaa näiden tietojen käsittelyä. Mieti hetki, kuinka tekisit alla olevan kaltaisen ohjelman ilman olio-ohjelmointia.
+Yhtä muuttujaa varten tuskin kannattaa tehdä eri olioita, mutta olio-ohjelmoinnin hyödyt tulevat nopeasti esille, kun tallennettavan tiedon määrä lisääntyy. Mietitään esimerkiksi tilannetta, jossa haluaisimme tallentaa tietoa kilpailussa mukana olevista kilpailijoista. Kilpailijoita voi olla useita ja jokaisesta pitäisi tallentaa ainakin nimi, kilpailijanumero ja pisteet. Olioiden avulla voimme pitää yhden kilpailijan tiedot ja niiden muokkaamiseen liittyvät toiminnallisuudet saman rakenteen sisällä, mikä helpottaa näiden tietojen käsittelyä. Mieti hetki, kuinka tekisit alla olevan kaltaisen ohjelman ilman olio-ohjelmointia.
 
 ```java
 public class Kilpailija {
@@ -69,9 +60,8 @@ public class Kilpailija {
 
     // ...
 
-    @Override
-    public String toString() {
-        return String.format("%d: %s, %d pistettä", numero, nimi, pisteet);
+    public void tulostaTiedot() {
+        IO.println(String.format("%d: %s, %d pistettä", numero, nimi, pisteet));
     }
 }
 
@@ -83,22 +73,16 @@ void main() {
     };
 
     for (Kilpailija kilpailija : kilpailijat) {
-        IO.println(kilpailija.toString());
+        kilpailija.tulostaTiedot();
     }
 }
 ```
 
-Jotkin esimerkeissä esiintyvät rakenteet ja käsitteet voivat tässä vaiheessa tuntua vielä vierailta. Lähdemme tutustumaan näihin tarkemmin heti osassa 2.2.
+HUOM! Jotkin esimerkeissä esiintyvät rakenteet ja käsitteet voivat tässä vaiheessa tuntua vielä vierailta. Lähdemme tutustumaan näihin tarkemmin heti osassa 2.2.
 
-Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin esimerkiksi opintojaksolla [TIEA1130 Oliosuuntautunut suunnittelu ja ohjelmointi](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiea1130/). Käymme tällä kurssilla läpi olio-ohjelmoinnin teoriaa valikoidusti erityisesti tämän opintojakson tarpeita ajatellen. 
+Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin esimerkiksi opintojaksolla [TIEA1130 Oliosuuntautunut suunnittelu ja ohjelmointi](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiea1130/). Käymme tällä kurssilla läpi olio-ohjelmoinnin teoriaa valikoidusti erityisesti tämän opintojakson tarpeita ajatellen. Jos haluat tutustua olio-ohjelmointiin syvällisemmin, suosittelemme lämpimästi tutustumaan myös aiheeseen liittyvään kirjallisuuteen.
 
-Jos haluat tutustua olio-ohjelmointiin syvällisemmin, suosittelemme lämpimästi tutustumaan aiheeseen liittyvään kirjallisuuteen.
-
-TODO: Linkki kurssiin, linkkejä vapaaehtoiseen luettavaan, SOLID, ym?
-
-TODO: Jos puhutaan olio-ohjelmoinnin oikeista hyödyistä, motivaationa voisi lyhyesti mainita polymorfismin, perinnän ym, ja että näihin tutustutaan tarkemmin seuraavassa osassa.
-
-TODO: Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle voi tehdä koodista helpommin ymmärrettävää ja siten hallittavaa, mutta se ei toki ole olio-ohjelmoinnin ainoa etu. Tutustumme seuraavassa osassa polymorfismiin, perintään ja rajapintoihin. Käyttämällä näitä ominaisuuksia voidaan vähentää toistoa ... 
+Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle tekee ohjelman koodista helpommin ymmärrettävää ja laajennettavaa, mutta se ei toki ole olio-ohjelmoinnin ainoa etu; voimme myös piilottaa osan luokan toteutusyksityiskohdista vain luokan sisäiseen käyttöön, jolloin luokkaa käyttävä ohjelmoija saa käyttöönsä vain tarkkaan määritetyn julkisen rajapinnan eikä hänen tarvitse miettiä luokan sisäistä toimintaa. Tutustumme 3. osassa myös polymorfismiin, perintään ja rajapintoihin, jolloin olio-ohjelmoinnin hyödyt tulevat todella esille.
 
 ## Pääohjelma Javassa
 
