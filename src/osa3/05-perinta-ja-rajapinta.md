@@ -10,14 +10,14 @@ Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa.
 
 Tässä analogiassa rajapinta on se standardi eli sopimus, jonka laitteen täytyy täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin päin, että *jos* laitteessa on pistorasiaan sopiva pistotulppa, niin sillä *täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
 
-Pistorasiaa ei kiinnosta, kytketkö siihen pölynimurin vai leivänpaahtimen. Laitteet ovat itse asiassa täysin erilaisia. Toinen tekee ruokaa, toinen siivoaa. Niillä ei ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla, kuin vaikkapa `Auto` ja `Moottoripyora` voisivat periä `Ajoneuvo`-luokan.  Ainoa pölynimuria ja leivänpaahdinta yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
+Pistorasiaa ei kiinnosta, kytketkö siihen leivänpaahtimen vai sirkkelin. Laitteet ovat itse asiassa täysin erilaisia. Toisella voi tehdä ruokaa, toinen on työkalu. Niillä ei ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla, kuin vaikkapa `Auto` ja `Moottoripyora` voisivat periä `Ajoneuvo`-luokan.  Ainoa leivänpaahdinta ja sirkkeliä yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
 
-Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun haluaisimme käyttää vaikkapa pölynimuria. Onko pölynimuri `Sahkolaite`, `Siivouslaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä kahta yliluokkaa. 
+Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun haluaisimme käyttää leivänpaahdinta. Onko pölynimuri `Sahkolaite`, `Keittiolaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä kahta yliluokkaa. 
 
 Rajapinta ratkaisee tämän ongelman tyylikkäästi: 
 
- * `Polynimuri` on `Siivouslaite` (perintä), mutta se myös *toteuttaa*  `Verkkovirtalaite`-rajapinnan. 
- * Samoin `Leivanpaahdin` voisi olla vaikkapa `Keittiolaite` (perintä), joka myöskin toteuttaa saman `Verkkovirtalaite`-rajapinnan.
+ * `Leivanpaahdin` on `Keittiolaite` (perintä), mutta se myös *toteuttaa*  `Verkkovirtalaite`-rajapinnan. 
+ * Samoin `Sirkkeli` voisi olla vaikkapa `Tyokalu` (perintä), joka myöskin toteuttaa saman `Verkkovirtalaite`-rajapinnan.
 
 Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttävät sopimuksen eli toteuttavat rajapinnan vaatiman kytkennän.
 
@@ -31,7 +31,7 @@ public interface Verkkovirtalaite {
 }
 ```
 
-Nyt vaikkapa `Leivanpaahdin` ja `Sirkkeli` voisivat olla luokkia, jotka toteuttavat tämän rajapinnan.
+Nyt `Leivanpaahdin` ja `Sirkkeli` voisivat olla luokkia, jotka toteuttavat tämän rajapinnan.
 
 ```java,ignore
 public class Leivanpaahdin implements Verkkovirtalaite {
