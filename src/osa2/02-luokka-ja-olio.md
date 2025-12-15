@@ -8,8 +8,6 @@
 > - `final` attribuuttien kanssa
 > - Osaat määritellä ja hyödyntää omia luokkia Javalla
 
-TODO: Vaihda väliaikaiset kuvat lopullisiin
-
 TODO: Tyyli, huomiopalkit ym.
 
 TODO: Koodiesimerkit; siistimistä (liian pitkät rivit), multifile ja ehkä jaa pidempiä useammaksi esimerkiksi (yksi asia kerrallaan)
