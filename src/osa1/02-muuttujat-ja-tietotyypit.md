@@ -94,14 +94,16 @@ Double kaaritty = desimaali;
 int kokonaislukuna = kaaritty.intValue();
 IO.println(kokonaislukuna);
 //-}
+```
 
-Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla et (välttämättä) tarvitse muita kuin yllä mainittuja.
+Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`. Hyvin isoja kokonaislukuja varten on tarjolla [`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html) ja hyvin tarkkoja desimaalilukuja varten [`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html), mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
 
 ## Yksittäinen merkki ja merkkijonot
 
 Javan merkkijonotyyppejä ovat `String` ja `StringBuilder`, joista kumpikin koostuu `char`-tyyppisistä merkeistä. 
 
 ### char
+
 Sisäisesti Javassa yksittäiset merkit `char` ovat 16-bittisiä luonnollisia lukuja (välillä [0-65535]). Tätä voidaan havainnoida esimerkiksi seuraavasti:
 
 ```java
