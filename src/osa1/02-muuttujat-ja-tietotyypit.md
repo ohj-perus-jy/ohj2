@@ -37,7 +37,7 @@ Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (e
 
 ### Alkeistietotyypit
 
-Javassa on kahdeksan sisäänrakennettua alkeistietotyyppiä. 
+Javassa on kahdeksan sisäänrakennettua [alkeistietotyyppiä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html). Lisäksi `String`-tyyppi muistuttaa alkeistietotyyppiä, vaikka teknisesti ottaen se ei sellainen olekaan. Käydään läpi nämä tyypit yksi kerrallaan.
 
 **Kokonaisluvut**: Kokonaisluvuille on neljä tyyppiä, jotka eroavat toisistaan lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty kokonaislukutyyppi on `int`. 
 
@@ -76,6 +76,8 @@ Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/doc
 **Merkit**: Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää 2 tavua muistia.
 
 **Totuusarvot**: Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
+
+**Merkkijono**: Vaikka `String`-tyyppi ei teknisesti ottaen olekaan alkeistietotyyppi, se käyttäytyy monin tavoin kuin alkeistietotyyppi. Siten sen voidaan katsoa kuuluvan tähän kategoriaan. `String`-tyyppiä käytetään merkkijonojen, eli tekstin, tallentamiseen.
 
 ### Viitetietotyypit
 
@@ -147,78 +149,35 @@ void main() {
 }
 ```
 
-## Yksittäinen merkki ja merkkijonot
 
-Javan merkkijonotyyppejä ovat `String` ja `StringBuilder`, joista kumpikin koostuu `char`-tyyppisistä merkeistä. 
+## Huomautuksia String-tyypistä
 
-### char
-
-Sisäisesti Javassa yksittäiset merkit `char` ovat 16-bittisiä luonnollisia lukuja (välillä [0-65535]). Tätä voidaan havainnoida esimerkiksi seuraavasti:
-
-```java
-void main() {
-    IO.println((int)'A'); //Muunnetaan merkki A kokonaisluvuksi
-    IO.println((char)65535); //Muunnetaan kokonaisluku merkiksi
-}
-```
-Javassa `char` on yksittäinen 16-bittinen Unicode-merkki, joita käytetään tyypillisesti yksittäisen merkin tallentamiseen muuttujaan tai kun tarkastelet merkkijonoa merkki kerrallaan 
+**Muuttumattomuus.** Javassa, kuten monissa muissakin kielissä merkkijono on muuttumaton muistin tehokkuuden, säikeiden turvallisuuden ja paremman suorituskyvyn takia. Jos yrität suorittaa jonkin operaation merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono muutu. Katsotaan tästä esimerkki:
 
 ```java
 //-void main() {
-char tabulaattoriMerkki = '\u0009';
-IO.println(Character.isWhitespace(tabulaattoriMerkki));
+String muuttumaton = "Tämä on muuttumaton.";
+IO.println(muuttumaton);
+muuttumaton.concat("Vai onko sittenkään?");
+IO.println(muuttumaton);
 //-}
 ```
 
-Aritmeettiset operaatiot ovat Javassa mahdollisia `char` -tyypille:
-```java
-void main() {
-    char a = 'A';
-    IO.println(Character(a + 1));
-}
-```
+Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään, ja alkuperäinen merkkijono pysyy ennallaan. 
 
-TODO: esimerkkejä hyödyllisistä char-luokan metodeista
-
-
-### String
-
-Monissa kielissä merkkijono on muuttumaton muistin tehokkuuden, säikeiden turvallisuuden ja paremman suorituskyvyn takia. Myös Javassa `String` on muuttumaton, eli jos jos yrität suorittaa jonkin operaation merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono täten muuttunut. Katsotaan tästä esimerkki:
+**Merkin hakeminen merkkijonosta.** Jos haluat tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
 
 ```java
-void main() {
-    String muuttumaton = "Tämä on muuttumaton";
-    IO.println(muuttumaton);
-    muuttumaton.concat(" merkkijono.");
-    IO.println(muuttumaton);
-}
+//-void main() {
+String mjono = "esimerkki";
+IO.println(mjono.charAt(0));
+// IO.println(mjono[0]); // Tämä ei toimi Javassa
+//-}
 ```
 
-Esimerkissä metodi `concat()` luo uuden merkkijonon, jota ei nyt tallenneta mihinkään.
+## StringBuilder
 
-Javassa, jos halutaan tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
-
-```java
-void main() {
-    String mjono = "esimerkki";
-    IO.println(mjono.charAt(0));
-    IO.println(mjono[0]);
-}
-```
-
-Entä jos sinun tarvitsee kuitenkin tulostaa merkkejä, jotka eivät mahdu yhteen 16-bittiseen `char` muuttujaan?
-```java
-void main() {
-    IO.println("\uD83D\uDE00");
-    // Tai vaihtoehtoisesti:
-    IO.println(new String(Character.toChars(0x1F600)));
-}
-```
-
-TODO: Joitain yleisimpiä esimerkkejä String-luokan metodeista?
-
-### StringBuilder
-Jos tarvitsee muunneltavan merkkijonon, käytä StringBuilderia:
+Jos tarvitsee muunneltavan merkkijonon, käytä `StringBuilder`-luokkaa. Se tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että joka kerta luodaan uusi merkkijono.
 
 ```java
 void main() {
@@ -231,50 +190,17 @@ void main() {
 }
 ```
 
-TODO: StringBuilderin hyödyllisiä metodeja
-
-## boolean
-Binääristä `boolean` -muuttujaa käytetään merkityksen selkeyttämiseen, vähentämään virheitä, luettavuuden parantamiseen, optimisaatioon, automaattisia työkaluja varten ja ovat luonnollinen tapa esittää binäärisiä tiloja. Esimerkiksi jokin on päällä tai pois päältä.
-
-Binäärisen muuttujan saa javassa avainsanalla `boolean` ja jonka arvo on joko `true` tai `false`
-
-```java
-void main() {
-    boolean totta = true;
-    String mjonona = Boolean.toString(totta);
-    IO.println(mjonona.charAt(0));
-}
-```
-
-Klassinen esimerkki `boolean` -muuttujien käytöstä jossain ohjelmassa:
-
-```java
-boolean ohjelmaOnPaalla = true;
-
-while (ohjelmaOnPaalla) {
-    // Tehdään ohjelmaan liittyviä asioita
-    if (/* Jokin lopettamiseen liittyvä ehto */) {
-        ohjelmaOnPaalla = false;
-    }
-}
-```
-
-## Muut perustietotyypit
-
-Javan dokumentaatiosta löytyy myös esimerkkejä [muista perustietotyypeistä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html), joita on tarjolla Javassa.
-
-
 ## Taulukot
 
 Taulukkoja käytetään tallentamaan joukkoa samantyyppisiä alkioita muuttujaan, joka helpottaa datan tehokasta hallintaa ja organisointia.  
 
 Javan taulukot esitellään syntaksilla 
-```java.ignore
+```java,ignore
 Tyyppi[] nimi = new Tyyppi[koko];
 ```
 Tai jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
 
-```java.ignore
+```java,ignore
 void main () {
     int[] luvut = {1,2,3,4};
 }
@@ -292,24 +218,18 @@ void main () {
 ```
 
 ## Vakiot
+
 Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että `final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan alaviivalla.
 
-```java.ignore
+```java,ignore
 final int PAIVIA_VIIKOSSA = 7;
 ```
 
-Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähentämiseksi, luotettavuuden parantamiseksi, parantamaan suorituskykyä jne. Kuvitellaan, että olet luomassa jotain järjestelmää, jossa tarvitaan tietokantayhteyttä ja saat kehittäessä virheen `2001`. Mitä sen olisi tarkoitus tarkoittaa? Oletetaan nyt, että joku on ajatellut asiaa etukäteen ja nimennyt virhekoodin järkevästi. Käyt lukemassa koodipohjaa ja löydät sieltä rivin:
-
-```java.ignore
-final int VIRHE_TIETOKANTAYHTEYDESSA = 2001;
-```
-
-Nyt on selvää, että kyseessä on nimenomaan virhe tietokantayhteydessä, eikä jokin muu virhe. Toisaalta ehkä koodipohjassa on useampi tilanne, jossa halutaan käyttää kyseistä virhettä. Ei olisi fiksua käyttää literaalia `2001` (TODO: Onko tämä oikea ongelma, koska säännölliset lausekkeet?).
+Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähentämiseksi, luotettavuuden parantamiseksi ja parantamaan suorituskykyä
 
 ## Vahva ja staattinen tyypitys
 
 Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa, että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli mielivaltaisia tyyppien välisiä sekoituksia. Eri tietotyyppejä ei voi käyttää toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa (boolean) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on käännösvirhe. Esimerkki alla.
-
 
 ```java,editable
 void main() {
