@@ -5,51 +5,56 @@
 > - Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet
 > - Muuttujat ja vakiot (perustyypit, `final`, String)
 
-## Rakenteisesta ohjelmoinnista
-- Rakenteinen ohjelmointi on ohjelmointiparadigma, joka painottaa ohjelman hajottamista lohkoihin, jotta ohjelman järjestyslogiikkaa on helpompi ymmärtää. Tätä olet jo oppinut ohjelmointi 1 -kurssilla.
-- Rakenteinen ohjelmointiparadigma syntyi alun perin poistamaan tarpeen `goto` -lauseille, joista lisää kurssilla "ITKA2030 Käyttöjärjestelmien ja pilvipalveluiden perusteet"
+Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten Javassa, käytetään selkokielisiä nimiä. Tällaista nimeä, joka viittaa muistissa olevaan tietoon, kutsutaan muuttujaksi (engl. *variable*). Ohjelmoijan tarvitsee muistaa vain nimi; tietokone huolehtii tiedon todellisesta sijainnista muistissa.
 
-## Javan alkeistietotyypeistä
+Javassa muuttujaan asetetaan tietoa käyttämällä sijoituslausetta. 
 
-Kullekin Javan alkeistietotyypille (engl. *primitive data types*) on olemassa niin sanottu käärijäluokka (engl. *wrapper class*). Kokonaislukutyypin `int` käärijäluokka on `Integer`, `char`-tyypin käärijäluokka on `Character`. Muut käärijäluokat ovat saman nimisiä kuin alkeistietotyypit, mutta alkavat isolla kirjaimella, esimerkiksi `Double`, `Boolean` jne. Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` alkeistietotyyppien käsittelyyn.
-
-Java käyttää staattista tyypitystä, eli muuttujan ja olion tyyppi tarkistetaan käännöshetkellä. Lisäksi Java on vahvasti tyypitetty, joten eri tyyppisiä arvoja ei voi sekoittaa tai muuntaa toiseksi ilman nimenomaista ja turvallista tyyppimuunnosta.
-
-```java
-void main() {
-    byte tavu = Byte.MAX_VALUE;
-    short kaksiTavua = Short.MAX_VALUE;
-    IO.println(tavu);
-    IO.println(kaksiTavua);
-    IO.println(Short.toString(kaksiTavua).charAt(0));
-}
+```java,ignore
+tyyppi muuttuja = lauseke;
 ```
 
-Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja sen jälkeen tulostetaan merkkijonon ensimmäinen merkki.
+Kun tietokone suorittaa sijoituslauseen, se laskee yhtäsuuruusmerkin oikealla puolella olevan lausekkeen (engl. *expression*) arvon ja tallentaa sen vasemmalla puolella nimettyyn muuttujaan.
 
-## Numeeriset tietotyypit
-
-Javassa on seuraavat tutut numeeriset muuttujatyypit:
-
-- `int` $\in$[$-2^{31}, 2^{31}-1$]
-- `long` $\in$[$-2^{63}, 2^{63}-1$]
-- `float` IEEE 754 yksinkertainen tarkkuus (TODO: vai pitäisikö jättää mainitsematta?)
-- `double` IEEE 754 kaksinkertainen tarkkuus
-
-Javassa numeeriset alkeistietotyypit ovat aina etumerkillisiä, eli niistä jokaisella pystyy esittämään myös negatiivisia lukuja. Lisäksi ne ovat kahden komplementteja, eli ylivuodossa pyörähdetään lukuvälin ympäri. Havainnoidaan näitä esimerkillä: (TODO: KA hyvä esimerkki vai ei?)
-
-```java
-void main() {
-    int maksimi = Integer.MAX_VALUE;
-    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int tyyppiseen muuttujaan" );
-    int ylivuoto = Integer.MAX_VALUE + 1;
-    IO.println(ylivuoto + " Tapahtui ylivuoto");
-    int n = 2;
-    int keskiarvo = (ylivuoto) / n;
-    IO.println(keskiarvo + " Saatiin, vaikka odotettiin lukua 1073741824");
-}
+```java,ignore
+double korkokerroin = 0.05;
+double paaoma = 150.0;
 ```
-Huomataan nyt, että kun yritettiin sijoittaa `int` -tyyppiseen muuttujaan `ylivuoto` yhtä suurempi kokonaisluku kuin mitä Javassa 32-bittisellä kokonaisluvulla pystytään esittämään, päädyttiin lukuun `Integer.MIN_VALUE` $= -2147483648 = -2^{31}$.
+Tässä luku 0.05 sijoitetaan `double`-tyyppiseen muuttujaan nimeltä `korkokerroin`, ja luku 150.0 `double`-tyyppiseen muuttujaan nimeltä `paaoma`. Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla. Muuttujan tyyppi määritellään muuttujan nimen edessä, ja se kertoo, millaista tietoa muuttuja voi sisältää. 
+
+Muuttuja voi olla myös lausekkeen osana, ja siten sen arvoa voidaan käyttää osana sijoitettavaa lauseketta. Huomaa, että tyyppiä ei tarvitse toistaa, kun viitataan olemassa olevaan muuttujaan.
+
+```java,ignore
+double paaomaKorolla = (1 + korkokerroin) * paaoma;
+```
+
+Tässä siis ohjelma lukee muuttujien `korkokerroin` ja `paaoma` sisältämät arvot, summaa ne keskenään, ja tallentaa tuloksen muuttujaan, jonka nimi on `paaomaKorolla`.
+
+Ohjelmoinnissa sijoitus on *lause*, ei matemaattinen yhtälö. Lause `double paaoma = 150.0;` on totta vain suoritushetkellä. Muuttujan arvo voi vaihtua myöhemmin ohjelman edetessä, toisin kuin matematiikan vakioissa. Lausetta voi ajatella myös käskynä; yllä oleva lause kuuluisi kutakuinkin "tallenna luku 150.0 muistiin paikkaan, jota kutsutaan tästä eteenpäin nimellä `paaoma`".
+
+## Javan tyyppijärjestelmä
+
+Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (engl. *primitive data types*) ja viitetietotyyppeihin (engl. *reference data types*). Kaikki tieto tallennetaan tietokoneen muistiin binäärilukuina (nollien ja ykkösten sarjana), ja tietotyypit eroavat toisistaan siinä, kuinka paljon muistia ne varaavat ja millaista dataa ne esittävät. Alkeistietotyypit sisältävät yksinkertaisia arvoja, kuten kokonaislukuja ja totuusarvoja, kun taas viitetietotyypit voivat sisältää monimutkaisempia rakenteita, kuten olioita, taulukoita ja merkkijonoja. 
+
+### Alkeistietotyypit
+
+Javassa on kahdeksan sisäänrakennettua alkeistietotyyppiä. 
+
+**Kokonaisluvut**: Kokonaisluvuille on neljä tyyppiä, jotka eroavat toisistaan lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty kokonaislukutyyppi on `int`. 
+
+| Tyyppi | Koko (tavua /bittiä) | Lukualue (suuntaa antava)       |
+| ------ | -------------------- | ------------------------------- |
+| byte   | 1 tavu (8 bittiä)    | -128 ... 127                    |
+| short  | 2 tavua (16 bittiä)  | -32 768 ... 32 767              |
+| int    | 4 tavua (32 bittiä)  | n. -2 miljardia ... 2 miljardia |
+| long   | 8 tavua (64 bittiä)  | n. +/- 9 * 10^18                |
+
+**Liukuluvut**: Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on `double`.
+
+| Tyyppi | Koko (tavua)        | Tarkkuus                  |
+| ------ | ------------------- | ------------------------- |
+| float  | 4 tavua (32 bittiä) | n. 7 merkitsevää numeroa  |
+| double | 8 tavua (64 bittiä) | n. 15 merkitsevää numeroa |
+
 
 Koska Java käyttää IEEE 754 standardia desimaalilukujen`double` ja `float` esittämiseen, niillä on muutama mielenkiintoinen ja kenties yllättävä ominaisuus:
 
@@ -66,37 +71,81 @@ void main() {
 
 Eli desimaaliluvuille on erikseen määritelty $-\infty, \infty$ ja `NaN` = **N**ot **A** **N**umber. Huomaa myös, että jos haluat erikseen `float` tyyppisen desimaaliluvun, luvun perässä pitää olla `f`. Muutoin se tulkitaan `double`ksi.
 
-```java,editable
+Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`. Hyvin isoja kokonaislukuja varten on tarjolla [`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html) ja hyvin tarkkoja desimaalilukuja varten [`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html), mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
+
+**Merkit**: Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää 2 tavua muistia.
+
+**Totuusarvot**: Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
+
+### Viitetietotyypit
+
+Viitetietotyypit sisältävät monimutkaisempia tietorakenteita, kuten olioita, taulukoita ja merkkijonoja. 
+Esimerkiksi `String` on viitetietotyyppi, kuten myös kaikki taulukot, esimerkiksi `int[]`. 
+
+Viitetietotyyppinen muuttuja eroaa alkeistietotyyppisestä muuttujasta erityisesti siinä, että se ei sisällä itse dataa, vaan se on viite (engl. *reference*) olioon. Java-aiheisessa kirjallisuudessa saatetaan esittää, että viite on osoitin siihen keskusmuistin paikkaan, jossa olio sijaitsee. Asia on kuitenkin hieman monimutkaisempi, sillä Java ei salli osoitinten suoraa käsittelyä ohjelmoijan toimesta. Voit kuitenkin ajatella viitettä siten, että se on tapa päästä käsiksi olioon, joka sijaitsee "jossakin muualla" muistissa.
+
+<details><summary>✨ Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
+
+On useampia syitä siihen, miksi nämä kaksi eri kategoriaa tietotyypeille on olemassa.
+
+Ensimmäinen liittyy suorituskykyyn ja muistin hallintaan. Jos kaikki muuttujat olisivat arvopohjaisia (kuten alkeistietotyypit), se aiheuttaisi valtavasti turhaa muistin kulutusta ja hidastaisi ohjelman suorituskykyä, erityisesti suurten tietorakenteiden kohdalla. Jos meillä olisi vaikkapa `kirja`, joka sisältäisi 1000 sivua tekstiä, niin joka ikinen kerta kun haluamme käsitellä `kirja`-muuttujaa, meidän pitäisi kopioida kaikki 1000 sivua muistissa. Tämä olisi erittäin tehotonta. Sen sijaan viitetietotyypit mahdollistavat sen, että me vain viittaamme `kirja`-olioon, joka sijaitsee jossakin muualla muistissa, ilman että tarvitsee kopioida koko kirjaa joka kerta.
+
+Toinen syy liittyy jaettuun tilaan. Usein haluamme, että useampi ohjelman osa muokkaa samaa tietoa. Esimerkiksi on järkevää, että `pankkitili`-olio on jaettu useiden eri toimintojen kesken, kuten talletus, nosto ja tilin saldo. Arvopohjaisessa maailmassa joutuisimme kopioimaan `pankkitili`-olion joka kerta, kun tililtä halutaan nostaa rahaa, tehdä tilisiirto tai vaikkapa tarkistaa saldo. Tämä johtaisi helposti siihen, että eri kopiot olisivat eri tilassa, mikä saattaisi aiheuttaa virheitä.
+
+Kolmas syy on dynaaminen koko. Viitetietotyypit mahdollistavat dynaamisesti kasvavien ja kutistuvien tietorakenteiden, kuten linkitettyjen listojen, pinojen ja jonoiden, luomisen. Näitä rakenteita ei voida helposti toteuttaa arvopohjaisina, koska arvopohjaisten muuttujien koko on kiinteä käännösaikana.
+
+Neljäs syy liittyy erityisesti olio-ohjelmointiin, ja liittyy osittain myös kolmanteen kohtaan. Javassa viitteet mahdollistavat polymorfismin. Koska muuttuja on vain viite, se voi osoittaa mihin tahansa, joka "näyttää" oikealta tyypiltä. 
+
+```java,ignore
+Elain lemmikki = new Koira();
+lemmikki = new Kissa();
+```
+
+Jos nämä olisivat puhtaita arvotyyppejä, `Elain`-tyyppiselle muuttujalle pitäisi varata kiinteä määrä muistia. Jos `Kissa` sitten tarvitsisikin enemmän muistia kuin `Elain` on varannut, koodi hajoaisi. Viitteiden avulla muuttujan koko on aina sama (viitteen koko), riippumatta siitä kuinka valtava olio viitteen päässä on.
+
+</details>
+
+## Literaalit
+
+Literaali (engl. *literal*) tarkoittaa ohjelmakoodiin kirjoitettua kiinteää arvoa. Eri tietotyypeillä on omat kirjoitussääntönsä literaaleille.
+
+ * **Merkit** (`char`): Kirjoitetaan yksittäisen lainausmerkin sisään, esimerkiksi `'A'`,  `'*'` ja `'x'`. Erikoismerkit alkavat kenoviivalla: `'\n'` (rivinvaihto), `'\u03A9'` (kreikkalainen iso omega) ja `'\t'` (tabulaattori).
+ * **Kokonaisluvut** (`byte`, `short`, `int`, `long`): Kirjoitetaan suoraan numerona, esimerkiksi `42`, `-7` ja `0`. `long`-luvun literaali päättyy isoon tai pieneen kirjaimeen `L` tai `l`, esimerkiksi `12345678901L`.
+ * **Liukuluvut** (`float`, `double`): Kirjoitetaan desimaalipisteellä erotettuna, esimerkiksi `3.14`, `-0.001` ja `2.0`. Voidaan käyttää myös tieteellistä muotoa: `1.5e3` (eli 1.5 × 10³ = 1500) ja `2.0E-4` (eli 2.0 × 10⁻⁴ = 0.0002). Oletuksena desimaaliluvut ovat `double`-tyyppiä. Jos haluat luoda `float`-luvun, literaalin tulee päättyä isoon tai pieneen kirjaimeen `F` tai `f`, esimerkiksi `3.14f`.
+ * **Totuusarvot** (`boolean`): Kirjoitetaan avainsanoina `true` ja `false`.
+
+## Käärijäluokat
+
+Javassa kullekin alkeistietotyypille on olemassa niin sanottu käärijäluokka (engl. *wrapper class*). Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` alkeistietotyyppien käsittelyyn. Alkeistietotyypit ja niitä vastaavat käärijäluokat on esitetty alla olevassa taulukossa. 
+
+| Alkeistietotyyppi | Käärijäluokka |
+| ----------------- | -------------- |
+| byte              | Byte           |
+| short             | Short          |
+| int               | Integer        |
+| long              | Long           |
+| float             | Float          |
+| double            | Double         |
+| char              | Character      |
+| boolean           | Boolean        |
+
+Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja sen jälkeen tulostetaan merkkijonon ensimmäinen merkki.
+
+```java
 void main() {
-    long neljakymmentaMiljardia = 40000000000L;
-    IO.println(neljakymmentaMiljardia);
-    int inttina = (int)neljakymmentaMiljardia;
-    IO.println(inttina);
+    byte tavu = Byte.MAX_VALUE;
+    short kaksiTavua = Short.MAX_VALUE;
+    IO.println(tavu);
+    IO.println(kaksiTavua);
+    IO.println(Short.toString(kaksiTavua).charAt(0));
+
+    int maksimi = Integer.MAX_VALUE;
+    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int tyyppiseen muuttujaan" );
+    int ylivuoto = Integer.MAX_VALUE + 1;
+    IO.println("Ylitetään lukualue:");
+    IO.println(ylivuoto);
 }
 ```
-Huomaa, että Java tulkitsee luvun `40 000 000 000` (neljäkymmentä miljardia) `int` -tyyppisenä, jos luvun perässä ei ole isoa `L` -kirjainta, eikä koodi tällöin edes käänny. 
-
-Nyt `40 000 000 000` (neljäkymmentä miljardia) on binäärilukuna tavun kokoisiin pätkiin jaoteltuna `00001001 01010000 00101111 10010000 00000000`. 
-
-| Tyyppi | 5        | 4        | 3        | 2        | 1        |
-| ------ | -------- | -------- | -------- | -------- | -------- |
-| long   | 00001001 | 01010000 | 00101111 | 10010000 | 00000000 |
-| int    |          | 01010000 | 00101111 | 10010000 | 00000000 |
-
-Ylläolevasta taulukosta huomataan, että kun `40 000 000 000` muunnetaan `int` -tyyppiseksi kokonaisluvuksi, siitä huomioidaan vain neljä ensimmäistä tavua oikealta laskettuna, eli `01010000 00101111 10010000 00000000` = 1345294336
-```java
-//-void main() {
-double desimaali = (double)1/3;
-System.out.format("1/3 on desimaalilukuna %.3f%n",desimaali);
-int leikattu = (int)1.3;
-IO.println(leikattu);
-Double kaaritty = desimaali;
-int kokonaislukuna = kaaritty.intValue();
-IO.println(kokonaislukuna);
-//-}
-```
-
-Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`. Hyvin isoja kokonaislukuja varten on tarjolla [`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html) ja hyvin tarkkoja desimaalilukuja varten [`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html), mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
 
 ## Yksittäinen merkki ja merkkijonot
 
@@ -256,3 +305,26 @@ final int VIRHE_TIETOKANTAYHTEYDESSA = 2001;
 ```
 
 Nyt on selvää, että kyseessä on nimenomaan virhe tietokantayhteydessä, eikä jokin muu virhe. Toisaalta ehkä koodipohjassa on useampi tilanne, jossa halutaan käyttää kyseistä virhettä. Ei olisi fiksua käyttää literaalia `2001` (TODO: Onko tämä oikea ongelma, koska säännölliset lausekkeet?).
+
+## Vahva ja staattinen tyypitys
+
+Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa, että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli mielivaltaisia tyyppien välisiä sekoituksia. Eri tietotyyppejä ei voi käyttää toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa (boolean) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on käännösvirhe. Esimerkki alla.
+
+
+```java,editable
+void main() {
+  long sairaanIsoLuku = 40000000000L;
+  IO.println("Iso, long-tyyppinen luku: " +sairaanIsoLuku);
+  // int normaaliIntti = sairaanIsoLuku; // Ei onnistu, koska vahva tyypitys
+  int katkaistu = (int)sairaanIsoLuku;
+  IO.println("int-luku eksplisiittisen tyyppimuunnoksen jälkeen: " + katkaistu);
+}
+```
+
+Yllä olevassa esimerkissä käytännössä otetaan `long`-luvun 32 oikeanpuoleisinta bittiä ja sijoitetaan ne `int`-tyyppiseen muuttujaan. Tämä on mahdollista siksi, että ohjelmoija on nimenomaisesti ("eksplisiittisesti") pyytänyt tyyppimuunnosta. Ilman eksplisiittistä tyyppimuunnosta kääntäjä antaisi virheen. 
+
+Vahva tyypitys vähentää virheellisten oletusten mahdollisuutta ja parantaa ohjelman luotettavuutta. Tämä on selkeä ero heikosti tyypitettyihin kieliin, kuten JavaScriptiin, jossa vaikkapa `1 + true` palauttaa `2`. 
+
+*Staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen. 
+
+Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että ohjelman tyyppivirheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot ovat keskenään yhteensopivia.
