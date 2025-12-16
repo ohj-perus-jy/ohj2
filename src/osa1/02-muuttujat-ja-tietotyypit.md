@@ -84,25 +84,22 @@ Nyt `40 000 000 000` (neljäkymmentä miljardia) on binäärilukuna tavun kokois
 | int    |          | 01010000 | 00101111 | 10010000 | 00000000 |
 
 Ylläolevasta taulukosta huomataan, että kun `40 000 000 000` muunnetaan `int` -tyyppiseksi kokonaisluvuksi, siitä huomioidaan vain neljä ensimmäistä tavua oikealta laskettuna, eli `01010000 00101111 10010000 00000000` = 1345294336
-
-Numeroliteraalin tyypin saa vaihdettua 
 ```java
-void main() {
-    double desimaali = (double)1/3; //tai 1.0/3 tai 1/3.0
-    System.out.format("1/3 on desimaalilukuna %.3f%n",desimaali);
-    Double kaaritty = desimaali;
-    int kokonaislukuna = kaaritty.intValue();
-    IO.println(kokonaislukuna);
-}
-```
+//-void main() {
+double desimaali = (double)1/3;
+System.out.format("1/3 on desimaalilukuna %.3f%n",desimaali);
+int leikattu = (int)1.3;
+IO.println(leikattu);
+Double kaaritty = desimaali;
+int kokonaislukuna = kaaritty.intValue();
+IO.println(kokonaislukuna);
+//-}
 
 Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla et (välttämättä) tarvitse muita kuin yllä mainittuja.
 
 ## Yksittäinen merkki ja merkkijonot
 
-- `char`
-- `String`
-- `StringBuilder`
+Javan merkkijonotyyppejä ovat `String` ja `StringBuilder`, joista kumpikin koostuu `char`-tyyppisistä merkeistä. 
 
 ### char
 Sisäisesti Javassa yksittäiset merkit `char` ovat 16-bittisiä luonnollisia lukuja (välillä [0-65535]). Tätä voidaan havainnoida esimerkiksi seuraavasti:
@@ -116,10 +113,10 @@ void main() {
 Javassa `char` on yksittäinen 16-bittinen Unicode-merkki, joita käytetään tyypillisesti yksittäisen merkin tallentamiseen muuttujaan tai kun tarkastelet merkkijonoa merkki kerrallaan 
 
 ```java
-void main() {
-    char tabulaattoriMerkki = '\u0009';
-    IO.println(Character.isWhitespace(tabulaattoriMerkki));
-}
+//-void main() {
+char tabulaattoriMerkki = '\u0009';
+IO.println(Character.isWhitespace(tabulaattoriMerkki));
+//-}
 ```
 
 Aritmeettiset operaatiot ovat Javassa mahdollisia `char` -tyypille:
