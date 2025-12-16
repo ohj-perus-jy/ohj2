@@ -83,7 +83,7 @@ Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun 
 ```java
 public static void nollaaTaulukko(int[] taulukko) {
     // Tämä muutos tapahtuu alkuperäiselle taulukolle!
-    // Koska "taulukko"-muuttuja viittaa samaan muistipaikkaan.
+    // Koska "taulukko"-muuttuja viittaa samaan olioon.
     for (int i = 0; i < taulukko.length; i++) {
         taulukko[i] = 0;
     }
