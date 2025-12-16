@@ -239,27 +239,25 @@ Tee seuraavasti:
 
 1. Klikkaa `main`-aliohjelman vasemmalla puolella olevaa ajopainiketta (<i class="bi bi-play-fill"></i>).
 
-   IDEA ensin kääntää ohjelmasi. Kun ohjelma on käännetty, koodieditorin alapuolelle
+   IDEA ensin kääntää ohjelmasi. Kun ohjelma on käännetty, editorin alapuolelle
    avautuu **Run**-ikkuna, ja IDEA ajaa ohjelmasi.
 
-   Ensimmäinen rivi ikkunassa näyttää komennon, jota IDEA käytti käännetyn tiedoston
-   ajamiseksi.
-   Seuraavalla rivillä näet ohjelman tulosteen, tässä tapauksessa
-   `IO.println`-aliohjelmalla tulostettu `Hei, maailma!`.
-   Viimeinen rivi näyttää poistumiskoodin `0` sen merkiksi, että ohjelman suoritus
-   päättyi ilman virheitä.
+   Ensimmäinen rivi ikkunassa näyttää komennon, jota IDEA käytti käännetyn
+   tiedoston ajamiseksi. Seuraavalla rivillä näet ohjelman tulosteen, tässä
+   tapauksessa `IO.println`-aliohjelmalla tulostettu `Hei, maailma!`. Viimeinen
+   rivi kertoo, että ohjelman suoritus päättyi ilman virheitä.
 
    <video src="images/intellij-run-gutter.mp4" controls></video>
 
 2. Kokeile vielä ohjelman ajamista luodulla ajokonfiguraatiolla.
 
-   Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo erikoisen 
+   Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo erikoisen
    *ajokonfiguraation*, jonka perusteella koodi käännetään ja ajetaan.
    
-   Kun ajokonfiguraatio on luotu ensimmäisen ajon jälkeen, voit jatkossa
-   ajaa koodin aina IDEA:n yläpalkissa olevalla ajopainikkeella. Tällä tavoin
-   voit helposti ajaa samoja ohjelmia ilman, että kooditiedostoa tarvitsisi
-   erikseen avata.
+   Kun ajokonfiguraatio on luotu ensimmäisen ajon jälkeen, voit jatkossa ajaa
+   koodin aina IDEA:n yläpalkissa olevalla ajopainikkeella. Tällä tavoin voit
+   helposti ajaa samoja ohjelmia ilman, että kooditiedostoa tarvitsisi erikseen
+   avata.
 
    IDEAn yläpalkissa pitäisi nyt näkyä `Ohjelma`-konfiguraation nimi,
    jonka vieressä on ajopainike (<i class="bi bi-play-fill"></i>).
@@ -268,30 +266,28 @@ Tee seuraavasti:
    <video src="images/intellij-run-config.mp4" controls></video>
 
    Ajokonfiguraatioiden avulla voit kirjoittaa useita ohjelmia samaan kansioon
-   ilman, että tarvitsisi tehdä uusia projekteja.
-   Myöhemmin materiaalissa tutustumme lisäksi Gradle-hallintatyökaluun,
-   jonka avulla teemme muun muassa erillisiä ajokonfiguraatioita projektin
-   ajamiselle, testaamiselle ja kääntämiselle.
+   ilman, että tarvitsisi tehdä uusia projekteja. Myöhemmin materiaalissa
+   tutustumme lisäksi Gradle-hallintatyökaluun, jonka avulla teemme muun muassa
+   erillisiä ajokonfiguraatioita projektin ajamiselle, testaamiselle ja
+   kääntämiselle.
 
 TODO: Usean moduulin luominen  
 TODO: Yleiset pikanäppäimet, tai mistä löytää
 
 ## Miten Java-ohjelmat ajetaan?
 
-Java on lähtökohtaisesti *käännettävä* ohjelmointikieli: ennen kuin
-IDEA varsinaisesti ajaa ohjelman, se käännetään ajettavaan muotoon.
-Tutkitaan seuraavaksi, mitä tämä käytännössä tarkoittaa kääntämällä
-ja ajamalla ohjelma suoraan komentoriviltä.
-
+Ennen kuin IDEA varsinaisesti ajaa ohjelman, se käännetään ajettavaan muotoon.
+Tutkitaan seuraavaksi, mitä tämä käytännössä tarkoittaa kääntämällä ja ajamalla
+ohjelma suoraan komentoriviltä.
 
 <details closed><summary>Miten voin seurata mukana?</summary>
 
 Tee alkuun yksinkertainen ohjelma [yllä olevan oppaan](#opas-java-ohjelmien-kääntäminen-ja-ajaminen)
 mukaisesti IDEA-kehitysympäristössä.
 
-Sen jälkeen avaa IDEA:n vasemmasta näkymäpalkista komentorivi painamalla komentorivipainikkeesta 
-(<i class="bi bi-terminal"></i>).
-Tämä avaa käyttöjärjestelmän komentorivin (zsh macOS:lla, Powershell Windowsilla,
+Sen jälkeen avaa IDEA:n vasemmasta näkymäpalkista komentorivi painamalla
+komentorivipainikkeesta (<i class="bi bi-terminal"></i>). Tämä avaa
+käyttöjärjestelmän komentorivin (zsh macOS:lla, Powershell Windowsilla,
 oletuskomentorivi Linuxilla).
 
 Jos latasit Java-kehitysympäristön seuraamalla [työkaluohjeita](../tyokalut.md#java-development-kit-jdk),
@@ -428,18 +424,18 @@ jshellistä poistutaan ajamalla komento `/exit` -->
 
 ## Tekstin tulostaminen ja lukeminen
 
-Jatkossa voi olla hyödyllistä tulostaa erilaisia asioita komentoriviin
+Jatkossa voi olla hyödyllistä tulostaa erilaisia asioita komentorivin avulla 
 ja toisaalta lukea tietoa sieltä.  
 Javan `IO`-luokka tarjoaa kolme perustoimintoa tekstin tulostamiseen ja lukemiseen
 komentorivillä:
 
 | Aliohjelma | Esimerkki                       | Selitys                                                                  |
 | ---------- | ------------------------------- | ------------------------------------------------------------------------ |
-| `println`  | `[java] IO.println("Moi!");`           | Tulostaa parametrina annetun arvon ja lisää loppuun rivinvaihdon         |
-|            | `[java] IO.println();`                 | Tulostaa rivinvaihdon                                                    |
-| `print`    | `[java] IO.print("Samalla rivillä!");` | Tulostaa parametrina annetun arvon ilman rivinvaihtoa                    |
-| `readln`   | `[java] IO.readln();`                  | Lukee käyttäjän syötettä komentoriviltä rivinvaihtoon asti               |
-|            | `[java] IO.readln("Anna sana > ");`    | Sama kuin `readln`, mutta tulostaa ensin annetun tekstin ennen syötettä. |
+| `println`  | `[java] IO.println("Moi!");`           | Tulostaa parametrina annetun arvon ja lisää loppuun rivinvaihdon  |
+|            | `[java] IO.println();`                 | Tulostaa rivin rivinvaihdolla                                     |
+| `print`    | `[java] IO.print("Samalla rivillä!");` | Tulostaa parametrina annetun arvon ilman rivinvaihtoa             |
+| `readln`   | `[java] IO.readln();`                  | Lukee syöterivin käyttäjältä (ts. Enterin painallukseen saakka)   |
+|            | `[java] IO.readln("Anna sana > ");`    | Sama kuin `readln`, mutta tulostaa ensin annetun tekstin ennen syötteen lukemista. |
 
 
 Katsotaan vielä näiden yhteistoimintaa.
