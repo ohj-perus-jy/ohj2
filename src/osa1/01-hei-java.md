@@ -464,9 +464,6 @@ void main() {
 
 ## Kommentointi ja dokumentointi
 
-Ennen kuin päästään varsinaisesti koodaamaan, otetaan vielä kertaus koodin
-kommentoinnista.
-
 Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan
 selittää sitä. Tällaista selitystekstiä on kahdentyyppisiä: (1) koodin sekaan
 kirjoitettavia kommentteja (nimitetään näitä lyhyesti *kommenteiksi*) sekä (2)
@@ -490,12 +487,9 @@ void main() {
 }
 ```
 
-Yleisesti hyvä periaate on se, että ohjelmoija pyrkii kirjoittamaan koodia, joka
-selittää itse itseään. Tällöin asiat, jotka voidaan nimetä (kuten muuttujat,
-luokat, funktiot), pyritään nimeämään mahdollisimman kuvaavasti, jolloin
-yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Joskus tältä ei voi
-välttyä, koska jotakin operaatiota ei voida olettaa itsestäänselväksi tai
-muuttujan nimestä tulisi kohtuuttoman pitkä:
+Yleisesti hyvä periaate on, että ohjelmoija pyrkii kirjoittamaan sellaista koodia, joka selittää itse itseään. Muuttujat, luokat, aliohjelmat ja muut nimet, johon ohjelmoija pystyy vaikuttamaan, pyritään nimeämään mahdollisimman kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Asiaa on kuvattu myös kurssin [tyylioppaassa](). TODO: Linkki.
+
+Joskus yhden rivin kommenteilta ei voi välttyä, jos jotakin operaatiota ei voida olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
 
 ```java
 void main() {
@@ -506,8 +500,7 @@ void main() {
 }
 ```
 
-Nyt muuttujan `pyoristetty` tilalla voisi olla
-`pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein
+Nyt muuttujan `pyoristetty` tilalla voisi olla `pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein
 järkevä vaihtoehto.
 
 ### Monirivinen kommentti
