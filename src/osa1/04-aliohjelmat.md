@@ -78,7 +78,7 @@ Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat *viitetyyppe
 
 Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan viitteen olioon, joka sisältää datan. Voi ajatella, että muuttuja on kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan käsittelyyn. 
 
-Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma saa kyllä käyttöönsä samanlaisen ``kaukosäätimen'', joka osoittaa samaan ``televisioon'' kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
+Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma saa kyllä käyttöönsä samanlaisen "kaukosäätimen", joka osoittaa samaan "televisioon" kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
 
 ```java
 public static void nollaaTaulukko(int[] taulukko) {
@@ -99,9 +99,32 @@ public static void main(String[] args) {
 }
 ```
 
+Oleellista on kuitenkin ymmärtää, että aliohjelman kutsussa annoimme nimenomaisesti kopion viitteestä, emme alkuperäistä viitettä. Jos aliohjelma yrittäisi muuttaa viitettä osoittamaan toiseen olioon, tämä muutos ei vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla esimerkki tästä tilanteesta:
+
+```java
+public static void muutaViite(int[] taulukko) {
+    // Tämä muutos ei vaikuta alkuperäiseen viitteeseen!
+    taulukko = new int[] {9, 9, 9};
+}
+
+public static void main(String[] args) {
+    int[] luvut = {1, 2, 3};
+    
+    muutaViite(luvut);
+    
+    // Alkuperäinen taulukko ei ole muuttunut
+    System.out.println(luvut[0]); // Tulostaa edelleen 1
+}
+```
+
+Joissain kielissä, kuten C++:ssa, on mahdollista välittää parametrina alkuperäinen muuttuja viitteenä (ns. *pass-by-reference*). Javassa tällaista mekanismia ei kuitenkaan ole, vaan kaikki parametrit välitetään arvona, kuten yllä on selitetty.
+
+## Aliohjelma ja sivuvaikutukset
+
 Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
 
-## B1
+## Tehtävät
+
 - Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
 
 Monty hallin ongelma neljällä ovella:
