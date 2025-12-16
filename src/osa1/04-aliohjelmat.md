@@ -123,6 +123,108 @@ Joissain kielissä, kuten C++:ssa, on mahdollista välittää parametrina alkupe
 
 Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
 
+## Kommentointi ja dokumentointi
+
+Lähdekoodiin voi kirjoittaa tekstiä, joka ei ole varsinaista koodia, vaan
+selittää sitä. Tällaista selitystekstiä on kahdentyyppisiä: (1) koodin sekaan
+kirjoitettavia kommentteja (nimitetään näitä lyhyesti *kommenteiksi*) sekä (2)
+dokumentaatiokommentteja. 
+
+Kommenttien tarkoitus on palvella *kehityksen aikaista* tekemistä. Ne näkyvät
+sisäisesti, eli ohjelmoijalle itselleen.  Dokumentaatiokommenttien tarkoitus on
+palvella kaikkia, jotka *käyttävät* koodia. Ne näkyvät paitsi ohjelmoijalle
+itselleen, myös niille, jotka hyödyntävät koodia esimerkiksi API:n (*application
+programming interface*) kautta.
+
+### Yhden rivin kommentointi
+
+Yhden rivin kommentteja, jonka syntaksi on `//` voidaan käyttää esimerkiksi
+merkitsemään TODO-kohtia koodissa:
+
+```java
+void main() {
+    // TODO: Tarkista millaisia ongelmia tästä ratkaisusta voi tulla
+    String syote = IO.readln();
+    IO.println("Kirjoitit: " + syote);
+}
+```
+
+Yleisesti hyvä periaate on, että ohjelmoija pyrkii kirjoittamaan sellaista koodia, joka selittää itse itseään. Muuttujat, luokat, aliohjelmat ja muut nimet, johon ohjelmoija pystyy vaikuttamaan, pyritään nimeämään mahdollisimman kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Asiaa on kuvattu myös kurssin [tyylioppaassa](). TODO: Linkki.
+
+Joskus yhden rivin kommenteilta ei voi välttyä, jos jotakin operaatiota ei voida olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
+
+```java
+void main() {
+    int n = 9;
+    // Pyöristää alaspäin lähimpään neljällä jaolliseen lukuun
+    int pyoristetty = n & ~3; 
+    IO.println(pyoristetty);
+}
+```
+
+Nyt muuttujan `pyoristetty` tilalla voisi olla `pyoristaaAlaspainLahimpaanNeljallaJaolliseenLukuun`, joka ei sekään ole oikein
+järkevä vaihtoehto.
+
+### Monirivinen kommentti
+
+Javassa monirivinen kommentti tulee `/*` ja  `*/` väliin. Tällaista suositellaan
+käytettäväksi, kun jokin monimutkaisempi logiikka vaatii tarkempaa avaamista
+ja/tai on järkevää selittää miksi juuri kyseinen ratkaisu on valittu. Tätä
+kommenteissa olevaa tarkempaa avaamista ei kuitenkaan ole tarkoitus näyttää
+koodin käyttäjille.
+
+```java,noplayground
+if (kayttaja.kayttaaVanhaa) {
+    /* 
+     * Vanhat käyttäjät (rekisteröityneet ennen vuotta 2022) käyttävät 
+     * toistaiseksi vanhaa käyttöoikeusmallia.
+     * Älä poista tarkistusta, ennen kuin kaikki tilit on siirretty.
+     */
+    return kaytaVanhojaKayttooikeuksia(kayttaja);
+}
+```
+
+### Dokumentaatiokommentti
+
+Dokumentaatiokommentti tarkoittaa sellaista kommenttia, josta voidaan automaattisesti
+luoda erilaisia koodin käyttäjille tarkoitettuja dokumentaatiomuotoja. Tällaisia dokumentaatiomuotoja voivat olla esimerkiksi HTML-muotoiset API-dokumentaatiot, jotka kertovat miten koodia käytetään, tai IDE:ssä näkyvät työkaluvihjeet aliohjelmien käytöstä.
+
+Dokumentaatiokommenttien sijainti on ennen dokumentoitavaa koodia, kuten aliohjelmaa tai luokkaa.
+
+Javassa dokumentaatiokommentit kirjoitetaan erityisellä syntaksilla, joka eroaa tavallisista kommenteista. Dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
+
+```java
+//- void main() {
+//-   IO.println("summa(1, 2) ==> " + summa(1, 2));
+//- }
+//-
+/**
+ * Laskee kahden kokonaisluvun summan.
+ * 
+ * @param a Ensimmäinen luku
+ * @param b Toinen luku
+ * @return Lukujen summa
+ */
+public int summa(int a , int b) {
+    return a + b;
+}
+```
+
+Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti IDEA-kehitysympäristössä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa merkit `/**` ja painaa <kbd>Enter</kbd>. 
+
+<video src="images/intellij-docstring.mp4" controls></video>
+
+<details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
+
+Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java` ja ajat sen jälkeen komennon `javadoc Summa.java` Nyt voit avata luodun `index.html` -tiedoston selaimessa, klikata selaimessa luokkaa `Summa` ja pääset seuraavanlaiseen näkymään:
+
+![Juuri tehdystä dokumentaatiosta kuva, joka voi näyttää tutulta jos on käynyt
+tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
+
+Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html)
+
+</details>
+
 ## Tehtävät
 
 - Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
