@@ -3,8 +3,8 @@
 > [!Osaamistavoitteet]
 > - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
 > - Osaat määritellä ja käyttää rajapintoja Javassa.
+> - Osaat käyttää rajapintaa aliohjelman parametrina ja muuttujan tyyppinä.
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
-> - Rajapinnat ("Kissa osaa Puhua, Kävellä, Hyppiä...")
 > - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhdestä luokasta
 
 ![alt text](images/interfaces.png)

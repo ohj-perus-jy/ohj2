@@ -2,12 +2,8 @@
 
 > [!Osaamistavoitteet]
 > 
-> TODO: Muotoile nämä osaamistavoitteiksi, ei pelkiksi määritelmiksi.
-> 
-> - Abstrakti luokka on luokka, joka on tarkoitettu vain perittäväksi, eikä siitä voi luoda ilmentymiä.
-> - Abstrakti metodi on metodin määrittely, jolla ei ole toteutusta, ja joka tulee toteuttaa perivissä luokissa.
-> - Abstrakti luokka tarjoaa osan toteutuksesta ja määrittelee ne osat, jotka perittävän luokan tulee toteuttaa itse. 
-> - Ymmärrät abstraktien luokkien ja metodien käytön hyödyt olio-ohjelmoinnissa.
+> - Osaat tehdä abstraktin luokan ja abstrakteja metodeja Javassa.
+> - Ymmärrät abstraktin luokan ja abstraktin metodin käsitteet ja niiden hyödyt olio-ohjelmoinnissa.
 
 ![Abstraktin luokan ajatusta voidaan havainnollistaa tuoleilla: Puutuoli, keinutuoli ja työtuoli ovat kaikki tuoleja, jotka erikoistavat "istuin"-käsitettä.](images/abstract-class2.png)
 

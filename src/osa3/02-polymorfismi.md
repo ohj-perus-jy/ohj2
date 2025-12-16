@@ -2,11 +2,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Polymorfismi (dynaaminen sidonta, rajapinnat ja abstraktit luokat voivat olla muuttujan tai parametrin tyyppeinä)
-> - Tunnistaa polymorfismin merkitys olioiden yhteistyössä. Olio, joka käyttää ylätason tyyppiä (rajapinta, abstrakti luokka) voi toimia erilaisten aliluokkien kanssa.
-> - Korvaaminen, @Override, final
-> - Kutsuttava metodi päätetään ajon aikana olion todellisen tyypin perusteella, ei muuttujan tyypin perusteella.
-> - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen riippuvuuden välttämiseksi 
+> - Ymmärrät polymorfismin perusajatuksen 
+> - Osaat korvata yliluokan metodin aliluokassa sekä estää korvaamisen `final`-avainsanalla
+> - Osaat kirjoittaa pienen ohjelman, jossa hyödynnetään polymorfismia
+> - Tunnistat Object-luokan korvattavat metodit: `toString()`, `equals()`, `hashCode()`
 
 ![Bändi](images/band.png)
 

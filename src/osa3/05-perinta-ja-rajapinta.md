@@ -1,5 +1,10 @@
 # Perintä ja rajapinnat olioiden yhteistyössä
 
+> [!Osaamistavoitteet]
+> - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen riippuvuuden välttämiseksi 
+
+
+
 Perintä ja rajapinnat voivat toimia, ja usein toimivatkin yhdessä. Perintä määrittelee luokkien välisen hierarkian ja jakaa yhteistä toiminnallisuutta, kun taas rajapinnat määrittelevät kyvykkyyksiä, joita eri luokat voivat toteuttaa riippumatta niiden sijainnista luokkahierarkiassa. 
 
 Itse asiassa käytimme jo [Älykoti](04-rajapinta.md#alykoti-saadettava)-esimerkissämme sekä perintää (`Laite` abstraktina luokkana) että rajapintaa (`Saadettava`-rajapinta). Laajennetaan kuitenkin perinnän ja rajapintojen yhteistyötä hieman eteenpäin. Tarkastellaan tilannetta, jossa meillä on ohjelmassamme luokkia, jotka eivät jaa yhteistä yliluokkaa, mutta kuitenkin jakavat yhteisen kyvykkyyden.

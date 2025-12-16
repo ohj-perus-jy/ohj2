@@ -2,14 +2,9 @@
 
 > [!Osaamistavoitteet]
 >
-> - Perintä: "Opiskelija on Henkilo", metodin korvaaminen, protected, luokkahierarkia
-> - Käytetään perintää olioiden yhteistyössä
-> - Ymmärrät miten luokat ja oliot voivat periä toistensa ominaisuuksia
-> - Ymmärrät miten metodeja voi korvata luokan sisällä ja luokkien yli
-> - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan ja korvaa sen metodeja
-> - Object-luokka ja sen korvattavat metodit
-> - Ymmärtää, että kaikki Javan luokat perivät `Object`-luokasta
-> - Tuntee hyödylliset korvattavat metodit `Object`-luokassa: `equals`, `toString`, (ehkä `hashCode`?)
+> - Ymmärrät perinnän käsitteen olio-ohjelmoinnissa ja osaat periä luokkia Javassa
+> - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan
+> - Ymmärrät, että kaikki Javan luokat perivät `Object`-luokan
 
 *Perintä* tarkoittaa mekanismia, jossa luokka sisällyttää itseensä toisen luokan ominaisuudet (attribuutit) ja toiminnallisuudet (metodit). Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
