@@ -8,11 +8,11 @@
 > - Dokumentaatiokommentit
 > - Osaat kirjoittaa Ohjelmointi 1 -kurssin tapaisia ohjelmia Javalla
 
-## Aliohjelmat
+Aliohjelma on ohjelman osa, joka suorittaa tietyn tehtävän. Aliohjelmat helpottavat ohjelman jäsentämistä, sillä niiden avulla ohjelma voidaan jakaa pienempiin, hallittavampiin osiin. Aliohjelmat helpottavat myös uudelleenkäyttöä, sillä samaa aliohjelmaa voidaan kutsua useita kertoja eri kohdissa ohjelmaa ilman, että koodia tarvitsee kirjoittaa uudelleen. 
 
-Aliohjelma on itsenäinen koodinpätkä, joka suorittaa tietyn tehtävän. Aliohjelmat helpottavat ohjelman jäsentämistä ja uudelleenkäyttöä. Aliohjelma voi ottaa vastaan syötteitä, suorittaa tehtävänsä ja palauttaa tuloksen. Aliohjelmia kutsutaan joskus myös funktioiksi, ja olio-ohjelmoinnin yhteydessä myös metodeiksi. Nimeäminen riippuu kontekstista, mutta tässä yhteydessä käytämme termiä aliohjelma.
+Aliohjelmia kutsutaan joskus myös funktioiksi, ja olio-ohjelmoinnin yhteydessä myös metodeiksi. Nimeäminen riippuu kontekstista, mutta tässä yhteydessä käytämme termiä aliohjelma.
 
-Kutsutaan `Keskiarvo`-aliohjelmaa, joka laskee lukujoukon keskiarvon:
+Aliohjelma voi ottaa vastaan *syötteitä*, joita sanotaan *parametreiksi*. Tehtävän suoritettuaan aliohjelma voi palauttaa tuloksen. Kutsutaan alla `Keskiarvo`-aliohjelmaa, joka laskee kokonaislukujen joukon keskiarvon. Tässä siis parametrina annetaan yksi kokonaislukutaulukko, ja aliohjelma palauttaa keskiarvon `double`-tyyppisenä arvona.
 
 ```java
 void main () {
@@ -33,6 +33,8 @@ public static double Keskiarvo(int[] luvut) {
 }
 ```
 
+## Aliohjelman määrittelyrivi
+
 Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyrivissä on seuraavat osat:
 
  * Julkisuus ja staattisuus (esimerkissämme `public static`): Kertovat, että metodi on kaikkien käytettävissä ja toimii ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat määritellään kuitenkin yleensä juuri näin.
@@ -42,30 +44,22 @@ Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyri
 
 ## Paluuarvot ja datan käsittely
 
-Aliohjelmaa voi ajatella *mustana laatikkona*: sinne syötetään raaka-ainetta (parametrit), laatikon sisällä tapahtuu prosessointia, ja lopuksi ulos tulee valmis tuote (paluuarvo).
+Aliohjelmaa voi ajatella *mustana laatikkona*: sinne syötetään raaka-ainetta (parametrit), laatikon sisällä tapahtuu prosessointia, ja lopuksi ulos tulee valmis tuote (paluuarvo). Avainsana `return` lopettaa metodin suorituksen välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava metodin määrittelyssä annettua tyyppiä.
 
-**Return-komento**
+Toisen tekemää aliohjelmaa käytettäessä emme välttämättä tiedä, mitä laatikon sisällä tapahtuu, vaan luotamme siihen, että se toimii määritellyllä tavalla. Tämä on tyypillistä ohjelmoinnissa, jossa käytämme valmiita kirjastoja ja aliohjelmia. 
 
-Avainsana `return` lopettaa metodin suorituksen välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava metodin määrittelyssä annettua tyyppiä.
-
-**Void-aliohjelma**
+## Void-aliohjelma
 
 Joskus metodia tarvitaan vain tekemään jokin toimenpide, kuten tulostamaan tekstiä ruudulle, tai aiheuttamaan muu sivuvaikutus. Tällaisessa tapauksessa aliohjelman ei tarvitse palauttaa arvoa. Tällöin paluuarvon tyypiksi merkitään `void`.
 
-## Javan perustietotyypin ja viitetyyppien ero funktion kutsussa
+## Parametrin välitys: alkeistietotyypit ja viitetyypit
 
-Yksi Javan tärkeimmistä ominaisuuksista on ymmärtää, miten tieto liikkuu, kun kutsumme metodia. Tämä riippuu siitä, onko kyseessä alkeistietotyyppi vai viitetietotyyppi.
+On tärkeää ymmärtää, mitä itse asiassa annamme aliohjelmalle parametrina kun kutsumme sitä. Javassa kaikki parametrit välitetään arvona (ns. *pass-by-value*), mutta välitettävän arvon luonne riippuu parametrin tyypistä.
 
-Alkeistietotyypit (Primitive Types)
-Alkeistietotyyppejä ovat mm. int, double, boolean, char. Ne ovat yksinkertaisia "laatikoita", jotka sisältävät suoraan arvon.
+ * Jos parametrin tyyppi on alkeistietotyyppi (kuten `int`, `double`, `char`, `boolean`), aliohjelmalle annetaan *kopio alkuperäisestä arvosta*.
+ * Jos parametrin tyyppi on viitetyyppi (kuten taulukko tai olio), aliohjelmalle annetaan *kopio viitteestä olioon*. 
 
-Kun alkeistietotyyppi annetaan parametrina metodille, tapahtuu arvon kopioiminen (pass-by-value).
-
-Metodi saa käyttöönsä kopion alkuperäisestä arvosta.
-
-Jos metodi muuttaa tätä arvoa, alkuperäinen muuttuja ei muutu.
-
-Esimerkki:
+Kun alkeistietotyyppi (ks. [Luku 1.2](02-muuttujat-ja-tietotyypit.md)) annetaan parametrina metodille, kyseisen muuttujan arvo kopioidaan ja välitetään kutsuttavalle aliohjelmalle. Jos aliohjelma muuttaa tätä kopiota, alkuperäinen muuttuja ei muutu. Alla esimerkki, jossa annamme `int`-tyyppisen muuttujan parametrina. 
 
 ```java
 public static void yritaMuuttaa(int luku) {
@@ -80,13 +74,11 @@ public static void main(String[] args) {
 }
 ```
 
-**Viitetyypit (Reference Types)**
+Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat *viitetyyppejä*. Tässä vaiheessa opintoja tutuimpia viitetyyppejä ovat taulukot (esim. `int[]`) ja `String`-oliot. Myös kaikki itse määritellyt oliot, joihin tutustutaan Luvussa 3, ovat viitetyyppejä. 
 
-Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat *viitetyyppejä*. Tässä vaiheessa opintoja tutuimpia viitetyyppejä ovat taulukot (esim. `int[]`) ja `String`-oliot.
+Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan viitteen olioon, joka sisältää datan. Voi ajatella, että muuttuja on kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan käsittelyyn. 
 
-Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan viitteen paikkaan, jossa data sijaitsee. Voi ajatella, että muuttuja on kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan käsittelyyn. 
-
-Kun viitetyyppi annetaan parametrina metodille, kopioidaan viite (kopio kaukosäätimestä). Metodi saa käyttöönsä ``kaukosäätimen'', joka osoittaa samaan dataan kuin pääohjelma. Jos metodi sitten muokkaa datan sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa.
+Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma saa kyllä käyttöönsä samanlaisen ``kaukosäätimen'', joka osoittaa samaan ``televisioon'' kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
 
 ```java
 public static void nollaaTaulukko(int[] taulukko) {
@@ -107,26 +99,7 @@ public static void main(String[] args) {
 }
 ```
 
-Javassa funktion olioparametrit kulkevat aina viitteinä. Se tarkoittaa, että funktiossa olioon tehdyt muutokset näkyvät myös sitä kutsuvassa ohjelmassa, eli funktio aiheuttaa sivuvaikutuksia. Tämä kannattaa pitää mielessä, kun haluaa ohjelmoida sivuvaikutuksettomia puhtaita funktioita. 
-
-(TODO: Onko mainin paikalle tiedostossa mitään ohjeistusta? Onko se ensimmäisenä vai c:n tapaan viimeisenä?)
-```java
-void main() {
-    StringBuilder muuttuva = new StringBuilder("Esimerkki");
-    int luku = 1;
-
-    lisaaJaTulosta(muuttuva, luku);
-    IO.println(muuttuva);
-    IO.println(luku);
-}
-
-public static void lisaaJaTulosta(StringBuilder mjono, int luku){
-    luku += 1;
-    mjono.append(" 1");
-    IO.println(mjono);
-    IO.println(luku);
-}
-```
+Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
 
 ## B1
 - Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
