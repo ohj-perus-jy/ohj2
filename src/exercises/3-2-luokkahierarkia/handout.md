@@ -1,10 +1,9 @@
 Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa siten, että lisäät kaksi uutta aliluokkaa `Puhelin` ja `Pakaste`, jotka perivät olemassa olevat luokat `Elektroniikka` ja `Ruoka`.
 
  1. `Puhelin` (perii `Elektroniikka`)
-    * Luo luokka `Puhelin`, joka perii luokan `Elektroniikka`.
-    * Lisää luokkaan:
-        * attribuutti `String kayttojarjestelma` (esim. "Android" tai "iOS")
-        * attribuutti `boolean onko5G`
+    * Lisää attribuutit:
+        * `private String kayttojarjestelma` (esim. "Android" tai "iOS")
+        * `private boolean onko5G`
     * Lisää metodi:
         * `public void soita(String numero)`
         * Metodi tulostaa esimerkiksi: `Soitetaan numeroon 0401234567 (Appleroid, 4G)`
@@ -13,9 +12,8 @@ Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa siten, että lisäät
         * Metodin tulee kutsua ensin yliluokan versiota (`super.tulostaPerustiedot();`), ja sitten tulostaa puhelimeen liittyvät lisätiedot (käyttöjärjestelmä ja 5G-tuki).
 
  2. `Pakaste` (perii `Ruoka`)
-    * Luo luokka `Pakaste`, joka perii luokan `Ruoka`.
-    * Lisää luokkaan:
-        * attribuutti `int lampotilaSuositus` (esim. -18)
+    * Lisää attribuutti:
+        * `private int lampotilaSuositus` (esim. -18)
     * Lisää metodi:
         * `private void sulata(int minuutit)` (huomaa private-määre)
         * Kun metodia kutsutaan, se tulostaa esimerkiksi: `Sulatat pakastetta 10 minuuttia. Säilytyssuositus: -18 C.`
