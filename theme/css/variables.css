@@ -351,6 +351,7 @@
 .jyu-dark {
     --bg: hsl(210, 25%, 8%);
     --fg: #c5c5c5;
+    --fg-bright: #e5e5e5;
 
     --sidebar-bg: #14191f;
     --sidebar-fg: #c8c9db;
