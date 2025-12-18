@@ -147,7 +147,7 @@ voidaan kirjoittaa koodi.
 
 Tee seuraavasti:
 
-1. Projektiselaimessa klikkaa oikealla hiiren painikkeella `src`-kansiosta
+1. Projektiselaimessa klikkaa toissijaisella hiiren painikkeella `src`-kansiosta
    ja valitse **New** <i class="bi bi-chevron-right"></i> **Java Compact File**.
 
 2. Aseta avautuneessa dialogissa lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
@@ -160,7 +160,7 @@ automaattisesti `main`-aliohjelman määrittelyn lähdekooditiedostoon.
 Samalla IDEA avaa lähdekooditiedoston koodialueelle. Voit jatkossa avata
 tiedoston myös klikkaamalla se kahdesti projektinäkymästä.
 
-### Kirjoita koodi
+### Kirjoita ohjelma
 
 Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma" -ohjelma alusta alkaen
 juuri luotuun `Ohjelma.java`-tiedostoon.
@@ -270,6 +270,32 @@ Tee seuraavasti:
    tutustumme lisäksi Gradle-hallintatyökaluun, jonka avulla teemme muun muassa
    erillisiä ajokonfiguraatioita projektin ajamiselle, testaamiselle ja
    kääntämiselle.
+
+### Usean ohjelman tekeminen samaan projektiin
+
+Opintojakson edetessä tehdään useita pienempiä ja suurempia ohjelmia.
+Vaikka jokaiselle ohjelmalle voi tehdä oman projektin, saatat huomata, että
+helpompaa olisi tehdä yksi iso projekti (esim. `Viikon1Tehtavat`),
+johon voi kirjoittaa useita ohjelmia samaan aikaan.
+IDEA:ssa saman projektin sisällä voi tehdä *alimoduuleita* (eng. submodules),
+jotka sisältävät oman `src`-kansion ja joita voi ajaa omalla ajokonfiguraatiolla.
+
+Luodaan seuraavaksi alimoduuli nimeltään `HelloProgramming`, lisätään
+siihen uusi ohjelma ja kokeilaan ajaa se.
+
+Tee seuraavasti:
+
+1. Klikkaa hiiren toissijaisella painikkeella projektin nimestä projektinäkymässä (`HelloWorld`)
+   ja valitse **New** <i class="bi bi-chevron-right"></i> **Module**.
+
+2. Avautuneesta **New module** -dialogista aseta moduulin nimeksi `HelloProgramming`.
+   Muut asetukset kopioituvat automaattisesti projektin asetuksista; voit jättää ne siis muokkaamatta.
+
+   Paina lopuksi **Create**. Tämä luo uuden `HelloPrograming`-kansion, joka sisältää
+   oman `src`-kansion.
+
+
+   
 
 TODO: Usean moduulin luominen  
 TODO: Yleiset pikanäppäimet, tai mistä löytää
