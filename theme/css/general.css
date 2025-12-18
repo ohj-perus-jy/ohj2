@@ -275,9 +275,11 @@ footer {
     padding: 2em 0;
     margin-top: 3em;
     color: var(--fg);
+    background-color: var(--footer-bg-fallback); /* Fallback for browsers without color-mix() */
     background-color: color-mix(in srgb, var(--bg) 40%, transparent);
     backdrop-filter: blur(22px);
     -webkit-backdrop-filter: blur(22px);
+    border-top: 1px solid var(--footer-border-fallback); /* Fallback for browsers without color-mix() */
     border-top: 1px solid color-mix(in srgb, var(--fg) 6%, transparent);
     box-shadow: 0 -10px 35px rgba(0, 0, 0, 0.18);
 }

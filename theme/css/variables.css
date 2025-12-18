@@ -297,6 +297,12 @@
 
     --footer: hsl(0 0% 93% / 1);
 
+    /* Fallback colors for browsers without color-mix() support */
+    --header-bg-fallback: rgba(250, 250, 250, 0.75);
+    --header-border-fallback: rgba(0, 0, 0, 0.1);
+    --footer-bg-fallback: rgba(250, 250, 250, 0.4);
+    --footer-border-fallback: rgba(0, 0, 0, 0.06);
+
     --icons: #002957;
     --icons-hover: #00295777;
     --icons-text: var(--bg);
@@ -362,6 +368,12 @@
 
     --scrollbar: var(--sidebar-fg);
     --footer: hsl(210 25% 6% / 1);
+
+    /* Fallback colors for browsers without color-mix() support */
+    --header-bg-fallback: rgba(20, 25, 31, 0.75);
+    --header-border-fallback: rgba(197, 197, 197, 0.1);
+    --footer-bg-fallback: rgba(20, 25, 31, 0.4);
+    --footer-border-fallback: rgba(197, 197, 197, 0.06);
 
     --icons: #737480;
     --icons-hover: #C29A5B;

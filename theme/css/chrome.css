@@ -34,7 +34,9 @@ a > .hljs {
     position: relative;
     display: flex;
     flex-wrap: wrap;
+    background-color: var(--header-bg-fallback); /* Fallback for browsers without color-mix() */
     background-color: color-mix(in srgb, var(--bg) 75%, transparent);
+    border-block-end-color: var(--header-border-fallback); /* Fallback for browsers without color-mix() */
     border-block-end-color: color-mix(in srgb, var(--fg) 10%, transparent);
     border-block-end-width: 1px;
     border-block-end-style: solid;
