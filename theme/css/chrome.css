@@ -33,12 +33,10 @@ a > .hljs {
     margin-inline-end: calc(var(--page-padding) * -1);
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--header-bg-fallback); /* Fallback for browsers without color-mix() */
+    background-color: var(--header-bg-fallback);
     background-color: color-mix(in srgb, var(--bg) 55%, transparent);
-    border-block-end-color: var(--header-border-fallback); /* Fallback for browsers without color-mix() */
-    border-block-end-color: color-mix(in srgb, var(--fg) 6%, transparent);
-    border-block-end-width: 1px;
-    border-block-end-style: solid;
+    border-block-end: 1px solid var(--header-border-fallback);
+    border-block-end: 1px solid color-mix(in srgb, var(--fg) 6%, transparent);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
     box-shadow: 0 14px 28px -16px rgba(0, 0, 0, 0.35);
@@ -122,22 +120,14 @@ html:not(.js) .left-buttons button {
 }
 
 .chapter-navigation {
-    width: 100%;
-    padding-block: 2.4rem;
-    padding-inline: 0;
-}
-
-.chapter-navigation-inner {
     max-width: var(--content-max-width);
     margin: 0 auto;
-    width: 100%;
-    padding: 0 var(--page-padding);
+    padding: 2.4rem var(--page-padding);
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
     align-items: stretch;
     gap: 3rem;
-    flex-wrap: nowrap;
 }
 
 .chapter-link {
@@ -187,28 +177,11 @@ html:not(.js) .left-buttons button {
 }
 
 .chapter-link.next {
-    justify-content: flex-end;
-    text-align: right;
+    flex-direction: row-reverse;
 }
 
 .chapter-link.next .chapter-link-text {
     text-align: right;
-}
-
-.chapter-link.next i {
-    order: 3;
-}
-
-.chapter-link.next .chapter-link-text {
-    order: 2;
-}
-
-.chapter-link.previous i {
-    order: 1;
-}
-
-.chapter-link.previous .chapter-link-text {
-    order: 2;
 }
 
 .chapter-navigation .chapter-link:only-of-type {
@@ -217,7 +190,7 @@ html:not(.js) .left-buttons button {
 }
 
 @media (max-width: 640px) {
-    .chapter-navigation-inner {
+    .chapter-navigation {
         gap: 1.4rem;
     }
     .chapter-link {
