@@ -25,38 +25,30 @@ a > .hljs {
 
 /* Menu Bar */
 
-#menu-bar,
-#menu-bar-hover-placeholder {
-    z-index: 101;
-    margin: auto calc(0px - var(--page-padding));
-}
 #menu-bar {
     position: relative;
+    z-index: 220;
+    width: calc(100% + var(--page-padding) * 2);
+    margin-inline-start: calc(var(--page-padding) * -1);
+    margin-inline-end: calc(var(--page-padding) * -1);
     display: flex;
     flex-wrap: wrap;
     background-color: var(--header-bg-fallback); /* Fallback for browsers without color-mix() */
-    background-color: color-mix(in srgb, var(--bg) 75%, transparent);
+    background-color: color-mix(in srgb, var(--bg) 55%, transparent);
     border-block-end-color: var(--header-border-fallback); /* Fallback for browsers without color-mix() */
-    border-block-end-color: color-mix(in srgb, var(--fg) 10%, transparent);
+    border-block-end-color: color-mix(in srgb, var(--fg) 6%, transparent);
     border-block-end-width: 1px;
     border-block-end-style: solid;
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 14px 28px -16px rgba(0, 0, 0, 0.35);
 }
 #menu-bar.sticky,
-#menu-bar-hover-placeholder:hover + #menu-bar,
 #menu-bar:hover,
 html.sidebar-visible #menu-bar {
     position: -webkit-sticky;
     position: sticky;
     top: 0 !important;
-}
-#menu-bar-hover-placeholder {
-    position: sticky;
-    position: -webkit-sticky;
-    top: 0;
-    height: var(--menu-bar-height);
 }
 #menu-bar.bordered {
     border-block-end-color: var(--table-border-color);
@@ -464,8 +456,10 @@ ul#searchresults span.teaser em {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
-    /*background-color: var(--sidebar-bg);*/
+    background-color: var(--sidebar-bg);
     color: var(--sidebar-fg);
+    z-index: 150;
+    box-shadow: 4px 0 18px -12px rgba(0, 0, 0, 0.25);
 }
 .sidebar-iframe-inner {
     --padding: 10px;
@@ -509,7 +503,7 @@ html:not(.sidebar-resizing) .sidebar {
     bottom: 0;
     left: 0;
     right: 0;
-    padding: 10px 10px;
+    padding: 3em 10px;
 }
 
 .sidebar-scrollbox:hover {
