@@ -142,6 +142,7 @@ html:not(.js) .left-buttons button {
 
 .chapter-link {
     flex: 1 1 0;
+    min-width: 0;
     display: flex;
     align-items: center;
     gap: 1.2rem;
@@ -182,9 +183,7 @@ html:not(.js) .left-buttons button {
     font-size: 1.8rem;
     font-weight: 600;
     color: inherit;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow-wrap: anywhere;
 }
 
 .chapter-link.next {
@@ -215,6 +214,24 @@ html:not(.js) .left-buttons button {
 .chapter-navigation .chapter-link:only-of-type {
     margin-left: auto;
     margin-right: auto;
+}
+
+@media (max-width: 640px) {
+    .chapter-navigation-inner {
+        gap: 1.4rem;
+    }
+    .chapter-link {
+        padding: 1.6rem 1.4rem;
+    }
+    .chapter-link i {
+        font-size: 2.2rem;
+    }
+    .chapter-link-label {
+        font-size: 1rem;
+    }
+    .chapter-link-title {
+        font-size: 1.5rem;
+    }
 }
 
 /* Use the correct buttons for RTL layouts*/
