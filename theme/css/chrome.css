@@ -124,14 +124,7 @@ html:not(.js) .left-buttons button {
 .chapter-navigation {
     width: 100%;
     padding-block: 2.4rem;
-    padding-inline: 0;
-}
-
-.chapter-navigation-inner {
-    max-width: var(--content-max-width);
-    margin: 0 auto;
-    width: 100%;
-    padding: 0 var(--page-padding);
+    padding-inline: max(var(--page-padding), calc((100% - var(--content-max-width)) / 2));
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -217,8 +210,9 @@ html:not(.js) .left-buttons button {
 }
 
 @media (max-width: 640px) {
-    .chapter-navigation-inner {
+    .chapter-navigation {
         gap: 1.4rem;
+        padding-inline: max(var(--page-padding), calc((100% - var(--content-max-width)) / 2));
     }
     .chapter-link {
         padding: 1.6rem 1.4rem;

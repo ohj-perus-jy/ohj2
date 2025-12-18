@@ -234,27 +234,25 @@
             </div>
 
             <nav class="chapter-navigation" aria-label="Page navigation">
-                <div class="chapter-navigation-inner">
-                    {{#previous}}
-                        <a rel="prev" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters previous" title="Edellinen: {{ title }}" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                            <i class="fa fa-angle-left" aria-hidden="true"></i>
-                            <span class="chapter-link-text">
-                                <span class="chapter-link-label">Edellinen</span>
-                                <span class="chapter-link-title">{{ title }}</span>
-                            </span>
-                        </a>
-                    {{/previous}}
+                {{#previous}}
+                    <a rel="prev" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters previous" title="Edellinen: {{ title }}" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="chapter-link-text">
+                            <span class="chapter-link-label">Edellinen</span>
+                            <span class="chapter-link-title">{{ title }}</span>
+                        </span>
+                    </a>
+                {{/previous}}
 
-                    {{#next}}
-                        <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters next" title="Seuraava: {{ title }}" aria-label="Next chapter" aria-keyshortcuts="Right">
-                            <span class="chapter-link-text">
-                                <span class="chapter-link-label">Seuraava</span>
-                                <span class="chapter-link-title">{{ title }}</span>
-                            </span>
-                            <i class="fa fa-angle-right" aria-hidden="true"></i>
-                        </a>
-                    {{/next}}
-                </div>
+                {{#next}}
+                    <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters next" title="Seuraava: {{ title }}" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class="chapter-link-text">
+                            <span class="chapter-link-label">Seuraava</span>
+                            <span class="chapter-link-title">{{ title }}</span>
+                        </span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+                {{/next}}
             </nav>
 
             <footer>
