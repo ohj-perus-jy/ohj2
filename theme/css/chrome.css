@@ -125,25 +125,32 @@ html:not(.js) .left-buttons button {
 }
 
 .chapter-navigation {
+    width: 100%;
+    padding-block: 2.4rem;
+    padding-inline: 0;
+}
+
+.chapter-navigation-inner {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    width: 100%;
+    padding: 0 var(--page-padding);
+    box-sizing: border-box;
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
-    padding: 2rem 0;
-    /*
-    border-top: 1px solid var(--sidebar-spacer);
-    border-bottom: 1px solid var(--sidebar-spacer);
-    */
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 3rem;
+    flex-wrap: nowrap;
 }
 
 .chapter-link {
-    flex: 1;
+    flex: 1 1 0;
     display: flex;
     align-items: center;
     gap: 1.2rem;
-    padding: 2.5rem 1.6rem;
+    padding: 2.2rem 2.4rem;
     text-decoration: none;
     background-color: var(--bg);
-    /*border-radius: 6px;*/
     transition: background-color 0.2s ease, transform 0.2s ease;
     border: 1px solid var(--sidebar-spacer);
     color: var(--fg);
@@ -164,8 +171,6 @@ html:not(.js) .left-buttons button {
     display: flex;
     flex-direction: column;
     text-align: left;
-    margin-left: 1.5em;
-    margin-right: 1.5em;
 }
 
 .chapter-link-label {
@@ -206,37 +211,18 @@ html:not(.js) .left-buttons button {
     order: 1;
 }
 
-.chapter-link.previous i, .chapter-link.next i {
-    margin-left: 1em;
-    margin-right: 1em;
-}
-
-
 .chapter-link.previous .chapter-link-text {
     order: 2;
 }
 
-.chapter-link:only-of-type {
+.chapter-navigation .chapter-link:only-of-type {
     margin-left: auto;
     margin-right: auto;
 }
 
-@media (max-width: 720px) {
-    .chapter-navigation {
-        flex-direction: column;
-    }
-
-    .chapter-link {
-        flex: 1 1 100%;
-    }
-
-    .chapter-link.next {
-        justify-content: flex-start;
-        text-align: left;
-    }
-
-    .chapter-link.next .chapter-link-text {
-        text-align: left;
+@media only screen and (min-width: 620px) {
+    #sidebar-toggle-anchor:checked ~ .page-wrapper > footer .chapter-navigation {
+        padding-inline-start: calc((var(--sidebar-width) + var(--sidebar-resize-indicator-width)) / 2);
     }
 }
 
