@@ -114,10 +114,6 @@ html:not(.js) .left-buttons button {
 
 .menu-bar,
 .menu-bar:visited,
-.nav-chapters,
-.nav-chapters:visited,
-.mobile-nav-chapters,
-.mobile-nav-chapters:visited,
 .menu-bar .icon-button,
 .menu-bar a i {
     color: var(--icons);
@@ -128,115 +124,125 @@ html:not(.js) .left-buttons button {
     color: var(--icons-hover);
 }
 
-.nav-chapters:hover,
-.mobile-nav-chapters:hover {
-    color: var(--theme-hover-text);
-}
-
-/* Nav Icons */
-
-.nav-chapters {
-    text-align: center;
-    text-decoration: none;
-
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    margin: 0;
-    max-width: 150px;
-    min-width: 90px;
-
+.chapter-navigation {
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-
-    transition: color 0.5s, background-color 0.5s;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 2rem 0;
+    /*
+    border-top: 1px solid var(--sidebar-spacer);
+    border-bottom: 1px solid var(--sidebar-spacer);
+    */
 }
 
-.nav-chapters:hover {
-    text-decoration: none;
-    background-color: var(--theme-hover);
-    transition: background-color 0.15s, color 0.15s;
-}
-
-.nav-wrapper {
-    margin-block-start: 50px;
-    display: none;
-}
-
-.nav-chapters i, .mobile-nav-chapters i {    
-    font-size: 2.5em;
-}
-
-.mobile-nav-chapters:hover {
-    background-color: var(--theme-hover);
-    transition: background-color 0.15s, color 0.15s;
-    text-decoration: none;
-}
-
-.nav-chapters, .mobile-nav-chapters {
+.chapter-link {
+    flex: 1;
     display: flex;
-    flex-direction: column;
-}
-
-.mobile-nav-chapters {
-    text-align: center;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2.5rem 1.6rem;
     text-decoration: none;
-    min-width: 90px;
-    max-width: 120px;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: var(--sidebar-bg);
+    background-color: var(--bg);
+    /*border-radius: 6px;*/
+    transition: background-color 0.2s ease, transform 0.2s ease;
     border: 1px solid var(--sidebar-spacer);
+    color: var(--fg);
 }
 
-/* Only Firefox supports flow-relative values */
-/* .previous { float: left; } */
-/* [dir=rtl] .previous { float: right; } */
-
-/* Only Firefox supports flow-relative values */
-.next {
-    /*float: right;*/
-    right: var(--page-padding);
+.chapter-link:hover {
+    background-color: var(--bg);
+    color: var(--theme-hover-text);
+    transform: translateY(-2px);
+    text-decoration: none;
 }
-[dir=rtl] .next {
-    /*float: left;*/
-    /*right: unset;*/
-    left: var(--page-padding);
+
+.chapter-link i {
+    font-size: 2.6rem;
+}
+
+.chapter-link-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+}
+
+.chapter-link-label {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--theme-hover-text);
+    opacity: 0.8;
+}
+
+.chapter-link-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.chapter-link.next {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chapter-link.next .chapter-link-text {
+    text-align: right;
+}
+
+.chapter-link.next i {
+    order: 3;
+}
+
+.chapter-link.next .chapter-link-text {
+    order: 2;
+}
+
+.chapter-link.previous i {
+    order: 1;
+}
+
+.chapter-link.previous i, .chapter-link.next i {
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+
+.chapter-link.previous .chapter-link-text {
+    order: 2;
+}
+
+.chapter-link:only-of-type {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 720px) {
+    .chapter-navigation {
+        flex-direction: column;
+    }
+
+    .chapter-link {
+        flex: 1 1 100%;
+    }
+
+    .chapter-link.next {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .chapter-link.next .chapter-link-text {
+        text-align: left;
+    }
 }
 
 /* Use the correct buttons for RTL layouts*/
-[dir=rtl] .previous i.fa-angle-left:before {content:"\f105";}
-[dir=rtl] .next i.fa-angle-right:before { content:"\f104"; }
-
-@media only screen and (max-width: 1080px) {
-    .nav-wide-wrapper { display: none; }
-    .nav-wrapper {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
-       align it to the right. */
-    .nav-wrapper:has(> .next:only-child) {
-        justify-content: flex-end;
-    }
-}
-
-/* sidebar-visible */
-@media only screen and (max-width: 1380px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wide-wrapper { display: none; }
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper { 
-        display: flex; 
-        justify-content: space-between;
-    }
-    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
-    align it to the right. */
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper:has(> .next:only-child) {
-        justify-content: flex-end;
-    }
-}
+[dir=rtl] .chapter-link.previous i.fa-angle-left:before {content:"\f105";}
+[dir=rtl] .chapter-link.next i.fa-angle-right:before { content:"\f104"; }
 
 /* Inline code */
 
@@ -473,7 +479,7 @@ ul#searchresults span.teaser em {
     box-sizing: border-box;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-y: contain;
-    background-color: var(--sidebar-bg);
+    /*background-color: var(--sidebar-bg);*/
     color: var(--sidebar-fg);
 }
 .sidebar-iframe-inner {

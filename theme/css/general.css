@@ -137,6 +137,13 @@ details summary:hover {
     position: relative;
     z-index: 200;
 }
+.chapter-navigation {
+    position: relative;
+    z-index: 1;
+    background-color: var(--theme-hover);
+    margin-bottom: 2em;
+}
+
 @media only screen and (min-width: 620px) {
     #sidebar-toggle-anchor:checked ~ .page-wrapper > footer {
         /* Offset the page wrapper margin so the footer covers the sidebar area */
@@ -264,10 +271,10 @@ sup {
 
 footer {
     text-align: center;
-    padding: 2em 0;
+    padding: 0 0 2em 0;
     margin-top: 3em;
     color: var(--fg);
-    background-color: var(--theme-hover);
+    background-color: var(--footer);
 }
 
 .footnote-definition {

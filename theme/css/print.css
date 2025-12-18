@@ -1,8 +1,7 @@
 
 #sidebar,
 #menu-bar,
-.nav-chapters,
-.mobile-nav-chapters {
+.nav-chapters {
     display: none;
 }
 

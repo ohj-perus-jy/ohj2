@@ -295,6 +295,8 @@
 
     --scrollbar: #8F8F8F;
 
+    --footer: hsl(0 0% 87% / 1);
+
     --icons: #002957;
     --icons-hover: #00295777;
     --icons-text: var(--bg);
@@ -359,6 +361,7 @@
     --sidebar-spacer: #2d334f;
 
     --scrollbar: var(--sidebar-fg);
+    --footer: hsl(213deg 21.74% 18.04%);
 
     --icons: #737480;
     --icons-hover: #C29A5B;
