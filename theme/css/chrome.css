@@ -157,8 +157,8 @@ html:not(.js) .left-buttons button {
 }
 
 .chapter-link:hover {
-    background-color: var(--bg);
-    color: var(--theme-hover-text);
+    background-color: var(--overlay-bg);
+    color: var(--theme-hover-text);    
     transform: translateY(-2px);
     text-decoration: none;
 }
