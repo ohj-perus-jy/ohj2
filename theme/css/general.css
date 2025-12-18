@@ -134,13 +134,14 @@ details summary:hover {
 }
 .page-wrapper > footer {
     margin-top: auto;
+    padding-top: 2em;
     position: relative;
     z-index: 200;
 }
 .chapter-navigation {
     position: relative;
-    z-index: 1;
-    background-color: var(--theme-hover);
+    z-index: 0;
+    /*background-color: hsl(210 25% 6% / 1);*/
     margin-bottom: 2em;
 }
 

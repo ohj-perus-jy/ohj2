@@ -220,12 +220,6 @@ html:not(.js) .left-buttons button {
     margin-right: auto;
 }
 
-@media only screen and (min-width: 620px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper > footer .chapter-navigation {
-        padding-inline-start: calc((var(--sidebar-width) + var(--sidebar-resize-indicator-width)) / 2);
-    }
-}
-
 /* Use the correct buttons for RTL layouts*/
 [dir=rtl] .chapter-link.previous i.fa-angle-left:before {content:"\f105";}
 [dir=rtl] .chapter-link.next i.fa-angle-right:before { content:"\f104"; }
