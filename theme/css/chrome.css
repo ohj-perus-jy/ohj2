@@ -34,10 +34,13 @@ a > .hljs {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--bg);
-    border-block-end-color: var(--bg);
+    background-color: color-mix(in srgb, var(--bg) 75%, transparent);
+    border-block-end-color: color-mix(in srgb, var(--fg) 10%, transparent);
     border-block-end-width: 1px;
     border-block-end-style: solid;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 #menu-bar.sticky,
 #menu-bar-hover-placeholder:hover + #menu-bar,
