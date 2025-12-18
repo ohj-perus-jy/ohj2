@@ -382,6 +382,66 @@
         </script>
         {{/if}}
 
+        <script>
+            (function() {
+                const footer = document.querySelector('.page-wrapper > footer');
+                if (!footer) { return; }
+
+                const rootStyle = document.documentElement.style;
+                const supportsIO = typeof IntersectionObserver === 'function';
+
+                const setFooterOffset = amount => {
+                    const clamped = Math.max(0, Math.min(amount, footer.offsetHeight));
+                    rootStyle.setProperty('--footer-offset', clamped + 'px');
+                };
+
+                const computeOverlap = () => {
+                    const rect = footer.getBoundingClientRect();
+                    const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+                    const overlap = Math.max(0, viewportHeight - Math.max(rect.top, 0));
+                    return Math.min(rect.height, overlap);
+                };
+
+                const refreshOverlap = () => setFooterOffset(computeOverlap());
+
+                const updateFooterHeight = () => {
+                    rootStyle.setProperty('--footer-height', footer.offsetHeight + 'px');
+                    refreshOverlap();
+                };
+
+                if (typeof ResizeObserver === 'function') {
+                    const footerObserver = new ResizeObserver(updateFooterHeight);
+                    footerObserver.observe(footer);
+                }
+
+                if (supportsIO) {
+                    const thresholds = [];
+                    for (let i = 0; i <= 10; i++) {
+                        thresholds.push(i / 10);
+                    }
+                    const observer = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            const overlap = entry.isIntersecting ? entry.intersectionRect.height : 0;
+                            setFooterOffset(overlap);
+                        });
+                    }, { threshold: thresholds });
+                    observer.observe(footer);
+                } else {
+                    window.addEventListener('scroll', refreshOverlap, { passive: true });
+                }
+
+                window.addEventListener('resize', () => {
+                    updateFooterHeight();
+                    if (!supportsIO) {
+                        refreshOverlap();
+                    }
+                });
+
+                updateFooterHeight();
+                refreshOverlap();
+            })();
+        </script>
+
     </div>
 
     </body>

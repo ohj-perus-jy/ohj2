@@ -4,6 +4,8 @@
     /* Browser default font-size is 16px, this way 1 rem = 10px */
     font-size: 62.5%;
     color-scheme: var(--color-scheme);
+    --footer-height: 0px;
+    --footer-offset: 0px;
 }
 
 html {
@@ -132,6 +134,17 @@ details summary:hover {
 }
 .page-wrapper > footer {
     margin-top: auto;
+    position: relative;
+    z-index: 200;
+}
+@media only screen and (min-width: 620px) {
+    #sidebar-toggle-anchor:checked ~ .page-wrapper > footer {
+        /* Offset the page wrapper margin so the footer covers the sidebar area */
+        margin-inline-start: calc((var(--sidebar-width) + var(--sidebar-resize-indicator-width)) * -1);
+    }
+    #sidebar-toggle-anchor:checked ~ .sidebar {
+        bottom: var(--footer-offset);
+    }
 }
 html:not(.js) .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
