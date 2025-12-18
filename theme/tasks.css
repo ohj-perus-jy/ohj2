@@ -24,6 +24,26 @@ task > task-title, task > task-link > a {
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.65);
 }
 
+task-link a {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+}
+
+task-link a::after {
+  content: "\f285"; /* The unicode for bi-chevron-right */
+  font-family: "bootstrap-icons" !important; /* Specify the icon font */
+ 
+  display: inline-block;
+  margin-left: 8px; 
+  margin-bottom: 1px;
+  transition: transform 0.3s ease;
+}
+
+task-link a:hover::after {
+  transform: translateX(4px);
+}
+
 task-title > points {
     margin-inline-start: auto;
     text-wrap: nowrap;
