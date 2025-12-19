@@ -4,8 +4,6 @@
 > - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
 >   riippuvuuden välttämiseksi 
 
-
-
 Perintä ja rajapinnat voivat toimia, ja usein toimivatkin yhdessä. Perintä
 määrittelee luokkien välisen hierarkian ja jakaa yhteistä toiminnallisuutta, kun
 taas rajapinnat määrittelevät kyvykkyyksiä, joita eri luokat voivat toteuttaa
