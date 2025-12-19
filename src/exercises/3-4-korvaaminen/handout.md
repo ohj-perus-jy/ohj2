@@ -6,10 +6,12 @@ Tee oheisen luokkakaavion mukainen luokkarakenne. Lisää `Ajoneuvo`-luokkaan
 ajoneuvolle, esimerkiksi
 
 ```
-Auton Skoda renkaat 4 kpl vaihdettu.
-Polkupyörän Trek renkaat 2 kpl vaihdettu.
-Kuorma-auton Scania renkaat 18 kpl vaihdettu.
+Skoda (Auto): renkaita 4 vaihdettu.
+Trek (Polkupyora): renkaita 2 vaihdettu.
+Scania (KuormaAuto): renkaita 18 vaihdettu.
 ```
+
+Vinkki: Saat tyypin nimen selville metodilla `this.getClass().getSimpleName()`.
 
 Tee sitten pääohjelma, jossa 
  1. luot jokaisen ajoneuvoluokan olion,
@@ -32,7 +34,7 @@ skinparam arrowColor   #888888
 class Ajoneuvo {
     - renkaidenMaara: int
     - merkki: String
-    + Ajoneuvo(renkaidenMaara: int, merkki: String)
+    + Ajoneuvo(renkaidenMaara: int, merkki: String)    
     + vaihdaRenkaat(): void
 }
 
