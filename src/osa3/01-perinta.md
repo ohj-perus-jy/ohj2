@@ -599,10 +599,11 @@ tehty olio perii myös molemmat luokat.
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Kisu_vaihe4/src).
 
-Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan
-välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista.
-Esimerkiksi `TutkintoOpiskelija`-luokan muodostajassa voisi kutsua vain
-`Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
+Huomautetaan vielä, että yliluokan muodostajan kutsuminen `super`-avainsanalla
+kutsuu nimen omaan luokan välittömän yliluokan muodostajaa. Luokkarakenteessa
+"yli hyppiminen", tyyliin `super().super()` ei ole mahdollista. Niinpä
+`TutkintoOpiskelija`-luokan muodostajassa voi kutsua vain `Opiskelija`-luokan
+muodostajaa, ei `Henkilo`-luokan muodostajaa.
 
 ## Metodit ja super-avainsana
 
