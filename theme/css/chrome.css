@@ -96,17 +96,18 @@ html:not(.js) .left-buttons button {
 }
 
 .menu-title {
-    font-family: var(--font-family);
+    color: var(--fg);
     display: inline-block;
+    flex: 1;
+    font-family: var(--font-family);
     font-weight: 300;
     font-size: 2.4rem;
     line-height: var(--menu-bar-height);
-    text-align: center;
     margin: 0;
-    flex: 1;
-    white-space: nowrap;
     overflow: hidden;
+    text-align: center;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .menu-title {
     cursor: pointer;
