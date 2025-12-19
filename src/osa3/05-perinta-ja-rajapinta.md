@@ -1,32 +1,58 @@
 # Perintä ja rajapinnat olioiden yhteistyössä
 
 > [!Osaamistavoitteet]
-> - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen riippuvuuden välttämiseksi 
+> - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
+>   riippuvuuden välttämiseksi 
 
 
 
-Perintä ja rajapinnat voivat toimia, ja usein toimivatkin yhdessä. Perintä määrittelee luokkien välisen hierarkian ja jakaa yhteistä toiminnallisuutta, kun taas rajapinnat määrittelevät kyvykkyyksiä, joita eri luokat voivat toteuttaa riippumatta niiden sijainnista luokkahierarkiassa. 
+Perintä ja rajapinnat voivat toimia, ja usein toimivatkin yhdessä. Perintä
+määrittelee luokkien välisen hierarkian ja jakaa yhteistä toiminnallisuutta, kun
+taas rajapinnat määrittelevät kyvykkyyksiä, joita eri luokat voivat toteuttaa
+riippumatta niiden sijainnista luokkahierarkiassa. 
 
-Itse asiassa käytimme jo [Älykoti](04-rajapinta.md#alykoti-saadettava)-esimerkissämme sekä perintää (`Laite` abstraktina luokkana) että rajapintaa (`Saadettava`-rajapinta). Laajennetaan kuitenkin perinnän ja rajapintojen yhteistyötä hieman eteenpäin. Tarkastellaan tilannetta, jossa meillä on ohjelmassamme luokkia, jotka eivät jaa yhteistä yliluokkaa, mutta kuitenkin jakavat yhteisen kyvykkyyden.
+Itse asiassa käytimme jo
+[Älykoti](04-rajapinta.md#alykoti-saadettava)-esimerkissämme sekä perintää
+(`Laite` abstraktina luokkana) että rajapintaa (`Saadettava`-rajapinta).
+Laajennetaan kuitenkin perinnän ja rajapintojen yhteistyötä hieman eteenpäin.
+Tarkastellaan tilannetta, jossa meillä on ohjelmassamme luokkia, jotka eivät jaa
+yhteistä yliluokkaa, mutta kuitenkin jakavat yhteisen kyvykkyyden.
 
 ## Pistorasia ja sähkölaitteet
 
-Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa. Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii, että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan. 
+Tehdään pieni ajatusharjoitus. Kuvittele kotisi seinässä olevaa pistorasiaa.
+Pistorasia tarjoaa sähkövirtaa, mutta se ei anna sitä mihin tahansa. Se vaatii,
+että laitteessa on sopiva pistotulppa, joka sopii pistorasiaan. 
 
-Tässä analogiassa rajapinta on se standardi eli sopimus, jonka laitteen täytyy täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin päin, että *jos* laitteessa on pistorasiaan sopiva pistotulppa, niin sillä *täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
+Tässä analogiassa rajapinta on se standardi eli sopimus, jonka laitteen täytyy
+täyttää, jotta se voi käyttää pistorasiaa. Asiaa voidaan tarkastella myös niin
+päin, että *jos* laitteessa on pistorasiaan sopiva pistotulppa, niin sillä
+*täytyy* olla kyky toimia siinä tilanteessa, että se kytketään pistorasiaan. 
 
-Pistorasiaa ei kiinnosta, kytketkö siihen leivänpaahtimen vai sirkkelin. Laitteet ovat itse asiassa täysin erilaisia. Toisella voi tehdä ruokaa, toinen on työkalu. Niillä ei ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla, kuin vaikkapa `Auto` ja `Moottoripyora` voisivat periä `Ajoneuvo`-luokan.  Ainoa leivänpaahdinta ja sirkkeliä yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
+Pistorasiaa ei kiinnosta, kytketkö siihen leivänpaahtimen vai sirkkelin.
+Laitteet ovat itse asiassa täysin erilaisia. Toisella voi tehdä ruokaa, toinen
+on työkalu. Niillä ei ole yhteistä "esi-isää" laitehierarkiassa samalla tavalla,
+kuin vaikkapa `Auto` ja `Moottoripyora` voisivat periä `Ajoneuvo`-luokan.  Ainoa
+leivänpaahdinta ja sirkkeliä yhdistävä tekijä on kyky kytkeytyä verkkovirtaan.
 
-Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun haluaisimme käyttää leivänpaahdinta. Onko leivänpaahdin `Sahkolaite`, `Keittiolaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä kahta yliluokkaa. 
+Jos yrittäisimme mallintaa tämän perinnällä, joutuisimme ongelmiin heti, kun
+haluaisimme käyttää leivänpaahdinta. Onko leivänpaahdin `Sahkolaite`,
+`Keittiolaite`, vai kenties molempia? Javassa luokka ei kuitenkaan voi periä
+kahta yliluokkaa. 
 
 Rajapinta ratkaisee tämän ongelman tyylikkäästi: 
 
- * `Leivanpaahdin` on `Keittiolaite` (perintä), mutta se myös *toteuttaa*  `Verkkovirtalaite`-rajapinnan. 
- * Samoin `Sirkkeli` voisi olla vaikkapa `Tyokalu` (perintä), joka myöskin toteuttaa saman `Verkkovirtalaite`-rajapinnan.
+ * `Leivanpaahdin` on `Keittiolaite` (perintä), mutta se myös *toteuttaa*
+   `Verkkovirtalaite`-rajapinnan. 
+ * Samoin `Sirkkeli` voisi olla vaikkapa `Tyokalu` (perintä), joka myöskin
+   toteuttaa saman `Verkkovirtalaite`-rajapinnan.
 
-Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttävät sopimuksen eli toteuttavat rajapinnan vaatiman kytkennän.
+Näin pistorasia voi hyväksyä kumman tahansa laitteen, koska molemmat täyttävät
+sopimuksen eli toteuttavat rajapinnan vaatiman kytkennän.
 
-Yksinkertaisimmillaan `Verkkovirtalaite`-rajapinnan sisältö olisi määritelmä siitä, että laitteen on pystyttävä reagoimaan siihen, kun se kytketään pistorasiaan ja virta alkaa kulkea johdossa. 
+Yksinkertaisimmillaan `Verkkovirtalaite`-rajapinnan sisältö olisi määritelmä
+siitä, että laitteen on pystyttävä reagoimaan siihen, kun se kytketään
+pistorasiaan ja virta alkaa kulkea johdossa. 
 
 ```java,ignore
 public interface Verkkovirtalaite {
@@ -58,7 +84,12 @@ public class Sirkkeli implements Verkkovirtalaite {
 }
 ```
 
-Nämä luokat voivat olla aivan eri puolella luokkahierarkiaa. Toinen on keittiölaite, toinen työkalu. Molemmat kuitenkin reagoivat sähkövirran kytkemiseen -- joskin omalla tavallaan. Tehdään vielä abstraktit `Keittiolaite`- ja `Tyokalu`-yliluokat, joista `Leivanpaahdin` ja `Sirkkeli` periytyvät. Jotta esimerkki olisi hieman mielekkäämpi, lisätään näihin yliluokkiin joitain ominaisuuksia ja metodeja.
+Nämä luokat voivat olla aivan eri puolella luokkahierarkiaa. Toinen on
+keittiölaite, toinen työkalu. Molemmat kuitenkin reagoivat sähkövirran
+kytkemiseen -- joskin omalla tavallaan. Tehdään vielä abstraktit `Keittiolaite`-
+ja `Tyokalu`-yliluokat, joista `Leivanpaahdin` ja `Sirkkeli` periytyvät. Jotta
+esimerkki olisi hieman mielekkäämpi, lisätään näihin yliluokkiin joitain
+ominaisuuksia ja metodeja.
 
 ```java,ignore
 public abstract class Keittiolaite {
@@ -175,7 +206,8 @@ Verkkovirtalaite <|.. Sirkkeli
 @enduml
 ```
 
-Tämä on tärkein kohta ymmärryksen kannalta. Pistorasia on luokka, joka **käyttää** rajapintaa.
+Tämä on tärkein kohta ymmärryksen kannalta. Pistorasia on luokka, joka
+**käyttää** rajapintaa.
 
 ```java,ignore
 public class Pistorasia {
@@ -193,15 +225,24 @@ public class Pistorasia {
 }
 ```
 
-Huomaamme, että aliohjelman parametrin tyyppinä on `Verkkovirtalaite`-rajapinta! Parametrin ei tarvitse olla `Leivanpaahdin`, `Sirkkeli` tai mikään muukaan konkreettinen luokka. Riittää, että se toteuttaa `Verkkovirtalaite`-rajapinnan.
+Huomaamme, että aliohjelman parametrin tyyppinä on `Verkkovirtalaite`-rajapinta!
+Parametrin ei tarvitse olla `Leivanpaahdin`, `Sirkkeli` tai mikään muukaan
+konkreettinen luokka. Riittää, että se toteuttaa `Verkkovirtalaite`-rajapinnan.
 
-Tässä `kytkeLaite()`-metodi ottaa parametrinaan `Verkkovirtalaite`-rajapinnan mukaisen tyypin. Tämä tarkoittaa, että metodi voi hyväksyä minkä tahansa olion, joka toteuttaa tämän rajapinnan, riippumatta siitä, mihin luokkahierarkiaan kyseinen olio kuuluu.
+Tässä `kytkeLaite()`-metodi ottaa parametrinaan `Verkkovirtalaite`-rajapinnan
+mukaisen tyypin. Tämä tarkoittaa, että metodi voi hyväksyä minkä tahansa olion,
+joka toteuttaa tämän rajapinnan, riippumatta siitä, mihin luokkahierarkiaan
+kyseinen olio kuuluu.
 
 ## Rajapinta muuttujan tyyppinä
 
-Jotta `Pistorasia`-luokka pääsisi tositoimiin, tarvitsemme vielä pääohjelman, jossa luomme `Pistorasia`-olion ja kytkemme siihen erilaisia laitteita. Luodaan nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
+Jotta `Pistorasia`-luokka pääsisi tositoimiin, tarvitsemme vielä pääohjelman,
+jossa luomme `Pistorasia`-olion ja kytkemme siihen erilaisia laitteita. Luodaan
+nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
 
-Esimerkki sisältää jo aika monta tiedostoa, joten lue esimerkki huolellisesti läpi. Voit vaihtoehtoisesti selata esimerkin tiedostoja [GitHubissa](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E35_Pistorasia/src).
+Esimerkki sisältää jo aika monta tiedostoa, joten lue esimerkki huolellisesti
+läpi. Voit vaihtoehtoisesti selata esimerkin tiedostoja
+[GitHubissa](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E35_Pistorasia/src).
 
 ```java
 // FILE: main.java
@@ -346,7 +387,11 @@ public class Pistorasia {
 // FILE_END
 ```
 
-Kuten Luvussa [3.2 Polymorfismi](02-polymorfismi.md#is-a-suhde) opimme, meidän ei olisi pääohjelmassa pakko määritellä `paahdin`- ja `sirkkeli`-muuttujia konkreettisten tyyppien (`Leivanpaahdin` ja `Sirkkeli`) avulla, vaan voisimme määritellä molemmat `Verkkovirtalaite`-tyyppisiksi. Tässähän nimittäin meitä kiinnostaa vain se, että laitteet pystytään kytkemään pistorasiaan. 
+Kuten Luvussa [3.2 Polymorfismi](02-polymorfismi.md#is-a-suhde) opimme, meidän
+ei olisi pääohjelmassa pakko määritellä `paahdin`- ja `sirkkeli`-muuttujia
+konkreettisten tyyppien (`Leivanpaahdin` ja `Sirkkeli`) avulla, vaan voisimme
+määritellä molemmat `Verkkovirtalaite`-tyyppisiksi. Tässähän nimittäin meitä
+kiinnostaa vain se, että laitteet pystytään kytkemään pistorasiaan. 
 
 ```java,ignore
 public class KodinSahkot {
@@ -445,7 +490,9 @@ Leivanpaahdin testattavaLaite = new Leivanpaahdin();
 testattavaLaite = new Sirkkeli(); // Ei onnistu, koska tyypit eivät täsmää
 ```
 
-Kun muuttuja määritellään rajapintana, voimme helposti luoda erilaisia testilaitteita, jotka toteuttavat saman rajapinnan, ja voimme vaihtaa konkreettisen toteutuksen vapaasti.
+Kun muuttuja määritellään rajapintana, voimme helposti luoda erilaisia
+testilaitteita, jotka toteuttavat saman rajapinnan, ja voimme vaihtaa
+konkreettisen toteutuksen vapaasti.
 
 ```java,ignore
 Verkkovirtalaite testattavaLaite = new Leivanpaahdin();
@@ -458,7 +505,13 @@ testattavaLaite = new Sirkkeli();
 // Verkkovirtalaite-rajapinnan
 ```
 
-Kolmas syy liittyy ohjelmiston suunnitteluun ja käytännön kirjoittamiseen. Kun määrittelet muuttujan tyypiksi `Verkkovirtalaite`, kääntäjä estää sinua kutsumasta metodeja, jotka ovat spesifejä vain leivänpaahtimille (kuten `saadaKuumuus()`) tai sirkkelille (kuten `asetaTeranKorkeus()`). Vaikka tällainen itsensä rajoittaminen saattaa tuntua oudolta, se auttaa pitämään koodin selkeänä ja estää virheitä, joissa yritetään käyttää laitetta tavalla, joka ei ole yhteensopiva sen rajapinnan kanssa. 
+Kolmas syy liittyy ohjelmiston suunnitteluun ja käytännön kirjoittamiseen. Kun
+määrittelet muuttujan tyypiksi `Verkkovirtalaite`, kääntäjä estää sinua
+kutsumasta metodeja, jotka ovat spesifejä vain leivänpaahtimille (kuten
+`saadaKuumuus()`) tai sirkkelille (kuten `asetaTeranKorkeus()`). Vaikka
+tällainen itsensä rajoittaminen saattaa tuntua oudolta, se auttaa pitämään
+koodin selkeänä ja estää virheitä, joissa yritetään käyttää laitetta tavalla,
+joka ei ole yhteensopiva sen rajapinnan kanssa. 
 
 ## Liskovin korvausperiaate
 
@@ -471,7 +524,9 @@ noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai
 vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan
 määrittelemiä sopimuksia.
 
-Palataan hetkeksi [Luvussa 3.2 alustettuun](02-polymorfismi.md) soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka määrittelee yleisölle musiikkia metodin `soita()`. 
+Palataan hetkeksi [Luvussa 3.2 alustettuun](02-polymorfismi.md)
+soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka
+määrittelee yleisölle musiikkia metodin `soita()`. 
 
 ```java,noplayground
 public interface Soitin {
@@ -482,7 +537,11 @@ public interface Soitin {
 }
 ```
 
-Kaikki soittimet, kuten `Kitara`, `Piano` ja `Rumpusetti`, toteuttavat tämän rajapinnan. Konsertin järjestäjä haluaa varmistaa, että kaikki soittimet voivat soittaa huolimatta siitä, minkä tyyppisiä soittimia ne ovat. Tehdään `Konsertti`-luokka, jonka `soitaKaikkiaSoittimia()`-metodi laittaa kaikki soittimet soimaan.
+Kaikki soittimet, kuten `Kitara`, `Piano` ja `Rumpusetti`, toteuttavat tämän
+rajapinnan. Konsertin järjestäjä haluaa varmistaa, että kaikki soittimet voivat
+soittaa huolimatta siitä, minkä tyyppisiä soittimia ne ovat. Tehdään
+`Konsertti`-luokka, jonka `soitaKaikkiaSoittimia()`-metodi laittaa kaikki
+soittimet soimaan.
 
 ```java,noplayground
 public class Konsertti {
@@ -494,7 +553,9 @@ public class Konsertti {
 }
 ```
 
-Tehdään nyt uusi soitin, `HarjoitusPiano`, jolla voi soittaa vain kuulokkeilla, jolloin yleisö ei kuule mitään. Tämäkin soitin toteuttaa `Soitin`-rajapinnan, mutta sen käyttäytyminen poikkeaa muista soittimista. 
+Tehdään nyt uusi soitin, `HarjoitusPiano`, jolla voi soittaa vain kuulokkeilla,
+jolloin yleisö ei kuule mitään. Tämäkin soitin toteuttaa `Soitin`-rajapinnan,
+mutta sen käyttäytyminen poikkeaa muista soittimista. 
 
 ```java,noplayground
 class HarjoitusPiano implements Soitin {
@@ -521,23 +582,58 @@ void main() {
 }
 ```
 
-Koodi kyllä sinänsä toimii teknisesti. Silti `HarjoitusPiano` rikkoo `Soitin`-rajapinnan sopimusta: sen `soita()` ei "esitä kappaletta yleisölle", vaan vain soittajalle itselleen. Aliluokan toiminta voisi olla järkevää jossain toisessa kontekstissa (tässä, harjoittelutilanteessa). Hyvin suunnitellussa luokkahierarkiassa kuitenkin jokainen olio noudattaa yliluokan tai rajapinnan lupaamaa sopimusta. Tällöin polymorfismia voidaan käyttää luotettavasti ilman, että ohjelman käyttäjän tarvitsee tuntea kaikkia konkreettisia aliluokkia erikseen.
+Koodi kyllä sinänsä toimii teknisesti. Silti `HarjoitusPiano` rikkoo
+`Soitin`-rajapinnan sopimusta: sen `soita()` ei "esitä kappaletta yleisölle",
+vaan vain soittajalle itselleen. Aliluokan toiminta voisi olla järkevää jossain
+toisessa kontekstissa (tässä, harjoittelutilanteessa). Hyvin suunnitellussa
+luokkahierarkiassa kuitenkin jokainen olio noudattaa yliluokan tai rajapinnan
+lupaamaa sopimusta. Tällöin polymorfismia voidaan käyttää luotettavasti ilman,
+että ohjelman käyttäjän tarvitsee tuntea kaikkia konkreettisia aliluokkia
+erikseen.
 
-Myös kodin sähkölaitteet -esimerkkimme liittyy samaan aiheeseen. Muistetaan, että koska Esimerkissä 3.8 `paahdin` ja `sirkkeli` määriteltiin `Verkkovirtalaite`-tyyppisiksi, emme voi kutsua niille metodeja, jotka eivät ole määritelty kyseisessä rajapinnassa. Esimerkiksi emme voi kutsua `paahdin.puhdista()` tai `sirkkeli.huolla()`, koska nämä metodit eivät kuulu `Verkkovirtalaite`-rajapintaan. Jos todella tarvitsisimme pääsyn näihin metodeihin, meidän tulisi pysähtyä miettimään, miksi käsittelemme oliota ylipäätään pelkkänä verkkovirtalaitteena. Ohjelmistosuunnittelun näkökulmasta tilanne vihjaa siihen, että yritämme ehkä ratkaista kahta eri ongelmaa samassa paikassa.
+Myös kodin sähkölaitteet -esimerkkimme liittyy samaan aiheeseen. Muistetaan,
+että koska Esimerkissä 3.8 `paahdin` ja `sirkkeli` määriteltiin
+`Verkkovirtalaite`-tyyppisiksi, emme voi kutsua niille metodeja, jotka eivät ole
+määritelty kyseisessä rajapinnassa. Esimerkiksi emme voi kutsua
+`paahdin.puhdista()` tai `sirkkeli.huolla()`, koska nämä metodit eivät kuulu
+`Verkkovirtalaite`-rajapintaan. Jos todella tarvitsisimme pääsyn näihin
+metodeihin, meidän tulisi pysähtyä miettimään, miksi käsittelemme oliota
+ylipäätään pelkkänä verkkovirtalaitteena. Ohjelmistosuunnittelun näkökulmasta
+tilanne vihjaa siihen, että yritämme ehkä ratkaista kahta eri ongelmaa samassa
+paikassa.
 
-Hyvässä suunnittelussa koodi, joka käsittelee `Verkkovirtalaite`-tyyppisiä olioita (kuten sähkömittari tai sulakekaappi), on kiinnostunut vain ja ainoastaan sähköön liittyvistä asioista. Sitä ei pitäisikään kiinnostaa, onko laite leivänpaahdin vai sirkkeli, eikä sen kuulu yrittää puhdistaa tai huoltaa niitä.
+Hyvässä suunnittelussa koodi, joka käsittelee `Verkkovirtalaite`-tyyppisiä
+olioita (kuten sähkömittari tai sulakekaappi), on kiinnostunut vain ja
+ainoastaan sähköön liittyvistä asioista. Sitä ei pitäisikään kiinnostaa, onko
+laite leivänpaahdin vai sirkkeli, eikä sen kuulu yrittää puhdistaa tai huoltaa
+niitä.
 
-Jos huomaamme tarvitsevamme `puhdista()`-metodia, olemme todennäköisesti "väärässä huoneessa":
+Jos huomaamme tarvitsevamme `puhdista()`-metodia, olemme todennäköisesti
+"väärässä huoneessa":
  
- * Väärä abstraktiotaso: Jos olemme rakentamassa sovelluslogiikkaa keittiön siivousta varten, meidän ei pitäisi säilyttää laitteita `List<Verkkovirtalaite>`-listassa, vaan `List<Keittiolaite>`-listassa. Tällöin kaikilla listan olioilla on luonnostaan `puhdista()`-metodi käytettävissä ilman kikkailua.
+ * Väärä abstraktiotaso: Jos olemme rakentamassa sovelluslogiikkaa keittiön
+   siivousta varten, meidän ei pitäisi säilyttää laitteita
+   `List<Verkkovirtalaite>`-listassa, vaan `List<Keittiolaite>`-listassa.
+   Tällöin kaikilla listan olioilla on luonnostaan `puhdista()`-metodi
+   käytettävissä ilman kikkailua.
 
- * Vastuun jako (*Single Responsibility*): Jos samassa aliohjelmassa yritetään sekä mitata sähkönkulutusta (rajapinta) että pestä laite (abstrakti luokka), aliohjelma tekee liikaa asioita. Parempi ratkaisu on jakaa ohjelma osiin: yksi osa hallinnoi sähköverkkoa (`Verkkovirtalaite`-rajapinnan kautta) ja toinen osa huolehtii ylläpidosta (`Keittiolaite`- tai `Tyokalu`-tyyppien kautta).
+ * Vastuun jako (*Single Responsibility*): Jos samassa aliohjelmassa yritetään
+   sekä mitata sähkönkulutusta (rajapinta) että pestä laite (abstrakti luokka),
+   aliohjelma tekee liikaa asioita. Parempi ratkaisu on jakaa ohjelma osiin:
+   yksi osa hallinnoi sähköverkkoa (`Verkkovirtalaite`-rajapinnan kautta) ja
+   toinen osa huolehtii ylläpidosta (`Keittiolaite`- tai `Tyokalu`-tyyppien
+   kautta).
 
-Tiivistetysti: Sen sijaan, että yrittäisimme pakottaa yleisen rajapinnan kautta esiin erityisominaisuuksia, meidän tulisi valita muuttujan tyyppi sen mukaan, mitä olemme sillä hetkellä tekemässä. Sähkömies näkee sirkkelin verkkovirtalaitteena, puuseppä näkee sen työkaluna – ja koodin tulisi heijastaa tätä roolijakoa."
+Tiivistetysti: Sen sijaan, että yrittäisimme pakottaa yleisen rajapinnan kautta
+esiin erityisominaisuuksia, meidän tulisi valita muuttujan tyyppi sen mukaan,
+mitä olemme sillä hetkellä tekemässä. Sähkömies näkee sirkkelin
+verkkovirtalaitteena, puuseppä näkee sen työkaluna – ja koodin tulisi heijastaa
+tätä roolijakoa."
 
 ## Abstrakti luokka vai rajapinta?
 
-Alla on lyhyt yhteenvetotaulukko, joka tiivistää abstraktin luokan ja rajapinnan keskeiset erot syntaktin ja käyttötarkoituksen osalta.
+Alla on lyhyt yhteenvetotaulukko, joka tiivistää abstraktin luokan ja rajapinnan
+keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 | Kysymys                              | Abstrakti luokka                              | Rajapinta                                                 |
 | ------------------------------------ | --------------------------------------------- | --------------------------------------------------------- |
@@ -585,4 +681,6 @@ public class Termostaatti extends SaadettavaLaite {
 // FILE_END
 ```
 
-`Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan, mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten abstrakti luokka ja rajapinta täydentävät toisiaan.
+`Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan,
+mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten
+abstrakti luokka ja rajapinta täydentävät toisiaan.
