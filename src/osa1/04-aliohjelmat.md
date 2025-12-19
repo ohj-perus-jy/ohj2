@@ -17,11 +17,11 @@ Aliohjelma voi ottaa vastaan *syötteitä*, joita sanotaan *parametreiksi*. Teht
 ```java
 void main () {
     int[] luvut = {4, 8, 15, 16, 23, 42};
-    double keskiarvo = Keskiarvo(luvut);
+    double keskiarvo = keskiarvo(luvut);
     IO.println("Lukujen keskiarvo on: " + keskiarvo);
 }
 
-public static double Keskiarvo(int[] luvut) {
+double keskiarvo(int[] luvut) {
     if (luvut.length == 0) {
         return 0; 
     }
@@ -37,10 +37,13 @@ public static double Keskiarvo(int[] luvut) {
 
 Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyrivissä on seuraavat osat:
 
- * Julkisuus ja staattisuus (esimerkissämme `public static`): Kertovat, että metodi on kaikkien käytettävissä ja toimii ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat määritellään kuitenkin yleensä juuri näin.
  * Paluuarvon tyyppi (`double`): Kertoo, minkä tyyppistä tietoa metodi palauttaa. Jos metodi ei palauta mitään, tyyppi on `void`. Paluuarvon tyyppi voi olla mikä tahansa Javan perustietotyyppi tai olio.
- * Aliohjelman nimi (`Keskiarvo`): Kertoo mitä aliohjelma tekee. Nimen tulee olla kuvaava ja noudattaa Javan nimeämiskäytäntöjä sekä [tämän kurssin tyyliohjetta](../tyyliohje.md).
+ * Aliohjelman nimi (`keskiarvo`): Kertoo mitä aliohjelma tekee. Nimen tulee olla kuvaava ja noudattaa Javan nimeämiskäytäntöjä sekä [tämän kurssin tyyliohjetta](../tyyliohje.md).
  * Parametrit (`int[] luvut`): Sulkeiden sisään määritellään muuttujat, jotka aliohjelma tarvitsee toimiakseen.
+
+[Luvussa 2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin lisämääreisiin, joita aliohjelmalle voi antaa (julkisuus ja staattisuus).
+
+TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat määritellään kuitenkin yleensä juuri näin.
 
 ## Paluuarvot ja datan käsittely
 
