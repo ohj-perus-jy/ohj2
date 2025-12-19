@@ -1,6 +1,21 @@
-Lisää `Ajoneuvo`-luokkaan metodi `vaihdaRenkaat()`, joka tulostaa konsoliin tekstin "Renkaita x kpl vaihdettu", missä x on parametrina annettu renkaiden lukumäärä. Ylikirjoita tämä metodi `Auto`, `Polkupyora`, ja `KuormaAuto`-luokissa siten, että ne tulostavat sopivan tekstin kyseiselle ajoneuvolle (esim. Auto: "Auton renkaat 4 kpl vaihdettu", Polkupyörä: "Polkupyörän renkaat 2 kpl vaihdettu", KuormaAuto: "Kuorma-auton renkaat 18 kpl vaihdettu").
+Tee oheisen luokkakaavion mukainen luokkarakenne. Lisää `Ajoneuvo`-luokkaan
+`renkaidenMaara`-ominaisuus, joka määritellään muodostajassa. Lisää
+`Ajoneuvo`-luokkaan metodi `vaihdaRenkaat()`, joka tulostaa konsoliin tekstin
+"Renkaat vaihdettu". Ylikirjoita tämä metodi `Auto`, `Polkupyora`, ja
+`KuormaAuto`-luokissa siten, että ne tulostavat sopivan tekstin kyseiselle
+ajoneuvolle, esimerkiksi
 
-Tee sitten pääohjelma, jossa luot jokaisen ajoneuvoluokan olion ja kutsut niiden `vaihdaRenkaat()`-metodia testataksesi ylikirjoituksia.
+```
+Auton Skoda renkaat 4 kpl vaihdettu.
+Polkupyörän Trek renkaat 2 kpl vaihdettu.
+Kuorma-auton Scania renkaat 18 kpl vaihdettu.
+```
+
+Tee sitten pääohjelma, jossa 
+ 1. luot jokaisen ajoneuvoluokan olion,
+ 2. lisäät ne `List<Ajoneuvo>`-kokoelmaan ja 
+ 3. kutsut kunkin olion `vaihdaRenkaat()`-metodia, jotta saat yllä olevan
+    kaltaisen tulosteen aikaiseksi. 
 
 Luokkarakenteen tulee olla seuraava:
 
@@ -14,7 +29,13 @@ skinparam class {
 }
 skinparam arrowColor   #888888
 
-class Ajoneuvo
+class Ajoneuvo {
+    - renkaidenMaara: int
+    - merkki: String
+    + Ajoneuvo(renkaidenMaara: int, merkki: String)
+    + vaihdaRenkaat(): void
+}
+
 class Auto
 class Polkupyora
 class KuormaAuto
@@ -22,5 +43,5 @@ class KuormaAuto
 Ajoneuvo <|-- Auto
 Ajoneuvo <|-- Polkupyora
 Auto <|-- KuormaAuto
-@enduml
+@enduml 
 ```
