@@ -379,7 +379,21 @@ public class KodinSahkot {
 }
 ```
 
-Miksi on hyödyllistä määritellä rajapinta muuttujan tyypiksi? Yksi syy on se, että voimme nyt käsitellä erilaisia laitteita yhtenäisenä joukkona. Voimme esimerkiksi luoda listan erilaisista verkkovirtalaitteista ja kytkeä ne kaikki pistorasiaan silmukassa.
+## Ylätyyppiä vasten ohjelmointi
+
+Yllä kuvattu tapa, jossa aliluokan oliota käsitellään ylätyypin, eli yliluokan
+tai rajapinnan tyyppisenä, on olio-ohjelmoinnissa hyvin yleinen ja suositeltava
+käytäntö. Tätä tapaa kutsutaan usein nimellä rajapintaa vasten ohjelmointi
+(*program to an interface*) tai ylätyyppiä vasten ohjelmointi (*program to a
+supertype*). Näin ohjelman eri osat kytkeytyvät toisiinsa löyhemmin, ja
+yksittäisiä toteutuksia voidaan vaihtaa ilman, että muuta koodia tarvitsee
+muuttaa.
+
+Miksi ylätyyppiä vasten ohjelmointi on hyödyllistä? Yksi syy on se, että voimme
+nyt käsitellä hyvin eri tyyppisiä olioita yhtenäisenä joukkona; näinhän tehtiin
+jo [Tehtävässä 3.4](./02-polymorfismi.md#tehtavat). Otetaan vaikkapa
+`Verkkovirtalaite`-esimerkkimme: voimme esimerkiksi luoda listan erilaisista
+verkkovirtalaitteista ja kytkeä ne kaikki pistorasiaan silmukassa.
 
 ```java,ignore
 List<Verkkovirtalaite> laitteet = List.of(
@@ -395,7 +409,9 @@ for (Verkkovirtalaite v : laitteet) {
 }
 ```
 
-Jos jokainen laite olisi määritelty omaksi tyypikseen, meidän täytyisi kirjoittaa seuraavasti (oletetaan jälleen, että `Keittiolaite` ja `Tyokalu` ovat olemassa olevia yliluokkia).
+Jos jokainen laite olisi määritelty omaksi tyypikseen, meidän täytyisi
+kirjoittaa seuraavasti (oletetaan jälleen, että `Keittiolaite` ja `Tyokalu` ovat
+olemassa olevia yliluokkia).
 
 ```java,ignore
 List<Keittiolaite> keittionLaitteet = ...;
@@ -412,7 +428,11 @@ for (Tyokalu t : tyokalut) {
 }
 ```
 
-Toinen syy on helppo vaihdettavuus, josta käytetään englanninkielistä termiä *loose coupling*. Kun koodi käyttää rajapintaa muuttujan tyyppinä, se ei ole sidottu tiettyyn toteutukseen. Tämä tarkoittaa, että voimme helposti vaihtaa yhden toteutuksen toiseen ilman, että meidän tarvitsee muuttaa koodia, joka käyttää kyseistä rajapintaa.
+Toinen syy on helppo vaihdettavuus, josta käytetään englanninkielistä termiä
+*loose coupling*. Kun koodi käyttää rajapintaa muuttujan tyyppinä, se ei ole
+sidottu tiettyyn toteutukseen. Tämä tarkoittaa, että voimme helposti vaihtaa
+yhden toteutuksen toiseen ilman, että meidän tarvitsee muuttaa koodia, joka
+käyttää kyseistä rajapintaa.
 
 Kuvitellaan, että teemme ohjelmaa, joka testaa sähkölaitteita. 
 
@@ -442,7 +462,14 @@ Kolmas syy liittyy ohjelmiston suunnitteluun ja käytännön kirjoittamiseen. Ku
 
 ## Liskovin korvausperiaate
 
-Yllä mainittuun *loose coupling*-periaatteeseen liittyy läheisesti myös *Liskovin korvausperiaate* (engl. *Liskov Substitution Principle*, LSP). LSP on olio-ohjelmoinnin periaate, jonka mukaan, että olion tulee olla korvattavissa sellaisella oliolla, joka toteuttaa saman rajapinnan tai sovitun sopimuksen ilman, että ohjelman käyttäytyminen muuttuu. Niinpä esimerkiksi aliluokan tulee noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan määrittelemiä sopimuksia.
+Yllä mainittuun *loose coupling*-periaatteeseen liittyy läheisesti myös
+*Liskovin korvausperiaate* (engl. *Liskov Substitution Principle*, LSP). LSP on
+olio-ohjelmoinnin periaate, jonka mukaan, että olion tulee olla korvattavissa
+sellaisella oliolla, joka toteuttaa saman rajapinnan tai sovitun sopimuksen
+ilman, että ohjelman käyttäytyminen muuttuu. Niinpä esimerkiksi aliluokan tulee
+noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai
+vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan
+määrittelemiä sopimuksia.
 
 Palataan hetkeksi [Luvussa 3.2 alustettuun](02-polymorfismi.md) soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka määrittelee yleisölle musiikkia metodin `soita()`. 
 
