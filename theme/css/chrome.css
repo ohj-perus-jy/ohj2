@@ -512,7 +512,6 @@ html:not(.sidebar-resizing) .sidebar {
     overflow-y: auto;
     position: absolute;
     scrollbar-width: thin;
-    scrollbar-color: var(--icons) #0000;
     transition: scrollbar-color linear 0.1s;
     top: 0;
     bottom: 0;
@@ -522,7 +521,7 @@ html:not(.sidebar-resizing) .sidebar {
 }
 
 .sidebar-scrollbox:hover {
-    scrollbar-color: var(--icons-hover) #0000;
+    scrollbar-color: var(--sidebar-active) #0000;
     transition: scrollbar-color linear 0.1s;
 }
 

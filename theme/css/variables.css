@@ -357,10 +357,9 @@
     --sidebar-non-existant: #5c6773;
     --sidebar-active: #C29A5B;
     --sidebar-spacer: #2d334f;
-
-    --scrollbar: var(--sidebar-fg);
-
+    
     --icons: #737480;
+    --scrollbar: var(--icons);
     --icons-hover: #C29A5B;
 
     --links: #0096cf;
