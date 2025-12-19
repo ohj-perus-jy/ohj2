@@ -12,8 +12,8 @@
     --mono-font: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
     --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
     --searchbar-margin-block-start: 5px;
-    --header-bg-fallback: rgba(255, 255, 255, 0.8);
-    --header-border-fallback: rgba(0, 0, 0, 0.1);
+    /*--header-bg: rgba(255, 255, 255);*/
+    /*--header-border: rgba(0, 0, 0, 0.1);*/
 
     /* Enable smooth scaling of size-related CSS variables */
     interpolate-size: allow-keywords;
@@ -291,19 +291,20 @@
     --sidebar-bg: #fff;
     --sidebar-fg: hsl(0, 0%, 0%);
     --sidebar-non-existant: #aaaaaa;
+    
     --sidebar-active: #002957;
-    /* --sidebar-active: #004997; */
     --sidebar-spacer: #d0d0d0;
-
+    
     --scrollbar: #8F8F8F;
+    
+    --scrollbar-inactive: var(--scrollbar);
+    --scrollbar-active: var(--sidebar-active);
 
-    --footer: hsl(0 0% 93% / 1);
+    --footer-bg: hsl(0 0% 93% / 1);
+    --footer-border: rgba(0, 0, 0, 0.06);
 
-    /* Fallback colors for browsers without color-mix() support */
-    --header-bg-fallback: rgba(250, 250, 250, 0.75);
-    --header-border-fallback: rgba(0, 0, 0, 0.1);
-    --footer-bg-fallback: rgba(250, 250, 250, 0.4);
-    --footer-border-fallback: rgba(0, 0, 0, 0.06);
+    --header-bg: rgba(250, 250, 250);
+    --header-border: rgba(0, 0, 0, 0.1);
 
     --icons: #002957;
     --icons-hover: #00295777;
@@ -370,12 +371,19 @@
     --sidebar-spacer: #2d334f;
     
     --icons: #737480;
-    --scrollbar: var(--icons);
     --icons-hover: #C29A5B;
+    --scrollbar-inactive: var(--icons);
+    --scrollbar-active: var(--sidebar-active);
 
     --links: #0096cf;
 
     --inline-code-color: #C29A5B;
+    --footer-bg: hsl(210, 25%, 7%);
+    --footer-border: hsl(225, 27%, 20%);
+
+    --header-bg: hsl(213, 27%, 8%);
+    --header-border: hsl(225, 27%, 20%);
+    
 
     --theme-popup-bg: #14191f;
     --theme-popup-border: #5c6773;
