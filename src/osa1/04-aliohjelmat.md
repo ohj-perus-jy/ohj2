@@ -65,12 +65,12 @@ On tärkeää ymmärtää, mitä itse asiassa annamme aliohjelmalle parametrina 
 Kun alkeistietotyyppi (ks. [Luku 1.2](02-muuttujat-ja-tietotyypit.md)) annetaan parametrina metodille, kyseisen muuttujan arvo kopioidaan ja välitetään kutsuttavalle aliohjelmalle. Jos aliohjelma muuttaa tätä kopiota, alkuperäinen muuttuja ei muutu. Alla esimerkki, jossa annamme `int`-tyyppisen muuttujan parametrina. 
 
 ```java
-public static void yritaMuuttaa(int luku) {
+void yritaMuuttaa(int luku) {
     luku = 99; // Muutetaan vain kopiota
     System.out.println("Metodissa: " + luku);
 }
 
-public static void main(String[] args) {
+void main(String[] args) {
     int x = 10;
     yritaMuuttaa(x);
     System.out.println("Mainissa: " + x); // Tulostaa edelleen 10
@@ -84,7 +84,7 @@ Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan viitt
 Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma saa kyllä käyttöönsä samanlaisen "kaukosäätimen", joka osoittaa samaan "televisioon" kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
 
 ```java
-public static void nollaaTaulukko(int[] taulukko) {
+void nollaaTaulukko(int[] taulukko) {
     // Tämä muutos tapahtuu alkuperäiselle taulukolle!
     // Koska "taulukko"-muuttuja viittaa samaan olioon.
     for (int i = 0; i < taulukko.length; i++) {
@@ -92,7 +92,7 @@ public static void nollaaTaulukko(int[] taulukko) {
     }
 }
 
-public static void main(String[] args) {
+void main(String[] args) {
     int[] luvut = {1, 2, 3};
     
     nollaaTaulukko(luvut);
@@ -105,18 +105,18 @@ public static void main(String[] args) {
 Oleellista on kuitenkin ymmärtää, että aliohjelman kutsussa annoimme nimenomaisesti kopion viitteestä, emme alkuperäistä viitettä. Jos aliohjelma yrittäisi muuttaa viitettä osoittamaan toiseen olioon, tämä muutos ei vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla esimerkki tästä tilanteesta:
 
 ```java
-public static void muutaViite(int[] taulukko) {
-    // Tämä muutos ei vaikuta alkuperäiseen viitteeseen!
-    taulukko = new int[] {9, 9, 9};
-}
-
-public static void main(String[] args) {
+void main(String[] args) {
     int[] luvut = {1, 2, 3};
     
     muutaViite(luvut);
     
     // Alkuperäinen taulukko ei ole muuttunut
     System.out.println(luvut[0]); // Tulostaa edelleen 1
+}
+
+void muutaViite(int[] taulukko) {
+    // Tämä muutos ei vaikuta alkuperäiseen viitteeseen!
+    taulukko = new int[] {9, 9, 9};
 }
 ```
 
@@ -208,7 +208,7 @@ Javassa dokumentaatiokommentit kirjoitetaan erityisellä syntaksilla, joka eroaa
  * @param b Toinen luku
  * @return Lukujen summa
  */
-public int summa(int a , int b) {
+int summa(int a , int b) {
     return a + b;
 }
 ```
