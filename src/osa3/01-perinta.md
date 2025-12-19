@@ -222,17 +222,37 @@ Henkilo <|-- Opettaja
 @enduml
 ``` 
 
-Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified Modelling Language*). Tarkkaan ottaen UML:ssä kunkin luokan kohdalle lisätään yleensä myös muutakin tietoa, kuten attribuuttien ja metodien nimet ja tieto kunkin näiden näkyvyydestä. Jätämme ne tässä esimerkissä yksinkertaisuuden vuoksi pois, ja pyrimme pitämään kuviot sellaisina, että ne havainnollistavat opeteltavaa asiaa mahdollisimman selkeästi. 
+Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa
+perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä
+oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified
+Modelling Language*). 
 
 ## Muodostajat ja super-avainsana
 
-Yliluokan muodostajia voidaan kutsua aliluokista käyttäen `super`-avainsanaa. Katsotaan esimerkin kautta, missä tällainen kutsu on tarpeen.
+Yliluokan muodostajia voidaan kutsua aliluokista käyttäen `super`-avainsanaa.
+Katsotaan esimerkin kautta, missä tällainen kutsu on tarpeen.
 
-Yllä olevassa esimerkissämme on pari ongelmaa. `Henkilo`-luokassa ei ole muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tästä seuraa, että `Henkilo`-olion muodostamisen jälkeen `nimi`-attribuutti on aina `null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo tiedon kapseloinnin periaatetta. 
+Yllä olevassa esimerkissämme on pari ongelmaa. `Henkilo`-luokassa ei ole
+muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tästä
+seuraa, että `Henkilo`-olion muodostamisen jälkeen `nimi`-attribuutti on aina
+`null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin
+syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen
+jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen
+asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo
+tiedon kapseloinnin periaatetta. 
 
-Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta, eli niin, että mikä tahansa olio voisi kutsua minkä tahansa `Henkilo`-olion metodia nimen muuttamiseksi, ei pitäisi olla sallittua, vaan pitäisi tapahtua huomattavasti hallitumman prosessin kautta. 
+Vaikka nimen muuttaminen toki pitäisikin tietyissä tilanteissa olla
+opintotietojärjestelmässä mahdollista, sen asettaminen julkisen metodin kautta,
+eli niin, että mikä tahansa olio voisi kutsua minkä tahansa `Henkilo`-olion
+metodia nimen muuttamiseksi, ei pitäisi olla sallittua, vaan pitäisi tapahtua
+huomattavasti hallitumman prosessin kautta. 
 
-Korjataan tilanne. Asetetaan aluksi `nimi`-attribuutti yksityiseksi `Henkilo`-luokassa. Lisätään sitten muodostaja, joka ottaa `nimi`-parametrin, ja alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa `setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain muodostajan kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä vaiheessa. 
+Korjataan tilanne. Asetetaan aluksi `nimi`-attribuutti yksityiseksi
+`Henkilo`-luokassa. Lisätään sitten muodostaja, joka ottaa `nimi`-parametrin, ja
+alustaa attribuutin arvon vastaavasti. Tämän jälkeen voimme poistaa
+`setNimi`-metodin kokonaan, jolloin nimen asettaminen onnistuu vain muodostajan
+kautta. Niinpä nimen muuttaminen ei enää onnistu, mutta tämä sopii meille tässä
+vaiheessa. 
 
 Muutetaan olioiden rakentelu pääohjelmassa vastaamaan tätä uutta muodostajaa.
 
@@ -277,7 +297,10 @@ public class Main {
 // FILE_END
 ```
 
-Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja, Java ei enää luo oletusmuodostajaa—siis sellaista, jossa ei ole parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen&mdash;valitettavasti hieman kryptisen sellaisen.
+Nyt koska `Henkilo`-luokassa on määritelty muodostaja, joka *ottaa* parametreja,
+Java ei enää luo oletusmuodostajaa—siis sellaista, jossa ei ole
+parametreja—automaattisesti. Tämä aiheuttaa käännösvirheen&mdash;valitettavasti
+hieman kryptisen sellaisen.
 
 ```
 java: constructor Opiskelija in class Opiskelija cannot be applied to given types;
@@ -286,9 +309,14 @@ java: constructor Opiskelija in class Opiskelija cannot be applied to given type
   reason: actual and formal argument lists differ in length
 ```
 
-Virheilmoituksen pointti on, että `Opiskelija`-olion muodostaja ei vastaa sitä, miten yritämme luoda olion pääohjelmassa. 
+Virheilmoituksen pointti on, että `Opiskelija`-olion muodostaja ei vastaa sitä,
+miten yritämme luoda olion pääohjelmassa. 
 
-Tässä tuleekin tärkeä huomio: Luokat eivät peri muodostajia yliluokiltaan. Esimerkiksi `Opiskelija`-luokka ei peri `Henkilo`-luokan muodostajia, vaan ne täytyy määritellä erikseen jokaisessa aliluokassa. Tehdään `Opiskelija` ja `Opettaja`-luokkiin muodostajat vastaamaan tätä vaatimusta. Esimerkiksi `Opiskelija`-luokassa muodostajan alku näyttäisi tältä.
+Tässä tuleekin tärkeä huomio: Luokat eivät peri muodostajia yliluokiltaan.
+Esimerkiksi `Opiskelija`-luokka ei peri `Henkilo`-luokan muodostajia, vaan ne
+täytyy määritellä erikseen jokaisessa aliluokassa. Tehdään `Opiskelija` ja
+`Opettaja`-luokkiin muodostajat vastaamaan tätä vaatimusta. Esimerkiksi
+`Opiskelija`-luokassa muodostajan alku näyttäisi tältä.
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
@@ -298,7 +326,8 @@ class Opiskelija extends Henkilo {
 }
 ```
 
-Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
+Toisaalta nyt kun määrittelimme `nimi`-attribuutin yksityiseksi, emme voi
+myöskään asettaa niitä perivästä luokasta käsin, esimerkiksi seuraavasti.
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
@@ -321,9 +350,16 @@ Opiskelija.java:8:13
 java: nimi has private access in Henkilo
 ```
 
-Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole ei-parametrista muodostajaa. Korjaamme tämän hieman myöhemmin. Jälkimmäinen virhe on tämän hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa sitä suoraan perivästä luokasta käsin.
+Ensimmäinen virhe liittyy siihen, että `Henkilo`-luokassa ei ole ei-parametrista
+muodostajaa. Korjaamme tämän hieman myöhemmin. Jälkimmäinen virhe on tämän
+hetkinen ongelmamme: `nimi`-attribuutti on yksityinen, joten emme voi asettaa
+sitä suoraan perivästä luokasta käsin.
 
-Koska poistimme `setNimi`-metodin, niin ainoa tapa asettaa nimen arvo on tehdä se kutsumalla aliluokasta muodostajasta käsin yliluokan muodostajaa ja välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan `super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan samalla myös loputkin attribuutit yksityisiksi.
+Koska poistimme `setNimi`-metodin, niin ainoa tapa asettaa nimen arvo on tehdä
+se kutsumalla aliluokasta muodostajasta käsin yliluokan muodostajaa ja
+välittämällä tuossa kutsussa tarvittavat parametrit. Tämä kutsuminen toteutetaan
+`super`-avainsanaa. Tehdään tämä muutos kumpaankin aliluokkaan. Muutetaan
+samalla myös loputkin attribuutit yksityisiksi.
 
 ```java,noplayground
 import java.util.ArrayList;
@@ -342,11 +378,14 @@ class Opiskelija extends Henkilo {
 }
 ```
 
-Huomaa, että järjestys on oltava nimen omaan tämä: `super`-kutsu tulee ensimmäisenä muodostajan rungossa. Vasta sen jälkeen voidaan tehdä muita alustuksia.
+Huomaa, että järjestys on oltava nimen omaan tämä: `super`-kutsu tulee
+ensimmäisenä muodostajan rungossa. Vasta sen jälkeen voidaan tehdä muita
+alustuksia.
 
 Tee vastaava muutos myös `Opettaja`-luokkaan.
 
-Tämän jälkeen ohjelma ei kuitenkaan vielä käänny, koska perivissä luokissa emme edelleenkään pääse käsiksi yliluokan yksityiseen `nimi`-attribuuttiin.
+Tämän jälkeen ohjelma ei kuitenkaan vielä käänny, koska perivissä luokissa emme
+edelleenkään pääse käsiksi yliluokan yksityiseen `nimi`-attribuuttiin.
 
 ```java,noplayground
 class Opiskelija extends Henkilo {
@@ -360,7 +399,10 @@ class Opiskelija extends Henkilo {
 }
 ```
 
-Ainoa tapa päästä käsiksi `nimi`-attribuuttiin on kutsua yliluokan `getNimi()`-metodia, sillä kyseinen metodi on julkinen. Tehdään tämä muutos kaikkiin kohtiin, joissa `nimi`-attribuuttiin viitataan suoraan perivissä luokissa.  
+Ainoa tapa päästä käsiksi `nimi`-attribuuttiin on kutsua yliluokan
+`getNimi()`-metodia, sillä kyseinen metodi on julkinen. Tehdään tämä muutos
+kaikkiin kohtiin, joissa `nimi`-attribuuttiin viitataan suoraan perivissä
+luokissa.  
 
 ```java
 // FILE: Henkilo.java
@@ -437,9 +479,16 @@ public class Main {
 
 Ei-parametrista muodostajaa emme tarvitse enää, joten jätämme sen toteuttamatta. 
 
-Luokkahierarkia voi olla enemmänkin kuin kaksi tasoa syvä. Meillä voisi olla myös `Sihteeri`, joka voi kirjata opintosuorituksia. `Sihteeri` peritään `Henkilo`-luokasta. Voisimme tehdä myös kahdenlaisia erilaisia opiskelijoita: Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita. Tutkinto-opiskelijalla voisi olla oma tutkinto-ohjelma, kun taas Avoimen opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyisi suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
-
-Luokkahierarkia näyttäisi nyt seuraavalta:
+UML-kaavioihin on tapana lisätä perintäsuhteiden lisäksi tietoja luokkien
+attribuuteista ja metodeista sekä niiden näkyvyydestä. Attribuutit tyyppeineen
+merkitään luokan nimen alle, ja metodit, myös muodostajat, vastaavasti ihan
+alimmaiseksi. Perittyjä attribuutteja metodeja, kuten tässä attribuutti `nimi`
+ja metodi `getNimi()`, ei yleensä merkitä kaavioon, paitsi jos ne
+ylikirjoitetaan aliluokassa&mdash;tästä lisää [Luvussa 3.2](02-polymorfismi.md).
+Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi,
+ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi. Tietojen
+merkitseminen kaavioon mahdollistaa rakenteiden kuvailemisen ilman, että
+tarvitsee sanallisesti kuvailla kaikkia yksityiskohtia.
 
 ```plantuml
 @startuml
@@ -452,12 +501,86 @@ skinparam class {
 }
 skinparam arrowColor   #888888
 
-class Henkilo
-class Opiskelija
-class Opettaja
-class Sihteeri
-class TutkintoOpiskelija
-class AvoinOpiskelija
+class Henkilo {
+    - nimi : String
+    + Henkilo(nimi : String)
+    + getNimi() : String
+}
+class Opiskelija {
+    - kaynnissaOlevatKurssit : ArrayList<String>
+    + Opiskelija(nimi : String)
+    + ilmoittauduKurssille(kurssi : String) : void
+    + naytaKurssit() : void
+}
+class Opettaja {
+    - opetettavatKurssit : ArrayList<String>
+    + Opettaja(nimi : String)
+    + lisaaKurssi(kurssi : String) : void
+    + naytaOpetettavatKurssit() : void
+}
+
+Henkilo <|-- Opiskelija
+Henkilo <|-- Opettaja
+@enduml
+``` 
+
+Luokkahierarkia voi olla enemmänkin kuin kaksi tasoa syvä. Meillä voisi olla
+myös `Sihteeri`, joka voi kirjata opintosuorituksia. `Sihteeri` peritään
+`Henkilo`-luokasta. Voisimme tehdä myös kahdenlaisia erilaisia opiskelijoita:
+Tutkinto-opiskelijoita sekä Avoimen yliopiston opiskelijoita.
+Tutkinto-opiskelijalla voisi olla oma tutkinto-ohjelma, kun taas Avoimen
+opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyisi
+suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
+
+Luokkahierarkia näyttäisi nyt seuraavalta. Merkitään tähänkin kuvioon
+attribuutit ja metodit mukaan. Tekstit menevät jo aika pieneksi, joten saat
+halutessasi kuvan auki uuteen välilehteen klikkaamalla sitä oikealla (tai
+Alt+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
+
+```plantuml
+@startuml
+' --- Style: square corners, no compartments, theme-safe colors ---
+hide empty members
+skinparam class {
+    RoundCorner        0
+    BorderColor        #888888
+    BackgroundColor    transparent
+}
+skinparam arrowColor   #888888
+
+class Henkilo {
+    - nimi : String
+    + Henkilo(nimi : String)
+    + getNimi() : String
+}
+class Opiskelija {
+    - kaynnissaOlevatKurssit : ArrayList<String>
+    + Opiskelija(nimi : String)
+    + ilmoittauduKurssille(kurssi : String) : void
+    + naytaKurssit() : void
+}
+class Opettaja {
+    - opetettavatKurssit : ArrayList<String>
+    + Opettaja(nimi : String)
+    + lisaaKurssi(kurssi : String) : void
+    + naytaOpetettavatKurssit() : void
+}
+class Sihteeri {
+    + Sihteeri(nimi : String)
+    + kirjaaSuoritus(opiskelija : Opiskelija, kurssi : String, pisteet : int) : void
+}
+class TutkintoOpiskelija {
+    - tutkintoOhjelma : String
+    + TutkintoOpiskelija(nimi : String, tutkintoOhjelma : String)
+    + naytaTutkintoOhjelma() : String
+}
+
+class AvoinOpiskelija {
+    - maksujaMaksamatta : double
+    + AvoinOpiskelija(nimi : String)
+    + maksa(eur : double) : void
+    + ostaOpintoOikeus(String kurssi, double hinta) : boolean
+}
 
 Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
@@ -466,14 +589,20 @@ Opiskelija <|-- TutkintoOpiskelija
 Opiskelija <|-- AvoinOpiskelija
 
 @enduml
-
 ``` 
 
-Koska nuoli `TutkintoOpiskelija`-luokasta osoittaa `Opiskelija`-luokkaan ja sieltä edelleen `Henkilo`-luokkaan, niin `TutkintoOpiskelija`-luokasta muodostettu olio perii sekä  `Opiskelija`-luokan ominaisuudet ja metodit, että `Henkilo`-luokan ominaisuudet ja metodit. Vastaavasti `AvoinOpiskelija`-luokasta tehty olio perii myös molemmat luokat.
+Koska nuoli `TutkintoOpiskelija`-luokasta osoittaa `Opiskelija`-luokkaan ja
+sieltä edelleen `Henkilo`-luokkaan, niin `TutkintoOpiskelija`-luokasta
+muodostettu olio perii sekä  `Opiskelija`-luokan ominaisuudet ja metodit, että
+`Henkilo`-luokan ominaisuudet ja metodit. Vastaavasti `AvoinOpiskelija`-luokasta
+tehty olio perii myös molemmat luokat.
 
 Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Kisu_vaihe4/src).
 
-Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista. Esimerkiksi `TutkintoOpiskelija`-luokan muodostaja voisi kutsua vain `Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
+Huomautetaan vielä, että `super`-avainsanalla kutsutaan nimen omaan luokan
+välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista.
+Esimerkiksi `TutkintoOpiskelija`-luokan muodostajassa voisi kutsua vain
+`Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
 
 ## Huomautus moniperinnän puuttumisesta
 

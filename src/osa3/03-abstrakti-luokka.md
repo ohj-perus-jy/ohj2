@@ -48,7 +48,7 @@ java: Muoto is abstract; cannot be instantiated
 
 Lähdemme aluksi liikkeelle yksinkertaisesta esimerkistä, jossa voi vain vaihtaa laitteen tilaa kahden mahdollisen tilan välillä. Palaamme monimutkaisempiin säätömahdollisuuksiin myöhemmin. 
 
-Luokkakaaviomme voisi näyttää seuraavanlaiselta. Lisätään luokkien ja niiden välisten perintäsuhteiden lisäksi kaavioon tietoja luokkien attribuuteista ja metodeista UML-notaation mukaisesti. Attribuutit tyyppeineen merkitään luokan nimen alle, ja metodit vastaavasti ihan alimmaiseksi. Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi, ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi.
+Luokkakaaviomme voisi näyttää seuraavanlaiselta. 
 
 ```plantuml
 @startuml
