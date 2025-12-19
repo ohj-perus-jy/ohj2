@@ -604,6 +604,33 @@ välitöntä yliluokkaa. Luokkarakenteessa "yli hyppiminen" ei ole mahdollista.
 Esimerkiksi `TutkintoOpiskelija`-luokan muodostajassa voisi kutsua vain
 `Opiskelija`-luokan muodostajaa, ei `Henkilo`-luokan muodostajaa.
 
+## Metodit ja super-avainsana
+
+`super`-avainsanaa voidaan käyttää kutsuttaessa yliluokasta perittyä 
+metodia, kun halutaan eksplisiittisesti viitata yliluokan metodiin. 
+
+```java,ignore
+class Opiskelija extends Henkilo {
+
+    // ...    
+    public void naytaKurssit(){
+        String kaikkiKurssit = String.join(", ", kaynnissaOlevatKurssit);
+        // HIGHLIGHT_RED_BEGIN
+        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
+        // HIGHLIGHT_RED_END
+        // HIGHLIGHT_GREEN_BEGIN
+        IO.println(super.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
+        // HIGHLIGHT_GREEN_END
+    }
+}
+```
+
+Tässä esimerkissä tällä ei ole mitään vaikutusta, koska `getNimi()` on sama sekä
+yliluokassa että aliluokassa. Seuraavassa luvussa [3.2
+Polymorfismi](02-polymorfismi.md) käsitellään tilannetta, jossa aliluokassa on
+määritelty saman niminen metodi kuin yliluokassa. Tällöin `super`-avainsanalla
+voidaan viitata nimenomaisesti yliluokan metodiin.
+
 ## Huomautus moniperinnän puuttumisesta
 
 Javassa luokka voi periä vain yhden luokan. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden luokan. Emme tässä mene syvemmälle moniperinnän käsitteeseen, mutta mainittakoon, moniperinnän käyttö voi joissain tilanteissa olla ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
