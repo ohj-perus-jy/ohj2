@@ -18,13 +18,17 @@ TODO: Onko osaamistavoitteiden kannalta tarpeellista: luokka on käännosaikaine
 
 Ensimmäinen askel olio-ohjelmointiin on luokan määritteleminen `class`-avainsanaa käyttäen. Luokkaa voi ajatella kaavana tai muottina, jonka pohjalta olioita luodaan. Luokka kertoo, mitä tietoja olio sisältää (attribuutit) ja mitä se voi tehdä (metodit). Luokassa määriteltyjä attribuutteja ja metodeja kutsutaan myös *luokan jäseniksi* (engl. *class member*).
 
-Esimerkiksi yhden rakennuspiirustuksen pohjalta voidaan rakentaa monta rakennusta. Ne olisivat rakenteeltaan samanlaisia, sillä ne ovat saman kaavan mukaan tehty, mutta jokaisella rakennuksella olisi kuitenkin oma tila; eri omistaja, väri, sisustus, jne. Rakennuspiirustus on kuin luokka ja rakennukset sen pohjalta tehtyjä olioita. Luokan nimi kertoo, *mikä* olio on, joten jos tekisimme luokan rakennuksille, sen nimeksi sopisi `Rakennus`. Huomaa, että Javassa on tapana aloittaa luokkien nimet aina isolla kirjaimella.
+Tehdään pieni ajatusharjoitus: mietitään hetki talonrakennusta. Arkkitehdin piirtämän yhden rakennuspiirustuksen pohjalta voidaan rakentaa monta rakennusta. Ne olisivat rakenteeltaan samanlaisia, sillä ne ovat saman kaavan mukaan tehty, mutta jokaisella rakennuksella olisi kuitenkin oma tila; eri omistaja, väri, sisustus, ja niin edelleen. Rakennuspiirustusta voi (ainakin etäisesti) ajatella olio-ohjelmoinnin luokkana, kun taas rakennukset ovat sen pohjalta tehtyjä olioita. Luokan nimi kertoo, *mikä* olio on, joten jos tekisimme luokan rakennuksille, sen nimeksi sopisi `Rakennus`. 
+
+> [!HUOMAUTUS]
+> Huomaa, että Javassa on tapana aloittaa luokkien nimet aina isolla kirjaimella.
 
 Määritellään aluksi tyhjä luokka `Rakennus`, jota lähdemme täydentämään.
 
 ```java
 class Rakennus {
-    // Luokan sisällä määritellään rakenne, jota luokasta tehdyt oliot vastaavat.
+    // Luokan sisällä määritellään rakenne, jota luokasta 
+    // tehdyt oliot vastaavat.
 }
 ```
 
@@ -32,34 +36,40 @@ Voimme luoda luokasta olioita käyttämällä avainsanaa `new`. Tämä varaa mui
 
 ```java
 void main() {
-    // 'new Rakennus()' luo olion ja palauttaa viitteen siihen. Sijoitamme tämän viitteen muuttujaan 'rakennus'.
+    // 'new Rakennus()' luo olion ja palauttaa viitteen siihen. 
+    // Sijoitamme tämän viitteen muuttujaan 'rakennus'.
     Rakennus rakennus = new Rakennus();
 }
 ```
 
-HUOM! On tärkeää pitää mielessä, että viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Sen ei kuitenkaan ole pakko osoittaa mihinkään, jolloin sen arvo on null. Olio on vastaavasti mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen osoittaa eri olioon. Tämä onkin täysin tavallista, kun teemme listan "olioista".
+> [!HUOMAUTUS]
+> On tärkeää pitää mielessä se, että viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Sen ei kuitenkaan ole pakko osoittaa mihinkään, jolloin sen arvo on null. Olio on vastaavasti mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen osoittaa eri olioon. Tämä onkin täysin tavallista, kun teemme listan "olioista".
 
 ## Attribuutit
 
-Luokan sisällä esiteltyjä muuttujia kutsutaan *attribuuteiksi*.
-
-Kuten muuttujat yleensä, attribuutit voivat olla alkeistietotyyppejä tai viitteitä. Niiden nimeämisessä käytetään myös samoja käytänteitä kuin muuttujien nimeämisessä muutenkin. 
-
-Attribuutit poikkeavat hieman esimerkiksi aliohjelmien paikallisista muuttujista siten, että niiden näkyvyyttä voidaan hallita erilaisten näkyvyysmääreiden avulla. Aliohjelman paikalliset muuttujat ovat olemassa ja nähtävillä vain aliohjelman sisällä sen suorituksen ajan, mutta attribuutit ovat olemassa koko olion eliniän ajan ja voivat olla nähtävissä myös olion ulkopuolelta. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
-
-Luokasta tehdyt oliot sisältävät aina luokassa määritellyt attribuutit. Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot saavat sen myös oman attribuuttinsa alkuarvoksi. Tavallisesti jokaisella oliolla on attribuutille oma arvo, sillä attribuutit muodostavat olion tilan. Näin ei kuitenkaan aina ole, sillä attribuutit voidaan jakaa tavallisiin **olion attribuutteihin** (engl. *instance attribute*) sekä staattisiin **luokan attribuutteihin** (engl. *class attribute*), joista jälkimmäiset tunnistaa esittelyriville lisätystä `static`-määritteestä. Nimensä mukaisesti olion attribuutti kiinnittyy olioon, eli jokaisella oliolla on tällaiselle attribuutille oma arvo. Luokan attribuutti sen sijaan sijaitsee luokassa, minkä vuoksi jokaisella oliolla ei ole sille omaa arvoa, vaan se katsotaan aina luokasta. Katsomme mitä tämä tarkoittaa käytännössä, kun tutustumme tarkemmin `static`-määritteeseen.
+Attribuutti on luokan sisällä määritelty muuttuja, joka edustaa olion ominaisuutta, piirrettä tai tilaa. Siinä missä luokka määrittelee, mitä tietoja olioilla voi olla, attribuutit tallentavat kunkin yksittäisen olion konkreettiset arvot. Kuten muuttujat yleensä, attribuutit voivat olla alkeistietotyyppejä tai viitteitä. Niiden nimeämisessä käytetään myös samoja käytänteitä. 
 
 Lisätään nyt muutama attribuutti `Rakennus`-luokkaamme.
 
 ```java
 public class Rakennus {
-    // Nämä muuttujat ovat olion attribuutteja. Jokaisella rakennuksella on omistaja ja väri, mutta ne eivät välttämättä ole kaikilla olioilla arvoiltaan samat.
+    // Nämä muuttujat ovat olion attribuutteja. Jokaisella rakennuksella
+    // on omistaja ja väri, mutta ne eivät välttämättä ole kaikilla 
+    // olioilla arvoiltaan samat.
     private String omistaja;
-    private String väri = "sininen"; // Värin oletusarvo on sininen, joten kaikilla tämän luokan pohjalta tehdyillä olioilla on aluksi värin arvona sininen.
+
+    // Värin oletusarvo on sininen, joten kaikilla tämän luokan pohjalta 
+    // tehdyillä olioilla on aluksi värin arvona sininen.
+    private String väri = "sininen";
 }
 ```
 
-HUOM! Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole attribuutteja, vaan aliohjelman *lokaaleja* eli *paikallisia* muuttujia. Vain suoraan luokan alla olevat muuttujat ovat attribuutteja. Lokaalien muuttujien sisältämä tieto katoaa aliohjelman suorituksen lopussa, eli ne eivät ole osa olion tilaa. Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos attribuutilla ja paikallisella muuttujalla on sama nimi, käytetään lausekkeissa ensisijaisesti lokaalia muuttujaa. Olion metodeista voi yhä päästä käsiksi sen attribuuttiin käyttämällä `this`-viitettä, johon palaamme hyvin pian.
+Attribuutit poikkeavat esimerkiksi aliohjelmien paikallisista muuttujista siten, että niiden näkyvyyttä voidaan hallita erilaisten näkyvyysmääreiden avulla. Aliohjelman paikalliset muuttujat ovat olemassa ja nähtävillä vain aliohjelman sisällä sen suorituksen ajan, mutta attribuutit ovat olemassa koko olion eliniän ajan ja voivat olla nähtävissä myös olion ulkopuolelta. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
+
+Luokasta tehdyt oliot sisältävät aina luokassa määritellyt attribuutit. Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot saavat sen myös oman attribuuttinsa alkuarvoksi. Tavallisesti jokaisella oliolla on attribuutille oma arvo, sillä attribuutit muodostavat olion tilan. Näin ei kuitenkaan aina ole, sillä attribuutit voidaan jakaa tavallisiin **olion attribuutteihin** (engl. *instance attribute*) sekä staattisiin **luokan attribuutteihin** (engl. *class attribute*), joista jälkimmäiset tunnistaa esittelyriville lisätystä `static`-määritteestä. Nimensä mukaisesti olion attribuutti kiinnittyy olioon, eli jokaisella oliolla on tällaiselle attribuutille oma arvo. Luokan attribuutti sen sijaan sijaitsee luokassa, minkä vuoksi jokaisella oliolla ei ole sille omaa arvoa, vaan se katsotaan aina luokasta. Katsomme mitä tämä tarkoittaa käytännössä, kun tutustumme tarkemmin `static`-määritteeseen.
+
+> [!HUOMAUTUS]
+> Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole attribuutteja, vaan aliohjelman *lokaaleja* eli *paikallisia* muuttujia. Vain suoraan luokan alla olevat muuttujat ovat attribuutteja. Lokaalien muuttujien sisältämä tieto katoaa aliohjelman suorituksen lopussa, eli ne eivät ole osa olion tilaa. Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos attribuutilla ja paikallisella muuttujalla on sama nimi, käytetään lausekkeissa ensisijaisesti lokaalia muuttujaa. Olion metodeista voi yhä päästä käsiksi sen attribuuttiin käyttämällä `this`-viitettä, johon palaamme hyvin pian.
 
 ```java
 public class Rakennus {
@@ -67,13 +77,16 @@ public class Rakennus {
 
     public void teeJotain()
     {
-        // Tämä lokaali muuttuja peittää saman nimen omaavan attribuutin aliohjelman sisällä.
+        // Tämä lokaali muuttuja peittää saman nimen omaavan attribuutin 
+        // aliohjelman sisällä.
         String väri = "punainen"; 
 
-        // Tulostaa "punainen". Tunniste 'väri' viittaa ensisijaisesti lokaaliin muuttujaan, jos sellainen on näkyvissä.
+        // Tulostaa "punainen". Tunniste 'väri' viittaa ensisijaisesti 
+        // lokaaliin muuttujaan, jos sellainen on näkyvissä.
         IO.println(väri); 
 
-        // Tulostaa "sininen". Voimme viitata olion metodin sisältä sen attribuuttiin 'this'-viitteen avulla.
+        // Tulostaa "sininen". Voimme viitata olion metodin sisältä sen 
+        // attribuuttiin 'this'-viitteen avulla.
         IO.println(this.väri); 
     }
 }
@@ -97,7 +110,8 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    // Olion metodi, joka ottaa vastaan merkkijonon ja sijoittaa sen 'väri'-attribuuttiin.
+    // Olion metodi, joka ottaa vastaan merkkijonon ja sijoittaa 
+    // sen 'väri'-attribuuttiin.
     public void setVäri(String väri) {
         // Parametrilla ja attribuutilla on sama nimi, joten käytämme this-viitettä.
         this.väri = väri;
@@ -123,7 +137,8 @@ void main() {
     IO.println(rakennus1.getVäri()); // Tulostaa "vihreä"
     IO.println(rakennus2.getVäri()); // Tulostaa "valkoinen"
 
-    // Huom! Emme voi kutsua olion metodia ilman oliota. Jos yritämme kutsua olion metodia luokan kautta seuraavasti, se aiheuttaa virheen.
+    // Huom! Emme voi kutsua olion metodia ilman oliota. Jos yritämme 
+    // kutsua olion metodia luokan kautta seuraavasti, se aiheuttaa virheen.
     // Rakennus.setVäri("sininen");
 }
 // FILE_END
@@ -168,7 +183,8 @@ Voimme määritellä luokkaan myös muuttujia ja aliohjelmia, joiden ei ole tark
 
 Lisätään esimerkkiin nyt staattinen attribuutti `luokanNimi` ja metodi `annaLuokanNimi`, joka yksinkertaisesti palauttaa staattisen attribuutin arvon.
 
-HUOM! Vastaava staattinen metodi itse asiassa on jo olemassa nimellä `getClass`, vaikka emme sellaista itse määrittelekään. Tällaisia valmiita metodeja on kaikissa luomissamme luokissa valmiiksi. Palaamme siihen miksi näin on osassa 3.
+> [!HUOMAUTUS]
+> Vastaava staattinen metodi itse asiassa on jo olemassa nimellä `getClass`, vaikka emme sellaista itse määrittelekään. Tällaisia valmiita metodeja on kaikissa luomissamme luokissa valmiiksi. Palaamme siihen miksi näin on osassa 3.
 
 ```java
 class Henkilo {
@@ -192,19 +208,17 @@ Tämäkään havainnollistus ei ehkä täysin vastaa todellisuutta, mutta se aut
 
 Oliot pääsevät aina käsiksi oman luokkansa staattisiin attribuutteihin ja metodeihin. Nämä ovat kuitenkin jaettuja kaikkien luokan olioiden kesken, sillä ne eivät kuulu yhdellekään oliolle. Jos olio muuttaa luokkansa staattisen attribuutin arvoa, tämä muutos näkyy kaikille saman luokan olioille. Vastaavasti staattinen metodi "sijaitsee" vain luokassa, eikä kyseisestä metodista voi nähdä minkään olion tilaa edes silloin, kun sitä kutsutaan jonkin olion metodin sisältä. Staattisista metodeista päästään toki käsiksi saman luokan staattisiin attribuutteihin. Staattisia metodeja voidaan kutsua suoraan luokan kautta ilman olion luomista, mikä tekee niiden kutsumisesta hieman helpompaa.
 
-HUOM! Tulostamisessa tähän mennessä käyttämämme `IO.println()` on itse asiassa [IO-luokan](https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IO.html) staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka kerta luoda IO-oliota ja kutsua sen `println`-metodia.
+> [!HUOMAUTUS]
+> Tulostamisessa tähän mennessä käyttämämme `IO.println()` on itse asiassa [IO-luokan](https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IO.html) staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka kerta luoda IO-oliota ja kutsua sen `println`-metodia.
 
 ```java
 void main() {
-    // Kutsumme tässä Henkilo-luokan metodia. Meidän ei tarvitse luoda oliota kutsuaksemme staattista metodia.
+    // Kutsumme tässä Henkilo-luokan metodia. Meidän ei tarvitse 
+    // luoda oliota kutsuaksemme staattista metodia.
     String luokka = Henkilo.annaLuokanNimi();
     IO.println(luokka);
 }
 ```
-
-HUOM! Staattisuutta voisi ajatella yksinkertaistettuna niin, että staattisesta muuttujasta tai aliohjelmasta voi olla ohjelman muistissa vain yksi ilmentymä, joten se täytyy jakaa kaikkien kesken.
-
-TODO: Staattinen luokka? Voi olla vain sisäinen luokka. Ei hirveän hyödyllinen kurssin osaamistavoitteiden kannalta.
 
 Koska staattiset metodit eivät liity mihinkään olioon, niiden sisällä ei myöskään voi käyttää `this`-viitettä. Tutustutaan tähän seuraavaksi.
 
@@ -236,7 +250,8 @@ public class Rakennus {
 
 Tämä viite on automaattisesti käytettävissä aina, kun kutsutaan jonkin olion metodia. Metodikutsun yhteydessä `this` asetetaan osoittamaan metodin suorituksen sisällä siihen olioon, jonka metodia kutsuttiin, eikä sitä voi muuttaa. Viitteen kautta metodi pääsee käsiksi oikean olion tilaan sekä sen muihin metodeihin. Olion metodien sisällä `this`-viitettä käytetään implisiittisesti, jos samalla näkyvyysalueella ei ole konfliktia tunnisteissa - esimerkiksi attribuutin kanssa samaa nimeä käyttävää lokaalia muuttujaa. Meidän ei siis tarvitse kirjoittaa aina attribuutin tai metodikutsun eteen `this`, sillä kääntäjä osaa päätellä sen itse, jos konfliktia ei ole. Joissain ohjelmointikielissä tällaista viitettä kutsutaan myös nimellä `self`.
 
-HUOM! Staattiset luokan metodit eivät kiinnity mihinkään olioon, eli niissä ei silloin voi myöskään olla olioon viittaavaa `this`-viitettä.
+> [!HUOMAUTUS]
+> Staattiset luokan metodit eivät kiinnity mihinkään olioon, eli niissä ei silloin voi myöskään olla olioon viittaavaa `this`-viitettä.
 
 Katsotaan muutamaa esimerkkiä `this`-viitteen käytöstä.
 
@@ -247,19 +262,24 @@ public class Rakennus {
     private String väri;
 
     public void setVäri(String väri) {
-        // Käytämme tässä this-viitettä, sillä attribuutilla ja parametrilla on sama nimi. Lokaalia muuttujaa käytettäisiin muuten ensisijaisesti.
+        // Käytämme tässä this-viitettä, sillä attribuutilla ja parametrilla 
+        // on sama nimi. Lokaalia muuttujaa käytettäisiin muuten ensisijaisesti.
         this.väri = väri; 
     }
 
     public String getVäri() {
-        // Tässä this on vapaaehtoinen. Samalla näkyvyysalueella ei ole muita "väri" nimisiä muuttujia, joten sekaannusta ei tapahdu.
+        // Tässä this on vapaaehtoinen. Samalla näkyvyysalueella ei ole muita 
+        // "väri" nimisiä muuttujia, joten sekaannusta ei tapahdu.
         // this-viitteen käyttö on kuitenkin täysin sallittua.
         return this.väri;
     }
 
-    // Huom! Teimme tästä metodista virheellisesti staattisen, eli vaikka kutsumme sitä jonkin olion kautta, sen sisällä ei ole tietoa oliosta.
+    // Huom! Teimme tästä metodista virheellisesti staattisen, eli vaikka kutsumme 
+    // sitä jonkin olion kautta, sen sisällä ei ole tietoa oliosta.
     public static void tulosta() {
-        // Kumpikaan alla olevista ei onnistu, sillä emme voi päästä 'this' viitteen kautta olion tilaan käsiksi, eikä metodissa ola lokaalia muuttujaa 'omistaja'.
+        // Kumpikaan alla olevista ei onnistu, sillä emme voi päästä 'this' viitteen 
+        // kautta olion tilaan käsiksi, eikä metodissa ole 
+        // lokaalia muuttujaa 'omistaja'.
         // IO.println(omistaja);
         // IO.println(this.omistaja);
     }
@@ -302,7 +322,8 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    // Kutsumme olion metodia, joka välittää itse olion eteenpäin staattiselle metodille.
+    // Kutsumme olion metodia, joka välittää itse olion 
+    // eteenpäin staattiselle metodille.
     Rakennus talo = new Rakennus();
     talo.teeJotain(); 
 }
@@ -344,15 +365,16 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    // Parametriton perusmuodostaja, joka vastaa oletusmuodostajaa.
+    // Parametriton, joka vastaa oletusmuodostajaa.
     public Rakennus() {
-        // Voisimme täällä alustaa olion tilan jollain tavalla, esimerkiksi asettamalla attribuuteille alkuarvot.
+        // Voisimme täällä alustaa olion tilan jollain tavalla, 
+        // esimerkiksi asettamalla attribuuteille alkuarvot.
     }
 }
 // FILE_END
 // FILE: main.java
 void main() {
-    // Olio luodaan määrittelemäämme perusmuodostajaa käyttäen.
+    // Olio luodaan määrittelemäämme parametritonta muodostajaa käyttäen.
     Rakennus rakennus = new Rakennus();
 }
 // FILE_END
@@ -366,7 +388,7 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    // Parametriton perusmuodostaja. Tämä on nyt pakollinen, koska määrittelimme luokkaan toisenkin muodostajan.
+    // Parametriton muodostaja. Tämä on nyt pakollinen, koska määrittelimme luokkaan toisenkin muodostajan.
     public Rakennus() {
         // Voisimme täällä alustaa olion tilan jollain tavalla, esimerkiksi asettamalla attribuuteille alkuarvot.
     }
@@ -380,7 +402,7 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    // Oliolle ei anneta luonnin yhteydessä argumentteja. Kääntäjä valitsee parametrittoman perusmuodostajan.
+    // Oliolle ei anneta luonnin yhteydessä argumentteja. Kääntäjä valitsee parametrittoman muodostajan.
     Rakennus rakennus1 = new Rakennus();
 
     // Oliolle annetaan kaksi merkkijonoa argumentteina. Nämä vastaavat määrittelemäämme parametrillista muodostajaa, joten sitä käytetään olion muodostamiseen.
@@ -426,7 +448,7 @@ void main() {
 // FILE_END
 ```
 
-Voimme lisäksi käyttää muodostajassa `this`-avainsanaa kuin metodia, jos haluamme siirtää muodostamisen toiselle muodostajalle. Muutetaan luokkaa nyt niin, että perusmuodostaja käyttää parametrillista muodostajaa antamaan attribuuteille alkuarvot.
+Voimme lisäksi käyttää muodostajassa `this`-avainsanaa kuin metodia, jos haluamme siirtää muodostamisen toiselle muodostajalle. Muutetaan luokkaa nyt niin, että parametriton muodostaja käyttää parametrillista muodostajaa antamaan attribuuteille alkuarvot.
 
 ```java
 // FILE: Rakennus.java
@@ -474,9 +496,9 @@ void main() {
 
 TODO: Tämä osio pitää vielä siistiä.
 
-Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Tyypiltään sopiva viitemuuttuja asetetaan osoittamaan tähän muistipaikkaan. Olioon päästään käsiksi viitemuuttujan kautta ja sen tilaa voidaan tarkastella ja muokata metodien avulla.
+Olion elinkaari lyhyesti; olion rakenne määritellään ensin luokalla. Ohjelman ajon aikana luokasta luodaan ilmentymä eli olio. Olion luonnin yhteydessä sille varataan ensin sopiva tila Javan virtuaalikoneen kekomuistista. Jotta olioon voidaan päästä käsiksi, luodaan sitä varten viitemuuttuja. Java-kääntäjä tarkistaa käännöksen yhteydessä, että muuttuja on yhteensopiva luodun olion kanssa, ja asettaa viitteen osoittamaan luotuun olioon.
 
-Kun olioon ei enää ole yhtään viitettä olemassa, myös olio tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
+Kun olioon ei enää ole yhtään viitettä olemassa, se tuhoutuu. Javassa ohjelmoijan ei tarvitse itse pitää huolta muistin varaamisesta tai vapauttamisesta. Tuhoutuneiden olioiden varaama muisti vapautetaan lopulta Javan automaattisen roskienkeräyksen toimesta.
 
 Käydään vielä olion koko elinkaari läpi esimerkkien avulla. Tarvitsemme olioiden luomista varten ensimmäiseksi luokan. Tehdään esimerkkejä varten yksinkertainen luokka `Henkilo`, johon voimme tallentaa henkilön nimen ja syntymävuoden.
 
@@ -518,25 +540,33 @@ Määrittelimme `Henkilo`-luokassa, että parametriton muodostaja ei alusta olio
 
 ```java
 void main() {
-    // Voimme luoda viitemuuttujan ilman että se viittaa mihinkään olioon. Oliota ei tässä luoda.
+    // Voimme luoda viitemuuttujan ilman että se viittaa mihinkään 
+    // olioon. Oliota ei tässä luoda.
     Henkilo h0;
 
-    // Tässä luodaan olio ja sijoitetaan viite h0-muuttujaan. Kääntäjä valitsee käytettäväksi parametrittoman perusmuodostajan, sillä muodostajalle ei anneta argumentteja.
+    // Tässä luodaan olio ja sijoitetaan viite h0-muuttujaan. 
+    // Kääntäjä valitsee käytettäväksi parametrittoman muodostajan, 
+    // sillä muodostajalle ei anneta argumentteja.
     h0 = new Henkilo(); 
 
-    // Tässä luodaan olio, mutta viitettä ei sijoiteta mihinkään. Emme pääse tähän olioon enää käsiksi ja se merkitään tuhottavaksi.
+    // Tässä luodaan olio, mutta viitettä ei sijoiteta mihinkään. 
+    // Emme pääse tähän olioon enää käsiksi ja se merkitään tuhottavaksi.
     new Henkilo();
 
-    // Yleensä on suoraviivaisempaa esitellä viitemuuttuja ja luoda siihen sijoitettava olio yhdessä.
+    // Yleensä on suoraviivaisempaa esitellä viitemuuttuja ja 
+    // luoda siihen sijoitettava olio yhdessä.
     Henkilo h1 = new Henkilo();
 
-    // Voimme käyttää parametrillista muodostajaa antamalla muodostajalle parametreja vastaavat arvot - nimi ja syntymävuosi.
+    // Voimme käyttää parametrillista muodostajaa antamalla muodostajalle 
+    // parametreja vastaavat arvot - nimi ja syntymävuosi.
     Henkilo h2 = new Henkilo("Anna", 1995);
 
-    // Tämä ei käy, sillä emme määritelleet luokalle muodostajaa, jolla on vain nimi parametrina.
+    // Tämä ei käy, sillä emme määritelleet luokalle muodostajaa, jolla 
+    // on vain nimi parametrina.
     // Henkilo h3 = new Henkilo("Mikko");
 
-    // Voimme luoda toisenkin viitteen Anna-olioon. Sekä h2 että h3 osoittavat nyt samaan olioon.
+    // Voimme luoda toisenkin viitteen Anna-olioon. 
+    // Sekä h2 että h3 osoittavat nyt samaan olioon.
     Henkilo h3 = h2;
 }
 ```
