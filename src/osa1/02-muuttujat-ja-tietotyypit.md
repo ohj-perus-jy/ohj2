@@ -48,6 +48,8 @@ Javassa on kahdeksan sisäänrakennettua [alkeistietotyyppiä](https://docs.orac
 | int    | 4 tavua (32 bittiä)  | n. -2 miljardia ... 2 miljardia |
 | long   | 8 tavua (64 bittiä)  | n. +/- 9 * 10^18                |
 
+TODO: Esimerkki siitä, mitä tapahtuu kun operoidaan luvuilla jotka ylittävät lukualueen. Python, C#. 
+
 **Liukuluvut**: Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on `double`.
 
 | Tyyppi | Koko (tavua)        | Tarkkuus                  |
