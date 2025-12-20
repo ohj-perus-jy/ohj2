@@ -271,34 +271,68 @@ Tee seuraavasti:
    erillisiä ajokonfiguraatioita projektin ajamiselle, testaamiselle ja
    kääntämiselle.
 
+> [!VINKKI]
+>
+> **Tutustu yleisimpiin pikanäppäinkomentoihin**
+>
+> Näppäinkomennot nopeuttavat kehitysympäristön käyttöä, ja pienellä harjoittelulla ohjelmointi voi sujua kokonaan hiirtä käyttämättä.
+>
+> Näppäinkomennot riippuvat käyttöjärjestelmästä ja valituista näppäinasetuksista.
+> IDEA kuitenkin näyttää näppäinkomennot valikoissa sekä vihjeteksteissä,
+> mikä helpottaa komentojen oppimista.
+>
+> <img src="images/intellij-shortcut-helper.png" width="500">
+>
+> Voit myös muokata näppäinkomentoja asetuksista (**File** <i class="bi bi-chevron-right"></i> **Settings** <i class="bi bi-chevron-right"></i> **Keymap**)
+> tai ladata muiden kehitysympäristöjen, kuten Visual Studio Coden, näppäinasetuksia laajennoskaupasta (**File** <i class="bi bi-chevron-right"></i> **Plugins**).
+
 ### Usean ohjelman tekeminen samaan projektiin
 
 Opintojakson edetessä tehdään useita pienempiä ja suurempia ohjelmia.
 Vaikka jokaiselle ohjelmalle voi tehdä oman projektin, saatat huomata, että
-helpompaa olisi tehdä yksi iso projekti (esim. `Viikon1Tehtavat`),
-johon voi kirjoittaa useita ohjelmia samaan aikaan.
-IDEA:ssa saman projektin sisällä voi tehdä *alimoduuleita* (eng. submodules),
-jotka sisältävät oman `src`-kansion ja joita voi ajaa omalla ajokonfiguraatiolla.
+helpompaa on tehdä yksi iso projekti (esim. `Viikon1Tehtavat`),
+johon voi kirjoittaa useita ohjelmia samassa projektissa.
+IDEA:ssa saman projektin sisällä voi tehdä alimoduuleita (engl. submodules),
+joilla on oma `src`-kansionsa ja joita voi ajaa omilla ajokonfiguraatioillaan.
 
 Luodaan seuraavaksi alimoduuli nimeltään `HelloProgramming`, lisätään
-siihen uusi ohjelma ja kokeilaan ajaa se.
+siihen uusi ohjelma ja kokeillaan ajaa se.
 
 Tee seuraavasti:
 
-1. Klikkaa hiiren toissijaisella painikkeella projektin nimestä projektinäkymässä (`HelloWorld`)
+1. Klikkaa hiiren toissijaisella painikkeella projektin nimeä projektinäkymässä (`HelloWorld`)
    ja valitse **New** <i class="bi bi-chevron-right"></i> **Module**.
 
-2. Avautuneesta **New module** -dialogista aseta moduulin nimeksi `HelloProgramming`.
-   Muut asetukset kopioituvat automaattisesti projektin asetuksista; voit jättää ne siis muokkaamatta.
+2. Avautuvassa **New Module** -dialogissa aseta moduulin nimeksi `HelloProgramming`.
+   Muut asetukset kopioituvat automaattisesti projektin asetuksista; voit jättää ne muokkaamatta.
 
-   Paina lopuksi **Create**. Tämä luo uuden `HelloPrograming`-kansion, joka sisältää
+   Paina lopuksi **Create**. Tämä luo uuden `HelloProgramming`-kansion, joka sisältää
    oman `src`-kansion.
 
+   <video src="images/intellij-submodule-create.mp4" controls></video>
 
+3. Lisää uusi **Java Compact File** -tiedosto `HelloProgramming/src`-kansioon yllä olevalla
+   [Luo lähdekooditiedosto](#luo-lähdekooditiedosto) -ohjeella.
+   Voit antaa tiedoston nimeksi `MoiOhjelmointi.java`.
+
+   Lisää tiedostoon seuraava lähdekoodi:
+
+   ```java,noplayground
+   void main() {
+      IO.println("Opiskelen Java-ohjelmointia!");
+   }
+   ```
+
+4. Aja `MoiOhjelmointi.java` yllä olevalla [Ohjelman ajaminen](#ohjelman-ajaminen) -ohjeella.
+
+   Huomaa, että `MoiOhjelmointi`-ohjelman ajamisen jälkeen IDEA luo uuden
+   ajokonfiguraation, joka on jatkossa valittavissa ajopainikkeen (<i class="bi
+   bi-play-fill"></i>) viereisestä alasvetovalikosta.
    
+   <video src="images/intellij-submodule-run.mp4" controls></video>
 
-TODO: Usean moduulin luominen  
-TODO: Yleiset pikanäppäimet, tai mistä löytää
+   Tällä tavoin voit tehdä useita ohjelmia (esim. kurssin tehtäviä)
+   saman projektin sisällä.
 
 ## Miten Java-ohjelmat ajetaan?
 
@@ -490,14 +524,18 @@ void main() {
 <task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
 <handout>
 
-Tee uusi IDEA-projekti nimeltään `OmatTiedot`. Lisää projektiin uusi
-Java-tiedosto (Java Compact File) nimeltään `OmatTiedot.java`
-ja kirjoita ohjelma, joka tulostaa *kullekin eri riville*
+Tee uusi IDEA-projekti nimeltään `Tehtavat` (ks. [Luo uusi
+projekti](#luo-uusi-java-projekti) ohje).
+Lisää projektiin alimoduuli `Tehtava11` (ks. [Usean projektin tekeminen samaan
+projektiin](#usean-ohjelman-tekeminen-samaan-projektiin) -ohje).
 
-- Nimesi
-- Puhelimesi merkin
-- Puhelimesi mallin
+Lisää projektiin Java Compact File -tiedosto nimeltään `OmatTiedot.java`.
+Kirjoita tiedostoon ohjelma, joka tulostaa *kullekin eri riville*
+
+- nimesi,
+- puhelimesi merkin
+- puhelimesi mallin
 
 </handout>
-<task-link><a href="#">Tee tehtävä TIMissä</a></task-link>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava1">Tee tehtävä TIMissä</a></task-link>
 </task>
