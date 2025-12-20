@@ -146,8 +146,8 @@ details summary:hover {
 
 @media only screen and (min-width: 620px) {
     #sidebar-toggle-anchor:checked ~ .page-wrapper > footer {
-        /* Offset the page wrapper margin so the footer covers the sidebar area */
-        margin-inline-start: calc((var(--sidebar-width) + var(--sidebar-resize-indicator-width)) * -1);
+        /* Keep footer aligned with content; avoid overlapping the sidebar. */
+        margin-inline-start: 0;
     }
     #sidebar-toggle-anchor:checked ~ .sidebar {
         bottom: var(--footer-offset);

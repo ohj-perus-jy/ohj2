@@ -588,6 +588,12 @@ html:not(.sidebar-resizing) .sidebar {
 [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-wrapper {
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
 }
+
+#sidebar-toggle-anchor:checked ~ footer {
+    margin-inline-start: calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width));
+}
+
+
 @media only screen and (min-width: 620px) {
     #sidebar-toggle-anchor:checked ~ .page-wrapper {
         transform: none;
@@ -597,6 +603,7 @@ html:not(.sidebar-resizing) .sidebar {
         transform: none;
     }
 }
+
 
 .chapter {
     list-style: none outside none;
