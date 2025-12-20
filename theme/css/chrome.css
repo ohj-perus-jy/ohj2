@@ -25,39 +25,41 @@ a > .hljs {
 
 .page-layout {
     position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
 }
 
-@media only screen and (min-width: 1080px) {
+.page-layout > .sidebar {
+    position: sticky;
+    top: 0;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    height: 100vh;
+    flex-grow: 0;
+    flex-shrink: 0;
+    flex-basis: var(--sidebar-width);
+    width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    overflow: hidden;
+    transition: width 0.3s, max-width 0.3s, flex-basis 0.3s, transform 0.3s;
+}
+
+.page-layout > .page-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+@media only screen and (min-width: 1300px) {
     .page-layout {
-        display: flex;
-        align-items: stretch;
         justify-content: center;
-        width: 100%;
         max-width: calc(var(--sidebar-width) + var(--content-max-width) + (var(--page-padding) * 2));
         margin-inline: auto;
     }
 
-    .page-layout > .sidebar {
-        position: sticky;
-        top: 0;
-        left: auto;
-        right: auto;
-        bottom: auto;
-        height: 100vh;
-        flex: 0 0 var(--sidebar-width);
-    }
-
-    .page-layout > .page-wrapper {
-        flex: 0 1 auto;
-        min-width: min(100%, calc(var(--content-max-width) + (var(--page-padding) * 2)));
-    }
-
     #sidebar-toggle-anchor:not(:checked) ~ .page-layout {
         max-width: calc(var(--content-max-width) + (var(--page-padding) * 2));
-    }
-
-    #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
-        display: none;
     }
 }
 
@@ -110,7 +112,7 @@ html.sidebar-visible #menu-bar {
         padding: 0 5px;
     }
 }
-@media only screen and (min-width: 1080px) {
+@media only screen and (min-width: 1300px) {
     #sidebar-toggle {
         display: none;
     }
@@ -588,6 +590,8 @@ html:not(.sidebar-resizing) .sidebar {
     right: 0;
     padding: 10px 10px;
     scrollbar-color: transparent transparent;
+    opacity: 1;
+    transition: scrollbar-color linear 0.1s, opacity 0.2s ease;
 }
 
 .sidebar-scrollbox:hover {
@@ -597,10 +601,19 @@ html:not(.sidebar-resizing) .sidebar {
 
 /* sidebar-hidden */
 #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
+    width: 0;
+    flex-basis: 0;
+    max-width: 0;
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
 }
 [dir=rtl] #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
+    width: 0;
+    flex-basis: 0;
+    max-width: 0;
     transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
+}
+ #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar .sidebar-scrollbox {
+    opacity: 0;
 }
 .sidebar::-webkit-scrollbar {
     background: var(--sidebar-bg);
@@ -617,24 +630,14 @@ html:not(.sidebar-resizing) .sidebar {
 
 /* sidebar-visible */
 #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
-    transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
+    transform: none;
+    margin-inline-start: 0;
 }
 [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
-    transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
+    transform: none;
 }
-@media only screen and (min-width: 620px) {
-    #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
-        transform: none;
-        margin-inline-start: calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width));
-    }
-    [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
-        transform: none;
-    }
-}
-@media only screen and (min-width: 1080px) {
-    #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
-        margin-inline-start: 0;
-    }
+ #sidebar-toggle-anchor:checked ~ .page-layout .sidebar {
+    transform: translateX(0);
 }
 
 .chapter {

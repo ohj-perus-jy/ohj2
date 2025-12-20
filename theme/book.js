@@ -529,36 +529,62 @@ aria-label="Show hidden lines"></button>';
     const sidebarToggleButton = document.getElementById('sidebar-toggle');
     const sidebarCheckbox = document.getElementById('sidebar-toggle-anchor');
     let firstContact = null;
+    let sidebarAnimation = null;
 
-
-    /* Because we cannot change the `display` using only CSS after/before the transition, we
-       need JS to do it. We change the display to prevent the browsers search to find text inside
-       the collapsed sidebar. */
-    if (!document.documentElement.classList.contains('sidebar-visible')) {
-        sidebar.style.display = 'none';
+    function getSidebarTargetWidth() {
+        const rootStyles = getComputedStyle(document.documentElement);
+        const target = parseFloat(rootStyles.getPropertyValue('--sidebar-target-width')) || 300;
+        const max = window.innerWidth * 0.8;
+        return Math.min(target, max);
     }
-    sidebar.addEventListener('transitionend', () => {
-        /* We only change the display to "none" if we're collapsing the sidebar. */
-        if (!sidebarCheckbox.checked) {
-            sidebar.style.display = 'none';
+
+    function setSidebarSize(widthPx) {
+        const widthValue = `${Math.max(widthPx, 0)}px`;
+        sidebar.style.width = widthValue;
+        sidebar.style.maxWidth = widthValue;
+        sidebar.style.flexBasis = widthValue;
+    }
+
+    function syncSidebarSize() {
+        if (sidebarCheckbox.checked) {
+            setSidebarSize(getSidebarTargetWidth());
+        } else {
+            setSidebarSize(0);
         }
-    });
-    sidebarToggleButton.addEventListener('click', () => {
-        /* To allow the sidebar expansion animation, we first need to put back the display. */
-        if (!sidebarCheckbox.checked) {
-            sidebar.style.display = '';
-            // Workaround for Safari skipping the animation when changing
-            // `display` and a transform in the same event loop. This forces a
-            // reflow after updating the display.
-            sidebar.offsetHeight;
+    }
+
+    function animateSidebar(show) {
+        const fromWidth = sidebar.getBoundingClientRect().width;
+        const toWidth = show ? getSidebarTargetWidth() : 0;
+
+        if (sidebarAnimation) {
+            sidebarAnimation.cancel();
         }
-    });
+
+        setSidebarSize(fromWidth);
+        sidebarAnimation = sidebar.animate(
+            [
+                { width: `${fromWidth}px`, maxWidth: `${fromWidth}px`, flexBasis: `${fromWidth}px` },
+                { width: `${toWidth}px`, maxWidth: `${toWidth}px`, flexBasis: `${toWidth}px` }
+            ],
+            { duration: 300, easing: 'ease' }
+        );
+
+        sidebarAnimation.onfinish = () => {
+            setSidebarSize(toWidth);
+            sidebarAnimation = null;
+        };
+    }
+
+    syncSidebarSize();
 
     window.addEventListener('resize', function sidebarResizeAutoShow() {
-        if (window.innerWidth >= 1080 && !sidebarCheckbox.checked) {
+        if (window.innerWidth >= 1300 && !sidebarCheckbox.checked) {
             sidebarCheckbox.checked = true;
-            sidebar.style.display = '';
             showSidebar();
+            animateSidebar(true);
+        } else if (sidebarCheckbox.checked) {
+            setSidebarSize(getSidebarTargetWidth());
         }
     });
 
@@ -592,7 +618,7 @@ aria-label="Show hidden lines"></button>';
 
     // Toggle sidebar
     sidebarCheckbox.addEventListener('change', function sidebarToggle() {
-        if (window.innerWidth >= 1080 && !sidebarCheckbox.checked) {
+        if (window.innerWidth >= 1300 && !sidebarCheckbox.checked) {
             sidebarCheckbox.checked = true;
             showSidebar();
             return;
@@ -604,8 +630,10 @@ aria-label="Show hidden lines"></button>';
                 document.documentElement.style.setProperty('--sidebar-target-width', '150px');
             }
             showSidebar();
+            animateSidebar(true);
         } else {
             hideSidebar();
+            animateSidebar(false);
         }
     });
 
