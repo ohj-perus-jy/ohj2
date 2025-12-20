@@ -110,6 +110,26 @@ html:not(.js) .left-buttons button {
 .menu-title {
     cursor: pointer;
 }
+.menu-title-full {
+    display: inline;
+}
+.menu-title-short {
+    display: none;
+}
+
+@media only screen and (max-width: 470px) {
+    .menu-title-full {
+        display: none;
+    }
+    .menu-title-short {
+        display: inline;
+    }
+}
+@media only screen and (min-width: 471px) {
+    .menu-title-short {
+        display: none;
+    }
+}
 
 .menu-bar,
 .menu-bar:visited,
