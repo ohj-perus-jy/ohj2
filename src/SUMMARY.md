@@ -3,7 +3,6 @@
 [Aloitus](./index.md)
 [Suorittaminen](./suorittaminen.md)
 [Työkalut ja asentaminen](./tyokalut.md)
-[Tuki ja palaute](./tuki-ja-palaute.md)
 [Harjoitustyö](./harjoitustyo.md)
 [Tentti](./tentti.md)
 

@@ -25,10 +25,17 @@
 	"appPort": [36742],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash ./update-mdbook.sh"
+	"postCreateCommand": "bash ./update-mdbook.sh",
 
 	// Configure tool-specific properties.
-	// "customizations": {},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dnut.rewrap-revived",
+				"yzhang.markdown-all-in-one"
+			]
+		}
+	},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
 	// "remoteUser": "root"
