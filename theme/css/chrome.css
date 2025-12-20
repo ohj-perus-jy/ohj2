@@ -63,13 +63,12 @@ a > .hljs {
 
 /* Menu Bar */
 
-#menu-bar,
-#menu-bar-hover-placeholder {
-    z-index: 101;
-    margin: auto calc(0px - var(--page-padding));
-}
 #menu-bar {
     position: relative;
+    z-index: 220;
+    width: calc(100% + var(--page-padding) * 2);
+    margin-inline-start: calc(var(--page-padding) * -1);
+    margin-inline-end: calc(var(--page-padding) * -1);
     display: flex;
     flex-wrap: wrap;
     background-color: var(--header-bg, var(--bg));
@@ -86,10 +85,14 @@ html.sidebar-visible #menu-bar {
     top: 0 !important;
 }
 #menu-bar-hover-placeholder {
+    z-index: 220;
     position: sticky;
     position: -webkit-sticky;
     top: 0;
     height: var(--menu-bar-height);
+    width: calc(100% + var(--page-padding) * 2);
+    margin-inline-start: calc(var(--page-padding) * -1);
+    margin-inline-end: calc(var(--page-padding) * -1);
 }
 #menu-bar.bordered {
     border-block-end-color: var(--table-border-color);
