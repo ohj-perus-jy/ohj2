@@ -23,6 +23,44 @@ a > .hljs {
     overflow-x: clip;
 }
 
+.page-layout {
+    position: relative;
+}
+
+@media only screen and (min-width: 1080px) {
+    .page-layout {
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
+        width: 100%;
+        max-width: calc(var(--sidebar-width) + var(--content-max-width) + (var(--page-padding) * 2));
+        margin-inline: auto;
+    }
+
+    .page-layout > .sidebar {
+        position: sticky;
+        top: 0;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        height: 100vh;
+        flex: 0 0 var(--sidebar-width);
+    }
+
+    .page-layout > .page-wrapper {
+        flex: 0 1 auto;
+        min-width: min(100%, calc(var(--content-max-width) + (var(--page-padding) * 2)));
+    }
+
+    #sidebar-toggle-anchor:not(:checked) ~ .page-layout {
+        max-width: calc(var(--content-max-width) + (var(--page-padding) * 2));
+    }
+
+    #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
+        display: none;
+    }
+}
+
 /* Menu Bar */
 
 #menu-bar,
@@ -34,8 +72,8 @@ a > .hljs {
     position: relative;
     display: flex;
     flex-wrap: wrap;
-    background-color: var(--bg);
-    border-block-end-color: var(--bg);
+    background-color: var(--header-bg, var(--bg));
+    border-block-end-color: var(--header-border, var(--bg));
     border-block-end-width: 1px;
     border-block-end-style: solid;
 }
@@ -67,6 +105,11 @@ html.sidebar-visible #menu-bar {
 @media only screen and (max-width: 420px) {
     #menu-bar i, #menu-bar .icon-button {
         padding: 0 5px;
+    }
+}
+@media only screen and (min-width: 1080px) {
+    #sidebar-toggle {
+        display: none;
     }
 }
 
@@ -142,10 +185,6 @@ html:not(.js) .left-buttons button {
 
 .menu-bar,
 .menu-bar:visited,
-.nav-chapters,
-.nav-chapters:visited,
-.mobile-nav-chapters,
-.mobile-nav-chapters:visited,
 .menu-bar .icon-button,
 .menu-bar a i {
     color: var(--icons);
@@ -156,115 +195,118 @@ html:not(.js) .left-buttons button {
     color: var(--icons-hover);
 }
 
-.nav-chapters:hover,
-.mobile-nav-chapters:hover {
-    color: var(--theme-hover-text);
-}
-
-/* Nav Icons */
-
-.nav-chapters {
-    text-align: center;
-    text-decoration: none;
-
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    margin: 0;
-    max-width: 150px;
-    min-width: 90px;
-
+.chapter-navigation {
+    width: 100%;
+    max-width: var(--content-max-width);
+    margin-inline: auto;
+    padding-block: 2.4rem;
+    padding-inline: 5px;
+    box-sizing: border-box;
     display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-direction: column;
-
-    transition: color 0.5s, background-color 0.5s;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 3rem;
+    flex-wrap: nowrap;
 }
 
-.nav-chapters:hover {
-    text-decoration: none;
-    background-color: var(--theme-hover);
-    transition: background-color 0.15s, color 0.15s;
-}
-
-.nav-wrapper {
-    margin-block-start: 50px;
-    display: none;
-}
-
-.nav-chapters i, .mobile-nav-chapters i {    
-    font-size: 2.5em;
-}
-
-.mobile-nav-chapters:hover {
-    background-color: var(--theme-hover);
-    transition: background-color 0.15s, color 0.15s;
-    text-decoration: none;
-}
-
-.nav-chapters, .mobile-nav-chapters {
+.chapter-link {
+    flex: 1 1 0;
+    min-width: 0;
     display: flex;
-    flex-direction: column;
-}
-
-.mobile-nav-chapters {
-    text-align: center;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 2.2rem 2.4rem;
     text-decoration: none;
-    min-width: 90px;
-    max-width: 120px;
-    border-radius: 5px;
-    padding: 5px;
-    background-color: var(--sidebar-bg);
+    background-color: var(--bg);
+    transition: background-color 0.2s ease, transform 0.2s ease;
     border: 1px solid var(--sidebar-spacer);
+    color: var(--fg);
 }
 
-/* Only Firefox supports flow-relative values */
-/* .previous { float: left; } */
-/* [dir=rtl] .previous { float: right; } */
-
-/* Only Firefox supports flow-relative values */
-.next {
-    /*float: right;*/
-    right: var(--page-padding);
+.chapter-link:hover {
+    background-color: var(--overlay-bg);
+    color: var(--theme-hover-text);
+    transform: translateY(-2px);
+    text-decoration: none;
 }
-[dir=rtl] .next {
-    /*float: left;*/
-    /*right: unset;*/
-    left: var(--page-padding);
+
+.chapter-link i {
+    font-size: 2.6rem;
+}
+
+.chapter-link-text {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.chapter-link-label {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--theme-hover-text);
+    opacity: 0.8;
+}
+
+.chapter-link-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+
+.chapter-link.next {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.chapter-link.next .chapter-link-text {
+    text-align: right;
+}
+
+.chapter-link.next i {
+    order: 3;
+}
+
+.chapter-link.next .chapter-link-text {
+    order: 2;
+}
+
+.chapter-link.previous i {
+    order: 1;
+}
+
+.chapter-link.previous .chapter-link-text {
+    order: 2;
+}
+
+.chapter-navigation .chapter-link:only-of-type {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (max-width: 640px) {
+    .chapter-navigation {
+        gap: 1.4rem;
+        padding-inline: 5px;
+    }
+    .chapter-link {
+        padding: 1.6rem 1.4rem;
+    }
+    .chapter-link i {
+        font-size: 2.2rem;
+    }
+    .chapter-link-label {
+        font-size: 1rem;
+    }
+    .chapter-link-title {
+        font-size: 1.5rem;
+    }
 }
 
 /* Use the correct buttons for RTL layouts*/
-[dir=rtl] .previous i.fa-angle-left:before {content:"\f105";}
-[dir=rtl] .next i.fa-angle-right:before { content:"\f104"; }
-
-@media only screen and (max-width: 1080px) {
-    .nav-wide-wrapper { display: none; }
-    .nav-wrapper {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
-       align it to the right. */
-    .nav-wrapper:has(> .next:only-child) {
-        justify-content: flex-end;
-    }
-}
-
-/* sidebar-visible */
-@media only screen and (max-width: 1380px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wide-wrapper { display: none; }
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper { 
-        display: flex; 
-        justify-content: space-between;
-    }
-    /* If the nav-wrapper has only one child, and it is .next, make .nav-wrapper
-    align it to the right. */
-    #sidebar-toggle-anchor:checked ~ .page-wrapper .nav-wrapper:has(> .next:only-child) {
-        justify-content: flex-end;
-    }
-}
+[dir=rtl] .chapter-link.previous i.fa-angle-left:before {content:"\f105";}
+[dir=rtl] .chapter-link.next i.fa-angle-right:before { content:"\f104"; }
 
 /* Inline code */
 
@@ -348,10 +390,6 @@ pre > .buttons button.clip-button:hover::before {
         padding: 0.3rem 1rem;
     }
 
-    .sidebar-resize-indicator {
-        /* Hide resize indicator on devices with limited accuracy */
-        display: none;
-    }
 }
 pre > code {
     display: block;
@@ -546,6 +584,7 @@ html:not(.sidebar-resizing) .sidebar {
     left: 0;
     right: 0;
     padding: 10px 10px;
+    scrollbar-color: transparent transparent;
 }
 
 .sidebar-scrollbox:hover {
@@ -553,52 +592,11 @@ html:not(.sidebar-resizing) .sidebar {
     transition: scrollbar-color linear 0.1s;
 }
 
-.sidebar .sidebar-resize-handle {
-    position: absolute;
-    cursor: col-resize;
-    width: 0;
-    right: calc(var(--sidebar-resize-indicator-width) * -1);
-    top: 0;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-}
-
-.sidebar-resize-handle .sidebar-resize-indicator {
-    width: 100%;
-    height: 16px;
-    color: var(--icons);
-    margin-inline-start: var(--sidebar-resize-indicator-space);
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-}
-.sidebar-resize-handle .sidebar-resize-indicator::before {
-    content: "";
-    width: 2px;
-    height: 12px;
-    border-left: dotted 2px currentColor;
-}
-.sidebar-resize-handle .sidebar-resize-indicator::after {
-    content: "";
-    width: 2px;
-    height: 16px;
-    border-left: dotted 2px currentColor;
-}
-
-[dir=rtl] .sidebar .sidebar-resize-handle {
-    left: calc(var(--sidebar-resize-indicator-width) * -1);
-    right: unset;
-}
-.js .sidebar .sidebar-resize-handle {
-    cursor: col-resize;
-    width: calc(var(--sidebar-resize-indicator-width) - var(--sidebar-resize-indicator-space));
-}
 /* sidebar-hidden */
-#sidebar-toggle-anchor:not(:checked) ~ .sidebar {
+#sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
 }
-[dir=rtl] #sidebar-toggle-anchor:not(:checked) ~ .sidebar {
+[dir=rtl] #sidebar-toggle-anchor:not(:checked) ~ .page-layout .sidebar {
     transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
 }
 .sidebar::-webkit-scrollbar {
@@ -607,21 +605,32 @@ html:not(.sidebar-resizing) .sidebar {
 .sidebar::-webkit-scrollbar-thumb {
     background: var(--scrollbar);
 }
+.sidebar .sidebar-scrollbox::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+.sidebar .sidebar-scrollbox:hover::-webkit-scrollbar-thumb {
+    background: var(--sidebar-active);
+}
 
 /* sidebar-visible */
-#sidebar-toggle-anchor:checked ~ .page-wrapper {
+#sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
     transform: translateX(calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width)));
 }
-[dir=rtl] #sidebar-toggle-anchor:checked ~ .page-wrapper {
+[dir=rtl] #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
     transform: translateX(calc(0px - var(--sidebar-width) - var(--sidebar-resize-indicator-width)));
 }
 @media only screen and (min-width: 620px) {
-    #sidebar-toggle-anchor:checked ~ .page-wrapper {
+    #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
         transform: none;
         margin-inline-start: calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width));
     }
-    [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-wrapper {
+    [dir=rtl] #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
         transform: none;
+    }
+}
+@media only screen and (min-width: 1080px) {
+    #sidebar-toggle-anchor:checked ~ .page-layout .page-wrapper {
+        margin-inline-start: 0;
     }
 }
 

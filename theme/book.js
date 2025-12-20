@@ -527,7 +527,6 @@ aria-label="Show hidden lines"></button>';
     const sidebar = document.getElementById('sidebar');
     const sidebarLinks = document.querySelectorAll('#sidebar a');
     const sidebarToggleButton = document.getElementById('sidebar-toggle');
-    const sidebarResizeHandle = document.getElementById('sidebar-resize-handle');
     const sidebarCheckbox = document.getElementById('sidebar-toggle-anchor');
     let firstContact = null;
 
@@ -552,6 +551,14 @@ aria-label="Show hidden lines"></button>';
             // `display` and a transform in the same event loop. This forces a
             // reflow after updating the display.
             sidebar.offsetHeight;
+        }
+    });
+
+    window.addEventListener('resize', function sidebarResizeAutoShow() {
+        if (window.innerWidth >= 1080 && !sidebarCheckbox.checked) {
+            sidebarCheckbox.checked = true;
+            sidebar.style.display = '';
+            showSidebar();
         }
     });
 
@@ -585,6 +592,11 @@ aria-label="Show hidden lines"></button>';
 
     // Toggle sidebar
     sidebarCheckbox.addEventListener('change', function sidebarToggle() {
+        if (window.innerWidth >= 1080 && !sidebarCheckbox.checked) {
+            sidebarCheckbox.checked = true;
+            showSidebar();
+            return;
+        }
         if (sidebarCheckbox.checked) {
             const current_width = parseInt(
                 document.documentElement.style.getPropertyValue('--sidebar-target-width'), 10);
@@ -596,32 +608,6 @@ aria-label="Show hidden lines"></button>';
             hideSidebar();
         }
     });
-
-    sidebarResizeHandle.addEventListener('mousedown', initResize, false);
-
-    function initResize() {
-        window.addEventListener('mousemove', resize, false);
-        window.addEventListener('mouseup', stopResize, false);
-        document.documentElement.classList.add('sidebar-resizing');
-    }
-    function resize(e) {
-        let pos = e.clientX - sidebar.offsetLeft;
-        if (pos < 20) {
-            hideSidebar();
-        } else {
-            if (!document.documentElement.classList.contains('sidebar-visible')) {
-                showSidebar();
-            }
-            pos = Math.min(pos, window.innerWidth - 100);
-            document.documentElement.style.setProperty('--sidebar-target-width', pos + 'px');
-        }
-    }
-    //on mouseup remove windows functions mousemove & mouseup
-    function stopResize() {
-        document.documentElement.classList.remove('sidebar-resizing');
-        window.removeEventListener('mousemove', resize, false);
-        window.removeEventListener('mouseup', stopResize, false);
-    }
 
     document.addEventListener('touchstart', function(e) {
         firstContact = {

@@ -132,6 +132,14 @@ details summary:hover {
 }
 .page-wrapper > footer {
     margin-top: auto;
+    padding-top: 2em;
+    position: relative;
+    z-index: 200;
+}
+.chapter-navigation {
+    position: relative;
+    z-index: 0;
+    margin-bottom: 2em;
 }
 html:not(.js) .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
@@ -140,6 +148,12 @@ html:not(.js) .page-wrapper,
 [dir=rtl]:not(.js) .page-wrapper,
 [dir=rtl].js:not(.sidebar-resizing) .page-wrapper {
     transition: margin-right 0.3s ease, transform 0.3s ease; /* Animation: slide away */
+}
+
+@media only screen and (min-width: 1080px) {
+    .page-wrapper {
+        min-width: min(100%, calc(var(--content-max-width) + (var(--page-padding) * 2)));
+    }
 }
 
 .content {
@@ -151,9 +165,9 @@ html:not(.js) .page-wrapper,
     margin-inline-end: auto;
     max-width: var(--content-max-width);
 }
-.content p { line-height: 1.45em; }
-.content ol { line-height: 1.45em; }
-.content ul { line-height: 1.45em; }
+.content p { line-height: 1.55em; }
+.content ol { line-height: 1.55em; }
+.content ul { line-height: 1.55em; }
 .content a, footer a { text-decoration: none; }
 .content a:hover, footer a:hover { text-decoration: underline; }
 .content nav a:hover { text-decoration: none; }
@@ -254,7 +268,10 @@ footer {
     padding: 2em 0;
     margin-top: 3em;
     color: var(--fg);
-    background-color: var(--theme-hover);
+    /*background-color: var(--footer-bg, var(--theme-hover));*/
+    /*border-block-color: var(--footer-border, transparent);*/
+    /*border-block-width: 1px;*/
+    /*border-block-style: solid;*/
 }
 
 .footnote-definition {

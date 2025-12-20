@@ -120,31 +120,28 @@
             let sidebar = null;
             const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
-                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
-                sidebar = sidebar || 'visible';
-            } else {
-                sidebar = 'hidden';
-                sidebar_toggle.checked = false;
-            }
-            if (sidebar === 'visible') {
+                sidebar = 'visible';
                 sidebar_toggle.checked = true;
             } else {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'hidden';
+                sidebar_toggle.checked = sidebar === 'visible';
+            }
+            if (!sidebar_toggle.checked) {
                 html.classList.remove('sidebar-visible');
             }
         </script>
 
-        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <!-- populated by js -->
-            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
-            <noscript>
-                <iframe class="sidebar-iframe-outer" src="{{ path_to_root }}toc.html"></iframe>
-            </noscript>
-            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
-                <div class="sidebar-resize-indicator"></div>
-            </div>
-        </nav>
+        <div id="page-layout" class="page-layout">
+            <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+                <!-- populated by js -->
+                <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+                <noscript>
+                    <iframe class="sidebar-iframe-outer" src="{{ path_to_root }}toc.html"></iframe>
+                </noscript>
+            </nav>
 
-        <div id="page-wrapper" class="page-wrapper">
+            <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 {{> header}}
@@ -233,41 +230,28 @@
                     <main>
                         {{{ content }}}
                     </main>
-
-                    <nav class="nav-wrapper" aria-label="Page navigation">
-                        <!-- Mobile navigation buttons -->
-                        {{#previous}}
-                            <a rel="prev" href="{{ path_to_root }}{{link}}" class="mobile-nav-chapters previous" title="Previous: {{ title }}" aria-label="Previous: {{ title }}" aria-keyshortcuts="Left">
-                                <i class="fa fa-angle-left"></i>
-                                <span>{{ title }}</span>
-                            </a>
-                        {{/previous}}
-
-                        {{#next}}
-                            <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="mobile-nav-chapters next" title="Next: {{ title }}" aria-label="Next: {{ title }}" aria-keyshortcuts="Right">
-                                <i class="fa fa-angle-right"></i>
-                                <span class="chapter-title">{{ title }}</span>
-                            </a>
-                        {{/next}}
-
-                        <!-- div style="clear: both"></div -->
-                    </nav>
                 </div>
 
             </div>
 
-            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+            <nav class="chapter-navigation" aria-label="Page navigation">
                 {{#previous}}
-                    <a rel="prev" href="{{ path_to_root }}{{link}}" class="nav-chapters previous" title="Edellinen: {{ title }}" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left"></i>
-                        <span>{{ title }}</span>
+                    <a rel="prev" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters previous" title="Edellinen: {{ title }}" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="chapter-link-text">
+                            <span class="chapter-link-label">Edellinen</span>
+                            <span class="chapter-link-title">{{ title }}</span>
+                        </span>
                     </a>
                 {{/previous}}
 
                 {{#next}}
-                    <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="nav-chapters next" title="Seuraava: {{ title }}" aria-label="Next chapter" aria-keyshortcuts="Right">
-                        <i class="fa fa-angle-right"></i>
-                        <span>{{ title }}</span>
+                    <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters next" title="Seuraava: {{ title }}" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <span class="chapter-link-text">
+                            <span class="chapter-link-label">Seuraava</span>
+                            <span class="chapter-link-title">{{ title }}</span>
+                        </span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
                     </a>
                 {{/next}}
             </nav>
@@ -277,6 +261,7 @@
                                     Ehdota muutosta</a> tai <a href="https://github.com/ohj-perus-jy/ohj2/issues" title="Avaa issue GitHubissa" aria-label="Avaa issue GitHubissa">ilmoita ongelmasta</a>.
                 </p> 
             </footer>
+            </div>
         </div>
 
         {{#if live_reload_endpoint}}
