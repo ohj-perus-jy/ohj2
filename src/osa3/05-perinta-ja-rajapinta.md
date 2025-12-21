@@ -641,6 +641,21 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 | Käyttötarkoitus                      | Yhteinen runko ja osittainen toteutus         | Yhteinen sopimus käyttäytymisestä                         |
 
 
+## Tehtävät
+
+<task>
+  <task-title>✨ Bonus: Tehtävä 3.9: Kotityörobotti. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/3-9-kotityorobotti/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava9">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+## Kesken...
+
 
 ```java
 // FILE: Säädettävä.java
@@ -682,3 +697,4 @@ public class Termostaatti extends SaadettavaLaite {
 `Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan,
 mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten
 abstrakti luokka ja rajapinta täydentävät toisiaan.
+
