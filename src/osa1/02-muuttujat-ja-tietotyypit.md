@@ -151,10 +151,13 @@ void main() {
 }
 ```
 
-
 ## Huomautuksia String-tyypistä
 
-**Muuttumattomuus.** Javassa, kuten monissa muissakin kielissä merkkijono on muuttumaton muistin tehokkuuden, säikeiden turvallisuuden ja paremman suorituskyvyn takia. Jos yrität suorittaa jonkin operaation merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono muutu. Katsotaan tästä esimerkki:
+**Muuttumattomuus.** Javassa, kuten monissa muissakin kielissä merkkijono on
+muuttumaton. Tämä liittyy muun muassa muistinkäytön tehokkuuteen ja sitä kautta
+parempaan suorituskykyyn. Jos yrität suorittaa jonkin operaation merkkijonolle,
+saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono muutu. Katsotaan
+tästä esimerkki:
 
 ```java
 //-void main() {
@@ -165,9 +168,11 @@ IO.println(muuttumaton);
 //-}
 ```
 
-Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään, ja alkuperäinen merkkijono pysyy ennallaan. 
+Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään,
+ja alkuperäinen merkkijono pysyy ennallaan. 
 
-**Merkin hakeminen merkkijonosta.** Jos haluat tarkastella tiettyä kirjainta merkkijonossa, se tapahtuu seuraavasti:
+**Merkin hakeminen merkkijonosta.** Jos haluat tarkastella tiettyä kirjainta
+merkkijonossa, se tapahtuu seuraavasti:
 
 ```java
 //-void main() {
@@ -179,7 +184,9 @@ IO.println(mjono.charAt(0));
 
 ## StringBuilder
 
-Jos tarvitsee muunneltavan merkkijonon, käytä `StringBuilder`-luokkaa. Se tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että joka kerta luodaan uusi merkkijono.
+Jos tarvitsee muunneltavan merkkijonon, käytä `StringBuilder`-luokkaa. Se
+tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että joka kerta luodaan uusi
+merkkijono.
 
 ```java
 void main() {
@@ -194,21 +201,28 @@ void main() {
 
 ## Taulukot
 
-Taulukkoja käytetään tallentamaan joukkoa samantyyppisiä alkioita muuttujaan, joka helpottaa datan tehokasta hallintaa ja organisointia.  
+Taulukkoja (engl. *array*) käytetään tallentamaan joukkoa samantyyppisiä
+alkioita muuttujaan. Tämä helpottaa datan tehokasta hallintaa ja organisointia.  
 
-Javan taulukot esitellään syntaksilla 
+Javan taulukot esitellään seuraavalla syntaksilla.
+
 ```java,ignore
 Tyyppi[] nimi = new Tyyppi[koko];
 ```
-Tai jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
+
+Jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
 
 ```java,ignore
 void main () {
-    int[] luvut = {1,2,3,4};
+    int[] luvut = {1, 2, 3, 4 };
 }
 ```
 
-Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla olevassa TODO: (ikkunassa)? kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot vaihtamalla `char` tilalle esimerkiksi `int` tai `double`. 
+Indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen indeksissä 1, ja niin edelleen. Taulukon viimeisen alkion indeksi on aina `taulukko.length - 1`.
+
+Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla
+kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot vaihtamalla `char` tilalle
+esimerkiksi `int` tai `double`. 
 
 ```java,editable
 void main () {
@@ -219,6 +233,12 @@ void main () {
 }
 ```
 
+Jos haluamme lisätä tietorakenteeseen tietoa ohjelman ajon aikana, parempi
+vaihtoehto on käyttää listoja.
+
+Lue lisää taulukoista Javan dokumentaatiosta: <https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html>
+
+
 ## Vakiot
 
 Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että `final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan alaviivalla.
@@ -228,6 +248,87 @@ final int PAIVIA_VIIKOSSA = 7;
 ```
 
 Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähentämiseksi, luotettavuuden parantamiseksi ja parantamaan suorituskykyä
+
+## Listat
+
+Kun emme tiedä datan määrää etukäteen tai se muuttuu jatkuvasti, käytämme listaa. Javan yleisin lista on ArrayList. Se on "älykäs taulukko", joka osaa venyttää itseään tarpeen mukaan.
+
+ArrayList on osa Javan java.util-pakettia, joten se täytyy importata.
+
+Alkioita lisätään listaan `add()`-metodilla, poistetaan `remove()`-metodilla ja
+haetaan `get()`-metodilla. Listan koko saadaan `size()`-metodilla. 
+
+Javassa `add()`-metodille on kaksi toteutusta, joista `add(lisättava)` lisää
+listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa
+siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi
+toteutusta, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion
+ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy. 
+
+```java
+import java.util.ArrayList;
+
+void main () {
+    // Luodaan tyhjä merkkijonolista
+    ArrayList<String> mjonoLista = new ArrayList<>();
+
+    // Lisätään alkioita listaan
+    mjonoLista.add("Matti");
+    mjonoLista.add("Teppo");
+    mjonoLista.add("Liisa");
+
+    // Tulostetaan listan koko
+    System.out.println("Listan koko: " + mjonoLista.size());
+    System.out.println("------");
+    // Haetaan alkio indeksistä 1 (toinen alkio)
+    String toinen = mjonoLista.get(1);
+    System.out.println("Toinen alkio: " + toinen);
+    System.out.println("------");
+
+    // Poistetaan alkio indeksistä 0 (ensimmäinen alkio)
+    mjonoLista.remove(0);
+    System.out.println("Poistettiin ensimmäinen alkio.");
+    System.out.println("------");
+    // Tulostetaan kaikki alkiot
+    for (String mjono : mjonoLista) {
+        System.out.println(mjono);
+    }
+    System.out.println("------");
+
+    // Tulostetaan listan koko
+    System.out.println("Listan koko: " + mjonoLista.size());
+
+
+    //Kaksi esimerkkiä kuinka luoda listaan heti sisältöä
+    List<String> elaimet = new ArrayList<>(List.of("koira", "kissa", "kala"));
+    List<String> varit = Arrays.asList("punainen", "sininen", "keltainen");
+
+    //For-Each on hyvä listojen tulostamiseen
+    for (String mjono : mjonoLista) {
+            IO.println(mjono);
+    }
+
+    for (String mjono : elaimet) {
+        IO.println(mjono);
+    }
+
+    for (String mjono : varit) {
+        IO.println(mjono);
+    }
+}
+```
+
+
+Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä:
+
+| Toiminto                    | Java                 | C#                     | Python            |
+| --------------------------- | -------------------- | ---------------------- | ----------------- |
+| Lukeminen tietystä paikasta | list.get(indeksi)    | list[indeksi]          | list[indeksi]     |
+| Listan koko                 | list.size()          | list.Count             | len(list)         |
+| Poistaminen                 | list.remove(indeksi) | list.RemoveAt(indeksi) | list.pop(indeksi) |
+
+
+Muista metodeista voi lukea dokumentaatiosta: <https://docs.oracle.com/javase/8/docs/api/java/util/List.html>
+
 
 ## Vahva ja staattinen tyypitys
 
