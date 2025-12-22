@@ -10,15 +10,34 @@
 ![alt text](images/interfaces.png)
 
 > [!TODO]
-> Lisää monivalintakysymyksiä /-tehtäviä rajapinnoista. Mahdollisesti "ihan oikeita tehtäviä" pisteiden kera? Voisiko olla esim 4 * 0.25 pisteen kysymystä -> 1 pisteen tehtävä?
+> Lisää monivalintakysymyksiä /-tehtäviä rajapinnoista. Mahdollisesti "ihan
+> oikeita tehtäviä" pisteiden kera? Voisiko olla esim 4 * 0.25 pisteen kysymystä
+> -> 1 pisteen tehtävä?
 
-*Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille, rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
+*Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on
+tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin
+kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille,
+rajapinta keskittyy kuvailemaan olion kyvykkyyksiä. Rajapinta mahdollistaa
+yhtenevän kyvykkyyksien määrittelyn, vaikka luokat olisivat täysin erilaisia tai
+periytyisivät eri paikoista luokkahierarkiassa. Kun ohjelmoija sitten käsittelee
+oliota rajapinnan kautta, hän voi luottaa siihen, että olio tarjoaa sovitun
+kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
 ## Älykoti: säädettävät laitteet{#alykoti-saadettava}
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
+Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa
+suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän
+periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus
+vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin
+kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%),
+sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja
+toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata
+tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan
+haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*-
+tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
 
-Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`. Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
+Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
+Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
 
 ```java,ignore
 /**
@@ -29,11 +48,15 @@ public interface Saadettava {
 }
 ```
 
-Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla luokalla tulee olla `asetaArvo`-metodi.
+Tämän voi lukea seuraavasti: Jokaisella `Saadettava`-rajapinnan toteuttavalla
+luokalla tulee olla `asetaArvo`-metodi.
 
 Nyt voimme muokata `Valo`-luokkaa toteuttamaan `Saadettava`-rajapinnan:
 
-Lisätään `Valo`-luokkaan rajapinnan toteutus (klikkaa `Valo.java`-tiedostoa). Jätämme `Kahvinkeitin`- ja `Turvakamera`-luokat tässä vaiheessa esimerkistä pois, koska päätämme yksinkertaisuuden vuoksi, että ne eivät ole säädettäviä laitteita.
+Lisätään `Valo`-luokkaan rajapinnan toteutus (klikkaa `Valo.java`-tiedostoa).
+Jätämme `Kahvinkeitin`- ja `Turvakamera`-luokat tässä vaiheessa esimerkistä
+pois, koska päätämme yksinkertaisuuden vuoksi, että ne eivät ole säädettäviä
+laitteita.
 
 ```java
 // FILE: main.java
@@ -111,7 +134,10 @@ public abstract class Laite {
 // FILE_END
 ```
 
-Luokkakaaviona esimerkkimme näyttäisi tältä. I-kirjain ilmaisee, että kyseessä on rajapinta. Abstraktin luokan tapaan rajapinta on merkitty kursiivilla. Rajapinnan toteuttaminen esitetään katkoviivalla, jossa on avoin nuoli kohti rajapintaa.
+Luokkakaaviona esimerkkimme näyttäisi tältä. I-kirjain ilmaisee, että kyseessä
+on rajapinta. Abstraktin luokan tapaan rajapinta on merkitty kursiivilla.
+Rajapinnan toteuttaminen esitetään katkoviivalla, jossa on avoin nuoli kohti
+rajapintaa.
 
 ```plantuml
 @startuml
@@ -159,18 +185,34 @@ Saadettava <|.. Valo
 
 ## Usean rajapinnan toteuttaminen
 
-Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu `ArrayList`-luokka toteuttaa rajapintoja: `List`, `RandomAccess`, `Cloneable` ja `Serializable` (ks. [`ArrayList`-luokan dokumentaatio](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)).
+Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu
+`ArrayList`-luokka toteuttaa rajapintoja: `List`, `RandomAccess`, `Cloneable` ja
+`Serializable` (ks. [`ArrayList`-luokan
+dokumentaatio](https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html)).
 
- * `List`-rajapinta määrittelee listan perustoiminnot, kuten elementtien lisäämisen, poistamisen ja hakemisen.
- * `RandomAccess`-rajapinta määrittelee, että listan alkioihin tulee päästä käsiksi nopeasti indeksien avulla. 
+ * `List`-rajapinta määrittelee listan perustoiminnot, kuten elementtien
+   lisäämisen, poistamisen ja hakemisen.
+ * `RandomAccess`-rajapinta määrittelee, että listan alkioihin tulee päästä
+   käsiksi nopeasti indeksien avulla. 
  * `Cloneable`-rajapinta sallii olion kloonauksen eli kopioinnin.
- * `Serializable`-rajapinta sallii olion tallentamisen tiedostoon tai lähettämiseen verkon yli.
+ * `Serializable`-rajapinta sallii olion tallentamisen tiedostoon tai
+   lähettämiseen verkon yli.
 
-Toisaalta myös [Javan `Date`-luokka](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html) toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään `ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
+Toisaalta myös [Javan
+`Date`-luokka](https://docs.oracle.com/javase/8/docs/api/java/util/Date.html)
+toteuttaa muun muassa `Cloneable`-rajapinnan, joka mahdollistaa päivämääräolion
+kloonaamisen. Huomaa, että `Date`-luokka ei liity mitenkään
+`ArrayList`-luokkaan, mutta molemmat toteuttavat saman rajapinnan.
 
-Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttavat molemmat rajapinnat.
+Luodaan nyt itse kaksi rajapintaa ja luokkia, jotka toteuttavat molemmat
+rajapinnat.
 
-Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja `Klikattava`. Näiden rajapintojen avulla voitaisiin määritellä, millaisia komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja korostaa itsensä, kun hiiri on sen päällä. 
+Otetaan esimerkki käyttöliittymäkomponenteista, joita voi piirtää näytölle ja
+joita voi klikata hiirellä. Määritellään kaksi rajapintaa: `Piirrettava` ja
+`Klikattava`. Näiden rajapintojen avulla voitaisiin määritellä, millaisia
+komponentteja käyttöliittymässä on. Sovitaan niin, että piirrettävä komponentti
+osaa piirtää itsensä, ja klikattava komponentti osaa käsitellä klikkauksia ja
+korostaa itsensä, kun hiiri on sen päällä. 
 
 ```java,ignore
 // FILE: Piirrettava.java
@@ -193,9 +235,16 @@ public interface Klikattava {
 // FILE_END
 ```
 
-Huomaa, että emme tiedä emmekä välitä siitä, miten nämä metodit aikanaan toteutetaan. Piirto voi tapahtua graafisella käyttöliittymällä, tekstipohjaisella käyttöliittymällä tai vaikkapa tulostamalla tiedostoon. Meille riittää, että tiedämme, että jokaisella `Pirrettava`-rajapinnan toteuttavalla luokalla on `piirra()`-metodi, ja jokaisella `Klikattava`-rajapinnan toteuttavalla luokalla on `klikattu()`- ja `asetaKorostus(boolean korostus)`-metodit.
+Huomaa, että emme tiedä emmekä välitä siitä, miten nämä metodit aikanaan
+toteutetaan. Piirto voi tapahtua graafisella käyttöliittymällä,
+tekstipohjaisella käyttöliittymällä tai vaikkapa tulostamalla tiedostoon. Meille
+riittää, että tiedämme, että jokaisella `Pirrettava`-rajapinnan toteuttavalla
+luokalla on `piirra()`-metodi, ja jokaisella `Klikattava`-rajapinnan
+toteuttavalla luokalla on `klikattu()`- ja `asetaKorostus(boolean
+korostus)`-metodit.
 
-Mennään eteenpäin. Toteutetaan `Teksti`, joka on pelkkää tekstiä näyttävä käyttöliittymäkomponentti.
+Mennään eteenpäin. Toteutetaan `Teksti`, joka on pelkkää tekstiä näyttävä
+käyttöliittymäkomponentti.
 
 ```java,ignore
 /**
@@ -216,7 +265,11 @@ public class Teksti implements Piirrettava {
 }
 ```
 
-Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että `piirra()`-metodi on ainoa metodi, jota `Piirrettava`-rajapinta tarjoaa. Nyt kuitenkin voimme luoda toisen komponentin, `Painike`, joka on laatikon näköinen klikkattava painike, jossa on tekstiä. `Painike`-luokka toteuttaa molemmat rajapinnat: `Pirrettava` ja `Klikattava`.
+Rajapintojen hyöty ei vielä kokonaisuudessaan välity, osittain siksi, että
+`piirra()`-metodi on ainoa metodi, jota `Piirrettava`-rajapinta tarjoaa. Nyt
+kuitenkin voimme luoda toisen komponentin, `Painike`, joka on laatikon näköinen
+klikkattava painike, jossa on tekstiä. `Painike`-luokka toteuttaa molemmat
+rajapinnat: `Pirrettava` ja `Klikattava`.
 
 ```java,ignore
 /**
@@ -266,7 +319,9 @@ public class Painike implements Piirrettava, Klikattava {
 }
 ```
 
-Nyt meillä on kaksi erilaista käyttöliittymäkomponenttia, jotka molemmat voidaan piirtää näytölle. `Painike`-komponentti on lisäksi klikattava. Käytetään näitä komponentteja pääohjelmassa.
+Nyt meillä on kaksi erilaista käyttöliittymäkomponenttia, jotka molemmat voidaan
+piirtää näytölle. `Painike`-komponentti on lisäksi klikattava. Käytetään näitä
+komponentteja pääohjelmassa.
 
 ```java
 // FILE: Piirrettava.java
@@ -369,13 +424,20 @@ public class Main {
 // FILE_END
 ```
 
-Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin [GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/examples/osa3/E32_Rajapinnat2/src).
+Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin
+[GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/examples/osa3/E32_Rajapinnat2/src).
 
 <details closed><summary>✨ Valinnaista lisätietoa: Piirtämisvastuun siirtäminen pois komponenteista </summary>
 
-Yllä oleva esimerkkimme on siinä mielessä aavistuksen epätodellinen, että käyttöliittymäkomponentit eivät yleensä huolehdi itse itsensä piirtämisestä, vaan piirtämisvastuu on usein erotettu muuhun osaan järjestelmää. Tällöin komponentit vain tarjoavat tiedot, jotka tarvitaan piirtämiseen, ja joku muu osa järjestelmää huolehtii siitä, että komponentit piirretään oikein näytölle (tai muuhun esitystapaan).
+Yllä oleva esimerkkimme on siinä mielessä aavistuksen epätodellinen, että
+käyttöliittymäkomponentit eivät yleensä huolehdi itse itsensä piirtämisestä,
+vaan piirtämisvastuu on usein erotettu muuhun osaan järjestelmää. Tällöin
+komponentit vain tarjoavat tiedot, jotka tarvitaan piirtämiseen, ja joku muu osa
+järjestelmää huolehtii siitä, että komponentit piirretään oikein näytölle (tai
+muuhun esitystapaan).
 
-Muokataan esimerkkiämme tämän ajatuksen mukaisesti. Tehdään `Naytto`-luokka, joka pitää kirjaa kaikista näytöllä näkyvistä käyttöliittymäkomponenteista. 
+Muokataan esimerkkiämme tämän ajatuksen mukaisesti. Tehdään `Naytto`-luokka,
+joka pitää kirjaa kaikista näytöllä näkyvistä käyttöliittymäkomponenteista. 
 
 ```java,ignore
 /**
@@ -394,7 +456,11 @@ public class Naytto {
 }
 ```
 
-Tehdään myös `Piirturi`-luokka, joka toimii välikerroksena `Naytto`-luokan ja käyttöliittymäkomponenttien välillä. `Piirturi`-luokka huolehtii siitä, että komponentit piirretään oikein näytölle. Tässä esimerkissä ne tulostetaan konsolille, mutta oikeassa käyttöliittymässä ne piirrettäisiin graafiselle näytölle.
+Tehdään myös `Piirturi`-luokka, joka toimii välikerroksena `Naytto`-luokan ja
+käyttöliittymäkomponenttien välillä. `Piirturi`-luokka huolehtii siitä, että
+komponentit piirretään oikein näytölle. Tässä esimerkissä ne tulostetaan
+konsolille, mutta oikeassa käyttöliittymässä ne piirrettäisiin graafiselle
+näytölle.
 
 ```java,ignore
 /**
@@ -420,7 +486,9 @@ public class Piirturi {
 }
 ```
 
-Nyt `Naytto`-luokka voi käyttää `Piirturi`-luokkaa piirtämään ne tarvittaessa. Lisätään `Naytto`-luokkaan metodi `paivita()`, joka käy läpi kaikki näytöllä olevat komponentit ja pyytää niitä piirtämään itsensä `Piirturi`-olion avulla.
+Nyt `Naytto`-luokka voi käyttää `Piirturi`-luokkaa piirtämään ne tarvittaessa.
+Lisätään `Naytto`-luokkaan metodi `paivita()`, joka käy läpi kaikki näytöllä
+olevat komponentit ja pyytää niitä piirtämään itsensä `Piirturi`-olion avulla.
 
 ```java,ignore
 import java.util.ArrayList;
@@ -453,7 +521,9 @@ public class Naytto {
 }
 ```
 
-Huomaa, että `Piirrettava`-rajapinnan `piirra()`-metodin tulee nyt ottaa parametrina `Piirturi`-olio. Tämän avulla komponentit voivat käyttää `Piirturi`-oliota piirtämiseen.
+Huomaa, että `Piirrettava`-rajapinnan `piirra()`-metodin tulee nyt ottaa
+parametrina `Piirturi`-olio. Tämän avulla komponentit voivat käyttää
+`Piirturi`-oliota piirtämiseen.
 
 ```java,ignore
 public interface Piirrettava {
@@ -463,7 +533,9 @@ public interface Piirrettava {
 }
 ```
 
-Ja nyt se oleellinen kohta: Tämän seurauksena `Teksti`- ja `Painike`-luokkien `piirra()`-metodit eivät enää itse tulosta mitään, vaan ne kutsuvat `Piirturi`-olion metodeja.
+Ja nyt se oleellinen kohta: Tämän seurauksena `Teksti`- ja `Painike`-luokkien
+`piirra()`-metodit eivät enää itse tulosta mitään, vaan ne kutsuvat
+`Piirturi`-olion metodeja.
 
 ```java,ignore
 /**
@@ -514,9 +586,10 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 
 ## Rajapinnan periminen
 
-Rajapinta voi myös laajentaa (periä) toista rajapintaa. Syntaktisesti tämä tapahtuu käyttämällä `extends`-avainsanaa, kuten luokkien perinnässä. 
-Luokkien perinnästä poiketen rajapinta voi periä useita rajapintoja. 
-Alirajapinta saa kaikki ylirajapinnan metodit. Alla synteettinen esimerkki. 
+Rajapinta voi myös laajentaa (periä) toista rajapintaa. Syntaktisesti tämä
+tapahtuu käyttämällä `extends`-avainsanaa, kuten luokkien perinnässä. Luokkien
+perinnästä poiketen rajapinta voi periä useita rajapintoja. Alirajapinta saa
+kaikki ylirajapinnan metodit. Alla synteettinen esimerkki. 
 
 ```java
 // FILE: A.java
@@ -566,14 +639,18 @@ public class Main {
 
 ## Esimerkit
 
-Löydät kaikki tällä sivulla esitellyt esimerkit [GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit) (E34-alkuiset kansiot).
+Löydät kaikki tällä sivulla esitellyt esimerkit
+[GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit)
+(E34-alkuiset kansiot).
 
 ## Huomautuksia
 
-✨ Valinnaista lisätietoa: Javan versiosta 8 alkaen rajapinnat voivat sisältää myös metodien oletustoteutuksia. Ominaisuus saattaa olla hyödyllinen esimerkiksi tilanteissa, jossa halutaan lisätä uusi metodi olemassa olevaan rajapintaan rikkomatta vanhoja toteutuksia. Lue aiheesta lisää [Javan dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
+✨ Valinnaista lisätietoa: Javan versiosta 8 alkaen rajapinnat voivat sisältää
+myös metodien oletustoteutuksia. Ominaisuus saattaa olla hyödyllinen esimerkiksi
+tilanteissa, jossa halutaan lisätä uusi metodi olemassa olevaan rajapintaan
+rikkomatta vanhoja toteutuksia. Lue aiheesta lisää [Javan
+dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html).
 
-## Tehtävät
-
-Kesken.
-
-Suunnittele `Hälytettävä`-rajapinta, jossa on metodit `trigger()` ja `reset()`. Toteuta rajapintaa hyödyntävä abstrakti `HälytinLaite`, joka pitää kirjaa siitä, montako kertaa hälytys on aktivoitu. Luo kaksi konkreettista laitetta (esim. `SavuHälytin` ja `VesivuotoHälytin`). Mieti, missä kohtaa sijoitat yhteisen lokituksen: rajapintaan (ei mahdollista) vai abstraktiin luokkaan?
+<!-- Tehtäväidea tulevaisuutta varten -->
+<!-- Suunnittele `Hälytettävä`-rajapinta, jossa on metodit `trigger()` ja `reset()`. Toteuta rajapintaa hyödyntävä abstrakti `HälytinLaite`, joka pitää kirjaa siitä, montako kertaa hälytys on aktivoitu. Luo kaksi konkreettista laitetta (esim. `SavuHälytin` ja `VesivuotoHälytin`). Mieti, missä kohtaa sijoitat yhteisen lokituksen: rajapintaan (ei mahdollista) vai abstraktiin luokkaan? -->
+ 
