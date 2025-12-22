@@ -7,7 +7,9 @@
 
 ![Abstraktin luokan ajatusta voidaan havainnollistaa tuoleilla: Puutuoli, keinutuoli ja työtuoli ovat kaikki tuoleja, jotka erikoistavat "istuin"-käsitettä.](images/abstract-class2.png)
 
-Suunnitellessamme ohjelman luokkahierarkiaa&mdash;eli millaisia ali- ja yliluokkasuhteita ohjelman luokilla tulisi olla&mdash;vastaan voi tulla käsite, jolle on hyödyllistä tehdä yhteistä toiminnallisuutta määrittävä yliluokka, josta itsestään ei kuitenkaan ole mielekästä luoda ilmentymiä eli olioita.
+Suunnitellessamme ali- ja yliluokkasuhteita voi tulla tilanne, että olisi
+hyödyllistä tehdä yhteistä toiminnallisuutta määrittävä yliluokka, josta
+itsestään ei kuitenkaan ole mielekästä luoda ilmentymiä eli olioita.
 
 Ajatellaan vaikkapa *tuolia*. Vaikka sana tuoli varmasti herättää meissä mielikuvan jostain tietynlaisesta tuolista, niin todellisuudessa tuoleja on monenlaisia: on puutuoleja, keinutuoleja, työtuoleja ja niin edelleen. Jokainen näistä tuolityypeistä on omanlainen ja hieman erilainen. Voidaan argumentoida, että tuoli-käsite itsessään on abstraktio. Tuolihan on oikeastaan vain asia, joka mahdollistaa istumisen. Tarvitaan aina jokin erikoistava käsite, kuten työtuoli, joka todella kuvaa millaisesta konkreettisesta tuolista on kysymys, ja jollaisia lopulta voidaan valmistaa tuotantolinjalla. 
 
