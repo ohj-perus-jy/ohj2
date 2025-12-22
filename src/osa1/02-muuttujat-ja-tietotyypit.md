@@ -107,9 +107,14 @@ taulukoita ja merkkijonoja.
 
 ### Alkeistietotyypit
 
-Javassa on kahdeksan sisäänrakennettua [alkeistietotyyppiä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html). Lisäksi `String`-tyyppi muistuttaa alkeistietotyyppiä, vaikka teknisesti ottaen se ei sellainen olekaan. Käydään läpi nämä tyypit yksi kerrallaan.
+Javassa on kahdeksan sisäänrakennettua
+[alkeistietotyyppiä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html).
+Lisäksi `String`-tyyppi muistuttaa alkeistietotyyppiä, vaikka teknisesti ottaen
+se ei sellainen olekaan. Käydään läpi nämä tyypit yksi kerrallaan.
 
-**Kokonaisluvut**: Kokonaisluvuille on neljä tyyppiä, jotka eroavat toisistaan lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty kokonaislukutyyppi on `int`. 
+**Kokonaisluvut**: Kokonaisluvuille on neljä tyyppiä, jotka eroavat toisistaan
+lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty
+kokonaislukutyyppi on `int`. 
 
 | Tyyppi | Koko (tavua /bittiä) | Lukualue (suuntaa antava)       |
 | ------ | -------------------- | ------------------------------- |
@@ -118,9 +123,11 @@ Javassa on kahdeksan sisäänrakennettua [alkeistietotyyppiä](https://docs.orac
 | int    | 4 tavua (32 bittiä)  | n. -2 miljardia ... 2 miljardia |
 | long   | 8 tavua (64 bittiä)  | n. +/- 9 * 10^18                |
 
-TODO: Esimerkki siitä, mitä tapahtuu kun operoidaan luvuilla jotka ylittävät lukualueen. Python, C#. 
+TODO: Esimerkki siitä, mitä tapahtuu kun operoidaan luvuilla jotka ylittävät
+lukualueen. Python, C#. 
 
-**Liukuluvut**: Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on `double`.
+**Liukuluvut**: Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on
+`double`.
 
 | Tyyppi | Koko (tavua)        | Tarkkuus                  |
 | ------ | ------------------- | ------------------------- |
@@ -128,7 +135,9 @@ TODO: Esimerkki siitä, mitä tapahtuu kun operoidaan luvuilla jotka ylittävät
 | double | 8 tavua (64 bittiä) | n. 15 merkitsevää numeroa |
 
 
-Koska Java käyttää IEEE 754 standardia desimaalilukujen`double` ja `float` esittämiseen, niillä on muutama mielenkiintoinen ja kenties yllättävä ominaisuus:
+Koska Java käyttää IEEE 754 standardia desimaalilukujen`double` ja `float`
+esittämiseen, niillä on muutama mielenkiintoinen ja kenties yllättävä
+ominaisuus:
 
 ```java
 void main() {
@@ -141,56 +150,118 @@ void main() {
 }
 ```
 
-Eli desimaaliluvuille on erikseen määritelty $-\infty, \infty$ ja `NaN` = **N**ot **A** **N**umber. Huomaa myös, että jos haluat erikseen `float` tyyppisen desimaaliluvun, luvun perässä pitää olla `f`. Muutoin se tulkitaan `double`ksi.
+Eli desimaaliluvuille on erikseen määritelty $-\infty, \infty$ ja `NaN` =
+**N**ot **A** **N**umber. Huomaa myös, että jos haluat erikseen `float`
+tyyppisen desimaaliluvun, luvun perässä pitää olla `f`. Muutoin se tulkitaan
+`double`ksi.
 
-Javasta löytyy myös enemmän [numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html) tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`. Hyvin isoja kokonaislukuja varten on tarjolla [`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html) ja hyvin tarkkoja desimaalilukuja varten [`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html), mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
+Javasta löytyy myös enemmän
+[numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html)
+tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`.
+Hyvin isoja kokonaislukuja varten on tarjolla
+[`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html)
+ja hyvin tarkkoja desimaalilukuja varten
+[`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html),
+mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
 
-**Merkit**: Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää 2 tavua muistia.
+**Merkit**: Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää
+2 tavua muistia.
 
-**Totuusarvot**: Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
+**Totuusarvot**: Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi
+mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
 
-**Merkkijono**: Vaikka `String`-tyyppi ei teknisesti ottaen olekaan alkeistietotyyppi, se käyttäytyy monin tavoin kuin alkeistietotyyppi. Siten sen voidaan katsoa kuuluvan tähän kategoriaan. `String`-tyyppiä käytetään merkkijonojen, eli tekstin, tallentamiseen.
+**Merkkijono**: Vaikka `String`-tyyppi ei teknisesti ottaen olekaan
+alkeistietotyyppi, se käyttäytyy monin tavoin kuin alkeistietotyyppi. Siten sen
+voidaan katsoa kuuluvan tähän kategoriaan. `String`-tyyppiä käytetään
+merkkijonojen, eli tekstin, tallentamiseen.
 
 ### Viitetietotyypit
 
-Viitetietotyypit sisältävät monimutkaisempia tietorakenteita, kuten olioita, taulukoita ja merkkijonoja. 
-Esimerkiksi `String` on viitetietotyyppi, kuten myös kaikki taulukot, esimerkiksi `int[]`. 
+Viitetietotyypit sisältävät monimutkaisempia tietorakenteita, kuten olioita,
+taulukoita ja merkkijonoja. Esimerkiksi `String` on viitetietotyyppi, kuten myös
+kaikki taulukot, esimerkiksi `int[]`. 
 
-Viitetietotyyppinen muuttuja eroaa alkeistietotyyppisestä muuttujasta erityisesti siinä, että se ei sisällä itse dataa, vaan se on viite (engl. *reference*) olioon. Java-aiheisessa kirjallisuudessa saatetaan esittää, että viite on osoitin siihen keskusmuistin paikkaan, jossa olio sijaitsee. Asia on kuitenkin hieman monimutkaisempi, sillä Java ei salli osoitinten suoraa käsittelyä ohjelmoijan toimesta. Voit kuitenkin ajatella viitettä siten, että se on tapa päästä käsiksi olioon, joka sijaitsee "jossakin muualla" muistissa.
+Viitetietotyyppinen muuttuja eroaa alkeistietotyyppisestä muuttujasta
+erityisesti siinä, että se ei sisällä itse dataa, vaan se on viite (engl.
+*reference*) olioon. Java-aiheisessa kirjallisuudessa saatetaan esittää, että
+viite on osoitin siihen keskusmuistin paikkaan, jossa olio sijaitsee. Asia on
+kuitenkin hieman monimutkaisempi, sillä Java ei salli osoitinten suoraa
+käsittelyä ohjelmoijan toimesta. Voit kuitenkin ajatella viitettä siten, että se
+on tapa päästä käsiksi olioon, joka sijaitsee "jossakin muualla" muistissa.
 
 <details><summary>✨ Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
 
-On useampia syitä siihen, miksi nämä kaksi eri kategoriaa tietotyypeille on olemassa.
+On useampia syitä siihen, miksi nämä kaksi eri kategoriaa tietotyypeille on
+olemassa.
 
-Ensimmäinen liittyy suorituskykyyn ja muistin hallintaan. Jos kaikki muuttujat olisivat arvopohjaisia (kuten alkeistietotyypit), se aiheuttaisi valtavasti turhaa muistin kulutusta ja hidastaisi ohjelman suorituskykyä, erityisesti suurten tietorakenteiden kohdalla. Jos meillä olisi vaikkapa `kirja`, joka sisältäisi 1000 sivua tekstiä, niin joka ikinen kerta kun haluamme käsitellä `kirja`-muuttujaa, meidän pitäisi kopioida kaikki 1000 sivua muistissa. Tämä olisi erittäin tehotonta. Sen sijaan viitetietotyypit mahdollistavat sen, että me vain viittaamme `kirja`-olioon, joka sijaitsee jossakin muualla muistissa, ilman että tarvitsee kopioida koko kirjaa joka kerta.
+Ensimmäinen liittyy suorituskykyyn ja muistin hallintaan. Jos kaikki muuttujat
+olisivat arvopohjaisia (kuten alkeistietotyypit), se aiheuttaisi valtavasti
+turhaa muistin kulutusta ja hidastaisi ohjelman suorituskykyä, erityisesti
+suurten tietorakenteiden kohdalla. Jos meillä olisi vaikkapa `kirja`, joka
+sisältäisi 1000 sivua tekstiä, niin joka ikinen kerta kun haluamme käsitellä
+`kirja`-muuttujaa, meidän pitäisi kopioida kaikki 1000 sivua muistissa. Tämä
+olisi erittäin tehotonta. Sen sijaan viitetietotyypit mahdollistavat sen, että
+me vain viittaamme `kirja`-olioon, joka sijaitsee jossakin muualla muistissa,
+ilman että tarvitsee kopioida koko kirjaa joka kerta.
 
-Toinen syy liittyy jaettuun tilaan. Usein haluamme, että useampi ohjelman osa muokkaa samaa tietoa. Esimerkiksi on järkevää, että `pankkitili`-olio on jaettu useiden eri toimintojen kesken, kuten talletus, nosto ja tilin saldo. Arvopohjaisessa maailmassa joutuisimme kopioimaan `pankkitili`-olion joka kerta, kun tililtä halutaan nostaa rahaa, tehdä tilisiirto tai vaikkapa tarkistaa saldo. Tämä johtaisi helposti siihen, että eri kopiot olisivat eri tilassa, mikä saattaisi aiheuttaa virheitä.
+Toinen syy liittyy jaettuun tilaan. Usein haluamme, että useampi ohjelman osa
+muokkaa samaa tietoa. Esimerkiksi on järkevää, että `pankkitili`-olio on jaettu
+useiden eri toimintojen kesken, kuten talletus, nosto ja tilin saldo.
+Arvopohjaisessa maailmassa joutuisimme kopioimaan `pankkitili`-olion joka kerta,
+kun tililtä halutaan nostaa rahaa, tehdä tilisiirto tai vaikkapa tarkistaa
+saldo. Tämä johtaisi helposti siihen, että eri kopiot olisivat eri tilassa, mikä
+saattaisi aiheuttaa virheitä.
 
-Kolmas syy on dynaaminen koko. Viitetietotyypit mahdollistavat dynaamisesti kasvavien ja kutistuvien tietorakenteiden, kuten linkitettyjen listojen, pinojen ja jonoiden, luomisen. Näitä rakenteita ei voida helposti toteuttaa arvopohjaisina, koska arvopohjaisten muuttujien koko on kiinteä käännösaikana.
+Kolmas syy on dynaaminen koko. Viitetietotyypit mahdollistavat dynaamisesti
+kasvavien ja kutistuvien tietorakenteiden, kuten linkitettyjen listojen, pinojen
+ja jonoiden, luomisen. Näitä rakenteita ei voida helposti toteuttaa
+arvopohjaisina, koska arvopohjaisten muuttujien koko on kiinteä käännösaikana.
 
-Neljäs syy liittyy erityisesti olio-ohjelmointiin, ja liittyy osittain myös kolmanteen kohtaan. Javassa viitteet mahdollistavat polymorfismin. Koska muuttuja on vain viite, se voi osoittaa mihin tahansa, joka "näyttää" oikealta tyypiltä. 
+Neljäs syy liittyy erityisesti olio-ohjelmointiin, ja liittyy osittain myös
+kolmanteen kohtaan. Javassa viitteet mahdollistavat polymorfismin. Koska
+muuttuja on vain viite, se voi osoittaa mihin tahansa, joka "näyttää" oikealta
+tyypiltä. 
 
 ```java,ignore
 Elain lemmikki = new Koira();
 lemmikki = new Kissa();
 ```
 
-Jos nämä olisivat puhtaita arvotyyppejä, `Elain`-tyyppiselle muuttujalle pitäisi varata kiinteä määrä muistia. Jos `Kissa` sitten tarvitsisikin enemmän muistia kuin `Elain` on varannut, koodi hajoaisi. Viitteiden avulla muuttujan koko on aina sama (viitteen koko), riippumatta siitä kuinka valtava olio viitteen päässä on.
+Jos nämä olisivat puhtaita arvotyyppejä, `Elain`-tyyppiselle muuttujalle pitäisi
+varata kiinteä määrä muistia. Jos `Kissa` sitten tarvitsisikin enemmän muistia
+kuin `Elain` on varannut, koodi hajoaisi. Viitteiden avulla muuttujan koko on
+aina sama (viitteen koko), riippumatta siitä kuinka valtava olio viitteen päässä
+on.
 
 </details>
 
 ## Literaalit
 
-Literaali (engl. *literal*) tarkoittaa ohjelmakoodiin kirjoitettua kiinteää arvoa. Eri tietotyypeillä on omat kirjoitussääntönsä literaaleille.
+Literaali (engl. *literal*) tarkoittaa ohjelmakoodiin kirjoitettua kiinteää
+arvoa. Eri tietotyypeillä on omat kirjoitussääntönsä literaaleille.
 
- * **Merkit** (`char`): Kirjoitetaan yksittäisen lainausmerkin sisään, esimerkiksi `'A'`,  `'*'` ja `'x'`. Erikoismerkit alkavat kenoviivalla: `'\n'` (rivinvaihto), `'\u03A9'` (kreikkalainen iso omega) ja `'\t'` (tabulaattori).
- * **Kokonaisluvut** (`byte`, `short`, `int`, `long`): Kirjoitetaan suoraan numerona, esimerkiksi `42`, `-7` ja `0`. `long`-luvun literaali päättyy isoon tai pieneen kirjaimeen `L` tai `l`, esimerkiksi `12345678901L`.
- * **Liukuluvut** (`float`, `double`): Kirjoitetaan desimaalipisteellä erotettuna, esimerkiksi `3.14`, `-0.001` ja `2.0`. Voidaan käyttää myös tieteellistä muotoa: `1.5e3` (eli 1.5 × 10³ = 1500) ja `2.0E-4` (eli 2.0 × 10⁻⁴ = 0.0002). Oletuksena desimaaliluvut ovat `double`-tyyppiä. Jos haluat luoda `float`-luvun, literaalin tulee päättyä isoon tai pieneen kirjaimeen `F` tai `f`, esimerkiksi `3.14f`.
+ * **Merkit** (`char`): Kirjoitetaan yksittäisen lainausmerkin sisään,
+   esimerkiksi `'A'`,  `'*'` ja `'x'`. Erikoismerkit alkavat kenoviivalla:
+   `'\n'` (rivinvaihto), `'\u03A9'` (kreikkalainen iso omega) ja `'\t'`
+   (tabulaattori).
+ * **Kokonaisluvut** (`byte`, `short`, `int`, `long`): Kirjoitetaan suoraan
+   numerona, esimerkiksi `42`, `-7` ja `0`. `long`-luvun literaali päättyy isoon
+   tai pieneen kirjaimeen `L` tai `l`, esimerkiksi `12345678901L`.
+ * **Liukuluvut** (`float`, `double`): Kirjoitetaan desimaalipisteellä
+   erotettuna, esimerkiksi `3.14`, `-0.001` ja `2.0`. Voidaan käyttää myös
+   tieteellistä muotoa: `1.5e3` (eli 1.5 × 10³ = 1500) ja `2.0E-4` (eli 2.0 ×
+   10⁻⁴ = 0.0002). Oletuksena desimaaliluvut ovat `double`-tyyppiä. Jos haluat
+   luoda `float`-luvun, literaalin tulee päättyä isoon tai pieneen kirjaimeen
+   `F` tai `f`, esimerkiksi `3.14f`.
  * **Totuusarvot** (`boolean`): Kirjoitetaan avainsanoina `true` ja `false`.
 
 ## Käärijäluokat
 
-Javassa kullekin alkeistietotyypille on olemassa niin sanottu käärijäluokka (engl. *wrapper class*). Käärijäluokasta löytyy hyödyllisiä metodeja, kuten `toString()` sekä vakioita, kuten `MAX_VALUE` alkeistietotyyppien käsittelyyn. Alkeistietotyypit ja niitä vastaavat käärijäluokat on esitetty alla olevassa taulukossa. 
+Javassa kullekin alkeistietotyypille on olemassa niin sanottu käärijäluokka
+(engl. *wrapper class*). Käärijäluokasta löytyy hyödyllisiä metodeja, kuten
+`toString()` sekä vakioita, kuten `MAX_VALUE` alkeistietotyyppien käsittelyyn.
+Alkeistietotyypit ja niitä vastaavat käärijäluokat on esitetty alla olevassa
+taulukossa. 
 
 | Alkeistietotyyppi | Käärijäluokka |
 | ----------------- | -------------- |
@@ -203,7 +274,9 @@ Javassa kullekin alkeistietotyypille on olemassa niin sanottu käärijäluokka (
 | char              | Character      |
 | boolean           | Boolean        |
 
-Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja sen jälkeen tulostetaan merkkijonon ensimmäinen merkki.
+Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja
+muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja
+sen jälkeen tulostetaan merkkijonon ensimmäinen merkki.
 
 ```java
 void main() {
@@ -280,7 +353,8 @@ Javan taulukot esitellään seuraavalla syntaksilla.
 Tyyppi[] nimi = new Tyyppi[koko];
 ```
 
-Jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
+Jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi
+kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
 
 ```java,ignore
 void main () {
@@ -288,7 +362,9 @@ void main () {
 }
 ```
 
-Indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen indeksissä 1, ja niin edelleen. Taulukon viimeisen alkion indeksi on aina `taulukko.length - 1`.
+Indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen
+indeksissä 1, ja niin edelleen. Taulukon viimeisen alkion indeksi on aina
+`taulukko.length - 1`.
 
 Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla
 kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot vaihtamalla `char` tilalle
@@ -306,22 +382,29 @@ void main () {
 Jos haluamme lisätä tietorakenteeseen tietoa ohjelman ajon aikana, parempi
 vaihtoehto on käyttää listoja.
 
-Lue lisää taulukoista Javan dokumentaatiosta: <https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html>
+Lue lisää taulukoista Javan dokumentaatiosta:
+<https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html>
 
 
 ## Vakiot
 
-Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että `final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan alaviivalla.
+Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään
+käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että
+`final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan
+alaviivalla.
 
 ```java,ignore
 final int PAIVIA_VIIKOSSA = 7;
 ```
 
-Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin vähentämiseksi, luotettavuuden parantamiseksi ja parantamaan suorituskykyä
+Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin
+vähentämiseksi, luotettavuuden parantamiseksi ja parantamaan suorituskykyä
 
 ## Listat
 
-Kun emme tiedä datan määrää etukäteen tai se muuttuu jatkuvasti, käytämme listaa. Javan yleisin lista on ArrayList. Se on "älykäs taulukko", joka osaa venyttää itseään tarpeen mukaan.
+Kun emme tiedä datan määrää etukäteen tai se muuttuu jatkuvasti, käytämme
+listaa. Javan yleisin lista on ArrayList. Se on "älykäs taulukko", joka osaa
+venyttää itseään tarpeen mukaan.
 
 ArrayList on osa Javan java.util-pakettia, joten se täytyy importata.
 
@@ -397,5 +480,6 @@ Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäess
 | Poistaminen                 | list.remove(indeksi) | list.RemoveAt(indeksi) | list.pop(indeksi) |
 
 
-Muista metodeista voi lukea dokumentaatiosta: <https://docs.oracle.com/javase/8/docs/api/java/util/List.html>
+Muista metodeista voi lukea dokumentaatiosta:
+<https://docs.oracle.com/javase/8/docs/api/java/util/List.html>
 
