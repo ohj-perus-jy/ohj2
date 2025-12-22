@@ -48,7 +48,12 @@ Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi
 
 ## Luokkahierarkia
 
-Toistamisen välttämiseksi voimme luoda yliluokan (engl. *superclass*) nimeltä `Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten alaluokat (engl. *subclass*) `Opiskelija` ja `Opettaja` voivat *periä* `Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin aliluokkaan ilman koodin toistamista.
+Toistamisen välttämiseksi voimme luoda yliluokan (engl. *superclass*) nimeltä
+`Henkilo`, joka sisältää kaikki yhteiset ominaisuudet ja toiminnot. Sitten
+alaluokat (engl. *subclass*) `Opiskelija` ja `Opettaja` voivat *periä*
+`Henkilo`-luokan, jolloin ne saavat *automaattisesti* kaikki sen määrittelemät
+ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin
+aliluokkaan ilman koodin toistamista.
 
 Toteutetaan nyt *uusi* `Henkilo`-luokka, ja muutetaan `Opiskelija`- ja
 `Opettaja`-luokkia niin, että ne perivät `Henkilo`-luokan. Javassa perintä toteutetaan
@@ -58,75 +63,17 @@ koodissamme.
 
 ```java
 // FILE: Henkilo.java
-public class Henkilo {
-    String nimi;
-
-    String getNimi()
-    {
-        return this.nimi;
-    }
-
-    void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe1/src/Henkilo.java}}
 // FILE_END
 // FILE: Opiskelija.java
-import java.util.ArrayList;
-
-class Opiskelija extends Henkilo {
-    ArrayList<String> kaynnissaOlevatKurssit;
-
-    public Opiskelija() {
-        this.kaynnissaOlevatKurssit = new ArrayList<>();
-    }
-
-    void naytaOpintosuunnitelma() {
-        String kurssit = String.join(", ", kaynnissaOlevatKurssit);
-        IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
-    }
-
-    void ilmoittauduKurssille(String kurssi) {
-        IO.println(this.nimi + " ilmoittautui kurssille: " + kurssi);
-        kaynnissaOlevatKurssit.add(kurssi);
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe1/src/Opiskelija.java}}
 // FILE_END
 // FILE: Opettaja.java
-import java.util.ArrayList;
-
-class Opettaja extends Henkilo {
-    ArrayList<String> opetettavatKurssit;
-
-    public Opettaja() {
-        this.opetettavatKurssit = new ArrayList<>();
-    }
-
-    void naytaOpetettavatKurssit() {
-        String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
-    }
-
-    void lisaaKurssi(String kurssi) {
-        opetettavatKurssit.add(kurssi);
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe1/src/Opettaja.java}}
 // FILE_END
 // FILE: main.java
-public class Main {
-    public static void main() {
-        Opiskelija opiskelija = new Opiskelija();
-        opiskelija.setNimi("Olli Opiskelija");
-        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
-
-        Opettaja opettaja = new Opettaja();
-        opettaja.setNimi("Maija Opettaja");
-        opettaja.lisaaKurssi("Ohjelmointi 1");
-        opettaja.lisaaKurssi("Ohjelmointi 2");
-        opettaja.naytaOpetettavatKurssit();
-    }
-}
-// FILE_END
+{{#include ../examples/osa3/E31_Kisu_vaihe1/src/Main.java}}
+// FILE_END 
 ``` 
 
 Huomaa, että `Opiskelija`- ja `Opettaja`-luokat eivät enää määrittele `nimi`-attribuuttia tai `getNimi`- ja `setNimi`-metodeja, koska ne perivät nämä `Henkilo`-luokasta, eikä sitä koodia enää tarvitse uudelleen kirjoittaa. Tämä tekee koodista huomattavasti siistimpää ja helpommin ylläpidettävää. Perinnällä siis määritetään *yksi* yliluokka (tässä `Henkilo`) ja aliluokka tai aliluokat (tässä `Opiskelija` ja `Opettaja`), jotka laajentavat (engl. *extend*) `Henkilo`-luokan lisätiedoilla ja -toiminnallisuuksilla opiskelijasta ja opettajasta. 
