@@ -12,19 +12,37 @@ Käytännössä olioilla on usein yhteisiä piirteitä. Yksi tapa näiden yhteis
 
 ## Opintotietojärjestelmä
 
-Otetaan keksitty esimerkki henkilötietojärjestelmästä: Olli Opiskelija, Maija Opettaja ja Satu Sihteeri voisivat kaikki olla olioita kuvitteellisessa Kisu-opintotietojärjestelmässä. Kaikilla näillä on kaikille käyttäjille tyypillisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisen pitäisi myös päästä kirjautumaan sisään järjestelmään ja sieltä ulos. 
+Otetaan keksitty esimerkki henkilötietojärjestelmästä: Olli Opiskelija, Maija
+Opettaja ja Satu Sihteeri voisivat kaikki olla olioita kuvitteellisessa
+Kisu-opintotietojärjestelmässä. Kaikilla näillä on kaikille käyttäjille
+tyypillisiä ominaisuuksia, kuten nimi ja käyttäjätunnus. Jokaisen pitäisi myös
+päästä kirjautumaan sisään järjestelmään ja sieltä ulos. 
 
-Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelijalla voisi olla lista kursseista, joille hän on ilmoittautunut, sekä hänen suorittamansa opintopisteet. Opettajalla on kurssit, joita hän opettaa sekä tehtävänimike, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole opiskelijanumeroa tai opetettavia kursseja.
+Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelijalla
+voisi olla lista kursseista, joille hän on ilmoittautunut, sekä hänen
+suorittamansa opintopisteet. Opettajalla on kurssit, joita hän opettaa sekä
+tehtävänimike, mutta hänellä ei ole opintopisteitä. Sihteeri on vastuussa
+opintosuoritusten kirjaamisesta ja tutkinnon antamisesta, mutta hänellä ei ole
+opiskelijanumeroa tai opetettavia kursseja.
 
-Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
+Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja
+`Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki
+näitä luokkia.  
 
-> [!VAROITUS]
-> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit, tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta, sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei ole välttämättä tarpeen. Dokumentaatiokommentit on kuitenkin kirjoitettu mukaan [GitHubissa](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/) olevien esimerkkikoodien tiedostoihin.
->
-> Lisää omaan koodiisi kuitenkin aina asianmukaiset dokumentaatiokommentit!
+> [!VAROITUS] 
+> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit,
+> tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta,
+> sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi
+> lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään
+> ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei
+> ole välttämättä tarpeen. 
 
-> [!VAROITUS]
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku 2.3](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin edetessä.
+> [!VAROITUS] Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän
+> syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti
+> nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista
+> `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku
+> 2.3](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin
+> edetessä.
 
 ```java
 // FILE: Opiskelija.java  
@@ -38,13 +56,23 @@ Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Ope
 // FILE_END  
 ```
 
-Huomaat, että kummassakin luokassa on samat attribuutti `nimi` sekä metodit `getNimi` ja `setNimi`. Näiden luokkien välillä on toki myös eroja, mutta nimen omaan toisto on ongelmallista, koska:
+Huomaat, että kummassakin luokassa on samat attribuutti `nimi` sekä metodit
+`getNimi` ja `setNimi`. Näiden luokkien välillä on toki myös eroja, mutta nimen
+omaan toisto on ongelmallista, koska:
 
- * jokaisessa luokassa on määriteltävä samat ominaisuudet ja toiminnot uudelleen, 
- * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän täytyy tehdä se kolmessa eri paikassa,
- * uuden luokan lisääminen, jolla on samat ominaisuudet, vaatii saman koodin kopioimisen uudelleen taas uuteen paikkaan.
+ * jokaisessa luokassa on määriteltävä samat ominaisuudet ja toiminnot
+   uudelleen, 
+ * jos haluamme muuttaa jotain yhteistä ominaisuutta tai toimintoa, meidän
+   täytyy tehdä se kolmessa eri paikassa,
+ * uuden luokan lisääminen, jolla on samat ominaisuudet, vaatii saman koodin
+   kopioimisen uudelleen taas uuteen paikkaan.
 
-Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi` ja `sukunimi` tallennetaan erikseen kahteen attribuuttiin, meidän pitäisi tehdä tämä muutos kaikissa näissä luokissa. Tämä lisää virheiden mahdollisuutta ja tekee koodin ylläpidosta hyvin hankalaa. Yksi ohjelmistokehityksen periaatteista onkin *älä toista itseäsi* (*Don't Repeat Yourself*, lyh. DRY; ks. [Wikipedia](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)). 
+Jos nyt haluaisimme muuttaa esimerkiksi `nimi`-attribuuttia niin, että `etunimi`
+ja `sukunimi` tallennetaan erikseen kahteen attribuuttiin, meidän pitäisi tehdä
+tämä muutos kaikissa näissä luokissa. Tämä lisää virheiden mahdollisuutta ja
+tekee koodin ylläpidosta hyvin hankalaa. Yksi ohjelmistokehityksen periaatteista
+onkin *älä toista itseäsi* (*Don't Repeat Yourself*, lyh. DRY; ks.
+[Wikipedia](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself)). 
 
 ## Luokkahierarkia
 
@@ -56,10 +84,10 @@ ominaisuudet ja metodit. Näin voimme lisätä vain erityispiirteet kuhunkin
 aliluokkaan ilman koodin toistamista.
 
 Toteutetaan nyt *uusi* `Henkilo`-luokka, ja muutetaan `Opiskelija`- ja
-`Opettaja`-luokkia niin, että ne perivät `Henkilo`-luokan. Javassa perintä toteutetaan
-käyttämällä `extends`-avainsanaa. Esimerkiksi `class Opiskelija extends Henkilo`
-tarkoittaa, että `Opiskelija`-luokka perii `Henkilo`-luokan. Tehdään tämä muutos
-koodissamme.
+`Opettaja`-luokkia niin, että ne perivät `Henkilo`-luokan. Javassa perintä
+toteutetaan käyttämällä `extends`-avainsanaa. Esimerkiksi `class Opiskelija
+extends Henkilo` tarkoittaa, että `Opiskelija`-luokka perii `Henkilo`-luokan.
+Tehdään tämä muutos koodissamme.
 
 ```java
 // FILE: Henkilo.java
@@ -458,7 +486,12 @@ voidaan viitata nimenomaisesti yliluokan metodiin.
 
 ## Huomautus moniperinnän puuttumisesta
 
-Javassa luokka voi periä vain yhden luokan. Joissain muissa ohjelmointikielissä, kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple inheritance*), jossa luokka voi periä useamman kuin yhden luokan. Emme tässä mene syvemmälle moniperinnän käsitteeseen, mutta mainittakoon, moniperinnän käyttö voi joissain tilanteissa olla ongelmallista (esim. [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
+Javassa luokka voi periä vain yhden luokan. Joissain muissa ohjelmointikielissä,
+kuten C++:ssa, on mahdollista käyttää *moniperintää* (engl. *multiple
+inheritance*), jossa luokka voi periä useamman kuin yhden luokan. Emme tässä
+mene syvemmälle moniperinnän käsitteeseen, mutta mainittakoon, moniperinnän
+käyttö voi joissain tilanteissa olla ongelmallista (esim.
+[Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
 
 Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interface*). Kysymys on kuitenkin monin tavoin eri asiasta. Rajapintoja käsitellään osassa [3.4 Rajapinta](04-rajapinta.md)
 
