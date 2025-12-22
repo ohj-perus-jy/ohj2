@@ -535,7 +535,7 @@ suorittaa maksu ennen kuin hän voi saada opintopisteitä.
 Luokkahierarkia näyttäisi nyt seuraavalta. Merkitään tähänkin kuvioon
 attribuutit ja metodit mukaan. Tekstit menevät jo aika pieneksi, joten saat
 halutessasi kuvan auki uuteen välilehteen klikkaamalla sitä oikealla (tai
-Alt+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
+Ctrl+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
 
 ```plantuml
 @startuml
