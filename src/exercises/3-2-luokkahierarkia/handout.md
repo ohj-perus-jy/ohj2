@@ -1,6 +1,18 @@
-Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa siten, että lisäät
-kaksi uutta aliluokkaa `Puhelin` ja `Pakaste`, jotka perivät olemassa olevat
-luokat `Elektroniikka` ja `Ruoka`.
+Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa alla olevan UML-kaavion
+mukaisesti. 
+
+Tehtäväsivulla on valmiiksi annettuna pääohjelma, jota voit käyttää luokkiesi
+testaamiseen. Sen pitäisi tulostaa seuraavaa:
+
+```
+Sulatit pakastetta Hernepussi 10 minuuttia. Säilytyssuositus on -18 astetta C.
+Syödään Hernepussi.
+Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
+```
+
+<details><summary>Kuvaus sanallisessa muodossa</summary>
+
+Tässä on kuvaus luokista ja niiden vaadituista ominaisuuksista (vastaavat kuin UML-kaaviossa):
 
  1. `Puhelin` (perii `Elektroniikka`)
     * Lisää attribuutit:
@@ -25,16 +37,7 @@ luokat `Elektroniikka` ja `Ruoka`.
         * Metodi kutsuu ensin `sulata(minuutit)`-metodia ja sitten perittyä
           `syo()`-metodia.
         * Metodi tulostaa esimerkiksi:
-```
-Sulatit pakastetta Hernepussi 10 minuuttia. Säilytyssuositus on -18 astetta C.
-Syödään Hernepussi.
-Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
-```
-
-Kokeile luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja
-metodit huolellisesti.
-
-Alla on luokkakaavio UML-muodossa.
+</details>
 
 ```plantuml
 @startuml
@@ -73,6 +76,3 @@ Elektroniikka <|-- Puhelin
 Ruoka <|-- Pakaste
 @enduml
 ```
-
-Tehtäväsivulla on valmiiksi annettuna pääohjelma, jota voit käyttää luokkiesi
-testaamiseen.
