@@ -244,7 +244,7 @@ nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
 
 Esimerkki sisältää jo aika monta tiedostoa, joten lue esimerkki huolellisesti
 läpi. Voit vaihtoehtoisesti selata esimerkin tiedostoja
-[GitHubissa](https://github.com/ohj-perus-jy/ohj2/tree/main/examples/osa3/E35_Pistorasia/src).
+[GitHubissa](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/E35_Pistorasia/src).
 
 ```java
 // FILE: main.java
@@ -276,116 +276,22 @@ public class KodinSahkot {
 }
 // FILE_END
 // FILE: Verkkovirtalaite.java
-/**
- * Verkkovirtaan kytkettävä laite.
- */
-public interface Verkkovirtalaite {
-    /**
-     * Kytke laite verkkovirtaan.
-     */
-    void kytkeVirta();
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Verkkovirtalaite.java}}
 // FILE_END
 // FILE: Leivanpaahdin.java
-/**
- * Leivänpaahdin on Keittiölaite, joka toimii verkkovirralla
- */
-public class Leivanpaahdin extends Keittiolaite implements Verkkovirtalaite {
-
-    @Override
-    public void kytkeVirta() {
-        // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
-    }
-
-    /**
-     * Puhdista leivänpaahdin. 
-     */
-    @Override
-    public void puhdista() {
-        System.out.println("Leivänpaahdin: Poistetaan murut ja pyyhitään kevyesti kostealla rätillä.");
-    }
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Leivanpaahdin.java}}
 // FILE_END
 // FILE: Sirkkeli.java
-/**
- * Sirkkeli on Työkalu, joka toimii verkkovirralla
- */
-public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
-
-    @Override
-    public void kytkeVirta() {
-        // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
-
-        // Kutsutaan tässä myös yliluokan kayta()-metodia, jolloin
-        // käyttötunnit lisääntyvät.
-        super.kayta(1);
-    }
-
-    /**
-     * Huolletaan sirkkeli.
-     * @return Onnistuiko huolto.
-     */
-    @Override
-    public boolean huolla() {
-        System.out.println("Huolletaan sirkkeliä... Teroitetaan terää ja säädetään kierrosnopeutta.");
-        return true;
-    }
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Sirkkeli.java}}
 // FILE_END
 // FILE: Keittiolaite.java
-/**
- * Keittiölaite
- */
-public abstract class Keittiolaite {
-    /**
-     * Sisältääkö laite lämmitysvastuksia.
-     */
-    boolean lammittava;
-
-    /**
-     * Kaikki keittiölaitteet pitää voida pestä.
-     */
-    public abstract void puhdista();
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Keittiolaite.java}}
 // FILE_END
 // FILE: Tyokalu.java
-public abstract class Tyokalu {
-    /**
-     * Laitteen käyttötunnit
-     */
-    private int kayttotunnit = 0;
-
-    /**
-     * Käytä laitetta
-     * @param tunnit Montako tuntia laitetta käytetään.
-     */
-    public void kayta(int tunnit)
-    {
-        this.kayttotunnit = tunnit;
-    }
-
-    /**
-     * Huolla laitetta
-     * @return Onnistuiko huolto
-     */
-    public abstract boolean huolla();
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Tyokalu.java}}
 // FILE_END
 // FILE: Pistorasia.java
-public class Pistorasia {
-
-    // Pistorasiaan voi kytkeä MINKÄ TAHANSA (yhden) verkkovirtalaitteen.
-    // Pistorasiaa ei kiinnosta, onko se sirkkeli vai paahdin.
-    public void kytkeLaite(Verkkovirtalaite laite) {
-        System.out.println("--- Pistorasia antaa sähköä ---");
-
-        // Pistorasia kutsuu sopimuksen mukaista metodia.
-        // Tässä tapahtuu polymorfismi: oikea laite reagoi oikealla tavalla.
-        laite.kytkeVirta();
-    }
-}
+{{#include ../examples/osa3/E35_Pistorasia/src/Pistorasia.java}}
 // FILE_END
 ```
 
@@ -656,49 +562,4 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava9">Tee tehtävä TIMissä</a></task-link>
 </task>
-
-
-## Kesken...
-
-
-```java
-// FILE: Säädettävä.java
-public interface Saadettava {
-    void asetaArvo(int arvo);
-}
-// FILE_END
-
-// FILE: SaadettavaLaite.java
-public abstract class SaadettavaLaite extends Laite implements Saadettava {
-    protected int nykyinenArvo = 0;
-
-    @Override
-    public void raportoiTila() {
-        IO.println("Nykyinen arvo: " + nykyinenArvo);
-    }
-}
-// FILE_END
-
-// FILE: Termostaatti.java
-public class Termostaatti extends SaadettavaLaite {
-    public Termostaatti() {
-        super("Termostaatti");
-    }
-
-    @Override
-    public void vaihdaTilaa() {
-        nykyinenArvo = (nykyinenArvo + 1) % 5;
-    }
-
-    @Override
-    public void asetaArvo(int arvo) {
-        nykyinenArvo = Math.max(0, Math.min(arvo, 4));
-    }
-}
-// FILE_END
-```
-
-`Termostaatti` saa valmiin `raportoiTila()`-metodin abstraktilta luokaltaan,
-mutta toteuttaa rajapinnan vaatimuksen (`asetaArvo`). Tämä osoittaa, miten
-abstrakti luokka ja rajapinta täydentävät toisiaan.
 
