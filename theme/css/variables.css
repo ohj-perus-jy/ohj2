@@ -406,7 +406,7 @@
     --code-bg: #191f26;
 
     --task-bg: var(--icons-hover);
-    --task-bg-text: white;
+    --task-bg-text: black;
     --task-bg-hover: #987a4a;
     --task-bg-hover-text: #e9e9e9;
 }

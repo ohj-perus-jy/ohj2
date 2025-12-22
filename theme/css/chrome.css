@@ -82,23 +82,29 @@ html.sidebar-visible #menu-bar {
 
 .right-buttons {
     margin: 0 15px;
+    justify-content: flex-end;
+
 }
 .right-buttons a {
     text-decoration: none;
 }
 
 .left-buttons {
-    display: flex;
     margin: 0 5px;
 }
+
 html:not(.js) .left-buttons button {
     display: none;
+}
+
+.left-buttons, .right-buttons, .menu-title {
+    display: flex;
+    flex: 1 1 0;
 }
 
 .menu-title {
     color: var(--fg);
     display: inline-block;
-    flex: 1;
     font-family: var(--font-family);
     font-weight: 300;
     font-size: 2.4rem;
@@ -109,8 +115,29 @@ html:not(.js) .left-buttons button {
     text-overflow: ellipsis;
     white-space: nowrap;
 }
+
 .menu-title {
     cursor: pointer;
+}
+.menu-title-full {
+    display: inline;
+}
+.menu-title-short {
+    display: none;
+}
+
+@media only screen and (max-width: 470px) {
+    .menu-title-full {
+        display: none;
+    }
+    .menu-title-short {
+        display: inline;
+    }
+}
+@media only screen and (min-width: 471px) {
+    .menu-title-short {
+        display: none;
+    }
 }
 
 .menu-bar,
