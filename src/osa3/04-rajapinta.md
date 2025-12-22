@@ -491,9 +491,12 @@ public class Teksti implements Piirrettava {
 
 Vastaava muutos tulee tehdä `Painike`-luokkaan.
 
-Tässä meidän yksinkertaisessa esimerkissämme kaikki tietysti tapahtuu konsolille tulostamalla, mutta oikeassa graafisessa käyttöliittymässä `Piirturi`-luokka voisi käyttää jotain graafista kirjastoa, kuten JavaFX:ää tai Swingiä.
+Tässä meidän yksinkertaisessa esimerkissämme kaikki tietysti tapahtuu konsolille
+tulostamalla, mutta oikeassa graafisessa käyttöliittymässä `Piirturi`-luokka
+voisi käyttää jotain graafista kirjastoa, kuten JavaFX:ää tai Swingiä.
 
-Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se [GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/examples/osa3/E32_Rajapinnat3/src).
+Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
+[GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/E34_Klikattava_ja_Piirrettava_2/src).
 
 </details>
 
