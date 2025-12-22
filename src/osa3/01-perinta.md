@@ -288,74 +288,16 @@ luokissa.
 
 ```java
 // FILE: Henkilo.java
-class Henkilo {
-    private String nimi;
-
-    public Henkilo(String nimi)
-    {
-        this.nimi = nimi;
-    }
-
-    public String getNimi()
-    {
-        return nimi;
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe2/src/Henkilo.java}}
 // FILE_END
 // FILE: Opiskelija.java
-import java.util.ArrayList;
-class Opiskelija extends Henkilo {
-    ArrayList<String> kaynnissaOlevatKurssit;
-
-    public Opiskelija(String nimi) {
-        super(nimi);
-        kaynnissaOlevatKurssit = new ArrayList<>();
-    }
-
-    void ilmoittauduKurssille(String kurssi) {
-        kaynnissaOlevatKurssit.add(kurssi);
-    }
-
-    public void naytaKurssit(){
-        String kaikkiKurssit = String.join(", ", kaynnissaOlevatKurssit);
-        IO.println(this.getNimi() + " opiskelee kursseilla: " + kaikkiKurssit);
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe2/src/Opiskelija.java}}
 // FILE_END
 // FILE: Opettaja.java
-import java.util.ArrayList;
-class Opettaja extends Henkilo {
-    private ArrayList<String> opetettavatKurssit;
-
-    public Opettaja(String nimi)
-    {
-        super(nimi);
-        this.opetettavatKurssit = new ArrayList<>();
-    }
-
-    void lisaaKurssi(String kurssi) {
-        opetettavatKurssit.add(kurssi);
-    }
-
-    void naytaOpetettavatKurssit() {
-        String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.getNimi() + " opettaa kursseja: " + kurssit);
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe2/src/Opettaja.java}}
 // FILE_END
 // FILE: main.java
-public class Main {
-    public static void main() {
-        Opiskelija opiskelija = new Opiskelija("Olli Opiskelija");
-        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
-        opiskelija.naytaKurssit();
-
-        Opettaja opettaja = new Opettaja("Maija Opettaja");
-        opettaja.lisaaKurssi("Ohjelmointi 1");
-        opettaja.lisaaKurssi("Ohjelmointi 2");
-        opettaja.naytaOpetettavatKurssit();
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe2/src/Main.java}}
 // FILE_END
 ```
 
