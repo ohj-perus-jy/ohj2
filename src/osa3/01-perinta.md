@@ -468,7 +468,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
   <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-1-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-1-luokkahierarkia/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava1">Tee tehtävä TIMissä</a></task-link>
@@ -478,7 +478,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
   <task-title>Tehtävä 3.2: Luokkahierarkia, osa 2. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-2-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-2-luokkahierarkia/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava2">Tee tehtävä TIMissä</a></task-link>
@@ -488,7 +488,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
   <task-title>✨ Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava3">Tee tehtävä TIMissä</a></task-link>
