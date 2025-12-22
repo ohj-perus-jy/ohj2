@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/E22_Rakennus_ja_this/E22_Rakennus_ja_this.iml" filepath="$PROJECT_DIR$/E22_Rakennus_ja_this/E22_Rakennus_ja_this.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E31_Kisu_vaihe0/E31_Kisu_vaihe0.iml" filepath="$PROJECT_DIR$/E31_Kisu_vaihe0/E31_Kisu_vaihe0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E31_Kisu_vaihe1/E31_Kisu_vaihe1.iml" filepath="$PROJECT_DIR$/E31_Kisu_vaihe1/E31_Kisu_vaihe1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E31_Kisu_vaihe2/E31_Kisu_vaihe2.iml" filepath="$PROJECT_DIR$/E31_Kisu_vaihe2/E31_Kisu_vaihe2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E31_Kisu_vaihe3/E31_Kisu_vaihe3.iml" filepath="$PROJECT_DIR$/E31_Kisu_vaihe3/E31_Kisu_vaihe3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E31_Kisu_vaihe4/E31_Kisu_vaihe4.iml" filepath="$PROJECT_DIR$/E31_Kisu_vaihe4/E31_Kisu_vaihe4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia.iml" filepath="$PROJECT_DIR$/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E32_Rajapinnat3/E32_Rajapinnat3.iml" filepath="$PROJECT_DIR$/E32_Rajapinnat3/E32_Rajapinnat3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia.iml" filepath="$PROJECT_DIR$/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla.iml" filepath="$PROJECT_DIR$/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla.iml" filepath="$PROJECT_DIR$/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E33_TemplateMethod/E33_TemplateMethod.iml" filepath="$PROJECT_DIR$/E33_TemplateMethod/E33_TemplateMethod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla.iml" filepath="$PROJECT_DIR$/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava.iml" filepath="$PROJECT_DIR$/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E34_LSP1/E34_LSP1.iml" filepath="$PROJECT_DIR$/E34_LSP1/E34_LSP1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E35_Pistorasia/E35_Pistorasia.iml" filepath="$PROJECT_DIR$/E35_Pistorasia/E35_Pistorasia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Tehtavat.iml" filepath="$PROJECT_DIR$/Tehtavat.iml" />
+    </modules>
+  </component>
+</project>
