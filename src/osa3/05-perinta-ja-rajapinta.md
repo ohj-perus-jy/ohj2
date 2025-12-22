@@ -147,28 +147,32 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
      */
     @Override
     public boolean huolla() {
-        System.out.println("Huolletaan sirkkeliä... Teroitetaan terää ja säädetään kierrosnopeutta.");
+        System.out.println("Huolletaan sirkkeliä..."
+         + "Teroitetaan terää ja säädetään kierrosnopeutta.");
         return true;
     }
 }
 
 // Leivänpaahdin on Keittiölaite, joka toimii verkkovirralla
-public class Leivanpaahdin extends Keittiolaite implements Verkkovirtalaite {
+public class Leivanpaahdin extends Keittiolaite 
+implements Verkkovirtalaite {
 
     @Override
     public void kytkeVirta() {
         // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
+        System.out.println("Leivänpaahdin: "
+        + "Vastukset alkavat hehkua punaisena.");
     }
 
     @Override
     public void puhdista() {
-        System.out.println("Leivänpaahdin: Poistetaan murut ja pyyhitään kevyesti kostealla rätillä.");
+        System.out.println("Leivänpaahdin: Poistetaan murut "
+        + "ja pyyhitään kevyesti kostealla rätillä.");
     }
 }
 ```
 
-Eri laitteiden luokkahierarkiat näyttäisivät seuraavanlaiselta.
+Luokkahierarkia näyttäisi seuraavanlaiselta.
 
 ```plantuml
 @startuml
@@ -204,7 +208,7 @@ Verkkovirtalaite <|.. Sirkkeli
 @enduml
 ```
 
-Tämä on tärkein kohta ymmärryksen kannalta. Pistorasia on luokka, joka
+Tämä on tärkein kohta ymmärryksen kannalta: Pistorasia on luokka, joka
 **käyttää** rajapintaa.
 
 ```java,ignore
