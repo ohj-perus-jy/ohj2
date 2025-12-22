@@ -5,35 +5,105 @@
 > - Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet
 > - Muuttujat ja vakiot (perustyypit, `final`, String)
 
-Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten Javassa, käytetään selkokielisiä nimiä. Tällaista nimeä, joka viittaa muistissa olevaan tietoon, kutsutaan muuttujaksi (engl. *variable*). Ohjelmoijan tarvitsee muistaa vain nimi; tietokone huolehtii tiedon todellisesta sijainnista muistissa.
+Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon
+viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten
+Javassa, käytetään selkokielisiä nimiä. Tällaista nimeä, joka viittaa muistissa
+olevaan tietoon, kutsutaan muuttujaksi (engl. *variable*). Ohjelmoijan tarvitsee
+muistaa vain nimi; tietokone huolehtii tiedon todellisesta sijainnista
+muistissa.
 
 Javassa muuttujaan asetetaan tietoa käyttämällä sijoituslausetta. 
 
 ```java,ignore
-tyyppi muuttuja = lauseke;
+tyyppi muuttujanNimi = lauseke;
 ```
 
-Kun tietokone suorittaa sijoituslauseen, se laskee yhtäsuuruusmerkin oikealla puolella olevan lausekkeen (engl. *expression*) arvon ja tallentaa sen vasemmalla puolella nimettyyn muuttujaan.
+Muuttujan tyyppi määritellään muuttujan nimen edessä, ja se kertoo, millaista
+tietoa muuttuja voi sisältää. Yhtäsuuruusmerkin oikealla puolella olevan
+lausekkeen (engl. *expression*) arvo tallennetaan sen vasemmalla puolella
+nimettyyn muuttujaan. Alla esimerkkejä.
 
 ```java,ignore
 double korkokerroin = 0.05;
 double paaoma = 150.0;
 ```
-Tässä luku 0.05 sijoitetaan `double`-tyyppiseen muuttujaan nimeltä `korkokerroin`, ja luku 150.0 `double`-tyyppiseen muuttujaan nimeltä `paaoma`. Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla. Muuttujan tyyppi määritellään muuttujan nimen edessä, ja se kertoo, millaista tietoa muuttuja voi sisältää. 
 
-Muuttuja voi olla myös lausekkeen osana, ja siten sen arvoa voidaan käyttää osana sijoitettavaa lauseketta. Huomaa, että tyyppiä ei tarvitse toistaa, kun viitataan olemassa olevaan muuttujaan.
+Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla. 
+
+Muuttuja voi olla myös lausekkeen osana, ja siten sen arvoa voidaan käyttää
+osana sijoitettavaa lauseketta. Huomaa, että tyyppiä ei tarvitse toistaa, kun
+viitataan olemassa olevaan muuttujaan.
 
 ```java,ignore
 double paaomaKorolla = (1 + korkokerroin) * paaoma;
 ```
 
-Tässä siis ohjelma lukee muuttujien `korkokerroin` ja `paaoma` sisältämät arvot, summaa ne keskenään, ja tallentaa tuloksen muuttujaan, jonka nimi on `paaomaKorolla`.
-
-Ohjelmoinnissa sijoitus on *lause*, ei matemaattinen yhtälö. Lause `double paaoma = 150.0;` on totta vain suoritushetkellä. Muuttujan arvo voi vaihtua myöhemmin ohjelman edetessä, toisin kuin matematiikan vakioissa. Lausetta voi ajatella myös käskynä; yllä oleva lause kuuluisi kutakuinkin "tallenna luku 150.0 muistiin paikkaan, jota kutsutaan tästä eteenpäin nimellä `paaoma`".
+Ohjelmoinnissa sijoitus on *lause*, ei matemaattinen yhtälö. Lause `double
+paaoma = 150.0;` on totta vain suoritushetkellä. Lausetta voi ajatella myös
+käskynä; yllä oleva lause kuuluisi kutakuinkin "tallenna luku 150.0 muistiin
+paikkaan, jota kutsutaan tästä eteenpäin nimellä `paaoma`".
 
 ## Javan tyyppijärjestelmä
 
-Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (engl. *primitive data types*) ja viitetietotyyppeihin (engl. *reference data types*). Kaikki tieto tallennetaan tietokoneen muistiin binäärilukuina (nollien ja ykkösten sarjana), ja tietotyypit eroavat toisistaan siinä, kuinka paljon muistia ne varaavat ja millaista dataa ne esittävät. Alkeistietotyypit sisältävät yksinkertaisia arvoja, kuten kokonaislukuja ja totuusarvoja, kun taas viitetietotyypit voivat sisältää monimutkaisempia rakenteita, kuten olioita, taulukoita ja merkkijonoja. 
+Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa,
+että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli
+mielivaltaisia tyyppien välisiä sekoituksia. Eri tietotyyppejä ei voi käyttää
+toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa
+(`boolean`) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä
+kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on
+käännösvirhe. Esimerkki alla.
+
+```java,editable
+void main() {
+  long sairaanIsoLuku = 40000000000L;
+  IO.println("Iso, long-tyyppinen luku: " +sairaanIsoLuku);
+  // int normaaliIntti = sairaanIsoLuku; // Ei onnistu, koska vahva tyypitys
+  int katkaistu = (int)sairaanIsoLuku;
+  IO.println("int-luku eksplisiittisen tyyppimuunnoksen jälkeen: " + katkaistu);
+}
+```
+
+Yllä olevassa esimerkissä käytännössä otetaan `long`-luvun 32 oikeanpuoleisinta
+bittiä ja sijoitetaan ne `int`-tyyppiseen muuttujaan. Tämä on mahdollista siksi,
+että ohjelmoija on nimenomaisesti ("eksplisiittisesti") pyytänyt
+tyyppimuunnosta. Ilman eksplisiittistä tyyppimuunnosta kääntäjä antaisi virheen.
+Vahva tyypitys vähentää virheellisten oletusten mahdollisuutta ja parantaa
+ohjelman luotettavuutta. 
+
+*Staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät
+käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän
+tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen. Tämä on
+selkeä ero dynaamisesti tyypitettyihin kieliin, kuten Pythoniin tai
+JavaScriptiin, jossa vaikkapa `1 + True` (tai `1 + true`) palauttaa `2`. Ehkä
+yksi tyypillisimmistä ongelmista on, että ohjelmoija olettaa muuttujan olevan
+tiettyä tyyppiä, mutta todellisuudessa se onkin jotain muuta. 
+
+```python
+syöte = "100" # Syöte tulee usein merkkijonona API:sta tai käyttäjältä
+kerroin = 10  # Tarkoituksena on olla kerroin
+
+# Virhe: Unohdetaan muuntaa 'syöte' int/float-tyyppiseksi
+tulos = syöte * kerroin 
+print(tulos)
+# Odotettu tulos: 1000
+# Todellinen tulos: "100100100100100100100100100100" (merkkijonon toisto)
+```
+
+Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että ohjelman
+tyyppivirheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
+eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
+ovat keskenään yhteensopivia.
+
+## Tietotyypit
+
+Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (engl.
+*primitive data types*) ja viitetietotyyppeihin (engl. *reference data types*).
+Kaikki tieto tallennetaan tietokoneen muistiin binäärilukuina (nollien ja
+ykkösten sarjana), ja tietotyypit eroavat toisistaan siinä, kuinka paljon
+muistia ne varaavat ja millaista dataa ne esittävät. Alkeistietotyypit
+sisältävät yksinkertaisia arvoja, kuten kokonaislukuja ja totuusarvoja, kun taas
+viitetietotyypit voivat sisältää monimutkaisempia rakenteita, kuten olioita,
+taulukoita ja merkkijonoja. 
 
 ### Alkeistietotyypit
 
@@ -329,25 +399,3 @@ Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäess
 
 Muista metodeista voi lukea dokumentaatiosta: <https://docs.oracle.com/javase/8/docs/api/java/util/List.html>
 
-
-## Vahva ja staattinen tyypitys
-
-Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa, että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli mielivaltaisia tyyppien välisiä sekoituksia. Eri tietotyyppejä ei voi käyttää toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa (boolean) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on käännösvirhe. Esimerkki alla.
-
-```java,editable
-void main() {
-  long sairaanIsoLuku = 40000000000L;
-  IO.println("Iso, long-tyyppinen luku: " +sairaanIsoLuku);
-  // int normaaliIntti = sairaanIsoLuku; // Ei onnistu, koska vahva tyypitys
-  int katkaistu = (int)sairaanIsoLuku;
-  IO.println("int-luku eksplisiittisen tyyppimuunnoksen jälkeen: " + katkaistu);
-}
-```
-
-Yllä olevassa esimerkissä käytännössä otetaan `long`-luvun 32 oikeanpuoleisinta bittiä ja sijoitetaan ne `int`-tyyppiseen muuttujaan. Tämä on mahdollista siksi, että ohjelmoija on nimenomaisesti ("eksplisiittisesti") pyytänyt tyyppimuunnosta. Ilman eksplisiittistä tyyppimuunnosta kääntäjä antaisi virheen. 
-
-Vahva tyypitys vähentää virheellisten oletusten mahdollisuutta ja parantaa ohjelman luotettavuutta. Tämä on selkeä ero heikosti tyypitettyihin kieliin, kuten JavaScriptiin, jossa vaikkapa `1 + true` palauttaa `2`. 
-
-*Staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen. 
-
-Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että ohjelman tyyppivirheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot ovat keskenään yhteensopivia.
