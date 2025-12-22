@@ -230,6 +230,8 @@ Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](ht
 
 ## Tehtävät
 
+
+## T1.2
 - Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
 
 Monty hallin ongelma neljällä ovella:
@@ -240,6 +242,45 @@ Tehtävänäsi on simuloida molemmat vaihtoehdot:
 2. Kilpailija vaihtaa johonkin jäljellä olevista ovista, jotka eivät ole vielä auki ja joka ei ollut kilpailijan ensimmäinen valinta
 
 ja valita vaihtoehdoista se, jolla voittaa todennäköisimmiten.
+
+## T1.3
+Komentorivipohjainen visa
+
+(Pitä luoda kysymykset, oikeat vastaukset, tarkistaminen ja pisteytys)
+
+## T1.4
+Lue 8 kokonaislukua käyttäjältä ja tulosta pienin ja suurin luku, summa ja keskiarvo (Jotain muuta?)
+
+## T1.5
+Tulosta kaikki alkuluvut väliltä 1-n, missä n on käyttäjän syöttämä luku. (Kenties n voi olla korkeintaan 100?)
+
+## T1.6
+Laske matriisiin kahden muun matriisin summa, eli A + B = C
+
+## T1.7
+Salasanan vahvuuden tarkistaja. On vähintään 8 merkkiä pitkä, sisältää yhden luvun, yhden suuren ja yhden pienen kirjaimen.
+
+## T1.8
+Tee funktio, joka palautaa kuinka monta sanaa merkkijonossa on ja kuinka monta kirjainta. Välilyöntejä ei lasketa
+
+## T1.9
+Laske kuinka monta esiintymää kutakin numeroa esiintyy luvussa.
+Esimerkiksi 12223 --> 1 1kpl, 2 3 kpl ja 3 1 kpl
+
+## T1.10
+Tulosta matriisissa olevat luvut spiraalimaisesti aloittaen vasemmasta yläkulmasta ja edeten kohti keskustaa. Esimerkiksi [[1 2 3] 
+[4 5 6]
+[7 8 9]]
+palauttaa 123698745
+
+## T1.11
+Merkkijonon pakkaaminen: Tulosta merkki ja merkkien lukumäärä aaaabbbccd --> a4b3c2d1
+
+## T1.12
+Kokonaislukutaulukossa on luvut 1-n, etsi luku, joka puuttuu järjestämättä taulukkoa eli 14326 --> 5
+
+## T1.13
+Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} --> true, ({}) --> true jne.
 
 ## B2
 - Vakioaikainen haku taulukosta. Esimerkiksi, että kuinka monta päivää on kuukaudessa?
