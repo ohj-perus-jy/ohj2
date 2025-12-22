@@ -1,5 +1,7 @@
 Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa alla olevan UML-kaavion
-mukaisesti. 
+mukaisesti. Saat kuvan suuremmaksi oikeaklikkaamalla (Windows) tai
+Control-klikkaamalla (macOS) sitä ja valitsemalla "Avaa kuva uudessa
+välilehdessä".
 
 Tehtäväsivulla on valmiiksi annettuna pääohjelma, jota voit käyttää luokkiesi
 testaamiseen. Sen pitäisi tulostaa seuraavaa:
