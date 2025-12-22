@@ -25,5 +25,4 @@ class Opiskelija {
         IO.println(this.nimi + " ilmoittautui kurssille: " + kurssi);
         kaynnissaOlevatKurssit.add(kurssi);
     }
-
 }

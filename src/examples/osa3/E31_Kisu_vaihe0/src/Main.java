@@ -1,5 +1,4 @@
-public class Main {
-    public static void main() {
+void main() {
         Opiskelija opiskelija = new Opiskelija();
         opiskelija.setNimi("Olli Opiskelija");
         opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
@@ -10,4 +9,3 @@ public class Main {
         opettaja.lisaaKurssi("Ohjelmointi 2");
         opettaja.naytaOpetettavatKurssit();
     }
-}
