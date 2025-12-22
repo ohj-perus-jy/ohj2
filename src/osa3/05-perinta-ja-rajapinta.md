@@ -240,7 +240,7 @@ nyt pääohjelma, jossa kytketään ensin `Leivanpaahdin` pistorasiaan.
 
 Esimerkki sisältää jo aika monta tiedostoa, joten lue esimerkki huolellisesti
 läpi. Voit vaihtoehtoisesti selata esimerkin tiedostoja
-[GitHubissa](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E35_Pistorasia/src).
+[GitHubissa](https://github.com/ohj-perus-jy/ohj2/tree/main/examples/osa3/E35_Pistorasia/src).
 
 ```java
 // FILE: main.java

@@ -19,7 +19,7 @@ Kullakin käyttäjällä on kuitenkin myös omia erityispiirteitään: Opiskelij
 Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki näitä luokkia.  
 
 > [!VAROITUS]
-> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit, tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta, sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei ole välttämättä tarpeen. Dokumentaatiokommentit on kuitenkin kirjoitettu mukaan [GitHubissa]() olevan esimerkkikoodin tiedostoihin.
+> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit, tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta, sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei ole välttämättä tarpeen. Dokumentaatiokommentit on kuitenkin kirjoitettu mukaan [GitHubissa](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/) olevien esimerkkikoodien tiedostoihin.
 >
 > Lisää omaan koodiisi kuitenkin aina asianmukaiset dokumentaatiokommentit!
 
@@ -28,82 +28,13 @@ Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja `Ope
 
 ```java
 // FILE: Opiskelija.java  
-import java.util.ArrayList;
-
-class Opiskelija {
-    String nimi;
-    ArrayList<String> kaynnissaOlevatKurssit;
-
-    public Opiskelija() {
-        this.kaynnissaOlevatKurssit = new ArrayList<>();
-    }
-
-    String getNimi() {
-        return this.nimi;
-    }
-
-    void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-
-    void naytaOpintosuunnitelma() {
-        String kurssit = String.join(", ", kaynnissaOlevatKurssit);
-        IO.println(this.nimi + " opiskelee kursseilla: " + kurssit);
-    }
-
-    void ilmoittauduKurssille(String kurssi) {
-        IO.println(this.nimi + " ilmoittautui kurssille: " + kurssi);
-        kaynnissaOlevatKurssit.add(kurssi);
-    }
-
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe0/src/Opiskelija.java}}
 // FILE_END  
-
 // FILE: Opettaja.java  
-import java.util.ArrayList;
-
-class Opettaja {
-    String nimi;
-    ArrayList<String> opetettavatKurssit;
-
-    public Opettaja() {
-        this.opetettavatKurssit = new ArrayList<>();
-    }
-
-    String getNimi() {
-        return this.nimi;
-    }
-
-    void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-
-    void naytaOpetettavatKurssit() {
-        String kurssit = String.join(", ", opetettavatKurssit);
-        IO.println(this.nimi + " opettaa kursseja: " + kurssit);
-    }
-
-    void lisaaKurssi(String kurssi) {
-        opetettavatKurssit.add(kurssi);
-    }
-}
-
+{{#include ../examples/osa3/E31_Kisu_vaihe0/src/Opettaja.java}}
 // FILE_END  
-
 //FILE: main.java  
-public class Main {
-    public static void main() {
-        Opiskelija opiskelija = new Opiskelija();
-        opiskelija.setNimi("Olli Opiskelija");
-        opiskelija.ilmoittauduKurssille("Ohjelmointi 2");
-
-        Opettaja opettaja = new Opettaja();
-        opettaja.setNimi("Maija Opettaja");
-        opettaja.lisaaKurssi("Ohjelmointi 1");
-        opettaja.lisaaKurssi("Ohjelmointi 2");
-        opettaja.naytaOpetettavatKurssit();
-    }
-}
+{{#include ../examples/osa3/E31_Kisu_vaihe0/src/Main.java}}
 // FILE_END  
 ```
 
@@ -597,7 +528,7 @@ muodostettu olio perii sekä  `Opiskelija`-luokan ominaisuudet ja metodit, että
 `Henkilo`-luokan ominaisuudet ja metodit. Vastaavasti `AvoinOpiskelija`-luokasta
 tehty olio perii myös molemmat luokat.
 
-Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit/tree/main/E31_Kisu_vaihe4/src).
+Jätämme esimerkin tässä toteuttamatta, mutta [voit halutessasi tutkia valmista koodia täällä](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/E31_Kisu_vaihe4).
 
 Huomautetaan vielä, että yliluokan muodostajan kutsuminen `super`-avainsanalla
 kutsuu nimen omaan luokan välittömän yliluokan muodostajaa. Luokkarakenteessa
