@@ -121,13 +121,22 @@ public class Piano extends Soitin {
 // FILE_END
 ```
 
-TODO: Tarvitaanko tähän väliin UML-kaavio?
+TODO: Lisää tähän väliin UML-kaavio.
 
 ## is-a-suhde
 
-Perintäsuhteesta käytetään myös englanninkielistä termiä *is-a*-suhde. Voimmekin sanoa, että `Opiskelija` *on* `Henkilo`, `Opettaja` *on* `Henkilo` ja `Sihteeri` *on* `Henkilo` -- nimen omaan näin päin. Edelleen, myös `TutkintoOpiskelija` *on* `Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii `Henkilo`-luokan. 
+Perintäsuhteesta käytetään myös englanninkielistä termiä *is-a*-suhde. Voimmekin
+sanoa, `Piano` *on* `Soitin` ja `Kitara` *on* `Soitin` -- nimen omaan näin päin.
 
-Kuten edellä opimme, polymorfismin ansiosta voimme käsitellä `Opiskelija`, `Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina. Lisätään kaikki tekemämme oliot `Henkilo`-taulukkoon:
+Palataan vielä hetkeksi edelliseen opintotietojärjestelmä-esimerkkiimme,
+siinäkin voimme sanoa että `Opiskelija` *on* `Henkilo`, `Opettaja` *on*
+`Henkilo` ja `Sihteeri` *on* `Henkilo`. Edelleen, myös `TutkintoOpiskelija` *on*
+`Henkilo`, koska se perii `Opiskelija`-luokan, joka puolestaan perii
+`Henkilo`-luokan. 
+
+Kuten edellä opimme, polymorfismin ansiosta voimme käsitellä `Opiskelija`,
+`Opettaja` ja `Sihteeri`-olioita koodissamme `Henkilo`-luokan olioina. Lisätään
+kaikki tekemämme oliot `Henkilo`-taulukkoon:
 
 ```java,noplayground
 Opiskelija opiskelija = new Opiskelija();
@@ -137,7 +146,9 @@ Sihteeri sihteeri = new Sihteeri();
 Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
 ```
 
-Jotta esimerkkimme olisi vähän mielekkäämpi, lisätään vielä `Henkilo`-luokkaan metodit `kirjaudu()` ja `kirjauduUlos()`. Nyt siis kaikki henkilöt perivät nämä metodit.
+metodit `kirjaudu()` ja `kirjauduUlos()`. Nyt siis kaikki henkilöt perivät nämä
+Jotta esimerkkimme olisi vähän mielekkäämpi, lisätään vielä `Henkilo`-luokkaan
+metodit.
 
 ```java,noplayground
 class Henkilo {
@@ -166,7 +177,9 @@ class Henkilo {
 }
 ```
 
-Voimme nyt kutsua vaikkapa `kirjauduUlos()`-metodia kaikille `henkilot`-taulukon olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita taulukossa on:
+Voimme nyt kutsua vaikkapa `kirjauduUlos()`-metodia kaikille `henkilot`-taulukon
+olioille ilman, että meidän tarvitsee tietää tarkasti, minkä tyyppisiä olioita
+taulukossa on:
 
 ```java,noplayground
 for (Henkilo henkilo : henkilot) {
