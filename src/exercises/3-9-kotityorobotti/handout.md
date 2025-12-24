@@ -10,7 +10,7 @@ nuoli, tarkoittaa, että `Robotti`-luokka käyttää `KayttoEsine`-rajapintaa:
 class Robotti {
     -KayttoEsine kayttoEsine
     +Robotti()
-    +void vaihdaKayttoEsine(KayttoEsine esine)
+    +void vaihdaKayttoEsine(KayttoEsine uusiEsine)
     +void teeTyota(String kohde)
 }
 
@@ -53,5 +53,15 @@ Robotilla on seuraavat metodit:
    `KasteluKannu`-oliolla ei saa kastella `"Tietokone"`-kohdetta), robotin tulee
    tulostaa virheilmoitus. Kielletyt käyttökohteet määritellään käyttöesineen
    attribuuttina merkkijonolistana. 
+ * `Kastelukannu`-olio ei kastele jos vettä ei ole riittävästi. Sen voi täyttää
+   `taytaVesi()`-metodilla. Kastelukannun vesimäärä on aluksi 50 yksikköä. Voit
+   halutessasi tehdä uuden muodostajan, joka asettaa vesimäärän alkutilan
+   toiseksi.
+ * `Imuri`-olio ei imuroi jos roskasäiliö on täynnä. Sen voi tyhjentää
+   `tyhjennaSailio()`-metodilla. Roskasäiliön kapasiteetti on 100 yksikköä. Voit
+   halutessasi tehdä uuden muodostajan, joka asettaa roskasäiliön alkutilan
+   toiseksi. 
+ * Molemmat käyttöesineet palauttavat `kayta(String kohde)`-metodin avulla
+   totuusarvon, joka kertoo onnistuiko työ.
 
 </details>
