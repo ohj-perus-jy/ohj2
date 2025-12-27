@@ -2,8 +2,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet
-> - Muuttujat ja vakiot (perustyypit, `final`, String)
+> - Muistat, mitä ovat muuttujat ja vakiot
+> - Muistat, mitä ovat merkkijonot ja listat
+> - Tunnet Javan alkeistietotyypit
+> - Tunnet, miten merkkijonot, taulukot ja listat käytetään Javassa
 
 Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon
 viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten
