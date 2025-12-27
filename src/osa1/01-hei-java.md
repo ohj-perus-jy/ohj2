@@ -2,10 +2,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Java-kielen perusteet
-> - Tiedät miten Java-ohjelma käännetään ja ajetaan (komentoriviohjelmat javac, java ja jshell, IDE-säädöt)
-> - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
-> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
+> - Tutustut Java-kielen perusteisiin
+> - Tiedät, miten Java-ohjelma käännetään ja ajetaan
+> - Tiedät, mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta
+> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille
 
 Ohjelmointi 2 -kurssilla käytämme Java-ohjelmointikieltä. Java on
 yleiskäyttöinen olio-ohjelmointia tukeva kieli, joka on tarkoitettu alustasta
