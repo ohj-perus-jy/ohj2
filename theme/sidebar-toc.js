@@ -132,7 +132,7 @@
     function expandActivePath(root) {
         const activeLink = resolveActiveLink(root);
         if (!activeLink) {
-            return;
+            return null;
         }
 
         root.querySelectorAll("a.active").forEach((link) => {
@@ -142,10 +142,11 @@
 
         const chapterItem = getChapterItemForLink(root, activeLink);
         if (!chapterItem) {
-            return;
+            return null;
         }
 
         chapterItem.classList.add("expanded");
+        return chapterItem;
     }
 
     // Normalize the TOC and signal readiness to CSS.
@@ -173,10 +174,14 @@
         expandActivePath(root);
 
         if (!tocReady) {
+            document.documentElement.classList.add("toc-initial");
             requestAnimationFrame(() => {
                 document.documentElement.classList.add("toc-ready");
                 updateAllSectionHeights(root);
                 tocReady = true;
+                setTimeout(() => {
+                    document.documentElement.classList.remove("toc-initial");
+                }, 900);
             });
         } else {
             updateAllSectionHeights(root);
