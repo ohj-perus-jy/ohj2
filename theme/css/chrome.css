@@ -205,7 +205,7 @@ html:not(.js) .left-buttons button {
     max-width: var(--content-max-width);
     margin-inline: auto;
     padding-block: 2.4rem;
-    padding-inline: 5px;
+    padding-inline: var(--page-padding);
     box-sizing: border-box;
     display: flex;
     justify-content: space-between;
@@ -293,7 +293,7 @@ html:not(.js) .left-buttons button {
 @media (max-width: 640px) {
     .chapter-navigation {
         gap: 1.4rem;
-        padding-inline: 5px;
+        padding-inline: var(--page-padding);
     }
     .chapter-link {
         padding: 1.6rem 1.4rem;
