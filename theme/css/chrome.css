@@ -74,7 +74,7 @@ a > .hljs {
     display: flex;
     flex-wrap: wrap;
     background-color: var(--header-bg, var(--bg));
-    border-block-end-color: var(--header-border, var(--bg));
+    border-block-end-color: var(--header-border);
     border-block-end-width: 1px;
     border-block-end-style: solid;
 }
@@ -97,7 +97,7 @@ html.sidebar-visible #menu-bar {
     /* margin-inline-end: calc(var(--page-padding) * -1); */
 }
 #menu-bar.bordered {
-    border-block-end-color: var(--table-border-color);
+    border-block-end-color: var(--header-border);
 }
 #menu-bar i, #menu-bar .icon-button {
     position: relative;
