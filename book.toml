@@ -30,6 +30,7 @@ additional-js = [
   "theme/accordion.js",
   "theme/codeblock-tabs.js",
   "theme/code-highlights.js",
+  "theme/sidebar-toc.js",
 ]
 
 [output.html.playground]

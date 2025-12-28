@@ -682,9 +682,47 @@ html:not(.sidebar-resizing) .sidebar {
     transition: transform 0.5s;
 }
 
+.chapter li.chapter-item > a {
+    flex: 1 1 auto;
+}
+
+.chapter li.chapter-item .toc-toggle {
+    margin-inline-start: auto;
+    border: none;
+    background: none;
+    color: var(--sidebar-fg);
+    cursor: pointer;
+    padding: 0 6px;
+    font-size: 1.4rem;
+    line-height: 1.4rem;
+    opacity: 0.75;
+}
+
+.chapter li.chapter-item .toc-toggle::before {
+    font-family: "FontAwesome";
+    content: "\f078";
+    display: inline-block;
+    transition: transform 0.2s ease;
+    font-weight: normal;
+    opacity: 0.6;
+}
+
+.chapter li.chapter-item.expanded .toc-toggle::before {
+    content: "\f077";
+}
+
+.chapter li.chapter-item .toc-toggle:hover {
+    color: var(--sidebar-active);
+    opacity: 0.85;
+}
+
 /* collapse the section */
-.chapter li:not(.expanded) + li > ol {
-    display: none;
+.chapter li + li > ol.section {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s ease, opacity 0.25s ease;
+    will-change: max-height, opacity;
 }
 
 .chapter li.chapter-item {
@@ -696,6 +734,31 @@ html:not(.sidebar-resizing) .sidebar {
     transform: rotate(90deg);
 }
 
+.sidebar .sidebar-scrollbox {
+    min-height: 100%;
+}
+
+html:not(.toc-ready) .sidebar .sidebar-scrollbox {
+    background: linear-gradient(90deg, var(--sidebar-bg), var(--sidebar-spacer), var(--sidebar-bg));
+    background-size: 200% 100%;
+    animation: toc-placeholder 1.4s ease-in-out infinite;
+}
+
+html.toc-ready .sidebar .sidebar-scrollbox {
+    background: none;
+    animation: none;
+}
+
+.toc-ready .chapter li.expanded + li > ol.section {
+    max-height: 1200px;
+    opacity: 1;
+}
+
+html:not(.js) .chapter li + li > ol.section {
+    max-height: none;
+    opacity: 1;
+}
+
 .spacer {
     width: 85%;
     height: 2px;
@@ -703,6 +766,11 @@ html:not(.sidebar-resizing) .sidebar {
 }
 .chapter .spacer {
     background-color: var(--sidebar-spacer);
+}
+
+@keyframes toc-placeholder {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
 }
 
 @media (-moz-touch-enabled: 1), (pointer: coarse) {
