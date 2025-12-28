@@ -6,6 +6,7 @@
  */
 (function sidebarToc() {
     const scrollboxSelector = "mdbook-sidebar-scrollbox";
+    let tocReady = false;
 
     // Normalize paths so `/foo/` and `/foo/index.html` are treated as the same page.
     function normalizePath(pathname) {
@@ -69,6 +70,35 @@
         return null;
     }
 
+    // Return the subchapter <ol> paired with a chapter item, if present.
+    function getSectionForChapterItem(chapterItem) {
+        const nextLi = chapterItem.nextElementSibling;
+        if (!nextLi) {
+            return null;
+        }
+        return nextLi.querySelector("ol.section");
+    }
+
+    // Set an explicit max-height to animate open/close without layout jumps.
+    function updateSectionHeight(chapterItem) {
+        const section = getSectionForChapterItem(chapterItem);
+        if (!section) {
+            return;
+        }
+
+        if (chapterItem.classList.contains("expanded")) {
+            section.style.maxHeight = `${section.scrollHeight}px`;
+        } else {
+            section.style.maxHeight = "0px";
+        }
+    }
+
+    // Sync max-height for all sections (used after initial expansion).
+    function updateAllSectionHeights(root) {
+        const chapterItems = Array.from(root.querySelectorAll("li.chapter-item"));
+        chapterItems.forEach((chapterItem) => updateSectionHeight(chapterItem));
+    }
+
     // Add toggle buttons next to chapters that have subchapters.
     function ensureChapterToggles(root) {
         const chapterItems = Array.from(root.querySelectorAll("li.chapter-item"));
@@ -91,6 +121,7 @@
                 event.preventDefault();
                 event.stopPropagation();
                 chapterItem.classList.toggle("expanded");
+                updateSectionHeight(chapterItem);
             });
 
             chapterItem.appendChild(toggle);
@@ -129,6 +160,10 @@
             return;
         }
 
+        if (!tocReady) {
+            document.documentElement.classList.remove("toc-ready");
+        }
+
         ensureChapterToggles(root);
 
         root.querySelectorAll("li.expanded").forEach((item) => {
@@ -136,7 +171,16 @@
         });
 
         expandActivePath(root);
-        document.documentElement.classList.add("toc-ready");
+
+        if (!tocReady) {
+            requestAnimationFrame(() => {
+                document.documentElement.classList.add("toc-ready");
+                updateAllSectionHeights(root);
+                tocReady = true;
+            });
+        } else {
+            updateAllSectionHeights(root);
+        }
     }
 
     // Observe the sidebar content and normalize once it is populated.
