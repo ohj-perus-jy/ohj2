@@ -67,10 +67,10 @@ h3:target::before,
 h4:target::before,
 h5:target::before,
 h6:target::before {
-    display: inline-block;
-    content: "»";
-    margin-inline-start: -30px;
-    width: 30px;
+    display: inline;
+    content: "» ";
+    /*margin-inline-start: 15px;
+    width: 30px;*/
 }
 
 details {
@@ -158,8 +158,9 @@ html:not(.js) .page-wrapper,
 
 .content {
     overflow-y: auto;
-    padding: 0 5px 50px 5px;
+    padding: 0 0px 50px 5px;
 }
+
 .content main {
     margin-inline-start: auto;
     margin-inline-end: auto;

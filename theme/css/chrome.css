@@ -68,9 +68,9 @@ a > .hljs {
 #menu-bar {
     position: relative;
     z-index: 220;
-    width: calc(100% + var(--page-padding) * 2);
-    margin-inline-start: calc(var(--page-padding) * -1);
-    margin-inline-end: calc(var(--page-padding) * -1);
+    /* width: calc(100% + var(--page-padding) * 2); */
+    /* margin-inline-start: calc(var(--page-padding) * -1); */
+    /* margin-inline-end: calc(var(--page-padding) * -1); */
     display: flex;
     flex-wrap: wrap;
     background-color: var(--header-bg, var(--bg));
@@ -93,8 +93,8 @@ html.sidebar-visible #menu-bar {
     top: 0;
     height: var(--menu-bar-height);
     width: calc(100% + var(--page-padding) * 2);
-    margin-inline-start: calc(var(--page-padding) * -1);
-    margin-inline-end: calc(var(--page-padding) * -1);
+    /* margin-inline-start: calc(var(--page-padding) * -1); */
+    /* margin-inline-end: calc(var(--page-padding) * -1); */
 }
 #menu-bar.bordered {
     border-block-end-color: var(--table-border-color);
@@ -697,8 +697,8 @@ html:not(.sidebar-resizing) .sidebar {
 }
 
 .spacer {
-    width: 100%;
-    height: 3px;
+    width: 85%;
+    height: 2px;
     margin: 5px 0px;
 }
 .chapter .spacer {
