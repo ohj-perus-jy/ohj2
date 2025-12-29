@@ -18,7 +18,7 @@ Ennen kuin voimme opettaa ohjelmaa tekemään valintoja ("jos tämä, niin tuo")
 meidän täytyy ymmärtää, miten tietokone näkee maailman. Tietokoneen logiikka on
 binääristä: väittämät ovat joko totta (true) tai epätotta (false).
 Vertailuoperaattorit ovat kuin kysymyksiä, jotka palauttavat vastaukseksi
-totuusarvon. Tässä ovat yleisimmät vertailuoperaattorit Javassa:
+totuusarvon. Tässä ovat yleisimmät vertailuoperaattorit Javassa.
 
 | Operaattori | Merkitys                | Esimerkki (kun x=5, y=3) | Tulos |
 | ----------- | ----------------------- | ------------------------ | ----- |
@@ -33,11 +33,11 @@ Usein päätökset riippuvat useammasta kuin yhdestä asiasta. Esimerkiksi: "Men
 ulos, JOS ei sada JA minulla on vapaa-aikaa". Tätä varten tarvitsemme loogisia
 operaattoreita yhdistämään ehtoja.
 
- * && (JA / AND): Lauseke on tosi vain, jos molemmat ehdot ovat tosi.
+ * `&&` (JA / AND): Lauseke on tosi vain, jos molemmat ehdot ovat tosi.
 
- * || (TAI / OR): Lauseke on tosi, jos edes toinen ehdoista on tosi.
+ * `||` (TAI / OR): Lauseke on tosi, jos edes toinen ehdoista on tosi.
 
- * ! (EI / NOT): Kääntää totuusarvon päinvastaiseksi (tosi muuttuu epätodeksi).
+ * `!` (EI / NOT): Kääntää totuusarvon päinvastaiseksi (tosi muuttuu epätodeksi).
 
 > [!VAROITUS] 
 > Älä sekoita toisiinsa sijoitusoperaattoria `=` ja
@@ -47,7 +47,7 @@ operaattoreita yhdistämään ehtoja.
 
 ## Merkkijonojen vertailu
 
-Toisin kuin primitiivisillä tyypeillä (`int`, `double`, jne.), Javassa
+Toisin kuin primitiivityypeillä (`int`, `double`, jne.), Javassa
 `==`-operaattori vertaa olioiden kohdalla viitteitä, eivät sisältöä. Tästä
 syystä merkkijonojen sisällön vertailuun tulee käyttää `equals()`-metodia.
 
@@ -56,17 +56,18 @@ void main() {
     String mjono1 = "Slush";
     String mjono2 = new String("Slush"); // Luodaan pakolla uusi olio
 
-    // VÄÄRIN: Vertaa muistiosoitteita -> tulostaa false
-    System.out.println(mjono1 == mjono2); 
+    // VÄÄRIN: Vertaa viitteitä -> tulostaa false
+    IO.println(mjono1 == mjono2); 
 
-    // OIKEIN: Vertaa sisältöä -> tulostaa true
-    System.out.println(mjono1.equals(mjono2));
+    // OIKEIN: Vertaa olioiden sisältöjä -> tulostaa true
+    IO.println(mjono1.equals(mjono2));
 }
 ```
 
 ## Ehtolauseet
 
-Kun osaamme muodostaa ehtoja, voimme käyttää niitä ohjaamaan koodin suoritusta.
+Ehtolauseilla ohjataan ohjelman kulkua. Ehtolauseiden muodostamiseen tarvitaan
+aina yksi tai useampi totuusarvoinen ehtolauseke.
 
 ### If-rakenne
 
@@ -75,12 +76,12 @@ Perusmuotoinen ehtolause on if. Sen sisällä oleva koodilohko suoritetaan vain,
 If-lauseiden syntaksi Javassa on seuraavanlainen: 
 ```java.ignore
 if (pisteet >= 90) {
-    System.out.println("Arvosana: 5");
+    IO.println("Arvosana: 5");
 } else if (pisteet >= 50) {
-    System.out.println("Arvosana: Läpi");
+    IO.println("Arvosana: Läpi");
 } else {
     // Suoritetaan, jos mikään yllä olevista ei toteutunut
-    System.out.println("Arvosana: Hylätty");
+    IO.println("Arvosana: Hylätty");
 }
 ```
 
@@ -95,13 +96,13 @@ int valinta = 2;
 
 switch (valinta) {
     case 1:
-        System.out.println("Valitsit vaihtoehdon 1");
+        IO.println("Valitsit vaihtoehdon 1");
         break; // Tärkeä: lopettaa suorituksen tässä lohkossa
     case 2:
-        System.out.println("Valitsit vaihtoehdon 2");
+        IO.println("Valitsit vaihtoehdon 2");
         break;
     default:
-        System.out.println("Tuntematon valinta");
+        IO.println("Tuntematon valinta");
 }
 ```
 
@@ -119,24 +120,24 @@ void main() {
     int luku1 = 5;
     int luku2 = 8;
     
-    // Perinteisen if-else -rakenteen sijaan voimme kirjoittaa:
+    // Luetaan: Jos luku1 on suurempi kuin luku2, 
+    // sijoita suurempi-muuttujaan luku1, muuten luku2
     int suurempi = (luku1 > luku2) ? luku1 : luku2;
 
-    System.out.println("Suurempi luvuista on: " + suurempi);
+    IO.println("Suurempi luvuista on: " + suurempi);
 }
 ```
 
-
 ## Silmukat
 
-Javassa on neljä päätapaa toteuttaa toistoja eli "looppeja". 
+Silmukoita tarvitaan, kun halutaan suorittaa asioita toistuvasti. Javassa on
+neljä päätapaa toteuttaa toistorakenteita: `for`, `for-each`, `while` ja
+`do-while`. 
 
 ### For
 
 Käytä for-silmukkaa, kun tiedät etukäteen toistojen määrän tai tarvitset
-indeksiä (järjestysnumeroa) toiston aikana.
-
-Rakenne: 
+indeksiä (järjestysnumeroa) toiston aikana. Rakenne on seuraava.
 
 ``` 
 for (alustus; toistoehto; päivitys) {
@@ -144,7 +145,7 @@ for (alustus; toistoehto; päivitys) {
 }
 ```
 
-Alla esimerkki summan laskemisesta `for`-silmukassa.
+Alla on esimerkki summan laskemisesta `for`-silmukassa.
 
 ```java
 //-void main () {
@@ -155,7 +156,7 @@ int summa = 0;
 for (int i = 0; i < luvut.length; i++) {
     summa += luvut[i];
 }
-System.out.println("Summa on: " + summa);
+IO.println("Summa on: " + summa);
 //-}
 ```
 
@@ -182,7 +183,7 @@ void main () {
     for (int luku : luvut) {
         summa += luku;
     }
-    System.out.println(summa);
+    IO.println(summa);
 }
 ```
 
@@ -201,18 +202,18 @@ void main() {
     Scanner lukija = new Scanner(System.in);
     String syote = "";
 
-    System.out.println("Tervetuloa peliin! (Kirjoita 'lopeta' poistuaksesi)");
+    IO.println("Tervetuloa peliin! (Kirjoita 'lopeta' poistuaksesi)");
 
     // Huomaa "!" (EI-operaattori) ja .equals() merkkijonolle
     // Silmukka jatkuu niin kauan kuin syöte EI ole "lopeta"
     while (!syote.equals("lopeta")) {
-        System.out.print("> ");
+        IO.print("> ");
         syote = lukija.nextLine(); // Pysähtyy odottamaan käyttäjän kirjoitusta
 
-        System.out.println("Kaiku: " + syote);
+        IO.println("Kaiku: " + syote);
     }
     
-    System.out.println("Peli päättyi.");
+    IO.println("Peli päättyi.");
 }
 ```
 
