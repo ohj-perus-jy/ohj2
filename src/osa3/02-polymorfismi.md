@@ -358,13 +358,89 @@ public class Ympyra extends Muoto {
 
 Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoittamisen. Olio-ohjelmoinnissa polymorfismia tarvitaan erityisesti siksi, että sen avulla voimme tarjota yhtenäisen tavan käsitellä keskenään hyvinkin erilaisia olioita.
 
-Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme rajapintoihin luvussa [3.3 Rajapinnat]()), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
+Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme rajapintoihin luvussa [3.4 Rajapinnat](./04-rajapinta.md)), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
 
  * kaikkia soittimia (`Soitin`), kuten kitarat, pianot ja rummut
  * kaikkia ajoneuvoja (`Ajoneuvo`), vaikka ne olisivatkin erilaisia, kuten autoja, polkupyöriä ja lentokoneita
  * kaikkia eläimiä (`Elain`), kuten koiria, kissoja ja lintuja
  * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
  * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
+
+Javassa on mahdollista kiertää yhtenäistä käsittelyä tekemällä tutkimalla, onko
+olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria. Esimerkiksi:
+
+```java,noplayground
+if (soitin instanceof Kitara) {
+    ((Kitara) soitin).soitaKitaraa();
+} else if (soitin instanceof Piano) {
+    ((Piano) soitin).soitaPianoa();
+}
+```
+
+Tällä kurssilla vältämme `instanceof`-operaattoria, ellei siihen erikseen
+ohjeisteta. On nimittäin niin, että `instanceof`-operaattorin käyttö tarkoittaa
+varsin usein sitä, ettei perintää ja polymorfismia ole hyödynnetty
+optimaalisella tavalla, josta seuraa yllä olevan esimerkin mukainen
+ehtolause-hässäkkä. Tällöin menetetään olio-ohjelmoinnin keskeinen etu, eli se,
+että olioiden erilaiset toteutukset voidaan piilottaa niiden käyttäjiltä.
+
+`instanceof`-operaattorin käyttö voi olla oikeutettua joissain
+erityistilanteissa, kuten
+
+ * kun emme hallitse olemassa olevaa luokkahierarkiaa,
+ * kun koodi toimii rajalla, kuten parsittaessa tietoa ulkoisesta lähteestä,
+   integroiduttaessa toiseen järjestelmään tai työskenneltäessä reflektiolla,
+   tai
+ * jos vaihtoehto olisi huonompi, kuten monimutkaisen luokkahierarkian tai
+   toisteisen koodin kirjoittaminen.
+
+<details><summary>Esimerkki instanceof-operaattorin käytöstä</summary>
+
+Tarkastellaan tilannetta, jossa ohjelma vastaanottaa viestejä (tekstiviesti,
+kuvaviesti) ulkoisesta järjestelmästä (esim. JSON-rajapinta, verkko, kolmannen
+osapuolen kirjasto). Viestien luokkia ei voi muuttaa, ja niillä on vain yhteinen
+ylityyppi.
+
+```java,ignore
+interface Viesti { }
+
+// Konkreettiset viestityypit (ulkoisesta kirjastosta)
+class TekstiViesti implements Viesti {
+    String teksti;
+}
+
+class KuvaViesti implements Viesti {
+    byte[] data;
+}
+```
+
+Ohjelman täytyy käsitellä viestit eri tavoin niiden todellisen ajonaikaisen
+tyypin perusteella.
+
+```java,ignore
+void kasittele(Viesti v) {
+    if (v instanceof TekstiViesti t) {
+        System.out.println("Teksti: " + t.teksti);
+    } else if (v instanceof KuvaViesti k) {
+        System.out.println("Kuvan koko: " + k.data.length);
+    } else {
+        throw new IllegalArgumentException("Tuntematon viestityyppi");
+    }
+}
+```
+
+Tämä on harvoja tilanteita, joissa `instanceof` on aidosti oikea ratkaisu:
+
+ * Luokkahierarkiaa ei voi muuttaa: Viestiluokat tulevat ulkoisesta kirjastosta
+   → niihin ei voi lisätä metodeja.
+ * Polymorfia ei ole käytettävissä: Ei voida määritellä esimerkiksi metodia
+   `kasittele()` rajapintaan `Viesti`.
+ * Käsittely riippuu konkreettisesta tyypistä: Tekstiviesti ja kuvaviesti
+   vaativat luonteeltaan eri logiikan.
+ * Kyseessä on järjestelmän rajapinta: Tällainen koodi kuuluu tyypillisesti
+   I/O-, integraatio- tai adapterikerrokseen.
+
+</details>
 
 ## Object-luokan metodien korvaaminen
 
@@ -460,14 +536,6 @@ Luokan periminen tai metodin korvaaminen voidaan estää käyttämällä `final`
 
 Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttujien yhteydessä, jolloin se tarkoittaa, että muuttujan arvoa ei voi muuttaa sen alustamisen jälkeen. Tällä ei ole kuitenkaan tekemistä perinnän kanssa. 
 
-
-## Huomautus instanceof-operaattorista
-
-TODO: Samilla oli tähän oma branch. Alla oleva teksti on vanhaa, ja poistunee sellaisenaan. 
-
-Javassa on mahdollista tarkistaa, onko olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria. Esimerkiksi:
-
-On kuitenkin niin, että `instanceof`-operaattorin käyttö tarkoittaa varsin usein sitä, ettei perintää ja polymorfismia ole hyödynnetty optimaalisella tavalla, jonka seurauksena koodiin tulee runsaasti ehtolauseita, jotka tarkistavat olion tyypin ja suorittavat sen perusteella erilaisia toimintoja. Tällöin menetetään olio-ohjelmoinnin keskeinen etu, eli se, että olioiden erilaiset toteutukset voidaan piilottaa niiden käyttäjiltä. Käytännössä ainoa, missä kyseistä operaattoria tarvitsee, on, jos käsitellään `Object`-olioita jonkin hyvin matalan tason yleisluokan kautta. 
 
 ## Tehtävät {#tehtavat}
 
