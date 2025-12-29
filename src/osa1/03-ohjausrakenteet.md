@@ -238,3 +238,27 @@ void main () {
 }
 ```
 
+
+
+## Tehtävät 
+
+<task>
+<task-title>Tehtävä 1.2: Sanojen määrä <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-2-sanojen-maara/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava2">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+<task-title>Tehtävä 1.3: Alkuluvut <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-3-alkuluvut/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava3">Tee tehtävä TIMissä</a></task-link>
+</task>

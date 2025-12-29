@@ -825,13 +825,3 @@ eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaati
 ovat keskenään yhteensopivia.
 
 ## Tehtävät 
-
-<task>
-<task-title>Tehtävä 1.2: Sanojen määrä <points>1 p.</points> </task-title>
-<handout>
-
-{{#include ../exercises/1-2-sanojen-maara/handout.md}}
-
-</handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava2">Tee tehtävä TIMissä</a></task-link>
-</task>
