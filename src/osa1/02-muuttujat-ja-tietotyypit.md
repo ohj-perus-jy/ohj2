@@ -670,7 +670,7 @@ Katsotaan vielä listojen yleisempiä toimintoja:
 | `remove(poistettava)`     | Poistaa listasta `poistettava`:n ensimmäisen esiintymän siirtäen loput alkiot yhden paikan taaksepäin. |
 | `remove(indeksi)`         | Poistaa listasta paikassa `indeksi` olevan alkion.                                                     |
 
-Löydät vastaavasti lisää metodeja JavaDocs-sivustolla (ks. [Class `ArrayList<E>`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html)).
+Löydät lisää metodeja JavaDocs-sivustolla (ks. [Class `ArrayList<E>`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html)).
 
 ```java
 void main () {
