@@ -710,13 +710,15 @@ void main () {
 ```
 
 
-Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä:
+Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä.
+Muuttuja `i` viittaa listan indeksiin.
 
-| Toiminto                    | Java                   | C#                       | Python              |
-| --------------------------- | ---------------------- | ------------------------ | ------------------- |
-| Lukeminen tietystä paikasta | `list.get(indeksi)`    | `list[indeksi]`          | `list[indeksi]`     |
-| Listan koko                 | `list.size()`          | `list.Count`             | `len(list)`         |
-| Poistaminen                 | `list.remove(indeksi)` | `list.RemoveAt(indeksi)` | `list.pop(indeksi)` |
+| Toiminto                    | Java                                    | C#                 | Python                              |
+| --------------------------- | --------------------------------------- | ------------------ | ----------------------------------- |
+| Lukeminen tietystä paikasta | `list.get(i)`                           | `list[i]`          | `list[i]`                           |
+| Listan koko                 | `list.size()`                           | `list.Count`       | `len(list)`                         |
+| Poistaminen                 | `list.remove(i)`                        | `list.RemoveAt(i)` | `list.pop(i)`                       |
+| Onko lista tyhjä?           | `list.isEmpty()` tai `list.size() == 0` | `list.Count == 0`  | `if not list:` tai `len(list) == 0` |
 
 ## Javan tyyppijärjestelmä
 
