@@ -443,6 +443,25 @@ void main() {
 }
 ```
 
+### Merkkijonosyötteen lukeminen konsoli-ikkunassa
+
+Merkkijonosyötteen lukemiseksi konsoli-ikkunassa tarvitaan kaksi vaihetta. Ensin
+tulee luoda `Scanner`-olio, joka lukee syötteen `System.in`-virrasta. Tämän
+jälkeen voidaan käyttää `nextLine()`-metodia, joka lukee koko syötteen rivin
+merkkijonona. Alla esimerkki. Esimerkkiä ei voi ajaa selaimessa, mutta voit
+kokeilla sitä omassa Java-ympäristössäsi.
+
+```java,ignore
+import java.util.Scanner;
+
+void main() {
+    Scanner scanner = new Scanner(System.in);
+    IO.print("Anna merkkijono: ");
+    String syote = scanner.nextLine();
+    IO.println("Syötit merkkijonon: " + syote);
+}
+```
+
 ## StringBuilder
 
 Käytä `StringBuilder`-luokkaa, kun tarvitset muunneltavan merkkijonon.
@@ -804,3 +823,15 @@ Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että tyyppeih
 liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
 eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
 ovat keskenään yhteensopivia.
+
+## Tehtävät 
+
+<task>
+<task-title>Tehtävä 1.2: Sanojen määrä <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-2-sanojen-maara/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava2">Tee tehtävä TIMissä</a></task-link>
+</task>

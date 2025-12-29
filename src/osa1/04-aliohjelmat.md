@@ -231,6 +231,7 @@ Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](ht
 ## Tehtävät
 
 
+
 ## T1.2
 - Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
 
