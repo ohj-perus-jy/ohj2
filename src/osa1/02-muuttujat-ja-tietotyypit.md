@@ -345,6 +345,8 @@ void main() {
 }
 ```
 
+
+
 ## Merkkijonot
 
 Javassa merkkijonoja ei lasketa alkeistietotyypiksi.
@@ -459,6 +461,24 @@ void main() {
     IO.print("Anna merkkijono: ");
     String syote = scanner.nextLine();
     IO.println("Syötit merkkijonon: " + syote);
+}
+```
+
+### Luvun parsiminen merkkijonosta
+
+Merkkijono voidaan muuntaa luvuksi käyttämällä käärijäluokkien
+`parse`-metodeja. Esimerkiksi `Integer.parseInt` muuntaa merkkijonon
+kokonaisluvuksi ja `Double.parseDouble` muuntaa merkkijonon desimaaliluvuksi.
+
+```java,ignore
+void main() {
+    String kokonaislukuJono = "42";
+    int kokonaisluku = Integer.parseInt(kokonaislukuJono);
+    IO.println("kokonaisluku = " + kokonaisluku);
+
+    String desimaalilukuJono = "3.14";
+    double desimaaliluku = Double.parseDouble(desimaalilukuJono);
+    IO.println("desimaaliluku = " + desimaaliluku);
 }
 ```
 
