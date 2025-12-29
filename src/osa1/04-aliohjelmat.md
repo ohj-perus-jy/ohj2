@@ -288,10 +288,15 @@ Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} -
 
 (Teoriatausta se, että laskennallista nopeutta voidaan lisätä käyttämällä enemmän muistia. Tähän esimerkiksi HashMap perustuu)
 
-## B3
-- Raa-alla voimalla sanakirjahyökkäys salasanaa vastaan?
+<task>
+<task-title>Tehtävä B3: Sanakirja <points>1 p.</points> </task-title>
+<handout>
 
-Omistamasi ulkoisen kovalevyn salasana on päässyt unohtumaan. Muistat, että salasana koostuu kahdesta [tästä](https://raw.githubusercontent.com/rajuruoho/nykysuomensanalista/main/src/nykysuomensanalista2024.txt) listasta valitusta yhteenliitetystä sanasta ilman välimerkkejä. Muodosta funktio `salasana`, joka ottaa parametrina listan merkkijonoja ja joka palauttaa salasanan `String` -tyyppisenä. 
+{{#include ../exercises/1-B3-sanakirja/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtavaB3">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## G1
 
