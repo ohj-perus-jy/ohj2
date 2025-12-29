@@ -251,9 +251,13 @@ Tee seuraavasti:
 
 2. Kokeile vielä ohjelman ajamista luodulla ajokonfiguraatiolla.
 
-   Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo erikoisen
-   *ajokonfiguraation*, jonka perusteella koodi käännetään ja ajetaan.
-   
+   Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo *ajokonfiguraation*.
+   Ajokonfiguraatio on pieni tiedosto, johon tallentuu koodin suorittamiseen
+   liittyviä asetuksia, kuten käytettävä JDK-version, mahdolliset
+   komentoriviparametrit ja työhakemisto. Oletusarvoisesti tämä tiedosto syntyy
+   projektin juurikansioon `.idea` <i class="bi bi-chevron-right"></i>
+   `workspace.xml`. 
+
    Kun ajokonfiguraatio on luotu ensimmäisen ajon jälkeen, voit jatkossa ajaa
    koodin aina IDEA:n yläpalkissa olevalla ajopainikkeella. Tällä tavoin voit
    helposti ajaa samoja ohjelmia ilman, että kooditiedostoa tarvitsisi erikseen
@@ -275,24 +279,27 @@ Tee seuraavasti:
 >
 > **Tutustu yleisimpiin pikanäppäinkomentoihin**
 >
-> Näppäinkomennot nopeuttavat kehitysympäristön käyttöä, ja pienellä harjoittelulla ohjelmointi voi sujua kokonaan hiirtä käyttämättä.
->
+> Näppäinkomennot nopeuttavat kehitysympäristön käyttöä, ja pienellä
+> harjoittelulla ohjelmointi voi sujua kokonaan hiirtä käyttämättä.
 > Näppäinkomennot riippuvat käyttöjärjestelmästä ja valituista näppäinasetuksista.
 > IDEA kuitenkin näyttää näppäinkomennot valikoissa sekä vihjeteksteissä,
 > mikä helpottaa komentojen oppimista.
 >
 > <img src="images/intellij-shortcut-helper.png" width="500">
 >
-> Voit myös muokata näppäinkomentoja asetuksista (**File** <i class="bi bi-chevron-right"></i> **Settings** <i class="bi bi-chevron-right"></i> **Keymap**)
-> tai ladata muiden kehitysympäristöjen, kuten Visual Studio Coden, näppäinasetuksia laajennoskaupasta (**File** <i class="bi bi-chevron-right"></i> **Plugins**).
+> Voit myös muokata näppäinkomentoja asetuksista kohdassa **File** <i class="bi
+> bi-chevron-right"></i> **Settings** <i class="bi bi-chevron-right"></i>
+> **Keymap**. Voit myös ladata muiden kehitysympäristöjen, kuten Visual Studio
+> Coden, näppäinasetuksia laajennoskaupasta kohdassa **File** <i class="bi
+> bi-chevron-right"></i> **Plugins**.
 
 ### Usean ohjelman tekeminen samaan projektiin
 
 Opintojakson edetessä tehdään useita pienempiä ja suurempia ohjelmia.
 Vaikka jokaiselle ohjelmalle voi tehdä oman projektin, saatat huomata, että
-helpompaa on tehdä yksi iso projekti (esim. `Viikon1Tehtavat`),
+helpompaa on tehdä yksi iso projekti (esim. `Viikko1` tai `Viikon1Tehtavat`),
 johon voi kirjoittaa useita ohjelmia samassa projektissa.
-IDEA:ssa saman projektin sisällä voi tehdä alimoduuleita (engl. submodules),
+IDEA:ssa saman projektin sisällä voi tehdä alimoduuleita (engl. *submodules*),
 joilla on oma `src`-kansionsa ja joita voi ajaa omilla ajokonfiguraatioillaan.
 
 Luodaan seuraavaksi alimoduuli nimeltään `HelloProgramming`, lisätään
@@ -524,17 +531,7 @@ void main() {
 <task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
 <handout>
 
-Tee uusi IDEA-projekti nimeltään `Tehtavat` (ks. [Luo uusi
-projekti](#luo-uusi-java-projekti) ohje).
-Lisää projektiin alimoduuli `Tehtava11` (ks. [Usean projektin tekeminen samaan
-projektiin](#usean-ohjelman-tekeminen-samaan-projektiin) -ohje).
-
-Lisää projektiin Java Compact File -tiedosto nimeltään `OmatTiedot.java`.
-Kirjoita tiedostoon ohjelma, joka tulostaa *kullekin eri riville*
-
-- nimesi,
-- puhelimesi merkin
-- puhelimesi mallin
+{{#include ../exercises/1-1-eka-ohjelma/handout.md}}
 
 </handout>
 <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava1">Tee tehtävä TIMissä</a></task-link>
