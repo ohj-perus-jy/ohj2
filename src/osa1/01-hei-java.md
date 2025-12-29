@@ -2,10 +2,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Java-kielen perusteet
-> - Tiedät miten Java-ohjelma käännetään ja ajetaan (komentoriviohjelmat javac, java ja jshell, IDE-säädöt)
-> - Tiedät mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta 
-> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille (tekstin tulostus, lukeminen konsolilta)
+> - Tutustut Java-kielen perusteisiin
+> - Tiedät, miten Java-ohjelma käännetään ja ajetaan
+> - Tiedät, mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta
+> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille
 
 Ohjelmointi 2 -kurssilla käytämme Java-ohjelmointikieltä. Java on
 yleiskäyttöinen olio-ohjelmointia tukeva kieli, joka on tarkoitettu alustasta
@@ -419,7 +419,7 @@ Tutkitaan vielä kansion rakenne `ls`-komennolla:
 <asciinema src="images/rec_javac_ls.cast" rows="3" poster="npt:5"></asciinema>
 
 Kääntämisen seurauksena siis syntyy `.class`-päätteinen tiedosto.
-Tämä tiedosto sisältää ns. *tavukoodia*, joka on tiedoston käännetty muoto.
+Tämä tiedosto sisältää ns. tavukoodia (engl. *bytecode*), joka on tiedoston käännetty muoto.
 Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe.
 Tavukoodia voidaan kuitenkin suorittaa Javan virtuaalikoneella (JVM, Java Virtual Machine),
 joka on erillinen ohjelma, joka osaa tulkita ja suorittaa tavukoodia.

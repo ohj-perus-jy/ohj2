@@ -2,97 +2,90 @@
 
 > [!Osaamistavoitteet]
 >
-> - Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet
-> - Muuttujat ja vakiot (perustyypit, `final`, String)
+> - Muistat, mitä ovat muuttujat ja vakiot
+> - Muistat, mitä ovat merkkijonot ja listat
+> - Tunnet Javan alkeistietotyypit
+> - Tunnet, miten merkkijonot, taulukot ja listat käytetään Javassa
 
 Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon
 viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten
-Javassa, käytetään selkokielisiä nimiä. Tällaista nimeä, joka viittaa muistissa
+Javassa käytetään selkokielisiä nimiä. Tällaista nimeä, joka viittaa muistissa
 olevaan tietoon, kutsutaan muuttujaksi (engl. *variable*). Ohjelmoijan tarvitsee
 muistaa vain nimi; tietokone huolehtii tiedon todellisesta sijainnista
 muistissa.
 
-Javassa muuttujaan asetetaan tietoa käyttämällä sijoituslausetta. 
+Javassa muuttuja tulee ensin *määritellä* ennen kuin sitä voi käyttää:
 
 ```java,ignore
-tyyppi muuttujanNimi = lauseke;
+tyyppi muuttujanNimi;
 ```
 
 Muuttujan tyyppi määritellään muuttujan nimen edessä, ja se kertoo, millaista
-tietoa muuttuja voi sisältää. Yhtäsuuruusmerkin oikealla puolella olevan
-lausekkeen (engl. *expression*) arvo tallennetaan sen vasemmalla puolella
-nimettyyn muuttujaan. Alla esimerkkejä.
+tietoa muuttuja voi sisältää.
+Muuttujan nimi voi sisältää kirjaimia ja alaviivoja. Muuttujan nimi
+ei kuitenkaan voi olla Java-kielessä varattu avainsana
+eikä muuttujan nimi saa alkaa numerolla.
+Javassa useasta osasta koostuvat muuttujien nimet kirjoitetaan
+yhteen `camelCase`-kirjoitustyylillä.
+
+Muuttujan määrittelyn jälkeen muuttujaan voi *sijoittaa* lausekkeiden
+arvoja:
 
 ```java,ignore
-double korkokerroin = 0.05;
-double paaoma = 150.0;
+muuttujanNimi = lauseke;
 ```
 
-Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla. 
+Yhtäsuuruusmerkin oikealla puolella olevan
+lausekkeen (engl. *expression*) arvo tallennetaan sen vasemmalla puolella
+nimettyyn muuttujaan.
+Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla.
+
+```java
+//-void main() {
+double korkokerroin; // Muuttujan määrittely, double = desimaalikuku
+double paaoma; // Muuttujan määrittely
+
+korkokerroin = 0.05; // Arvon sijoitus muuttujaan
+paaoma = 150.0; // Arvon sijoitus muuttujaan
+//- IO.println("korkokerroin = " + korkokerroin);
+//- IO.println("paaoma = " + korkokerroin);
+//- }
+```
+
+Muuttujaa ei voi käyttää ennen kuin siihen sijoittaa arvon ainakin kerran.
+Tätä varten voi käyttää yhdistettyä määrittely- ja sijoituslausetta, joka
+yhdistää muuttujan määrittelyn ja alkuarvon sijoittamisen samalle riville:
+
+```java,ignore
+double paaoma = 0.05; 
+// Yllä oleva on sama kuin:
+double paaoma;
+paaoma = 0.05;
+```
 
 Muuttuja voi olla myös lausekkeen osana, ja siten sen arvoa voidaan käyttää
-osana sijoitettavaa lauseketta. Huomaa, että tyyppiä ei tarvitse toistaa, kun
-viitataan olemassa olevaan muuttujaan.
+osana sijoitettavaa lauseketta. 
 
-```java,ignore
+```java
+//-void main() {
+double korkokerroin = 0.05;
+double paaoma = 150.0;
+
 double paaomaKorolla = (1 + korkokerroin) * paaoma;
+//- IO.println("korkokerroin = " + korkokerroin);
+//- IO.println("paaoma = " + korkokerroin);
+//- IO.println("paaomaKorolla = " + paaomaKorolla);
+//-}
 ```
 
-Ohjelmoinnissa sijoitus on *lause*, ei matemaattinen yhtälö. Lause `double
-paaoma = 150.0;` on totta vain suoritushetkellä. Lausetta voi ajatella myös
-käskynä; yllä oleva lause kuuluisi kutakuinkin "tallenna luku 150.0 muistiin
-paikkaan, jota kutsutaan tästä eteenpäin nimellä `paaoma`".
+Ohjelmoinnissa sijoitus on *lause*, eli yksittäinen suoritettava käsky.
+Esimerkiksi lausetta `double paaoma = 150.0;`
+voi ajatella tarkoittavan: 
+"tallenna luku 150.0 muistiin paikkaan, jota kutsutaan tästä eteenpäin nimellä
+`paaoma`".
+Muuttujan arvo pysyy samana kunnes jokin toinen lause muokkaa muuttujan arvoa.
 
-## Javan tyyppijärjestelmä
 
-Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa,
-että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli
-mielivaltaisia tyyppien välisiä sekoituksia. Eri tietotyyppejä ei voi käyttää
-toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa
-(`boolean`) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä
-kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on
-käännösvirhe. Esimerkki alla.
-
-```java,editable
-void main() {
-  long sairaanIsoLuku = 40000000000L;
-  IO.println("Iso, long-tyyppinen luku: " +sairaanIsoLuku);
-  // int normaaliIntti = sairaanIsoLuku; // Ei onnistu, koska vahva tyypitys
-  int katkaistu = (int)sairaanIsoLuku;
-  IO.println("int-luku eksplisiittisen tyyppimuunnoksen jälkeen: " + katkaistu);
-}
-```
-
-Yllä olevassa esimerkissä käytännössä otetaan `long`-luvun 32 oikeanpuoleisinta
-bittiä ja sijoitetaan ne `int`-tyyppiseen muuttujaan. Tämä on mahdollista siksi,
-että ohjelmoija on nimenomaisesti ("eksplisiittisesti") pyytänyt
-tyyppimuunnosta. Ilman eksplisiittistä tyyppimuunnosta kääntäjä antaisi virheen.
-Vahva tyypitys vähentää virheellisten oletusten mahdollisuutta ja parantaa
-ohjelman luotettavuutta. 
-
-*Staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät
-käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän
-tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen. Tämä on
-selkeä ero dynaamisesti tyypitettyihin kieliin, kuten Pythoniin tai
-JavaScriptiin, jossa vaikkapa `1 + True` (tai `1 + true`) palauttaa `2`. Ehkä
-yksi tyypillisimmistä ongelmista on, että ohjelmoija olettaa muuttujan olevan
-tiettyä tyyppiä, mutta todellisuudessa se onkin jotain muuta. 
-
-```python
-syöte = "100" # Syöte tulee usein merkkijonona API:sta tai käyttäjältä
-kerroin = 10  # Tarkoituksena on olla kerroin
-
-# Virhe: Unohdetaan muuntaa 'syöte' int/float-tyyppiseksi
-tulos = syöte * kerroin 
-print(tulos)
-# Odotettu tulos: 1000
-# Todellinen tulos: "100100100100100100100100100100" (merkkijonon toisto)
-```
-
-Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että ohjelman
-tyyppivirheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
-eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
-ovat keskenään yhteensopivia.
 
 ## Tietotyypit
 
@@ -100,33 +93,63 @@ Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (e
 *primitive data types*) ja viitetietotyyppeihin (engl. *reference data types*).
 Kaikki tieto tallennetaan tietokoneen muistiin binäärilukuina (nollien ja
 ykkösten sarjana), ja tietotyypit eroavat toisistaan siinä, kuinka paljon
-muistia ne varaavat ja millaista dataa ne esittävät. Alkeistietotyypit
+muistia ne varaavat, millaista dataa ne esittävät ja millä säännöillä dataa
+voi käsitellä. Alkeistietotyypit
 sisältävät yksinkertaisia arvoja, kuten kokonaislukuja ja totuusarvoja, kun taas
-viitetietotyypit voivat sisältää monimutkaisempia rakenteita, kuten olioita,
+viitetietotyypit sisältävät monimutkaisempia rakenteita, kuten olioita,
 taulukoita ja merkkijonoja. 
 
 ### Alkeistietotyypit
 
-Javassa on kahdeksan sisäänrakennettua
-[alkeistietotyyppiä](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/datatypes.html).
-Lisäksi `String`-tyyppi muistuttaa alkeistietotyyppiä, vaikka teknisesti ottaen
-se ei sellainen olekaan. Käydään läpi nämä tyypit yksi kerrallaan.
+Javassa on kahdeksan sisäänrakennettua alkeistietotyyppiä, joita 
+voi karkeasti jakaa neljään kategoriaan: kokonaisluvut, liukuluvut, merkit
+ja totuusarvot.
 
-**Kokonaisluvut**: Kokonaisluvuille on neljä tyyppiä, jotka eroavat toisistaan
+#### Kokonaisluvut 
+
+Kokonaisluvuille on olemassa neljä tyyppiä, jotka eroavat toisistaan
 lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty
 kokonaislukutyyppi on `int`. 
 
-| Tyyppi | Koko (tavua /bittiä) | Lukualue (suuntaa antava)       |
-| ------ | -------------------- | ------------------------------- |
-| byte   | 1 tavu (8 bittiä)    | -128 ... 127                    |
-| short  | 2 tavua (16 bittiä)  | -32 768 ... 32 767              |
-| int    | 4 tavua (32 bittiä)  | n. -2 miljardia ... 2 miljardia |
-| long   | 8 tavua (64 bittiä)  | n. +/- 9 * 10^18                |
+| Tyyppi  | Koko (tavua /bittiä) | Lukualue (suuntaa antava)       |
+| ------- | -------------------- | ------------------------------- |
+| `byte`  | 1 tavu (8 bittiä)    | -128 ... 127                    |
+| `short` | 2 tavua (16 bittiä)  | -32 768 ... 32 767              |
+| `int`   | 4 tavua (32 bittiä)  | n. -2 miljardia ... 2 miljardia |
+| `long`  | 8 tavua (64 bittiä)  | n. +/- 9 * 10^18                |
 
-TODO: Esimerkki siitä, mitä tapahtuu kun operoidaan luvuilla jotka ylittävät
-lukualueen. Python, C#. 
 
-**Liukuluvut**: Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on
+<details><summary><b><i class="bi bi-info-circle"></i> Huomautus:</b> Muuttujan tyyppi ei vaihdu lennosta</summary>
+
+Useissa dynaamisissa ohjelmointikielissä, kuten Pythonissa tai JavaScriptissa,
+kokonaisluvuille ei välttämättä ole suurinta arvoa: suurille luvuille varataan
+joko lisää tilaa tai vähemmän merkitseviä numeroita pyöristetään.
+**Tämä ei päde Javassa.** Jos laskutoimituksen tuloksena kokonaisluku ylittää 
+muuttujan tyypin lukualueen, luku *vuotaa yli* (engl. overflow) ja "pyörähtää lukualueen ympäri":
+
+```java
+//-void main() {
+int suuriLuku = 2000000000;
+IO.println("suuriLuku = " + suuriLuku);
+
+suuriLuku += 1000000000;
+IO.println("suuriLuku = " + suuriLuku);
+//-}
+```
+
+Siispä mahdollinen lukualue on otettava huomioon ohjelmaa kirjoittaessa.
+Jos on mahdollisuus, että laskutoimitus ylittää tyypin lukualueen, on syytä
+vaihtaa toiseen tietotyyppiin.
+
+Javasta löytyy myös suuria lukuja käsittelevä
+[`BigInteger`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/math/BigInteger.html)
+-tyyppi, jota ei tällä opintojaksolla käsitellä.
+
+</details>
+
+#### Liukuluvut
+
+Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on
 `double`.
 
 | Tyyppi | Koko (tavua)        | Tarkkuus                  |
@@ -134,64 +157,70 @@ lukualueen. Python, C#.
 | float  | 4 tavua (32 bittiä) | n. 7 merkitsevää numeroa  |
 | double | 8 tavua (64 bittiä) | n. 15 merkitsevää numeroa |
 
+<details><summary><b><i class="bi bi-info-circle"></i> Huomautus:</b> Liukuluvut ovat epätarkkoja!</summary>
 
-Koska Java käyttää IEEE 754 standardia desimaalilukujen`double` ja `float`
-esittämiseen, niillä on muutama mielenkiintoinen ja kenties yllättävä
-ominaisuus:
+Java käyttää liukulujuja desimaalilukujen `double` ja `float`
+esittämiseen. Liukulukuja voidaan ajatella esittävän desimaalilukujen
+likiarvoja. Liukulukujen tarkka toiminta on standardoitu (IEEE 754 -standardi);
+vaikka ne on tarkoitettu desimaalilukujen esittämiseen, niillä on silti joitain
+mielenkiintoisia ja kenties yllättäviä eroja tavallisiin desimaalilukuihin:
 
 ```java
 void main() {
-    float negatiivinenAarettomyys = -1.0f / 0.0f;
-    IO.println(negatiivinenAarettomyys);
+    // Laskutoimitukset voivat erota desimaaliluvuista pyöristysvirheiden takia
+    double pyoristysVirhe = 0.1 + 0.2;
+    IO.println("pyoristysVirhe = " + pyoristysVirhe);
+
+    // Jakaminen nollalla on määritelty eikä aiheuta virhettä
+    double negatiivinenAarettomyys = -1.0 / 0.0;
+    IO.println("negatiivinenAarettomyys = " + negatiivinenAarettomyys);
     double positiivinenAarettomyys = 1.0 / 0.0;
-    IO.println(positiivinenAarettomyys);
+    IO.println("positiivinenAarettomyys = " + positiivinenAarettomyys);
+
+    // Jakolasku 0/0 ei aiheuta virhettä
     double nan = 0.0 / 0.0;
-    IO.println(nan);
+    IO.println("nan = " + nan);
 }
 ```
 
-Eli desimaaliluvuille on erikseen määritelty $-\infty, \infty$ ja `NaN` =
-**N**ot **A** **N**umber. Huomaa myös, että jos haluat erikseen `float`
-tyyppisen desimaaliluvun, luvun perässä pitää olla `f`. Muutoin se tulkitaan
-`double`ksi.
+Liukuluvuille on siten erikseen määritelty $-\infty, \infty$ ja `NaN` =
+**N**ot **A** **N**umber. Lisäksi liukulukujen väliset laskutoimitukset
+voivat sisältää pieniä virheitä johtuen liukulukujen esitystavasta ja 
+pyöristysvirheistä.
 
-Javasta löytyy myös enemmän
-[numeerisia](https://docs.oracle.com/javase/8/docs/api/java/lang/Number.html)
-tietotyyppejä, mutta tällä kurssilla riittänevät käytännössä `int` ja `double`.
-Hyvin isoja kokonaislukuja varten on tarjolla
-[`BigInteger`](https://docs.oracle.com/javase/8/docs/api/java/math/BigInteger.html)
-ja hyvin tarkkoja desimaalilukuja varten
-[`BigDecimal`](https://docs.oracle.com/javase/8/docs/api/java/math/BigDecimal.html),
-mutta niitä tuskin tällä opintojaksolla tarvitsemme. 
+Hyvin tarkkoja laskuja vaativille ohjelmille löytyy myös
+[`BigDecimal`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/math/BigDecimal.html)
+-tyyppi, jota ei tällä opintojaksolla käsitellä.
 
-**Merkit**: Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää
+</details>
+
+#### Merkit
+
+Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää
 2 tavua muistia.
 
-**Totuusarvot**: Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi
+#### Totuusarvot
+
+Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi
 mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
 
-**Merkkijono**: Vaikka `String`-tyyppi ei teknisesti ottaen olekaan
-alkeistietotyyppi, se käyttäytyy monin tavoin kuin alkeistietotyyppi. Siten sen
-voidaan katsoa kuuluvan tähän kategoriaan. `String`-tyyppiä käytetään
-merkkijonojen, eli tekstin, tallentamiseen.
 
 ### Viitetietotyypit
 
-Viitetietotyypit sisältävät monimutkaisempia tietorakenteita, kuten olioita,
-taulukoita ja merkkijonoja. Esimerkiksi `String` on viitetietotyyppi, kuten myös
-kaikki taulukot, esimerkiksi `int[]`. 
+Toisin kuin alkeistietotyypit, 
+viitetietotyyppinen muuttuja sisältää varsinaisen tiedon sijaan vain pienen, 
+kiinteän kokoisen arvon eli *viitteen* (engl. reference).
+Viitteen avulla ohjelma pääsee käsiksi varsinaiseen dataan,  
+jonka kokoa tai sisältöä ei välttämättä tiedetä ennen kuin ohjelma ajetaan.  
 
-Viitetietotyyppinen muuttuja eroaa alkeistietotyyppisestä muuttujasta
-erityisesti siinä, että se ei sisällä itse dataa, vaan se on viite (engl.
-*reference*) olioon. Java-aiheisessa kirjallisuudessa saatetaan esittää, että
-viite on osoitin siihen keskusmuistin paikkaan, jossa olio sijaitsee. Asia on
-kuitenkin hieman monimutkaisempi, sillä Java ei salli osoitinten suoraa
-käsittelyä ohjelmoijan toimesta. Voit kuitenkin ajatella viitettä siten, että se
-on tapa päästä käsiksi olioon, joka sijaitsee "jossakin muualla" muistissa.
+Javassa viitetietotyypit ovat käytännössä kaikki muut tietotyypit
+kuin alkeistietotyypit. Esimerkiksi `String` on viitetietotyyppi, kuten myös
+kaikki taulukot ja listat. Alkaen luvusta 2 tutustumme olio-ohjelmointiin;
+Javassa kaikki oliot ovat viitetietotyypit.
 
 <details><summary>✨ Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
 
-On useampia syitä siihen, miksi nämä kaksi eri kategoriaa tietotyypeille on
+On useita syitä sille, miksi nämä kaksi eri kategoriaa tietotyypeille on
 olemassa.
 
 Ensimmäinen liittyy suorituskykyyn ja muistin hallintaan. Jos kaikki muuttujat
@@ -201,7 +230,7 @@ suurten tietorakenteiden kohdalla. Jos meillä olisi vaikkapa `kirja`, joka
 sisältäisi 1000 sivua tekstiä, niin joka ikinen kerta kun haluamme käsitellä
 `kirja`-muuttujaa, meidän pitäisi kopioida kaikki 1000 sivua muistissa. Tämä
 olisi erittäin tehotonta. Sen sijaan viitetietotyypit mahdollistavat sen, että
-me vain viittaamme `kirja`-olioon, joka sijaitsee jossakin muualla muistissa,
+vain viittaamme `kirja`-olioon, joka sijaitsee jossakin muualla muistissa,
 ilman että tarvitsee kopioida koko kirjaa joka kerta.
 
 Toinen syy liittyy jaettuun tilaan. Usein haluamme, että useampi ohjelman osa
@@ -255,6 +284,28 @@ arvoa. Eri tietotyypeillä on omat kirjoitussääntönsä literaaleille.
    `F` tai `f`, esimerkiksi `3.14f`.
  * **Totuusarvot** (`boolean`): Kirjoitetaan avainsanoina `true` ja `false`.
 
+```java
+//-void main() {
+char merkki = 'A';
+//-IO.println("merkki = " + merkki);
+
+int luku = 123;
+//-IO.println("luku = " + luku);
+long isoLuku = 12345678901L;
+//-IO.println("isoLuku = " + isoLuku);
+
+double liukuluku = -2.0;
+//-IO.println("liukuluku = " + liukuluku);
+float pieniLiukuluku = 2.0f;
+//-IO.println("pieniLiukuluku = " + pieniLiukuluku);
+double tieteellinenMuoto = 1.5e-2;
+//-IO.println("tieteellinenMuoto = " + tieteellinenMuoto);
+
+boolean totuusarvo = true;
+//-IO.println("totuusarvo = " + totuusarvo);
+//-}
+```
+
 ## Käärijäluokat
 
 Javassa kullekin alkeistietotyypille on olemassa niin sanottu käärijäluokka
@@ -264,15 +315,15 @@ Alkeistietotyypit ja niitä vastaavat käärijäluokat on esitetty alla olevassa
 taulukossa. 
 
 | Alkeistietotyyppi | Käärijäluokka |
-| ----------------- | -------------- |
-| byte              | Byte           |
-| short             | Short          |
-| int               | Integer        |
-| long              | Long           |
-| float             | Float          |
-| double            | Double         |
-| char              | Character      |
-| boolean           | Boolean        |
+| ----------------- | ------------- |
+| byte              | Byte          |
+| short             | Short         |
+| int               | Integer       |
+| long              | Long          |
+| float             | Float         |
+| double            | Double        |
+| char              | Character     |
+| boolean           | Boolean       |
 
 Tässä käytetään tietotyypin käärijäluokassa olevaa vakiota MAX_VALUE ja
 muunnetaan käärijäluokan avulla muuttujan `kaksiTavua` ensin merkkijonoksi ja
@@ -294,192 +345,462 @@ void main() {
 }
 ```
 
-## Huomautuksia String-tyypistä
+## Merkkijonot
 
-**Muuttumattomuus.** Javassa, kuten monissa muissakin kielissä merkkijono on
-muuttumaton. Tämä liittyy muun muassa muistinkäytön tehokkuuteen ja sitä kautta
-parempaan suorituskykyyn. Jos yrität suorittaa jonkin operaation merkkijonolle,
+Javassa merkkijonoja ei lasketa alkeistietotyypiksi.
+Java-kieli tarjoaa kuitenkin merkkijonoille oman syntaksin: uuden merkkijonon
+voi luoda kirjoittamalla merkkejä lainausmerkkien `"` väliin:
+
+```java
+//-void main() {
+String jono = "Opiskelen ohjelmointia!";
+//-IO.println("jono = " + jono);
+//-}
+```
+Javassa merkkijono on
+muuttumaton. Jos yrität suorittaa jonkin operaation merkkijonolle,
 saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono muutu. Katsotaan
 tästä esimerkki:
 
 ```java
-//-void main() {
-String muuttumaton = "Tämä on muuttumaton.";
-IO.println(muuttumaton);
-muuttumaton.concat("Vai onko sittenkään?");
-IO.println(muuttumaton);
-//-}
+void main() {
+    String muuttumaton = "Tämä on muuttumaton.";
+    IO.println(muuttumaton);
+
+    muuttumaton.concat("Vai onko sittenkään?");
+    IO.println(muuttumaton);
+}
 ```
 
 Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään,
 ja alkuperäinen merkkijono pysyy ennallaan. 
-
-**Merkin hakeminen merkkijonosta.** Jos haluat tarkastella tiettyä kirjainta
-merkkijonossa, se tapahtuu seuraavasti:
+Toisin sanoen, merkkijonomuuttujien arvoa voi muuttaa vain sijoittamalla:
 
 ```java
-//-void main() {
-String mjono = "esimerkki";
-IO.println(mjono.charAt(0));
-// IO.println(mjono[0]); // Tämä ei toimi Javassa
-//-}
+void main() {
+    String muuttumaton = "Tämä on muuttumaton.";
+    IO.println(muuttumaton);
+
+// HIGHLIGHT_GREEN_BEGIN
+    muuttumaton = muuttumaton.concat("Vai onko sittenkään?");
+// HIGHLIGHT_GREEN_END
+    IO.println(muuttumaton);
+}
+```
+
+### Hyödyllisiä toimintoja
+
+`String`-tyyppi sisältää lukuisia hyödyllisiä toimintoja.
+Alla on joitakin yleisimmistä hyödyllisistä toiminnoista:
+
+| Metodi                         | Selitys                                                                                                |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------ |
+| `jono.charAt(paikka)`          | Palauttaa jonossa olevan yksittäisen merkin indeksistä `paikka`.                                       |
+| `jono.length()`                | Palauttaa jonossa olevien merkkien määrän eli jonon pituuden.                                          |
+| `jono.trim()`                  | Palauttaa kopion jonosta ilman alussa ja lopussa olevia ylimääräisiä tyhjiä merkkejä.                  |
+| `jono.replace(mitä, millä)`    | Palauttaa kopion jonosta, jossa jonot/merkit `mitä` on korvattu jonolla/merkillä `millä`.              |
+| `jono.contains(etsittävä)`     | Palauttaa `true`, jos `etsittävä` löytyy jonosta.                                                      |
+| `jono.indexOf(etsittävä)`      | Palauttaa indeksin, jossa `etsittävä` esiintyy ensimmäistä kertaa.                                     |
+| `jono.substring(mistä, mihin)` | Palauttaa osan jonosta alkaen indeksistä `mistä` päättyen indeksiin `mihin`.                           |
+| `String.join(merkki, jonot)`   | Palauttaa jonon, jossa taulukossa `jonot` olevat jonot ovat peräkkäin yhdistettynä merkillä `merkki`). |
+
+Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
+`Sting`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/String.html)).
+Katsotaan vielä, miten yllä olevia esimerkkejä voi käyttää:
+
+```java
+void main() {
+    String mjono = "Opiskelen ohjelmointia java-kielellä.";
+    IO.println("mjono = " + mjono);
+    IO.println("Ensimmäinen merkki: " + mjono.charAt(0));
+    IO.println("Jonon pituus: " + mjono.length());
+
+    IO.println(); // Lisää ylimääräisen rivivaihdon
+
+    // Merkkijonojen yhdistäminen onnistuu + operaattorilla
+    mjono = mjono + " Hei maailma!";
+    IO.println("mjono (lisäyksen jälkeen) = " + mjono);
+
+    // Tekstin korvaaminen merkkijonossa
+    mjono = mjono.replace("java", "Java");
+    IO.println("mjono (korvattu java -> Java) = " + mjono);
+
+    IO.println();
+
+    // indexOf etsii indeksin, jossa annettu jono löytyy
+    int ohjelmointiaPaikka = mjono.indexOf("ohjelmointia");
+    IO.println("ohjelmointiaPaikka = " + ohjelmointiaPaikka);
+
+    // substring palauttaa osajonon annettusta jonosta indeksin perusteella
+    String osajono = mjono.substring(ohjelmointiaPaikka, ohjelmointiaPaikka + 12);
+    IO.println("osajono = " + osajono);
+
+    IO.println();
+
+    // Operaatio "String + lauseke" muuntaa lausekkeen arvon merkkijonoksi
+    String toinenJono = "1/2 = " + (1.0 / 2);
+    IO.println("toinenJono = \"" + toinenJono + "\"");
+}
 ```
 
 ## StringBuilder
 
-Jos tarvitsee muunneltavan merkkijonon, käytä `StringBuilder`-luokkaa. Se
-tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että joka kerta luodaan uusi
-merkkijono.
+Käytä `StringBuilder`-luokkaa, kun tarvitset muunneltavan merkkijonon.
+Se tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että
+uutta merkkijonoa tarvitsisi sijoittaa muuttujaan.
+
+Oleelliset toiminnot:
+
+| Metodi              | Selitys                                                          |
+| ------------------- | ---------------------------------------------------------------- |
+| `sb.charAt(paikka)` | Palauttaa jonossa olevan yksittäisen merkin indeksistä `paikka`. |
+| `sb.length()`       | Palauttaa jonossa olevien merkkien määrän eli jonon pituuden.    |
+| `sb.append(arvo)`   | Lisää arvon nykyisen jonon loppuun.                              |
+
+Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
+`StingBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/StringBuilder.html)).
+Katsotaan vielä, miten yllä olevia esimerkkejä voi käyttää:
 
 ```java
 void main() {
-    Byte tavu;
-    IO.println(tavu);
     StringBuilder muuttuva = new StringBuilder("Tämä on muuttuva");
-    IO.println(muuttuva);
+    IO.println("muuttuva = " + muuttuva);
+    IO.println("muuttuva.length() = " + muuttuva.length());
+
+    IO.println();
+
     muuttuva.append(" merkkijono.");
-    IO.println(muuttuva);
+    IO.println("muuttuva = " + muuttuva);
+    IO.println("muuttuva.length() = " + muuttuva.length());
 }
 ```
+
+`StringBuilder` on lisäksi muistin käytön kannalta tehokkaampi niissä
+tapauksissa, jossa useita merkkijonoja on yhdistettävä monta kertaa peräkkäin.
 
 ## Taulukot
 
 Taulukkoja (engl. *array*) käytetään tallentamaan joukkoa samantyyppisiä
 alkioita muuttujaan. Tämä helpottaa datan tehokasta hallintaa ja organisointia.  
 
-Javan taulukot esitellään seuraavalla syntaksilla.
+Uuden taulukon määrittely ja luominen Javassa onnistuu seuraavasti:
 
 ```java,ignore
-Tyyppi[] nimi = new Tyyppi[koko];
+tyyppi[] nimi = new tyyppi[koko];
 ```
 
-Jos sisältö on jo tiedossa taulukkoa luotaessa, niin esimerkiksi
-kokonaislukutaulukon voi alustaa suoraan aaltosulkeiden sisään.
+Tässä `new tyyppi[koko]` luo taulukon, joka sisältää `koko` kappaletta
+alkioita, joiden tyyppi on `tyyppi`.
+Taulukon luomisen jälkeen alkioiden arvoja voi asettaa käyttäen sijoituslausetta
+seuraavasti:
 
-```java,ignore
-void main () {
-    int[] luvut = {1, 2, 3, 4 };
-}
+```java
+//-void main() {
+int[] arvosanat = new int[4];
+arvosanat[0] = 4;
+arvosanat[1] = 2;
+arvosanat[2] = 2;
+arvosanat[3] = 5;
+//-IO.println("arvosanat = " + Arrays.toString(arvosanat));
+//-}
 ```
 
-Indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen
+Sijoituslauseessa `[numero]` tarkoittaa alkion paikkaa eli *indeksiä*
+taulukossa.
+Javassa indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen
 indeksissä 1, ja niin edelleen. Taulukon viimeisen alkion indeksi on aina
 `taulukko.length - 1`.
 
-Java täyttää taulukon oletusarvoilla riippuen taulukon tyypistä. Voit alla
-kokeilla mitkä ovat kunkin taulukkotyypin oletusarvot vaihtamalla `char` tilalle
-esimerkiksi `int` tai `double`. 
+Jos alkioiden arvot tunnetaan etukäteen, taulukon voi myös luoda seuraavasti
 
-```java,editable
-void main () {
-    char[] luvut = new char[4];
-    luvut[0] = 'a';
-    IO.println(luvut[0]);
-    IO.println(luvut[1]);
-}
+```java
+//-void main () {
+int[] arvosanat = new int[] {4, 2, 2, 5};
+//-IO.println("arvosanat = " + Arrays.toString(arvosanat));
+//-}
 ```
 
-Jos haluamme lisätä tietorakenteeseen tietoa ohjelman ajon aikana, parempi
-vaihtoehto on käyttää listoja.
+Javassa taulukkojen kokoa ei voi muuttaa taulukon luomisen jälkeen.
+Sijoittaminen paikkaan, jota ei ole taulukossa, aiheuttaa virheen
+ohjelman ajon aikana:
 
-Lue lisää taulukoista Javan dokumentaatiosta:
-<https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html>
+```java,ignore
+int[] arvosanat = new int[] {4, 2, 2, 5};
+arvosanat[5] = 3;
+```
+```
+java.lang.ArrayIndexOutOfBoundsException: Index 5 out of bounds for length 4
+	at main.main(main.java:3)
+```
+
+Javassa taulukon pituuden voi aina tarkistaa `length`-attribuutilla.
+Lisäksi taulukon voi tulostaa käyttämällä `Arrays.toString`-metodia (ks. [JavaDocs](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Arrays.html#toString(java.lang.Object[])))
+
+```java
+//-void main() {
+int[] arvosanat = new int[] {4, 2, 2, 5};
+IO.println("Taulukon pituus: " + arvosanat.length);
+IO.println("Taulukon sisältö: " + Arrays.toString(arvosanat));
+//-}
+```
 
 
 ## Vakiot
 
-Muuttuja, jolle voi sijoittaa arvon vain alustuksen yhteydessä esitellään
-käyttäen `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että
+Muuttuja, jolle voidaan sijoittaa arvo vain alustuksen yhteydessä, määritellään
+käyttämällä `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että
 `final`-muuttujat kirjoitetaan suuraakkosin ja sanat erotellaan toisistaan
 alaviivalla.
 
+Javassa `final`-avainsanaa voi käyttää sekä alkeistietotyyppien että
+viitetietotyyppien kanssa.
+
 ```java,ignore
 final int PAIVIA_VIIKOSSA = 7;
+final int[] PAIVIA_KUUKAUDESSA_KARKAUSVUOSI = new int[] {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 ```
 
 Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin
-vähentämiseksi, luotettavuuden parantamiseksi ja parantamaan suorituskykyä
+vähentämiseksi, luotettavuuden parantamiseksi ja suorituskyvyn parantamiseksi.
 
 ## Listat
 
-Kun emme tiedä datan määrää etukäteen tai se muuttuu jatkuvasti, käytämme
-listaa. Javan yleisin lista on ArrayList. Se on "älykäs taulukko", joka osaa
-venyttää itseään tarpeen mukaan.
+Lista on tietorakenne, joka voi kasvaa ja kutistua tarpeen mukaan. Kuten
+taulukko, lista voi sisältää vain yhden tyypin mukaisia alkioita. Listan koko ei ole
+kiinteä, mikä tekee siitä joustavamman tilanteisiin, joissa alkioiden määrä ei
+ole etukäteen tiedossa.
+Javan listat vastaavat siten JavaScriptin taulukkoja.
 
-ArrayList on osa Javan java.util-pakettia, joten se täytyy importata.
-
-Alkioita lisätään listaan `add()`-metodilla, poistetaan `remove()`-metodilla ja
-haetaan `get()`-metodilla. Listan koko saadaan `size()`-metodilla. 
-
-Javassa `add()`-metodille on kaksi toteutusta, joista `add(lisättava)` lisää
-listan loppuun ja `add(indeksi, lisättävä)` lisää tiettyyn indeksiin taulukossa
-siirtäen loput alkiot yhden oikealle. Myös `remove()` metodille on kaksi
-toteutusta, joista `remove(indeksi)` poistaa tietyssä indeksissä olevan alkion
-ja `remove(poistettavaAlkio)` poistaa tietyn alkion listasta, jos alkio löytyy. 
+Javan yleisin listan tyyppi on `ArrayList<T>`, jossa `T` on listassa olevien
+alkioiden tyyppi.
+Kuten taulukoilla, listan voi luoda alkuun tyhjänä tai täyttää valmiiksi
+alkioilla:
 
 ```java
-import java.util.ArrayList;
+//-void main() {
+// Tyhjä lista ilman alkioita
+List<Integer> arvosanat = new ArrayList<Integer>();
+// Lisätään alkiot yksi kerrallaan
+arvosanat.add(4);
+arvosanat.add(2);
+arvosanat.add(2);
+arvosanat.add(5);
+//-IO.println("arvosanat = " + arvosanat);
 
+// Lista, jossa alkiot annettu valmiiksi
+List<Integer> arvosanatValmis = new ArrayList<Integer>(List.of(4, 2, 2, 5));
+//-IO.println("arvosanatValmis = " + arvosanatValmis);
+//-}
+```
+
+> [!HUOMAUTUS]
+>
+> Javan rajoituksista johtuen listojen **alkioiden tyypin on aina oltava
+> viitetyyppimuuttuja.** Täten esimerkiksi `int`-alkioita sisältävän listan
+> ei voi kirjoittaa muodossa `ArrayList<int>`:
+> 
+> ```java,ignore
+> List<int> lista = new ArrayList<int>();
+> ```
+> ```
+> error: unexpected type
+> List<int> lista = new ArrayList<int>();
+>      ^
+>   required: reference
+>   found:    int
+> ```
+>
+> Jos tarvitset listoja, jonka alkioina ovat alkeistietotyypit, käytä
+> alkioiden tyyppinä [alkeistietotyyppien käärijäluokat](#käärijäluokat),
+> jotka ovat viitetyyppejä, mutta toimivat kuten niitä vastaavat alkeistietotyypit.
+> Toisin sanoen, `ArrayList<Integer>` on sallittu, kun taas `ArrayList<int>` ei ole.
+> Puolestaan `ArrayList<String>` on sallittu, koska merkkijono on viitetietotyyppi.
+
+> [!HUOMAUTUS]
+>
+> Javan *koodauskäytänteisiin* kuuluu, että lista*muuttujien* tyyppinä käytetään
+> `List<T>`, kun taas muuttujien arvojen alustuksessa käytetään
+> tarkempaa tyyppiä, kuten `ArrayList<T>`.
+>
+> Toisin sanoen, vaikka alla oleva on sallittu
+>
+> ```java
+>
+> 
+> //-void main() {
+> ArrayList<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
+> //-IO.println("nimet = " + nimet);
+> //-}
+> ```
+>
+> **koodauskäytänteiden** mukaisesti on yleisempää esittää muuttuja seuraavasti:
+>
+> ```java
+>
+> 
+> //-void main() {
+> List<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
+> //-IO.println("nimet = " + nimet);
+> //-}
+> ```
+>
+> Lisäksi, jos alkioiden tyyppi on muuttujan määrittelyrivin perusteella selvä,
+> alkioiden tyyppi saatetaan usein jättää pois listan alustuksesta:
+>
+> ```java
+> //-void main() {
+> // Kääntäjä päättelee, että ArrayList<> = ArrayList<String> 
+> // muuttujan tyypin perusteella
+> List<String> nimet = new ArrayList<>(List.of("Matti", "Teppo"));
+> //-IO.println("nimet = " + nimet);
+> //-}
+> ```
+>
+> Palaamme tarkemmin `List<T>` ja `ArrayList<T>` -tyyppien välisiin eroihin
+> [osassa 5](../osa5/index.md). Voit tässä vaiheessa kuitenkin miettiä,
+> että `List<T>` on yleinen tyyppi listoille, kun taas `ArrayList<T>` on
+> (eräs) Javan tarjoama tapa esittää lista.
+
+Katsotaan vielä listojen yleisempiä toimintoja:
+
+| Metodi                    | Selitys                                                                                                |
+| ------------------------- | ------------------------------------------------------------------------------------------------------ |
+| `size()`                  | Palauttaa listassa olevien alkioiden lukumäärän.                                                       |
+| `add(lisättävä)`          | Lisää alkion listan loppuun.                                                                           |
+| `add(indeksi, lisättävä)` | Lisää alkion listan indeksiin `indeksi` siirtäen loput alkiot yhden paikan eteenpäin.                  |
+| `get(indeksi)`            | Palauttaa indeksissä `indeksi` olevan alkion.                                                          |
+| `remove(poistettava)`     | Poistaa listasta `poistettava`:n ensimmäisen esiintymän siirtäen loput alkiot yhden paikan taaksepäin. |
+| `remove(indeksi)`         | Poistaa listasta paikassa `indeksi` olevan alkion.                                                     |
+
+Löydät vastaavasti lisää metodeja JavaDocs-sivustolla (ks. [Class `ArrayList<E>`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html)).
+
+```java
 void main () {
     // Luodaan tyhjä merkkijonolista
-    ArrayList<String> mjonoLista = new ArrayList<>();
-
+    List<String> nimet = new ArrayList<>();
     // Lisätään alkioita listaan
-    mjonoLista.add("Matti");
-    mjonoLista.add("Teppo");
-    mjonoLista.add("Liisa");
+    nimet.add("Matti");
+    nimet.add("Teppo");
+    nimet.add("Liisa");
 
     // Tulostetaan listan koko
-    System.out.println("Listan koko: " + mjonoLista.size());
-    System.out.println("------");
+    IO.println("Listan koko: " + nimet.size());
+    IO.println("------");
     // Haetaan alkio indeksistä 1 (toinen alkio)
-    String toinen = mjonoLista.get(1);
-    System.out.println("Toinen alkio: " + toinen);
-    System.out.println("------");
+    String toinen = nimet.get(1);
+    IO.println("Toinen alkio: " + toinen);
+    IO.println("------");
 
     // Poistetaan alkio indeksistä 0 (ensimmäinen alkio)
-    mjonoLista.remove(0);
-    System.out.println("Poistettiin ensimmäinen alkio.");
-    System.out.println("------");
+    nimet.remove(0);
+    IO.println("Poistettiin ensimmäinen alkio.");
+    IO.println("------");
     // Tulostetaan kaikki alkiot
-    for (String mjono : mjonoLista) {
-        System.out.println(mjono);
-    }
-    System.out.println("------");
+    IO.println("nimet = " + nimet);
+    IO.println("------");
 
     // Tulostetaan listan koko
-    System.out.println("Listan koko: " + mjonoLista.size());
+    IO.println("Listan koko: " + nimet.size());
 
 
-    //Kaksi esimerkkiä kuinka luoda listaan heti sisältöä
+    // Kaksi esimerkkiä siitä, kuinka luoda listaan heti sisältöä
     List<String> elaimet = new ArrayList<>(List.of("koira", "kissa", "kala"));
     List<String> varit = Arrays.asList("punainen", "sininen", "keltainen");
-
-    //For-Each on hyvä listojen tulostamiseen
-    for (String mjono : mjonoLista) {
-            IO.println(mjono);
-    }
-
-    for (String mjono : elaimet) {
-        IO.println(mjono);
-    }
-
-    for (String mjono : varit) {
-        IO.println(mjono);
-    }
+    IO.println("elaimet = " + elaimet);
+    IO.println("varit = " + elaimet);
 }
 ```
 
 
 Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä:
 
-| Toiminto                    | Java                 | C#                     | Python            |
-| --------------------------- | -------------------- | ---------------------- | ----------------- |
-| Lukeminen tietystä paikasta | list.get(indeksi)    | list[indeksi]          | list[indeksi]     |
-| Listan koko                 | list.size()          | list.Count             | len(list)         |
-| Poistaminen                 | list.remove(indeksi) | list.RemoveAt(indeksi) | list.pop(indeksi) |
+| Toiminto                    | Java                   | C#                       | Python              |
+| --------------------------- | ---------------------- | ------------------------ | ------------------- |
+| Lukeminen tietystä paikasta | `list.get(indeksi)`    | `list[indeksi]`          | `list[indeksi]`     |
+| Listan koko                 | `list.size()`          | `list.Count`             | `len(list)`         |
+| Poistaminen                 | `list.remove(indeksi)` | `list.RemoveAt(indeksi)` | `list.pop(indeksi)` |
+
+## Javan tyyppijärjestelmä
+
+Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa,
+että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli
+mielivaltaisia tyyppien välisiä sekoituksia.
+Puolestaan *staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät
+käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän
+tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen.
+
+Käytännössä Javassa eri tietotyyppejä ei voi käyttää
+toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa
+(`boolean`) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä
+kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on
+käännösvirhe.
 
 
-Muista metodeista voi lukea dokumentaatiosta:
-<https://docs.oracle.com/javase/8/docs/api/java/util/List.html>
+```java,ignore
+void main() {
+    boolean totuusarvo = false;
+    totuusarvo = 1;
+}
+```
+```
+error: incompatible types: int cannot be converted to boolean
+    totuusarvo = 1;
+                 ^
+1 error
+error: compilation failed
+```
 
+Yllä oleva käännösvirhe kertoo, että kokonaislukua (`int`) ei voida muuntaa
+totuusarvoksi (`boolean`).
+Tämä on selkeä ero dynaamisesti tyypitettyihin kieliin, kuten Pythoniin tai
+JavaScriptiin, jossa vaikkapa `1 + True` (tai `1 + true`) palauttaa `2` tai
+jossa samaan muuttujaan voi sijoittaa erityyppisiä arvoja.
+
+On kuitenkin väistämätöntä, että ohjelmassa tulee käsitellä useita erityyppisiä
+arvoja. Tätä varten Javassa on valmiiksi määritelty joitain automaattisia
+sääntöjä, joiden perusteella kääntäjä osaa tehdä *implisiittisen*
+tyyppimuunnoksen. Esimerkiksi
+
+- kokonaislukuja (`int`) saa muuntaa desimaaliluvuksi (`double`),
+- pienempiä kokonaislukuja (esim. 8-bittinen kokonaisluku `byte`) saa muuntaa
+  enemmän tilaa vievään kokonaislukuun (esim. 32-bittinen kokonaisluku `int`).
+
+Tyyppimuunnossääntöjä on paljon lisääkin; yleisperiaate on, että jos
+muunnos ei aiheuta tiedon menetystä, sille on varmasti olemassa automaattinen muunnos.
+Automaattinen muunnos tapahtuu sijoituksissa ja lausekkeiden yhteydessä.
+
+```java
+void main() {
+    int kokonaisluku = 23;
+    //-IO.println("kokonaisluku = " + kokonaisluku);
+    double desimaaliluku = kokonaisluku; // OK: int -> double muunnos on implisiittinen
+    //-IO.println("desimaaliluku = " + desimaaliluku);
+
+    // HUOM: jakolasku on int / int => desimaalit häviävät
+    double puoletVirhe = 1 / 2; 
+    //-IO.println("puoletVirhe = " + puoletVirhe);
+
+    // OIKEIN: jakolasku on int / double -> double / double
+    double puoletOikein = 1 / 2.0;
+    //-IO.println("puoletOikein = " + puoletOikein);
+}
+```
+
+Lisäksi ohjelmoija voi erikseen pakottaa ns. *eksplisiittinsen* tyyppimuunnoksen
+käyttämällä syntaksia `(uusiTyyppi)muuttujanNimi`.
+Tämä soveltuu tilanteisiin, jossa muunnos ei olisi mahdollista implisiittisesti:
+
+```java
+void main() {
+  long sairaanIsoLuku = 40000000000L; // long = 64-bittinen luku
+  IO.println("Iso, long-tyyppinen luku: " + sairaanIsoLuku);
+  // long -> int ei ole implisiittinen, mutta se onnistuu eksplisiittisesti
+  int katkaistu = (int)sairaanIsoLuku; // int = 32-bittinen luku
+  IO.println("int-luku eksplisiittisen tyyppimuunnoksen jälkeen: " + katkaistu);
+}
+```
+
+Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että tyyppeihin
+liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
+eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
+ovat keskenään yhteensopivia.
