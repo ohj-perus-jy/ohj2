@@ -566,15 +566,13 @@ vähentämiseksi, luotettavuuden parantamiseksi ja suorituskyvyn parantamiseksi.
 ## Listat
 
 Lista on tietorakenne, joka voi kasvaa ja kutistua tarpeen mukaan. Kuten
-taulukko, lista voi sisältää vain yhden tyypin mukaisia alkioita. Listan koko ei ole
-kiinteä, mikä tekee siitä joustavamman tilanteisiin, joissa alkioiden määrä ei
-ole etukäteen tiedossa.
-Javan listat vastaavat siten JavaScriptin taulukkoja.
+taulukko, lista voi sisältää vain yhden tyypin mukaisia alkioita. Listan koko ei
+ole kiinteä, mikä tekee siitä joustavamman tilanteisiin, joissa alkioiden määrä
+ei ole etukäteen tiedossa. Javan listat vastaavat siten JavaScriptin taulukkoja.
 
 Javan yleisin listan tyyppi on `ArrayList<T>`, jossa `T` on listassa olevien
-alkioiden tyyppi.
-Kuten taulukoilla, listan voi luoda alkuun tyhjänä tai täyttää valmiiksi
-alkioilla:
+alkioiden tyyppi. Listan voi luoda alkuun tyhjänä, mutta sen voi myös alustaa
+valmiilla listalla sanomalla `List.of(...)`.
 
 ```java
 //-void main() {
