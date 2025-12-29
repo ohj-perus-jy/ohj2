@@ -290,6 +290,8 @@ Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} -
 ## B3
 - Raa-alla voimalla sanakirjahyökkäys salasanaa vastaan?
 
+Omistamasi ulkoisen kovalevyn salasana on päässyt unohtumaan. Muistat, että salasana koostuu kahdesta [tästä](https://raw.githubusercontent.com/rajuruoho/nykysuomensanalista/main/src/nykysuomensanalista2024.txt) listasta valitusta yhteenliitetystä sanasta ilman välimerkkejä. Muodosta funktio `salasana`, joka ottaa parametrina listan merkkijonoja ja joka palauttaa salasanan `String` -tyyppisenä. 
+
 ## G1
 
 - Linkitetty lista käänteiseksi?
