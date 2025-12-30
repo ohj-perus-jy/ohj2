@@ -522,15 +522,3 @@ void main() {
     IO.println("Tervetuloa Ohjelmointi 2 -kurssille!");
 }
 ```
-
-## Tehtävät
-
-<task>
-<task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
-<handout>
-
-{{#include ../exercises/1-1-eka-ohjelma/handout.md}}
-
-</handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava1">Tee tehtävä TIMissä</a></task-link>
-</task>

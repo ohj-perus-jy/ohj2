@@ -313,56 +313,23 @@ Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](ht
 
 </details>
 
-## Tehtävät
-
-
-<task>
-<task-title>✨ Bonus: Tehtävä 1.3: Alkuluvut <points>1 p.</points> </task-title>
-<handout>
-
-{{#include ../exercises/1-3-alkuluvut/handout.md}}
-
-</handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava3">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-
-<task>
-<task-title>Tehtävä 1.4: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
-<handout>
-
-{{#include ../exercises/1-4-kokonaislukujen-lukeminen/handout.md}}
-
-</handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava4">Tee tehtävä TIMissä</a></task-link>
-</task>
 
 ## T1.6
 Laske matriisiin kahden muun matriisin summa, eli A + B = C
 
-<task>
-<task-title>Tehtävä 7: Salasanan vahvuuden tarkistaminen <points>1 p.</points> </task-title>
-<handout>
-
-{{#include ../exercises/1-7-salasanan-tarkistaja/handout.md}}
-
-</handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava7">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-## T1.9
-Laske kuinka monta esiintymää kutakin numeroa esiintyy luvussa.
-Esimerkiksi 12223 --> 1 1kpl, 2 3 kpl ja 3 1 kpl
 
 ## T1.10
 TODO: rajuruoho
-Tulosta matriisissa olevat luvut spiraalimaisesti aloittaen vasemmasta yläkulmasta ja edeten kohti keskustaa. Esimerkiksi [[1 2 3] 
-[4 5 6]
-[7 8 9]]
+Tulosta matriisissa olevat luvut spiraalimaisesti aloittaen vasemmasta
+yläkulmasta ja edeten kohti keskustaa. Esimerkiksi 
+[
+    [1 2 3] 
+    [4 5 6]
+    [7 8 9]
+    ]
 palauttaa 123698745
 
-## T1.11
-Merkkijonon pakkaaminen: Tulosta merkki ja merkkien lukumäärä aaaabbbccd --> a4b3c2d1
+
 
 <task>
 <task-title>Tehtävä 10: Puuttuva luku <points>1 p.</points> </task-title>
