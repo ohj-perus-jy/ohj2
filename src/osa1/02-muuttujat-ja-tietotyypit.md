@@ -213,10 +213,10 @@ kiinteän kokoisen arvon eli *viitteen* (engl. reference).
 Viitteen avulla ohjelma pääsee käsiksi varsinaiseen dataan,  
 jonka kokoa tai sisältöä ei välttämättä tiedetä ennen kuin ohjelma ajetaan.  
 
-Javassa viitetietotyypit ovat käytännössä kaikki muut tietotyypit
-kuin alkeistietotyypit. Esimerkiksi `String` on viitetietotyyppi, kuten myös
-kaikki taulukot ja listat. Alkaen luvusta 2 tutustumme olio-ohjelmointiin;
-Javassa kaikki oliot ovat viitetietotyypit.
+Javassa käytännössä kaikki muut tietotyypit kuin alkeistietotyypit ovat
+viitetietotyyppejä. Esimerkiksi `String` on viitetietotyyppi, kuten myös kaikki
+taulukot ja listat. Alkaen luvusta 2 tutustumme olio-ohjelmointiin; Javassa
+kaikki oliot ovat viitetietotyypit.
 
 <details><summary>✨ Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
 
