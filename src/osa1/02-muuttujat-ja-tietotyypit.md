@@ -821,5 +821,3 @@ Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että tyyppeih
 liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
 eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
 ovat keskenään yhteensopivia.
-
-## Tehtävät 
