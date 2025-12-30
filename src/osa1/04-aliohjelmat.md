@@ -2,11 +2,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Käsitellään dataa funktioiden avulla (Ohj1-kurssin tapaan)
-> - Funktiot (määrittely, kirjoitusasu, palautusarvot, ehkä hieman datan käsittelyä kertauksena)
-> - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron funktion kutsussa (oliot ovat aina viitteen takana)
-> - Dokumentaatiokommentit
-> - Osaat kirjoittaa Ohjelmointi 1 -kurssin tapaisia ohjelmia Javalla
+> - Osaat määritellä aliohjelman 
+> - Osaat käsitellään tietoa aliohjelmien avulla
+> - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron aliohjelmaa kutsuttaessa
+> - Osaat dokumentoida aliohjelman
 
 Aliohjelma on ohjelman osa, joka suorittaa tietyn tehtävän. Aliohjelmat helpottavat ohjelman jäsentämistä, sillä niiden avulla ohjelma voidaan jakaa pienempiin, hallittavampiin osiin. Aliohjelmat helpottavat myös uudelleenkäyttöä, sillä samaa aliohjelmaa voidaan kutsua useita kertoja eri kohdissa ohjelmaa ilman, että koodia tarvitsee kirjoittaa uudelleen. 
 
