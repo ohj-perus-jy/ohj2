@@ -359,10 +359,9 @@ String jono = "Opiskelen ohjelmointia!";
 //-IO.println("jono = " + jono);
 //-}
 ```
-Javassa merkkijono on
-muuttumaton. Jos yrität suorittaa jonkin operaation merkkijonolle,
-saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono muutu. Katsotaan
-tästä esimerkki:
+Javassa merkkijono on muuttumaton. Jos yrität suorittaa jonkin operaation
+merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono
+muutu. Katsotaan tästä esimerkki:
 
 ```java
 void main() {
@@ -375,8 +374,8 @@ void main() {
 ```
 
 Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään,
-ja alkuperäinen merkkijono pysyy ennallaan. 
-Toisin sanoen, merkkijonomuuttujien arvoa voi muuttaa vain sijoittamalla:
+ja alkuperäinen merkkijono pysyy ennallaan. Toisin sanoen, merkkijonomuuttujien
+arvoa voi muuttaa vain sijoittamalla:
 
 ```java
 void main() {
@@ -390,10 +389,8 @@ void main() {
 }
 ```
 
-### Hyödyllisiä toimintoja
-
-`String`-tyyppi sisältää lukuisia hyödyllisiä toimintoja.
-Alla on joitakin yleisimmistä hyödyllisistä toiminnoista:
+`String`-tyyppi sisältää lukuisia hyödyllisiä metodeja. Alla on lueteltu joitain
+niistä. 
 
 | Metodi                         | Selitys                                                                                                |
 | ------------------------------ | ------------------------------------------------------------------------------------------------------ |
@@ -445,29 +442,10 @@ void main() {
 }
 ```
 
-### Merkkijonosyötteen lukeminen konsoli-ikkunassa
-
-Merkkijonosyötteen lukemiseksi konsoli-ikkunassa tarvitaan kaksi vaihetta. Ensin
-tulee luoda `Scanner`-olio, joka lukee syötteen `System.in`-virrasta. Tämän
-jälkeen voidaan käyttää `nextLine()`-metodia, joka lukee koko syötteen rivin
-merkkijonona. Alla esimerkki. Esimerkkiä ei voi ajaa selaimessa, mutta voit
-kokeilla sitä omassa Java-ympäristössäsi.
-
-```java,ignore
-import java.util.Scanner;
-
-void main() {
-    Scanner scanner = new Scanner(System.in);
-    IO.print("Anna merkkijono: ");
-    String syote = scanner.nextLine();
-    IO.println("Syötit merkkijonon: " + syote);
-}
-```
-
 ### Luvun parsiminen merkkijonosta
 
 Merkkijono voidaan muuntaa luvuksi käyttämällä käärijäluokkien
-`parse`-metodeja. Esimerkiksi `Integer.parseInt` muuntaa merkkijonon
+`parse`-alkuisia metodeja. Esimerkiksi `Integer.parseInt` muuntaa merkkijonon
 kokonaisluvuksi ja `Double.parseDouble` muuntaa merkkijonon desimaaliluvuksi.
 
 ```java,ignore
@@ -484,11 +462,11 @@ void main() {
 
 ## StringBuilder
 
-Käytä `StringBuilder`-luokkaa, kun tarvitset muunneltavan merkkijonon.
-Se tarjoaa menetelmiä merkkijonon muokkaamiseen ilman, että
-uutta merkkijonoa tarvitsisi sijoittaa muuttujaan.
+Käytä `StringBuilder`-luokkaa, kun tarvitset muunneltavan merkkijonon. Se
+tarjoaa menetelmiä merkkijonon muokkaamiseen ilman uusien merkkijono-olioiden
+luomista, mikä tehostaa muistin käyttöä. 
 
-Oleelliset toiminnot:
+Alla on lueteltu joitain StringBuilder-luokan hyödyllisiä metodeja. 
 
 | Metodi              | Selitys                                                          |
 | ------------------- | ---------------------------------------------------------------- |
@@ -498,7 +476,7 @@ Oleelliset toiminnot:
 
 Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
 `StingBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/StringBuilder.html)).
-Katsotaan vielä, miten yllä olevia esimerkkejä voi käyttää:
+Alla on esimerkkejä metodien käytöstä.
 
 ```java
 void main() {
@@ -513,9 +491,6 @@ void main() {
     IO.println("muuttuva.length() = " + muuttuva.length());
 }
 ```
-
-`StringBuilder` on lisäksi muistin käytön kannalta tehokkaampi niissä
-tapauksissa, jossa useita merkkijonoja on yhdistettävä monta kertaa peräkkäin.
 
 ## Taulukot
 
@@ -583,7 +558,6 @@ IO.println("Taulukon sisältö: " + Arrays.toString(arvosanat));
 //-}
 ```
 
-
 ## Vakiot
 
 Muuttuja, jolle voidaan sijoittaa arvo vain alustuksen yhteydessä, määritellään
@@ -592,11 +566,17 @@ käyttämällä `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että
 alaviivalla.
 
 Javassa `final`-avainsanaa voi käyttää sekä alkeistietotyyppien että
-viitetietotyyppien kanssa.
+viitetietotyyppien kanssa. On kuitenkin huomattava, että
+`final`-viitetietotyyppinen muuttuja tarkoittaa, että viitettä ei voi muuttaa
+osoittamaan toiseen olioon, mutta itse olion sisältöä voi silti muuttaa, jos
+olio itsessään on muutettavissa.
 
 ```java,ignore
 final int PAIVIA_VIIKOSSA = 7;
 final int[] PAIVIA_KUUKAUDESSA_KARKAUSVUOSI = new int[] {31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+// PAIVIA_VIIKOSSA = 8; // Tämä aiheuttaa käännösvirheen
+PAIVIA_KUUKAUDESSA_KARKAUSVUOSI[0] = 30; // Tämä on sallittu
 ```
 
 Vakioita tarvitaan mm. koodin lukemisen helpottamiseksi, toisteisen koodin
@@ -698,7 +678,7 @@ List<Integer> arvosanatValmis = new ArrayList<Integer>(List.of(4, 2, 2, 5));
 > että `List<T>` on yleinen tyyppi listoille, kun taas `ArrayList<T>` on
 > (eräs) Javan tarjoama tapa esittää lista.
 
-Katsotaan vielä listojen yleisempiä toimintoja:
+Katsotaan vielä listojen eräitä hyödyllisiä metodeja.
 
 | Metodi                    | Selitys                                                                                                |
 | ------------------------- | ------------------------------------------------------------------------------------------------------ |
@@ -748,7 +728,6 @@ void main () {
 }
 ```
 
-
 Huomaa ainakin nämä erot Javan, C# ja Pythonin välillä listoja käytettäessä.
 Muuttuja `i` viittaa listan indeksiin.
 
@@ -773,7 +752,6 @@ toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvo
 (`boolean`) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä
 kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on
 käännösvirhe.
-
 
 ```java,ignore
 void main() {

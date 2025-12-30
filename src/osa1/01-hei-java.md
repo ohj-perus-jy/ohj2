@@ -408,14 +408,13 @@ Siirrytään nyt `src` kansioon ja tarkastellaan sen sisältö:
 
 <asciinema src="images/rec_cd_project.cast" rows="4" poster="npt:5"></asciinema>
 
-`.java`-tiedostopäätettä käytettävät tiedostot ovat Javan *lähdekooditiedostoja*.
-Ne sisältävät ohjelman lähdekoodia tekstinä eivätkä ne ole vielä suoraan
-ajettavissa.
+`.java`-tiedostopäätettä käytettävät tiedostot ovat Javan
+*lähdekooditiedostoja*. Ne sisältävät ohjelman lähdekoodia tekstinä eivätkä ne
+ole vielä suoraan ajettavissa.
 
-Jotta ohjelma voidaan ajaa, se pitää kääntää.
-Java-lähdekoodin kääntäminen onnistuu Java-kehitysympäristön (Java Development Kit, JDK)
-kanssa tulleen `javac`-kääntäjäohjelman avulla.
-Kokeillaan kääntää `Ohjelma.java`:
+Jotta ohjelma voidaan ajaa, se pitää kääntää. Java-lähdekoodin kääntäminen
+onnistuu Java-kehitysympäristön (Java Development Kit, JDK) kanssa tulleen
+`javac`-kääntäjäohjelman avulla. Kokeillaan kääntää `Ohjelma.java`:
 
 <asciinema src="images/rec_javac.cast" rows="2" poster="npt:5"></asciinema>
 
@@ -425,17 +424,18 @@ Tutkitaan vielä kansion rakenne `ls`-komennolla:
 
 <asciinema src="images/rec_javac_ls.cast" rows="3" poster="npt:5"></asciinema>
 
-Kääntämisen seurauksena siis syntyy `.class`-päätteinen tiedosto.
-Tämä tiedosto sisältää ns. tavukoodia (engl. *bytecode*), joka on tiedoston käännetty muoto.
-Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen välivaihe.
-Tavukoodia voidaan kuitenkin suorittaa Javan virtuaalikoneella (JVM, Java Virtual Machine),
-joka on erillinen ohjelma, joka osaa tulkita ja suorittaa tavukoodia.
-Vaikka tämä voi kuulostaa turhan monimutkaiselta, hyöty on siinä, että 
-ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan JVM on toteutettu kyseisellä alustalla. 
-JVM voi puolestaan optimoida tavukoodia juuri alustalle ja prosessorille
-sopivaan muotoon tai tarvittaessa tulkata tavukoodia suoraan 
-ns. skriptauskielten tapaan, kuten Python tai Lua.
-Javalla onkin iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
+Kääntämisen seurauksena siis syntyy `.class`-päätteinen tiedosto. Tämä tiedosto
+sisältää ns. tavukoodia (engl. *bytecode*), joka on tiedoston käännetty muoto.
+Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen
+välivaihe. Tavukoodia voidaan kuitenkin suorittaa Javan virtuaalikoneella (JVM,
+Java Virtual Machine), joka on erillinen ohjelma, joka osaa tulkita ja suorittaa
+tavukoodia. Vaikka tämä voi kuulostaa turhan monimutkaiselta, hyöty on siinä,
+että ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa
+alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan JVM on toteutettu
+kyseisellä alustalla. JVM voi puolestaan optimoida tavukoodia juuri alustalle ja
+prosessorille sopivaan muotoon tai tarvittaessa tulkata tavukoodia suoraan ns.
+skriptauskielten tapaan, kuten Python tai Lua. Javalla onkin iskulause: "Write
+Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
 
 <!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
 Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
@@ -489,25 +489,23 @@ jshell on interaktiivinen tulkki Java-ohjelmoinnin opetteluun. Interaktiivisuus 
 
 jshellistä poistutaan ajamalla komento `/exit` -->
 
-## Tekstin tulostaminen ja lukeminen
+## Tekstin tulostaminen ja syötteen lukeminen komentorivi-ikkunassa
 
-Jatkossa voi olla hyödyllistä tulostaa erilaisia asioita komentorivin avulla 
-ja toisaalta lukea tietoa sieltä.  
-Javan `IO`-luokka tarjoaa kolme perustoimintoa tekstin tulostamiseen ja lukemiseen
-komentorivillä:
+Jatkossa voi olla hyödyllistä tulostaa erilaisia asioita komentorivin avulla ja
+toisaalta lukea tietoa sieltä. Javan `IO`-luokka tarjoaa kolme perustoimintoa
+tekstin tulostamiseen ja lukemiseen komentorivillä:
 
-| Aliohjelma | Esimerkki                       | Selitys                                                                  |
-| ---------- | ------------------------------- | ------------------------------------------------------------------------ |
-| `println`  | `[java] IO.println("Moi!");`           | Tulostaa parametrina annetun arvon ja lisää loppuun rivinvaihdon  |
-|            | `[java] IO.println();`                 | Tulostaa rivin rivinvaihdolla                                     |
-| `print`    | `[java] IO.print("Samalla rivillä!");` | Tulostaa parametrina annetun arvon ilman rivinvaihtoa             |
-| `readln`   | `[java] IO.readln();`                  | Lukee syöterivin käyttäjältä (ts. Enterin painallukseen saakka)   |
+| Aliohjelma | Esimerkki                              | Selitys                                                                            |
+| ---------- | -------------------------------------- | ---------------------------------------------------------------------------------- |
+| `println`  | `[java] IO.println("Moi!");`           | Tulostaa parametrina annetun arvon ja lisää loppuun rivinvaihdon                   |
+|            | `[java] IO.println();`                 | Tulostaa rivin rivinvaihdolla                                                      |
+| `print`    | `[java] IO.print("Samalla rivillä!");` | Tulostaa parametrina annetun arvon ilman rivinvaihtoa                              |
+| `readln`   | `[java] IO.readln();`                  | Lukee syöterivin käyttäjältä (ts. Enterin painallukseen saakka)                    |
 |            | `[java] IO.readln("Anna sana > ");`    | Sama kuin `readln`, mutta tulostaa ensin annetun tekstin ennen syötteen lukemista. |
 
 
-Katsotaan vielä näiden yhteistoimintaa.
-Voit muokata alla olevaa esimerkkiä vapaasti ja kokeilla, miten erilainen
-tulostus toimii.
+Katsotaan vielä näiden yhteistoimintaa. Voit muokata alla olevaa esimerkkiä
+vapaasti ja kokeilla, miten erilainen tulostus toimii.
 
 ```java,editable
 void main() {
