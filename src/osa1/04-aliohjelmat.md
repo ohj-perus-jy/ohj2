@@ -74,22 +74,40 @@ tyyliohjetta](../tyyliohje.md).
 
 ## Paluuarvot ja datan käsittely
 
-Aliohjelmaa voi ajatella *mustana laatikkona*: sinne syötetään raaka-ainetta (parametrit), laatikon sisällä tapahtuu prosessointia, ja lopuksi ulos tulee valmis tuote (paluuarvo). Avainsana `return` lopettaa metodin suorituksen välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava metodin määrittelyssä annettua tyyppiä.
+Aliohjelmaa voi ajatella *mustana laatikkona*: sinne syötetään raaka-ainetta
+(parametrit), laatikon sisällä tapahtuu prosessointia, ja lopuksi ulos tulee
+valmis tuote (paluuarvo). Avainsana `return` lopettaa metodin suorituksen
+välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava metodin
+määrittelyssä annettua tyyppiä.
 
-Toisen tekemää aliohjelmaa käytettäessä emme välttämättä tiedä, mitä laatikon sisällä tapahtuu, vaan luotamme siihen, että se toimii määritellyllä tavalla. Tämä on tyypillistä ohjelmoinnissa, jossa käytämme valmiita kirjastoja ja aliohjelmia. 
+Toisen tekemää aliohjelmaa käytettäessä emme välttämättä tiedä, mitä laatikon
+sisällä tapahtuu, vaan luotamme siihen, että se toimii määritellyllä tavalla.
+Tämä on tyypillistä ohjelmoinnissa, jossa käytämme valmiita kirjastoja ja
+aliohjelmia. 
 
 ## Void-aliohjelma
 
-Joskus metodia tarvitaan vain tekemään jokin toimenpide, kuten tulostamaan tekstiä ruudulle, tai aiheuttamaan muu sivuvaikutus. Tällaisessa tapauksessa aliohjelman ei tarvitse palauttaa arvoa. Tällöin paluuarvon tyypiksi merkitään `void`.
+Joskus metodia tarvitaan vain tekemään jokin toimenpide, kuten tulostamaan
+tekstiä ruudulle, tai aiheuttamaan muu sivuvaikutus. Tällaisessa tapauksessa
+aliohjelman ei tarvitse palauttaa arvoa. Tällöin paluuarvon tyypiksi merkitään
+`void`.
 
 ## Parametrin välitys: alkeistietotyypit ja viitetyypit
 
-On tärkeää ymmärtää, mitä itse asiassa annamme aliohjelmalle parametrina kun kutsumme sitä. Javassa kaikki parametrit välitetään arvona (ns. *pass-by-value*), mutta välitettävän arvon luonne riippuu parametrin tyypistä.
+On tärkeää ymmärtää, mitä itse asiassa annamme aliohjelmalle parametrina kun
+kutsumme sitä. Javassa kaikki parametrit välitetään arvona (ns.
+*pass-by-value*), mutta välitettävän arvon luonne riippuu parametrin tyypistä.
 
- * Jos parametrin tyyppi on alkeistietotyyppi (kuten `int`, `double`, `char`, `boolean`), aliohjelmalle annetaan *kopio alkuperäisestä arvosta*.
- * Jos parametrin tyyppi on viitetyyppi (kuten taulukko tai olio), aliohjelmalle annetaan *kopio viitteestä olioon*. 
+ * Jos parametrin tyyppi on alkeistietotyyppi (kuten `int`, `double`, `char`,
+   `boolean`), aliohjelmalle annetaan *kopio alkuperäisestä arvosta*.
+ * Jos parametrin tyyppi on viitetyyppi (kuten taulukko tai olio), aliohjelmalle
+   annetaan *kopio viitteestä olioon*. 
 
-Kun alkeistietotyyppi (ks. [Luku 1.2](02-muuttujat-ja-tietotyypit.md)) annetaan parametrina metodille, kyseisen muuttujan arvo kopioidaan ja välitetään kutsuttavalle aliohjelmalle. Jos aliohjelma muuttaa tätä kopiota, alkuperäinen muuttuja ei muutu. Alla esimerkki, jossa annamme `int`-tyyppisen muuttujan parametrina. 
+Kun alkeistietotyyppi (ks. [Luku 1.2](02-muuttujat-ja-tietotyypit.md)) annetaan
+parametrina metodille, kyseisen muuttujan arvo kopioidaan ja välitetään
+kutsuttavalle aliohjelmalle. Jos aliohjelma muuttaa tätä kopiota, alkuperäinen
+muuttuja ei muutu. Alla esimerkki, jossa annamme `int`-tyyppisen muuttujan
+parametrina. 
 
 ```java
 void yritaMuuttaa(int luku) {
@@ -104,11 +122,25 @@ void main(String[] args) {
 }
 ```
 
-Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat *viitetyyppejä*. Tässä vaiheessa opintoja tutuimpia viitetyyppejä ovat taulukot (esim. `int[]`) ja `String`-oliot. Myös kaikki itse määritellyt oliot, joihin tutustutaan Luvussa 3, ovat viitetyyppejä. 
+Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat
+*viitetyyppejä*. Tässä vaiheessa opintoja tutuimpia viitetyyppejä ovat taulukot
+(esim. `int[]`) ja `String`-oliot. Myös kaikki itse määritellyt oliot, joihin
+tutustutaan Luvussa 3, ovat viitetyyppejä. 
 
-Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan viitteen olioon, joka sisältää datan. Voi ajatella, että muuttuja on kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan käsittelyyn. 
+Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan
+viitteen olioon, joka sisältää datan. Voi ajatella, että muuttuja on
+kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan
+kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan
+käsittelyyn. 
 
-Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma saa kyllä käyttöönsä samanlaisen "kaukosäätimen", joka osoittaa samaan "televisioon" kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
+Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun
+kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan
+viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma
+saa kyllä käyttöönsä samanlaisen "kaukosäätimen", joka osoittaa samaan
+"televisioon" kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion
+sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös
+pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme
+`int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
 
 ```java
 void nollaaTaulukko(int[] taulukko) {
@@ -129,7 +161,11 @@ void main(String[] args) {
 }
 ```
 
-Oleellista on kuitenkin ymmärtää, että aliohjelman kutsussa annoimme nimenomaisesti kopion viitteestä, emme alkuperäistä viitettä. Jos aliohjelma yrittäisi muuttaa viitettä osoittamaan toiseen olioon, tämä muutos ei vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla esimerkki tästä tilanteesta:
+Oleellista on kuitenkin ymmärtää, että aliohjelman kutsussa annoimme
+nimenomaisesti kopion viitteestä, emme alkuperäistä viitettä. Jos aliohjelma
+yrittäisi muuttaa viitettä osoittamaan toiseen olioon, tämä muutos ei
+vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla esimerkki tästä
+tilanteesta:
 
 ```java
 void main(String[] args) {
@@ -147,11 +183,17 @@ void muutaViite(int[] taulukko) {
 }
 ```
 
-Joissain kielissä, kuten C++:ssa, on mahdollista välittää parametrina alkuperäinen muuttuja viitteenä (ns. *pass-by-reference*). Javassa tällaista mekanismia ei kuitenkaan ole, vaan kaikki parametrit välitetään arvona, kuten yllä on selitetty.
+Joissain kielissä, kuten C++:ssa, on mahdollista välittää parametrina
+alkuperäinen muuttuja viitteenä (ns. *pass-by-reference*). Javassa tällaista
+mekanismia ei kuitenkaan ole, vaan kaikki parametrit välitetään arvona, kuten
+yllä on selitetty.
 
 ## Aliohjelma ja sivuvaikutukset
 
-Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
+Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein
+aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne
+voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää
+olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
 
 ## Kommentointi ja dokumentointi
 
@@ -179,9 +221,14 @@ void main() {
 }
 ```
 
-Yleisesti hyvä periaate on, että ohjelmoija pyrkii kirjoittamaan sellaista koodia, joka selittää itse itseään. Muuttujat, luokat, aliohjelmat ja muut nimet, johon ohjelmoija pystyy vaikuttamaan, pyritään nimeämään mahdollisimman kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen. Asiaa on kuvattu myös kurssin [tyylioppaassa](). TODO: Linkki.
+Yleisesti hyvä periaate on, että ohjelmoija pyrkii kirjoittamaan sellaista
+koodia, joka selittää itse itseään. Muuttujat, luokat, aliohjelmat ja muut
+nimet, johon ohjelmoija pystyy vaikuttamaan, pyritään nimeämään mahdollisimman
+kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen.
+Asiaa on kuvattu myös kurssin [tyylioppaassa](). TODO: Linkki.
 
-Joskus yhden rivin kommenteilta ei voi välttyä, jos jotakin operaatiota ei voida olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
+Joskus yhden rivin kommenteilta ei voi välttyä, jos jotakin operaatiota ei voida
+olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
 
 ```java
 void main() {
@@ -216,12 +263,18 @@ if (kayttaja.kayttaaVanhaa) {
 
 ### Dokumentaatiokommentti
 
-Dokumentaatiokommentti tarkoittaa sellaista kommenttia, josta voidaan automaattisesti
-luoda erilaisia koodin käyttäjille tarkoitettuja dokumentaatiomuotoja. Tällaisia dokumentaatiomuotoja voivat olla esimerkiksi HTML-muotoiset API-dokumentaatiot, jotka kertovat miten koodia käytetään, tai IDE:ssä näkyvät työkaluvihjeet aliohjelmien käytöstä.
+Dokumentaatiokommentti tarkoittaa sellaista kommenttia, josta voidaan
+automaattisesti luoda erilaisia koodin käyttäjille tarkoitettuja
+dokumentaatiomuotoja. Tällaisia dokumentaatiomuotoja voivat olla esimerkiksi
+HTML-muotoiset API-dokumentaatiot, jotka kertovat miten koodia käytetään, tai
+IDE:ssä näkyvät työkaluvihjeet aliohjelmien käytöstä.
 
-Dokumentaatiokommenttien sijainti on ennen dokumentoitavaa koodia, kuten aliohjelmaa tai luokkaa.
+Dokumentaatiokommenttien sijainti on ennen dokumentoitavaa koodia, kuten
+aliohjelmaa tai luokkaa.
 
-Javassa dokumentaatiokommentit kirjoitetaan erityisellä syntaksilla, joka eroaa tavallisista kommenteista. Dokumentaatiokommentit alkavat `/**` ja päättyvät `*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
+Javassa dokumentaatiokommentit kirjoitetaan erityisellä syntaksilla, joka eroaa
+tavallisista kommenteista. Dokumentaatiokommentit alkavat `/**` ja päättyvät
+`*/`, eli ovat syntaksiltaan hyvin lähellä monirivistä kommenttia.
 
 ```java
 //- void main() {
@@ -240,13 +293,18 @@ int summa(int a , int b) {
 }
 ```
 
-Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti IDEA-kehitysympäristössä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa merkit `/**` ja painaa <kbd>Enter</kbd>. 
+Aliohjelman dokumentaatiokommentin runko syntyy automaattisesti
+IDEA-kehitysympäristössä, kun aliohjelman esittelyrivin yläpuolelle kirjoittaa
+merkit `/**` ja painaa <kbd>Enter</kbd>. 
 
 <video src="images/intellij-docstring.mp4" controls></video>
 
 <details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
 
-Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java` ja ajat sen jälkeen komennon `javadoc Summa.java` Nyt voit avata luodun `index.html` -tiedoston selaimessa, klikata selaimessa luokkaa `Summa` ja pääset seuraavanlaiseen näkymään:
+Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java` ja ajat sen
+jälkeen komennon `javadoc Summa.java` Nyt voit avata luodun `index.html`
+-tiedoston selaimessa, klikata selaimessa luokkaa `Summa` ja pääset
+seuraavanlaiseen näkymään:
 
 ![Juuri tehdystä dokumentaatiosta kuva, joka voi näyttää tutulta jos on käynyt
 tutkimassa Javan omaa dokumentaatiota ](images/summaDokumentaatio.png)
