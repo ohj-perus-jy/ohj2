@@ -55,16 +55,16 @@ mielessä:
   aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
 
 - Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen
-  kirjain on pienellä ja seuraavat sanat aloitetaan isolla kirjaimella.
+  kirjain on pienaakkonen ja seuraavat sanat aloitetaan suuraakkosella.
   Esimerkiksi `tamaOnFunktionNimi`. Samaa tyyliä käytetään myös muuttujien
   nimeämisessä.
 
-- Tiedostot ja myöhemmin kurssilla käytettävät luokat, rajapinnat ja listaukset
-  nimetään PascalCasing-tyylillä. Esimerkiksi `HeiMaailma.java`, `public class
-  Opiskelija {...`, `public interface Saadettava {...` tai `public enum
-  Viikonpaiva { ...`.
-
-
+- Tiedostojen ja luokkien nimeämisessä käytetään PascalCasing-tyyliä, eli
+  ensimmäinen kirjain on suuraakkonen ja seuraavat sanat aloitetaan isolla
+  kirjaimella: `HeiMaailma.java`, `public class Opiskelija`, jne. Samoin monissa
+  muissa myöhemmin opittavissa rakenteissa, kuten rajapinnoissa ja
+  enumeraatioissa käytetään PascalCasing-tyyliä. 
+  
 ## Opas: Java-ohjelmien kääntäminen ja ajaminen
 
 > [!TÄRKEÄÄ]
