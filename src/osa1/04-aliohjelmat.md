@@ -369,6 +369,7 @@ Laske kuinka monta esiintymää kutakin numeroa esiintyy luvussa.
 Esimerkiksi 12223 --> 1 1kpl, 2 3 kpl ja 3 1 kpl
 
 ## T1.10
+TODO: rajuruoho
 Tulosta matriisissa olevat luvut spiraalimaisesti aloittaen vasemmasta yläkulmasta ja edeten kohti keskustaa. Esimerkiksi [[1 2 3] 
 [4 5 6]
 [7 8 9]]
@@ -391,6 +392,7 @@ Merkkijonon pakkaaminen: Tulosta merkki ja merkkien lukumäärä aaaabbbccd --> 
 Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} --> true, ({}) --> true jne.
 
 ## B2
+TODO: rajuruoho
 - Vakioaikainen haku taulukosta. Esimerkiksi, että kuinka monta päivää on kuukaudessa?
 
 (Teoriatausta se, että laskennallista nopeutta voidaan lisätä käyttämällä enemmän muistia. Tähän esimerkiksi HashMap perustuu)
@@ -406,10 +408,11 @@ Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} -
 </task>
 
 ## G1
-
+TODO: rajuruoho
 - Linkitetty lista käänteiseksi?
 
 ## G2
 
+TODO: rajuruoho
 - Neliömatriisin eli n x n, n $\in \mathbb{N}$ matriisin pyöräyttäminen 90-astetta. 
 - In ([[1,2],[3,4]], oikealle) --> [[3,1],[4,2]]
