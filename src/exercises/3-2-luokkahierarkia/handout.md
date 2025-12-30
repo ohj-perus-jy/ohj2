@@ -1,3 +1,80 @@
-Laajenna edellistä ajoneuvojen luokkahierarkiaa lisäämällä uusi aliluokka `Sahkoauto`, joka perii `Auto`-luokasta. Lisää `Sahkoauto`-luokkaan ominaisuus `akunKapasiteetti` ja metodi `lataaAkku()`, joka simuloi akun lataamista. Jos akku on täynnä, ei ladata enää lisää. 
+Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa alla olevan UML-kaavion
+mukaisesti. Saat kuvan suuremmaksi oikeaklikkaamalla (Windows) tai
+Control-klikkaamalla (macOS) sitä ja valitsemalla "Avaa kuva uudessa
+välilehdessä".
 
-Testaa kumpaakin auto-luokkaa luomalla niistä olio ja kutsumalla metodeja.
+Tehtäväsivulla on valmiiksi annettuna pääohjelma, jota voit käyttää luokkiesi
+testaamiseen. Sen pitäisi tulostaa seuraavaa:
+
+```
+Sulatit pakastetta Hernepussi 10 minuuttia. Säilytyssuositus on -18 astetta C.
+Syödään Hernepussi.
+Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
+```
+
+<details><summary>Kuvaus sanallisessa muodossa</summary>
+
+Tässä on kuvaus luokista ja niiden vaadituista ominaisuuksista (vastaavat kuin UML-kaaviossa):
+
+ 1. `Puhelin` (perii `Elektroniikka`)
+    * Lisää attribuutit:
+        * `private String kayttojarjestelma` (esim. "Android" tai "iOS")
+        * `private boolean onko5G`
+    * Lisää metodit:
+        * `public void soita(String numero)`. Metodi tulostaa esimerkiksi:
+          `Soitetaan numeroon 0401234567 (Appleroid, 4G)`
+        * `public void tulostaPuhelimenTiedot()`. Metodin tulee kutsua ensin
+          perittyä metodia (`tulostaPerustiedot();`), ja sitten tulostaa
+          puhelimeen liittyvät lisätiedot (takuu, käyttöjärjestelmä ja 5G-tuki).
+
+ 2. `Pakaste` (perii `Ruoka`)
+    * Lisää attribuutti:
+        * `private int lampotilaSuositus` (esim. -18)
+    * Lisää metodi:
+        * `private void sulata(int minuutit)` (huomaa private-määre)
+        * Kun metodia kutsutaan, se tulostaa esimerkiksi: `Sulatat pakastetta 10
+          minuuttia. Säilytyssuositus: -18 C.`
+    * Lisää metodi:
+        * `public void sulataJaNauti(int minuutit)`
+        * Metodi kutsuu ensin `sulata(minuutit)`-metodia ja sitten perittyä
+          `syo()`-metodia.
+        * Metodi tulostaa esimerkiksi:
+</details>
+
+```plantuml
+@startuml
+class Tuote {
+    -String nimi
+    -double hinta
+    +Tuote(String nimi, double hinta)
+    +void tulostaPerustiedot()
+}
+class Elektroniikka {
+    -int takuuKuukaudet
+    +Elektroniikka(String nimi, double hinta, int takuuKuukaudet)
+    +void testaaLaite()
+}
+class Ruoka {
+    -String parastaEnnen
+    +Ruoka(String nimi, double hinta, String parastaEnnen)
+    +void syo()
+}
+class Puhelin {
+    -String kayttojarjestelma
+    -boolean onko5G
+    +Puhelin(String nimi, double hinta, int takuuKuukaudet, String kayttojarjestelma, boolean onko5G)
+    +void soita(String numero)
+    +void tulostaPerustiedot()
+}
+class Pakaste {
+    -int lampotilaSuositus
+    +Pakaste(String nimi, double hinta, String parastaEnnen, int lampotilaSuositus)
+    -void sulata(int minuutit)
+    +void sulataJaNauti(int minuutit)
+}
+Tuote <|-- Elektroniikka
+Tuote <|-- Ruoka
+Elektroniikka <|-- Puhelin
+Ruoka <|-- Pakaste
+@enduml
+```

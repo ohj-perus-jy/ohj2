@@ -1,17 +1,24 @@
-Tee luokkahierarkia ajoneuvoille. Yliluokasta `Ajoneuvo` periytyvät aliluokat `Auto`, `Moottoripyora` ja `Polkupyora`. 
+Tee luokkahierarkia verkkokaupalle. Yliluokasta `Tuote` periytyvät aliluokat
+`Elektroniikka`, `Vaate` ja `Ruoka`. 
 
-Määrittele yhteiset ominaisuudet (`nopeus`, `paino`) ja metodit (`kiihdyta()`, `jarruta()`) `Ajoneuvo`-luokassa. 
-
-<!-- Tämä ei toimi, koska meillä ei ole vielä abstrakteja luokkia: Määrittele myös renkaiden lukumäärä, jonka tulee olla vakio.  -->
-
-Kiihdyttäminen kasvattaa ajoneuvon nopeutta ja jarruttaminen vähentää sitä. 
-
-<!-- Käyttövoima voi olla esimerkiksi "bensiini", "sähkö" tai "reisilihakset". TODO: Tehdäänkö tästä enum? -->
+Määrittele `Tuote`-luokkaan yhteiset ominaisuudet `nimi`, `hinta` sekä metodi
+`tulostaPerustiedot()`.
 
 Lisää erityispiirteitä kuhunkin aliluokkaan:
 
- * `Auto`: `ovienLukumaara`
- * `Moottoripyora`: `sivuvaunu`
- * `Polkupyora`: `vaihteidenLukumaara`
+ * `Vaate`: attribuutti `String koko` (esim. "M", "L", jne.), metodi
+   `sovita(String sovittajanKoko)`, joka tulostaa, onko vaate sopiva
+   sovittajalle.
+ * `Elektroniikka`: attribuutti `int takuuKuukausina` (esim. 24), metodi
+   `testaaLaite()`, joka tulostaa "Laite toimii moitteettomasti vielä X
+   kuukautta." (X on `takuuKuukausina`-arvo).
+ * `Ruoka`: attribuutti `String parastaEnnen` (esim. "2026-01-31"), ja metodi
+   `syo()`, joka tulostaa "Nautit ruoan, jonka viimeinen käyttöpäivä on
+   YYYY-MM-DD." (korvaa YYYY-MM-DD `parastaEnnen`-arvolla).
 
-Testaa luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja metodit huolellisesti.
+Kokeile luokkia luomalla olioita ja kutsumalla metodeja. Dokumentoi luokat ja
+metodit huolellisesti.
+
+Tehtäväsivulla on valmiiksi annettuna pääohjelma. Käytä sitä luokkiesi
+testaamiseen. Se ei saa tuottaa käännös- tai ajonaikaisia virheitä. Voit
+kuitenkin halutessasi lisätä pääohjelmaan omaa koodiasi. 
