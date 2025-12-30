@@ -392,6 +392,7 @@ niistä.
 | `jono.length()`                | Palauttaa jonossa olevien merkkien määrän eli jonon pituuden.                                          |
 | `jono.trim()`                  | Palauttaa kopion jonosta ilman alussa ja lopussa olevia ylimääräisiä tyhjiä merkkejä.                  |
 | `jono.replace(mitä, millä)`    | Palauttaa kopion jonosta, jossa jonot/merkit `mitä` on korvattu jonolla/merkillä `millä`.              |
+| `jono.split(haku)` | "Pilkkoo" jonon osiin `haku`-jonon esiintymien kohdalla ja palauttaa taulukon pilkotuista osajonoista. Huomaa, että `haku` on ns. [säännöllinen lauseke](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/regex/Pattern.html#sum). |
 | `jono.contains(etsittävä)`     | Palauttaa `true`, jos `etsittävä` löytyy jonosta.                                                      |
 | `jono.indexOf(etsittävä)`      | Palauttaa indeksin, jossa `etsittävä` esiintyy ensimmäistä kertaa.                                     |
 | `jono.substring(mistä, mihin)` | Palauttaa osan jonosta alkaen indeksistä `mistä` päättyen indeksiin `mihin`.                           |
@@ -417,6 +418,18 @@ void main() {
     // Tekstin korvaaminen merkkijonossa
     mjono = mjono.replace("java", "Java");
     IO.println("mjono (korvattu java -> Java) = " + mjono);
+
+    IO.println();
+
+    // "Pilkkoo" jonon kahteen osajonoon viivan kohdalla
+    // HUOM: split-metodissa merkit \^$.|?*+()[]{}
+    // vaativat, että niiden eteen laitetaan kenoviiva \\
+    // Eli jos haluttaisiin pilkkoa pisteen kohdalla, tulisi kirjoittaa
+    // mjono.split("\\.") eikä mjono.split(".");
+    // jälkimmäinen versio on ns. säännöllinen lauseke (regular expression),
+    // joka pilkkoo jonon jokaisen merkin kohdalla
+    String[] lauseet = mjono.split("\\.");
+    IO.println("lauseet = " + Arrays.toString(lauseet));
 
     IO.println();
 
@@ -467,6 +480,7 @@ Alla on lueteltu joitain StringBuilder-luokan hyödyllisiä metodeja.
 | `sb.charAt(paikka)` | Palauttaa jonossa olevan yksittäisen merkin indeksistä `paikka`. |
 | `sb.length()`       | Palauttaa jonossa olevien merkkien määrän eli jonon pituuden.    |
 | `sb.append(arvo)`   | Lisää arvon nykyisen jonon loppuun.                              |
+| `sb.toString()`     | Palauttaa kopion tästä jonosta `String`-merkkijonona.            |
 
 Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
 `StingBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/StringBuilder.html)).
@@ -483,6 +497,11 @@ void main() {
     muuttuva.append(" merkkijono.");
     IO.println("muuttuva = " + muuttuva);
     IO.println("muuttuva.length() = " + muuttuva.length());
+
+    IO.println();
+
+    String muuttumatonKopio = muuttuva.toString();
+    IO.println("muuttumatonKopio = " + muuttumatonKopio);
 }
 ```
 
@@ -513,7 +532,7 @@ arvosanat[3] = 5;
 //-}
 ```
 
-Sijoituslauseessa `[numero]` tarkoittaa alkion paikkaa eli *indeksiä*
+Sijoituslauseessa `\[numero]` tarkoittaa alkion paikkaa eli *indeksiä*
 taulukossa.
 Javassa indeksointi alkaa nollasta, eli ensimmäinen alkio on indeksissä 0, toinen
 indeksissä 1, ja niin edelleen. Taulukon viimeisen alkion indeksi on aina
@@ -552,6 +571,63 @@ IO.println("Taulukon sisältö: " + Arrays.toString(arvosanat));
 //-}
 ```
 
+### Moniulotteiset taulukot 
+
+Toisin kuin esimerkiksi C#-kielessä, Javassa ei ole erillisiä moniulotteisia
+taulukkoja. Sen sijaan Javassa voi luoda taulukon, jonka alkioina
+ovat taulukot, eli `T[][]`:
+
+```java
+//-void main() {
+int[][] taulukko2D = new int[][] {
+    new int[] {1, 2, 3},
+    new int[] {4, 5, 6},
+    new int[] {7, 8, 9},
+};
+
+// Taulukon pituus on tässä siten taulukkojen lukumäärä, eli "rivien" määrä.
+IO.println("Taulukossa on " + taulukko2D.length + " taulukkoa.");
+
+// Indeksointi toimii normaalisti; alkiona on nyt kokonainen taulukko
+IO.println("taulukko2D[0] on taulukko: " + Arrays.toString(taulukko2D[0]));
+IO.println("taulukko2D[1] on taulukko: " + Arrays.toString(taulukko2D[1]));
+IO.println("taulukko2D[2] on taulukko: " + Arrays.toString(taulukko2D[2]));
+
+// Myös yksittäisen taulukon indeksointi toimii normaalisti,
+// mutta huomaa syntaksi!
+int ensimmainenAlkio = taulukko2D[0][0];
+IO.println("Ensimmäisen rivin ensimmäinen alkio: " + ensimmainenAlkio);
+
+IO.println("Rivillä 2 (indeksi 1) kolmas alkio (indeksi 2) on: " + taulukko2D[1][2]);
+//-}
+```
+
+Huomaa, että yllä olevassa esimerkissä `taulukko2D[0][0]` viittaa
+ensimmäisen taulukon (`taulukko2D[0]`) ensimmäiseen alkioon
+`(taulukko2D[0])[0]`. Voit siis ajatella yllä olevan taulukon
+seuraavasti:
+
+```bob
+                      [0]                [1]                [2]
+              +------------------+------------------+------------------+
+              | taulukko2D[0][0] | taulukko2D[0][1] | taulukko2D[0][2] |
+taulukko2D[0] |                  |                  |                  |
+              |        1         |        2         |        3         |
+              +------------------+------------------+------------------+
+
+              +------------------+------------------+------------------+
+              | taulukko2D[1][0] | taulukko2D[1][1] | taulukko2D[1][2] |
+taulukko2D[1] |                  |                  |                  |
+              |        4         |        5         |        6         |
+              +------------------+------------------+------------------+
+
+              +------------------+------------------+------------------+
+              | taulukko2D[2][0] | taulukko2D[2][1] | taulukko2D[2][2] |
+taulukko2D[2] |                  |                  |                  |
+              |        7         |       8          |        9         |
+              +------------------+------------------+------------------+
+```
+
 ## Vakiot
 
 Muuttuja, jolle voidaan sijoittaa arvo vain alustuksen yhteydessä, määritellään
@@ -584,24 +660,41 @@ ole kiinteä, mikä tekee siitä joustavamman tilanteisiin, joissa alkioiden mä
 ei ole etukäteen tiedossa. Javan listat vastaavat siten JavaScriptin taulukkoja.
 
 Javan yleisin listan tyyppi on `ArrayList<T>`, jossa `T` on listassa olevien
-alkioiden tyyppi. Listan voi luoda alkuun tyhjänä, mutta sen voi myös alustaa
-valmiilla listalla sanomalla `List.of(...)`.
+alkioiden tyyppi. Jotta listoja voi käyttää koodissa, tulee ne ensin tuoda 
+kääntäjän näkyville lisäämällä tiedoston ensimmäiselle riville `import`-määre:
+
+```java,ignore
+import java.util.*;
+
+// Varsinainen ohjelma
+void main() ...
+```
+
+`import`-määre kertoo kääntäjälle, että ohjelmassa käytetään tyyppejä, jotka
+löytyvät `java.util`-pakkauksesta. Pakkauksiin palataan tarkemmin myöhemmissä
+osissa; tässä vaiheessa riittää tiedostaa, että kääntäjä ei välttämättä tiedä
+tyyppien olemassaolosta ellei ne tuo näkyviin `import`-määreellä.
+
+Kun `java.util`-pakkauksen sisältö on tuotu ohjelmaan, voidaan listoja alustaa
+seuraavasti:
 
 ```java
-//-void main() {
-// Tyhjä lista ilman alkioita
-List<Integer> arvosanat = new ArrayList<Integer>();
-// Lisätään alkiot yksi kerrallaan
-arvosanat.add(4);
-arvosanat.add(2);
-arvosanat.add(2);
-arvosanat.add(5);
-//-IO.println("arvosanat = " + arvosanat);
+import java.util.*;
 
-// Lista, jossa alkiot annettu valmiiksi
-List<Integer> arvosanatValmis = new ArrayList<Integer>(List.of(4, 2, 2, 5));
-//-IO.println("arvosanatValmis = " + arvosanatValmis);
-//-}
+void main() {
+    // Tapa 1: Tyhjä lista ilman alkioita
+    List<Integer> arvosanat = new ArrayList<Integer>();
+    // Lisätään alkiot yksi kerrallaan
+    arvosanat.add(4);
+    arvosanat.add(2);
+    arvosanat.add(2);
+    arvosanat.add(5);
+    //-IO.println("arvosanat = " + arvosanat);
+
+    // Tapa 2: Lista, jossa alkiot annettu valmiiksi
+    List<Integer> arvosanatValmis = new ArrayList<Integer>(List.of(4, 2, 2, 5));
+    //-IO.println("arvosanatValmis = " + arvosanatValmis);
+}
 ```
 
 > [!HUOMAUTUS]
@@ -686,6 +779,8 @@ Katsotaan vielä listojen eräitä hyödyllisiä metodeja.
 Löydät lisää metodeja JavaDocs-sivustolla (ks. [Class `ArrayList<E>`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/ArrayList.html)).
 
 ```java
+import java.util.*;
+
 void main () {
     // Luodaan tyhjä merkkijonolista
     List<String> nimet = new ArrayList<>();
