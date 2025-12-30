@@ -316,23 +316,16 @@ Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](ht
 ## Tehtävät
 
 
+<task>
+<task-title>✨ Bonus: Tehtävä 1.3: Alkuluvut <points>1 p.</points> </task-title>
+<handout>
 
-## T1.2
-- Tehtävänäsi on Monty hallin ongelman simulointi neljällä ovella. Jos ongelma ei ole tuttu, 
+{{#include ../exercises/1-3-alkuluvut/handout.md}}
 
-Monty hallin ongelma neljällä ovella:
-Kilpailijalla on edessään neljä ovea. Yhden oven takana on palkinto ja muiden ovien takana ei ole mitään. Kilpailija valitsee yhden ovista, jonka jälkeen juontaja paljastaa yhden ovista, jonka takana ei ole mitään. Kannattaako kilpailijan vaihtaa ovea suljettuun oveen, vai pitäytyä alkuperäisessä valinnassa?
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava3">Tee tehtävä TIMissä</a></task-link>
+</task>
 
-Tehtävänäsi on simuloida molemmat vaihtoehdot:
-1. Kilpailija pitäytyy alkuperäisessä valinnassaan
-2. Kilpailija vaihtaa johonkin jäljellä olevista ovista, jotka eivät ole vielä auki ja joka ei ollut kilpailijan ensimmäinen valinta
-
-ja valita vaihtoehdoista se, jolla voittaa todennäköisimmiten.
-
-## T1.3
-Komentorivipohjainen visa
-
-(Pitä luoda kysymykset, oikeat vastaukset, tarkistaminen ja pisteytys)
 
 <task>
 <task-title>Tehtävä 1.4: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
