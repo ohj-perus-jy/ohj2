@@ -358,13 +358,13 @@ merkkijonolle, saat tulokseksi uuden merkkijonon, eikä alkuperäinen merkkijono
 muutu. Katsotaan tästä esimerkki:
 
 ```java
-void main() {
-    String muuttumaton = "Tämä on muuttumaton.";
-    IO.println(muuttumaton);
+//-void main() {
+String muuttumaton = "Tämä on muuttumaton.";
+//-IO.println("muuttumaton = " + muuttumaton);
 
-    muuttumaton.concat("Vai onko sittenkään?");
-    IO.println(muuttumaton);
-}
+muuttumaton.concat("Vai onko sittenkään?");
+//-IO.println("muuttumaton = " + muuttumaton);
+//-}
 ```
 
 Metodin `concat()` palauttamaa *uutta* merkkijonoa ei nyt tallenneta mihinkään,
@@ -372,15 +372,15 @@ ja alkuperäinen merkkijono pysyy ennallaan. Toisin sanoen, merkkijonomuuttujien
 arvoa voi muuttaa vain sijoittamalla:
 
 ```java
-void main() {
-    String muuttumaton = "Tämä on muuttumaton.";
-    IO.println(muuttumaton);
+//-void main() {
+String muuttumaton = "Tämä on muuttumaton.";
+//-IO.println("muuttumaton = " + muuttumaton);
 
 // HIGHLIGHT_GREEN_BEGIN
-    muuttumaton = muuttumaton.concat("Vai onko sittenkään?");
+muuttumaton = muuttumaton.concat("Vai onko sittenkään?");
 // HIGHLIGHT_GREEN_END
-    IO.println(muuttumaton);
-}
+//-IO.println("muuttumaton = " + muuttumaton);
+//-}
 ```
 
 `String`-tyyppi sisältää lukuisia hyödyllisiä metodeja. Alla on lueteltu joitain
@@ -562,8 +562,8 @@ alaviivalla.
 Javassa `final`-avainsanaa voi käyttää sekä alkeistietotyyppien että
 viitetietotyyppien kanssa. On kuitenkin huomattava, että
 `final`-viitetietotyyppinen muuttuja tarkoittaa, että viitettä ei voi muuttaa
-osoittamaan toiseen olioon, mutta itse olion sisältöä voi silti muuttaa, jos
-olio itsessään on muutettavissa.
+osoittamaan uuteen dataan, mutta itse jo viitattua dataa voi silti muuttaa, jos
+tietotyyppi sallii sen.
 
 ```java,ignore
 final int PAIVIA_VIIKOSSA = 7;
@@ -607,7 +607,7 @@ List<Integer> arvosanatValmis = new ArrayList<Integer>(List.of(4, 2, 2, 5));
 > [!HUOMAUTUS]
 >
 > Javan rajoituksista johtuen listojen **alkioiden tyypin on aina oltava
-> viitetyyppimuuttuja.** Täten esimerkiksi `int`-alkioita sisältävän listan
+> viitetyyppi.** Täten esimerkiksi `int`-alkioita sisältävän listan
 > ei voi kirjoittaa muodossa `ArrayList<int>`:
 > 
 > ```java,ignore
