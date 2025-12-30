@@ -1,0 +1,1 @@
+Kokonaislukutaulukossa on luvut 1-n satunnaisessa järjestyksessä, mutta yksi luvuista puuttuu. Tehtävänäsi on tehdä funktio, joka palauttaa luvun, joka puuttuu järjestämättä taulukkoa.

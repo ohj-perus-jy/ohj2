@@ -1,0 +1,1 @@
+Tehtävänäsi on tehdä funktio, joka tarkastaa parametrina saadun salasanan vahvuuden. Salasanan tulee olla vähintään 8 merkkiä pitkä, sisältää yhden luvun, sekä vähintään yhden suuren ja pienen kirjaimen. 

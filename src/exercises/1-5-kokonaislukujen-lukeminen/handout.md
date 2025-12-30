@@ -1,0 +1,1 @@
+Tee ohjelma, joka lukee käyttäjältä kokonaislukuja, kunnes käyttäjä antaa tyhjän merkkijonon. Tulosta sen jälkeen annetuista luvuisita pienin ja suurin luku, summa ja lukujen keskiarvo.

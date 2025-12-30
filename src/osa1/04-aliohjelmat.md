@@ -334,17 +334,32 @@ Komentorivipohjainen visa
 
 (Pitä luoda kysymykset, oikeat vastaukset, tarkistaminen ja pisteytys)
 
-## T1.4
-Lue 8 kokonaislukua käyttäjältä ja tulosta pienin ja suurin luku, summa ja keskiarvo (Jotain muuta?)
+<task>
+<task-title>Tehtävä 5: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-5-kokonaislukujen-lukeminen/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## T1.5
+
 Tulosta kaikki alkuluvut väliltä 1-n, missä n on käyttäjän syöttämä luku. (Kenties n voi olla korkeintaan 100?)
 
 ## T1.6
 Laske matriisiin kahden muun matriisin summa, eli A + B = C
 
-## T1.7
-Salasanan vahvuuden tarkistaja. On vähintään 8 merkkiä pitkä, sisältää yhden luvun, yhden suuren ja yhden pienen kirjaimen.
+<task>
+<task-title>Tehtävä 7: Salasanan vahvuuden tarkistaminen <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-7-salasanan-tarkistaja/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava7">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## T1.8
 Tee funktio, joka palautaa kuinka monta sanaa merkkijonossa on ja kuinka monta kirjainta. Välilyöntejä ei lasketa
@@ -362,8 +377,15 @@ palauttaa 123698745
 ## T1.11
 Merkkijonon pakkaaminen: Tulosta merkki ja merkkien lukumäärä aaaabbbccd --> a4b3c2d1
 
-## T1.12
-Kokonaislukutaulukossa on luvut 1-n, etsi luku, joka puuttuu järjestämättä taulukkoa eli 14326 --> 5
+<task>
+<task-title>Tehtävä 10: Puuttuva luku <points>1 p.</points> </task-title>
+<handout>
+
+{{#include ../exercises/1-10-puuttuva-luku/handout.md}}
+
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava10">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## T1.13
 Pätevät sulkeet, eli tarkasta suljetaanko kaikki avatut sulut { --> false {} --> true, ({}) --> true jne.
