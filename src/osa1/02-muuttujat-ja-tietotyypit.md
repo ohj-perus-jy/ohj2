@@ -79,33 +79,27 @@ double paaomaKorolla = (1 + korkokerroin) * paaoma;
 ```
 
 Ohjelmoinnissa sijoitus on *lause*, eli yksittäinen suoritettava käsky.
-Esimerkiksi lausetta `double paaoma = 150.0;`
-voi ajatella tarkoittavan: 
+Esimerkiksi lausetta `double paaoma = 150.0;` voi ajatella tarkoittavan:
 "tallenna luku 150.0 muistiin paikkaan, jota kutsutaan tästä eteenpäin nimellä
-`paaoma`".
-Muuttujan arvo pysyy samana kunnes jokin toinen lause muokkaa muuttujan arvoa.
-
-
-
-## Tietotyypit
+`paaoma`". Muuttujan arvo pysyy samana kunnes jokin toinen lause muokkaa
+muuttujan arvoa.
 
 Javan tietotyypit voidaan jakaa kahteen pääryhmään: alkeistietotyyppeihin (engl.
 *primitive data types*) ja viitetietotyyppeihin (engl. *reference data types*).
 Kaikki tieto tallennetaan tietokoneen muistiin binäärilukuina (nollien ja
 ykkösten sarjana), ja tietotyypit eroavat toisistaan siinä, kuinka paljon
-muistia ne varaavat, millaista dataa ne esittävät ja millä säännöillä dataa
-voi käsitellä. Alkeistietotyypit
-sisältävät yksinkertaisia arvoja, kuten kokonaislukuja ja totuusarvoja, kun taas
-viitetietotyypit sisältävät monimutkaisempia rakenteita, kuten olioita,
-taulukoita ja merkkijonoja. 
+muistia ne varaavat, millaista dataa ne esittävät ja millä säännöillä dataa voi
+käsitellä. Alkeistietotyypit sisältävät yksinkertaisia arvoja, kuten
+kokonaislukuja ja totuusarvoja, kun taas viitetietotyypit sisältävät
+monimutkaisempia rakenteita, kuten olioita, taulukoita ja merkkijonoja. 
 
-### Alkeistietotyypit
+## Alkeistietotyypit
 
 Javassa on kahdeksan sisäänrakennettua alkeistietotyyppiä, joita 
 voi karkeasti jakaa neljään kategoriaan: kokonaisluvut, liukuluvut, merkit
 ja totuusarvot.
 
-#### Kokonaisluvut 
+### Kokonaisluvut 
 
 Kokonaisluvuille on olemassa neljä tyyppiä, jotka eroavat toisistaan
 lukualueen ja muistinkulutuksen perusteella. Yleisimmin käytetty
@@ -147,7 +141,7 @@ Javasta löytyy myös suuria lukuja käsittelevä
 
 </details>
 
-#### Liukuluvut
+### Liukuluvut
 
 Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on
 `double`.
@@ -194,18 +188,18 @@ Hyvin tarkkoja laskuja vaativille ohjelmille löytyy myös
 
 </details>
 
-#### Merkit
+### Merkit
 
 Yksi merkki tallennetaan `char`-tyyppiseen muuttujaan, joka käyttää
 2 tavua muistia.
 
-#### Totuusarvot
+### Totuusarvot
 
 Totuusarvoja varten on `boolean`-tyyppi, jolla on kaksi
 mahdollista arvoa: `true` (tosi) tai `false` (epätosi).
 
 
-### Viitetietotyypit
+## Viitetietotyypit
 
 Toisin kuin alkeistietotyypit, 
 viitetietotyyppinen muuttuja sisältää varsinaisen tiedon sijaan vain pienen, 
