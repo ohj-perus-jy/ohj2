@@ -54,6 +54,7 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
+- CachyOS Linux (`6.18.2-2-cachyos`)
 
 ***
 

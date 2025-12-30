@@ -37,7 +37,8 @@ näitä luokkia.
 > ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei
 > ole välttämättä tarpeen. 
 
-> [!VAROITUS] Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän
+> [!VAROITUS] 
+> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän
 > syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti
 > nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista
 > `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku
