@@ -361,9 +361,6 @@ Laske matriisiin kahden muun matriisin summa, eli A + B = C
 <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava7">Tee tehtävä TIMissä</a></task-link>
 </task>
 
-## T1.8
-Tee funktio, joka palautaa kuinka monta sanaa merkkijonossa on ja kuinka monta kirjainta. Välilyöntejä ei lasketa
-
 ## T1.9
 Laske kuinka monta esiintymää kutakin numeroa esiintyy luvussa.
 Esimerkiksi 12223 --> 1 1kpl, 2 3 kpl ja 3 1 kpl
