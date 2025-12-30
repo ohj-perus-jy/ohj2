@@ -344,10 +344,6 @@ Komentorivipohjainen visa
 <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
-## T1.5
-
-Tulosta kaikki alkuluvut väliltä 1-n, missä n on käyttäjän syöttämä luku. (Kenties n voi olla korkeintaan 100?)
-
 ## T1.6
 Laske matriisiin kahden muun matriisin summa, eli A + B = C
 
