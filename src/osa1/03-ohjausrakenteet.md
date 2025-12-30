@@ -71,7 +71,10 @@ aina yksi tai useampi totuusarvoinen ehtolauseke.
 
 ### If-rakenne
 
-Perusmuotoinen ehtolause on if. Sen sisällä oleva koodilohko suoritetaan vain, jos sulkeissa oleva vertailu on tosi (true). Usein tarvitsemme myös vaihtoehtoisia reittejä, jolloin käytämme else if (muuten jos) ja else (muuten) -rakenteita.
+Perusmuotoinen ehtolause on if. Sen sisällä oleva koodilohko suoritetaan vain,
+jos sulkeissa oleva vertailu on tosi (true). Usein tarvitsemme myös
+vaihtoehtoisia reittejä, jolloin käytämme else if ("muuten jos") ja else
+("muuten") -rakenteita.
 
 If-lauseiden syntaksi Javassa on seuraavanlainen: 
 ```java.ignore
@@ -87,9 +90,9 @@ if (pisteet >= 90) {
 
 ### Switch-rakenne
 
-Kun meillä on yksi muuttuja, jota halutaan verrata useisiin yksittäisiin
+Kun halutaan verrata yhden muuttujan sisältämää arvoa useisiin yksittäisiin
 arvoihin (esimerkiksi valikon valinta), switch-rakenne voi olla selkeämpi kuin
-pitkä if-else if -ketju.
+pitkä if-else-ketju.
 
 ```java,ignore
 int valinta = 2;
@@ -108,7 +111,7 @@ switch (valinta) {
 
 ### Kolmiarvoinen operaattori
 
-Yksinkertaisissa "joko-tai" -tilanteissa, joissa halutaan sijoittaa arvo
+Yksinkertaisissa "joko-tai"-tilanteissa, joissa halutaan sijoittaa arvo
 muuttujaan ehdon perusteella, voidaan käyttää kolmiarvoista operaattoria
 (*ternary operator*) `?.` Se tiivistää koodia merkittävästi.
 
@@ -171,8 +174,9 @@ For-each-silmukka on usein luettavin ja myös turvallisin tapa käydä läpi kok
 tietorakenne. Kun et tarvitse indeksiä etkä aio muokata rakenteen kokoa, käytä
 for-each-silmukkaa.
 
-Rajoitukset: Et tiedä monennessako alkiossa olet menossa, etkä voi korvata
-alkiota toisella silmukan sisällä.
+For-each-silmukassa on joitain rajoituksia: Et tiedä monennessako alkiossa olet
+menossa, etkä voi tehdä muutoksia tietorakenteeseen, kuten poistaa tai lisätä
+alkioita.
 
 ```java
 void main () {
@@ -189,11 +193,10 @@ void main () {
 
 ### While
 
-While-silmukka on paras valinta silloin, kun et tiedä etukäteen, kuinka monta
+While-silmukka on hyvä valinta silloin, kun et tiedä etukäteen, kuinka monta
 kertaa toisto pitää suorittaa. Se jatkuu niin kauan kuin ehto on tosi.
 Tyypillinen esimerkki on tietojen lukeminen tiedostosta rivi riviltä tai
 pelisilmukka.
-
 
 ```java
 import java.util.Scanner; // Tarvitaan syötteen lukemiseen
@@ -219,7 +222,8 @@ void main() {
 
 ### Do-While
 
-Tämä toimii kuten while, mutta yhdellä merkittävällä erolla: silmukan runko suoritetaan aina vähintään kerran, koska ehto tarkistetaan vasta lopussa.
+Tämä toimii kuten while, mutta yhdellä merkittävällä erolla: silmukan runko
+suoritetaan aina vähintään kerran, koska ehto tarkistetaan vasta lopussa.
 
 Do-while on ainoa silmukka, jonka lopettavaan sulkeeseen tulee puolipiste. Alla
 pseudokoodina esimerkki, jossa omenan sijainti arvotaan uudestaan, jos se on
@@ -237,8 +241,6 @@ void main () {
     } while (omenanSijainti.distanceTo(pelaajanSijainti) < 2.0);
 }
 ```
-
-
 
 ## Tehtävät 
 
