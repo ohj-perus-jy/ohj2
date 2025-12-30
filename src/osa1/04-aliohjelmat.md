@@ -42,21 +42,35 @@ double keskiarvo(int[] luvut) {
 }
 ```
 
-## Aliohjelman määrittelyrivi
+## Aliohjelman määrittely
 
-Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyrivissä
-on seuraavat osat:
+Yllä oleva `keskiarvo`-aliohjelma koostuu monesta pienestä palasesta (1)
+paluuarvo, (2) nimi, (3) parametrit ja (4) runko-osa. 
 
- * Paluuarvon tyyppi (`double`): Kertoo, minkä tyyppistä tietoa metodi palauttaa. Jos metodi ei palauta mitään, tyyppi on `void`. Paluuarvon tyyppi voi olla mikä tahansa Javan perustietotyyppi tai olio.
- * Aliohjelman nimi (`keskiarvo`): Kertoo mitä aliohjelma tekee. Nimen tulee olla kuvaava ja noudattaa Javan nimeämiskäytäntöjä sekä [tämän kurssin tyyliohjetta](../tyyliohje.md).
- * Parametrit (`int[] luvut`): Sulkeiden sisään määritellään muuttujat, jotka aliohjelma tarvitsee toimiakseen.
+ * (1) Paluuarvon tyyppi (tässä `double`): Kertoo, minkä tyyppistä tietoa aliohjelma
+   palauttaa. Jos aliohjelma ei palauta mitään, tyyppi on `void`. 
+ * (2) Aliohjelman nimi (tässä `keskiarvo`): Kertoo millä nimellä sitä
+   kutsutaan. 
+ * (3) Parametrit (tässä `int[] luvut`): Sulkeiden sisään määritellään
+   muuttujat, jotka ottavat vastaan aliohjelmalle annettavat syötteet.
+   Parametreja voi olla nolla tai useampia, ja ne erotetaan toisistaan pilkulla.
+   Jokaisella parametrilla on oma tyyppi ja nimi.
 
-[Luvussa 2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin lisämääreisiin, joita aliohjelmalle voi antaa (julkisuus ja staattisuus).
+Kutsutaan näitä kolmea palasta yhdessä aliohjelman *esittelyriviksi*. [Luvussa
+2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin määreisiin
+(engl. *modifier*), joita esittelyriville voi lisätä.
 
-TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii
-ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä
-kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat
-määritellään kuitenkin yleensä juuri näin.
+> TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii
+> ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä
+> kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat
+> määritellään kuitenkin yleensä juuri näin.
+
+Esittelyrivin jälkeen kirjoitetaan aaltosulkeiden sisään aliohjelman runko-osa.
+Se sisältää varsinaisen koodin, joka suoritetaan, kun aliohjelmaa kutsutaan. 
+
+Kuten kaikessa lähdekoodissa muutenkin, myös aliohjelmien ja parametrien nimien
+tulee olla kuvaavia ja noudattaa Javan nimeämiskäytäntöjä sekä [tämän kurssin
+tyyliohjetta](../tyyliohje.md).
 
 ## Paluuarvot ja datan käsittely
 
