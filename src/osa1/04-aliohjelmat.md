@@ -7,11 +7,21 @@
 > - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron aliohjelmaa kutsuttaessa
 > - Osaat dokumentoida aliohjelman
 
-Aliohjelma on ohjelman osa, joka suorittaa tietyn tehtävän. Aliohjelmat helpottavat ohjelman jäsentämistä, sillä niiden avulla ohjelma voidaan jakaa pienempiin, hallittavampiin osiin. Aliohjelmat helpottavat myös uudelleenkäyttöä, sillä samaa aliohjelmaa voidaan kutsua useita kertoja eri kohdissa ohjelmaa ilman, että koodia tarvitsee kirjoittaa uudelleen. 
+Aliohjelma on ohjelman osa, joka suorittaa tietyn tehtävän. Aliohjelmat
+helpottavat ohjelman jäsentämistä, sillä niiden avulla ohjelma voidaan jakaa
+pienempiin, hallittavampiin osiin. Aliohjelmat helpottavat myös
+uudelleenkäyttöä, sillä samaa aliohjelmaa voidaan kutsua useita kertoja eri
+kohdissa ohjelmaa ilman, että koodia tarvitsee kirjoittaa uudelleen. 
 
-Aliohjelmia kutsutaan joskus myös funktioiksi, ja olio-ohjelmoinnin yhteydessä myös metodeiksi. Nimeäminen riippuu kontekstista, mutta tässä yhteydessä käytämme termiä aliohjelma.
+Aliohjelmia kutsutaan joskus myös funktioiksi, ja olio-ohjelmoinnin yhteydessä
+myös metodeiksi. Nimeäminen riippuu kontekstista, mutta tässä yhteydessä
+käytämme termiä aliohjelma.
 
-Aliohjelma voi ottaa vastaan *syötteitä*, joita sanotaan *parametreiksi*. Tehtävän suoritettuaan aliohjelma voi palauttaa tuloksen. Kutsutaan alla `Keskiarvo`-aliohjelmaa, joka laskee kokonaislukujen joukon keskiarvon. Tässä siis parametrina annetaan yksi kokonaislukutaulukko, ja aliohjelma palauttaa keskiarvon `double`-tyyppisenä arvona.
+Aliohjelma voi ottaa vastaan *syötteitä*, joita sanotaan *parametreiksi*.
+Tehtävän suoritettuaan aliohjelma voi palauttaa tuloksen. Kutsutaan alla
+`Keskiarvo`-aliohjelmaa, joka laskee kokonaislukujen joukon keskiarvon. Tässä
+siis parametrina annetaan yksi kokonaislukutaulukko, ja aliohjelma palauttaa
+keskiarvon `double`-tyyppisenä arvona.
 
 ```java
 void main () {
@@ -34,7 +44,8 @@ double keskiarvo(int[] luvut) {
 
 ## Aliohjelman määrittelyrivi
 
-Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyrivissä on seuraavat osat:
+Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyrivissä
+on seuraavat osat:
 
  * Paluuarvon tyyppi (`double`): Kertoo, minkä tyyppistä tietoa metodi palauttaa. Jos metodi ei palauta mitään, tyyppi on `void`. Paluuarvon tyyppi voi olla mikä tahansa Javan perustietotyyppi tai olio.
  * Aliohjelman nimi (`keskiarvo`): Kertoo mitä aliohjelma tekee. Nimen tulee olla kuvaava ja noudattaa Javan nimeämiskäytäntöjä sekä [tämän kurssin tyyliohjetta](../tyyliohje.md).
@@ -42,7 +53,10 @@ Aliohjelman ensimmäistä riviä kutsutaan *määrittelyriviksi*. Määrittelyri
 
 [Luvussa 2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin lisämääreisiin, joita aliohjelmalle voi antaa (julkisuus ja staattisuus).
 
-TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat määritellään kuitenkin yleensä juuri näin.
+TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii
+ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä
+kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat
+määritellään kuitenkin yleensä juuri näin.
 
 ## Paluuarvot ja datan käsittely
 

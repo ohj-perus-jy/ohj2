@@ -162,7 +162,7 @@ tiedoston myös klikkaamalla se kahdesti projektinäkymästä.
 
 ### Kirjoita ohjelma
 
-Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma" -ohjelma alusta alkaen
+Kirjoitetaan seuraavaksi yksinkertainen "Hei, maailma"-ohjelma alusta alkaen
 juuri luotuun `Ohjelma.java`-tiedostoon.
 
 Tee seuraavasti:
@@ -187,10 +187,10 @@ Tee seuraavasti:
 <details closed>
 <summary><i class="bi bi-stars jyu-gold"></i> Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
 
-IDEA tarjoaa lisäksi erilaisia aikaa säästäviä täydennysominaisuuksia, 
-joiden käyttöä on hyvä harjoitella.
+IDEA tarjoaa erilaisia aikaa säästäviä täydennysominaisuuksia, joiden käyttöä on
+hyvä harjoitella.
 
-Voit kokeilla seuraavia täydennysominaisuuksia:
+Kokeile ainakin seuraavia ominaisuuksia.
 
 * `main`-pääohjelman automaattinen lisääminen: Aloita kirjoittamalla `main`.
     Paina sen jälkeen <kbd>Ctrl</kbd>+<kbd>Space</kbd> (macOS: <kbd>⌘</kbd>+<kbd>Space</kbd>).
@@ -232,8 +232,8 @@ täydennyksen painamalla
 ### Ohjelman ajaminen
 
 Kooditiedostoja, jotka sisältävät `main`-aliohjelman, voidaan suorittaa.
-Suorittaminen onnistuu ajopainikkeella (<i class="bi bi-play-fill"></i>),
-joka sijaitsee `main`-aliohjelman vieressä sekä IDEA:n yläpalkissa.
+Suorittaminen onnistuu ajopainikkeella (<i class="bi bi-play-fill"></i>), joka
+sijaitsee `main`-aliohjelman vieressä sekä IDEA:n yläpalkissa.
 
 Tee seuraavasti:
 
