@@ -151,7 +151,17 @@ void main() {
   <handout>
   TODO: Tehdään oma luokka attribuuteilla ja metodeilla (yksinkertaiset saantimetodit riittävät). Pääohjelmassa luodaan olio, jonka tilaa muutetaan metodien avulla.
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava1">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.2: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-2-luokkia-ja-olioita/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 ## Static
