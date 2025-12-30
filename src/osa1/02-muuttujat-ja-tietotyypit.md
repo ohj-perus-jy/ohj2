@@ -734,11 +734,9 @@ Muuttuja `i` viittaa listan indeksiin.
 
 ## Javan tyyppijärjestelmä
 
-Java on vahvasti ja staattisesti tyypitetty kieli. *Vahva tyypitys* tarkoittaa,
-että Java valvoo tiukasti tyyppisääntöjen noudattamista eikä salli
-mielivaltaisia tyyppien välisiä sekoituksia.
-Puolestaan *staattinen tyypitys* tarkoittaa, että muuttujien tyypit määräytyvät
-käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa muuttujaan väärän
+Java on *staattisesti tyypitetty* kieli, mikä tarkoittaa, että muuttujien 
+tyypit määräytyvät käännösaikana, ei ohjelman ajon aikana.
+Jos yrität sijoittaa muuttujaan väärän
 tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen.
 
 Käytännössä Javassa eri tietotyyppejä ei voi käyttää
@@ -764,8 +762,15 @@ error: compilation failed
 Yllä oleva käännösvirhe kertoo, että kokonaislukua (`int`) ei voida muuntaa
 totuusarvoksi (`boolean`).
 Tämä on selkeä ero dynaamisesti tyypitettyihin kieliin, kuten Pythoniin tai
-JavaScriptiin, jossa vaikkapa `1 + True` (tai `1 + true`) palauttaa `2` tai
-jossa samaan muuttujaan voi sijoittaa erityyppisiä arvoja.
+JavaScriptiin, jossa samaan muuttujaan voi sijoittaa erityyppisiä arvoja:
+
+```javascript
+// Tämä on sallittu koodi JavaScriptissa
+let totuusarvo = true;
+//-console.log(`totuusarvo = ${totuusarvo}`);
+totuusarvo = 1;
+//-console.log(`totuusarvo = ${totuusarvo}`);
+```
 
 On kuitenkin väistämätöntä, että ohjelmassa tulee käsitellä useita erityyppisiä
 arvoja. Tätä varten Javassa on valmiiksi määritelty joitain automaattisia
@@ -811,7 +816,7 @@ void main() {
 }
 ```
 
-Yhdessä staattinen ja vahva tyypitys tarkoittavat Javassa sitä, että tyyppeihin
+Staattinen tyypitys tarkoittaa Javassa käytännössä sitä, että tyyppeihin
 liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
 eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
 ovat keskenään yhteensopivia.
