@@ -8,8 +8,10 @@
 
 ## Olio-ohjelmointi
 
-Tähän mennessä olemme tehneet enimmäkseen ohjelmia, joissa dataa tallennetaan ohjelman muuttujiin ja käsitellään funktioiden avulla. Tällaista ohjelmointityyliä&mdash;tai hienosti kutsuttunua ohjelmointiparadigmaa&mdash;kutsutaan 
-*proseduraaliseksi ohjelmoinniksi*. Tutustumme tällä kurssilla myös toiseen ohjelmointiparadigmaan: olio-ohjelmointiin. 
+Tähän mennessä olemme tehneet enimmäkseen ohjelmia, joissa dataa tallennetaan
+ohjelman muuttujiin ja käsitellään funktioiden avulla. Tällaista
+ohjelmointityyliä kutsutaan *proseduraaliseksi ohjelmoinniksi*. Tutustumme tällä
+kurssilla toiseen ohjelmointityyliin: *olio-ohjelmointiin*. 
 
 Olio-ohjelmoinnissa ideana on luoda olioiksi kutsuttuja objekteja, jotka sisältävät datan sekä toiminnallisuudet sen muokkaamiseen. Oliot voivat olla samanlaisia, mutta jokaisella oliolla on oma *tila*, joka voi muuttua ohjelman suorituksen aikana. Olion tila tallentuu sen omiin muuttujiin eli *attribuutteihin*. Oliolla voi olla myös omia aliohjelmia, joita kutsutaan *metodeiksi*. Metodi on oliolle kuuluva aliohjelma, joka voi tarkastella ja muuttaa sen omistavan olion tilaa. Ennen olion luontia täytyy ensin määrittää *luokka* eli *class*, jossa kuvaillaan olion rakenne.
 
