@@ -335,13 +335,13 @@ Komentorivipohjainen visa
 (Pitä luoda kysymykset, oikeat vastaukset, tarkistaminen ja pisteytys)
 
 <task>
-<task-title>Tehtävä 5: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
+<task-title>Tehtävä 1.4: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
 <handout>
 
-{{#include ../exercises/1-5-kokonaislukujen-lukeminen/handout.md}}
+{{#include ../exercises/1-4-kokonaislukujen-lukeminen/handout.md}}
 
 </handout>
-<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava5">Tee tehtävä TIMissä</a></task-link>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa1/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 ## T1.5
