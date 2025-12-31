@@ -1,13 +1,21 @@
-Tulosta kaikki oheisen matriisin luvut samalle riville. 
+Tee aliohjelma `tulostaMatriisi`, joka tulostaa kaikki parametrina
+annetun kokonaislukumatriisin luvut samalle riville. 
+Aliohjelma ei palauta mitään.
 
+Esimerkki aliohjelman toiminnasta
 
-    int[][] matriisi = {
-        {42, 2, 3},
-        {4, 67, 6},
-        {7, 8, 9}
-    };
+```java,ignore
+int[][] matriisi = {
+    {42, 2, 3},
+    {4, 67, 6},
+    {7, 8, 9}
+};
 
-Tulostuksen pitäisi siis olla:
+tulostaMatriisi(matriisi);
+```
 
-    42 2 3 4 67 6 7 8 9 
+Tulostuksen pitäisi silloin olla:
 
+```
+42 2 3 4 67 6 7 8 9 
+```
