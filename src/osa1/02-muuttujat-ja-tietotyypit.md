@@ -636,9 +636,9 @@ käyttämällä `final`-avainsanaa. Javan koodauskäytänteisiin kuuluu, että
 alaviivalla.
 
 Javassa `final`-avainsanaa voi käyttää sekä alkeistietotyyppien että
-viitetietotyyppien kanssa. On kuitenkin huomattava, että
-`final`-viitetietotyyppinen muuttuja tarkoittaa, että viitettä ei voi muuttaa
-osoittamaan uuteen dataan, mutta itse jo viitattua dataa voi silti muuttaa, jos
+viitetietotyyppien kanssa. On kuitenkin huomattava, että viitetietotyyppisen
+muuttujan tapauksessa `final`-sana tarkoittaa, että viitettä ei voi muuttaa
+osoittamaan uuteen dataan. Viitteen päässä olevaa dataa voi silti muuttaa, jos
 tietotyyppi sallii sen.
 
 ```java,ignore
