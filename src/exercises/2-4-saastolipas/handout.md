@@ -1,6 +1,4 @@
 Toteuta luokka `Saastolipas`, jonka tarkoituksena on säilyttää rahaa.
-Kapseloinnin ideana on, että kukaan ei pääse käsiksi rahoihin suoraan, vaan
-kaikki tapahtuu luokan omien metodien kautta.
 
 Attribuutit:
 
@@ -8,8 +6,8 @@ Attribuutit:
  * `private String omistaja`: Lippaan omistajan nimi.
  * `private final String SALASANA`: Salasana, joka tarvitaan rahojen nostamiseen.
 
-Konstruktori: Ottaa vastaan `omistaja` ja `SALASANA` -arvot.
-Asettaa alkusaldoksi 0.0.
+Konstruktori: Ottaa vastaan `omistaja` ja `SALASANA` -arvot. Asettaa
+alkusaldoksi 0.0.
 
 Metodit:
 
