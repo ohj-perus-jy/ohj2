@@ -17,7 +17,7 @@
     padding-inline: 12px;
     padding-block: 12px;
     font-weight: bold;
-    background: var(--code-bg);
+    background: var(--bg);
 }
 
 .codeblock-tabs-titles a:link:hover {
@@ -25,7 +25,8 @@
 }
 
 .codeblock-tabs-titles a:link[aria-selected="true"] {
-    background: var(--quote-bg);
+    background: var(--code-bg);
+    color: var(--fg-bright);
 }
 
 .codeblock-tabs-titles li {

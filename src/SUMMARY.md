@@ -3,9 +3,9 @@
 [Aloitus](./index.md)
 [Suorittaminen](./suorittaminen.md)
 [Työkalut ja asentaminen](./tyokalut.md)
-[Tuki ja palaute](./tuki-ja-palaute.md)
 [Harjoitustyö](./harjoitustyo.md)
 [Tentti](./tentti.md)
+[Usein kysyttyä](./ukk.md)
 
 ---
 
@@ -26,10 +26,11 @@
   - [Osan kaikki tehtävät](./osa2/04-tehtavat.md)
 - [Perintä ja rajapinnat](./osa3/index.md)
   - [Perintä](./osa3/01-perinta.md)
-  - [Rajapinnat ja abstraktit luokat](./osa3/02-rajapinnat-ja-abstraktit-luokat.md)
-  - [Polymorfismi](./osa3/03-polymorfismi.md)
-  - [Perintä tai rajapinta?](./osa3/04-perinta-tai-rajapinta.md)
-  - [Osan kaikki tehtävät](./osa3/05-tehtavat.md)
+  - [Polymorfismi](./osa3/02-polymorfismi.md)
+  - [Abstrakti luokka](./osa3/03-abstrakti-luokka.md)
+  - [Rajapinta](./osa3/04-rajapinta.md)
+  - [Perintä ja rajapinta olioiden yhteistyössä](./osa3/05-perinta-ja-rajapinta.md)
+  - [Osan kaikki tehtävät](./osa3/06-tehtavat.md)
 - [Hyödyllisiä menetelmiä olio-ohjelmoinnissa](./osa4/index.md)
   - [Geneeriset luokat](./osa4/02-geneeriset-luokat.md)
   - [Tyyppitarkistukset ja tyyppimuunnokset](./osa4/04-tyyppitarkistukset-ja-tyyppimuunnokset.md)

@@ -82,34 +82,62 @@ html.sidebar-visible #menu-bar {
 
 .right-buttons {
     margin: 0 15px;
+    justify-content: flex-end;
+
 }
 .right-buttons a {
     text-decoration: none;
 }
 
 .left-buttons {
-    display: flex;
     margin: 0 5px;
 }
+
 html:not(.js) .left-buttons button {
     display: none;
 }
 
+.left-buttons, .right-buttons, .menu-title {
+    display: flex;
+    flex: 1 1 0;
+}
+
 .menu-title {
-    font-family: var(--font-family);
+    color: var(--fg);
     display: inline-block;
+    font-family: var(--font-family);
     font-weight: 300;
     font-size: 2.4rem;
     line-height: var(--menu-bar-height);
-    text-align: center;
     margin: 0;
-    flex: 1;
-    white-space: nowrap;
     overflow: hidden;
+    text-align: center;
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
+
 .menu-title {
     cursor: pointer;
+}
+.menu-title-full {
+    display: inline;
+}
+.menu-title-short {
+    display: none;
+}
+
+@media only screen and (max-width: 470px) {
+    .menu-title-full {
+        display: none;
+    }
+    .menu-title-short {
+        display: inline;
+    }
+}
+@media only screen and (min-width: 471px) {
+    .menu-title-short {
+        display: none;
+    }
 }
 
 .menu-bar,
@@ -304,16 +332,10 @@ pre > .buttons button.clip-button {
     padding: 2px 4px 0px 6px;
 }
 pre > .buttons button.clip-button::before {
-    /* clipboard image from octicons (https://github.com/primer/octicons/tree/v2.0.0) MIT license
+    /* clipboard image from octicons
+     * (https://github.com/primer/octicons/tree/v2.0.0) MIT license 
      */
-    content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 24 25" \
-xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard">\
-<path d="M18 20h2v3c0 1-1 2-2 2H2c-.998 0-2-1-2-2V5c0-.911.755-1.667 1.667-1.667h5A3.323 3.323 0 \
-0110 0a3.323 3.323 0 013.333 3.333h5C19.245 3.333 20 4.09 20 5v8.333h-2V9H2v14h16v-3zM3 \
-7h14c0-.911-.793-1.667-1.75-1.667H13.5c-.957 0-1.75-.755-1.75-1.666C11.75 2.755 10.957 2 10 \
-2s-1.75.755-1.75 1.667c0 .911-.793 1.666-1.75 1.666H4.75C3.793 5.333 3 6.09 3 7z"/>\
-<path d="M4 19h6v2H4zM12 11H4v2h8zM4 17h4v-2H4zM15 15v-3l-4.5 4.5L15 21v-3l8.027-.032L23 15z"/>\
-</svg>');
+    content: url('data:image/svg+xml,<svg width="21" height="20" viewBox="0 0 24 25" xmlns="http://www.w3.org/2000/svg" aria-label="Copy to clipboard"><path d="M18 20h2v3c0 1-1 2-2 2H2c-.998 0-2-1-2-2V5c0-.911.755-1.667 1.667-1.667h5A3.323 3.323 0 0110 0a3.323 3.323 0 013.333 3.333h5C19.245 3.333 20 4.09 20 5v8.333h-2V9H2v14h16v-3zM3 7h14c0-.911-.793-1.667-1.75-1.667H13.5c-.957 0-1.75-.755-1.75-1.666C11.75 2.755 10.957 2 10 2s-1.75.755-1.75 1.667c0 .911-.793 1.666-1.75 1.666H4.75C3.793 5.333 3 6.09 3 7z"/><path d="M4 19h6v2H4zM12 11H4v2h8zM4 17h4v-2H4zM15 15v-3l-4.5 4.5L15 21v-3l8.027-.032L23 15z"/></svg>');
     filter: var(--copy-button-filter);
 }
 pre > .buttons button.clip-button:hover::before {
@@ -517,12 +539,20 @@ html:not(.sidebar-resizing) .sidebar {
 .sidebar .sidebar-scrollbox {
     overflow-y: auto;
     position: absolute;
+    scrollbar-width: thin;
+    transition: scrollbar-color linear 0.1s;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
     padding: 10px 10px;
 }
+
+.sidebar-scrollbox:hover {
+    scrollbar-color: var(--sidebar-active) #0000;
+    transition: scrollbar-color linear 0.1s;
+}
+
 .sidebar .sidebar-resize-handle {
     position: absolute;
     cursor: col-resize;
