@@ -242,6 +242,17 @@ Koska staattiset metodit eivät liity mihinkään olioon, niiden sisällä ei my
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
 </task>
 
+<task>
+  <task-title>Tehtävä 2.3: Kirjasto<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-3-kirjasto/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
 ## This-viite
 
 Sana `this` viittaa olioon itseensä. Se toimii viitteenä "tähän olioon", jonka kontekstissa koodia suoritetaan. 
