@@ -571,12 +571,24 @@ TODO: Tapahtumat ja viestit?
 
 
 
+
 <task>
-  <task-title>Tehtävä 2.4: Sähköverkko<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.4: Säästölipas<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-4-sahkoverkko/handout.md}}
+{{#include ../exercises/2-4-saastolipas/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+  <task-title>Tehtävä 2.5: Sähköverkko<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-5-sahkoverkko/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>
