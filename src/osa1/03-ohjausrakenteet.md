@@ -45,11 +45,12 @@ operaattoreita yhdistämään ehtoja.
 >  * `if (x = 5)` yrittää asettaa x:n arvoksi 5 (virhe)
 >  * `if (x == 5)` kysyy, onko x:n arvo 5 (oikein)
 
-## Merkkijonojen vertailu
+## Viitetietotyyppimuuttujien vertailu
 
 Toisin kuin primitiivityypeillä (`int`, `double`, jne.), Javassa
 `==`-operaattori vertaa olioiden kohdalla viitteitä, eivät sisältöä. Tästä
-syystä merkkijonojen sisällön vertailuun tulee käyttää `equals()`-metodia.
+syystä merkkijonojen ja muiden
+viitetyyppimuuttujien sisällön vertailuun tulee käyttää `equals()`-metodia.
 
 ```java
 void main() {
@@ -64,6 +65,16 @@ void main() {
 }
 ```
 
+Kuitenkin null-viitteen tarkistus voidaan tehdä `==`-operaattorilla, koska
+kyseessä on juuri viitteiden vertailu:
+
+```java
+void main() {
+    String mjono = null;
+    IO.println(mjono == null);
+}
+```
+
 ## Ehtolauseet
 
 Ehtolauseilla ohjataan ohjelman kulkua. Ehtolauseiden muodostamiseen tarvitaan
@@ -72,12 +83,12 @@ aina yksi tai useampi totuusarvoinen ehtolauseke.
 ### If-rakenne
 
 Perusmuotoinen ehtolause on if. Sen sisällä oleva koodilohko suoritetaan vain,
-jos sulkeissa oleva vertailu on tosi (true). Usein tarvitsemme myös
+jos sulkeissa oleva totuuslauseke on tosi (true). Usein tarvitsemme myös
 vaihtoehtoisia reittejä, jolloin käytämme else if ("muuten jos") ja else
 ("muuten") -rakenteita.
 
 If-lauseiden syntaksi Javassa on seuraavanlainen: 
-```java.ignore
+```java,ignore
 if (pisteet >= 90) {
     IO.println("Arvosana: 5");
 } else if (pisteet >= 50) {

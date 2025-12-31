@@ -212,6 +212,26 @@ viitetietotyyppejä. Esimerkiksi `String` on viitetietotyyppi, kuten myös kaikk
 taulukot ja listat. Alkaen luvusta 2 tutustumme olio-ohjelmointiin; Javassa
 kaikki oliot ovat viitetietotyypit.
 
+Kaikkiin viitetyyppimuuttujiin on sallittua sijoittaa erikoisarvo `null`
+Tämä niin sanottu *null-viite* merkitsee, että muuttuja ei sisällä viitettä
+mihinkään tietoon. Yritys muokata tai lukea muuttujaa, jonka arvo on `null`,
+tuottaa yleensä virheen ohjelman ajon aikana:
+
+```java,ignore
+String teksti = null;
+String tekstiIsolla = teksti.toUpperCase();
+IO.println(tekstiIsolla);
+```
+```
+java.lang.NullPointerException: Cannot invoke "String.toUpperCase()" because "<local1>" is null
+	at main.main(main.java:3)
+```
+
+Koska virhe tapahtuu vasta ajon aikana, Javassa on yleensä ohjelmoijan vastuulla
+varmistaa, että muuttujan tai funktion parametrin arvona ei ole null-viite.
+Varmistus voidaan tehdä esimerkiksi ehtorakenteella, jotka esitetään seuraavassa
+alaluvussa.
+
 <details><summary>✨ Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
 
 On useita syitä sille, miksi nämä kaksi eri kategoriaa tietotyypeille on
