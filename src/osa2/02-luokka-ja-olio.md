@@ -154,16 +154,6 @@ void main() {
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava1">Tee tehtävä TIMissä</a></task-link>
 </task>
 
-<task>
-  <task-title>Tehtävä 2.2: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-2-luokkia-ja-olioita/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
-</task>
-
 ## Static
 
 Tähän muistiin tällainen "määritelmäteksti". Siirrä tai muokkaa tarpeen mukaan. Voit myös lainata tekstiä täältä (minun kirjoittama teksti): https://tim.jyu.fi/view/kurssit/tie/ohj1/materiaali/staattiset
@@ -241,17 +231,6 @@ Koska staattiset metodit eivät liity mihinkään olioon, niiden sisällä ei my
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
 </task>
-
-<task>
-  <task-title>Tehtävä 2.3: Kirjasto<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-3-kirjasto/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
-</task>
-
 
 ## This-viite
 
@@ -721,3 +700,25 @@ void main() {
 Joidenkin Javan sisäänrakennettujen oliotyyppien tapauksessa `==`-operaattori *voi* toimia, vaikka edellä mainitun perusteella sen ei pitäisi. Tästä hyvä esimerkki on `String` olioiden vertailu. Java pyrkii välttämään täysin samanlaisten olioiden luomista turhaan uudelleenkäyttämällä saman sisällön omaavia, muuttumattomia olioita parhaansa mukaan. Tämä on melko yleinen ominaisuus ohjelmointikielissä. Voit halutessasi lukea lisää aiheesta täältä; [*string interning*](https://www.geeksforgeeks.org/java/interning-of-string/). Varmuuden vuoksi on paras käyttää aina olion `equals`-metodia tai `Objects.equals`-funktiota.
 
 TODO: Jos toteutamme oman `equals`-metodin, meidän täytyisi toteuttaa myös luokalle oma `toHash`-metodi.
+
+## Tehtävät
+
+<task>
+  <task-title>Tehtävä 2.2: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-2-luokkia-ja-olioita/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.3: Kirjasto<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-3-kirjasto/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
+</task>

@@ -566,3 +566,17 @@ TODO: Kompositio (rakennus -> tila -> varaus)
 TODO: Delegointi (peru kaikki rakennuksen tapahtumat)
 
 TODO: Tapahtumat ja viestit?
+
+## Tehtävät
+
+
+
+<task>
+  <task-title>Tehtävä 2.4: Sähköverkko<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-4-sahkoverkko/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
+</task>
