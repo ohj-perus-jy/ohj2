@@ -44,7 +44,7 @@ Sähköyhtiö haluaa seurata kaikkien keskusten tilannetta.
 
 Lisää `Sahkokeskus`-luokkaan `static double kokonaisKulutusValtakunnassa`.
 
-Päivitä tätä muuttujaa aina, kun jokin laite missä tahansa keskuksessa kytketään päälle tai kun sulake palaa.
+Päivitä tätä muuttujaa aina, kun jokin laite missä tahansa keskuksessa kytketään päälle, irrotetaan sähkökeskuksesta tai kun sulake palaa.
 
 Lisää static-metodi `tulostaValtakunnanTilanne()`, joka tulostaa kokonaiskulutuksen.
 </details>
