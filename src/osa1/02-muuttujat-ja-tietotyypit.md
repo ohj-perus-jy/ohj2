@@ -547,6 +547,16 @@ int[] arvosanat = new int[] {4, 2, 2, 5};
 //-}
 ```
 
+Yhdistetyssä muuttujan määrittely- ja sijoituslauseessa `new T[]` osa
+on myös sallittua pudottaa pois, jolloin yllä oleva voi tiivistää lisää:
+
+```java
+//-void main () {
+int[] arvosanat = {4, 2, 2, 5};
+//-IO.println("arvosanat = " + Arrays.toString(arvosanat));
+//-}
+```
+
 Javassa taulukkojen kokoa ei voi muuttaa taulukon luomisen jälkeen.
 Sijoittaminen paikkaan, jota ei ole taulukossa, aiheuttaa virheen
 ohjelman ajon aikana:
@@ -581,8 +591,8 @@ ovat taulukot, eli `T[][]`:
 //-void main() {
 int[][] taulukko2D = new int[][] {
     new int[] {1, 2, 3},
-    new int[] {4, 5, 6},
-    new int[] {7, 8, 9},
+    new int[] {4, 5, 6, 7},
+    new int[] {8, 9, 0},
 };
 
 // Taulukon pituus on tässä siten taulukkojen lukumäärä, eli "rivien" määrä.
@@ -604,8 +614,8 @@ IO.println("Rivillä 2 (indeksi 1) kolmas alkio (indeksi 2) on: " + taulukko2D[1
 
 Huomaa, että yllä olevassa esimerkissä `taulukko2D[0][0]` viittaa
 ensimmäisen taulukon (`taulukko2D[0]`) ensimmäiseen alkioon
-`(taulukko2D[0])[0]`. Voit siis ajatella yllä olevan taulukon
-seuraavasti:
+`(taulukko2D[0])[0]`. Yllä oleva taulukko ja siinä olevat alkiot voisi kuvata
+siis seuraavasti:
 
 ```bob
                       [0]                [1]                [2]
@@ -615,18 +625,21 @@ taulukko2D[0] |                  |                  |                  |
               |        1         |        2         |        3         |
               +------------------+------------------+------------------+
 
-              +------------------+------------------+------------------+
-              | taulukko2D[1][0] | taulukko2D[1][1] | taulukko2D[1][2] |
-taulukko2D[1] |                  |                  |                  |
-              |        4         |        5         |        6         |
-              +------------------+------------------+------------------+
+              +------------------+------------------+------------------+------------------+
+              | taulukko2D[1][0] | taulukko2D[1][1] | taulukko2D[1][2] | taulukko2D[1][3] |
+taulukko2D[1] |                  |                  |                  |                  |
+              |        4         |        5         |        6         |        7         |
+              +------------------+------------------+------------------+------------------+
 
               +------------------+------------------+------------------+
               | taulukko2D[2][0] | taulukko2D[2][1] | taulukko2D[2][2] |
 taulukko2D[2] |                  |                  |                  |
-              |        7         |       8          |        9         |
+              |        8         |       9          |        0         |
               +------------------+------------------+------------------+
 ```
+
+Huomaa erityisesti, että "rivitaulukkojen" ei tarvitse olla välttämättä
+samanpituuisia.
 
 ## Vakiot
 

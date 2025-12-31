@@ -199,19 +199,16 @@ Tyypillinen esimerkki on tietojen lukeminen tiedostosta rivi riviltä tai
 pelisilmukka.
 
 ```java
-import java.util.Scanner; // Tarvitaan syötteen lukemiseen
-
 void main() {
-    Scanner lukija = new Scanner(System.in);
     String syote = "";
 
     IO.println("Tervetuloa peliin! (Kirjoita 'lopeta' poistuaksesi)");
 
     // Huomaa "!" (EI-operaattori) ja .equals() merkkijonolle
-    // Silmukka jatkuu niin kauan kuin syöte EI ole "lopeta"
-    while (!syote.equals("lopeta")) {
-        IO.print("> ");
-        syote = lukija.nextLine(); // Pysähtyy odottamaan käyttäjän kirjoitusta
+    // Silmukka jatkuu niin kauan kuin 
+    // syöte EI puutu (eli ei ole null-viite) JA syöte EI ole "lopeta" 
+    while (syote != null && !syote.equals("lopeta")) {
+        syote = IO.readln("> "); // Pysähtyy odottamaan käyttäjän kirjoitusta
 
         IO.println("Kaiku: " + syote);
     }
@@ -241,3 +238,122 @@ void main () {
     } while (omenanSijainti.distanceTo(pelaajanSijainti) < 2.0);
 }
 ```
+
+
+### Silmukoiden suorituksen ohjaaminen
+
+Tarvittaessa silmukan suoritusta voi ohjata seuraavilla lauseilla:
+
+- `break`: lopettaa silmukan suorittamisen ja siirtyy suorittamaan silmukan
+  jälkeinen koodi
+- `continue`: päättää tämänhetkisen silmukan toiston ja siirtyy silmukan
+  päivityslauseeseen ja toistoehtoon
+
+Esimerkiksi alla olevassa silmukassa tulostetaan luvut 1, 2, 3, 4, 6, 7.
+Luku 5 jätetään välistä ja luvun 8 kohdalla silmukka lopetetaan.
+
+```java
+//- void main() {
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        continue; // Siirrytään seuraavaan kierrokseen
+    }
+    if (i == 8) {
+        break; // Lopetetaan silmukan suoritus
+    }
+    IO.println(i);
+}
+//-}
+```
+
+## Ohjausrakenteiden yhdistäminen
+
+Silmukkarakenne voi sisältää muita rakenteita, kuten ehto- ja
+silmukkarakenteita.
+Sisäkkäisiä rakenteita käytettäessä on huomioitavaa muuttujien näkyvyys:
+sisemmässä rakenteessa *määritelty* muuttuja ei näy ulommassa rakenteessa,
+kun taas ulommassa rakenteessa määritelty muuttuja näkyy sisemmässä rakenteessa.
+
+Esimerkiksi, ehtorakenteen sisällä määritelty muuttuja ei ole
+käytettävissä ehtorakenteen ulkopuolella:
+
+```java,ignore
+void main() {
+    int luku = 10;
+
+    if (luku > 5) {
+        int luku2 = luku + 1; // OK, luku määritelty ulommassa rakenteessa
+        luku2 *= 5;
+    }
+
+    IO.println(luku2); // VIRHE: luku2 on määritelty sisemmässä rakenteessa
+}
+```
+
+```
+error: cannot find symbol
+    IO.println(luku2);
+               ^
+  symbol:   variable luku2
+```
+
+Tällaisissa tapauksissa eräs korjaus on siirtää muuttujan määrittely
+ulompaan rakenteeseen:
+
+```java
+void main() {
+    int luku = 10;
+
+    // Lisätään muuttujan määrittely ja alustetaan väliaikaisella arvolla
+    // HIGHLIGHT_GREEN_BEGIN
+    int luku2 = 0;
+    // HIGHLIGHT_GREEN_END
+    if (luku > 5) {
+    // OK: Nyt luku ja luku2 määritelty ulommassa rakenteessa
+    // HIGHLIGHT_YELLOW_BEGIN
+        luku2 = luku + 1;
+    // HIGHLIGHT_YELLOW_END
+        luku2 *= 5;
+    }
+
+    IO.println(luku2); // OK: luku2 on määritelty samassa rakenteessa kuin tämä lause
+}
+```
+
+### Sisäkkäiset silmukat
+
+Sisäkkäiset silmukat tarkoittaa yhden tai useamman silmukkarakenteen
+kirjoittaminen toisen silmukkarakenteen sisään.
+Tällöin jokaista ulomman silmukan toistokertaa kohden suoritetaan
+tietty määrä lisää toistoja.
+
+Yleinen käyttötapaus sisäkkäisille silmukoille on [moniulotteisten taulukoiden
+`T[][]`](02-muuttujat-ja-tietotyypit.md#moniulotteiset-taulukot) käsittely.
+
+```java
+//-void main() {
+int[][] taulu2D = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+for (int riviNro = 0; riviNro < taulu2D.length; riviNro++) {
+    IO.println("Rivi " + riviNro + ":");
+    for (int sarakeNro = 0; sarakeNro < taulu2D[riviNro].length; sarakeNro++) {
+        int alkio = taulu2D[riviNro][sarakeNro];
+        IO.println("  Sarake " + sarakeNro + ": " + alkio);
+    }
+}
+//-}
+```
+
+Muista, että `int[][]` tarkoittaa, että kyseessä on taulukko, jonka alkioina
+ovat kokonaislukutaulukot. Siispä yllä olevassa esimerkissä:
+
+- `taulu2D.length` antaa taulukossa olevien taulukoiden lukumäärän, eli ns.
+  "rivien" lukumäärän;
+- `taulu2D[riviNro]` antaa tietyssä indeksissä olevan `int[]`-taulun, joka
+  sisältää kaikki rivillä olevat alkiot;
+- `taulu2D[riviNro][sarakeNro]` antaa `taulu2D[riviNro]`-taulukossa olevan
+  alkion indeksistä `sarakeNro`.
