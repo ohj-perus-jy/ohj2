@@ -424,18 +424,17 @@ Tutkitaan vielä kansion rakenne `ls`-komennolla:
 
 <asciinema src="images/rec_javac_ls.cast" rows="3" poster="npt:5"></asciinema>
 
-Kääntämisen seurauksena siis syntyy `.class`-päätteinen tiedosto. Tämä tiedosto
-sisältää ns. tavukoodia (engl. *bytecode*), joka on tiedoston käännetty muoto.
-Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan eräänlainen
-välivaihe. Tavukoodia voidaan kuitenkin suorittaa Javan virtuaalikoneella (JVM,
-Java Virtual Machine), joka on erillinen ohjelma, joka osaa tulkita ja suorittaa
-tavukoodia. Vaikka tämä voi kuulostaa turhan monimutkaiselta, hyöty on siinä,
-että ohjelma joka on käännetty Java-tavukoodiksi voidaan nyt ajaa
-alustariippumattomasti (Windows, macOS, Linux, jne.), kunhan JVM on toteutettu
-kyseisellä alustalla. JVM voi puolestaan optimoida tavukoodia juuri alustalle ja
-prosessorille sopivaan muotoon tai tarvittaessa tulkata tavukoodia suoraan ns.
-skriptauskielten tapaan, kuten Python tai Lua. Javalla onkin iskulause: "Write
-Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
+Kääntämisen seurauksena syntyy `.class`-päätteinen tiedosto. Tämä tiedosto
+sisältää niin sanottua tavukoodia (engl. *bytecode*), joka on tiedoston
+käännetty muoto. Tavukoodi ei ole suoraan prosessorilla ajettava ohjelma, vaan
+eräänlainen välivaihe. Tavukoodia voidaan kuitenkin suorittaa Javan
+virtuaalikoneella (JVM, Java Virtual Machine), joka on erillinen ohjelma, joka
+osaa tulkita ja suorittaa tavukoodia. Vaikka tämä voi kuulostaa turhan
+monimutkaiselta, hyöty on siinä, että ohjelma joka on käännetty
+Java-tavukoodiksi voidaan nyt ajaa eri alustoilla (Windows, macOS, Linux, jne.),
+kunhan JVM on toteutettu kyseisellä alustalla. JVM voi puolestaan optimoida
+tavukoodia juuri alustalle ja prosessorille sopivaan muotoon. Javalla onkin
+iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
 
 <!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
 Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
