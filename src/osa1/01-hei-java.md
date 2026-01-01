@@ -35,8 +35,8 @@ Käydään läpi ohjelma rivi riviltä:
    parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä
    aloitetaan myös aliohjelman runko aaltosululla `{`.
 
-2. Javassa lause loppuu yleensä puolipisteeseen `;`. Tekstin tulostaminen
-   onnistuu `IO.println`-metodilla.
+2. Tekstin tulosteminen komentorivi-ikkunaan onnistuu `IO.println`-metodilla.
+   Javassa lause loppuu yleensä puolipisteeseen `;`. 
 
 3. Aliohjelman runko lopetetaan aaltosululla `}`.
 
@@ -77,9 +77,9 @@ luomiseen, ajamiseen ja virheenjäljitykseen.
 
 ### Luo uusi Java-projekti
 
-Luodaan seuraavaksi yksinkertainen Java-projekti IDEAssa.
-Projekti on IDEA-kehitysympäristön tapa koostaa lähdekooditiedostoja,
-testeja, kirjastoja ja muita lisätiedostoja yhteen kokonaisuuteen.
+Luodaan seuraavaksi yksinkertainen Java-projekti IDEAssa. Projekti on
+IDEA-kehitysympäristön tapa koostaa lähdekooditiedostoja, testejä, kirjastoja ja
+muita lisätiedostoja yhteen kokonaisuuteen.
 
 Tee seuraavasti:
 
@@ -101,24 +101,26 @@ Tee seuraavasti:
 
     * Valitse vasemmalla puolella olevasta listasta projektityypiksi **Java**.
 
-    * Aseta projektin nimeksi **Name**-kenttään `HelloWorld`. Projektien nimet yleensä
-      kirjoitetaan ilman välilyöntejä.
+    * Aseta projektin nimeksi **Name**-kenttään `HelloWorld`. Projektien nimet
+      kirjoitetaan yleensä ilman välilyöntejä.
 
     * Aseta projektin sijainti **Location**-kenttään. Klikkaa kentän oikealla puolella 
       olevaa kansiokuvaketta (<i class="bi bi-folder2"></i>) ja valitse
       projektille sopiva kansio. Valitse sellainen kansio, jonka löydät tulevaisuudessakin
       helposti omalta tietokoneelta.
 
-    * Valitse **Build system**-rivillä **IntelliJ**.  
+    * Valitse **Build system**-rivillä **IntelliJ**. 
       Tutustumme muihin projektien rakennusjärjestelmiin myöhemmissä osissa.
 
     * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#java-development-kit-jdk).
 
     * Laita ruksi **Add sample code** pois päältä. Lisäämme kooditiedoston itse.
 
-    * Laita ruksi **Create Git repository** pois päältä. Emme tarvitse vielä versiohallintaa tässä vaiheessa.
+    * Laita ruksi **Create Git repository** pois päältä. Emme tarvitse
+      versiohallintaa vielä tässä vaiheessa.
 
-    Yllä olevien muutosten jälkeen tuloksen pitäisi näyttää seuraavalta:
+    Yllä olevien valintojen jälkeen tuloksen pitäisi näyttää seuraavalta
+    (Location-kenttä voi olla erilainen riippuen käyttöjärjestelmästäsi):
 
     <img src="images/intellij-new-project-dialog.png" width="600">
     
@@ -143,22 +145,20 @@ Tee seuraavasti:
 
 IntelliJ-projektissa kaikki koodi laitetaan `src`-kansioon.
 Luodaan seuraavaksi yksinkertainen Java-lähdekooditiedosto, johon
-voidaan kirjoittaa koodi.
+voidaan kirjoittaa koodi. 
 
-Tee seuraavasti:
+1. Klikkaa toissijaisella hiiren painikkeella projektiselaimessa olevaa
+   `src`-kansiosta ja valitse **New** <i class="bi bi-chevron-right"></i> **Java
+   Compact File**.
 
-1. Projektiselaimessa klikkaa toissijaisella hiiren painikkeella `src`-kansiosta
-   ja valitse **New** <i class="bi bi-chevron-right"></i> **Java Compact File**.
-
-2. Aseta avautuneessa dialogissa lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
+2. Anna lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
 
 <video src="images/intellij-new-java-file.mp4" controls></video>
 
 IDEA luo uuden `Ohjelma.java`-nimisen tiedoston `src`-kansioon. IDEA myös lisää
-automaattisesti `main`-aliohjelman määrittelyn lähdekooditiedostoon.
-
-Samalla IDEA avaa lähdekooditiedoston koodialueelle. Voit jatkossa avata
-tiedoston myös klikkaamalla se kahdesti projektinäkymästä.
+automaattisesti `main`-aliohjelman määrittelyn lähdekooditiedostoon. Samalla
+IDEA avaa lähdekooditiedoston koodialueelle. Voit jatkossa avata tiedoston myös
+tuplaklikkaamalla sitä.
 
 ### Kirjoita ohjelma
 
@@ -167,7 +167,7 @@ juuri luotuun `Ohjelma.java`-tiedostoon.
 
 Tee seuraavasti:
 
-1. Poista kaikki koodi `Ohjelma.java` -tiedostosta.
+1. Poista kaikki koodi `Ohjelma.java`-tiedostosta.
 
    IDEA lisää yleensä valmista pohjakoodia uusiin lähdekooditiedostoihin.
    Tätä harjoitusta varten kirjoitamme kuitenkin koodia itse.
@@ -237,15 +237,15 @@ sijaitsee `main`-aliohjelman vieressä sekä IDEA:n yläpalkissa.
 
 Tee seuraavasti:
 
-1. Klikkaa `main`-aliohjelman vasemmalla puolella olevaa ajopainiketta (<i class="bi bi-play-fill"></i>).
+1. Klikkaa `main`-aliohjelman vasemmalla puolella olevaa ajopainiketta (<i
+   class="bi bi-play-fill"></i>).
 
-   IDEA ensin kääntää ohjelmasi. Kun ohjelma on käännetty, editorin alapuolelle
-   avautuu **Run**-ikkuna, ja IDEA ajaa ohjelmasi.
-
-   Ensimmäinen rivi ikkunassa näyttää komennon, jota IDEA käytti käännetyn
-   tiedoston ajamiseksi. Seuraavalla rivillä näet ohjelman tulosteen, tässä
-   tapauksessa `IO.println`-aliohjelmalla tulostettu `Hei, maailma!`. Viimeinen
-   rivi kertoo, että ohjelman suoritus päättyi ilman virheitä.
+   IDEA ensin kääntää ohjelmasi. Kun ohjelma on käännetty, IDEA ajaa ohjelmasi,
+   ja editorin alapuolelle avautuu **Run**-ikkuna, jossa näkyy tekstiä.
+   Ensimmäinen rivi on se komento, jota IDEA käytti käännetyn tiedoston
+   ajamiseksi. Seuraavalla rivillä on oman ohjelmamme tuottama tuloste `Hei,
+   maailma!`. Viimeinen rivi kertoo, että ohjelman suoritus päättyi ilman
+   virheitä.
 
    <video src="images/intellij-run-gutter.mp4" controls></video>
 
@@ -260,10 +260,9 @@ Tee seuraavasti:
 
    Kun ajokonfiguraatio on luotu ensimmäisen ajon jälkeen, voit jatkossa ajaa
    koodin aina IDEA:n yläpalkissa olevalla ajopainikkeella. Tällä tavoin voit
-   helposti ajaa samoja ohjelmia ilman, että kooditiedostoa tarvitsisi erikseen
-   avata.
+   helposti ajaa ohjelmia ilman, että kooditiedostoa tarvitsee erikseen avata.
 
-   IDEAn yläpalkissa pitäisi nyt näkyä `Ohjelma`-konfiguraation nimi,
+   IDEAn yläpalkissa pitäisi nyt näkyä `Ohjelma`-ajokonfiguraation nimi,
    jonka vieressä on ajopainike (<i class="bi bi-play-fill"></i>).
    Kokeile sulkea `Ohjelma.java` ja suorittaa ohjelma yläpalkin kautta.
 
@@ -350,7 +349,7 @@ ohjelma suoraan komentoriviltä.
 <details closed><summary>Miten voin seurata mukana?</summary>
 
 Tee alkuun yksinkertainen ohjelma [yllä olevan oppaan](#opas-java-ohjelmien-kääntäminen-ja-ajaminen)
-mukaisesti IDEA-kehitysympäristössä.
+mukaisesti.
 
 Sen jälkeen avaa IDEA:n vasemmasta näkymäpalkista komentorivi painamalla
 komentorivipainikkeesta (<i class="bi bi-terminal"></i>). Tämä avaa
@@ -400,7 +399,7 @@ Tarkastellaan vielä, mitä tiedostoja projektista löytyy:
 
 Koska käytössämme on IntelliJ-projekti, sieltä löytyy vain muutama olennainen tiedosto ja kansio:
 
-- `HelloWorld.iml` on projektin konfiguraatio, jolla IDEA tunnistaa kansion olevan Java-projekti
+- `HelloWorld.iml` on projektin asetustiedosto, jolla IDEA tunnistaa kansion olevan Java-projekti
 - `src` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsevat
 - `out` on kansio, joka sisältää käännetyt ohjelmat
 
@@ -412,14 +411,14 @@ Siirrytään nyt `src` kansioon ja tarkastellaan sen sisältö:
 *lähdekooditiedostoja*. Ne sisältävät ohjelman lähdekoodia tekstinä eivätkä ne
 ole vielä suoraan ajettavissa.
 
-Jotta ohjelma voidaan ajaa, se pitää kääntää. Java-lähdekoodin kääntäminen
-onnistuu Java-kehitysympäristön (Java Development Kit, JDK) kanssa tulleen
-`javac`-kääntäjäohjelman avulla. Kokeillaan kääntää `Ohjelma.java`:
+Jotta ohjelma voidaan ajaa, se pitää kääntää. IDEA tekee tämän automaattisesti
+kun käynnistämme tekemämme ohjelman, mutta Java-lähdekoodin kääntäminen onnistuu
+myös komentoriviltä käyttäen Java-kehitysympäristön mukana tullutta
+`javac`-kääntäjäohjelmaa. Kokeillaan kääntää `Ohjelma.java`:
 
 <asciinema src="images/rec_javac.cast" rows="2" poster="npt:5"></asciinema>
 
-`javac`-komento ei tulosta oletuksella mitään, jos kääntäminen tapahtuu 
-onnistuneesti.
+Jos kääntäminen onnistui, `javac`-komento ei tulosta oletuksena mitään.
 Tutkitaan vielä kansion rakenne `ls`-komennolla:
 
 <asciinema src="images/rec_javac_ls.cast" rows="3" poster="npt:5"></asciinema>
@@ -439,8 +438,10 @@ iskulause: "Write Once, Run Anywhere", jolla viitataan tähän periaatteeseen.
 <!-- DZ: Onko tarpeellinen tähän? Yllä vähän tiivistetty versio.
 Käytetyin JVM:n spesifikaation toteutus on nimeltään HotSpot, joka sisältää sekä tulkin että JIT (**J**ust **I**n **T**ime) kääntäjän. Tulkki käynnistää ohjelman ja JVM etsii koodista toistuvia pätkiä, jotka käännetään kyseisen alustan konekieliseksi koodiksi JIT kääntäjällä, jotta ohjelma pyörisi nopeammin. Alustakohtainen käännetty konekieli on aina nopeampi ajaa kuin tulkattava kieli. Javan tyyli käyttää sekä tulkkausta, että kääntämistä on kompromissi alustariippumattomuuden ja suoritusnopeuden välillä. -->
 
-JDK:n kanssa tulee myös valmiiksi Java-virtuaalikone sekä Javan ajoympäristö (JRE, Java Runtime Environment), joka sisältää yleisempiä toimintoja, joita Java-ohjelma saattaa käyttää.
-Tavukooditiedosto voidaan ajaa JVM:llä käyttäen `java`-komentoa:
+JDK:n kanssa tulee myös valmiiksi Java-virtuaalikone sekä Javan ajoympäristö
+(JRE, Java Runtime Environment), joka sisältää yleisempiä toimintoja, joita
+Java-ohjelma saattaa käyttää. Tavukooditiedosto voidaan ajaa JVM:llä käyttäen
+`java`-komentoa:
 
 <asciinema src="images/rec_java.cast" rows="3" poster="npt:5"></asciinema>
 
