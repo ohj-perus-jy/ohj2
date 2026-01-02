@@ -2,7 +2,7 @@ Tee funktio `int puuttuvaLuku(int[] taulukko)`.
 Funktiolle annetaan parametriksi taulukko, joka sisältää
 luvut 1-N satunnaisessa järjestyksessä, mutta yksi luvuista puuttuu.
 Funktion on palautettava luku, joka puuttuu.
-Funktion ei saa järjestää eikä muutoin muokata taulukkoa.
+Funktion ei saa muokata parametrina annettua taulukkoa.
 
 Esimerkiksi:
 
@@ -14,16 +14,11 @@ Esimerkiksi:
 Voit käyttää alla olevaa apufunktiota satunnaisen taulukon luomiseksi:
 
 ```java,ignore
-int[] annaSyote() {
-    final int LUKUJA = 10; // Muokkaa tätä jos haluat isompia taulukoita
-
+int[] annaSyote(int maxLuku) {
     Random r = new Random();
-    List<Integer> luvut = new ArrayList<>(IntStream.range(1, r.nextInt(2, LUKUJA + 1)).boxed().toList());
+    List<Integer> luvut = new ArrayList<>(IntStream.range(1, r.nextInt(2, maxLuku + 1)).boxed().toList());
     Collections.shuffle(luvut);
-
-    int randomIndex = r.nextInt(luvut.size());
-    luvut.remove(randomIndex);
-
+    luvut.remove(r.nextInt(luvut.size()));
     return luvut.stream().mapToInt(Integer::intValue).toArray();
 }
 ```
@@ -31,6 +26,8 @@ int[] annaSyote() {
 Voit käyttää aliohjelmaa seuraavasti:
 
 ```java,ignore
-int[] syote = annaSyote();
+// Tekee taulukon luvuista 1-10, mutta yksi luku puuttuu
+int[] syote = annaSyote(10); 
+// Selvitetään, mikä luvuista puuttuu
 int puuttuva = puuttuvaLuku(syote);
 ```
