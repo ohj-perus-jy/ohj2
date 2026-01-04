@@ -2,8 +2,9 @@ Tee luokka `Puhelin`, jolla on attribuutit `merkki` (merkkijono) ja `akunVaraus`
 (kokonaisluku, joka kuvaa akun varausta prosentteina väliltä 0-100). Lisää
 luokkaan seuraavat metodit:
 
- * `lahetaViesti(String viesti)`: tulostaa viestin muodossa "Lähetetään viesti:
-   \<viesti\>". Vähentää akkua 5 prosenttiyksikköä. 
+ * `lahetaViesti(String henkilo, String viesti)`: tulostaa viestin muodossa
+   "Lähetetään viesti henkilölle \<henkilo\>: \<viesti\>". Viestin lähettäminen
+   vähentää akkua 5 prosenttiyksikköä. 
  * `soita(String henkilo, int minuutit)`: tulostaa viestin muodossa "Soitetaan
    puhelu henkilölle \<henkilo\>, kesto: \<minuutit\> minuuttia". Soittaminen
    vähentää akkua 1 prosenttiyksikköä per minuutti.
