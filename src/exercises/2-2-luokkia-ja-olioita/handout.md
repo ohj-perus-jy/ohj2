@@ -18,18 +18,19 @@ arvoilla.
 
 Akun varaus ei voi mennä alle 0%.
 
-Jos akun varaus on 0%, viestiä ei voida lähettää eikä voi soittaa "Akun varaus
-on 0%, viestiä ei voida lähettää / ei voi soittaa.".
+Jos akun varaus on 0%, viestiä ei voida lähettää eikä voi soittaa "Akku tyhjä.
+Viestiä ei voida lähettää / ei voi soittaa.".
 
 Testaa sovellustasi luomalla `Puhelin`-olion, lähettämällä viesti, soittamalla
 puhelu, lataamalla akkua ja tulostamalla puhelimen tiedot.
 
-<details><summary>Valinnainen lisätehtävä: Onko akun varaus riittävä?</summary>
+<details><summary>Valinnainen lisätehtävä: Jos akku loppuu kesken</summary>
 
-Lisää luokkaan metodi `onkoAkunVarausRiittava(int
-tarvittavaVaraus)`, joka palauttaa totuusarvon (boolean) sen mukaan, onko akun
-varaus riittävä viestin lähettämiseen tai puhelun soittamiseen. Käytä tätä metodia
-`lahetaViesti`- ja `soita`-metodeissa tarkistamaan, onko akun varaus riittävä ennen
-toimintoa.
+Muokkaa `lahetaViesti`- ja `soita`-metodeja siten, että jos akun varaus ei riitä
+koko viestin lähettämiseen tai puhelun soittamiseen, niin lähetetään/soitetaan
+niin kauan kuin akku riittää. Jos akku loppuu kesken puhelun / viestin, tulosta
+kauanko puhelu onnistui / kuinka paljon viestistä saatiin lähetettyä ennen akun
+loppumista. Esimerkiksi "Akku tyhjä. Sait lähetettyä 60% viestistä." tai "Akku
+loppui 3 minuutin jälkeen.
 
 </details>
