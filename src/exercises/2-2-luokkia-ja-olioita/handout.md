@@ -21,7 +21,7 @@ Akun varaus ei voi mennä alle 0%.
 Jos akun varaus on 0%, viestiä ei voida lähettää eikä voi soittaa "Akku tyhjä.
 Viestiä ei voida lähettää / ei voi soittaa.".
 
-Testaa sovellustasi luomalla `Puhelin`-olion, lähettämällä viesti, soittamalla
+Testaa sovellustasi luomalla `Puhelin`-olio, lähettämällä viesti, soittamalla
 puhelu, lataamalla akkua ja tulostamalla puhelimen tiedot.
 
 <details><summary>Valinnainen lisätehtävä: Jos akku loppuu kesken</summary>
