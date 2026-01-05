@@ -4,7 +4,7 @@
 >
 > - Ehtolauseet (`if`, `switch`)
 > - Toistolauseet (`for`, `while`, `do-while`), ja listatyyppiset tietorakenteet
-> - Tiedostat, että Javassa merkkijonot verrataan `equals`-aliohjelmalla eikä `==`
+> - Tiedostat, että Javassa merkkijonoja verrataan `equals`-aliohjelmalla eikä `==`
 
 Ohjelmointi on harvoin pelkkää koodirivien suorittamista peräkkäin. Jotta
 ohjelmista saadaan hyödyllisiä, niiden täytyy pystyä tekemään päätöksiä,
@@ -48,7 +48,7 @@ operaattoreita yhdistämään ehtoja.
 ## Viitetietotyyppisten muuttujien vertailu
 
 Toisin kuin primitiivityypeillä (`int`, `double`, jne.), Javassa
-`==`-operaattori vertaa viitetyyppien kohdalla viitteitä, eivät sisältöä. Tästä
+`==`-operaattori vertaa viitetyyppien kohdalla viitteitä, eikä sisältöä. Tästä
 syystä merkkijonojen ja muiden
 viitetyyppimuuttujien sisällön vertailuun tulee käyttää `equals()`-metodia.
 
@@ -256,7 +256,7 @@ void main () {
 Tarvittaessa silmukan suoritusta voi ohjata seuraavilla lauseilla:
 
 - `break`: lopettaa silmukan suorittamisen ja siirtyy suorittamaan silmukan
-  jälkeinen koodi
+  jälkeistä koodia
 - `continue`: päättää tämänhetkisen silmukan toiston ja siirtyy silmukan
   päivityslauseeseen ja toistoehtoon
 
@@ -334,7 +334,7 @@ void main() {
 ### Sisäkkäiset silmukat
 
 Sisäkkäiset silmukat tarkoittaa yhden tai useamman silmukkarakenteen
-kirjoittaminen toisen silmukkarakenteen sisään.
+kirjoittamista toisen silmukkarakenteen sisään.
 Tällöin jokaista ulomman silmukan toistokertaa kohden suoritetaan
 tietty määrä lisää toistoja.
 

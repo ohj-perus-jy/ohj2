@@ -3,7 +3,7 @@
 > [!Osaamistavoitteet]
 >
 > - Osaat määritellä aliohjelman 
-> - Osaat käsitellään tietoa aliohjelmien avulla
+> - Osaat käsitellä tietoa aliohjelmien avulla
 > - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron aliohjelmaa kutsuttaessa
 > - Osaat dokumentoida aliohjelman
 
@@ -19,7 +19,7 @@ käytämme termiä aliohjelma.
 
 Aliohjelma voi ottaa vastaan *syötteitä*, joita sanotaan *parametreiksi*.
 Tehtävän suoritettuaan aliohjelma voi palauttaa tuloksen. Kutsutaan alla
-`Keskiarvo`-aliohjelmaa, joka laskee kokonaislukujen joukon keskiarvon. Tässä
+`keskiarvo`-aliohjelmaa, joka laskee kokonaislukujen joukon keskiarvon. Tässä
 siis parametrina annetaan yksi kokonaislukutaulukko, ja aliohjelma palauttaa
 keskiarvon `double`-tyyppisenä arvona.
 
@@ -346,7 +346,7 @@ merkit `/**` ja painaa <kbd>Enter</kbd>.
 <details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
 
 Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java` ja ajat sen
-jälkeen komennon `javadoc Summa.java` Nyt voit avata luodun `index.html`
+jälkeen komennon `javadoc Summa.java`. Nyt voit avata luodun `index.html`
 -tiedoston selaimessa, klikata selaimessa luokkaa `Summa` ja pääset
 seuraavanlaiseen näkymään:
 

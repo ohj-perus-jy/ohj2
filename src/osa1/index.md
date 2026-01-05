@@ -10,7 +10,7 @@
 Materiaali on jaettu 12 osaan, jotka sisältävät tekstiä, esimerkkejä ja tehtäviä. 
 Voit liikkua materiaalissa kahdella tavalla:
 
-- Käyttämällä sivun oikealla ja vasemalla puolella olevia nuolipainikkeita.
+- Käyttämällä sivun oikealla ja vasemmalla puolella olevia nuolipainikkeita.
 - Käyttämällä sivun sisällysluetteloa.
 
 Yläpalkista löydät seuraavat toiminnot:
@@ -40,7 +40,7 @@ liittyvät tehtävät alaluvun lopusta.
 Löydät kaikki osan tehtävät koostettuna myös "Osan kaikki tehtävät" -alaluvusta.
 
 Tehtävät palautetaan TIM-järjestelmään.
-Linkki kunkin tehtävän palautuslaatiikoon löytyy aina tehtävänannon
-yhteydessä. Voit seurata edistymisesi kurssin [TIM-kotisivulla](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti).
-Kirjaudu sisään TIM-järjestelmään Haka-kirjautumisella käyttän
+Linkki kunkin tehtävän palautuslaatikkoon löytyy aina tehtävänannon
+yhteydessä. Voit seurata edistymistäsi kurssin [TIM-kotisivulla](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti).
+Kirjaudu sisään TIM-järjestelmään Haka-kirjautumisella käyttäen
 yliopistotunnuksesi. Ohjeet Haka-kirjautumiselle löytyvät [TIM-ohjeista](https://tim.jyu.fi/view/tim/ohjeita/haka-login).

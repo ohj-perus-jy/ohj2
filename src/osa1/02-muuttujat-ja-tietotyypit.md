@@ -5,7 +5,7 @@
 > - Muistat, mitä ovat muuttujat ja vakiot
 > - Muistat, mitä ovat merkkijonot ja listat
 > - Tunnet Javan alkeistietotyypit
-> - Tunnet, miten merkkijonot, taulukot ja listat käytetään Javassa
+> - Tunnet, miten merkkijonoja, taulukoita ja listoja käytetään Javassa
 
 Ohjelmat käsittelevät muistiin tallennettua tietoa. Konekielessä tietoon
 viitataan numeerisilla muistiosoitteilla, mutta korkean tason kielissä, kuten
@@ -42,7 +42,7 @@ Jos muuttujissa oli aiemmin jotain muita arvoja, ne korvataan uusilla.
 
 ```java
 //-void main() {
-double korkokerroin; // Muuttujan määrittely, double = desimaalikuku
+double korkokerroin; // Muuttujan määrittely, double = desimaaliluku
 double paaoma; // Muuttujan määrittely
 
 korkokerroin = 0.05; // Arvon sijoitus muuttujaan
@@ -153,7 +153,7 @@ Desimaaliluvuille käytetään liukulukutyyppejä. Yleisin näistä on
 
 <details><summary><b><i class="bi bi-info-circle"></i> Huomautus:</b> Liukuluvut ovat epätarkkoja!</summary>
 
-Java käyttää liukulujuja desimaalilukujen `double` ja `float`
+Java käyttää liukulukuja desimaalilukujen `double` ja `float`
 esittämiseen. Liukulukuja voidaan ajatella esittävän desimaalilukujen
 likiarvoja. Liukulukujen tarkka toiminta on standardoitu (IEEE 754 -standardi);
 vaikka ne on tarkoitettu desimaalilukujen esittämiseen, niillä on silti joitain
@@ -257,7 +257,7 @@ saattaisi aiheuttaa virheitä.
 
 Kolmas syy on dynaaminen koko. Viitetietotyypit mahdollistavat dynaamisesti
 kasvavien ja kutistuvien tietorakenteiden, kuten linkitettyjen listojen, pinojen
-ja jonoiden, luomisen. Näitä rakenteita ei voida helposti toteuttaa
+ja jonojen, luomisen. Näitä rakenteita ei voida helposti toteuttaa
 arvopohjaisina, koska arvopohjaisten muuttujien koko on kiinteä käännösaikana.
 
 Neljäs syy liittyy erityisesti olio-ohjelmointiin, ja liittyy osittain myös
@@ -273,8 +273,7 @@ lemmikki = new Kissa();
 Jos nämä olisivat puhtaita arvotyyppejä, `Elain`-tyyppiselle muuttujalle pitäisi
 varata kiinteä määrä muistia. Jos `Kissa` sitten tarvitsisikin enemmän muistia
 kuin `Elain` on varannut, koodi hajoaisi. Viitteiden avulla muuttujan koko on
-aina sama (viitteen koko), riippumatta siitä kuinka valtava olio viitteen päässä
-on.
+aina sama (viitteen koko), riippumatta siitä kuinka valtava olio viitteen päässä on.
 
 </details>
 
@@ -352,7 +351,7 @@ void main() {
     IO.println(Short.toString(kaksiTavua).charAt(0));
 
     int maksimi = Integer.MAX_VALUE;
-    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int tyyppiseen muuttujaan" );
+    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int-tyyppiseen muuttujaan" );
     int ylivuoto = Integer.MAX_VALUE + 1;
     IO.println("Ylitetään lukualue:");
     IO.println(ylivuoto);
@@ -419,7 +418,7 @@ niistä.
 | `String.join(merkki, jonot)`   | Palauttaa jonon, jossa taulukossa `jonot` olevat jonot ovat peräkkäin yhdistettynä merkillä `merkki`). |
 
 Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
-`Sting`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/String.html)).
+`String`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/String.html)).
 Katsotaan vielä, miten yllä olevia esimerkkejä voi käyttää:
 
 ```java
@@ -457,7 +456,7 @@ void main() {
     int ohjelmointiaPaikka = mjono.indexOf("ohjelmointia");
     IO.println("ohjelmointiaPaikka = " + ohjelmointiaPaikka);
 
-    // substring palauttaa osajonon annettusta jonosta indeksin perusteella
+    // substring palauttaa osajonon annetusta jonosta indeksin perusteella
     String osajono = mjono.substring(ohjelmointiaPaikka, ohjelmointiaPaikka + 12);
     IO.println("osajono = " + osajono);
 
@@ -503,7 +502,7 @@ Alla on lueteltu joitain StringBuilder-luokan hyödyllisiä metodeja.
 | `sb.toString()`     | Palauttaa kopion tästä jonosta `String`-merkkijonona.            |
 
 Kaikki toiminnot ja niiden tarkat selitykset löytyvät JavaDocs-sivulta (ks. [Class
-`StingBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/StringBuilder.html)).
+`StringBuilder`](https://docs.oracle.com/en/java/javase/25/docs/api//java.base/java/lang/StringBuilder.html)).
 Alla on esimerkkejä metodien käytöstä.
 
 ```java
@@ -748,7 +747,7 @@ void main() {
 > ```
 >
 > Jos tarvitset listoja, jonka alkioina ovat alkeistietotyypit, käytä
-> alkioiden tyyppinä [alkeistietotyyppien käärijäluokat](#käärijäluokat),
+> alkioiden tyyppinä [alkeistietotyypien käärijäluokat](#käärijäluokat),
 > jotka ovat viitetyyppejä, mutta toimivat kuten niitä vastaavat alkeistietotyypit.
 > Toisin sanoen, `ArrayList<Integer>` on sallittu, kun taas `ArrayList<int>` ei ole.
 > Puolestaan `ArrayList<String>` on sallittu, koska merkkijono on viitetietotyyppi.
@@ -929,7 +928,7 @@ void main() {
 }
 ```
 
-Lisäksi ohjelmoija voi erikseen pakottaa ns. *eksplisiittinsen* tyyppimuunnoksen
+Lisäksi ohjelmoija voi erikseen pakottaa ns. *eksplisiittisen* tyyppimuunnoksen
 käyttämällä syntaksia `(uusiTyyppi)muuttujanNimi`. Tämä soveltuu tilanteisiin,
 jossa muunnos ei olisi mahdollista implisiittisesti:
 

@@ -35,7 +35,7 @@ Käydään läpi ohjelma rivi riviltä:
    parametreja, sulut voidaan jättää tyhjäksi. Javassa samalla rivillä
    aloitetaan myös aliohjelman runko aaltosululla `{`.
 
-2. Tekstin tulosteminen komentorivi-ikkunaan onnistuu `IO.println`-metodilla.
+2. Tekstin tulostaminen komentorivi-ikkunaan onnistuu `IO.println`-metodilla.
    Javassa lause loppuu yleensä puolipisteeseen `;`. 
 
 3. Aliohjelman runko lopetetaan aaltosululla `}`.
@@ -295,7 +295,7 @@ Tee seuraavasti:
 
    Kun ajat kooditiedoston ensimmäistä kertaa, IDEA luo *ajokonfiguraation*.
    Ajokonfiguraatio on pieni tiedosto, johon tallentuu koodin suorittamiseen
-   liittyviä asetuksia, kuten käytettävä JDK-version, mahdolliset
+   liittyviä asetuksia, kuten käytettävä JDK-versio, mahdolliset
    komentoriviparametrit ja työhakemisto. Oletusarvoisesti tämä tiedosto syntyy
    projektin juurikansioon `.idea` <i class="bi bi-chevron-right"></i>
    `workspace.xml`. 
@@ -400,7 +400,7 @@ Siirrytään nyt kansioon `HelloProgram` ja tarkastellaan sen sisältö:
 
 <asciinema src="images/rec_cd_module.cast" rows="4" poster="npt:10"></asciinema>
 
-Yksittäisesta moduulista löytyvät vastaavasti seuraavat tiedostot ja kansiot:
+Yksittäisestä moduulista löytyvät vastaavasti seuraavat tiedostot ja kansiot:
 
 - `HelloProgram.iml` on moduulin asetustiedosto, jolla IDEA tunnistaa kansion olevan Java-moduuli
 - `src` on lähdekoodikansio, joka sisältää ohjelman lähdekoodin
