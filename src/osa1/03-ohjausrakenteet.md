@@ -45,7 +45,7 @@ operaattoreita yhdistämään ehtoja.
 >  * `if (x = 5)` yrittää asettaa x:n arvoksi 5 (virhe)
 >  * `if (x == 5)` kysyy, onko x:n arvo 5 (oikein)
 
-## Viitetietotyyppimuuttujien vertailu
+## Viitetietotyyppisten muuttujien vertailu
 
 Toisin kuin primitiivityypeillä (`int`, `double`, jne.), Javassa
 `==`-operaattori vertaa olioiden kohdalla viitteitä, eivät sisältöä. Tästä

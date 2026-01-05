@@ -862,16 +862,15 @@ Muuttuja `i` viittaa listan indeksiin.
 
 ## Javan tyyppijärjestelmä
 
-Java on *staattisesti tyypitetty* kieli, mikä tarkoittaa, että muuttujien 
-tyypit määräytyvät käännösaikana, ei ohjelman ajon aikana.
-Jos yrität sijoittaa muuttujaan väärän
-tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa virheilmoituksen.
+Java on *staattisesti tyypitetty* kieli, mikä tarkoittaa, että muuttujien tyypit
+määräytyvät käännösaikana, ei ohjelman ajon aikana. Jos yrität sijoittaa
+muuttujaan väärän tyyppistä tietoa, ohjelma ei käänny, ja kääntäjä antaa
+virheilmoituksen.
 
-Käytännössä Javassa eri tietotyyppejä ei voi käyttää
-toistensa sijaan, ellei kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa
-(`boolean`) ei voi käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä
-kokonaislukuna. Jos ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on
-käännösvirhe.
+Käytännössä Javassa eri tietotyyppejä ei voi käyttää toistensa sijaan, ellei
+kieli nimenomaisesti salli sitä. Esimerkiksi totuusarvoa (`boolean`) ei voi
+käyttää lukuarvona, eikä viitetyyppistä arvoa voi käsitellä kokonaislukuna. Jos
+ohjelmoija yrittää rikkoa näitä sääntöjä, seurauksena on käännösvirhe.
 
 ```java,ignore
 void main() {
@@ -888,9 +887,9 @@ error: compilation failed
 ```
 
 Yllä oleva käännösvirhe kertoo, että kokonaislukua (`int`) ei voida muuntaa
-totuusarvoksi (`boolean`).
-Tämä on selkeä ero dynaamisesti tyypitettyihin kieliin, kuten Pythoniin tai
-JavaScriptiin, jossa samaan muuttujaan voi sijoittaa erityyppisiä arvoja:
+totuusarvoksi (`boolean`). Tämä on selkeä ero dynaamisesti tyypitettyihin
+kieliin, kuten Pythoniin tai JavaScriptiin, jossa samaan muuttujaan voi
+sijoittaa erityyppisiä arvoja:
 
 ```javascript
 // Tämä on sallittu koodi JavaScriptissa
@@ -909,8 +908,8 @@ tyyppimuunnoksen. Esimerkiksi
 - pienempiä kokonaislukuja (esim. 8-bittinen kokonaisluku `byte`) saa muuntaa
   enemmän tilaa vievään kokonaislukuun (esim. 32-bittinen kokonaisluku `int`).
 
-Tyyppimuunnossääntöjä on paljon lisääkin; yleisperiaate on, että jos
-muunnos ei aiheuta tiedon menetystä, sille on varmasti olemassa automaattinen muunnos.
+Tyyppimuunnossääntöjä on paljon lisääkin; yleisperiaate on, että jos muunnos ei
+aiheuta tiedon menetystä, sille on varmasti olemassa automaattinen muunnos.
 Automaattinen muunnos tapahtuu sijoituksissa ja lausekkeiden yhteydessä.
 
 ```java
@@ -931,8 +930,8 @@ void main() {
 ```
 
 Lisäksi ohjelmoija voi erikseen pakottaa ns. *eksplisiittinsen* tyyppimuunnoksen
-käyttämällä syntaksia `(uusiTyyppi)muuttujanNimi`.
-Tämä soveltuu tilanteisiin, jossa muunnos ei olisi mahdollista implisiittisesti:
+käyttämällä syntaksia `(uusiTyyppi)muuttujanNimi`. Tämä soveltuu tilanteisiin,
+jossa muunnos ei olisi mahdollista implisiittisesti:
 
 ```java
 void main() {
@@ -945,6 +944,6 @@ void main() {
 ```
 
 Staattinen tyypitys tarkoittaa Javassa käytännössä sitä, että tyyppeihin
-liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä toimii
-eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja operaatiot
-ovat keskenään yhteensopivia.
+liittyvät virheet pyritään estämään jo ennen ohjelman suorittamista. Kääntäjä
+toimii eräänlaisena turvaverkkona, joka varmistaa, että arvot, muuttujat ja
+operaatiot ovat keskenään yhteensopivia.
