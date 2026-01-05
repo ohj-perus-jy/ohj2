@@ -1,5 +1,9 @@
 # Muuttujat ja tietotyypit
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 12. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Kerrataan lyhyesti rakenteisen ohjelmoinnin perusteet

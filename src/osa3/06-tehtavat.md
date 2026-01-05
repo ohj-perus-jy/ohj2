@@ -1,5 +1,8 @@
 # Osan kaikki tehtävät
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
 
 <task>
   <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>

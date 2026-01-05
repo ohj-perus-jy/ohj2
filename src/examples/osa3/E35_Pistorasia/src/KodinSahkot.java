@@ -13,13 +13,13 @@ public class KodinSahkot {
         Verkkovirtalaite sirkkeli = new Sirkkeli();
 
         // 3. Käytetään laitteita pistorasian kautta
-        System.out.println("--- Aamu keittiössä ---");
+        IO.println("--- Aamu keittiössä ---");
 
         // Kytketään paahdin seinään
         keittionPistoke.kytkeLaite(paahdin);
         // TULOSTUS: "Pistorasia antaa sähköä" -> "Leivänpaahdin: Vastukset alkavat hehkua..."
 
-        System.out.println("\n--- Remontti alkaa ---");
+        IO.println("\n--- Remontti alkaa ---");
 
         // Otetaan paahdin pois ja kytketään sirkkeli SAMAAN pistorasiaan
         keittionPistoke.kytkeLaite(sirkkeli);

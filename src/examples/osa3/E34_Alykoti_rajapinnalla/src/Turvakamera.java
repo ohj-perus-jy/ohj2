@@ -14,6 +14,6 @@ public class Turvakamera extends Laite {
     @Override
     public void raportoiTila() {
         String tila = tallennusPaalla ? "päällä" : "pois";
-        System.out.println("Turvakameran tallennus on " + tila + ".");
+        IO.println("Turvakameran tallennus on " + tila + ".");
     }
 }

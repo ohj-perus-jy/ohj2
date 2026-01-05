@@ -1,5 +1,9 @@
 # Aliohjelmat
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 12. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Käsitellään dataa funktioiden avulla (Ohj1-kurssin tapaan)

@@ -1,5 +1,9 @@
 # Tiedostojen käsittely
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 16. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Osaat käsitellä tiedostoja Javan valmiiden rajapintojen kautta (Tiedostomuotojen käsittely "käsin" (CSV) ja kirjastolla (JSON))

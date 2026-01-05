@@ -6,7 +6,7 @@ public class Leivanpaahdin extends Keittiolaite implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
+        IO.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
     }
 
     /**
@@ -14,6 +14,6 @@ public class Leivanpaahdin extends Keittiolaite implements Verkkovirtalaite {
      */
     @Override
     public void puhdista() {
-        System.out.println("Leivänpaahdin: Poistetaan murut ja pyyhitään kevyesti kostealla rätillä.");
+        IO.println("Leivänpaahdin: Poistetaan murut ja pyyhitään kevyesti kostealla rätillä.");
     }
 }

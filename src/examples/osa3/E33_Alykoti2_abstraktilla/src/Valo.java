@@ -12,6 +12,6 @@ public class Valo extends Laite {
     }
     @Override
     public void raportoiTila() {
-        System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }

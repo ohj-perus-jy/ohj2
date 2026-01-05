@@ -10,6 +10,6 @@ public class Kahvinkeitin extends Laite {
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
-        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+        IO.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
