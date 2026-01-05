@@ -1,18 +1,25 @@
-Tässä tehtävässä rakennat järjestelmän, joka valvoo rakennusten sähkönkulutusta ja estää sulakkeiden palamisen. Tehtävä koostuu vaiheista. Kukin vaihe on 0,25 pisteen arvoinen.
+Tässä tehtävässä rakennat järjestelmän, joka valvoo rakennusten sähkönkulutusta
+ja estää sulakkeiden palamisen. Tehtävä koostuu vaiheista. Kukin vaihe on 0,25
+pisteen arvoinen.
 
 <details><summary>Vaihe 1: Sähkölaite</summary>
 
-Tee luokka `Sahkolaite`. Laitteilla on ominaisuuksia, jotka eivät muutu (kuten valmistajan ilmoittama virrankulutus).
+Tee luokka `Sahkolaite`. Laitteilla on kaksi muuttumatonta ominaisuutta: nimi ja
+virrankulutus ampeereina.
 
-Lisää attribuutit: `private final String NIMI` ja `private final double VIRTA`. Oletetaan, että virrankulutus on aina positiivinen luku eikä muutu laitteen elinkaaren aikana.
+Lisää attribuutit: `private final String NIMI` ja `private final double VIRTA`.
+Oletetaan, että virrankulutus on aina positiivinen luku.
 
 Tee konstruktori, joka asettaa nämä arvot. 
 
 Lisää `private boolean kytketty`, joka kertoo, onko laite päällä.
 
-Tee metodit `kytke()` ja `irrota()`, jotka muuttavat `kytketty`-muuttujan tilaa. Tee myös `getVirta()`-metodi, joka palauttaa laitteen virrankulutuksen, vastaavasti `getNimi()`.
+Tee metodit `kytke()` ja `irrota()`, jotka muuttavat `kytketty`-muuttujan tilaa.
+Tee myös `getVirta()`-metodi, joka palauttaa laitteen virrankulutuksen,
+vastaavasti `getNimi()`.
 
-Kokeile luokkaasi pääohjelmassa luomalla muutama laite ja kytkemällä niitä päälle ja pois.
+Kokeile luokkaasi pääohjelmassa luomalla muutama laite ja kytkemällä niitä
+päälle ja pois.
 
 </details>
 
@@ -20,7 +27,10 @@ Kokeile luokkaasi pääohjelmassa luomalla muutama laite ja kytkemällä niitä 
 
 Luo `Sahkokeskus`-luokka. Tämän luokan tarkoituksena on hallita sähkölaitteita. 
 
-Lisää luokkaan attribuutti `final double SULAKKEEN_KOKO`. Sulakkeen koko voi olla esimerkiksi 16 ampeeria tai 35 ampeeria. Lisää myös `private boolean sulakePaalla`, joka kertoo, onko sulake ehjä (true) vai palanut (false). Aluksi sulake on päällä.
+Lisää luokkaan attribuutti `final double SULAKKEEN_KOKO`. Sulakkeen koko voi
+olla esimerkiksi 16 ampeeria tai 35 ampeeria. Lisää myös `private boolean
+sulakePaalla`, joka kertoo, onko sulake ehjä (true) vai palanut (false). Aluksi
+sulake on päällä.
 
 Luo `List<Sahkolaite> paallaOlevatLaitteet` (käytä ArrayListia).
 
