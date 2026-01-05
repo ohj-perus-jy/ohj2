@@ -212,7 +212,7 @@ viitetietotyyppejä. Esimerkiksi `String` on viitetietotyyppi, kuten myös kaikk
 taulukot ja listat. Alkaen luvusta 2 tutustumme olio-ohjelmointiin; Javassa
 kaikki oliot ovat viitetietotyypit.
 
-Kaikkiin viitetyyppimuuttujiin on sallittua sijoittaa erikoisarvo `null`
+Kaikkiin viitetyyppimuuttujiin on sallittua sijoittaa erikoisarvo `null`.
 Tämä niin sanottu *null-viite* merkitsee, että muuttuja ei sisällä viitettä
 mihinkään tietoon. Yritys muokata tai lukea muuttujaa, jonka arvo on `null`,
 tuottaa yleensä virheen ohjelman ajon aikana:
@@ -351,7 +351,7 @@ void main() {
     IO.println(Short.toString(kaksiTavua).charAt(0));
 
     int maksimi = Integer.MAX_VALUE;
-    IO.println(maksimi + " On suurin luku, jonka voi tallettaa int-tyyppiseen muuttujaan" );
+    IO.println(maksimi + " on suurin luku, jonka voi tallettaa int-tyyppiseen muuttujaan" );
     int ylivuoto = Integer.MAX_VALUE + 1;
     IO.println("Ylitetään lukualue:");
     IO.println(ylivuoto);
@@ -747,7 +747,7 @@ void main() {
 > ```
 >
 > Jos tarvitset listoja, jonka alkioina ovat alkeistietotyypit, käytä
-> alkioiden tyyppinä [alkeistietotyypien käärijäluokat](#käärijäluokat),
+> alkioiden tyyppinä [alkeistietotyyppien käärijäluokat](#käärijäluokat),
 > jotka ovat viitetyyppejä, mutta toimivat kuten niitä vastaavat alkeistietotyypit.
 > Toisin sanoen, `ArrayList<Integer>` on sallittu, kun taas `ArrayList<int>` ei ole.
 > Puolestaan `ArrayList<String>` on sallittu, koska merkkijono on viitetietotyyppi.

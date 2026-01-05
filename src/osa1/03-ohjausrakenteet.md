@@ -364,7 +364,7 @@ ovat kokonaislukutaulukot. Siispä yllä olevassa esimerkissä:
 
 - `taulu2D.length` antaa taulukossa olevien taulukoiden lukumäärän, eli ns.
   "rivien" lukumäärän;
-- `taulu2D[riviNro]` antaa tietyssä indeksissä olevan `int[]`-taulun, joka
+- `taulu2D[riviNro]` antaa tietyssä indeksissä olevan `int[]`-taulukon, joka
   sisältää kaikki rivillä olevat alkiot;
 - `taulu2D[riviNro][sarakeNro]` antaa `taulu2D[riviNro]`-taulukossa olevan
   alkion indeksistä `sarakeNro`.

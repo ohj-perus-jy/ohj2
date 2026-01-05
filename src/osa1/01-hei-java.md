@@ -52,7 +52,7 @@ mielessä:
 
 - Aliohjelman runkoa aloittava aaltosulku `{` laitetaan yleensä samalle riville
   kuin aliohjelman määrittely. Sama pätee muihin rakenteisiin, joissa käytetään
-  aaltosulkuja, kuten `if`-, `for`-, `while` ja `do-while` -rakenteille.
+  aaltosulkuja, kuten `if`-, `for`-, `while`- ja `do-while`-rakenteille.
 
 - Aliohjelmien nimeämisessä käytetään camelCasing-tyyliä, eli ensimmäinen
   kirjain on pienaakkonen ja seuraavat sanat aloitetaan suuraakkosella.
