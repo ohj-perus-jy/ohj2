@@ -1,5 +1,9 @@
 # Polymorfismi
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Ymmärrät polymorfismin perusajatuksen 
@@ -38,7 +42,7 @@ Tämä lähestymistapa ei ole laajennettavissa. Jos yrittäisimme käsitellä so
 public class Soitin {
     // Kaikilla soittimilla on soita()-metodi
     public void soita() {
-        System.out.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
+        IO.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
     }
 }
 ```
@@ -61,7 +65,7 @@ public class Kitara extends Soitin {
     // Korvataan yliluokan Soitin.soita()
     @Override
     public void soita() {
-        System.out.println("Kitara soi ja kieliä näppäillään.");
+        IO.println("Kitara soi ja kieliä näppäillään.");
     }
 }
 
@@ -69,7 +73,7 @@ public class Piano extends Soitin {
     // Korvataan yliluokan Soitin.soita()
     @Override
     public void soita() {
-        System.out.println("Piano soi ja koskettimia painellaan.");
+        IO.println("Piano soi ja koskettimia painellaan.");
     }
 }
 ```
@@ -97,7 +101,7 @@ void main() {
 public class Soitin {
     // Kaikilla soittimilla on soita()-metodi
     public void soita() {
-        System.out.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
+        IO.println("Tuntematon soitin soi."); // Oletusarvoinen toteutus
     }
 }
 // FILE_END
@@ -106,7 +110,7 @@ public class Kitara extends Soitin {
     // Korvataan yliluokan Soitin.soita()
     @Override
     public void soita() {
-        System.out.println("Kitara soi ja kieliä näppäillään.");
+        IO.println("Kitara soi ja kieliä näppäillään.");
     }
 }
 // FILE_END
@@ -115,7 +119,7 @@ public class Piano extends Soitin {
     // Korvataan yliluokan Soitin.soita()
     @Override
     public void soita() {
-        System.out.println("Piano soi ja koskettimia painellaan.");
+        IO.println("Piano soi ja koskettimia painellaan.");
     }
 }
 // FILE_END
@@ -203,7 +207,7 @@ class Opiskelija extends Henkilo {
         if (opintoOikeusVoimassa) {
             super.kirjaudu(); // Kutsutaan yliluokan kirjaudu-metodia
         } else {
-            System.out.println("Opinto-oikeus ei ole voimassa. Et voi kirjautua.");
+            IO.println("Opinto-oikeus ei ole voimassa. Et voi kirjautua.");
         }
     }
 }
@@ -420,9 +424,9 @@ tyypin perusteella.
 ```java,ignore
 void kasittele(Viesti v) {
     if (v instanceof TekstiViesti t) {
-        System.out.println("Teksti: " + t.teksti);
+        IO.println("Teksti: " + t.teksti);
     } else if (v instanceof KuvaViesti k) {
-        System.out.println("Kuvan koko: " + k.data.length);
+        IO.println("Kuvan koko: " + k.data.length);
     } else {
         throw new IllegalArgumentException("Tuntematon viestityyppi");
     }
@@ -456,8 +460,8 @@ public class Main {
     public static void main(String[] args) {
         Vektori3D v1 = new Vektori3D(1.0, 2.0, 3.0);
         Vektori3D v2 = new Vektori3D(4.0, 5.0, 6.0);
-        System.out.println("Vektori 1: (" + v1.getX() + ", " + v1.getY() + ", " + v1.getZ() + ")");
-        System.out.println("Vektori 2: (" + v2.getX() + ", " + v2.getY() + ", " + v2.getZ() + ")");
+        IO.println("Vektori 1: (" + v1.getX() + ", " + v1.getY() + ", " + v1.getZ() + ")");
+        IO.println("Vektori 2: (" + v2.getX() + ", " + v2.getY() + ", " + v2.getZ() + ")");
     }
 }
 // FILE_END
@@ -484,7 +488,7 @@ class Vektori3D {
 // FILE_END
 ```
 
-Vaikka tulostaminen kyllä toimii, olisi varsin mukavaa, jos voisimme yksinkertaisesti kirjoittaa `System.out.println("Vektori 1: " + v1);` ilman, että meidän tarvitsee erikseen hakea koordinaatteja ja yhdistellä String-olioita toisiinsa. Tätä varten voimme korvata `toString()`-metodin `Vektori3D`-luokassa. 
+Vaikka tulostaminen kyllä toimii, olisi varsin mukavaa, jos voisimme yksinkertaisesti kirjoittaa `IO.println("Vektori 1: " + v1);` ilman, että meidän tarvitsee erikseen hakea koordinaatteja ja yhdistellä String-olioita toisiinsa. Tätä varten voimme korvata `toString()`-metodin `Vektori3D`-luokassa. 
 
 ```java
 // FILE: main.java
@@ -492,8 +496,8 @@ public class Main {
     public static void main(String[] args) {
         Vektori3D v1 = new Vektori3D(1.0, 2.0, 3.0);
         Vektori3D v2 = new Vektori3D(4.0, 5.0, 6.0);
-        System.out.println("Vektori 1: " + v1);
-        System.out.println("Vektori 2: " + v2);
+        IO.println("Vektori 1: " + v1);
+        IO.println("Vektori 2: " + v2);
     }
 }
 // FILE_END

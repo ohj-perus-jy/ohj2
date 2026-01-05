@@ -23,14 +23,14 @@ public abstract class Laite {
     public void kytkePaalle() {
         if (!kytketty) {
             kytketty = true;
-            System.out.println(nimi + " käynnistyy.");
+            IO.println(nimi + " käynnistyy.");
         }
     }
 
     public void kytkePois() {
         if (kytketty) {
             kytketty = false;
-            System.out.println(nimi + " sammuu.");
+            IO.println(nimi + " sammuu.");
         }
     }
 
