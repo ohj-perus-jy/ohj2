@@ -2,7 +2,7 @@ Tee funktio `int puuttuvaLuku(int[] taulukko)`.
 Funktiolle annetaan parametriksi taulukko, joka sisältää
 luvut 1-N satunnaisessa järjestyksessä, mutta yksi luvuista puuttuu.
 Funktion on palautettava luku, joka puuttuu.
-Funktion ei saa muokata parametrina annettua taulukkoa.
+Funktio ei saa aiheuttaa sivuvaikutuksia.
 
 Esimerkiksi:
 

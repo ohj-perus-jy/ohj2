@@ -60,11 +60,6 @@ Kutsutaan näitä kolmea palasta yhdessä aliohjelman *esittelyriviksi*. [Luvuss
 2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin määreisiin
 (engl. *modifier*), joita esittelyriville voi lisätä.
 
-> TODO: Siirto lukuun 2? Kertovat, että metodi on kaikkien käytettävissä ja toimii
-> ilman olioita. Nämä osat vaihtelevat tai voivat jopa puuttua sen mukaan, missä
-> kontekstissa aliohjelmaa käytetään. Ilman olioita toimivat aliohjelmat
-> määritellään kuitenkin yleensä juuri näin.
-
 Esittelyrivin jälkeen kirjoitetaan aaltosulkeiden sisään aliohjelman runko-osa.
 Se sisältää varsinaisen koodin, joka suoritetaan, kun aliohjelmaa kutsutaan. 
 
@@ -115,7 +110,7 @@ void yritaMuuttaa(int luku) {
     System.out.println("Metodissa: " + luku);
 }
 
-void main(String[] args) {
+void main() {
     int x = 10;
     yritaMuuttaa(x);
     System.out.println("Mainissa: " + x); // Tulostaa edelleen 10
@@ -194,6 +189,12 @@ Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein
 aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne
 voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää
 olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
+
+```java,editable
+void main() {
+
+}
+```
 
 ## Kommentointi ja dokumentointi
 
