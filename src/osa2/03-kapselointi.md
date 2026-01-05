@@ -404,6 +404,8 @@ public class Auto {
     private double ajetutKilometrit;
 
     private Moottori moottori;
+
+    private final int maxRenkaat = 4;
     private ArrayList<Rengas> renkaat = new ArrayList<>();
 
     public Auto() {
@@ -426,7 +428,9 @@ public class Auto {
     }
 
     public void lisaaRengas(Rengas rengas) {
-        this.renkaat.add(rengas);
+        if (renkaat.size() < maxRenkaat) {
+            this.renkaat.add(rengas);
+        }
     }
 
     public void tulostaTiedot() {
