@@ -887,8 +887,9 @@ error: compilation failed
 
 Yllä oleva käännösvirhe kertoo, että kokonaislukua (`int`) ei voida muuntaa
 totuusarvoksi (`boolean`). Tämä on selkeä ero dynaamisesti tyypitettyihin
-kieliin, kuten Pythoniin tai JavaScriptiin, jossa samaan muuttujaan voi
-sijoittaa erityyppisiä arvoja:
+kieliin, kuten Pythoniin tai JavaScriptiin, jossa tyyppi määräytyy
+ohjelman ajon aikana, mahdollistaen erityyppisten arvojen sijoittamisen samaan
+muuttujaan:
 
 ```javascript
 // Tämä on sallittu koodi JavaScriptissa
@@ -901,15 +902,14 @@ totuusarvo = 1;
 On kuitenkin väistämätöntä, että ohjelmassa tulee käsitellä useita erityyppisiä
 arvoja. Tätä varten Javassa on valmiiksi määritelty joitain automaattisia
 sääntöjä, joiden perusteella kääntäjä osaa tehdä *implisiittisen*
-tyyppimuunnoksen. Esimerkiksi
+tyyppimuunnoksen sijoituksissa ja lausekkeissa. Esimerkiksi
 
-- kokonaislukuja (`int`) saa muuntaa desimaaliluvuksi (`double`),
-- pienempiä kokonaislukuja (esim. 8-bittinen kokonaisluku `byte`) saa muuntaa
-  enemmän tilaa vievään kokonaislukuun (esim. 32-bittinen kokonaisluku `int`).
+- kokonaislukuja (`int`) voidaan automaattisesti muuntaa desimaaliluvuksi (`double`),
+- pienempiä kokonaislukuja (esim. 8-bittinen kokonaisluku `byte`) voidaan 
+  "laajentaa" suurempiin kokonaislukuihin (esim. 32-bittinen kokonaisluku `int`).
 
-Tyyppimuunnossääntöjä on paljon lisääkin; yleisperiaate on, että jos muunnos ei
-aiheuta tiedon menetystä, sille on varmasti olemassa automaattinen muunnos.
-Automaattinen muunnos tapahtuu sijoituksissa ja lausekkeiden yhteydessä.
+Tyyppimuunnossääntöjä on paljon lisää; yleisperiaate on, että jos muunnos ei
+aiheuta tiedon menetystä, sille on todennäköisesti olemassa implisiittinen muunnos.
 
 ```java
 void main() {
