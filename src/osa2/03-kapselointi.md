@@ -2,18 +2,24 @@
 
 > [!Osaamistavoitteet]
 >
-> - Ymmärrät kapseloinnin ja sen hyödyt (Decoupling/Coupling)
-> - Toteutetaan olioiden yhteistyö pienessä olioverkossa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa.
+> - Ymmärrät kapseloinnin ja sen hyödyt
+> - Kytkentä (coupling)
+> - Toteutetaan olioiden yhteistyö pienessä olioverkossa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa. 
 > - julkisuusmääreet `public` ja `private`, getterit ja setterit, metodi pääasiallisena tapana olioille "viestiä"
-> - Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutusta voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan.
+> - Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutusta voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan. 
 
 ![Autoa ajetaan, vaikka emme tiedä miten moottori toimii](images/auto.png)
 
 ## Näkyvyysmääreet
 
-Java tarjoaa kolme pääasiallista näkyvyysmäärettä: `public`, `protected` ja `private`. Näkyvyysmääreet määrittelevät, mistä luokan jäseniin voidaan päästä käsiksi. 
+Java tarjoaa kolme pääasiallista näkyvyysmäärettä: `public`, `protected` ja
+`private`. Näkyvyysmääreet määrittelevät, mistä luokan jäseniin voidaan päästä
+käsiksi.  
 
-Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä tarkoittaa, että ne ovat näkyvissä vain samassa pakkauksessa oleville luokille. Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista; Oletus-sarake viittaa `package-private`-näkyvyyteen.
+Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä
+tarkoittaa, että ne ovat näkyvissä vain samassa pakkauksessa oleville luokille.
+Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista;
+Oletus-sarake viittaa `package-private`-näkyvyyteen. 
 
 |                            | Luokka | Pakkaus | Aliluokka | Muu maailma |
 | -------------------------- | ------ | ------- | --------- | ----------- |
@@ -22,19 +28,34 @@ Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mi
 | `package-private` (oletus) | Kyllä  | Kyllä   | Ei        | Ei          |
 | `private`                  | Kyllä  | Ei      | Ei        | Ei          |
 
-Ensimmäinen sarake ilmaisee, onko luokan oliolla itsellään pääsy määritellyn näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin jäseniinsä. Toinen sarake ilmaisee, onko muilla samassa pakkauksessa olevilla oliolla pääsy jäseneen. Kolmas sarake ilmaisee, onko luokasta perityillä aliluokan olioilla, jotka sijaitsevat pakkauksen ulkopuolella, pääsy jäseneen. Neljäs sarake ilmaisee, onko millä tahansa oliolla pääsy jäseneen.
+Ensimmäinen sarake ilmaisee, onko luokan oliolla itsellään pääsy määritellyn
+näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin jäseniinsä.
+Toinen sarake ilmaisee, onko muilla samassa pakkauksessa olevilla oliolla pääsy
+jäseneen. Kolmas sarake ilmaisee, onko luokasta perityillä aliluokan olioilla,
+jotka sijaitsevat pakkauksen ulkopuolella, pääsy jäseneen. Neljäs sarake
+ilmaisee, onko millä tahansa oliolla pääsy jäseneen. 
 
-Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa, näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla, jolla olet suunnitellut sen käytettävän. Pääsääntö on, että ohjelmoijan tulisi käyttää mahdollisimman rajoittavaa näkyvyysmäärettä, ellei ole erityistä syytä käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Vältä julkisia attribuutteja, ellei kyseessä ole vakio. 
+Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa,
+näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla,
+jolla olet suunnitellut sen käytettävän. Pääsääntö on, että ohjelmoijan tulisi
+käyttää mahdollisimman rajoittavaa näkyvyysmäärettä, ellei ole erityistä syytä
+käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään
+tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Vältä julkisia
+attribuutteja, ellei kyseessä ole vakio.  
 
 > [!HUOMAUTUS]
-> Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti, mutta sitä ei suositella tuotantokoodissa.
+> Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia
+> attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti,
+> mutta sitä ei suositella tuotantokoodissa. 
 
-Attribuutille tai metodille voi antaa näkyvyysmääreen lisäämällä sen esittelyriville. Luokalle voidaan myös asettaa näkyvyysmääre.
+Attribuutille tai metodille voi antaa näkyvyysmääreen lisäämällä sen
+esittelyriville. Luokalle voidaan myös asettaa näkyvyysmääre. 
 
 ```java
 // FILE: Henkilo.java
 class Henkilo {
-    // Näkyvyysmääre 'private' piilottaa attribuutin niin, että sitä ei voi tarkastella luokan ulkopuolelta.
+    // Näkyvyysmääre 'private' piilottaa attribuutin niin, että sitä ei voi 
+    // tarkastella luokan ulkopuolelta.
     private String etunimi;
     private String sukunimi;
 
@@ -48,13 +69,31 @@ class Henkilo {
 
 ## Kapselointi ja koheesio
 
-Kapselointi (engl. *encapsulation*) on yksi keskeisimmistä käsitteistä olio-ohjelmoinnissa. Se tarkoittaa luokkien suunnittelua mahdollisimman itsenäiseksi ja modulaariseksi. Jokaisella luokalla on oma tehtävänsä, jota varten tarvittavat tiedot ja toiminnallisuudet *kapseloidaan* luokan sisälle. Osa näistä tiedoista ja toiminnallisuuksista voidaan piilottaa vain luokan sisäistä käyttöä varten. Olioiden tilan käsittelyä varten luokka tarjoaa käyttäjälleen tavallisesti julkisista metodeista koostuvan rajapinnan, mikä parantaa ohjelman muokattavuutta ja laajennettavuutta vähentämällä luokan sisäisistä muutoksista johtuvia sivuvaikutuksia.
+Kapselointi (engl. *encapsulation*) on yksi keskeisimmistä käsitteistä
+olio-ohjelmoinnissa. Se tarkoittaa luokkien suunnittelua mahdollisimman
+itsenäiseksi ja modulaariseksi. Jokaisella luokalla on oma tehtävänsä, jota
+varten tarvittavat tiedot ja toiminnallisuudet *kapseloidaan* olion sisälle. Osa
+näistä tiedoista ja toiminnallisuuksista voidaan piilottaa vain luokan sisäistä
+käyttöä varten. Olioiden tilan käsittelyä varten luokka tarjoaa käyttäjälleen
+tavallisesti julkisista metodeista koostuvan rajapinnan, mikä parantaa ohjelman
+muokattavuutta ja laajennettavuutta vähentämällä luokan sisäisistä muutoksista
+johtuvia sivuvaikutuksia.
 
-Yhteen kuuluvan tiedon ja toiminnallisuuden sijoittaminen saman rakenteen sisälle on kapseloinnin ensimmäinen periaate. Olemmekin jo tehneet näin määritellessämme luokkia ja niille sopivia attribuutteja ja metodeja. Luokan koheesio (engl. *cohesion*) kuvastaa sitä, kuinka *hyvin* luokan attribuutit ja metodit sopivat yhteen luokan tarkoituksen kanssa. Luokkien suunnittelun tavoitteena on mahdollisimman korkea koheesio; luokan jäsenten tulisi olla sopivia sen tarkoitukseen.
+Yhteen kuuluvan tiedon ja toiminnallisuuden sijoittaminen saman rakenteen
+sisälle on kapseloinnin ensimmäinen periaate. Olemmekin jo tehneet näin
+määritellessämme luokkia ja niille sopivia attribuutteja ja metodeja. Luokan
+koheesio (engl. *cohesion*) kuvastaa sitä, kuinka *hyvin* luokan attribuutit ja
+metodit sopivat yhteen luokan tarkoituksen kanssa. Luokkien suunnittelun
+tavoitteena on mahdollisimman korkea koheesio; luokan jäsenten tulisi olla
+sopivia sen tarkoitukseen. 
 
-Jos tekisimme esimerkiksi luokan kuvaamaan autoa, ei ehkä olisi kovin järkevää lisätä tähän luokkaan jäseneksi auton omistajan nimeä, osoitetta, puhelinnumeroa, jne. Omistajan tiedot ja niihin liittyvät toiminnallisuudet voi olla parempi laittaa omaan luokkaan.
+Jos tekisimme esimerkiksi luokan kuvaamaan autoa, ei ehkä olisi kovin järkevää
+lisätä tähän luokkaan jäseneksi auton omistajan nimeä, osoitetta,
+puhelinnumeroa, jne. Omistajan tiedot ja niihin liittyvät toiminnallisuudet voi
+olla parempi laittaa omaan luokkaan. 
 
-Tehdään nyt luokka `Auto`, johon voimme soveltaa kapseloinnin periaatteita. Lisätään aluksi vain attribuutit ja yksinkertaiset muodostajat.
+Tehdään nyt luokka `Auto`, johon voimme soveltaa kapseloinnin periaatteita.
+Lisätään aluksi vain attribuutit ja yksinkertaiset muodostajat. 
 
 ```java
 // FILE: Auto.java
@@ -76,11 +115,22 @@ class Auto {
 // FILE_END
 ```
 
-Haluaisimme tallentaa myös tietoja auton eri osista. Moottorista voisimme tallentaa esimerkiksi mallin ja nykyisen kierrosluvun. Renkaista olisi hyvä tietää ainakin malli, rengaspaine ja ehkä myös tyyppi, jolla voimme erottaa kesä- ja talvirenkaat. Nämä *voisi* lisätä suoraan `Auto`-luokkaan attribuuttina, mutta attribuuttien määrä kasvaisi aika suureksi, sillä jokaisella renkaalla on omat tietonsa. Jos käyttäisimme taulukoita tai listoja, tarvitsisimme niitäkin useita. Voi myös olla, että autossa ei välttämättä aina ole moottoria kiinni. Renkaatkin on mahdollista ottaa irti tai niiden lukumäärä voisi vaihdella automallien välillä. 
+Haluaisimme tallentaa myös tietoja auton eri osista. Moottorista voisimme
+tallentaa esimerkiksi mallin ja nykyisen kierrosluvun. Renkaista olisi hyvä
+tietää ainakin malli, rengaspaine ja ehkä myös tyyppi, jolla voimme erottaa
+kesä- ja talvirenkaat. Nämä *voisi* lisätä suoraan `Auto`-luokkaan
+attribuuttina, mutta attribuuttien määrä kasvaisi aika suureksi, sillä
+jokaisella renkaalla on omat tietonsa. Jos käyttäisimme taulukoita tai listoja,
+tarvitsisimme niitäkin useita. Voi myös olla, että autossa ei välttämättä aina
+ole moottoria kiinni. Renkaatkin on mahdollista ottaa irti tai niiden lukumäärä
+voisi vaihdella automallien välillä.  
 
-Auton ei oikeastaan tarvitse olla tietoinen sen moottorin tai renkaiden sisäisestä toiminnasta, joten meidän on parempi tehdä useampi luokka, joista jokainen on vastuussa omista tiedoistaan ja toiminnoistaan.
+Auton ei oikeastaan tarvitse olla tietoinen sen moottorin tai renkaiden
+sisäisestä toiminnasta, joten meidän on parempi tehdä useampi luokka, joista
+jokainen on vastuussa omista tiedoistaan ja toiminnoistaan. 
 
-Lisätään nyt `Moottori` ja `Rengas` -luokat ja määritellään näille sopivia attribuutteja sekä muodostajat.
+Lisätään nyt `Moottori` ja `Rengas` -luokat ja määritellään näille sopivia
+attribuutteja sekä muodostajat. 
 
 ```java
 // FILE: Moottori.java
@@ -117,9 +167,18 @@ class Rengas {
 // FILE_END
 ```
 
-Lisätään lopuksi moottori ja lista renkaista `Auto`-luokan attribuuteiksi. Nämä sisältävät viitteet moottori- ja rengasolioihin. Muistetaan, että viitteet eivät oletuksena osoita mihinkään, vaan meidän täytyy luoda myös oliot ja asettaa viitteet osoittamaan niihin. `Auto` sisältää nyt muiden luokkien olioita, jotka hoitavat omat vastuualueensa auton kokonaisuudessa. Tällaista rakennetta kutsutaan kompositioksi (engl. *composition*). Yksi etu tässä on se, että auton moottorin tai renkaat voisi vaihtaa helposti uusin asettamalla viiteattribuutit osoittamaan uuteen olioon.
+Lisätään lopuksi moottori ja lista renkaista `Auto`-luokan attribuuteiksi. Nämä
+sisältävät viitteet moottori- ja rengasolioihin. Muistetaan, että viitteet eivät
+oletuksena osoita mihinkään, vaan meidän täytyy luoda myös oliot ja asettaa
+viitteet osoittamaan niihin. `Auto` sisältää nyt muiden luokkien olioita, jotka
+hoitavat omat vastuualueensa auton kokonaisuudessa. Tällaista rakennetta
+kutsutaan kompositioksi (engl. *composition*). Yksi etu tässä on se, että auton
+moottorin tai renkaat voisi vaihtaa helposti uusin asettamalla viiteattribuutit
+osoittamaan uuteen olioon. 
 
-Lisätään myös pieni pääohjelma, jossa voimme luoda yhden auton oletusarvoilla ja tulostaa sen tietoja. Käytämme tässä vielä olion attribuuttien arvoja suoraan, mikä ei ole hyvän tavan mukaista. Teemme pian tämän paremmin.
+Lisätään myös pieni pääohjelma, jossa voimme luoda yhden auton oletusarvoilla ja
+tulostaa sen tietoja. Käytämme tässä vielä olion attribuuttien arvoja suoraan,
+mikä ei ole hyvän tavan mukaista. Teemme pian tämän paremmin. 
 
 ```java
 // FILE: Moottori.java
@@ -177,7 +236,8 @@ class Auto {
         // Lisätään autolle moottori luomalla uusi moottori-olio.
         moottori = new Moottori("M100", 0);
 
-        // Lisätään autolle neljä rengasta luomalla näille oliot ja lisäämällä viitteet renkaat-listaan.
+        // Lisätään autolle neljä rengasta luomalla näille oliot ja lisäämällä 
+        // viitteet renkaat-listaan.
         renkaat.add(new Rengas("R1", "nastarengas", 100.0));
         renkaat.add(new Rengas("R2", "nastarengas", 100.0));
         renkaat.add(new Rengas("R3", "nastarengas", 100.0));
@@ -203,13 +263,35 @@ void main() {
 // FILE_END
 ```
 
-Kapseloinnin toinen periaate on luokan sisäisen tiedon *piilottaminen* ja sen käsittelyn rajoittaminen niin, että siihen päästään käsiksi vain tarkkaan määritetyn *julkisen rajapinnan* kautta. Oliolla voi olla sen tilan tallentamista varten paljon sisäistä tietoa, jonka ei ole tarkoitus olla tarkasteltavissa tai muokattavissa olion ulkopuolelta. Itse asiassa kaikki olion attribuutit tavallisesti piilotetaan, jotta oliota ei olisi mahdollista vahingossa saattaa attribuutteja suoraan muuttamalla virheelliseen tilaan. Oliolla voi myös olla sisäiseen käyttöön apumetodeja, joita ei ole tarkoitus voida kutsua ulkopuolelta.
+Kapseloinnin toinen periaate on luokan sisäisen tiedon *piilottaminen* ja sen
+käsittelyn rajoittaminen niin, että siihen päästään käsiksi vain tarkkaan
+määritetyn *julkisen rajapinnan* kautta. Oliolla voi olla sen tilan
+tallentamista varten paljon sisäistä tietoa, jonka ei ole tarkoitus olla
+tarkasteltavissa tai muokattavissa olion ulkopuolelta. Itse asiassa kaikki olion
+attribuutit tavallisesti piilotetaan, jotta oliota ei olisi mahdollista
+vahingossa saattaa attribuutteja suoraan muuttamalla virheelliseen tilaan.
+Oliolla voi myös olla sisäiseen käyttöön apumetodeja, joita ei ole tarkoitus
+voida kutsua ulkopuolelta. 
 
-Olion sisäisen tilan muokkaamista varten luokkaan määritellään julkisia metodeja, joita voidaan kutsua muualta ohjelmasta. Nämä metodit muodostavat edellä mainitun julkisen rajapinnan ja kaikki muutokset olion tilaan tapahtuvat niiden kautta, jolloin virheellisiin muutoksiin voidaan reagoida metodin sisällä sopivalla tavalla. 
+Olion sisäisen tilan muokkaamista varten luokkaan määritellään julkisia
+metodeja, joita voidaan kutsua muualta ohjelmasta. Nämä metodit muodostavat
+edellä mainitun julkisen rajapinnan ja kaikki muutokset olion tilaan tapahtuvat
+niiden kautta, jolloin virheellisiin muutoksiin voidaan reagoida metodin sisällä
+sopivalla tavalla.  
 
-Se, mitä attribuutteja luokalla on tai miten niitä käsitellään luokan sisällä ovat yleensä toteutusyksityiskohtia, joita luokkaa käyttävän ohjelmoijan ei tarvitse tietää. Tällaisten toteutusyksityiskohtien piilottamisen tavoite on helpottaa ohjelmoijan työtä; kun luokan toteutusyksityiskohdat ovat piilotettuja ja tilaa käsitellään vain julkisen rajapinnan kautta, luokan sisäiseen toimintaan voidaan helpommin tehdä muutoksia niin, että luokan käyttäjä ei edes huomaa niiden tapahtuneen. Tämä on yksi kapseloinnin suurimmista höydyistä.
+Se, mitä attribuutteja luokalla on tai miten niitä käsitellään luokan sisällä
+ovat yleensä toteutusyksityiskohtia, joita luokkaa käyttävän ohjelmoijan ei
+tarvitse tietää. Tällaisten toteutusyksityiskohtien piilottamisen tavoite on
+helpottaa ohjelmoijan työtä; kun luokan toteutusyksityiskohdat ovat piilotettuja
+ja tilaa käsitellään vain julkisen rajapinnan kautta, luokan sisäiseen
+toimintaan voidaan helpommin tehdä muutoksia niin, että luokan käyttäjä ei edes
+huomaa niiden tapahtuneen. Tämä on yksi kapseloinnin suurimmista höydyistä. 
 
-Lisätään `Auto`-luokalle muutama metodi yksinkertaista julkista rajapintaa varten. Piilotetaan myös attribuutit, että emme voi muuttaa auton tilaa enää suoraan. Luokan jäsenten näkyvyyttä luokan ja sen olioiden ulkopuolelle voidaan muuttaa käyttämällä niiden esittelyn yhteydessä *näkyvyysmääreitä* kuten `public` ja `private`. `Moottori` ja `Rengas` pysyvät vielä samana.
+Lisätään `Auto`-luokalle muutama metodi yksinkertaista julkista rajapintaa
+varten. Piilotetaan myös attribuutit, että emme voi muuttaa auton tilaa enää
+suoraan. Luokan jäsenten näkyvyyttä luokan ja sen olioiden ulkopuolelle voidaan
+muuttaa käyttämällä niiden esittelyn yhteydessä *näkyvyysmääreitä* kuten
+`public` ja `private`. `Moottori` ja `Rengas` pysyvät vielä samana. 
 
 ```java
 // FILE: Auto.java
@@ -235,31 +317,12 @@ public class Auto {
         // Lisätään autolle moottori luomalla uusi moottori-olio.
         moottori = new Moottori("M100", 0);
 
-        // Lisätään autolle neljä rengasta luomalla näille oliot ja lisäämällä viitteet renkaat-listaan.
+        // Lisätään autolle neljä rengasta luomalla näille oliot ja lisäämällä 
+        // viitteet renkaat-listaan.
         renkaat.add(new Rengas("RR", "nastarengas", 100.0));
         renkaat.add(new Rengas("RR", "nastarengas", 100.0));
         renkaat.add(new Rengas("RR", "nastarengas", 100.0));
         renkaat.add(new Rengas("RR", "nastarengas", 100.0));
-    }
-
-    public String getMalli() {
-        return malli;
-    }
-
-    public void setMalli(String malli) {
-        this.malli = malli;
-    }
-
-    public String getValmistenumero() {
-        return valmistenumero;
-    }
-
-    public void setValmistenumero(String valmistenumero) {
-        this.valmistenumero = valmistenumero;
-    }
-
-    public double getAjetutKilometrit() {
-        return ajetutKilometrit;
     }
 
     public void aja(double kilometrit) {
@@ -325,7 +388,11 @@ class Rengas {
 // FILE_END
 ```
 
-Piilotimme `Auto`-luokan attribuutit `private`-näkyvyymääritteellä ja auton tilaa käsitellään nyt yksinkertaisten saantimetodien avulla. Siirsimme myös tulostamisen luokan vastuulle. Meidän tulisi tehdä vielä samanlaiset muutokset `Moottori` ja `Rengas` -luokille, jotta voimme käyttää niiden julkisia rajapintoja `Auto`-luokan sisällä.
+Piilotimme `Auto`-luokan attribuutit `private`-näkyvyymääritteellä ja auton
+tilaa käsitellään nyt yksinkertaisten saantimetodien avulla. Siirsimme myös
+tulostamisen luokan vastuulle. Meidän tulisi tehdä vielä samanlaiset muutokset
+`Moottori` ja `Rengas` -luokille, jotta voimme käyttää niiden julkisia
+rajapintoja `Auto`-luokan sisällä. 
 
 ```java
 // FILE: Auto.java
@@ -347,26 +414,6 @@ public class Auto {
         this.malli = malli;
         this.valmistenumero = valmistenumero;
         this.ajetutKilometrit = ajetutKilometrit;
-    }
-
-    public String getMalli() {
-        return malli;
-    }
-
-    public void setMalli(String malli) {
-        this.malli = malli;
-    }
-
-    public String getValmistenumero() {
-        return valmistenumero;
-    }
-
-    public void setValmistenumero(String valmistenumero) {
-        this.valmistenumero = valmistenumero;
-    }
-
-    public double getAjetutKilometrit() {
-        return ajetutKilometrit;
     }
 
     public void aja(double kilometrit) {
@@ -419,22 +466,6 @@ public class Moottori {
         this.kierrosluku = kierrosluku;
     }
 
-    public String getMalli() {
-        return malli;
-    }
-
-    public void setMalli(String malli) {
-        this.malli = malli;
-    }
-
-    public double getKierrosluku() {
-        return kierrosluku;
-    }
-
-    public void setKierrosluku(double kierrosluku) {
-        this.kierrosluku = kierrosluku;
-    }
-
     public void tulostaTiedot() {
         IO.println("Malli: " + malli);
         IO.println("Kierrosluku: " + kierrosluku);
@@ -454,30 +485,6 @@ public class Rengas {
     public Rengas(String malli, String tyyppi, double rengaspaine) {
         this.malli = malli;
         this.tyyppi = tyyppi;
-        this.rengaspaine = rengaspaine;
-    }
-
-    public String getMalli() {
-        return malli;
-    }
-
-    public void setMalli(String malli) {
-        this.malli = malli;
-    }
-
-    public String getTyyppi() {
-        return tyyppi;
-    }
-
-    public void setTyyppi(String tyyppi) {
-        this.tyyppi = tyyppi;
-    }
-
-    public double getRengaspaine() {
-        return rengaspaine;
-    }
-
-    public void setRengaspaine(double rengaspaine) {
         this.rengaspaine = rengaspaine;
     }
 
@@ -504,38 +511,94 @@ void main() {
 // FILE_END
 ```
 
-Nyt `Auto`-luokkamme ei enää ole riippuvainen `Moottori` tai `Rengas` -luokkien sisäisistä toteutusyksityiskohdista.
+Nyt `Auto`-luokkamme ei enää ole riippuvainen `Moottori` tai `Rengas` -luokkien
+sisäisistä toteutusyksityiskohdista. 
 
-> [!HUOMAUTUS]
-> Tärkeä huomio saantimetodeista. 
->
-> Yllä olevassa esimerkissä attribuutit piilotettiin, mutta pääosin niitä voidaan edelleen muokata täysin samalla tavalla yksinkertaisen saantimetodin kautta. Tämä ei ole täysin olio-ohjelmoinnin tavoitteiden mukaista; julkisen rajapinnan ei ole tarkoitus olla vain väliaskel attribuutin muuttamisessa. Julkisen rajapinnan idea on välittää oliolle käsky tehdä jotain, jolloin olio suorittaa käskyn itse parhaaksi näkemällään tavalla. 
->
-> Hyvä esimerkki tästä voisi olla esimerkiksi pelihahmo, jolla on sijaintia varten attribuutteina koordinaatit `X` ja `Y`. Sen sijaan, että muuttaisimme pelihahmon sijaintia suoraan yksinkertaisilla `setX` tai `setY` -metodeilla, voisimme määritellä hahmolle `liiku`-metodin, joka ottaa tavoitekoordinaatit vastaan ja sallii pelihahmon itse suorittaa tavoitekoordinaatteihin liikkumisen oman sisäisen toteutuksensa ja rajoitteidensa mukaisesti. Tällöin vastuu liikkumisesta kuuluu pelihahmolle itselleen. Jos pelihahmo ei esimerkiksi kykenisi sillä hetkellä liikkumaan, metodi voi käsitellä tilanteen itse, jolloin metodin kutsujan ei tarvitse ottaa tällaisia erikoistilanteita huomioon.
->
-> Todellisuudessa yksinkertaisia saantimetodeja käytetään usein myös tuotantokoodissa, sillä olioiden hyvä suunnittelu vie paljon aikaa ja vaivaa. Joskus voi olla myös ihan perusteltua muuttaa yksinkertaisen attribuutin arvoa suoraan metodin kautta. Metodi tuntuu tässä tapauksessa aika turhalta, mutta sen olemassaolo kuitenkin mahdollistaa sen, että luokan sisäistä toteutusta voidaan muuttaa ilman, että luokkaa käyttävä ohjelmakoodi hajoaa. 
->
-> Tällä kurssilla emme valitettavasti ehdi käydä oliosuunnittelun teoriaa perusteellisesti läpi. Suosittelemme olio-ohjelmoinnin teorian oppimiseen tämän osan alussa mainittua kurssia.
+### Huomio olio-ohjelmoinnin hyvistä tavoista
 
-## Coupling
+Joissain tähän mennessä nähdyissä esimerkeissä attribuutteja piilotettiin, mutta 
+niitä voitiin edelleen muokata lähes suoraan metodin kautta.
+Tämä ei ole täysin olio-ohjelmoinnin tavoitteiden mukaista; julkisen rajapinnan 
+ei ole tarkoitus olla vain väliaskel attribuutin muuttamisessa. Julkisen rajapinnan 
+idea on välittää oliolle käsky tehdä jotain, jolloin olio suorittaa käskyn itse 
+parhaaksi näkemällään tavalla.  
 
-TODO:
+Hyvä esimerkki tästä voisi olla esimerkiksi pelihahmo, jolla on sijaintia varten
+attribuutteina koordinaatit `X` ja `Y`. Sen sijaan, että muuttaisimme pelihahmon
+sijaintia suoraan yksinkertaisilla `setX` tai `setY` -metodeilla, voisimme
+määritellä hahmolle `liiku`-metodin, joka ottaa tavoitekoordinaatit vastaan ja
+sallii pelihahmon itse suorittaa tavoitekoordinaatteihin liikkumisen oman
+sisäisen toteutuksensa ja rajoitteidensa mukaisesti. Tällöin vastuu
+liikkumisesta kuuluu pelihahmolle itselleen. Jos pelihahmo ei esimerkiksi
+kykenisi sillä hetkellä liikkumaan, metodi voi käsitellä tilanteen itse, jolloin
+metodin kutsujan ei tarvitse ottaa tällaisia erikoistilanteita huomioon. 
 
-Coupling/Decoupling käsitteiden selitys
-- coupling on riippuvuus eri komponenttien eli tässä kontekstissa luokkien välillä
-- riippuvuuksia syntyy luokkien välille, kun yksi luokka on sidoksissa toisen toteutusyksityiskohtiin
-- miksi syytä välttää? ylläpidettävyys, pienet muutokset voivat aiheuttaa suuria ongelmia, ym.
-- decoupling, kuinka riippuvuuksia voidaan vähentää -> esimerkiksi kapselointi, eli toteutusyksityiskohtien piilottaminen ja julkisten rajapintojen käyttäminen
+Todellisuudessa yksinkertaisia saantimetodeja käytetään usein myös
+tuotantokoodissa, sillä olioiden hyvä suunnittelu vie paljon aikaa ja vaivaa.
+Joskus voi olla myös ihan perusteltua muuttaa yksinkertaisen attribuutin arvoa
+suoraan metodin kautta. Metodi tuntuu tässä tapauksessa aika turhalta, mutta sen
+olemassaolo kuitenkin mahdollistaa sen, että luokan sisäistä toteutusta voidaan
+muuttaa ilman, että luokkaa käyttävä ohjelmakoodi hajoaa.  
+
+Tällä kurssilla emme valitettavasti ehdi käydä oliosuunnittelun teoriaa
+perusteellisesti läpi. Suosittelemme olio-ohjelmoinnin teorian oppimiseen tämän
+osan alussa mainittua kurssia. 
+
+### Kytkentä (coupling)
+
+Kytkentä (engl. *coupling*) tarkoittaa riippuvuutta kahden eri luokan tai
+komponentin välillä. Jos luokat ovat vahvasti kytkettynä toisiinsa, yhteen
+luokkaan tehdyt muutokset todennäköisemmin aiheuttavat sivuvaikutuksia myös
+toiseen luokkaan. Ohjelman muokattavuuden kannalta on tärkeää, että luokat
+pyritään pitämään *heikosti* kytköksissä. Heikosti kytketyttyjä komponentteja on
+helpompi käyttää uudelleen tai vaihtaa uusiin tarpeen mukaan.
+
+Riippuvuuksia syntyy luokkien välille usein silloin, kun yksi luokka riippuu
+suoraan toisesta luokasta tai sen toteutusyksityiskohdista. Luokat ovat
+erityisen vahvasti kytketty, jos toinen luokka käyttää suoraan toisen tilaa. 
+Kytköksiä luokkien välille voi muodostua esimerkiksi myös niiden tavasta jakaa 
+tietoa; esimerkiksi käyttämällä jonkinlaista globaalia tilaa, jota eri luokkien
+oliot lukevat.
+
+Jos tekisimme ohjelman, joka lukee dataa jostain lähteestä ja analysoi sitä,
+voisimme jakaa nämä kaksi vastuuta eri luokille. Voisi olla hyvä idea varmistaa,
+että luettu data välitetään analysoivalle luokalle tavalla, joka ei riipu 
+esimerkiksi *tiedoston* lukemisen yksityiskohdista. Tällöin voisimme helpommin 
+vaihtaa esimerkiksi CSV-tiedoston lukemiseen tarkoitetun komponentin vaikkapa
+verkkopalvelun ohjelmointirajapintaa käyttävään ilman, että koko ohjelma hajoaa.
+
+Kapselointi auttaa heikentämään kytkentää luokkien välillä.
+Toteutusyksityiskohtien ja sisäisen tilan piilottaminen julkisen rajapinnan
+taakse estää toista luokkaa riippumasta niistä.
+
+Olioita suunnitellessa on hyvä pyrkiä pitämään luokkien sisäinen koheesio
+mahdollisimman korkeana ja vastaavasti luokkien välinen kytkentä mahdollisimman 
+vähäisenä.
 
 ## Olioiden yhteistoiminta
 
 TODO: Koodiesimerkki. Siistiminen, osa siirtyi kapselointiin.
 
-Kerrataan vielä esimerkin avulla olioiden ja niiden yhteistyön suunnittelua tässä osassa opittuja käsitteitä käyttäen. Olioiden hyödyt tulevat paremmin esille, kun alamme rakentamaan ohjelmaan useampia luokkia, jotka tekevät yhteistyötä. Nyt kun olemme myös oppineet kapseloinnin periaatteista, voimme käyttää niitä organisoimaan ohjelmakoodia fiksummin.
+Kerrataan vielä esimerkin avulla olioiden ja niiden yhteistyön suunnittelua
+tässä osassa opittuja käsitteitä käyttäen. Olioiden hyödyt tulevat paremmin
+esille, kun alamme rakentamaan ohjelmaan useampia luokkia, jotka tekevät
+yhteistyötä. Nyt kun olemme myös oppineet kapseloinnin periaatteista, voimme
+käyttää niitä organisoimaan ohjelmakoodia fiksummin. 
 
-Oliot voivat toimia yhdessä eri tavoin. Oliot voivat sisältää toisia olioita - tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu olioista, joista jokainen tuo oman toiminnallisuutensa, tätä kutsutaan usein kompositioksi. Oliot voivat kutsua toistensa metodeja ja näin delegoida tehtäviä toiselle oliolle, jolle tehtävän vastuu kuuluu, tai kommunikoida esimerkiksi tapahtumien yhteydessä. Oliot voivat myös sisältää kokoelmia olioista - esimerkiksi Javan sisäänrakennetut tietorakenteet ovat olioita, jotka sisältävät kokoelman olioista.
+Oliot voivat toimia yhdessä eri tavoin. Oliot voivat sisältää toisia olioita -
+tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu olioista,
+joista jokainen tuo oman toiminnallisuutensa, tätä kutsutaan usein
+*kompositioksi*. Oliot voivat kutsua toistensa metodeja ja näin delegoida tehtäviä
+toiselle oliolle, jolle tehtävän vastuu kuuluu, tai kommunikoida esimerkiksi
+tapahtumien yhteydessä. Oliot voivat myös sisältää kokoelmia olioista;
+esimerkiksi Javan sisäänrakennetut tietorakenteet ovat olioita, jotka sisältävät
+kokoelman olioista. 
 
-Katsotaan esimerkkiä, jossa haluamme mallintaa ohjelmallamme rakennuksia, niissä sijaitsevia tiloja sekä tiloihin tehtäviä varauksia. Jokaisessa rakennuksessa voi olla monta tilaa ja jokaisessa tilassa voi olla monta varausta. Emme välitä vielä tässä esimerkissä siitä, voiko varauksia olla samassa tilassa päällekkäin. Pidetään myös luokat vielä suhteellisen yksinkertaisina.
+Katsotaan esimerkkiä, jossa haluamme mallintaa ohjelmallamme rakennuksia, niissä
+sijaitsevia tiloja sekä tiloihin tehtäviä varauksia. Jokaisessa rakennuksessa
+voi olla monta tilaa ja jokaisessa tilassa voi olla monta varausta. Emme välitä
+vielä tässä esimerkissä siitä, voiko varauksia olla samassa tilassa päällekkäin.
+Pidetään myös luokat vielä suhteellisen yksinkertaisina. 
 
 Aloitetaan määrittelemällä tarvittavat luokat `Rakennus`, `Tila` ja `Varaus`.
 
@@ -566,6 +629,22 @@ TODO: Kompositio (rakennus -> tila -> varaus)
 TODO: Delegointi (peru kaikki rakennuksen tapahtumat)
 
 TODO: Tapahtumat ja viestit?
+
+<task>
+  <task-title>Tehtävä 2.X: Tapahtumat<points>1 p.</points></task-title>
+  <handout>
+
+Muokkaa `Rakennus`, `Tila` ja `Varaus` -luokat sisältävää ohjelmaa niin, että 
+ohjelma ei anna lisätä samaan tilaan päällekkäisiä varauksia. Jos tilassa on jo 
+varaus, joka olisi päällekkäin uuden varauksen kanssa, uutta varausta ei luoda.
+
+Virhetilanteet voi käsitellä tulostamalla virheilmoituksen.
+
+Voit testata ohjelman toimintaa valmiiksi annetulla pääohjelmalla.
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## Tehtävät
 
