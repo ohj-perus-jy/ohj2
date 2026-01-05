@@ -75,9 +75,9 @@ mielessä:
 Tässä materiaalissa käytämme IntelliJ IDEA -kehitysympäristöä Java-ohjelmien
 luomiseen, ajamiseen ja virheenjäljitykseen.
 
-### Luo uusi Java-projekti
+### Luo uusi projekti
 
-Luodaan seuraavaksi yksinkertainen Java-projekti IDEAssa. Projekti on
+Luodaan seuraavaksi yksinkertainen projekti IDEAssa. Projekti on
 IDEA-kehitysympäristön tapa koostaa lähdekooditiedostoja, testejä, kirjastoja ja
 muita lisätiedostoja yhteen kokonaisuuteen.
 
@@ -99,7 +99,7 @@ Tee seuraavasti:
 
 2. Uuden projektin dialogissa aseta seuraavat tiedot:
 
-    * Valitse vasemmalla puolella olevasta listasta projektityypiksi **Java**.
+    * Valitse vasemmalla puolella olevasta listasta projektityypiksi **Empty Project**.
 
     * Aseta projektin nimeksi **Name**-kenttään `HelloWorld`. Projektien nimet
       kirjoitetaan yleensä ilman välilyöntejä.
@@ -108,13 +108,6 @@ Tee seuraavasti:
       olevaa kansiokuvaketta (<i class="bi bi-folder2"></i>) ja valitse
       projektille sopiva kansio. Valitse sellainen kansio, jonka löydät tulevaisuudessakin
       helposti omalta tietokoneelta.
-
-    * Valitse **Build system**-rivillä **IntelliJ**. 
-      Tutustumme muihin projektien rakennusjärjestelmiin myöhemmissä osissa.
-
-    * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#java-development-kit-jdk).
-
-    * Laita ruksi **Add sample code** pois päältä. Lisäämme kooditiedoston itse.
 
     * Laita ruksi **Create Git repository** pois päältä. Emme tarvitse
       versiohallintaa vielä tässä vaiheessa.
@@ -141,17 +134,66 @@ Tee seuraavasti:
        Sivupalkin avulla voidaan avata ja piilottaa näkymät tarpeen mukaan. Esimerkiksi
        projektiselaimen voi piilottaa painamalla sivupalkissa olevasta kansiokuvakkeesta (<i class="bi bi-folder2"></i>).
 
+### Luo Java-moduuli
+
+Oletuksella uusi projekti on tyhjä. IDEA:ssa ohjelmakoodi kirjoitetaan
+*moduuleihin* (engl. module). Samaan projektiin voi lisätä useita
+moduuleita, joita voi kehittää ja ajaa erikseen.
+Esimerkiksi, voit näin tehdä yhden projektin tietyn viikon tehtäville
+(esim. `Viikko1` tai `Viikon1Tehtavat`) ja lisätä
+kunkin tehtävän omana moduulina.
+
+Luodaan seuraavaksi alimoduuli nimeltään `HelloProgram`, lisätään
+siihen uusi ohjelma ja kokeillaan ajaa se.
+
+Tee seuraavasti:
+
+1. Klikkaa hiiren toissijaisella painikkeella projektin nimeä projektinäkymässä (`HelloWorld`)
+   ja valitse **New** <i class="bi bi-chevron-right"></i> **Module**.
+
+2. Avautuvassa **New Module** -dialogissa aseta seuraavat tiedot:
+
+    * Valitse vasemmalla puolella olevasta listasta projektityypiksi **Java**.
+
+    * Aseta projektin nimeksi **Name**-kenttään `HelloProgram`. Projektien nimet
+      kirjoitetaan yleensä ilman välilyöntejä.
+
+    * Jätä **Location**-kenttä sellaisenaan. IDEA automaattisesti valitsee
+      moduulille oikean sijainnin.
+
+    * Valitse **Build system**-rivillä **IntelliJ**. 
+      Tutustumme muihin projektien rakennusjärjestelmiin myöhemmissä osissa.
+
+    * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#java-development-kit-jdk).
+
+    * Laita ruksi **Add sample code** pois päältä. Lisäämme kooditiedoston itse.
+
+   Yllä olevien valintojen jälkeen tuloksen pitäisi näyttää seuraavalta
+    (Location-kenttä voi olla erilainen riippuen käyttöjärjestelmästäsi):
+
+    <img src="images/intellij-new-module-dialog.png" width="600">
+
+
+   Paina lopuksi **Create**. Tämä luo uuden `HelloProgram`-kansion, joka
+   sisältää `src`-kansion.
+
+   <video src="images/intellij-module-create.mp4" controls></video>
+
 ### Luo lähdekooditiedosto
 
-IntelliJ-projektissa kaikki koodi laitetaan `src`-kansioon.
+IntelliJ-projektissa moduuliin kuuluva koodi laitetaan `src`-kansioon.
+Jos projektissa on useampi moduuli, jokaisella moduulilla on oma `src`-kansio.
+
 Luodaan seuraavaksi yksinkertainen Java-lähdekooditiedosto, johon
 voidaan kirjoittaa koodi. 
 
-1. Klikkaa toissijaisella hiiren painikkeella projektiselaimessa olevaa
+1. Klikkaa projektiselaimessa olevaa 
+   `HelloProgram`-moduulin alasvetopainiketta. Sen jälkeen
+   klikkaa toissijaisella hiiren painikkeella 
    `src`-kansiosta ja valitse **New** <i class="bi bi-chevron-right"></i> **Java
    Compact File**.
 
-2. Anna lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
+1. Anna lähdekooditiedoston nimeksi `Ohjelma` ja paina <kbd>Enter</kbd>.
 
 <video src="images/intellij-new-java-file.mp4" controls></video>
 
@@ -268,8 +310,7 @@ Tee seuraavasti:
 
    <video src="images/intellij-run-config.mp4" controls></video>
 
-   Ajokonfiguraatioiden avulla voit kirjoittaa useita ohjelmia samaan kansioon
-   ilman, että tarvitsisi tehdä uusia projekteja. Myöhemmin materiaalissa
+   Ajokonfiguraatioiden avulla voit ajaa eri moduuleissa kirjoitettuja ohjelmia. Myöhemmin materiaalissa
    tutustumme lisäksi Gradle-hallintatyökaluun, jonka avulla teemme muun muassa
    erillisiä ajokonfiguraatioita projektin ajamiselle, testaamiselle ja
    kääntämiselle.
@@ -291,54 +332,6 @@ Tee seuraavasti:
 > **Keymap**. Voit myös ladata muiden kehitysympäristöjen, kuten Visual Studio
 > Coden, näppäinasetuksia laajennoskaupasta kohdassa **File** <i class="bi
 > bi-chevron-right"></i> **Plugins**.
-
-### Usean ohjelman tekeminen samaan projektiin
-
-Opintojakson edetessä tehdään useita pienempiä ja suurempia ohjelmia.
-Vaikka jokaiselle ohjelmalle voi tehdä oman projektin, saatat huomata, että
-helpompaa on tehdä yksi iso projekti (esim. `Viikko1` tai `Viikon1Tehtavat`),
-johon voi kirjoittaa useita ohjelmia samassa projektissa.
-IDEA:ssa saman projektin sisällä voi tehdä alimoduuleita (engl. *submodules*),
-joilla on oma `src`-kansionsa ja joita voi ajaa omilla ajokonfiguraatioillaan.
-
-Luodaan seuraavaksi alimoduuli nimeltään `HelloProgramming`, lisätään
-siihen uusi ohjelma ja kokeillaan ajaa se.
-
-Tee seuraavasti:
-
-1. Klikkaa hiiren toissijaisella painikkeella projektin nimeä projektinäkymässä (`HelloWorld`)
-   ja valitse **New** <i class="bi bi-chevron-right"></i> **Module**.
-
-2. Avautuvassa **New Module** -dialogissa aseta moduulin nimeksi `HelloProgramming`.
-   Muut asetukset kopioituvat automaattisesti projektin asetuksista; voit jättää ne muokkaamatta.
-
-   Paina lopuksi **Create**. Tämä luo uuden `HelloProgramming`-kansion, joka sisältää
-   oman `src`-kansion.
-
-   <video src="images/intellij-submodule-create.mp4" controls></video>
-
-3. Lisää uusi **Java Compact File** -tiedosto `HelloProgramming/src`-kansioon yllä olevalla
-   [Luo lähdekooditiedosto](#luo-lähdekooditiedosto) -ohjeella.
-   Voit antaa tiedoston nimeksi `MoiOhjelmointi.java`.
-
-   Lisää tiedostoon seuraava lähdekoodi:
-
-   ```java,noplayground
-   void main() {
-      IO.println("Opiskelen Java-ohjelmointia!");
-   }
-   ```
-
-4. Aja `MoiOhjelmointi.java` yllä olevalla [Ohjelman ajaminen](#ohjelman-ajaminen) -ohjeella.
-
-   Huomaa, että `MoiOhjelmointi`-ohjelman ajamisen jälkeen IDEA luo uuden
-   ajokonfiguraation, joka on jatkossa valittavissa ajopainikkeen (<i class="bi
-   bi-play-fill"></i>) viereisestä alasvetovalikosta.
-   
-   <video src="images/intellij-submodule-run.mp4" controls></video>
-
-   Tällä tavoin voit tehdä useita ohjelmia (esim. kurssin tehtäviä)
-   saman projektin sisällä.
 
 ## Miten Java-ohjelmat ajetaan?
 
@@ -395,15 +388,24 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 Avataan nyt komentorivi ja siirrytään alkuun projektikansioon.
 Tarkastellaan vielä, mitä tiedostoja projektista löytyy:
 
-<asciinema src="images/rec_ls_files.cast" rows="3" poster="npt:2"></asciinema>
+<asciinema src="images/rec_ls_files.cast" rows="3" poster="npt:3"></asciinema>
 
 Koska käytössämme on IntelliJ-projekti, sieltä löytyy vain muutama olennainen tiedosto ja kansio:
 
 - `HelloWorld.iml` on projektin asetustiedosto, jolla IDEA tunnistaa kansion olevan Java-projekti
-- `src` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsevat
+- `HelloProgram` on lähdekoodikansio, jossa kaikki lähdekooditiedostot sijaitsevat
 - `out` on kansio, joka sisältää käännetyt ohjelmat
 
-Siirrytään nyt `src` kansioon ja tarkastellaan sen sisältö:
+Siirrytään nyt kansioon `HelloProgram` ja tarkastellaan sen sisältö:
+
+<asciinema src="images/rec_cd_module.cast" rows="4" poster="npt:10"></asciinema>
+
+Yksittäisesta moduulista löytyvät vastaavasti seuraavat tiedostot ja kansiot:
+
+- `HelloProgram.iml` on moduulin asetustiedosto, jolla IDEA tunnistaa kansion olevan Java-moduuli
+- `src` on lähdekoodikansio, joka sisältää ohjelman lähdekoodin
+
+Siirrytään vastaavasti kansioon `src` ja tarkastellaan sen sisältö:
 
 <asciinema src="images/rec_cd_project.cast" rows="4" poster="npt:5"></asciinema>
 

@@ -48,19 +48,19 @@ operaattoreita yhdistämään ehtoja.
 ## Viitetietotyyppisten muuttujien vertailu
 
 Toisin kuin primitiivityypeillä (`int`, `double`, jne.), Javassa
-`==`-operaattori vertaa olioiden kohdalla viitteitä, eivät sisältöä. Tästä
+`==`-operaattori vertaa viitetyyppien kohdalla viitteitä, eivät sisältöä. Tästä
 syystä merkkijonojen ja muiden
 viitetyyppimuuttujien sisällön vertailuun tulee käyttää `equals()`-metodia.
 
 ```java
 void main() {
     String mjono1 = "Slush";
-    String mjono2 = new String("Slush"); // Luodaan pakolla uusi olio
+    String mjono2 = new String("Slush"); // Luodaan pakolla uusi merkkijono
 
     // VÄÄRIN: Vertaa viitteitä -> tulostaa false
     IO.println(mjono1 == mjono2); 
 
-    // OIKEIN: Vertaa olioiden sisältöjä -> tulostaa true
+    // OIKEIN: Vertaa sisältöjä -> tulostaa true
     IO.println(mjono1.equals(mjono2));
 }
 ```

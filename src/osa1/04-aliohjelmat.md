@@ -71,8 +71,8 @@ tyyliohjetta](../tyyliohje.md).
 
 Aliohjelmaa voi ajatella *mustana laatikkona*: sinne syötetään raaka-ainetta
 (parametrit), laatikon sisällä tapahtuu prosessointia, ja lopuksi ulos tulee
-valmis tuote (paluuarvo). Avainsana `return` lopettaa metodin suorituksen
-välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava metodin
+valmis tuote (paluuarvo). Avainsana `return` lopettaa aliohjelman suorituksen
+välittömästi ja palauttaa arvon kutsujalle. Arvon tyypin on vastattava aliohjelman
 määrittelyssä annettua tyyppiä.
 
 Toisen tekemää aliohjelmaa käytettäessä emme välttämättä tiedä, mitä laatikon
@@ -82,7 +82,7 @@ aliohjelmia.
 
 ## Void-aliohjelma
 
-Joskus metodia tarvitaan vain tekemään jokin toimenpide, kuten tulostamaan
+Joskus aliohjelmaa tarvitaan vain tekemään jokin toimenpide, kuten tulostamaan
 tekstiä ruudulle, tai aiheuttamaan muu sivuvaikutus. Tällaisessa tapauksessa
 aliohjelman ei tarvitse palauttaa arvoa. Tällöin paluuarvon tyypiksi merkitään
 `void`.
@@ -95,11 +95,12 @@ kutsumme sitä. Javassa kaikki parametrit välitetään arvona (ns.
 
  * Jos parametrin tyyppi on alkeistietotyyppi (kuten `int`, `double`, `char`,
    `boolean`), aliohjelmalle annetaan *kopio alkuperäisestä arvosta*.
- * Jos parametrin tyyppi on viitetyyppi (kuten taulukko tai olio), aliohjelmalle
-   annetaan *kopio viitteestä olioon*. 
+ * Jos parametrin tyyppi on viitetyyppi (kuten taulukko), aliohjelmalle
+   annetaan *kopio viitteestä alkuperäiseen dataan*. 
 
-Kun alkeistietotyyppi (ks. [Luku 1.2](02-muuttujat-ja-tietotyypit.md)) annetaan
-parametrina metodille, kyseisen muuttujan arvo kopioidaan ja välitetään
+Kun alkeistietotyyppi (ks. [Luku
+1.2](02-muuttujat-ja-tietotyypit.md#alkeistietotyypit)) annetaan
+parametrina, kyseisen muuttujan arvo kopioidaan ja välitetään
 kutsuttavalle aliohjelmalle. Jos aliohjelma muuttaa tätä kopiota, alkuperäinen
 muuttuja ei muutu. Alla esimerkki, jossa annamme `int`-tyyppisen muuttujan
 parametrina. 
@@ -107,40 +108,36 @@ parametrina.
 ```java
 void yritaMuuttaa(int luku) {
     luku = 99; // Muutetaan vain kopiota
-    System.out.println("Metodissa: " + luku);
+    IO.println("Metodissa: " + luku);
 }
 
 void main() {
     int x = 10;
     yritaMuuttaa(x);
-    System.out.println("Mainissa: " + x); // Tulostaa edelleen 10
+    IO.println("Mainissa: " + x); // Tulostaa edelleen 10
 }
 ```
 
-Javassa kaikki tyypit, mitkä eivät ole alkeistietotyyppejä, ovat
-*viitetyyppejä*. Tässä vaiheessa opintoja tutuimpia viitetyyppejä ovat taulukot
-(esim. `int[]`) ja `String`-oliot. Myös kaikki itse määritellyt oliot, joihin
-tutustutaan Luvussa 3, ovat viitetyyppejä. 
+Kun viitetyyppi (ks. [Luku
+1.2](02-muuttujat-ja-tietotyypit.md#viitetietotyypit)) annetaan parametrina
+aliohjelmalle, kopioidaan
+viite eikä alkuperäistä dataa. Aliohjelma
+saa siis käyttöönsä kopion viitteestä, joka osoittaa samaan
+dataan kuin pääohjelman muuttuja. Jos aliohjelma sitten muokkaa muuttujan 
+osoittamaa dataa (esim. taulukon alkioita), muutos näkyy myös
+pääohjelmassa.
 
-Viitetyypin muuttuja ei sisällä itse dataa (kuten taulukon lukuja), vaan
-viitteen olioon, joka sisältää datan. Voi ajatella, että muuttuja on
-kaukosäädin, ja itse data on televisio. Ihan kuten televisiota ohjaillaan
-kaukosäätimellä, viitetyyppisiä muuttujia käytetään olion sisältämän datan
-käsittelyyn. 
+Voit ajatella viitteen ikään kuin "kaukosäätimenä", jolla
+ohjataan "televisiota" eli dataa. Vaikka aliohjelmalle
+viedään kopio "kaukosäätimestä", voi sillä ohjata samaa "televisiota".
 
-Analogiamme hieman hajoaa tässä kohden, mutta viedään se silti loppuun, kun
-kerran aloitimme: Kun viitetyyppi annetaan parametrina aliohjelmalle, kopioidaan
-viite; siis kopio kaukosäätimestä, eikä alkuperäistä kaukosäädintä. Aliohjelma
-saa kyllä käyttöönsä samanlaisen "kaukosäätimen", joka osoittaa samaan
-"televisioon" kuin pääohjelman kaukosäädin. Jos aliohjelma sitten muokkaa olion
-sisältöä (esim. taulukon alkioita) viitteen kautta, muutos näkyy myös
-pääohjelmassa. Alla esimerkki tällaisesta tilanteesta, jossa annamme
+Alla esimerkki tällaisesta tilanteesta, jossa annamme
 `int[]`-tyyppisen taulukon parametrina, ja aliohjelma muokkaa taulukon alkioita.
 
 ```java
 void nollaaTaulukko(int[] taulukko) {
     // Tämä muutos tapahtuu alkuperäiselle taulukolle!
-    // Koska "taulukko"-muuttuja viittaa samaan olioon.
+    // Koska "taulukko"-muuttuja viittaa samaan taulukkoon.
     for (int i = 0; i < taulukko.length; i++) {
         taulukko[i] = 0;
     }
@@ -152,14 +149,15 @@ void main(String[] args) {
     nollaaTaulukko(luvut);
     
     // Alkuperäinen taulukko on muuttunut
-    System.out.println(luvut[0]); // Tulostaa 0
+    IO.println(luvut[0]); // Tulostaa 0
 }
 ```
 
 Oleellista on kuitenkin ymmärtää, että aliohjelman kutsussa annoimme
 nimenomaisesti kopion viitteestä, emme alkuperäistä viitettä. Jos aliohjelma
-yrittäisi muuttaa viitettä osoittamaan toiseen olioon, tämä muutos ei
-vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla esimerkki tästä
+yrittäisi muuttaa viitettä osoittamaan muuhun dataan (esim. toiseen taulukkoon), 
+tämä muutos ei vaikuttaisi alkuperäiseen viitteeseen pääohjelmassa. Alla
+esimerkki tästä 
 tilanteesta:
 
 ```java
@@ -169,7 +167,7 @@ void main(String[] args) {
     muutaViite(luvut);
     
     // Alkuperäinen taulukko ei ole muuttunut
-    System.out.println(luvut[0]); // Tulostaa edelleen 1
+    IO.println(luvut[0]); // Tulostaa edelleen 1
 }
 
 void muutaViite(int[] taulukko) {
@@ -185,16 +183,61 @@ yllä on selitetty.
 
 ## Aliohjelma ja sivuvaikutukset
 
-Aliohjelmaa, joka muokkaa parametrina annettua oliota, sanotaan usein
-aiheuttavan *sivuvaikutuksia*. Sivuvaikutukset voivat olla hyödyllisiä, mutta ne
-voivat myös tehdä ohjelmasta vaikeammin ymmärrettävän. Siksi on erittäin tärkeää
-olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
+Aliohjelmaa, joka muokkaa parametrina annettua dataa, sanotaan usein
+aiheuttavan *sivuvaikutuksia*. 
+Esimerkiksi, jos alla oleva aliohjelma `kaanna` kääntää parametrina annetun
+taulukon alkiot käänteiseen järjestykseen:
 
-```java,editable
+```java
+void kaanna(int[] taulu) {
+    // Toteutus piilotettu tilan säästämiseksi
+//-    for (int i = 0; i < taulu.length / 2; i++) {
+//-        int tmp = taulu[i];
+//-        taulu[i] = taulu[taulu.length - 1 - i];
+//-        taulu[taulu.length - 1 - i] = tmp;
+//-    }
+}
+
 void main() {
-
+    int[] taulukko = {1, 2, 3, 4, 5};
+    IO.println("taulukko = " + Arrays.toString(taulukko));
+    kaanna(taulukko);
+    IO.println("taulukko = " + Arrays.toString(taulukko));
 }
 ```
+
+Huomaa, että `kaanna` ei palauta mitään, mutta sen *sivuvaikutuksena*
+on, että parametrina annettu taulukko kääntyy.
+Yllä oleva aliohjelma voitaisiin toteuttaa myös ilman sivuvaikutuksia
+muuttamalla palautusarvoa:
+
+```java
+int[] kaanna(int[] taulu) {
+    // Toteutus piilotettu tilan säästämiseksi
+//-    int[] tulos = new int[taulu.length];
+//-    for (int i = 0; i < taulu.length; i++) {
+//-        tulos[i] = taulu[taulu.length - 1 - i];
+//-    }
+//-    return tulos;
+}
+
+void main() {
+    int[] taulukko = {1, 2, 3, 4, 5};
+    IO.println("taulukko = " + Arrays.toString(taulukko));
+    int[] kaannetty = kaanna(taulukko);
+    IO.println("kaannetty = " + Arrays.toString(kaannetty));
+}
+```
+
+Sivuvaikutukset voivat olla hyödyllisiä muun muassa muistin käytön optimoinnin
+kannalta, mutta ne voivat myös tehdä ohjelmasta
+vaikeammin ymmärrettävän. Yllä olevassa esimerkissä 
+aliohjelman `void kaanna(int[] taulu)` sivuvaikutus ei ole ilmiselvää
+ellei katso aliohjelman lähdekoodia. Sivuvaikutuksilla voikin esimerkiksi 
+tiedostamatta tuhota tai muokata dataa.
+Siksi on erittäin tärkeää
+olla tietoinen siitä, miten aliohjelmat käsittelevät parametreja.
+
 
 ## Kommentointi ja dokumentointi
 
