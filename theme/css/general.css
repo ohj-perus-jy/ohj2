@@ -265,7 +265,6 @@ sup {
 
 
 footer {
-    text-align: center;
     padding: 2em 0;
     margin-top: 3em;
     color: var(--fg);
@@ -273,6 +272,30 @@ footer {
     /*border-block-color: var(--footer-border, transparent);*/
     /*border-block-width: 1px;*/
     /*border-block-style: solid;*/
+}
+
+footer > div.footer-content {
+    max-width: var(--content-max-width);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 1em;
+    margin: auto;
+}
+
+footer a {
+    color: var(--links);
+}
+
+footer img {
+    max-width: 100px;
+    vertical-align: middle;
+}
+
+footer > div.footer-content > div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25em;
 }
 
 .footnote-definition {
