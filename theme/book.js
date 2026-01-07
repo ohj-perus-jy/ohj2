@@ -583,6 +583,10 @@ aria-label="Show hidden lines"></button>';
             sidebarCheckbox.checked = true;
             showSidebar();
             animateSidebar(true);
+        } else if (window.innerWidth <= 640 && sidebarCheckbox.checked) {
+            sidebarCheckbox.checked = false;
+            hideSidebar();
+            animateSidebar(false);
         } else if (sidebarCheckbox.checked) {
             setSidebarSize(getSidebarTargetWidth());
         }
