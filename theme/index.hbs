@@ -119,7 +119,11 @@
         <script>
             let sidebar = null;
             const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
-            if (document.body.clientWidth >= 1300) {
+            const is_small_screen = document.body.clientWidth <= 640;
+            if (is_small_screen) {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            } else if (document.body.clientWidth >= 1300) {
                 sidebar = 'visible';
                 sidebar_toggle.checked = true;
             } else {
