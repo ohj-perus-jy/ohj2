@@ -700,6 +700,33 @@ html:not(.sidebar-resizing) .sidebar {
     transform: translateX(0);
 }
 
+@media (max-width: 640px) {
+    :root {
+        --sidebar-slide-width: calc(var(--sidebar-width) + var(--sidebar-resize-indicator-width));
+    }
+
+    .page-layout>.sidebar {
+        position: fixed;
+        left: 0;
+        right: auto;
+        top: 0;
+        bottom: 0;
+    }
+
+    [dir=rtl] .page-layout>.sidebar {
+        left: auto;
+        right: 0;
+    }
+
+    #sidebar-toggle-anchor:checked~.page-layout .page-wrapper {
+        transform: translateX(var(--sidebar-slide-width));
+    }
+
+    [dir=rtl] #sidebar-toggle-anchor:checked~.page-layout .page-wrapper {
+        transform: translateX(calc(var(--sidebar-slide-width) * -1));
+    }
+}
+
 .chapter {
     list-style: none outside none;
     padding-inline-start: 0;
