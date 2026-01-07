@@ -32,14 +32,12 @@ a>.hljs {
 }
 
 .page-layout>.sidebar {
-    position: fixed;
-    top: calc(var(--menu-bar-height) + 1px);
-    height: calc(100vh - var(--menu-bar-height) - 1px);
-    background-color: var(--bg);
-    z-index: 500;
+    position: sticky;
+    top: 0;
     left: auto;
     right: auto;
     bottom: auto;
+    height: 100vh;
     flex-grow: 0;
     flex-shrink: 0;
     flex-basis: var(--sidebar-width);
@@ -47,15 +45,6 @@ a>.hljs {
     max-width: var(--sidebar-width);
     overflow: hidden;
     transition: width 0.3s, max-width 0.3s, flex-basis 0.3s, transform 0.3s;
-}
-
-
-@media only screen and (min-width: 800px) {
-    .page-layout>.sidebar {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-    }
 }
 
 .page-layout>.page-wrapper {
@@ -89,8 +78,6 @@ a>.hljs {
     border-block-end-color: var(--header-border);
     border-block-end-width: 1px;
     border-block-end-style: solid;
-
-    margin-inline: calc(-1 * var(--page-padding));
 }
 
 #menu-bar.sticky,
