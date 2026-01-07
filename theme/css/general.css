@@ -276,6 +276,7 @@ footer {
 }
 
 footer > div.footer-content {
+    padding-inline: 20px;
     max-width: var(--content-max-width);
     display: flex;
     justify-content: flex-end;
