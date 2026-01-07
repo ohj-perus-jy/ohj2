@@ -122,6 +122,7 @@ details summary:hover {
     padding: 0 var(--page-padding);
     margin-block-start: calc(0px - var(--menu-bar-height)); /* Compensate for the #menu-bar-hover-placeholder */
 }
+
 .page-wrapper {
     box-sizing: border-box;
     background-color: var(--bg);
