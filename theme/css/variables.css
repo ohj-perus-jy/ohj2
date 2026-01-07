@@ -17,6 +17,18 @@
     interpolate-size: allow-keywords;
 }
 
+@media (max-width: 900px) {
+    :root {
+        --page-padding: 32px;
+    }
+}
+
+@media (max-width: 600px) {
+    :root {
+        --page-padding: 20px;
+    }
+}
+
 /* Themes */
 
 .ayu {
