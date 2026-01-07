@@ -324,6 +324,7 @@ html:not(.js) .left-buttons button {
 :not(pre):not(a) > .hljs {
     color: var(--inline-code-color);
     overflow-x: initial;
+    text-wrap-mode: nowrap;
 }
 
 a:hover > .hljs {

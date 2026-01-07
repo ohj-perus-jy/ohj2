@@ -352,3 +352,14 @@ footer {
 .result-no-output {
     font-style: italic;
 }
+
+
+div:has(> svg.svgbob) {
+    width: 100% !important;
+    overflow-x: auto;
+    overflow-y: clip;
+}
+
+svg.svgbob {
+    width: initial !important;
+}

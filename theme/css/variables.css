@@ -354,6 +354,10 @@
     --task-bg-hover-text: #002957;
 }
 
+.jyu-gold {
+    color: #C29A5B;
+}
+
 .jyu-dark {
     --bg: hsl(210, 25%, 8%);
     --fg: #c5c5c5;

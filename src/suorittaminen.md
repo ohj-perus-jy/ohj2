@@ -1,8 +1,11 @@
 # Suorittaminen
 
-Voit valita kolmesta suoritustavasta itsellesi sopivimman. Kaikki suoritustavat sisältävät harjoitustyön tekemisen.
+Voit valita kolmesta suoritustavasta itsellesi sopivimman. Kaikki suoritustavat
+sisältävät harjoitustyön tekemisen.
 
-Suoritustapojen yksityiskohdat eroavat aikaisemmista toteutuksista jonkin verran, joten jos olet aiemmin yrittänyt suorittaa kurssia, lue tämä osio huolellisesti läpi.
+Suoritustapojen yksityiskohdat eroavat aikaisemmista toteutuksista jonkin
+verran, joten jos olet aiemmin yrittänyt suorittaa kurssia, lue tämä osio
+huolellisesti läpi.
 
 ## Suoritustapa 1
 
@@ -65,3 +68,33 @@ Arvosanasi on tällöin 1, jota voit vapaaehtoisesti korottaa tentillä.
  2. Teet tasokokeen tapaisen loppukokeen (tämä on eri asia kuin tentti)
   
 Arvosana muodostuu loppukokeen arvosanasta.
+
+## Eettiset ohjeet {#eettiset-ohjeet}
+
+Olet vastuussa kaikista palauttamistasi töistä. Kopioiminen tai toisen henkilön
+työn esittäminen omanaan on kiellettyä. Ryhmätyö on sallittua, mutta jokaisen
+ryhmän jäsenen tulee antaa panoksensa työhön, ymmärtää tekemänsä asiat ja osata
+selittää ne tarvittaessa. Ryhmätyönä tehty osa tulee aina merkitä selvästi
+palautettuun työhön, esimerkiksi koodin kommenttien avulla. 
+
+Noudatamme [Jyväskylän yliopiston ohjeita ja linjauksia tekoälypohjaisten
+sovellusten käytössä
+opiskelussa](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/tekoalypohjaisten-sovellusten-kaytto-opiskelussa-jyu-ohjeet-ja-linjaukset).
+Alla olevat ohjeet täydentävät näitä linjauksia. 
+
+Generatiivisten tekoälytyökalujen käyttö koodin luomisessa on kiellettyä.
+Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun
+ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä
+osaamistavoitteita. Kiellettyjä generatiivisia työkaluja ovat esimerkiksi GitHub
+Copilot, ChatGPT, Bard ja vastaavat chat- ja agenttisovellukset. Myös Riderin
+koodin tekoälypohjainen täydennys käyttö on kiellettyä. 
+
+Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
+selittämiseen, tehtävänantojen ymmärtämiseen tai materiaalissa annettujen
+esimerkkien selittämiseen. Tekoälytyökalulle annettavassa kehotteessa tulee
+huomioida, että tekoäly ei saa tuottaa suoria vastauksia tai koodia
+opintojakson tehtäviin.
+
+Menettely vilppiepäilytilanteessa on kuvattu [Jyväskylän yliopiston opintoja
+ohjaavissa säädöksissä ja
+määräyksissä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/vilppitapausten-kasittely).
