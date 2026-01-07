@@ -1,0 +1,111 @@
+class MDBookSidebarScrollbox extends HTMLElement {
+    constructor() {
+        super();
+    }
+    connectedCallback() {
+        this.innerHTML = `{{#toc}}{{/toc}}`;
+
+        // 1. Path Resolution & Active Link Identification
+        let current_page = document.location.href.toString().split("#")[0].split("?")[0];
+        if (current_page.endsWith("/")) {
+            current_page += "index.html";
+        }
+
+        var links = Array.prototype.slice.call(this.querySelectorAll("a"));
+        var activeLink = null;
+
+        for (var i = 0; i < links.length; ++i) {
+            var link = links[i]; var href = link.getAttribute("href"); if (href &&
+                !href.startsWith("#") && !/^(?:[a-z+]+:)?\/\//.test(href)) { link.href = path_to_root + href; } if
+                (link.href === current_page || (i === 0 && path_to_root === "" && current_page.endsWith("/index.html"))) {
+                activeLink = link;
+            }
+        }
+        // 2. Initial Setup: Collapse all, Add Toggles 
+        // Default mdBook toc output has 'expanded' on many items. We want to start fresh.
+        const allChapters = Array.from(this.querySelectorAll('li.chapter-item'));
+        allChapters.forEach(el => {
+            el.classList.remove('expanded');
+            this.ensureToggle(el);
+        });
+
+        // 3. Expand Active Path
+        if (activeLink) {
+            activeLink.classList.add("active");
+
+            // Expand the item containing the link
+            var parent = activeLink.parentElement;
+            if (parent && parent.classList.contains("chapter-item")) {
+                parent.classList.add("expanded");
+            }
+
+            // Walk up to expand all ancestors
+            while (parent) {
+                if (parent.tagName === 'LI' && parent.previousElementSibling &&
+                    parent.previousElementSibling.classList.contains("chapter-item")) {
+                    parent.previousElementSibling.classList.add("expanded");
+                }
+                parent = parent.parentElement;
+            }
+        }
+
+        // 4. Apply Initial Max-Height Styles (to avoid animation on load)
+        allChapters.forEach(el => this.updateSectionHeight(el));
+
+        // 5. Scroll Position Logic
+        var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+        sessionStorage.removeItem('sidebar-scroll');
+        if (sidebarScrollTop) {
+            this.scrollTop = sidebarScrollTop;
+        } else {
+            var activeSection = this.querySelector('.active');
+            if (activeSection) {
+                activeSection.scrollIntoView({ block: 'center' });
+            }
+        }
+
+        this.addEventListener('click', function (e) {
+            if (e.target.tagName === 'A') {
+                sessionStorage.setItem('sidebar-scroll', this.scrollTop);
+            }
+        }, { passive: true });
+    }
+
+    // Helper: Add toggle button if subsection exists
+    ensureToggle(chapterItem) {
+        const nextLi = chapterItem.nextElementSibling;
+        if (!nextLi || !nextLi.querySelector("ol.section")) {
+            return;
+        }
+
+        if (chapterItem.querySelector(".toc-toggle")) {
+            return;
+        }
+
+        const toggle = document.createElement("button");
+        toggle.type = "button";
+        toggle.className = "toc-toggle";
+        toggle.setAttribute("aria-label", "Toggle subchapters");
+        toggle.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            chapterItem.classList.toggle("expanded");
+            this.updateSectionHeight(chapterItem);
+        });
+        chapterItem.appendChild(toggle);
+    }
+
+    // Helper: Update max-height for animation
+    updateSectionHeight(chapterItem) {
+        const nextLi = chapterItem.nextElementSibling;
+        const section = (nextLi && nextLi.querySelector("ol.section")) ? nextLi.querySelector("ol.section") : null;
+        if (!section) return;
+
+        if (chapterItem.classList.contains("expanded")) {
+            section.style.maxHeight = section.scrollHeight + "px";
+        } else {
+            section.style.maxHeight = "0px";
+        }
+    }
+}
+window.customElements.define("mdbook-sidebar-scrollbox", MDBookSidebarScrollbox);

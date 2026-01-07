@@ -33,7 +33,6 @@ additional-js = [
   "theme/code-highlights.js",
   "theme/asciinema-player.min.js",
   "theme/asciinema-component.js",
-  "theme/sidebar-toc.js",
 ]
 
 [output.html.playground]

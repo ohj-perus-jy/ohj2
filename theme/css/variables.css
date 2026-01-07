@@ -6,8 +6,8 @@
     --sidebar-width: min(var(--sidebar-target-width), 80vw);
     --sidebar-resize-indicator-width: 0px;
     --sidebar-resize-indicator-space: 0px;
-    --page-padding: 15px;
-    --content-max-width: 960px;
+    --page-padding: 60px;
+    --content-max-width: 820px;
     --menu-bar-height: 56px;
     --mono-font: "Source Code Pro", Consolas, "Ubuntu Mono", Menlo, "DejaVu Sans Mono", monospace, monospace;
     --code-font-size: 0.875em; /* please adjust the ace font size accordingly in editor.js */
@@ -286,7 +286,7 @@
     --bg: hsl(0, 0%, 98%);
     --fg: hsl(0, 0%, 0%);
 
-    --sidebar-bg: #fff;
+    --sidebar-bg: var(--bg);
     --sidebar-fg: hsl(0, 0%, 0%);
     --sidebar-non-existant: #aaaaaa;
     --sidebar-active: #002957;
