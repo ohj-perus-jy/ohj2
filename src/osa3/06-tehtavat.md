@@ -1,6 +1,14 @@
 # Osan kaikki tehtävät
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
 
+> [!HUOMAUTUS]
+> Jos palautat tehtävät ennen osion takarajaa ({{#include ../takarajat.md:3}}), voit saada DL-BONUS-pisteitä
+> harjoitustehtäviin. Lue lisää
+> [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
+> 
 <task>
   <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
   <handout>
@@ -22,7 +30,7 @@
 </task>
 
 <task>
-  <task-title>✨ Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}

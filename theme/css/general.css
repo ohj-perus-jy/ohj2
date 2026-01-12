@@ -67,10 +67,10 @@ h3:target::before,
 h4:target::before,
 h5:target::before,
 h6:target::before {
-    display: inline-block;
-    content: "»";
-    margin-inline-start: -30px;
-    width: 30px;
+    display: inline;
+    content: "» ";
+    /*margin-inline-start: 15px;
+    width: 30px;*/
 }
 
 details {
@@ -122,6 +122,7 @@ details summary:hover {
     padding: 0 var(--page-padding);
     margin-block-start: calc(0px - var(--menu-bar-height)); /* Compensate for the #menu-bar-hover-placeholder */
 }
+
 .page-wrapper {
     box-sizing: border-box;
     background-color: var(--bg);
@@ -132,6 +133,14 @@ details summary:hover {
 }
 .page-wrapper > footer {
     margin-top: auto;
+    padding-top: 2em;
+    position: relative;
+    z-index: 200;
+}
+.chapter-navigation {
+    position: relative;
+    z-index: 0;
+    margin-bottom: 2em;
 }
 html:not(.js) .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
@@ -142,18 +151,25 @@ html:not(.js) .page-wrapper,
     transition: margin-right 0.3s ease, transform 0.3s ease; /* Animation: slide away */
 }
 
+@media only screen and (min-width: 1300px) {
+    .page-wrapper {
+        min-width: min(100%, calc(var(--content-max-width) + (var(--page-padding) * 2)));
+    }
+}
+
 .content {
     overflow-y: auto;
-    padding: 0 5px 50px 5px;
+    padding: 0 0px 50px 5px;
 }
+
 .content main {
     margin-inline-start: auto;
     margin-inline-end: auto;
     max-width: var(--content-max-width);
 }
-.content p { line-height: 1.45em; }
-.content ol { line-height: 1.45em; }
-.content ul { line-height: 1.45em; }
+.content p { line-height: 1.55em; }
+.content ol { line-height: 1.55em; }
+.content ul { line-height: 1.55em; }
 .content a, footer a { text-decoration: none; }
 .content a:hover, footer a:hover { text-decoration: underline; }
 .content nav a:hover { text-decoration: none; }
@@ -250,11 +266,38 @@ sup {
 
 
 footer {
-    text-align: center;
     padding: 2em 0;
     margin-top: 3em;
     color: var(--fg);
-    background-color: var(--theme-hover);
+    /*background-color: var(--footer-bg, var(--theme-hover));*/
+    /*border-block-color: var(--footer-border, transparent);*/
+    /*border-block-width: 1px;*/
+    /*border-block-style: solid;*/
+}
+
+footer > div.footer-content {
+    padding-inline: 20px;
+    max-width: var(--content-max-width);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 1em;
+    margin: auto;
+}
+
+footer a {
+    color: var(--links);
+}
+
+footer img {
+    max-width: 100px;
+    vertical-align: middle;
+}
+
+footer > div.footer-content > div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25em;
 }
 
 .footnote-definition {
@@ -333,4 +376,15 @@ footer {
 
 .result-no-output {
     font-style: italic;
+}
+
+
+div:has(> svg.svgbob) {
+    width: 100% !important;
+    overflow-x: auto;
+    overflow-y: clip;
+}
+
+svg.svgbob {
+    width: initial !important;
 }

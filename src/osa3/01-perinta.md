@@ -1,5 +1,9 @@
 # Perintä
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Ymmärrät perinnän käsitteen olio-ohjelmoinnissa ja osaat periä luokkia Javassa
@@ -519,7 +523,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
 </task>
 
 <task>
-  <task-title>✨ Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}

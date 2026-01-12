@@ -3,6 +3,11 @@
 Tämä on Jyväskylän yliopiston järjestämän **TIEP111 Ohjelmointi 2**
 -opintojakson oppimateriaali. 
 
+Voit palauttaa tehtäviä vain, jos olet ilmoittautunut opintojaksolle Sisu- tai
+Ilpo-järjestelmässä. Oman etenemisesi tilanteen (harjoitustehtävien pisteet,
+harjoitustyön hyväksyminen, tenttitulokset) näet
+[TIM-järjestelmästä](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti).
+
 ## Tietoja opintojaksosta
 
 <!-- OPS:sta -->
@@ -29,28 +34,45 @@ aikana. Osa materiaalista julkaistaan kurssin edetessä. Uudistamisesta johtuen
 sisällössä voi olla myös keskeneräisyyksiä ja virheitä. Pahoittelemme tästä
 mahdollisesti aiheutuvaa haittaa. Pyydämme, että ilmoitat virheistä tai
 parannusehdotuksista GitHubin kautta (katso tämän sivun alareuna) tai suoraan
-opettajien sähköpostiin <opet@TODO>.
+opettajien sähköpostiin <ohj2-opet@jyu.onmicrosoft.com>.
 
 </details>
 
 ## Ohjaukset ja tuki
 
-Kevään 2026 ohjauskauden (10.1.-30.4.) aikana on tarjolla seuraavat tukikanavat:
+Kevään 2026 on 12. tammikuuta &ndash; 24. huhtikuuta välisenä aikana tarjolla
+lähiohjausta Agoralla, etäohjausta Teamsin kautta, sekä sähköpostitukea. 
 
-| Tukikanava                                           | Aika                         | Paikka/Linkki                                                                                                                    |
-| ---------------------------------------------------- | ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Lähiohjaus                                           | ke 10-16, to 10-16, pe 10-16 | Agoralla luokat [Ag B213.1 Lakes](https://navi.jyu.fi/space/m118990) ja [Ag B212.2 Mountains](https://navi.jyu.fi/space/m118989) |
-| Etäohjaus                                            | ke 10-16, to 8-18, pe 10-16  | [Ohjelmointi 2 Teams-kanava](#teams-jy)                                        |
-| Vastuuopettajien ja tuntiopettajien sähköpostiosoite | Jatkuva                      | ohj2-opet@tim.jyu.fi                                                                                                             |
+Pääsiäistauon aikana (30.3.-6.4.) ei kuitenkaan ole ohjausta tarjolla.
 
-Ohjaukset ovat yhteisiä ITKP102 Ohjelmointi 1- ja ITKA2004 Tietokannat ja
-tiedonhallinta -opintojaksojen kanssa. Ohjaajat auttavat kummankin kurssin
-opiskelijoita.
+Sisu vaatii ilmoittautumisen yhteydessä valitsemaan ohjausryhmän. Voit kuitenkin
+täysin vapaasti käyttää kaikkia ohjausaikoja ja -kanavia riippumatta siitä,
+mihin ohjausryhmään olet ilmoittautunut. 
+
+| Tukikanava                                           | Aika                      | Paikka/Linkki                                                                                                                   |
+| ---------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Lähiohjaus                                           | ke 8-18, to 8-18, pe 8-14 | Agoralla luokat [Ag B212.1 Finland](https://navi.jyu.fi/space/m118988) ja [Ag B211.1 Sovjet](https://navi.jyu.fi/space/m118987) |
+| Etäohjaus                                            | ke 8-18, to 8-18, pe 8-14 | [Ohjelmointi 2 Teams-kanava](#teams-jy)                                                                                         |
+| Vastuuopettajien ja tuntiopettajien sähköpostiosoite | Jatkuva                   | ohj2-opet@jyu.onmicrosoft.com                                                                                                   |
+
+<!--
+| Tukikanava                                           | Aika                        | Paikka/Linkki                           |
+| ---------------------------------------------------- | --------------------------- | --------------------------------------- |
+| Etäohjaus                                            | ke 10-16, to 8-18, pe 10-16 | [Ohjelmointi 2 Teams-kanava](#teams-jy) |
+| Vastuuopettajien ja tuntiopettajien sähköpostiosoite | Jatkuva                     | ohj2-opet@jyu.onmicrosoft.com           |
+--> 
+
+Ohjaukset ovat yhteisiä TIEP111 Ohjelmointi 2, ITKP102 Ohjelmointi 1- ja
+ITKA2004 Tietokannat ja tiedonhallinta -opintojaksojen kanssa. Ohjaajat auttavat
+kaikkien kolmen kurssin opiskelijoita.
 
 Ohjausaikoja saatetaan lisätä tai poistaa kysynnän mukaan; kerro aikatoiveistasi
 opettajille sähköpostitse. 
 
-<details closed><summary>Haluatko Sisun kalenteriin ohjausaikoja näkyviin? (Avaa ohje klikkaamalla) </summary>
+24.4. jälkeen ohjausta on saatavilla ajanvarauksella. Linkki ajanvaraukseen
+tulee myöhemmin saataville. 
+
+<details closed><summary>Haluatko Sisun opintokalenteriin ohjausaikoja näkyviin? (Avaa ohje klikkaamalla) </summary>
 
 1. Kirjaudu Sisuun
 2. Jos olet jo ilmoittautunut kurssille, klikkaa ylhäällä välilehteä
@@ -58,15 +80,15 @@ opettajille sähköpostitse.
 3. Selaa oikealla oikea kurssi näkyville, eli tässä tapauksessa Ohjelmointi 2
 4. Klikkaa oikealla olevaa oikealle osoittavaa väkästä Ohjelmointi 2 -kurssin
    kohdalla
-1. Skrollaa alaspäin, kunnes tulee alaotsikko *Pääteohjaus*
-2. Jos ei vielä näy, niin skrollaa alaspäin, kunnes näkyy *Muiden ryhmien
+5. Skrollaa alaspäin, kunnes tulee alaotsikko *Pääteohjaus*
+6. Jos ei vielä näy, niin skrollaa alaspäin, kunnes näkyy *Muiden ryhmien
    tiedot* ja klikkaa sitä
-3. Nyt voit skrollaamalla alaspäin haluamiesi pääteohjauksien kohdalta klikata
+7. Nyt voit skrollaamalla alaspäin haluamiesi pääteohjauksien kohdalta klikata
    nappulaa *Näytä tapahtumat kalenterissa*. 
 
-   ![Image](images/tapahtumat.jpg)
+   ![Näytä Sisu-tapahtumat kalenterissa](images/tapahtumat.jpg)
 
-1. Nyt kyseisen ryhmän ohjausajat näkyvät sinulla automaattisesti. Tarvittaessa
+8. Nyt kyseisen ryhmän ohjausajat näkyvät sinulla automaattisesti. Tarvittaessa
    voit poistaa ryhmän tapahtumia viikkokohtaisesti Tapahtumakalenterista. 
 
 </details>
@@ -94,7 +116,7 @@ tarvittaessa sallia oikeudet käyttöjärjestelmäsi asetuksista.
 
 ## Ohjeet Teams-ohjauksiin liittymiseksi (JY Avoin yliopisto, erilliset opinto-oikeudet) {#teams-avoin}
 
-Lähetä sähköpostilla alla oleva pyyntö osoitteeseen `ohj2-opet@tim.jyu.fi`.
+Lähetä sähköpostilla alla oleva pyyntö osoitteeseen `ohj2-opet@jyu.onmicrosoft.com`.
 
 ```plain
 Hei,
@@ -160,7 +182,7 @@ kolmella tavalla:
     epäselvyyksistä, tai muista ongelmista tässä oppimateriaalissa. Raportoi
     havaintosi GitHubissa klikkaamalla kunkin sivun alareunassa olevia linkkejä.
     Voit myös ilmoittaa puutteista suoraan opettajille sähköpostitse
-    osoitteeseen `opet@TODO`.
+    osoitteeseen `ohj2-opet@jyu.onmicrosoft.com`.
  
  3. Opintojakson lopuksi kaikki **Sisussa** (tai **Ilpo-portaalissa**)
     ilmoittautuneet (tutkinto, avoin, erilliset opinto-oikeudet, lukiolinjat)

@@ -6,7 +6,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
+        IO.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
 
         // Kutsutaan tässä myös yliluokan kayta()-metodia, jolloin
         // käyttötunnit lisääntyvät.
@@ -19,7 +19,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
      */
     @Override
     public boolean huolla() {
-        System.out.println("Huolletaan sirkkeliä... Teroitetaan terää ja säädetään kierrosnopeutta.");
+        IO.println("Huolletaan sirkkeliä... Teroitetaan terää ja säädetään kierrosnopeutta.");
         return true;
     }
 }

@@ -1,5 +1,9 @@
 # Perintä ja rajapinnat olioiden yhteistyössä
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 > - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
 >   riippuvuuden välttämiseksi 
@@ -68,7 +72,7 @@ public class Leivanpaahdin implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
+        IO.println("Leivänpaahdin: Vastukset alkavat hehkua punaisena.");
     }
 }
 
@@ -77,7 +81,7 @@ public class Sirkkeli implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
+        IO.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
     }
 }
 ```
@@ -134,7 +138,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Sirkkelin oma tapa reagoida virtaan:
-        System.out.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
+        IO.println("Sirkkeli: Moottori alkaa pyörittää terää 4000 rpm.");
 
         // Kutsutaan tässä myös yliluokan kayta()-metodia, jolloin
         // käyttötunnit lisääntyvät.
@@ -147,7 +151,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
      */
     @Override
     public boolean huolla() {
-        System.out.println("Huolletaan sirkkeliä..."
+        IO.println("Huolletaan sirkkeliä..."
          + "Teroitetaan terää ja säädetään kierrosnopeutta.");
         return true;
     }
@@ -160,13 +164,13 @@ implements Verkkovirtalaite {
     @Override
     public void kytkeVirta() {
         // Leivänpaahtimen oma tapa reagoida virtaan:
-        System.out.println("Leivänpaahdin: "
+        IO.println("Leivänpaahdin: "
         + "Vastukset alkavat hehkua punaisena.");
     }
 
     @Override
     public void puhdista() {
-        System.out.println("Leivänpaahdin: Poistetaan murut "
+        IO.println("Leivänpaahdin: Poistetaan murut "
         + "ja pyyhitään kevyesti kostealla rätillä.");
     }
 }
@@ -217,7 +221,7 @@ public class Pistorasia {
     // Pistorasiaan voi kytkeä MINKÄ TAHANSA verkkovirtalaitteen.
     // Pistorasiaa ei kiinnosta, onko se sirkkeli vai paahdin.
     public void kytkeLaite(Verkkovirtalaite laite) {
-        System.out.println("--- Pistorasia antaa sähköä ---");
+        IO.println("--- Pistorasia antaa sähköä ---");
         
         // Pistorasia kutsuu sopimuksen mukaista metodia.
         // Tässä toteutuu polymorfismi: 
@@ -261,11 +265,11 @@ public class KodinSahkot {
         Sirkkeli sirkkeli = new Sirkkeli();
 
         // 3. Käytetään laitteita pistorasian kautta
-        System.out.println("--- Aamu keittiössä ---");
+        IO.println("--- Aamu keittiössä ---");
 
         // Kytketään paahdin seinään
         keittionPistoke.kytkeLaite(paahdin);
-        System.out.println("\n--- Remontti alkaa ---");
+        IO.println("\n--- Remontti alkaa ---");
 
         // Kytketään sirkkeli SAMAAN pistorasiaan
         // Koska yhdessä pistorasiassa voi olla yksi laite kerrallaan,
@@ -317,11 +321,11 @@ public class KodinSahkot {
         // HIGHLIGHT_GREEN_END
 
         // 3. Käytetään laitteita pistorasian kautta
-        System.out.println("--- Aamu keittiössä ---");
+        IO.println("--- Aamu keittiössä ---");
 
         // Kytketään paahdin seinään
         keittionPistoke.kytkeLaite(paahdin);
-        System.out.println("\n--- Remontti alkaa ---");
+        IO.println("\n--- Remontti alkaa ---");
 
         // Kytketään sirkkeli SAMAAN pistorasiaan
         // Koska yhdessä pistorasiassa voi olla yksi laite kerrallaan,
@@ -470,7 +474,7 @@ class HarjoitusPiano implements Soitin {
     @Override
     public void soita() {
         // Toteutus, joka tekee sinänsä jotain "järkevää", mutta rikkoo sopimuksen.
-        System.out.println("Harjoitellaan kuulokkeilla. Yleisö ei kuule mitään.");
+        IO.println("Harjoitellaan kuulokkeilla. Yleisö ei kuule mitään.");
     }
 }
 ``` 
@@ -554,7 +558,7 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 ## Tehtävät
 
 <task>
-  <task-title>✨ Bonus: Tehtävä 3.9: Kotityörobotti. <points>1 p.</points> </task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.9: Kotityörobotti. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/3-9-kotityorobotti/handout.md}}

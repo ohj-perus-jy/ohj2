@@ -1,5 +1,9 @@
 # Abstrakti luokka
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 26. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 > 
 > - Osaat tehdä abstraktin luokan ja abstrakteja metodeja Javassa.
@@ -160,7 +164,7 @@ public class Kahvinkeitin extends Laite {
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
-        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+        IO.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
 // FILE_END
@@ -249,7 +253,7 @@ public class Kahvinkeitin extends Laite {
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
-        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+        IO.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
 // FILE_END
@@ -347,14 +351,14 @@ public abstract class Laite {
     public void kytkePaalle() {
         if (!kytketty) {
             kytketty = true;
-            System.out.println(nimi + " käynnistyy.");
+            IO.println(nimi + " käynnistyy.");
         }
     }
 
     public void kytkePois() {
         if (kytketty) {
             kytketty = false;
-            System.out.println(nimi + " sammuu.");
+            IO.println(nimi + " sammuu.");
         }
     }
     // HIGHLIGHT_GREEN_END
@@ -411,14 +415,14 @@ public abstract class Laite {
     public void kytkePaalle() {
         if (!kytketty) {
             kytketty = true;
-            System.out.println(nimi + " käynnistyy.");
+            IO.println(nimi + " käynnistyy.");
         }
     }
 
     public void kytkePois() {
         if (kytketty) {
             kytketty = false;
-            System.out.println(nimi + " sammuu.");
+            IO.println(nimi + " sammuu.");
         }
     }
 
@@ -446,7 +450,7 @@ public class Valo extends Laite {
     }
     @Override
     public void raportoiTila() {
-        System.out.println("Valon kirkkaus on " + kirkkaus + "%.");
+        IO.println("Valon kirkkaus on " + kirkkaus + "%.");
     }
 }
 // FILE_END
@@ -467,7 +471,7 @@ public class Turvakamera extends Laite {
     @Override
     public void raportoiTila() {
         String tila = tallennusPaalla ? "päällä" : "pois";
-        System.out.println("Turvakameran tallennus on " + tila + ".");
+        IO.println("Turvakameran tallennus on " + tila + ".");
     }
 }
 // FILE_END
@@ -488,7 +492,7 @@ public class Kahvinkeitin extends Laite {
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";
-        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+        IO.println("Kahvinkeittimen pannu on " + tila + ".");
     }
 }
 // FILE_END
@@ -506,7 +510,7 @@ Abstraktia metodia ei voi määritellä `private`-määreellä.
 
 ## Huomautuksia
 
-<details closed><summary>✨ Valinnaista lisätietoa: Abstraktit metodit ja operaatiorunko-malli </summary>
+<details closed><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Abstraktit metodit ja operaatiorunko-malli </summary>
 
 Abstraktissa luokassa voi olla myös konkreettinen metodi, jonka toteutuksessa kutsutaan abstraktia metodia. Tällaista toteutusta kutsutaan ohjelmistosuunnittelussa *operaatiorunko*-suunnittelumalliksi. Abstrakti luokka määrittelee toimenpiteelle "kaavan", mutta delegoi osan vaiheista aliluokkien toteutettavaksi.
 
@@ -539,14 +543,14 @@ public abstract class Laite {
 //-    public void kytkePaalle() {
 //-        if (!kytketty) {
 //-            kytketty = true;
-//-            System.out.println(nimi + " käynnistyy.");
+//-            IO.println(nimi + " käynnistyy.");
 //-        }
 //-    }
 //-
 //-    public void kytkePois() {
 //-        if (kytketty) {
 //-            kytketty = false;
-//-            System.out.println(nimi + " sammuu.");
+//-            IO.println(nimi + " sammuu.");
 //-        }
 //-    }
 //-
@@ -607,7 +611,7 @@ public class Kahvinkeitin extends Laite {
 //-    @Override
 //-    public void raportoiTila() {
 //-        String tila = kiehumassa ? "päällä" : "pois";
-//-        System.out.println("Kahvinkeittimen pannu on " + tila + ".");
+//-        IO.println("Kahvinkeittimen pannu on " + tila + ".");
 //-    }
 }
 // FILE_END

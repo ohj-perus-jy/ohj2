@@ -1,5 +1,9 @@
 # Muuttumaton luokka
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 2. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Immutable-olio ja `final`

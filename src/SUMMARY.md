@@ -10,6 +10,7 @@
 ---
 
 [Luennot](./luennot.md)
+[Eteneminen (TIM)<https://tim.jyu.fi/view/kurssit/tie/tiep111/koti>]()
 
 --- 
 
@@ -49,9 +50,9 @@
   - [Ulkoiset kirjastot ja Java-projektien hallintatyökalut](./osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut.md)
   - [Tiedostojen käsittely](./osa6/05-tiedostojen-kasittely.md)
   - [Osan kaikki tehtävät](./osa6/06-tehtavat.md)
-- [Viikko 7 (WIP)]()
-- [Viikko 8 (WIP)]()
-- [Viikko 9 (WIP)]()
-- [Viikko 10 (WIP)]()
-- [Viikko 11 (WIP)]()
-- [Viikko 12 (WIP)]()
+- [Osa 7](./osa7/index.md)
+- [Osa 8](./osa8/index.md)
+- [Osa 9](./osa9/index.md)
+- [Osa 10](./osa10/index.md)
+- [Osa 11](./osa11/index.md)
+- [Osa 12](./osa12/index.md)

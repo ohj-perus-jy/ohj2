@@ -18,6 +18,10 @@ task > task-title {
     padding: 0.75em 1.5em 0 1.5em;
 }
 
+task-title > i.bi {
+    margin-inline-end: 0.25em;
+}
+
 task-link a {
     display: flex;
     align-items: center;

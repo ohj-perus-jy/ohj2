@@ -1,5 +1,9 @@
 # Esimerkki: oma ArrayList-toteutus
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 9. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > TODO: Pitäisikö olla sen sijaan ohjattu tehtävä?

@@ -1,10 +1,13 @@
 # Suorittaminen
 
-Voit valita kolmesta suoritustavasta itsellesi sopivimman. Kaikki suoritustavat sisältävät harjoitustyön tekemisen.
+Voit valita kolmesta suoritustavasta itsellesi sopivimman. Kaikki suoritustavat
+sisältävät harjoitustyön tekemisen.
 
-Suoritustapojen yksityiskohdat eroavat aikaisemmista toteutuksista jonkin verran, joten jos olet aiemmin yrittänyt suorittaa kurssia, lue tämä osio huolellisesti läpi.
+Suoritustapojen yksityiskohdat eroavat aikaisemmista toteutuksista jonkin
+verran, joten jos olet aiemmin yrittänyt suorittaa kurssia, lue tämä osio
+huolellisesti läpi.
 
-## Suoritustapa 1
+## Suoritustapa 1 {#suoritustapa-1}
 
 *Tentti, harjoitustehtävät, harjoitustyö aikataulussa*
 
@@ -33,7 +36,18 @@ Ensimmäisen kuuden osan kohdalla on mahdollista saada myös ns. DL-BONUS-pistei
 
 <sup>2</sup> Edelleen, "50%" tarkoittaa tässä yhteydessä puolet siitä pistemäärästä, mitä kyseisen osan perustehtävistä voi saada.
 
-Näet [etenemissivulla]() kerättyjen tehtäväpisteidän määrän ja prosenttiosuuden sekä DL-BONUS-pisteet erikseen. (Linkki TODO!)
+Osien takarajat DL-BONUS-pisteiden saamiseksi ovat seuraavat:
+
+| Osa | Takaraja DL-BONUS-pisteille |
+| --- | --------------------------- |
+| 1   |{{#include ./takarajat.md:1}}|
+| 2   |{{#include ./takarajat.md:2}}|
+| 3   |{{#include ./takarajat.md:3}}|
+| 4   |{{#include ./takarajat.md:4}}|
+| 5   |{{#include ./takarajat.md:5}}|
+| 6   |{{#include ./takarajat.md:6}}|
+
+Näet [etenemissivulla](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti) kerättyjen tehtäväpisteidän määrän ja prosenttiosuuden sekä DL-BONUS-pisteet erikseen.
 
 Lopullinen arvosana muodostuu harjoitustehtävien arvosanan ja tentin arvosanan painotettuna keskiarvona. Harjoitustehtävistä saatua arvosanaa painotetaan 40% ja tentistä saatua arvosanaa painotetaan 60%. Sekä harjoitustehtävistä että tentistä täytyy saada vähintään arvosana 1, jotta kurssista voi saada hyväksytyn arvosanan.
 
@@ -47,7 +61,7 @@ Lopullinen arvosana muodostuu harjoitustehtävien arvosanan ja tentin arvosanan 
 
 Harjoitustehtävistä saatu arvosana otetaan lukuun **kolmeen ensimmäiseen tenttiin**, jotka opiskelija suorittaa, ja enintään yhden vuoden sisällä opintojakson viimeisestä suorituspäivästä. 
 
-## Suoritustapa 2
+## Suoritustapa 2 {#suoritustapa-2}
 
 *105% harjoitustehtävistä, suullinen kuulustelu harjoitustyöstä, harjoitustyö aikataulussa*
 
@@ -65,3 +79,33 @@ Arvosanasi on tällöin 1, jota voit vapaaehtoisesti korottaa tentillä.
  2. Teet tasokokeen tapaisen loppukokeen (tämä on eri asia kuin tentti)
   
 Arvosana muodostuu loppukokeen arvosanasta.
+
+## Eettiset ohjeet {#eettiset-ohjeet}
+
+Olet vastuussa kaikista palauttamistasi töistä. Kopioiminen tai toisen henkilön
+työn esittäminen omanaan on kiellettyä. Ryhmätyö on sallittua, mutta jokaisen
+ryhmän jäsenen tulee antaa panoksensa työhön, ymmärtää tekemänsä asiat ja osata
+selittää ne tarvittaessa. Ryhmätyönä tehty osa tulee aina merkitä selvästi
+palautettuun työhön, esimerkiksi koodin kommenttien avulla. 
+
+Noudatamme [Jyväskylän yliopiston ohjeita ja linjauksia tekoälypohjaisten
+sovellusten käytössä
+opiskelussa](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/tekoalypohjaisten-sovellusten-kaytto-opiskelussa-jyu-ohjeet-ja-linjaukset).
+Alla olevat ohjeet täydentävät näitä linjauksia. 
+
+Generatiivisten tekoälytyökalujen käyttö koodin luomisessa on kiellettyä.
+Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun
+ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä
+osaamistavoitteita. Kiellettyjä generatiivisia työkaluja ovat esimerkiksi GitHub
+Copilot, ChatGPT, Bard ja vastaavat chat- ja agenttisovellukset. Myös Riderin
+koodin tekoälypohjainen täydennyksen käyttö on kiellettyä. 
+
+Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
+selittämiseen, tehtävänantojen ymmärtämiseen tai materiaalissa annettujen
+esimerkkien selittämiseen. Tekoälytyökalulle annettavassa kehotteessa tulee
+huomioida, että tekoäly ei saa tuottaa suoria vastauksia tai koodia
+opintojakson tehtäviin.
+
+Menettely vilppiepäilytilanteessa on kuvattu [Jyväskylän yliopiston opintoja
+ohjaavissa säädöksissä ja
+määräyksissä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/vilppitapausten-kasittely).

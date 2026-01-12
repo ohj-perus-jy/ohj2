@@ -2,15 +2,24 @@
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
-- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista varten. 
+- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää
+  muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista
+  varten. 
 
-- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
+- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka
+  mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
-- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE), jolla voi kehittää ja debugata muun muassa Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
+- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated
+  Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
+  Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
-Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja 2. kerros). Jos sinulla on oma tietokone, suosittelemme, että asennat ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
+Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran
+mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja
+2. kerros). Jos sinulla on oma tietokone, suosittelemme vahvasti, että asennat
+ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun
+kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
 >
