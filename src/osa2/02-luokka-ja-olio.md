@@ -1,9 +1,5 @@
 # Luokka ja olio
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 19. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 >
 > - Luokka ja olio
@@ -40,16 +36,16 @@ class Rakennus {
 }
 ```
 
-Voimme luoda luokasta olioita käyttämällä avainsanaa `new`. Tämä varaa muistista
-oliolle sopivan tilan, valitsee ja suorittaa sopivan muodostajan, ja palauttaa
-viitteen juuri luotuun olioon. Sijoitamme tämän viitten muuttujaan, jotta
-pääsemme olioon sitä kautta käsiksi. Viitemuuttujan tyyppi kertoo, _minkälainen_
-olio muistisijainnissa täytyy olla - eli mitä _luokkaa_ se edustaa. Käytämme
-siis luokkaa muuttujan tyyppinä. 
+Voimme luoda luokasta ilmentymiä eli *olioita* käyttämällä avainsanaa `new`. 
+Tämä varaa muistista oliolle sopivan tilan, valitsee ja suorittaa sopivan 
+muodostajan, ja palauttaa viitteen juuri luotuun olioon. Sijoitamme tämän
+viitten muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Viitemuuttujan 
+tyyppi kertoo, _minkälainen_ olio muistisijainnissa täytyy olla - eli mitä 
+_luokkaa_ se edustaa. Käytämme siis luokkaa muuttujan tyyppinä. 
 
 ```java
 void main() {
-    // 'new Rakennus()' luo olion ja palauttaa viitteen siihen. 
+    // Lauseke 'new Rakennus()' luo olion ja palauttaa viitteen siihen. 
     // Sijoitamme tämän viitteen muuttujaan 'rakennus'.
     Rakennus rakennus = new Rakennus();
 }
@@ -63,8 +59,7 @@ void main() {
 > osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi
 > viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain
 > yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen
-> osoittaa eri olioon. Tämä onkin täysin tavallista, kun teemme listan
-> "olioista".
+> osoittaa eri olioon.
 
 ## Attribuutit
 
@@ -95,7 +90,7 @@ että niiden näkyvyyttä voidaan hallita erilaisten näkyvyysmääreiden avulla
 Aliohjelman paikalliset muuttujat ovat olemassa ja nähtävillä vain aliohjelman
 sisällä sen suorituksen ajan, mutta attribuutit ovat olemassa koko olion eliniän
 ajan ja ne *voidaan* asettaa näkyväksi myös olion ulkopuolelta, joskin tämä on
-yleisesti ottaen huono tapa. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
+yleisesti ottaen huono idea. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
 
 Luokasta tehdyt oliot sisältävät aina luokassa määritellyt attribuutit.
 Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot
@@ -116,9 +111,10 @@ on attribuutille oma arvo, sillä attribuutit muodostavat olion tilan.
 
 ```java
 public class Rakennus {
-    private String väri = "sininen"; // Olion attribuutti
+    // Olion attribuutti, jolla on oletusarvo.
+    private String väri = "sininen";
 
-    public void teeJotain()
+    public void tulosta()
     {
         // Tämä lokaali muuttuja peittää saman nimen omaavan attribuutin 
         // aliohjelman sisällä.
@@ -155,7 +151,7 @@ useammaksi metodiksi.
 Voidaksemme kutsua olion metodia, meillä täytyy olla olio ja siihen viite.
 Lisätään nyt `Rakennus`-luokkaamme pari yksinkertaista metodia olion tilan
 käsittelyyn ja kutsutaan näitä. Tällaisia metodeja kutsutaan usein
-*saantimetodeiksi*.
+saantimetodeiksi.
 
 ```java
 // FILE: Rakennus.java
@@ -185,7 +181,7 @@ void main() {
 
     // Käytetään olioiden metodeja muuttamaan niiden tilaa.
     rakennus1.setVäri("vihreä");
-    rakennus2.setVäri("valkoinen")
+    rakennus2.setVäri("valkoinen");
 
     // Tulostetaan olioiden värit saantimetodien avulla.
     IO.println(rakennus1.getVäri()); // Tulostaa "vihreä"
@@ -198,23 +194,10 @@ void main() {
 // FILE_END
 ```
 
-<task>
-  <task-title>Tehtävä 2.1a: Ensimmäinen luokka<points>1 p.</points></task-title>
-  <handout>
-
-Valitse jokin esine tai käsite ja tee siitä yksinkertainen luokka.
-
-Lisää luokkaan vähintään kaksi sille sopivaa attribuuttia ja ainakin yksi
-metodi, joka muuttaa tai tarkastelee olion tilaa jollain tavalla. 
-
-Käytä kaikkia attribuutteja jollain tavalla niin, että kääntäjä ei anna
-varoituksia.
-
-Luo olio ja kokeile sen tilan muuttamista pääohjelmassa.
-  
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava1">Tee tehtävä TIMissä</a></task-link>
-</task>
+Voisimme lisätä myös vastaavat metodit luokan toista attribuuttia varten.
+Keskustelemme myöhemmin tässä osassa siitä, miten olion tilaa voidaan käsitellä
+hieman järkevämmin, mutta tässä vaiheessa tällaiset yksinkertaiset `get` ja
+`set` -metodit riittävät.
 
 ## This-viite
 
@@ -227,6 +210,8 @@ attribuutteja näin:
 ```java
 public class Rakennus {
     private String väri;
+
+    // ...
 
     public String getVäri() {
         return this.väri;
@@ -265,16 +250,6 @@ public class Rakennus {
         // this-viitteen käyttö on kuitenkin täysin sallittua.
         return this.väri;
     }
-
-    // Huom! Teimme tästä metodista virheellisesti staattisen, eli vaikka 
-    // kutsumme sitä jonkin olion kautta, sen sisällä ei ole tietoa oliosta.
-    public static void tulosta() {
-        // Kumpikaan alla olevista ei onnistu, sillä emme voi päästä 'this' 
-        // viitteen kautta olion tilaan käsiksi, eikä metodissa ole 
-        // lokaalia muuttujaa 'omistaja'.
-        // IO.println(omistaja);
-        // IO.println(this.omistaja);
-    }
 }
 // FILE_END
 // FILE: main.java
@@ -304,9 +279,19 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    public Rakennus(String omistaja, String väri)
-    {
+    public String getOmistaja() {
+        return omistaja;
+    }
+
+    public void setOmistaja(String omistaja) {
         this.omistaja = omistaja;
+    }
+
+    public String getVäri() {
+        return väri;
+    }
+
+    public void setVäri(String väri) {
         this.väri = väri;
     }
 
@@ -330,7 +315,9 @@ public class Kaunistaja {
 // FILE_END
 // FILE: main.java
 void main() {
-    Rakennus talo = new Rakennus("Maija Opettaja", "Keltainen");
+    Rakennus talo = new Rakennus();
+    talo.setOmistaja("Maija Opettaja");
+    talo.setVäri("Keltainen");
     IO.println(talo.kaunista());
 }
 // FILE_END
@@ -345,18 +332,17 @@ metodien nimeämistyylistä. Muodostajalle ei määritetä paluuarvon tyyppiä, 
 muodostaja palauttaa aina viitteen muodostettuun olioon.
 
 Luokassa täytyy olla ainakin yksi muodostaja. Olemme kuitenkin tähän asti
-tehneet luokan olioita määrittelemättä luokkaan muodostajaa. Tämä onnistuu
+luoneet olioita määrittelemättä luokkaan muodostajaa. Tämä onnistuu
 Javassa, sillä jos luokkaan *ei* ole tehty yhtään muodostajaa, kääntäjä luo
 automaattisesti parametrittoman muodostajan. Automaattisesti luotu parametriton
 muodostaja on toteutukseltaan tyhjä siinä mielessä, että se ei sisällä yhtään
-lausetta.
+lausetta. Parametritonta muodostajaa ei luoda automaattisesti, jos
+määrittelemme luokkaan yhdenkin muodostajan itse.
 
-Parametritonta muodostajaa ei kuitenkaan luoda automaattisesti silloin, kun
-määrittelemme luokkaan yhdenkin muodostajan itse. Muodostajan on aina sama kuin 
-luokan, joten teemme siis muodostajia lisätessämme metodin kuormitusta
-erilaisilla parametreilla. Jos luokalla on useampi muodostaja eri parametreilla,
-kääntäjä valitsee oikean muodostajan automaattisesti olion luomisen
-yhteydessä annettujen argumenttien perusteella. 
+Muodostajan nimi on aina sama kuin luokan, joten teemme siis muodostajia 
+lisätessämme metodin kuormitusta erilaisilla parametreilla. Kääntäjä valitsee 
+oikean muodostajan automaattisesti olion luomisen yhteydessä annettujen 
+argumenttien perusteella. 
 
 Käytimme aikaisemmassa esimerkissä `Rakennus`-luokkaa määrittelemättä
 muodostajaa. Otetaan metodit hetkeksi pois selkeyden vuoksi ja katsotaan, mitä
@@ -371,7 +357,8 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    // Olio luodaan oletusmuodostajaa käyttäen.
+    // Emme määritelleet luokkaan yhtään muodostajaa itse, joten
+    // olio luodaan oletusmuodostajaa käyttäen.
     Rakennus rakennus = new Rakennus();
 }
 // FILE_END
@@ -387,7 +374,7 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    // Parametriton, joka vastaa oletusmuodostajaa.
+    // Parametriton muodostaja, joka vastaa oletusmuodostajaa.
     public Rakennus() {
         // Voisimme täällä alustaa olion tilan jollain tavalla, 
         // esimerkiksi asettamalla attribuuteille alkuarvot.
@@ -396,17 +383,30 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    // Olio luodaan määrittelemäämme parametritonta muodostajaa käyttäen.
+    // Olio luodaan itse määrittelemäämme parametritonta muodostajaa käyttäen.
     Rakennus rakennus = new Rakennus();
 }
 // FILE_END
 ```
 
-Joskus oletusmuodostaja voi olla riittävä, mutta usein haluamme mahdollistaa
-olioiden luomisen suoraan oikeaan tilaan määrittelemällä erilaisia muodostajia.
+Olemme tähän asti muodostaneet olioita ilman kunnollista alustusta. Tämä ei ole
+hyvä käytäntö, joten korjataan tilanne seuraavaksi.
+
+Rakennukset ovat heti luomisen jälkeen tilassa, jossa niillä ei ole omistajaa 
+tai väriä. Tällä hetkellä vasta luodun olion attribuuttien arvot ovat `null`.
+Oliosta ja sen tarkoituksesta riippuen tällaiset arvot *voivat* olla sallittuja,
+mutta jos rakennus on olemassa, sillä täytynee olla jokin omistaja ja väri.
+
+Olisi parempi, että olio olisi heti luonnin jälkeen käyttökelpoinen. Voisimme
+luoda olion suoraan oikeaan tilaan määrittelemällä muodostajan, joka ottaa olion
+tilan alustamiseen tarvittavat tiedot vastaan parametreina ja alustaa
+attribuutit oikein.
+
 Lisätään nyt `Rakennus`-luokalle toinen muodostaja, joka ottaa omistajan ja
-värin parametreina vastaan ja alustaa näillä olion attribuutit. Näin meidän ei
-tarvitse asettaa attribuutteja erikseen olion luomisen jälkeen. 
+värin vastaan parametreina ja alustaa näillä olion attribuutit. Näin meidän ei
+tarvitse asettaa attribuutteja erikseen olion luomisen jälkeen. Voimme nyt myös 
+poistaa parametrittoman muodostajan, jotta sitä ei voi enää käyttää
+luomaan olioita, joilla on virheellinen alkutila.
 
 ```java
 // FILE: Rakennus.java
@@ -414,13 +414,9 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    // Parametriton muodostaja. Tämä on nyt pakollinen, koska määrittelimme luokkaan toisenkin muodostajan.
-    public Rakennus() {
-        // Voisimme täällä alustaa olion tilan jollain tavalla, esimerkiksi asettamalla attribuuteille alkuarvot.
-    }
-
     public Rakennus(String omistaja, String väri) {
-        // Alustetaan olion tila parametreilla. Huomaa tässä this-viitteen käyttö, sillä parametrien ja attribuuttien nimet ovat samat.
+        // Alustetaan olion tila parametreilla. Huomaa tässä this-viitteen 
+        // käyttö, sillä parametrien ja attribuuttien nimet ovat samat.
         this.omistaja = omistaja;
         this.väri = väri;
     }
@@ -428,21 +424,25 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    // Oliolle ei anneta luonnin yhteydessä argumentteja. Kääntäjä valitsee parametrittoman muodostajan.
-    Rakennus rakennus1 = new Rakennus();
+    // Oliolle annetaan kaksi merkkijonoa argumentteina. Nämä vastaavat 
+    // määrittelemäämme parametrillista muodostajaa, joten sitä käytetään 
+    // olion muodostamiseen.
+    Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
 
-    // Oliolle annetaan kaksi merkkijonoa argumentteina. Nämä vastaavat määrittelemäämme parametrillista muodostajaa, joten sitä käytetään olion muodostamiseen.
-    Rakennus rakennus2 = new Rakennus("DVV", "valkoinen");
+    // Tämä ei onnistuisi, sillä emme ole määritelleet muodostajaa, jossa on 
+    // vain yksi parametri.
+    // Rakennus rakennus2 = new Rakennus("JYU");
 
-    // Tämä ei onnistuisi, sillä emme ole määritelleet muodostajaa, jossa on vain yksi parametri. 
-    // Rakennus rakennus3 = new Rakennus("DVV");
+    // Tämäkään ei onnistuisi, sillä parametritonta muodostajaa ei enää ole 
+    // eikä sellaista enää luoda automaattisesti.
+    // Rakennus rakennus3 = new Rakennus();
 }
 // FILE_END
 ```
 
 Lisätään vielä lopuksi hieman erikoisempi muodostaja, joka ottaa vastaan toisen
 saman luokan olion ja kopioi sen tilan muodostettavalle oliolle. Tällaisesta
-muodostajasta puhuttaessa käytetään usein termiä *copy constructor*. 
+muodostajasta puhuttaessa käytetään usein nimitystä *copy constructor*. 
 
 ```java
 // FILE: Rakennus.java
@@ -450,16 +450,13 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    public Rakennus() {
-        // Voisimme täällä alustaa olion tilan jollain tavalla, esimerkiksi asettamalla attribuuteille alkuarvot.
-    }
-
     public Rakennus(String omistaja, String väri) {
         this.omistaja = omistaja;
         this.väri = väri;
     }
 
-    // Muodostaja, joka ottaa vastaan toisen saman luokan olion ja kopioi sen arvot muodostettavalle oliolle.
+    // Muodostaja, joka ottaa vastaan toisen saman luokan olion ja 
+    // kopioi sen arvot muodostettavalle oliolle.
     public Rakennus(Rakennus kopioitava) {
         this.omistaja = kopioitava.omistaja;
         this.väri = kopioitava.väri;
@@ -468,17 +465,21 @@ public class Rakennus {
 // FILE_END
 // FILE: main.java
 void main() {
-    Rakennus rakennus1 = new Rakennus("DVV", "valkoinen");
+    Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
 
-    // Antamalla argumenttina toisen Rakennus-tyyppisen olion, käytämme uutta muodostaa, joka kopioi olion arvot. Molemmilla rakennuksilla on nyt sama omistaja ja väri.
+    // Antamalla argumenttina toisen Rakennus-tyyppisen olion, käytämme uutta 
+    // muodostaa, joka kopioi olion arvot. Molemmilla rakennuksilla on nyt 
+    // sama omistaja ja väri.
     Rakennus rakennus2 = new Rakennus(rakennus1);
 }
 // FILE_END
 ```
 
 Voimme lisäksi käyttää muodostajassa `this`-avainsanaa kuin metodia, jos
-haluamme siirtää muodostamisen toiselle saman luokan muodostajalle. Muutetaan 
-luokkaa nyt niin, että parametriton muodostaja käyttää parametrillista 
+haluamme siirtää muodostamisen toiselle saman luokan muodostajalle. Voimme usein
+välttää näin turhaa toistoa.
+
+Muutetaan luokkaa nyt niin, että parametriton muodostaja käyttää parametrillista 
 muodostajaa antamaan attribuuteille alkuarvot.
 
 ```java
@@ -487,67 +488,59 @@ public class Rakennus {
     private String omistaja;
     private String väri;
 
-    public Rakennus() {
-        // Kutsutaan muodostajaa, jossa on kaksi merkkijonoa parametrina.
-        this("JYU", "valkoinen");
-    }
-
     public Rakennus(String omistaja, String väri) {
         this.omistaja = omistaja;
         this.väri = väri;
     }
 
-    // Muodostaja, joka ottaa vastaan toisen saman luokan olion ja kopioi sen arvot muodostettavalle oliolle.
     public Rakennus(Rakennus kopioitava) {
-        this.omistaja = kopioitava.omistaja;
-        this.väri = kopioitava.väri;
+        // Siirrämme muodostamisen yllä olevalle muodostajalle sitä 
+        // vastaavilla parametreilla
+        this(kopioitava.omistaja, kopioitava.väri);
     }
 }
 // FILE_END
 // FILE: main.java
 void main() {
-    Rakennus rakennus1 = new Rakennus();
-    IO.println(rakennus1.omistaja); // JYU
-    IO.println(rakennus1.väri); // valkoinen
+    Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
+
+    Rakennus rakennus2 = new Rakennus(rakennus1);
+    IO.println(rakennus2.omistaja); // JYU
+    IO.println(rakennus2.väri); // valkoinen
 }
 // FILE_END
 ```
 
-
-> [!VAROITUS]
-> Myös muodostajasta voidaan välittää `this`-viite toiselle 
-> aliohjelmalle, mutta tämä voi tietyissä tilanteissa aiheuttaa ongelmia. 
-> Olio on valmis vasta kun sen muodostaja on tehnyt tehtävänsä. Jos olio välitetään
-> kesken alustamisen toiselle aliohjelmalle, siihen voi tulla muutoksia, jotka
-> vaikuttavat muodostajan toimintaan. Kääntäjä antaa tällaisissa tilanteissa
-> `this-escape`-varoituksen. 
-> 
-> Ongelman voi välttää esimerkiksi välittämällä 
-> koko olion sijaan vain siitä tarvittavia tietoja. Toinen vaihtoehto on välttää
-> `this`-viitteen välittämistä muodostajan ulkopuolelle kokonaan. Voit lukea lisää
-> [täältä](https://bugs.openjdk.org/browse/JDK-8299995).
-
 <task>
-  <task-title>Tehtävä 2.1b: Muodostajat<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.1: Luokkia ja olioita, osa 1<points>1 p.</points></task-title>
   <handout>
 
-Lisää omaan luokkaasi vähintään kaksi eri muodostajaa. Kaikkien muodostajien
-täytyy alustaa olion tila jollain tavalla.
-
-Luo pääohjelmassa olioita tekemiäsi muodostajia käyttäen.
-
+{{#include ../exercises/2-1-luokkia-ja-olioita1/handout.md}}
+  
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/tehtava1">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava1">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.2: Oma luokka<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-2-oma-luokka/handout.md}}
+  
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 
 ## Static
 
-Staattisuuden käsite on usein alussa hieman hankala ymmärtää. Kannattaa aluksi lukea
-kertauksena Ohjelmointi 1 -kurssin
+Staattisuuden käsite on usein alussa hieman hankala ymmärtää. Kannattaa aluksi 
+lukea kertauksena Ohjelmointi 1 -kurssin
 [materiaaleista](https://tim.jyu.fi/view/kurssit/tie/ohj1/materiaali/staattiset)
 staattisuutta koskeva osa. Luokan jäsenten osalta staattisuus toimii samalla
-tavalla myös Javassa.
+tavalla myös Javassa. Käytämme tässä Javassa yleensä käytettyjä termejä,
+mutta mainittakoon, että nimityskäytännöt vaihtelevat hieman
+ohjelmointikielestä riippuen.
 
 Tavallisia, ei-staattisia attribuutteja ja metodeja kutsutaan *olion* 
 attribuuteiksi (engl. *instance attribute*) ja -metodeiksi 
@@ -582,13 +575,9 @@ Tehdään aluksi luokka, jossa ei ole staattisia jäseniä.
 
 ```java
 // FILE: Henkilo.java
-class Henkilo {
+public class Henkilo {
     private String etunimi;
     private String sukunimi;
-
-    public Henkilo() {
-        this("?", "?");
-    }
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -625,14 +614,10 @@ Lisätään nyt *luokan* attribuutti `luokanNimi` ja -metodi
 
 ```java
 // FILE: Henkilo.java
-class Henkilo {
+public class Henkilo {
     private String etunimi;
     private String sukunimi;
     private static String luokanNimi = "Henkilo";
-
-    public Henkilo() {
-        this("?", "?");
-    }
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -677,37 +662,13 @@ ja kääntäjä varoittaakin siitä.
 > kerta luoda IO-oliota ja kutsua sen `println`-metodia.
 
 <task>
-  <task-title>Tehtävä 2.Xa: Staattisuus<points>1 p.</points></task-title>
-  <handout>
-Teoriatehtävä?
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-<task>
-  <task-title>Tehtävä 2.Xb: Staattisuus<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.3: Static<points>1 p.</points></task-title>
   <handout>
 
-Muuta esimerkin `Henkilo`-luokkaa niin, että jokainen luotu henkilö saa
-*automaattisesti* oman järjestysnumeron, joka on kokonaisluku. 
-Ensimmäiseksi luodun henkilön numero on 1, seuraava saa numeroksi 2, jne.
-Numeroa ei saa antaa henkilölle kutsumalla erikseen sen metodia.
-
-Toteuta luokkaan myös metodi `annaNumero`, joka palauttaa tietyn olion numeron
-kokonaislukuna. Muita metodeja ei tarvitse lisätä.
-
-<details>
-<summary>Vinkki</summary>
-Tarvitset tässä tehtävässä staattisia luokan jäseniä.
-
-Mieti aluksi seuraavia kysymyksiä: 
-- Milloin olio saa numeron? 
-- Mistä olio tietää, mikä sen numeron pitäisi olla?
-- Mikä tieto on jaettua olioiden kesken ja mikä on oliokohtaista?
-</details>
+{{#include ../exercises/2-3-static/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 ## Olion elinkaari
@@ -733,10 +694,6 @@ tilan muuttamiseen.
 class Henkilo {
     private String etunimi;
     private String sukunimi;
-
-    public Henkilo() {
-        this("?", "?");
-    }
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -765,15 +722,15 @@ void main() {
     // Tässä luodaan olio ja sijoitetaan sen viite h0-muuttujaan. 
     // Kääntäjä valitsee käytettäväksi parametrittoman muodostajan, 
     // sillä muodostajalle ei anneta argumentteja.
-    h0 = new Henkilo();
+    h0 = new Henkilo("Mikko", "Mäkinen");
 
     // Tässä luodaan olio, mutta viitettä ei sijoiteta mihinkään. 
     // Emme pääse tähän olioon enää käsiksi ja se merkitään tuhottavaksi.
-    new Henkilo();
+    new Henkilo("Mikko", "Mäkinen");
 
     // Yleensä on suoraviivaisempaa esitellä viitemuuttuja ja 
     // luoda siihen sijoitettava olio yhdessä.
-    Henkilo h1 = new Henkilo();
+    Henkilo h1 = new Henkilo("Mikko", "Mäkinen");
     IO.println("h1: " + h1.annaNimi());
 
     // Voimme käyttää parametrillista muodostajaa antamalla muodostajalle 
@@ -781,7 +738,7 @@ void main() {
     Henkilo h2 = new Henkilo("Anna", "Korhonen");
     IO.println("h2: " + h2.annaNimi());
 
-    // Viitemuuttujat voivat osoittaa samaan olioon.
+    // Viitemuuttujat voivat osoittaa samaan olioon. Oliota ei kopioida.
     Henkilo h3 = h2;
     IO.println("h3: " + h3.annaNimi());
 }
@@ -797,23 +754,16 @@ suorituksen aikana.
 ```java
 // FILE: main.java
 void main() {
-    Henkilo h1 = new Henkilo();
-    IO.println(h1.annaNimi()); // Tulostaa ? ?
-
-    h1.asetaEtunimi("Joni");
-    h1.asetaSukunimi("Mäkinen");
-
-    IO.println(h1.annaNimi()); // Henkilöllä on nyt oikea nimi
+    Henkilo h1 = new Henkilo("Joni", "Mäkinen");
+    IO.println(h1.annaNimi());
+    h1.asetaSukunimi("Korhonen");
+    IO.println(h1.annaNimi());
 }
 // FILE_END
 // FILE: Henkilo.java
 class Henkilo {
     private String etunimi;
     private String sukunimi;
-
-    public Henkilo() {
-        this("?", "?");
-    }
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -849,21 +799,18 @@ void main() {
 
     // Muuttuja h1 on tällä hetkellä ainoa viite ensimmäiseen olioon.
     // Jos sijoitamme h1-muuttujaan jonkin muun viitten tai asetamme sen arvoksi
-    // null, ensimmäinen olio merkitään tuhottavaksi, sillä siihen ei ole enää viitteitä.
+    // null, olio merkitään tuhottavaksi, sillä siihen ei ole enää viitteitä.
     h1 = null;
 
-    // Aliohjelman päättyessä kaikki sen sisällä luodut lokaalit muuttujat (h1 ja h2) tuhoutuvat.
-    // Tässä tapauksessa olioihin ei ole enää muita viitteitä, joten nekin tuhoutuvat.
+    // Aliohjelman päättyessä kaikki sen sisällä luodut lokaalit 
+    // muuttujat (h1 ja h2) tuhoutuvat. Tässä tapauksessa olioihin ei ole 
+    // enää muita viitteitä, joten nekin tuhoutuvat.
 }
 // FILE_END
 // FILE: Henkilo.java
 class Henkilo {
     private String etunimi;
     private String sukunimi;
-
-    public Henkilo() {
-        this("?", "?");
-    }
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -897,21 +844,21 @@ roskienkeräyksestä suhteellisen helposti lähestyttävässä muodossa.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 2.2: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.4: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-2-luokkia-ja-olioita/handout.md}}
+{{#include ../exercises/2-4-luokkia-ja-olioita2/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title>Tehtävä 2.3: Kirjasto<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.5: Kirjasto<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-3-kirjasto/handout.md}}
+{{#include ../exercises/2-5-kirjasto/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>

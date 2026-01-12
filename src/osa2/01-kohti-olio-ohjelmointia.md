@@ -1,9 +1,5 @@
 # Kohti olio-ohjelmointia
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 19. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 >
 > - Eteneminen "data+funktio"-ajatuksesta (Ohj1) kohti "tila+metodi"-ajatusta (Ohj2)
@@ -29,7 +25,7 @@ muuttaa sen omistavan olion tilaa. Ennen olion luontia täytyy ensin määrittä
 Minimaalinen, olioita hyödyntävä ohjelma voisi näyttää esimeriksi tältä:
 
 ```java
-public class Kissa {
+class Kissa {
     private String nimi;
 
     public String getNimi() {
@@ -53,14 +49,29 @@ void main() {
 }
 ```
 
-Esimerkissä määritellään ensin `Kissa`-luokka ja luodaan sitten pääohjelmassa sen pohjalta olioita, jotka sisältävät attribuuttina merkkijonon `nimi` sekä kaksi metodia. Olion nimeä voidaan muuttaa kutsumalla sen `setNimi`-metodia ja se voidaan pyytää vastaavasti `getNimi`-metodilla. Molemmilla olioilla on oma tilansa - eli oma nimi. Yhden olion tila ei vaikuta toisen olion tilaan.
+Esimerkissä määritellään ensin `Kissa`-luokka ja luodaan sitten pääohjelmassa
+sen pohjalta olioita, jotka sisältävät attribuuttina merkkijonon `nimi` sekä
+kaksi metodia. Olion nimeä voidaan muuttaa kutsumalla sen `setNimi`-metodia ja
+se voidaan pyytää vastaavasti `getNimi`-metodilla. Molemmilla olioilla on oma
+tilansa - eli oma nimi. Yhden olion tila ei vaikuta toisen olion tilaan. 
 
-Tästä yksinkertaisesta esimerkistä näemme, kuinka data voidaan ryhmitellä olioiden sisälle. Tässä tapauksessa olion ainoa attribuutti `nimi` on suoraan käsiteltävissä metodien kautta, mutta olioilla voi toki olla myös attribuutteja, joiden ei ole tarkoituskaan olla muiden nähtävissä tai saatavissa.
+Tästä yksinkertaisesta esimerkistä näemme, kuinka data voidaan ryhmitellä
+olioiden sisälle. Tässä tapauksessa olion ainoa attribuutti `nimi` on suoraan
+käsiteltävissä metodien kautta, mutta olioilla voi toki olla myös attribuutteja,
+joiden ei ole tarkoituskaan olla muiden nähtävissä tai saatavissa. 
 
-Yhtä muuttujaa varten tuskin kannattaa tehdä eri olioita, mutta olio-ohjelmoinnin hyödyt tulevat nopeasti esille, kun tallennettavan tiedon määrä lisääntyy. Mietitään esimerkiksi tilannetta, jossa haluaisimme tallentaa tietoa kilpailussa mukana olevista kilpailijoista. Kilpailijoita voi olla useita ja jokaisesta pitäisi tallentaa ainakin nimi, kilpailijanumero ja pisteet. Olioiden avulla voimme pitää yhden kilpailijan tiedot ja niiden muokkaamiseen liittyvät toiminnallisuudet saman rakenteen sisällä, mikä helpottaa näiden tietojen käsittelyä. Mieti hetki, kuinka tekisit alla olevan kaltaisen ohjelman ilman olio-ohjelmointia.
+Yhtä muuttujaa varten tuskin kannattaa tehdä eri olioita, mutta
+olio-ohjelmoinnin hyödyt tulevat nopeasti esille, kun tallennettavan tiedon
+määrä lisääntyy. Mietitään esimerkiksi tilannetta, jossa haluaisimme tallentaa
+tietoa kilpailussa mukana olevista kilpailijoista. Kilpailijoita voi olla useita
+ja jokaisesta pitäisi tallentaa ainakin nimi, kilpailijanumero ja pisteet.
+Olioiden avulla voimme pitää yhden kilpailijan tiedot ja niiden muokkaamiseen
+liittyvät toiminnallisuudet saman rakenteen sisällä, mikä helpottaa näiden
+tietojen käsittelyä. Mieti hetki, kuinka tekisit kuvatun ohjelman
+ilman olio-ohjelmointia.
 
 ```java
-public class Kilpailija {
+class Kilpailija {
     private String nimi;
     private int numero;
     private int pisteet;
@@ -91,32 +102,63 @@ void main() {
 }
 ```
 
-HUOM! Jotkin esimerkeissä esiintyvät rakenteet ja käsitteet voivat tässä vaiheessa tuntua vielä vierailta. Lähdemme tutustumaan näihin tarkemmin heti osassa 2.2.
+> [!HUOMAUTUS]
+> Jotkin esimerkeissä esiintyvät rakenteet ja käsitteet voivat tässä
+> vaiheessa tuntua vielä vierailta. Lähdemme tutustumaan näihin tarkemmin heti
+> tässä osassa. 
 
-Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin esimerkiksi opintojaksolla [TIEA1130 Oliosuuntautunut suunnittelu ja ohjelmointi](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiea1130/). Käymme tällä kurssilla läpi olio-ohjelmoinnin teoriaa valikoidusti erityisesti tämän opintojakson tarpeita ajatellen. Jos haluat tutustua olio-ohjelmointiin syvällisemmin, suosittelemme lämpimästi tutustumaan myös aiheeseen liittyvään kirjallisuuteen.
+Olio-ohjelmointi on hyvin laaja aihe, jonka teoriaan perehdytään syvällisemmin
+esimerkiksi opintojaksolla [TIEA1130 Oliosuuntautunut suunnittelu ja
+ohjelmointi](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiea1130/). Käymme
+tällä kurssilla läpi olio-ohjelmoinnin teoriaa valikoidusti erityisesti tämän
+opintojakson tarpeita ajatellen. Jos haluat tutustua olio-ohjelmointiin
+syvällisemmin, suosittelemme lämpimästi tutustumaan myös aiheeseen liittyvään
+kirjallisuuteen. 
 
-Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle tekee ohjelman koodista helpommin ymmärrettävää ja laajennettavaa, mutta se ei toki ole olio-ohjelmoinnin ainoa etu; voimme myös piilottaa osan luokan toteutusyksityiskohdista vain luokan sisäiseen käyttöön, jolloin luokkaa käyttävä ohjelmoija saa käyttöönsä vain tarkkaan määritetyn julkisen rajapinnan eikä hänen tarvitse miettiä luokan sisäistä toimintaa. Tutustumme 3. osassa myös polymorfismiin, perintään ja rajapintoihin, jolloin olio-ohjelmoinnin hyödyt tulevat todella esille.
+Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle
+tekee ohjelman koodista helpommin ymmärrettävää ja laajennettavaa, mutta se ei
+toki ole olio-ohjelmoinnin ainoa etu; voimme myös piilottaa osan luokan
+toteutusyksityiskohdista vain luokan sisäiseen käyttöön, jolloin luokkaa
+käyttävä ohjelmoija saa käyttöönsä vain tarkkaan määritetyn julkisen rajapinnan
+eikä hänen tarvitse miettiä luokan sisäistä toimintaa. Tutustumme 3. osassa myös
+polymorfismiin, perintään ja rajapintoihin, jolloin olio-ohjelmoinnin hyödyt
+tulevat todella esille. 
 
 ## Pääohjelma Javassa
 
-Java on erityisesti olio-ohjelmointiin suuntautunut ohjelmointikieli, jossa myös pääohjelman on historiallisesti täytynyt olla luokan sisällä. Javan uudemmissa versioissa tähän on tullut muutoksia; yksinkertaisen ohjelman kirjoittamista on pyritty helpottamaan niin, että pääohjelma ei tarvitsisi ympärilleen luokkaa. Näistä muutoksista voi lukea lisää [Java 21:n dokumentaatiosta](https://openjdk.org/jeps/445) sekä vuoden 2025 syksyllä julkaistun [Java 25:n dokumentaatiosta](https://openjdk.org/jeps/512).
+Java on erityisesti olio-ohjelmointiin suuntautunut ohjelmointikieli, jossa myös
+pääohjelman on historiallisesti täytynyt olla luokan sisällä. Javan uudemmissa
+versioissa tähän on tullut muutoksia; yksinkertaisen ohjelman kirjoittamista on
+pyritty helpottamaan niin, että pääohjelma ei tarvitsisi ympärilleen luokkaa.
+Näistä muutoksista voi lukea lisää [Java 21:n
+dokumentaatiosta](https://openjdk.org/jeps/445) sekä vuoden 2025 syksyllä
+julkaistun [Java 25:n dokumentaatiosta](https://openjdk.org/jeps/512). 
+
+Nykyään riittää näissä materiaaleissa käytetty suoraviivaisempi pääohjelma:
+
+```java
+void main() {
+    IO.println("Hei maailma!");
+}
+```
 
 Aikaisemmin minimaalinen Java-ohjelma saattoi näyttää tältä:
 
 ```java
-public class HelloWorld {
+public class HeiMaailma {
     public static void main(String[] args) {
-        System.out.println("Hei maailma!");
+        IO.println("Hei maailma!");
     }
 }
 ```
 
-Nykyään riittää myös näissä materiaaleissa käytetty suoraviivaisempi pääohjelma:
+Vanhemman tyylin esimerkissä on muutama uusi määrite, joihin lähdemme
+tutustumaan tässä osassa tarkemmin. Ohjelmassa määritetään ensiksi
+`class`-avainsanaa käyttäen luokka, jonka nimeksi on esimerkissä annettu 
+`HeiMaailma`. Pääohjelma `main` sijoitetaan tämän luokan sisälle. Vanhassa
+tyylissä pääohjelmassa täytyy olla `static`-määrite, jota katsomme tarkemmin
+pian.
 
-```java
-void main() {
-    System.out.println("Hei maailma!");
-}
-```
-
-Koska ominaisuus on verrattain uusi, valtaosa verkosta ja kirjoista löytyvistä esimerkeistä käyttää yhä alkuperäistä tyyliä, eli luokan sisään upotettua pääohjelmaa. Tämä on hyvä tiedostaa tietoa etsiessä.
+Koska suoraviivaisempi pääohjelma on verrattain uusi ominaisuus, valtaosa 
+verkosta ja kirjoista löytyvistä esimerkeistä käyttää yhä alkuperäistä tyyliä, 
+eli luokan sisään upotettua pääohjelmaa. Tämä on hyvä tiedostaa tietoa etsiessä.

@@ -34,3 +34,5 @@ Kirjoita pääohjelma, jossa
  * vaihdat koodin väärällä vanhalla koodilla
  * vaihdat koodin oikealla vanhalla koodilla
  * tulostat oven tilan
+
+---

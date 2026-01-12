@@ -1,16 +1,11 @@
 # Kapselointi
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 19. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 >
+> - Näkyvyysmääreet `public` ja `private`, getterit ja setterit, metodi pääasiallisena tapana olioille "viestiä"
 > - Ymmärrät kapseloinnin ja sen hyödyt
-> - Kytkentä (coupling)
-> - Toteutetaan olioiden yhteistyö pienessä olioverkossa. Pidetään kytkentä löyhänä, eli olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa. 
-> - julkisuusmääreet `public` ja `private`, getterit ja setterit, metodi pääasiallisena tapana olioille "viestiä"
 > - Kutsuja ei tiedä (eikä voi riippua siitä) miten olion tila on toteutettu. Toteutusta voi muuttaa ilman että kutsujan tarvitsee muuttaa koodiaan. 
+> - Toteutetaan olioiden yhteistyö pienessä olioverkossa. Olioiden välinen riippuvuus on vain rajapinnan (metodien) varassa, ei sisäisen toteutuksen varassa. 
 
 ![Autoa ajetaan, vaikka emme tiedä miten moottori toimii](images/auto.png)
 
@@ -106,10 +101,6 @@ class Auto {
     String valmistenumero;
     double ajetutKilometrit;
 
-    public Auto() {
-        this("A1", "123A", 0.0);
-    }
-
     public Auto(String malli, String valmistenumero, double ajetutKilometrit) {
         this.malli = malli;
         this.valmistenumero = valmistenumero;
@@ -142,10 +133,6 @@ class Moottori {
     String malli;
     double kierrosluku;
 
-    public Moottori() {
-        this("M1", 0.0);
-    }
-
     public Moottori(String malli, double kierrosluku) {
         this.malli = malli;
         this.kierrosluku = kierrosluku;
@@ -157,10 +144,6 @@ class Rengas {
     String malli;
     String tyyppi;
     double rengaspaine;
-
-    public Rengas() {
-        this("R1", "talvi", 0.0);
-    }
 
     public Rengas(String malli, String tyyppi, double rengaspaine) {
         this.malli = malli;
@@ -190,10 +173,6 @@ class Moottori {
     String malli;
     double kierrosluku;
 
-    public Moottori() {
-        this("M1", 0.0);
-    }
-
     public Moottori(String malli, double kierrosluku) {
         this.malli = malli;
         this.kierrosluku = kierrosluku;
@@ -205,10 +184,6 @@ class Rengas {
     String malli;
     String tyyppi;
     double rengaspaine;
-
-    public Rengas() {
-        this("R1", "talvi", 0.0);
-    }
 
     public Rengas(String malli, String tyyppi, double rengaspaine) {
         this.malli = malli;
@@ -224,13 +199,8 @@ class Auto {
     String malli;
     String valmistenumero;
     double ajetutKilometrit;
-
     Moottori moottori;
     ArrayList<Rengas> renkaat = new ArrayList<>();
-
-    public Auto() {
-        this("A1", "123A", 0.0);
-    }
 
     public Auto(String malli, String valmistenumero, double ajetutKilometrit) {
         this.malli = malli;
@@ -305,13 +275,8 @@ public class Auto {
     private String malli;
     private String valmistenumero;
     private double ajetutKilometrit;
-
     private Moottori moottori;
     private ArrayList<Rengas> renkaat = new ArrayList<>();
-
-    public Auto() {
-        this("A1", "123A", 0.0);
-    }
 
     public Auto(String malli, String valmistenumero, double ajetutKilometrit) {
         this.malli = malli;
@@ -363,10 +328,6 @@ class Moottori {
     String malli;
     double kierrosluku;
 
-    public Moottori() {
-        this("M1", 0.0);
-    }
-
     public Moottori(String malli, double kierrosluku) {
         this.malli = malli;
         this.kierrosluku = kierrosluku;
@@ -378,10 +339,6 @@ class Rengas {
     String malli;
     String tyyppi;
     double rengaspaine;
-
-    public Rengas() {
-        this("R1", "talvi", 0.0);
-    }
 
     public Rengas(String malli, String tyyppi, double rengaspaine) {
         this.malli = malli;
@@ -406,15 +363,9 @@ public class Auto {
     private String malli;
     private String valmistenumero;
     private double ajetutKilometrit;
-
     private Moottori moottori;
-
     private final int maxRenkaat = 4;
     private ArrayList<Rengas> renkaat = new ArrayList<>();
-
-    public Auto() {
-        this("A1", "123A", 0.0);
-    }
 
     public Auto(String malli, String valmistenumero, double ajetutKilometrit) {
         this.malli = malli;
@@ -465,10 +416,6 @@ public class Moottori {
     private String malli;
     private double kierrosluku;
 
-    public Moottori() {
-        this("M1", 0.0);
-    }
-
     public Moottori(String malli, double kierrosluku) {
         this.malli = malli;
         this.kierrosluku = kierrosluku;
@@ -485,10 +432,6 @@ public class Rengas {
     private String malli;
     private String tyyppi;
     private double rengaspaine;
-
-    public Rengas() {
-        this("R1", "talvi", 0.0);
-    }
 
     public Rengas(String malli, String tyyppi, double rengaspaine) {
         this.malli = malli;
@@ -522,7 +465,7 @@ void main() {
 Nyt `Auto`-luokkamme ei enää ole riippuvainen `Moottori` tai `Rengas` -luokkien
 sisäisistä toteutusyksityiskohdista. 
 
-### Huomio olio-ohjelmoinnin hyvistä tavoista
+### Vastuu olion tilasta kuuluu oliolle itselleen
 
 Joissain tähän mennessä nähdyissä esimerkeissä attribuutteja piilotettiin, mutta 
 niitä voitiin edelleen muokata lähes suoraan metodin kautta.
@@ -552,40 +495,7 @@ Tällä kurssilla emme valitettavasti ehdi käydä oliosuunnittelun teoriaa
 perusteellisesti läpi. Suosittelemme olio-ohjelmoinnin teorian oppimiseen tämän
 osan alussa mainittua kurssia. 
 
-### Kytkentä (coupling)
-
-Kytkentä (engl. *coupling*) tarkoittaa riippuvuutta kahden eri luokan tai
-komponentin välillä. Jos luokat ovat vahvasti kytkettynä toisiinsa, yhteen
-luokkaan tehdyt muutokset todennäköisemmin aiheuttavat sivuvaikutuksia myös
-toiseen luokkaan. Ohjelman muokattavuuden kannalta on tärkeää, että luokat
-pyritään pitämään *heikosti* kytköksissä. Heikosti kytketyttyjä komponentteja on
-helpompi käyttää uudelleen tai vaihtaa uusiin tarpeen mukaan.
-
-Riippuvuuksia syntyy luokkien välille usein silloin, kun yksi luokka riippuu
-suoraan toisesta luokasta tai sen toteutusyksityiskohdista. Luokat ovat
-erityisen vahvasti kytketty, jos toinen luokka käyttää suoraan toisen tilaa. 
-Kytköksiä luokkien välille voi muodostua esimerkiksi myös niiden tavasta jakaa 
-tietoa; esimerkiksi käyttämällä jonkinlaista globaalia tilaa, jota eri luokkien
-oliot lukevat.
-
-Jos tekisimme ohjelman, joka lukee dataa jostain lähteestä ja analysoi sitä,
-voisimme jakaa nämä kaksi vastuuta eri luokille. Voisi olla hyvä idea varmistaa,
-että luettu data välitetään analysoivalle luokalle tavalla, joka ei riipu 
-esimerkiksi *tiedoston* lukemisen yksityiskohdista. Tällöin voisimme helpommin 
-vaihtaa esimerkiksi CSV-tiedoston lukemiseen tarkoitetun komponentin vaikkapa
-verkkopalvelun ohjelmointirajapintaa käyttävään ilman, että koko ohjelma hajoaa.
-
-Kapselointi auttaa heikentämään kytkentää luokkien välillä.
-Toteutusyksityiskohtien ja sisäisen tilan piilottaminen julkisen rajapinnan
-taakse estää toista luokkaa riippumasta niistä.
-
-Olioita suunnitellessa on hyvä pyrkiä pitämään luokkien sisäinen koheesio
-mahdollisimman korkeana ja vastaavasti luokkien välinen kytkentä mahdollisimman 
-vähäisenä.
-
 ## Olioiden yhteistoiminta
-
-TODO: Koodiesimerkki. Siistiminen, osa siirtyi kapselointiin.
 
 Kerrataan vielä esimerkin avulla olioiden ja niiden yhteistyön suunnittelua
 tässä osassa opittuja käsitteitä käyttäen. Olioiden hyödyt tulevat paremmin
@@ -593,9 +503,9 @@ esille, kun alamme rakentamaan ohjelmaan useampia luokkia, jotka tekevät
 yhteistyötä. Nyt kun olemme myös oppineet kapseloinnin periaatteista, voimme
 käyttää niitä organisoimaan ohjelmakoodia fiksummin. 
 
-Oliot voivat toimia yhdessä eri tavoin. Oliot voivat sisältää toisia olioita -
-tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu olioista,
-joista jokainen tuo oman toiminnallisuutensa, tätä kutsutaan usein
+Oliot voivat toimia yhdessä eri tavoin. Oliot voivat esimerkiksi sisältää toisia 
+olioita - tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu 
+olioista, joista jokainen tuo oman toiminnallisuutensa, tätä kutsutaan usein
 *kompositioksi*. Oliot voivat kutsua toistensa metodeja ja näin delegoida tehtäviä
 toiselle oliolle, jolle tehtävän vastuu kuuluu, tai kommunikoida esimerkiksi
 tapahtumien yhteydessä. Oliot voivat myös sisältää kokoelmia olioista;
@@ -609,82 +519,365 @@ vielä tässä esimerkissä siitä, voiko varauksia olla samassa tilassa pääll
 Pidetään myös luokat vielä suhteellisen yksinkertaisina. 
 
 Aloitetaan määrittelemällä tarvittavat luokat `Rakennus`, `Tila` ja `Varaus`.
+Tehdään näille myös muodostajat, jotka alustavat olion heti käyttökelpoiseen 
+tilaan.
 
 ```java
+// FILE: Rakennus.java
+import java.util.*;
+
 public class Rakennus {
     private String nimi;
-    // ...
+    private List<Tila> tilat = new ArrayList<>();
+    
+    public Rakennus(String nimi) { 
+        this.nimi = nimi;
+    }
 }
+// FILE_END
+// FILE: Tila.java
+import java.util.*;
 
 public class Tila {
     private String nimi;
-    // ...
+    private List<Varaus> varaukset = new ArrayList<>(); 
+    
+    public Tila(String nimi) { 
+        this.nimi = nimi; 
+    } 
+    
+    public String getNimi() { 
+        return nimi; 
+    }
 }
-
+// FILE_END
+// FILE: Varaus.java
 public class Varaus {
     private String varaaja;
-    private boolean peruttu;
-    // ...
-}
+    private int ajankohta;
+    private int kesto;
 
-void main() {
-
+    public Varaus(String varaaja, int ajankohta, int kesto) { 
+        this.varaaja = varaaja;
+        this.ajankohta = ajankohta;
+        this.kesto = kesto;
+    }
 }
+// FILE_END
 ```
 
-TODO: Kompositio (rakennus -> tila -> varaus)
+Lisätään nyt rakennukselle sopivat metodit tilojen lisäämiseen. Haluaisimme
+löytää oikean tilan myöhemmin sen nimen perusteella, joten rakennuksessa ei
+saisi olla saman nimisiä tiloja. Tarvitsemme siis myös keinon hakea tila sen
+nimen perusteella. Tilan lisäämiseen tarvitsemme vain tilan nimen.
 
-TODO: Delegointi (peru kaikki rakennuksen tapahtumat)
+```java
+// FILE: Rakennus.java
+import java.util.*;
 
-TODO: Tapahtumat ja viestit?
+public class Rakennus {
+    private String nimi;
+    private List<Tila> tilat = new ArrayList<>();
+    
+    public Rakennus(String nimi) { 
+        this.nimi = nimi;
+    }
 
-<task>
-  <task-title>Tehtävä 2.X: Tapahtumat<points>1 p.</points></task-title>
-  <handout>
+    public Tila haeTila(String tilanNimi) {
+        for (Tila tila : tilat) { 
+            if (tila.getNimi().equals(tilanNimi)) {
+                return tila;
+            }
+        }
+        return null;
+    }
 
-Muokkaa `Rakennus`, `Tila` ja `Varaus` -luokat sisältävää ohjelmaa niin, että 
-ohjelma ei anna lisätä samaan tilaan päällekkäisiä varauksia. Jos tilassa on jo 
-varaus, joka olisi päällekkäin uuden varauksen kanssa, uutta varausta ei luoda.
+    public void lisaaTila(String tilanNimi) { 
+        Tila tila = haeTila(tilanNimi); 
+        if (tila != null) {
+            IO.println("Rakennus " + nimi + " sisältää jo tilan " + tilanNimi);
+            return;
+        } 
+        tilat.add(new Tila(tilanNimi)); 
+    }
+}
+// FILE_END
+// FILE: Tila.java
+import java.util.*;
 
-Virhetilanteet voi käsitellä tulostamalla virheilmoituksen.
+public class Tila {
+    private String nimi;
+    private List<Varaus> varaukset = new ArrayList<>(); 
+    
+    public Tila(String nimi) { 
+        this.nimi = nimi; 
+    } 
+    
+    public String getNimi() { 
+        return nimi; 
+    }
+}
+// FILE_END
+// FILE: Varaus.java
+public class Varaus {
+    private String varaaja;
+    private int ajankohta;
+    private int kesto;
 
-Voit testata ohjelman toimintaa valmiiksi annetulla pääohjelmalla.
+    public Varaus(String varaaja, int ajankohta, int kesto) { 
+        this.varaaja = varaaja;
+        this.ajankohta = ajankohta;
+        this.kesto = kesto;
+    }
+}
+// FILE_END
+```
 
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/esimerkki">Tee tehtävä TIMissä</a></task-link>
-</task>
+Tilaan pitäisi voida tehdä varauksia. Lisätään tämä ominaisuus, mutta pidetään 
+esimerkki yksinkertaisena tekemällä varaukset tasatunneille. Ohjelman tila 
+voisi kuvastaa esimerkiksi seuraavan päivän tilavarauksia. 
+
+Tarvitsemme varauksen tekemiseen varaajan nimen sekä varauksen alkamistunnin ja 
+keston.
+
+```java
+// FILE: Tila.java
+import java.util.*;
+
+public class Tila {
+    private String nimi;
+    private List<Varaus> varaukset = new ArrayList<>(); 
+    
+    public Tila(String nimi) { 
+        this.nimi = nimi; 
+    } 
+    
+    public String getNimi() { 
+        return nimi; 
+    }
+
+    public void lisaaVaraus(String varaaja, int ajankohta, int kesto) { 
+        varaukset.add(new Varaus(varaaja, ajankohta, kesto)); 
+    }
+}
+// FILE_END
+// FILE: Rakennus.java
+import java.util.*;
+
+public class Rakennus {
+    private String nimi;
+    private List<Tila> tilat = new ArrayList<>();
+    
+    public Rakennus(String nimi) { 
+        this.nimi = nimi;
+    }
+
+    public Tila haeTila(String tilanNimi) {
+        for (Tila tila : tilat) { 
+            if (tila.getNimi().equals(tilanNimi)) {
+                return tila;
+            }
+        }
+        return null;
+    }
+
+    public void lisaaTila(String tilanNimi) { 
+        Tila tila = haeTila(tilanNimi); 
+        if (tila != null) {
+            IO.println("Rakennus " + nimi + " sisältää jo tilan " + tilanNimi);
+            return;
+        } 
+        tilat.add(new Tila(tilanNimi)); 
+    }
+}
+// FILE_END
+// FILE: Varaus.java
+public class Varaus {
+    private String varaaja;
+    private int ajankohta;
+    private int kesto;
+
+    public Varaus(String varaaja, int ajankohta, int kesto) { 
+        this.varaaja = varaaja;
+        this.ajankohta = ajankohta;
+        this.kesto = kesto;
+    }
+}
+// FILE_END
+```
+
+Lisätään lopuksi vielä mahdollisuus lisätä varauksia *rakennuksen* kautta niin,
+että käyttäjän ei tarvitse edes tietää, että `Tila`-luokka on olemassa. Se miten
+`Rakennus` tallentaa tiedot tiloista jää sen toteutusyksityiskohdaksi.
+
+Tarvitsemme varauksen lisäämiseen tilan ja varaajan nimet sekä varauksen
+alkamistunnin ja keston.
+
+Lisätään myös yksinkertaiset `tulosta`-metodit kaikkiin luokkiin, jotta voimme 
+nähdä kaikki rakennuksen tilat ja varaukset helposti.
+
+```java
+// FILE: Rakennus.java
+import java.util.*;
+
+public class Rakennus {
+    private String nimi;
+    private List<Tila> tilat = new ArrayList<>();
+    
+    public Rakennus(String nimi) { 
+        this.nimi = nimi;
+    }
+
+    public Tila haeTila(String tilanNimi) {
+        for (Tila tila : tilat) { 
+            if (tila.getNimi().equals(tilanNimi)) {
+                return tila;
+            }
+        }
+        return null;
+    }
+
+    public void lisaaTila(String tilanNimi) { 
+        Tila tila = haeTila(tilanNimi); 
+        if (tila != null) {
+            IO.println("Rakennus '" + nimi + "' sisältää jo tilan '" + tilanNimi + "'");
+            return;
+        } 
+        tilat.add(new Tila(tilanNimi)); 
+    }
+
+    public void lisaaVaraus(String tilanNimi, String varaaja, int ajankohta, int kesto) { 
+        Tila tila = haeTila(tilanNimi); 
+        if (tila == null) {
+            IO.println("Rakennuksessa '" + nimi + "' ei ole tilaa '" + tilanNimi + "'");
+            return;
+        } 
+        tila.lisaaVaraus(varaaja, ajankohta, kesto);
+    }
+
+    public void tulosta() {
+        IO.println(nimi);
+        for (Tila tila : tilat) {
+            tila.tulosta();
+        }
+    }
+}
+// FILE_END
+// FILE: Tila.java
+import java.util.*;
+
+public class Tila {
+    private String nimi;
+    private List<Varaus> varaukset = new ArrayList<>(); 
+    
+    public Tila(String nimi) { 
+        this.nimi = nimi; 
+    } 
+    
+    public String getNimi() { 
+        return nimi; 
+    }
+
+    public void lisaaVaraus(String varaaja, int ajankohta, int kesto) { 
+        varaukset.add(new Varaus(varaaja, ajankohta, kesto)); 
+    }
+
+    public void tulosta() {
+        IO.print(" ");
+        IO.println(nimi);
+        if (varaukset.isEmpty()) {
+            IO.print("  ");
+            IO.println("Ei varauksia.");
+        }
+        else {
+            for (Varaus varaus : varaukset) {
+                varaus.tulosta();
+            }
+        }
+    }
+}
+// FILE_END
+// FILE: Varaus.java
+public class Varaus {
+    private String varaaja;
+    private int ajankohta;
+    private int kesto;
+
+    public Varaus(String varaaja, int ajankohta, int kesto) { 
+        this.varaaja = varaaja;
+        this.ajankohta = ajankohta;
+        this.kesto = kesto;
+    }
+
+    public void tulosta() {
+        IO.print("  ");
+        IO.println("Klo " + ajankohta + "-" + (ajankohta + kesto) + ", varaaja " + varaaja);
+    }
+}
+// FILE_END
+// FILE: main.java
+void main() {
+    Rakennus agora = new Rakennus("Agora"); 
+    agora.lisaaTila("Auditorio 1"); 
+    agora.lisaaTila("AgFinland"); 
+    agora.lisaaTila("AgFinland"); // Ei onnistu.
+
+    agora.lisaaVaraus("AgFinland", "Maija", 8, 2); 
+    agora.lisaaVaraus("AgFinland", "Matti", 10, 2); 
+    agora.lisaaVaraus("Auditorio 5", "Maija", 13, 1); // Ei onnistu.
+
+    IO.println();
+    agora.tulosta();
+}
+// FILE_END
+```
+
+Voimme nyt käyttää `Rakennus`-luokkaa niin, että meidän ei tarvitse olla
+tietoisia tilojen tai varausten toiminnasta. Vastaavasti `Rakennus` ei riipu
+suoraan siitä, miten `Tila` tallentaa varausten tietoja.
+
+Tässä vaiheessa meiltä puuttuu vielä osa olio-ohjelmoinnin tärkeimmistä 
+työkaluista; perintä, polymorfismi ja rajapinnat. Tutustumme näihin seuraavassa
+osassa.
 
 ## Tehtävät
 
-
-
-
 <task>
-  <task-title>Tehtävä 2.4: Ovi<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.6: Ovi<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-4-ovi/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-<task>
-  <task-title>Tehtävä 2.5: Säästölipas<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-5-saastolipas/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava5">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-<task>
-  <task-title>Tehtävä 2.6: Sähköverkko<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-6-sahkoverkko/handout.md}}
+{{#include ../exercises/2-6-ovi/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.7: Säästölipas<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-7-saastolipas/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava7">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.8: Sähköverkko<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-8-sahkoverkko/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava8">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title><i class="bi bi-stars jyu-gold"></i>Tehtävä 2.9: Varaukset<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-9-varaukset/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava9">Tee tehtävä TIMissä</a></task-link>
 </task>
