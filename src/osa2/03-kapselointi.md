@@ -50,7 +50,7 @@ attribuutteja, ellei kyseessä ole vakio.
 Attribuutille tai metodille voi antaa näkyvyysmääreen lisäämällä sen
 esittelyriville. Luokalle voidaan myös asettaa näkyvyysmääre. 
 
-```java
+```java,ignore
 // FILE: Henkilo.java
 class Henkilo {
     // Näkyvyysmääre 'private' piilottaa attribuutin niin, että sitä ei voi 
@@ -94,7 +94,7 @@ olla parempi laittaa omaan luokkaan.
 Tehdään nyt luokka `Auto`, johon voimme soveltaa kapseloinnin periaatteita.
 Lisätään aluksi vain attribuutit ja yksinkertaiset muodostajat. 
 
-```java
+```java,ignore
 // FILE: Auto.java
 class Auto {
     String malli;
@@ -127,7 +127,7 @@ jokainen on vastuussa omista tiedoistaan ja toiminnoistaan.
 Lisätään nyt `Moottori` ja `Rengas` -luokat ja määritellään näille sopivia
 attribuutteja sekä muodostajat. 
 
-```java
+```java,ignore
 // FILE: Moottori.java
 class Moottori {
     String malli;
@@ -522,7 +522,7 @@ Aloitetaan määrittelemällä tarvittavat luokat `Rakennus`, `Tila` ja `Varaus`
 Tehdään näille myös muodostajat, jotka alustavat olion heti käyttökelpoiseen 
 tilaan.
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 import java.util.*;
 
@@ -571,7 +571,7 @@ löytää oikean tilan myöhemmin sen nimen perusteella, joten rakennuksessa ei
 saisi olla saman nimisiä tiloja. Tarvitsemme siis myös keinon hakea tila sen
 nimen perusteella. Tilan lisäämiseen tarvitsemme vain tilan nimen.
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 import java.util.*;
 
@@ -640,7 +640,7 @@ voisi kuvastaa esimerkiksi seuraavan päivän tilavarauksia.
 Tarvitsemme varauksen tekemiseen varaajan nimen sekä varauksen alkamistunnin ja 
 keston.
 
-```java
+```java,ignore
 // FILE: Tila.java
 import java.util.*;
 

@@ -29,7 +29,7 @@ Huomaa, että Javassa on tapana aloittaa luokkien nimet aina isolla kirjaimella.
 
 Määritellään aluksi tyhjä luokka `Rakennus`, jota lähdemme täydentämään.
 
-```java
+```java,ignore
 class Rakennus {
     // Luokan sisällä määritellään rakenne, jota luokasta 
     // tehdyt oliot vastaavat.
@@ -43,7 +43,7 @@ viitten muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Viitemuuttuja
 tyyppi kertoo, _minkälainen_ olio muistisijainnissa täytyy olla - eli mitä 
 _luokkaa_ se edustaa. Käytämme siis luokkaa muuttujan tyyppinä. 
 
-```java
+```java,ignore
 void main() {
     // Lauseke 'new Rakennus()' luo olion ja palauttaa viitteen siihen. 
     // Sijoitamme tämän viitteen muuttujaan 'rakennus'.
@@ -72,7 +72,7 @@ käytänteitä.
 
 Lisätään nyt muutama attribuutti `Rakennus`-luokkaamme.
 
-```java
+```java,ignore
 public class Rakennus {
     // Nämä muuttujat ovat olion attribuutteja. Jokaisella rakennuksella
     // on omistaja ja väri, mutta ne eivät välttämättä ole kaikilla 
@@ -109,7 +109,7 @@ on attribuutille oma arvo, sillä attribuutit muodostavat olion tilan.
 > olion metodeista voi yhä päästä käsiksi sen attribuuttiin 
 > käyttämällä `this`-viitettä, johon palaamme hyvin pian.
 
-```java
+```java,ignore
 public class Rakennus {
     // Olion attribuutti, jolla on oletusarvo.
     private String väri = "sininen";
@@ -207,7 +207,7 @@ jonka kontekstissa koodia suoritetaan.
 Käytimme tämän osan alun esimerkeissä `this`-viitettä lukeaksemme olion
 attribuutteja näin: 
 
-```java
+```java,ignore
 public class Rakennus {
     private String väri;
 
@@ -480,7 +480,7 @@ välttää näin turhaa toistoa.
 Muutetaan luokkaa nyt niin, että parametriton muodostaja käyttää parametrillista 
 muodostajaa antamaan attribuuteille alkuarvot.
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 public class Rakennus {
     private String omistaja;
