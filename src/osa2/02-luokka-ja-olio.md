@@ -346,7 +346,7 @@ Käytimme aikaisemmassa esimerkissä `Rakennus`-luokkaa määrittelemättä
 muodostajaa. Otetaan metodit hetkeksi pois selkeyden vuoksi ja katsotaan, mitä
 olioita luodessa tapahtuu. 
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 public class Rakennus {
     private String omistaja;
@@ -366,7 +366,7 @@ Tässä tapauksessa olio muodostetaan automaattista oletusmuodostajaa käyttäen
 sillä yhtään muodostajaa ei ole määritelty. Voimme tehdä vastaavan muodostajan
 itsekin seuraavasti. 
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 public class Rakennus {
     private String omistaja;
@@ -375,7 +375,7 @@ public class Rakennus {
     // Parametriton muodostaja, joka vastaa oletusmuodostajaa.
     public Rakennus() {
         // Voisimme täällä alustaa olion tilan jollain tavalla, 
-        // esimerkiksi asettamalla attribuuteille alkuarvot.
+        // asettamalla attribuuteille alkuarvot.
     }
 }
 // FILE_END
@@ -406,7 +406,7 @@ tarvitse asettaa attribuutteja erikseen olion luomisen jälkeen. Voimme nyt myö
 poistaa parametrittoman muodostajan, jotta sitä ei voi enää käyttää
 luomaan olioita, joilla on virheellinen alkutila.
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 public class Rakennus {
     private String omistaja;
@@ -442,7 +442,7 @@ Lisätään vielä lopuksi hieman erikoisempi muodostaja, joka ottaa vastaan toi
 saman luokan olion ja kopioi sen tilan muodostettavalle oliolle. Tällaisesta
 muodostajasta puhuttaessa käytetään usein nimitystä *copy constructor*. 
 
-```java
+```java,ignore
 // FILE: Rakennus.java
 public class Rakennus {
     private String omistaja;
@@ -538,10 +538,12 @@ liittyvät olioon; jokaisella oliolla on tällaisille attribuuteille oma arvo ja
 metodit kiinnittyvät olioon, jolle ne kuuluvat, minkä vuoksi ne pääsevät olion 
 tilaan käsiksi.
 
-Attribuutit ja metodit voidaan myös määritellä *staattiseksi* käyttämällä 
-`static`-määritettä, jolloin ne kuuluvat olion sijaan **luokalle**. Tällaisia
-attribuutteja ja metodeja kutsutaan *luokan* attribuuteiksi (engl. *class
-attribute*) ja -metodeiksi (engl. *class method*).
+Luokan jäsenet voidaan määritellä kuuluvaksi olion sijaan **luokalle** 
+`static`-määritettä käyttämällä. Tällaisia attribuutteja ja metodeja kutsutaan 
+*luokan* attribuuteiksi (engl. *class attribute*) ja -metodeiksi 
+(engl. *class method*). Sana `static` voi olla hieman harhaanjohtava;
+*staattisuus* ei tässä tarkoita, että nämä luokan jäsenet ovat pysyviä tai 
+muuttumattomia.
 
 Luokan attribuutti ei ole osa minkään olion tilaa ja sillä on vain yksi arvo, 
 joka on jaettu kaikkien luokan olioiden kesken. Jos yksi olio muuttaa oman 
