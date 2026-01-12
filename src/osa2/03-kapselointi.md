@@ -72,7 +72,7 @@ Kapselointi (engl. *encapsulation*) on yksi keskeisimmistä käsitteistä
 olio-ohjelmoinnissa. Se tarkoittaa luokkien suunnittelua mahdollisimman
 itsenäiseksi ja modulaariseksi. Jokaisella luokalla on oma tehtävänsä, jota
 varten tarvittavat tiedot ja toiminnallisuudet *kapseloidaan* olion sisälle. Osa
-näistä tiedoista ja toiminnallisuuksista voidaan piilottaa vain luokan sisäistä
+näistä tiedoista ja toiminnallisuuksista voidaan piilottaa vain olion sisäistä
 käyttöä varten. Olioiden tilan käsittelyä varten luokka tarjoaa käyttäjälleen
 tavallisesti julkisista metodeista koostuvan rajapinnan, mikä parantaa ohjelman
 muokattavuutta ja laajennettavuutta vähentämällä luokan sisäisistä muutoksista

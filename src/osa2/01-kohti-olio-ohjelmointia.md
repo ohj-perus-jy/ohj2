@@ -17,10 +17,17 @@ Olio-ohjelmoinnissa ideana on luoda olioiksi kutsuttuja rakenteita, jotka
 sisältävät datan sekä toiminnallisuudet sen muokkaamiseen. Oliot voivat olla
 samanlaisia, mutta jokaisella oliolla on oma *tila*, joka voi muuttua ohjelman
 suorituksen aikana. Olion tila tallentuu sen omiin muuttujiin eli
-*attribuutteihin*. Oliolla voi olla myös omia aliohjelmia, joita kutsutaan
+*attribuutteihin*. 
+
+Oliolla voi olla myös omia aliohjelmia, joita kutsutaan
 *metodeiksi*. Metodi on oliolle kuuluva aliohjelma, joka voi tarkastella ja
 muuttaa sen omistavan olion tilaa. Ennen olion luontia täytyy ensin määrittää
 *luokka* eli *class*, jossa kuvaillaan olion rakenne.
+
+Olioiden tehtävä on olla vastuussa oman vastuualueensa toiminnallisuuksista. 
+Olioiden välinen yhteistoiminta ja kommunikointi metodikutsujen kautta on 
+olio-ohjelmoinnissa keskeisessä osassa. Joissain ohjelmointikielissä tätä 
+saatetaan kutsutaan viestinvälitykseksi.
 
 Minimaalinen, olioita hyödyntävä ohjelma voisi näyttää esimeriksi tältä:
 

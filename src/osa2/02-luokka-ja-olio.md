@@ -255,15 +255,13 @@ public class Rakennus {
 // FILE: main.java
 void main() {
     Rakennus talo = new Rakennus();
-    Rakennus autotalli = new Rakennus();
 
     // Kutsumme 'talo' viitteen kautta löytyvän olion setVäri-metodia, joten 
     // tämän metodikutsun suorituksessa 'this' viittaa samaan olioon kuin 
     // pääohjelman 'talo'.
-    talo.setVäri("harmaa"); 
+    talo.setVäri("harmaa");
 
-    // Tämän metodikutsun sisällä 'this' viittaa samaan olioon kuin 'autotalli'.
-    autotalli.setVäri("valkoinen");
+    IO.println(talo.getVäri());
 }
 // FILE_END
 ```
@@ -325,7 +323,7 @@ void main() {
 
 ## Muodostaja eli konstruktori
 
-Muodostaja eli konstruktori on erikoismetodi, jota käytetään uuden olion 
+Muodostaja eli konstruktori on luokan erikoismetodi, jota käytetään uuden olion 
 luomisen yhteydessä sen tilan alustamiseen. Muodostajan nimi on aina sama kuin 
 luokan nimi ja se kirjoitetaan isolla alkukirjaimella, mikä poikkeaa muiden 
 metodien nimeämistyylistä. Muodostajalle ei määritetä paluuarvon tyyppiä, vaan 
@@ -467,7 +465,7 @@ public class Rakennus {
 void main() {
     Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
 
-    // Antamalla argumenttina toisen Rakennus-tyyppisen olion, käytämme uutta 
+    // Antamalla argumenttina toisen Rakennus-tyyppisen olion käytämme uutta 
     // muodostaa, joka kopioi olion arvot. Molemmilla rakennuksilla on nyt 
     // sama omistaja ja väri.
     Rakennus rakennus2 = new Rakennus(rakennus1);
@@ -498,15 +496,6 @@ public class Rakennus {
         // vastaavilla parametreilla
         this(kopioitava.omistaja, kopioitava.väri);
     }
-}
-// FILE_END
-// FILE: main.java
-void main() {
-    Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
-
-    Rakennus rakennus2 = new Rakennus(rakennus1);
-    IO.println(rakennus2.omistaja); // JYU
-    IO.println(rakennus2.väri); // valkoinen
 }
 // FILE_END
 ```
