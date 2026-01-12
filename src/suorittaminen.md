@@ -9,7 +9,7 @@ huolellisesti läpi.
 
 ## Suoritustapa 1 {#suoritustapa-1}
 
-*Tentti, harjoitustehtävät, harjoitustyö aikataulussa*
+*Harjoitustehtävät, harjoitustyö aikataulussa sekä tentti*
 
 Suoritus koostuu seuraavista osasuorituksista (kaikista on saatava hyväksytty):
 
