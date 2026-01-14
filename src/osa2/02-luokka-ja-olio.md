@@ -36,12 +36,12 @@ class Rakennus {
 }
 ```
 
-Voimme luoda luokasta ilmentymiä eli *olioita* käyttämällä avainsanaa `new`. 
-Tämä varaa muistista oliolle sopivan tilan, valitsee ja suorittaa sopivan 
+Luokasta luodaan ilmentymiä eli *olioita* käyttämällä avainsanaa `new`. Tämä
+varaa muistista oliolle sopivan tilan, valitsee ja suorittaa sopivan
 muodostajan, ja palauttaa viitteen juuri luotuun olioon. Sijoitamme tämän
-viitten muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Viitemuuttujan 
-tyyppi kertoo, _minkälainen_ olio muistisijainnissa täytyy olla - eli mitä 
-_luokkaa_ se edustaa. Käytämme siis luokkaa muuttujan tyyppinä. 
+viitteen muuttujaan, jotta pääsemme olioon sitä kautta käsiksi. Luokan nimi on
+muuttujan tyyppi ja siten kertoo kääntäjälle, _millainen_ olio muistisijainnissa
+täytyy olla.
 
 ```java,ignore
 void main() {
@@ -52,14 +52,13 @@ void main() {
 ```
 
 > [!HUOMAUTUS]
-> On tärkeää pitää mielessä se, että viitemuuttuja ja olio ovat kaksi eri asiaa.
-> Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Sen ei kuitenkaan ole
-> pakko osoittaa mihinkään, jolloin sen arvo on null. Olio on vastaavasti
+> Viitemuuttuja ja olio ovat kaksi eri asiaa.
+> Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Viitemuuttujan ei kuitenkaan ole
+> pakko viitata mihinkään, jolloin sen arvo on `null`. Olio on vastaavasti
 > mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon
-> osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se tuhoutuu. Useampi
+> osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se merkitään automaattisesti roskaksi. Useampi
 > viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain
-> yhteen olioon kerrallaan. Voimme toki tehdä listan viitteistä, joista jokainen
-> osoittaa eri olioon.
+> yhteen olioon kerrallaan. 
 
 ## Attribuutit
 
@@ -79,8 +78,9 @@ public class Rakennus {
     // olioilla arvoiltaan samat.
     private String omistaja;
 
-    // Värin oletusarvo on sininen, joten kaikilla tämän luokan pohjalta 
-    // tehdyillä olioilla on aluksi värin arvona sininen.
+    // Attribuutille voidaan asettaa oletusarvo. Tässä värin oletusarvo on 
+    // sininen, jolloin kaikilla tämän luokan pohjalta tehdyillä olioilla
+    // on aluksi tämä arvo, ellei sitä muuteta.
     private String väri = "sininen";
 }
 ```
@@ -94,8 +94,9 @@ yleisesti ottaen huono idea. Palaamme näkyvyysmääreisiin myöhemmin tässä o
 
 Luokasta tehdyt oliot sisältävät aina luokassa määritellyt attribuutit.
 Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot
-saavat sen myös oman attribuuttinsa alkuarvoksi. Tavallisesti jokaisella oliolla
-on attribuutille oma arvo, sillä attribuutit muodostavat olion tilan.
+saavat sen myös oman attribuuttinsa alkuarvoksi. Jos attribuutilla ei ole
+oletusarvoa, sen arvo voidaan määrittää olion luomisen yhteydessä, myöhemmin
+metodien avulla, tai jopa jättää määrittämättä.
 
 > [!HUOMAUTUS]
 > Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole
