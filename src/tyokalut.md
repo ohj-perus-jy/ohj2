@@ -64,6 +64,7 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
 - CachyOS Linux (`6.18.2-2-cachyos`)
+- Linux Mint 22.2 (`6.14.0-37-generic`)
 
 ***
 
