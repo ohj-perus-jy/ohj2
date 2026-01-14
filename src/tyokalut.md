@@ -2,15 +2,24 @@
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
-- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista varten. 
+- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää
+  muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista
+  varten. 
 
-- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
+- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka
+  mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
-- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE), jolla voi kehittää ja debugata muun muassa Java-ohjelmia. (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys). Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
+- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated
+  Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
+  Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
 - **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
-Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja 2. kerros). Jos sinulla on oma tietokone, suosittelemme, että asennat ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
+Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran
+mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja
+2. kerros). Jos sinulla on oma tietokone, suosittelemme vahvasti, että asennat
+ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun
+kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
 >
@@ -54,6 +63,7 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
+- CachyOS Linux (`6.18.2-2-cachyos`)
 
 ***
 
@@ -67,11 +77,11 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ### [Windows](#tab/win)
 
-Varmista, että tietokoneesi on ajan tasalla (Windows Update:ssa ei uusia päivityksiä).
+Jos Windows Updatessa on saatavilla käyttöjärjestelmäpäivityksiä, asenna ne.
 
 Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma asennettuna:
 
-1. Avaa PowerShell-komentorivi (*Haku-ikoni* > *Kirjoita PowerShell* > *Windows PowerShell*).
+1. Avaa PowerShell-komentorivi (*Haku-ikoni* <i class="bi bi-chevron-right"></i> *Kirjoita PowerShell* <i class="bi bi-chevron-right"></i> *Windows PowerShell*).
 2. Anna seuraava komento:
 
     ```bash
@@ -95,7 +105,7 @@ Varmista ensin, että tietokoneesi on ajan tasalla.
 
 Varmista sen jälkeen, että tietokoneellasi on Homebrew-pakkaushallintaohjelma asennettuna:
 
-1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
+1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Anna seuraava komento:
 
     ```bash
@@ -108,7 +118,7 @@ sinun tulee asentaa Homebrew alla olevilla ohjeilla:
 <details>
 <summary>Homebrew-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
-1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
+1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Asenna ensin macOS:n kehitystyökalut suorittamalla alla oleva komento:
 
     ```bash
@@ -252,7 +262,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
     
     Tekstin `X.XX.XX` tilalla näkyy git-työkalun tarkka versio.
 
-5. Testaa, vielä, että Git Bash on asennettu. Mene *Haku-ikoni* > Kirjoita *Git Bash* > Valitse *Git Bash*.
+5. Testaa, vielä, että Git Bash on asennettu. Mene *Haku-ikoni* <i class="bi bi-chevron-right"></i> Kirjoita *Git Bash* <i class="bi bi-chevron-right"></i> Valitse *Git Bash*.
 
     Jos kaikki toimii, pitäisi avautua Git Bash -komentorivi:
 
@@ -507,9 +517,9 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
 >
->    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* > *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
+>    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
 >
-> 2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) > *Settings*.
+> 2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
 >
 > 3. Valitse vasemmalla puolella olevista asetusnäkymistä *Plugins*
 >

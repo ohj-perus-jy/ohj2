@@ -1,0 +1,27 @@
+name: Ilmoita ongelmasta
+description: Ilmoita virheestä tai ongelmasta kurssimateriaaleissa
+title: "[Ongelma]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Kiitos, että ilmoitat ongelmasta! Täytä alla olevat kentät mahdollisimman tarkasti.
+  
+  - type: input
+    id: url
+    attributes:
+      label: Sivun osoite tai polku
+      description: Kopioi tähän sen sivun URL-osoite tai polku, jossa ongelma esiintyy
+      placeholder: "https://ohjelmointi2.it.jyu.fi/..."
+    validations:
+      required: true
+  
+  - type: textarea
+    id: description
+    attributes:
+      label: Kuvaus ongelmasta
+      description: Kuvaile ongelma mahdollisimman tarkasti.
+      placeholder: Kerro tarkasti, mikä ongelma on...
+    validations:
+      required: true

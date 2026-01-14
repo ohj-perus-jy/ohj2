@@ -1,0 +1,6 @@
+ma 19.1.2026 klo 11:59 (keskipäivä)
+ma 26.1.2026 klo 11:59 (keskipäivä)
+ma 2.2.2026 klo 11:59 (keskipäivä)
+ma 9.2.2026 klo 11:59 (keskipäivä)
+ma 16.2.2026 klo 11:59 (keskipäivä)
+ma 23.2.2026 klo 11:59 (keskipäivä)

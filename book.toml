@@ -18,7 +18,8 @@ additional-css = [
   "theme/accordion.css",
   "theme/codeblock-tabs.css",
   "theme/code-highlights.css",
-  "theme/tasks.css"
+  "theme/tasks.css",
+  "theme/asciinema-player.css",
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
@@ -30,6 +31,8 @@ additional-js = [
   "theme/accordion.js",
   "theme/codeblock-tabs.js",
   "theme/code-highlights.js",
+  "theme/asciinema-player.min.js",
+  "theme/asciinema-component.js",
 ]
 
 [output.html.playground]
@@ -37,6 +40,7 @@ editable = true
 
 [output.html.code.hidelines]
 java = "//-"
+javascript = "//-"
 
 [preprocessor.alerts]
 
@@ -51,3 +55,20 @@ command = "python3 ./preprocessors/python/accordion.py"
 
 [preprocessor.plantuml]
 plantuml-cmd="https://www.plantuml.com/plantuml"
+
+[preprocessor.inline-highlighting]
+
+[preprocessor.svgbob]
+font_size = 14
+font_family = "var(--mono-font)"
+fill_color = "black"
+background = "transparent"               # default overridden, differs from svgbob's default
+stroke_color = "var(--fg)"               # default overridden, differs from svgbob's default
+stroke_width = 2.0
+scale = 8.0
+include_backdrop = true
+include_styles = true
+include_defs = true
+
+# preprocessor configuration:
+code_block = "bob"                       # render only code-blocks marked as "bob", e.g.: ```bob

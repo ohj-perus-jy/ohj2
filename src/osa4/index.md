@@ -7,6 +7,10 @@ Tässä osassa käymme tyyppeihin liittyvää asiaa, mihin aiemmin ei ole vielä
 - _Comparable_- ja _Comparator_-rajapintoihin, jotka mahdollistavat arvojen järjestämisen esimerkiksi kokoelmissa ja
 - tyyppiparametreihin ja geneerisiin tyyppeihin.
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 2. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 > - Osaat toteuttaa yleiskäyttöisiä luokkia ja metodeja geneeristen tyyppien avulla
 

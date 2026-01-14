@@ -1,5 +1,9 @@
 # Kohti olio-ohjelmointia
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 19. tammikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - Eteneminen "data+funktio"-ajatuksesta (Ohj1) kohti "tila+metodi"-ajatusta (Ohj2)
