@@ -79,8 +79,7 @@ tietoa kilpailussa mukana olevista kilpailijoista. Kilpailijoita voi olla useita
 ja jokaisesta pitäisi tallentaa ainakin nimi, kilpailijanumero ja pisteet.
 Olioiden avulla voimme pitää yhden kilpailijan tiedot ja niiden muokkaamiseen
 liittyvät toiminnallisuudet saman rakenteen sisällä, mikä helpottaa näiden
-tietojen käsittelyä. Mieti hetki, kuinka tekisit kuvatun ohjelman
-ilman olio-ohjelmointia.
+tietojen käsittelyä. 
 
 ```java
 class Kilpailija {
@@ -113,6 +112,13 @@ void main() {
     }
 }
 ```
+
+Vastaavan ohjelman tekeminen ilman olio-ohjelmointia vaatii vähän aivojumppaa.
+Yksi tapa olisi käyttää kolmea erillistä taulukkoa: Yksi sisältäisi nimet,
+toinen numerot ja kolmas pisteet. Tällöin täytyy kuitenkin huolehtia, että
+kilpailijan tiedot löytyvät aina samoista indekseistä kaikissa taulukoissa, mikä
+on käytännössä hankalaa ja altistaa virheille. Olioiden avulla tiedot ja
+toiminnallisuudet voidaan paketoida selkeämmin yhteen. 
 
 Yhteen kuuluvan tiedon ja toiminnallisuuden järjestely saman rakenteen sisälle
 tekee ohjelman koodista helpommin ymmärrettävää ja laajennettavaa, mutta se ei
