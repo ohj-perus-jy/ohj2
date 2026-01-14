@@ -1,4 +1,4 @@
-# Lisää tyypeistä
+# Lisää Javan tyypeistä
 
 Tässä osassa käymme tyyppeihin liittyvää asiaa, mihin aiemmin ei ole vielä pureuduttu. Tutustumme
 

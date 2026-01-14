@@ -32,7 +32,7 @@
   - [Rajapinta](./osa3/04-rajapinta.md)
   - [Perintä ja rajapinta olioiden yhteistyössä](./osa3/05-perinta-ja-rajapinta.md)
   - [Osan kaikki tehtävät](./osa3/06-tehtavat.md)
-- [Lisää tyypeistä](./osa4/index.md)
+- [Lisää Javan tyypeistä](./osa4/index.md)
   - [Vertailurajapinnat ja tietue](./osa4/01-vertailurajapinnat-ja-tietue.md)
   - [Luetelma ja hahmonsovitus](./osa4/02-luetelma-ja-hahmonsovitus.md)
   - [Tyyppiparametrit ja geneerisyys](./osa4/03-tyyppiparametrit-ja-geneerisyys.md)
