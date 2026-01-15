@@ -518,37 +518,26 @@ public class Rakennus {
 
 ## Static
 
-Staattisuuden käsite on usein alussa hieman hankala ymmärtää. Kannattaa aluksi 
-lukea kertauksena Ohjelmointi 1 -kurssin
-[materiaaleista](https://tim.jyu.fi/view/kurssit/tie/ohj1/materiaali/staattiset)
-staattisuutta koskeva osa. Luokan jäsenten osalta staattisuus toimii samalla
-tavalla myös Javassa. Käytämme tässä Javassa yleensä käytettyjä termejä,
-mutta mainittakoon, että nimityskäytännöt vaihtelevat hieman
-ohjelmointikielestä riippuen.
+Luokan jäsenet voidaan määritellä kuuluvaksi olion sijaan **luokalle**
+`static`-määritettä käyttämällä. Tällaisia attribuutteja ja metodeja kutsutaan
+luokan attribuuteiksi (engl. *class attribute*) ja luokan metodeiksi (engl.
+*class method*). 
 
-Tavallisia, ei-staattisia attribuutteja ja metodeja kutsutaan *olion* 
-attribuuteiksi (engl. *instance attribute*) ja -metodeiksi 
-(engl. *instance method*). Nimensä mukaisesti olion attribuutit ja metodit 
-liittyvät olioon; jokaisella oliolla on tällaisille attribuuteille oma arvo ja 
-metodit kiinnittyvät olioon, jolle ne kuuluvat, minkä vuoksi ne pääsevät olion 
-tilaan käsiksi.
+Sana `static` voi olla hieman harhaanjohtava; *staattisuus* ei tässä tarkoita,
+että nämä luokan jäsenet ovat pysyviä tai muuttumattomia. Käytämme kuitenkin
+tässä materiaalissa sanaa staattinen kuvaamaan luokan jäseniä. 
 
-Luokan jäsenet voidaan määritellä kuuluvaksi olion sijaan **luokalle** 
-`static`-määritettä käyttämällä. Tällaisia attribuutteja ja metodeja kutsutaan 
-*luokan* attribuuteiksi (engl. *class attribute*) ja -metodeiksi 
-(engl. *class method*). Sana `static` voi olla hieman harhaanjohtava;
-*staattisuus* ei tässä tarkoita, että nämä luokan jäsenet ovat pysyviä tai 
-muuttumattomia.
+Siinä missä attribuutit ja metodit liittyvät olioon -- olion attribuutit ja
+metodit pääsevät olion tilaan käsiksi -- luokan attribuutti ei ole osa minkään
+olion tilaa ja sillä on vain yksi arvo, joka on jaettu kaikkien luokan olioiden
+kesken. Jos yksi olio muuttaa oman luokkansa attribuutin arvoa, muutos näkyy
+kaikissa saman luokan olioissa. 
 
-Luokan attribuutti ei ole osa minkään olion tilaa ja sillä on vain yksi arvo, 
-joka on jaettu kaikkien luokan olioiden kesken. Jos yksi olio muuttaa oman 
-luokkansa attribuutin arvoa, muutos näkyy kaikissa saman luokan olioissa. 
-
-Samalla tavalla voimme ajatella myös luokan metodien olevan jaettu kaikkien 
-luokan olioiden kesken; ne eivät liity mihinkään olioon, eivätkä siten pääse 
+Samalla tavalla voimme ajatella myös luokan metodien olevan jaettu kaikkien
+luokan olioiden kesken; ne eivät liity mihinkään olioon, eivätkä siten pääse
 minkään olion tilaan suoraan käsiksi. Oliot voivat kutsua oman luokkansa
-(staattista) metodia, mutta se ei silti mahdollista olion tilan käsittelyä tämän
-metodin sisältä. Koska staattiset metodit eivät liity mihinkään olioon, niiden 
+metodia, siis staattista metodia, mutta tämä kutsu ei mahdollista olion tilan
+käsittelyä. Koska staattiset metodit eivät liity mihinkään olioon, niiden
 sisällä ei myöskään voi käyttää `this`-viitettä.
 
 Voidaksemme kutsua **olion metodia**, meillä täytyy olla olio ja siihen viite.
@@ -587,23 +576,20 @@ void main() {
 ```
 
 Koska `annaNimi` on *olion* metodi, meidän täytyy ensin luoda olio. Emme voi
-kutsua tätä metodia *staattisesti* luokan kautta, eikä siinä olisi oikeastaan
-järkeä.
+kutsua tätä metodia *staattisesti* luokan kautta, esimerkiksi
+`Henkilo.annaNimi()`.
 
-Lisätään nyt *luokan* attribuutti `luokanNimi` ja -metodi
-`annaLuokanNimi`, joka yksinkertaisesti palauttaa staattisen attribuutin arvon. 
-
-> [!HUOMAUTUS]
-> Vastaava staattinen metodi itse asiassa on jo olemassa nimellä `getClass`,
-> vaikka emme sellaista itse määrittelekään. Tällaisia valmiita metodeja on
-> kaikissa luomissamme luokissa valmiiksi. Palaamme tähän osassa 3.
+Lisätään nyt *luokan* attribuutti `taysiIkaisyydenRaja`, joka kuvastaa kaikkien
+henkilöiden täysi-ikäisyyden rajaa. Lisätään luokkaan myös metodi
+`onkoTaysiIkainen`, joka tarkistaa, onko annettu ikä täysi-ikäinen. Huomaa, että
+kyseinen metodi ei liity mihinkään olioon, vaan se tarkistaa vain annetun iän. 
 
 ```java
 // FILE: Henkilo.java
 public class Henkilo {
     private String etunimi;
     private String sukunimi;
-    private static String luokanNimi = "Henkilo";
+    private static int taysiIkaisyydenRaja = 18;
 
     public Henkilo(String etunimi, String sukunimi) {
         this.etunimi = etunimi;
@@ -614,8 +600,8 @@ public class Henkilo {
         return etunimi + " " + sukunimi;
     }
 
-    public static String annaLuokanNimi() {
-        return luokanNimi;
+    public static boolean onkoTaysiIkainen(int ika) {
+        return ika >= taysiIkaisyydenRaja;
     }
 }
 // FILE_END
@@ -628,24 +614,46 @@ void main() {
     IO.println(h1.annaNimi());
 
     // Staattista metodia sen sijaan voi kutsua luokan kautta:
-    IO.println(Henkilo.annaLuokanNimi());
+    IO.println(Henkilo.onkoTaysiIkainen(20)); // Tulostaa 'true'
+    IO.println(Henkilo.onkoTaysiIkainen(15)); // Tulostaa 'false'
 
     // Staattista metodia voi kutsua myös olion kautta, mutta selkeyden vuoksi 
     // on parempi käyttää luokkaa.
-    // IO.println(h1.annaLuokanNimi());
+    // IO.println(h1.onkoTaysiIkainen(20)); // Tämä toimii, mutta ei ole suositeltavaa.
 }
 // FILE_END
 ```
 
-Nyt meillä on *luokan* metodi `annaLuokanNimi`, jota voimme kutsua ilman oliota.
+Nyt meillä on *luokan* metodi `onkoTaysiIkainen`, jota voimme kutsua ilman oliota.
 Voisimme kutsua tätä luokan metodia myös olion kautta, mutta se ei ole tarpeen
 ja kääntäjä varoittaakin siitä.
 
-> [!HUOMAUTUS]
-> Tekstin tulostamiseen käyttämämme `IO.println()` on itse asiassa
-> [IO-luokan](https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IO.html)
-> staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka
-> kerta luoda IO-oliota ja kutsua sen `println`-metodia.
+Staattinen jäsen on hyödyllinen, kun haluamme määritellä jonkin toiminnallisuuden,
+joka ei liity mihinkään yksittäiseen olioon, mutta liittyy luokkaan yleisesti.
+
+Staattiseen jäseneen pääsee käsiksi myös olion metodin sisältä. Voimme
+esimerkiksi tarkistaa, onko henkilö täysi-ikäinen.
+
+```java,ignore
+// Olion metodi voi myös käyttää staattista muuttujaa
+public boolean onkoHenkiloItseTaysiIkainen() {
+    return this.ika >= taysiIkaisyydenRaja;
+}
+```
+
+Selkeyden vuoksi on hyvä käyttää luokan nimeä, kun viitataan staattiseen jäseneen
+luokan sisälläkin, esimerkiksi `Henkilo.taysiIkaisyydenRaja`. Tämä auttaa erottamaan
+staattiset jäsenet olion jäsenistä.
+
+Yllä oleva esimerkki on sikäli varoittava, että täysi-ikäisyyden rajaa pystyy
+muuttamaan mistä tahansa koodista, joka pääsee käsiksi `Henkilo`-luokkaan.
+Tällaisen "globaalin" tilan käyttäminen koodissa on yleensä erittäin huono idea. 
+
+Yksi esimerkki staattisesta metodista, jota käytämme usein, on `IO.println()`.
+Tämä on
+[IO-luokan](https://docs.oracle.com/en/java/javase/24/docs/api/java.base/java/io/IO.html)
+staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka
+kerta luoda IO-oliota ja kutsua sen `println`-metodia.
 
 <task>
   <task-title>Tehtävä 2.3: Static<points>1 p.</points></task-title>
