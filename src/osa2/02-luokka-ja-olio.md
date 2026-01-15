@@ -52,22 +52,25 @@ void main() {
 ```
 
 > [!HUOMAUTUS]
-> Viitemuuttuja ja olio ovat kaksi eri asiaa.
-> Viitemuuttuja on kuin nuoli, joka voi osoittaa olioon. Viitemuuttujan ei kuitenkaan ole
-> pakko viitata mihinkään, jolloin sen arvo on `null`. Olio on vastaavasti
-> mahdollista luoda ilman siihen viittaavaa muuttujaa, mutta jos olioon
-> osoittavia viitteitä ei ole, siihen ei päästä käsiksi ja se merkitään automaattisesti roskaksi. Useampi
-> viitemuuttuja voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain
-> yhteen olioon kerrallaan. 
+> Viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka
+> voi osoittaa olioon. Viitemuuttujan ei kuitenkaan ole pakko viitata mihinkään,
+> jolloin sen arvo on `null`. Olio on vastaavasti mahdollista luoda ilman siihen
+> viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei
+> päästä käsiksi ja se merkitään automaattisesti roskaksi. Useampi viitemuuttuja
+> voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon
+> kerrallaan. 
 
 ## Attribuutit
 
-Attribuutti on luokan sisällä määritelty muuttuja, joka edustaa olion
-ominaisuutta, piirrettä tai tilaa. Siinä missä luokka määrittelee, mitä tietoja
-olioilla voi olla, attribuutit tallentavat kunkin yksittäisen olion
-konkreettiset arvot. Kuten muuttujat yleensä, attribuutit voivat olla
-alkeistietotyyppejä tai viitteitä. Niiden nimeämisessä käytetään myös samoja
-käytänteitä.  
+Attribuutti on luokan sisällä, aliohjelmien ulkopuolella määritelty muuttuja,
+joka edustaa olion ominaisuutta, piirrettä tai tilaa. Luokasta tehdyt oliot
+sisältävät aina luokassa määritellyt attribuutit. Siinä missä luokka
+määrittelee, mitä tietoja olioilla voi olla, attribuutit tallentavat kunkin
+yksittäisen olion konkreettiset arvot. Kuten muuttujat yleensä, attribuutit
+voivat olla alkeistietotyyppejä tai viitteitä. Niiden nimeämisessä käytetään
+myös samoja käytänteitä. Huomaa, että metodien sisällä esitellyt muuttujat eivät
+ole attribuutteja; ne ovat metodin *paikallisia* eli *lokaaleja* muuttujia.
+Lokaalit muuttujat eivät ole osa olion tilaa.
 
 Lisätään nyt muutama attribuutti `Rakennus`-luokkaamme.
 
@@ -85,30 +88,25 @@ public class Rakennus {
 }
 ```
 
-Attribuutit poikkeavat esimerkiksi aliohjelmien paikallisista muuttujista siten,
-että niiden näkyvyyttä voidaan hallita erilaisten näkyvyysmääreiden avulla.
-Aliohjelman paikalliset muuttujat ovat olemassa ja nähtävillä vain aliohjelman
-sisällä sen suorituksen ajan, mutta attribuutit ovat olemassa koko olion eliniän
-ajan ja ne *voidaan* asettaa näkyväksi myös olion ulkopuolelta, joskin tämä on
+Attribuutit poikkeavat paikallisista muuttujista siten, että niiden näkyvyyttä
+voidaan hallita näkyvyysmääreiden avulla. Paikalliset muuttujat ovat olemassa ja
+nähtävillä vain aliohjelman sisällä sen suorituksen ajan, mutta attribuutit ovat
+olemassa koko olion eliniän ajan ja näkyvät kaikille muille jäsenille luokan
+sisällä. Ne *voidaan* asettaa näkyväksi myös olion ulkopuolelta, joskin tämä on
 yleisesti ottaen huono idea. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
 
-Luokasta tehdyt oliot sisältävät aina luokassa määritellyt attribuutit.
+> [!HUOMAUTUS]
+> Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se
+> peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos
+> attribuutilla ja paikallisella muuttujalla on sama nimi, käytetään
+> lausekkeissa ensisijaisesti lokaalia muuttujaa. Tässäkin tilanteessa olion
+> metodeista voi yhä päästä käsiksi sen attribuuttiin käyttämällä
+> `this`-viitettä, johon palaamme hyvin pian.
+
 Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot
 saavat sen myös oman attribuuttinsa alkuarvoksi. Jos attribuutilla ei ole
 oletusarvoa, sen arvo voidaan määrittää olion luomisen yhteydessä, myöhemmin
 metodien avulla, tai jopa jättää määrittämättä.
-
-> [!HUOMAUTUS]
-> Luokassa olevien aliohjelmien sisällä esitellyt muuttujat eivät ole
-> attribuutteja, vaan aliohjelman *paikallisia* eli *lokaaleja* muuttujia. Vain
-> suoraan luokan alla olevat muuttujat ovat attribuutteja. Lokaalien muuttujien
-> sisältämä tieto katoaa aliohjelman suorituksen lopussa, eli ne eivät ole osa
-> olion tilaa. Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla,
-> jolloin se peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl.
-> *shadowing*). Jos attribuutilla ja paikallisella muuttujalla on sama nimi,
-> käytetään lausekkeissa ensisijaisesti lokaalia muuttujaa. Tässäkin tilanteessa 
-> olion metodeista voi yhä päästä käsiksi sen attribuuttiin 
-> käyttämällä `this`-viitettä, johon palaamme hyvin pian.
 
 ```java,ignore
 public class Rakennus {

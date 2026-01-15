@@ -147,7 +147,7 @@ void main() {
 }
 ```
 
-Aikaisemmin minimaalinen Java-ohjelma saattoi näyttää tältä:
+Aiemmin minimaalinen Java-ohjelma saattoi näyttää tältä:
 
 ```java
 public class HeiMaailma {
