@@ -135,8 +135,8 @@ public class Rakennus {
 Luokassa määriteltyjä aliohjelmia kutsutaan *metodeiksi*. Siinä missä
 attribuuttia voisi kuvailla niin, että se muodostaa olion sisäisen tilan,
 metodia voisi kuvailla olion kyvyksi tehdä jotain. Javassa erikoista on se, 
-että kaikki aliohjelmat ovat itse asiassa aina *jonkin* luokan sisällä ja siten 
-metodeja.
+että kaikki aliohjelmat ovat itse asiassa aina *jonkin* luokan sisällä. Ehkä
+tästä syystä Java-kielessä tupataan kutsumaan kaikkia aliohjelmia metodeiksi.
 
 Metodien määrittely ei syntaksiltaan eroa muista aliohjelmista, ja niiden
 nimeämisessä käytetään myös samanlaisia käytänteitä. Metodeja
@@ -195,8 +195,8 @@ void main() {
 
 Voisimme lisätä myös vastaavat metodit luokan toista attribuuttia varten.
 Keskustelemme myöhemmin tässä osassa siitä, miten olion tilaa voidaan käsitellä
-hieman järkevämmin, mutta tässä vaiheessa tällaiset yksinkertaiset `get` ja
-`set` -metodit riittävät.
+hieman järkevämmin, mutta tässä vaiheessa tällaiset yksinkertaiset `get`- ja
+`set`-metodit riittävät.
 
 ## This-viite
 
@@ -221,15 +221,14 @@ public class Rakennus {
 Tämä viite on automaattisesti käytettävissä aina, kun kutsutaan jonkin olion
 metodia. Metodikutsun yhteydessä `this` asetetaan osoittamaan metodin
 suorituksen sisällä siihen olioon, jonka metodia kutsuttiin, eikä sitä voi
-muuttaa. Viitteen kautta metodi pääsee käsiksi oikean olion tilaan sekä sen
-muihin metodeihin. Olion metodien sisällä `this`-viitettä käytetään
-implisiittisesti, jos samalla näkyvyysalueella ei ole konfliktia tunnisteissa -
-esimerkiksi attribuutin kanssa samaa nimeä käyttävää lokaalia muuttujaa. Meidän
-ei siis tarvitse kirjoittaa aina attribuutin tai metodikutsun eteen `this`,
-sillä kääntäjä osaa päätellä sen itse, jos konfliktia ei ole. Joissain
+muuttaa. Viitteen kautta metodi pääsee käsiksi oikean olion tilaan sekä
+metodeihin. Olion metodien sisällä `this`-viite on pakko kirjoittaa vain, jos
+näkyvyysalueella on samanniminen jäsen, kuten lokaali muuttuja. Meidän ei siis
+tarvitse kirjoittaa aina attribuutin tai metodikutsun eteen `this`, sillä
+kääntäjä osaa päätellä sen itse, jos konfliktia ei ole. Joissain
 ohjelmointikielissä tällaista viitettä kutsutaan myös nimellä `self`.
 
-Katsotaan muutamaa esimerkkiä `this`-viitteen käytöstä.
+Katsotaan muutama esimerkki `this`-viitteen käytöstä.
 
 ```java
 // FILE: Rakennus.java
@@ -399,11 +398,11 @@ luoda olion suoraan oikeaan tilaan määrittelemällä muodostajan, joka ottaa o
 tilan alustamiseen tarvittavat tiedot vastaan parametreina ja alustaa
 attribuutit oikein.
 
-Lisätään nyt `Rakennus`-luokalle toinen muodostaja, joka ottaa omistajan ja
-värin vastaan parametreina ja alustaa näillä olion attribuutit. Näin meidän ei
-tarvitse asettaa attribuutteja erikseen olion luomisen jälkeen. Voimme nyt myös 
-poistaa parametrittoman muodostajan, jotta sitä ei voi enää käyttää
-luomaan olioita, joilla on virheellinen alkutila.
+Lisätään nyt `Rakennus`-luokalle muodostaja, joka ottaa omistajan ja värin
+vastaan parametreina ja alustaa näiden avulla olion attribuutit. Näin meidän ei
+tarvitse asettaa attribuutteja erikseen olion luomisen jälkeen pääohjelmassa.
+Voimme nyt myös poistaa parametrittoman muodostajan, jotta sitä ei voi enää
+käyttää luomaan olioita, joilla on virheellinen alkutila.
 
 ```java,ignore
 // FILE: Rakennus.java
@@ -425,17 +424,14 @@ void main() {
     // määrittelemäämme parametrillista muodostajaa, joten sitä käytetään 
     // olion muodostamiseen.
     Rakennus rakennus1 = new Rakennus("JYU", "valkoinen");
-
-    // Tämä ei onnistuisi, sillä emme ole määritelleet muodostajaa, jossa on 
-    // vain yksi parametri.
-    // Rakennus rakennus2 = new Rakennus("JYU");
-
-    // Tämäkään ei onnistuisi, sillä parametritonta muodostajaa ei enää ole 
-    // eikä sellaista enää luoda automaattisesti.
-    // Rakennus rakennus3 = new Rakennus();
-}
 // FILE_END
 ```
+
+Pari huomiota: Emme voi luoda rakennusta yhdellä parametrilla, esimerkiksi
+`Rakennus rakennus2 = new Rakennus("JYU");`, sillä määrittelemämme muodostaja
+tarvitsee kaksi parametria. Emme voi myöskään luoda rakennusta ilman
+parametreja, esimerkiksi `Rakennus rakennus3 = new Rakennus();`, koska
+oletusmuodostajaa ei enää ole. 
 
 Lisätään vielä lopuksi hieman erikoisempi muodostaja, joka ottaa vastaan toisen
 saman luokan olion ja kopioi sen tilan muodostettavalle oliolle. Tällaisesta
