@@ -638,76 +638,16 @@ esimerkki yksinkertaisena tekemällä varaukset tasatunneille. Ohjelman tila
 voisi kuvastaa esimerkiksi seuraavan päivän tilavarauksia. 
 
 Tarvitsemme varauksen tekemiseen varaajan nimen sekä varauksen alkamistunnin ja 
-keston.
+keston. Lisätään oheinen metodi `Tila`-luokkaan.
 
 ```java,ignore
-// FILE: Tila.java
-import java.util.*;
-
-public class Tila {
-    private String nimi;
-    private List<Varaus> varaukset = new ArrayList<>(); 
-    
-    public Tila(String nimi) { 
-        this.nimi = nimi; 
-    } 
-    
-    public String getNimi() { 
-        return nimi; 
-    }
-
-    public void lisaaVaraus(String varaaja, int ajankohta, int kesto) { 
-        varaukset.add(new Varaus(varaaja, ajankohta, kesto)); 
-    }
+public void lisaaVaraus(String varaaja, int ajankohta, int kesto) { 
+    varaukset.add(new Varaus(varaaja, ajankohta, kesto)); 
 }
-// FILE_END
-// FILE: Rakennus.java
-import java.util.*;
-
-public class Rakennus {
-    private String nimi;
-    private List<Tila> tilat = new ArrayList<>();
-    
-    public Rakennus(String nimi) { 
-        this.nimi = nimi;
-    }
-
-    public Tila haeTila(String tilanNimi) {
-        for (Tila tila : tilat) { 
-            if (tila.getNimi().equals(tilanNimi)) {
-                return tila;
-            }
-        }
-        return null;
-    }
-
-    public void lisaaTila(String tilanNimi) { 
-        Tila tila = haeTila(tilanNimi); 
-        if (tila != null) {
-            IO.println("Rakennus " + nimi + " sisältää jo tilan " + tilanNimi);
-            return;
-        } 
-        tilat.add(new Tila(tilanNimi)); 
-    }
-}
-// FILE_END
-// FILE: Varaus.java
-public class Varaus {
-    private String varaaja;
-    private int ajankohta;
-    private int kesto;
-
-    public Varaus(String varaaja, int ajankohta, int kesto) { 
-        this.varaaja = varaaja;
-        this.ajankohta = ajankohta;
-        this.kesto = kesto;
-    }
-}
-// FILE_END
 ```
 
-Lisätään lopuksi vielä mahdollisuus lisätä varauksia *rakennuksen* kautta niin,
-että käyttäjän ei tarvitse edes tietää, että `Tila`-luokka on olemassa. Se miten
+Lisätään vielä mahdollisuus lisätä varauksia *rakennuksen* kautta niin, että
+käyttäjän ei tarvitse edes tietää, että `Tila`-luokka on olemassa. Se miten
 `Rakennus` tallentaa tiedot tiloista jää sen toteutusyksityiskohdaksi.
 
 Tarvitsemme varauksen lisäämiseen tilan ja varaajan nimet sekä varauksen
