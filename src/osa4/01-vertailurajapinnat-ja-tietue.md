@@ -163,20 +163,27 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 
 </details>
 
-<task> <task-title>Tehtävä 4.1: Miksi Comparable? <points>1
-p.</points></task-title> <handout>
+<task>
+  <task-title>Tehtävä 4.1: Miksi Comparable? <points>1 p.</points> </task-title>
+  <handout>
 
 {{#include ../exercises/4-1-miksi-comparable/handout.md}}
 
-</handout> <task-link> <a
-href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a>
-</task-link> </task>
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
+</task>
+
 
 ### Oma toteutus Comparable-rajapinnalle
 
-Toteutetaan `Comparable`-rajapinta omassa luokassamme. Otetaan esimerkiksi
-luokka `Kerailykortti`, joka sisältää keräilykortin nimen ja yksilöivän,
-ykkösestä alkavan tunnistenumeron.
+Kokeillaan `Comparable`-rajapinnan toteuttamista omassa luokassamme.
+
+
+Otetaan esimerkiksi luokka `Kerailykortti`, joka mallintaa eräässä
+keräilypelissä käytettäviä kortteja.
+
+Meidän keräilykorttti sisältää alkuun vain keräilykortin 
+nimen ja yksilöivän, ykkösestä alkavan tunnistenumeron:
 
 ```java
 // FILE: Kerailykortti.java
@@ -197,23 +204,22 @@ class Kerailykortti {
 // FILE_END
 // FILE: main.java
 void main() {
-    List<Kerailykortti> kortit = Arrays.asList(
+    List<Kerailykortti> kortit = List.of(
         new Kerailykortti("Loistava Lohikäärme", 3),
         new Kerailykortti("Aloittelijan Ameeba", 1),
         new Kerailykortti("Mieletön Merihevonen", 2)
     );
 
-    // TODO: tarkista, että tämä syntaksi esitellään aiemmin
-    kortit.forEach(IO::println);
+    IO.println(kortit);
 }
 // FILE_END
 ```
 
-Mikäli yritämme järjestää `Kerailykortti`-olioita
-`Collections.sort()`-metodilla, saamme käännöksenaikaisen virheen. Klikkaa
-play-painiketta nähdäksesi virheen.
+Mikäli nyt yritämme järjestää `Kerailykortti`-olioita
+`Collections.sort()`-metodilla, saamme käännöksenaikaisen virheen,
+koska se ei toteuta `Comparable`-rajapintaa: 
 
-```java
+```java,ignore
 // FILE: main.java
 void main() {
     List<Kerailykortti> kortit = Arrays.asList(
@@ -223,12 +229,12 @@ void main() {
     );
 
     IO.println("Ennen järjestämistä:");
-    kortit.forEach(IO::println);
+    IO.println(kortit);
 
-    Collections.sort(kortit); // käännöksenaikainen virhe
+    Collections.sort(kortit);
 
-    IO.println("\nJälkeen järjestämisen:");
-    kortit.forEach(IO::println);
+    IO.println("Jälkeen järjestämisen:");
+    IO.println(kortit);
 }
 // FILE_END
 // FILE: Kerailykortti.java
@@ -249,25 +255,39 @@ class Kerailykortti {
 // FILE_END
 ```
 
-Virheilmoitus on vähintäänkin kryptinen, mutta vapaa suomennos kuuluu, että
+```
+main.java:11: error: no suitable method found for sort(List<Kerailykortti>)
+    Collections.sort(kortit);
+```
+
+Virheilmoitus on vähintäänkin kryptinen.
+Yksinkertaistetusti virhe johtuu perimmäisesti siitä, että
 `Collections.sort()` ei voi meidän puolestamme arvata, mikä on
-`Kerailykortti`-olioiden luonnollinen järjestys. Onko se kenties kortin nimen
+`Kerailykortti`-olioiden luonnollinen järjestys. 
+Onko se kenties kortin nimen
 aakkosjärjestys vai kenties numerotunnisteen mukainen nouseva järjestys?
 Vastataksemme tähän kysymykseen meidän täytyy toteuttaa `Comparable`-rajapinta
 `Kerailykortti`-luokalle.
 
 Kun lähdemme toteuttamaan `Comparable`-rajapintaa keräilykortille, joudumme heti
-pohtimaan mikä on luonnollinen järjestys keräilykorteillemme. Aakkosjärjestys
-voi olla hyödyllinen, mutta mikäli korteilla on yksilöivät ykkösestä alkavat
-numerotunnisteet, se lienee loppupeleissä useimpien mielestä luonnollisemman
-tuntuinen ja yhtälailla tarpeellinen. Oletusjärjestystä kannattaa myös pohtia
-puhtaasti sovelluksen tarpeen mukaan — mitä rajapinnan käyttäjät (eli rajapintaa
-hyödyntävät koodit tai niiden ohjelmoijat) kaipaavat?
+pohtimaan, mikä on luonnollinen järjestys keräilykorteillemme.
+Esimerkiksi aakkosjärjestys nimen mukaan voi olla hyödyllinen.
+Toisaalta koska korteilla on numeeriset ykkösestä alkavat
+numerotunnisteet, numerojärjestys tunnisteen mukaan voidaan myös
+mieltää luonnollisemman tuntuiseksi ja yhtälailla tarpeelliseksi.
+Luonnollista järjestystä valittaessa on lisäksi syytä
+pohtia kohdealueen ja sovelluksen tarpeen — mitä luokkaa käyttäjät 
+muut ohjelmoijat tai sovelluksen lopulliset käyttäjät kaipaavat
+tai olettavat keräilykorttien oletusjärjestyksestä?
 
+Päättäkäämme tämän esimerkin puiteissa, että järjestys yksilöllisen tunnisteen
+mukaan on tässä tapauksessa järkevin luonnollinen järjestys.
 Toteutetaan tällä pohjustuksella `Comparable`-rajapinta siten, että kortit
 järjestetään numerotunnisteen mukaan. Tätä varten tarvitsemme rajapinnan
 toteutuksen luokan määrittelyyn sekä toteutuksen edellä mainitulle
 `compareTo`-metodille.
+
+Käytämme toteutuksessa luvun alussa olevaa [palautustaulukkoa](#comparator-rajapinta):
 
 ```java
 // FILE: Kerailykortti.java
@@ -285,7 +305,13 @@ class Kerailykortti implements Comparable<Kerailykortti> {
     // HIGHLIGHT_GREEN_BEGIN
     @Override
     public int compareTo(Kerailykortti other) {
-        return Integer.compare(this.tunnistenumero, other.tunnistenumero);
+        if (tunnistenumero > other.tunnistenumero) {
+            return 1;
+        }
+        if (tunnistenumero < other.tunnistenumero) {
+            return -1;
+        }
+        return 0;
     }
     // HIGHLIGHT_GREEN_END
 
@@ -304,44 +330,91 @@ void main() {
     );
 
     IO.println("Ennen järjestämistä:");
-    kortit.forEach(IO::println);
+    IO.println(kortit);
 
     Collections.sort(kortit);
 
-    IO.println("\nJälkeen järjestämisen:");
-    kortit.forEach(IO::println);
+    IO.println("Jälkeen järjestämisen:");
+    IO.println(kortit);
 }
 // FILE_END
 ```
 
 Huomaa, että `implements Comparable<Kerailykortti>`-osa luokan määrittelyssä
-tulee kertoa minkä tyypin olioille luokka tarjoaa vertailutoiminnon, samalla
+tulee kertoa minkä tyypin olioille luokka tarjoaa luonnollisen järjestyksen, samalla
 tavoin kuin listalle kerrotaan minkätyyppisiä olioita lista sisältää (tyylillä
 `List<Kerailykortti>`). Tähän on yleensä helppo valita suoraan luokan oma tyyppi
 ellei ole erityistä syytä valita sen sijaan esimerkiksi yliluokkaa.
+Toisaalta tämä myös tarkoittaa erityisesti, että samalle luokalle voi 
+toteuttaa useita eri `Comparable<T>`-rajapintoja, jossa `T` on mikä tahansa muu
+tyyppi.
 
-> [!Huomautus] `compareTo`-metodin toteutuksessa hyödynnetään Javan valmista
-> `Integer.compare`-metodia, joka vertaa kahta kokonaislukua ja palauttaa
-> vertailutuloksen yllä kuvatulla tavalla. Tämä on kätevä apumetodi, joka
-> kannattaa muistaa kun vertailtavat arvot ovat perusdatatyyppejä kuten `int`,
-> `double` tai `char`.
+> [!Huomautus] 
 >
-> Olennainen syy miksi `Integer.compare`-metodia kannattaa käyttää on, että se
-> käsittelee oikein myös erikoistapaukset kuten ylivuodot, joita voi syntyä
-> suoran vähennyslaskun avulla tehtävässä vertailussa: `this.tunnistenumero -
-> other.tunnistenumero` — mieti mikä on `compareTo`:n antama järjestys, jos
-> `this.tunnistenumero` on `int`:n pienin mahdollinen arvo ja
-> `other.tunnistenumero` on `1` (vihje: ei mitä sen pitäisi olla eli
-> negatiivinen).
+> Yllä olevassa tapauksessa toteutimme `compareTo`-metodin käyttäen suoraan
+> `Comparable`-rajapinnan määritelmää.
+> Kuitenkin Javan valmiit tyypit useimmiten tarjoavat jo
+> valmiita vertailumetodeja, joita voi hyödyntää `Comparable`-rajapinnan toteuttamiseksi.
+>
+> Esimerkiksi `int`-kokonaisluvuille Java tarjoaa valmiin `Integer.compare`-metodin 
+> ([JavaDoc]()), jolla `Kerailykortti`-luokan `compareTo`-metodin toteutus
+> voidaan yksinkertaistaa yhden rivin funktioksi:
+>
+> ```java
+> //-class Kerailykortti implements Comparable<Kerailykortti> {
+> //-    private String nimi;
+> //-    private int tunnistenumero;
+> //-
+> //-    public Kerailykortti(String nimi, int tunnistenumero) {
+> //-        this.nimi = nimi;
+> //-        this.tunnistenumero = tunnistenumero;
+> //-    }
+> //-
+> @Override
+> public int compareTo(Kerailykortti other) {
+>     return Integer.compare(tunnistenumero, other.tunnistenumero);
+> }
+> //- 
+> //-    @Override
+> //-    public String toString() {
+> //-        return "Kortti: " + nimi + " (#" + tunnistenumero + ")";
+> //-    }
+> //-}
+> //-
+> //-void main() {
+> //-    List<Kerailykortti> kortit = Arrays.asList(
+> //-        new Kerailykortti("Loistava Lohikäärme", 3),
+> //-        new Kerailykortti("Aloittelijan Ameeba", 1),
+> //-        new Kerailykortti("Mieletön Merihevonen", 2)
+> //-    );
+> //-
+> //-    IO.println("Ennen järjestämistä:");
+> //-    IO.println(kortit);
+> //-
+> //-    Collections.sort(kortit);
+> //-
+> //-    IO.println("Jälkeen järjestämisen:");
+> //-    IO.println(kortit);
+> //-}
+> ```
+> 
+> Toteuttaessa `Comparable`-rajapintaa itse tehdyille luokille onkin syytä suosia 
+> valmiita vertailumetodeja ja niiden yhdistämistä.
+> Esimerkiksi `Integer.compare` osaa käsitellä kaikkia erikoistapauksia,
+> kuten lukualueen ylivuotoja. Vastaavasti `Double.compare` osaa
+> käsitellä kaikkia liukulukutyyppien erikoisarvoja, kuten äärettömyyttä tai
+> "Not a Number" -arvoja.
 
-<task> <task-title>Tehtävä 4.2: Henkilöt järjestykseen. <points>0.5 p.</points>
-  </task-title> <handout>
+<task>
+  <task-title>Tehtävä 4.2: Henkilöt järjestykseen, osa 1 <points>0,5 p.</points> </task-title>
+  <handout>
 
 {{#include ../exercises/4-2-henkilöt-järjestykseen/handout.md}}
 
-  </handout> <task-link><a
-  href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä
-TIMissä</a></task-link> </task>
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
+</task>
+
 
 ### Useamman kentän vertailu
 

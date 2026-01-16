@@ -1,3 +1,6 @@
+
+
+Tutki Javan dokumentaatiota
 Vastaa seuraaviin kysymyksiin `Comparable`-rajapinnasta:
 
 - Mikä on `Comparable`-rajapinnan pääasiallinen tarkoitus? Valitse sopivin vaihtoehto
@@ -21,3 +24,4 @@ Vastaa seuraaviin kysymyksiin `Comparable`-rajapinnasta:
   2. `Object`
   3. `Double`
   4. `Integer`
+
