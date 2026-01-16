@@ -34,7 +34,7 @@ _järjestyksen_ suhteessa toiseen olioon:
 | `olioA.compareTo(olioB) == 0` | `olioA == olioB` | `olioA` on yhtä suuri kuin `olioB` |
 | `olioA.compareTo(olioB) > 0`  | `olioA > olioB`  | `olioA` on suurempi kuin `olioB`   |
 
-Esimerkikiksi `Integer`-tyyppi toteuttaa `Comparable`-rajapinnan
+Esimerkiksi `Integer`-tyyppi toteuttaa `Comparable`-rajapinnan
 `Integer`-olioille, eli kaksi kokonaislukuoliota voidaan vertailla
 keskenään `compareTo`-metodilla.
 
@@ -186,7 +186,7 @@ Kokeillaan `Comparable`-rajapinnan toteuttamista omassa luokassamme.
 
 Otetaan esimerkiksi luokka `Kerailykortti`, joka mallintaa eräässä
 keräilypelissä käytettäviä kortteja.
-Meidän keräilykorttti sisältää alkuun vain keräilykortin 
+Meidän keräilykortti sisältää alkuun vain keräilykortin 
 nimen ja yksilöivän, ykkösestä alkavan tunnistenumeron:
 
 ```java
@@ -299,7 +299,7 @@ järjestetään numerotunnisteen mukaan. Tätä varten tarvitsemme rajapinnan
 toteutuksen luokan määrittelyyn sekä toteutuksen edellä mainitulle
 `compareTo`-metodille.
 
-Käytämme toteutuksessa luvun alussa olevaa [palautustaulukkoa](#comparator-rajapinta):
+Käytämme toteutuksessa luvun alussa olevaa [palautustaulukkoa](#comparable-rajapinta-ja-luonnollinen-järjestys):
 
 ```java
 // FILE: Kerailykortti.java
@@ -446,7 +446,7 @@ järjestetäänkin ensin aakkosjärjestyksen ja sitten vasta numerotunnisteen
 mukaan?
 Tätä varten meidän
 täytyy muuttaa `compareTo`-metodia siten, että ensin verrataan `nimi`
-aakkosjärejstyksen mukaan käyttäen `String`-luokan omaa `compareTo`-metodia.
+aakkosjärjestyksen mukaan käyttäen `String`-luokan omaa `compareTo`-metodia.
 Jos merkkijonot ovat samat (eli `compareTo` palauttaa `0`), tehdään vertailu
 `tunnistenumero`-attribuutille:
 
@@ -464,9 +464,9 @@ class Kerailykortti implements Comparable<Kerailykortti> {
     @Override
     public int compareTo(Kerailykortti other) {
         // HIGHLIGHT_GREEN_BEGIN
-        int sarjaVertailu = this.sarja.compareTo(other.sarja);
-        if (sarjaVertailu != 0) {
-            return sarjaVertailu;
+        int nimiVertailu = this.nimi.compareTo(other.nimi);
+        if (nimiVertailu != 0) {
+            return nimiVertailu;
         }
         return Integer.compare(this.tunnistenumero, other.tunnistenumero);
         // HIGHLIGHT_GREEN_END
@@ -474,7 +474,7 @@ class Kerailykortti implements Comparable<Kerailykortti> {
 
     @Override
     public String toString() {
-        return "Kortti: " + nimi + " (Sarja: " + sarja + ", #" + tunnistenumero + ")";
+        return "Kortti: " + nimi + " (#" + tunnistenumero + ")";
     }
 }
 // FILE_END
@@ -507,7 +507,7 @@ void main() {
 <task> 
 <task-title>
 Tehtävä 4.3: Henkilöt järjestykseen, osa 2. 
-<points>0.5 p.</points> 
+<points>0,5 p.</points> 
 </task-title> 
   
   <handout>
@@ -529,11 +529,11 @@ TIMissä</a>
 Kuten totesimme ylempänä, toisinaan voi olla vaikeaa valita yksittäinen
 järkevä järjestys. 
 Yleisestikin, luonnollisen järjestyksen lisäksi voi olla järkevää
-pystyä määrittämään *vaihtoehtoisia* järjestystapoja samalla luokalle.
+pystyä määrittämään *vaihtoehtoisia* järjestystapoja samalle luokalle.
 
 Esimerkiksi, vaikka kokonaislukujen suuruusjärjestys on järkevä luonnolliseksi
 järjestykselle, joskus lukuja saatetaan haluta järjestää niiden suuruusluokan
-mukaan tai vaikkapa sen mukaan, kuinka lähellä luvut ovat lähellä jotakin toista 
+mukaan tai vaikkapa sen mukaan, kuinka lähellä luvut ovat jotakin toista
 tiettyä lukua. Vastaavasti, vaikka yllä oleville keräilykorteille voisi olla
 järkevää määrätä järjestys tunnisteen mukaan, voi olla mielekästä
 pystyä järjestämään niitä kortin nimen mukaan.
@@ -541,7 +541,7 @@ pystyä järjestämään niitä kortin nimen mukaan.
 Javan `Comparator`-rajapinta
 [JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html)
 tarjoaa tavan määrittää *vaihtoehtoisia* järjestystapoja tyypeille.
-Liäksi rajapinta tarjoaa mahdollisuuden määrittää järjestystapoja
+Lisäksi rajapinta tarjoaa mahdollisuuden määrittää järjestystapoja
 ilman, että alkuperäisen luokan tarvitsisi toteuttaa `Comparable`-rajapintaa.
 
 Rajapinta sisältää ainoastaan yhden pakollisen metodin `compare`, joka
@@ -634,7 +634,7 @@ Tätä varten voimme luoda uuden vertailuluokan, joka toteuttaa
 `Comparator`-rajapinnan:
 
 ```java
-// FILE: KerailykorttiVertailuSarajanMukaan.java
+// FILE: KerailykorttiSarjaVertailija.java
 import java.util.Comparator;
 
 class KerailykorttiSarjaVertailija implements Comparator<Kerailykortti> {
@@ -711,7 +711,7 @@ Huomaa erityisesti, että:
 
 - Vaihtoehtoinen vertailu on nyt toteutettu omaan luokkaan `KerailykorttiSarjaVertailija`.
   Tämä on tarkoituksellista ja se mahdollistaa, että vertailijoita voi tehdä
-  myös sellaisille luokille, jonka koodia ei voi suoraan muokata (esim.
+  myös sellaisille luokille, joiden koodia ei voi suoraan muokata (esim.
   Javan sisäänrakennetut luokat).
 - Koska `KerailykorttiSarjaVertailija` on oma luokkansa, määritimme `Kerailykortti`-luokkaan
   saantimetodin `getSarja()`.
@@ -721,12 +721,12 @@ Huomaa erityisesti, että:
 
 > [!VAROITUS]
 >
-> Yllä olevasa esimerkissä toteutimme `Comparator`-rajapinnan luokassa, jotta esimerkki
+> Yllä olevassa esimerkissä toteutimme `Comparator`-rajapinnan luokassa, jotta esimerkki
 > voidaan pitää yksinkertaisena.
 > 
-> Modernissa Java on kuitenkin yleistä, että *vertailuluokkia ei luoda käsin*.
+> Modernissa Javassa on kuitenkin yleistä, että *vertailuluokkia ei luoda käsin*.
 > `Comparator` on nimittäin ns. *funktiorajapinta*, jonka ansiosta mikä tahansa
-> luokkametodi, jonka määrittely vastaa `compare`-metodia voidaan sijoittaa
+> luokkametodi, jonka määrittely vastaa `compare`-metodia, voidaan sijoittaa
 > suoraan `Comparator`-tyyppiseen muuttujaan tekemättä luokkaa:
 >
 > ```java
@@ -746,9 +746,9 @@ auttavat algoritmien suunnittelussa.
 
 `Comparator.naturalOrder()` palauttaa `Comparator`-tyyppisen vertailuolion,
 joka järjestää oliot niiden *luonnollisen järjestyksen* mukaan.
-Toisin sanoin, tämä mahdollistaa ns. eristää `Comparable`-rajapintaa
+Toisin sanoen, tämä mahdollistaa ns. eristää `Comparable`-rajapintaa
 toteuttavan olion `compareTo`-metodin toteutuksen vertailuolioksi.
-Esimerkiksi merkkijonojen aakkosjärjestystä vastaavan vertailuolion saa tälla
+Esimerkiksi merkkijonojen aakkosjärjestystä vastaavan vertailuolion saa tällä
 tavoin:
 
 ```java
@@ -770,9 +770,9 @@ void main() {
     List<String> jonoja = new ArrayList<>(List.of("Denis", "Antti-Jussi", "Karri", "Rauli", "Sami"));
     Comparator<String> aakkosjarjestys = Comparator.naturalOrder();
     // HIGHLIGHT_GREEN_BEGIN
-    Comparator<String> kaanteinenAkkosjarjestys = aakkosjarjestys.reversed();
+    Comparator<String> kaanteinenAakkosjarjestys = aakkosjarjestys.reversed();
     // HIGHLIGHT_GREEN_END
-    Collections.sort(jonoja, kaanteinenAkkosjarjestys);
+    Collections.sort(jonoja, kaanteinenAakkosjarjestys);
 
     IO.println(jonoja);
 }
@@ -782,7 +782,7 @@ Kun olioita vertailee käyttäen luonnollista tai vaihtoehtoista järjestystä,
 ei voi olla varma siitä, että `null`-viite on käsitelty järkevästi
 tai ollenkaan.
 Esimerkiksi jopa Javassa määritelty `String`-merkkijonojen luonnollinen
-järjestys ei käsittele tapausta, jos jompikumpi verrattavista merkijonoista
+järjestys ei käsittele tapausta, jos jompikumpi verrattavista merkkijonoista
 on `null`:
 
 ```java,ignore
