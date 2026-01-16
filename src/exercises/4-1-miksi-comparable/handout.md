@@ -25,3 +25,4 @@ Vastaa seuraaviin kysymyksiin `Comparable`-rajapinnasta:
   3. `Double`
   4. `Integer`
 
+Nämä TIMiin monivalintana
