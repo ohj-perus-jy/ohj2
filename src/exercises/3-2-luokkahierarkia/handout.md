@@ -4,15 +4,51 @@ Control-klikkaamalla (macOS) sitä ja valitsemalla "Avaa kuva uudessa
 välilehdessä".
 
 Tehtäväsivulla on valmiiksi annettuna pääohjelma, jota voit käyttää luokkiesi
-testaamiseen. Sen pitäisi tulostaa seuraavaa:
+testaamiseen. 
+
+<details><summary>Avaa tästä ohjelman antama esimerkkituloste.</summary>
 
 ```
+Kutsutaan perittyjä metodeja:
+--- TUOTETIEDOT: Talvitakki Dulce & Käppänä ---
+Hinta: 120.0 euroa
+--- TUOTETIEDOT: Ruisleipä Reissurähjä ---
+Hinta: 2.5 euroa
+--- TUOTETIEDOT: HighPower ---
+Hinta: 899.0 euroa
+
+----------------------------
+
+Kutsutaan omia metodeja:
+Testi 1: Sovitetaan M-kokoista käyttäjää:
+Sovitetaan vaatetta Talvitakki Dulce & Käppänä...
+Voi ei. Sinä olet kokoa M, mutta tämä vaate on L.
+
+Testi 2: Sovitetaan L-kokoista käyttäjää:
+Sovitetaan vaatetta Talvitakki Dulce & Käppänä...
+Mahtavaa! Koko L istuu sinulle täydellisesti.
+
+Syödään Ruisleipä Reissurähjä.
+Parasta ennen oli 20.12.2024, toivottavasti on hyvää.
+
+Käynnistetään laite HighPower...
+Virta päällä! Takuuta on jäljellä 24 kk.
+--- TUOTETIEDOT: pHone ---
+Hinta: 999.99 euroa
+Käynnistetään laite pHone...
+Virta päällä! Takuuta on jäljellä 24 kk.
+Soitetaan numeroon 0401122330 (Orange 4G)
+--- TUOTETIEDOT: Hernepussi ---
+Hinta: 0.99 euroa
 Sulatit pakastetta Hernepussi 10 minuuttia. Säilytyssuositus on -18 astetta C.
 Syödään Hernepussi.
 Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
 ```
+</details>
 
-<details><summary>Kuvaus sanallisessa muodossa</summary>
+<br />
+
+<details><summary>Tehtävän kuvaus sanallisessa muodossa</summary>
 
 Tässä on kuvaus luokista ja niiden vaadituista ominaisuuksista (vastaavat kuin UML-kaaviossa):
 
@@ -38,8 +74,9 @@ Tässä on kuvaus luokista ja niiden vaadituista ominaisuuksista (vastaavat kuin
         * `public void sulataJaNauti(int minuutit)`
         * Metodi kutsuu ensin `sulata(minuutit)`-metodia ja sitten perittyä
           `syo()`-metodia.
-        * Metodi tulostaa esimerkiksi:
 </details>
+
+<br />
 
 ```plantuml
 @startuml

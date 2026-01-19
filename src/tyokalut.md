@@ -2,18 +2,18 @@
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
-- **Java Development Kit (JDK)** - *ohjelmistokehityspaketti*, joka sisältää
+- **[Java Development Kit (JDK)](#jdk)** - *ohjelmistokehityspaketti*, joka sisältää
   muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista
   varten. 
 
-- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka
+- **[Git](#git)** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka
   mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
-- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated
+- **[IntelliJ IDEA](#idea)** - *integroitu kehitysympäristö* (engl. Integrated
   Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
   Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
-- **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
+- **[ComTest](#comtest)** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
 Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran
 mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja
@@ -206,7 +206,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## Git
+## Git {#git}
 
 ### [Windows](#tab/win)
 
@@ -356,7 +356,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## IntelliJ IDEA
+## IntelliJ IDEA {#idea}
 
 ### [Windows](#tab/win)
 
@@ -385,9 +385,16 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
    IDEA saattaa kysyä, haluatko tuoda (engl. *import*) asetuksia niistä. Voit 
    halutessasi tuoda asetukset, voit tehdä asetukset myös myöhemmin ja painaa *Skip Import*.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
+
+Valmis!
 
 ***
 
@@ -412,15 +419,21 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (engl. *import*) asetuksia niistä.
+4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+   Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
+   asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
+   myöhemmin.
 
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
-
+Valmis!
 
 ***
 
@@ -448,13 +461,21 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (engl. *import*) asetuksia niistä.
+4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+   Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
+   asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
+   myöhemmin.
 
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
+
+Valmis!
 
 ***
 
@@ -464,10 +485,11 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## Java Development Kit (JDK)
+## Java Development Kit (JDK) {#jdk}
 
 
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
+>
 > 
 > 2. Klikkaa ikkunan keskellä tai ylädassa olevaa *New Project* -painiketta:
 > 
@@ -513,7 +535,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 > 8. Voit nyt sulkea IntelliJ IDEA:n.
 
 
-## ComTest
+## ComTest {#comtest}
 
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
 >
@@ -537,3 +559,31 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 ## Mitä seuraavaksi?
 
 Onneksi olkoon! Sinulla on seuraavaksi kaikki tarvittavat kurssityökalut. Voit jatkaa tästä varsinaisiin materiaaleihin.
+
+## Yleiset ongelmat ja ratkaisut
+
+<details>
+<summary>Saan IDEAssa Java-projektia ajaessa virheen <code>error: illegal character: '\ufeff'</code> </summary>
+
+Virhe voi mahdollisesti johtua siitä, että toit Rider-työkalun asetukset
+IDEAan. Riderin asetukset eivät ole täysin yhteensopivia Javan kehityksen kanssa
+eikä IDEA osaa korjata ongelmaa.
+
+Tee seuraavasti:
+
+1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
+  
+   **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
+
+2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
+
+3. Valitse vasemmalla puolella olevista asetusnäkymistä *Editor* <i class="bi
+   bi-chevron-right"></i> *File Encodings*
+
+4. Aseta *Create UTF-8 files* -asetuksen arvoksi **with no BOM**.
+
+6. Paina *Save*.
+
+7. Tee *uusi* projekti ja kokeile ajaa yksinkertainen ohjelma.
+
+</details>

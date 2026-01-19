@@ -4,7 +4,7 @@ import java.util.ArrayList;
  * Naytto-luokka hallinnoi piirrettäviä komponentteja.
  */
 public class Naytto {
-    private ArrayList<Piirrettava> komponentit = new ArrayList<>();
+    private List<Piirrettava> komponentit = new ArrayList<>();
     private Piirturi piirturi = new Piirturi();
 
     public void lisaaKomponentti(Piirrettava p) {

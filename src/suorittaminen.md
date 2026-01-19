@@ -49,7 +49,11 @@ Osien takarajat DL-BONUS-pisteiden saamiseksi ovat seuraavat:
 
 Näet [etenemissivulla](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti) kerättyjen tehtäväpisteidän määrän ja prosenttiosuuden sekä DL-BONUS-pisteet erikseen.
 
-Lopullinen arvosana muodostuu harjoitustehtävien arvosanan ja tentin arvosanan painotettuna keskiarvona. Harjoitustehtävistä saatua arvosanaa painotetaan 40% ja tentistä saatua arvosanaa painotetaan 60%. Sekä harjoitustehtävistä että tentistä täytyy saada vähintään arvosana 1, jotta kurssista voi saada hyväksytyn arvosanan.
+Lopullinen arvosana muodostuu harjoitustehtävien arvosanan ja tentin arvosanan
+painotettuna keskiarvona, pyöristäen lähimpään kokonaislukuun.
+Harjoitustehtävistä saatua arvosanaa painotetaan 40% ja tentistä saatua
+arvosanaa painotetaan 60%. Sekä harjoitustehtävistä että tentistä täytyy saada
+vähintään arvosana 1, jotta kurssista voi saada hyväksytyn arvosanan. 
 
 |                                          | Esim1 | Esim2 | Esim3 |
 | ---------------------------------------- | ----- | ----- | ----- |
@@ -97,8 +101,9 @@ Generatiivisten tekoälytyökalujen käyttö koodin luomisessa on kiellettyä.
 Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun
 ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä
 osaamistavoitteita. Kiellettyjä generatiivisia työkaluja ovat esimerkiksi GitHub
-Copilot, ChatGPT, Bard ja vastaavat chat- ja agenttisovellukset. Myös Riderin
-koodin tekoälypohjainen täydennyksen käyttö on kiellettyä. 
+Copilot, ChatGPT, Bard ja vastaavat chat- ja agenttisovellukset. Myös
+IDE-työkalujen sisäänrakennetut tekoälyavusteiset koodinluontiominaisuudet
+kuuluvat kiellettyjen työkalujen piiriin.
 
 Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
 selittämiseen, tehtävänantojen ymmärtämiseen tai materiaalissa annettujen

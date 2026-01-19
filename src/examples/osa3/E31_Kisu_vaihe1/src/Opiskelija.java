@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 class Opiskelija extends Henkilo {
-    ArrayList<String> kaynnissaOlevatKurssit;
+    List<String> kaynnissaOlevatKurssit;
 
     public Opiskelija() {
         this.kaynnissaOlevatKurssit = new ArrayList<>();
