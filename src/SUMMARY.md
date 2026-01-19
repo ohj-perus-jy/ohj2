@@ -27,6 +27,7 @@
   - [Kapselointi](./osa2/03-kapselointi.md)
   - [Osan kaikki tehtävät](./osa2/04-tehtavat.md)
 - [Perintä ja rajapinnat](./osa3/index.md)
+  - [Perintä](./osa3/01-perinta.md)
   - [Polymorfismi](./osa3/02-polymorfismi.md)
   - [Abstrakti luokka](./osa3/03-abstrakti-luokka.md)
   - [Rajapinta](./osa3/04-rajapinta.md)
