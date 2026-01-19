@@ -1,9 +1,17 @@
 # Luetelma ja hahmonsovitus
 
+> [!TODO]
+>
+> Tämä luku voisi olla jossain myöhemmässä osassa tai muuten jättää ekstraksi.
+>
+> Enumit voinee ainakin mainita asiana jossain kohti "vaihtoehtona"
+> booleaneille.
+
 > [!Osaamistavoitteet]
 >
 > - Tiedät mikä on luetelma tyyppinä ja ymmärrät sen hyödyt
 > - Tiedät mitä on hahmonsovitus ja milloin sitä kannattaa käyttää
+
 
 ## Luetelma rajatuille joukoille
 
