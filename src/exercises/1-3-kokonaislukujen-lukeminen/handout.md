@@ -1,4 +1,4 @@
-Tee ohjelma, joka lukee käyttäjältä kokonaislukuja yksi rivi kerrallaan
+Tee ohjelma, joka lukee käyttäjältä positiivisia kokonaislukuja yksi rivi kerrallaan
 silmukassa käyttäen
 `IO.readln()`-metodia, kunnes käyttäjä antaa tyhjän merkkijonon. 
 Tallenna nämä luvut listaan. 
@@ -6,9 +6,9 @@ Tallenna nämä luvut listaan.
 Tee sitten aliohjelmat `summa`, `keskiarvo`, `pienin` ja `suurin`, jotka
 laskevat listan pienimmän luvun, suurimman luvun, lukujen summan ja lukujen
 keskiarvon. Tulosta aliohjelmien palauttamat arvot käyttäjälle. 
-Lisää aliohjelmiin sopiva käsittely tyhjille listoille.
+Lisää aliohjelmiin sopiva käsittely tyhjille listoille ja dokumentoi ne.
 
-Voit olettaa, että käyttäjä kirjoittaa vain kokonaislukuja syötteenä.
+Voit olettaa, että käyttäjä kirjoittaa vain positiivisia kokonaislukuja syötteenä.
 
 <details><summary>Vinkki</summary>
 
