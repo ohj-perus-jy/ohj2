@@ -177,7 +177,7 @@ sinun tulee asentaa Homebrew alla olevilla ohjeilla:
     ```
     
     Versionumero `X.X.X` voi olla mikä tahansa; olennaista on, että tuloste ilmestyy näkyviin.
-</summary>
+</details>
 
 ***
 
