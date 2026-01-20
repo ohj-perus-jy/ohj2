@@ -195,7 +195,7 @@ Ota huomioon seuraavat asiat seuratessa ohjeita:
    kuten [Snap](https://snapcraft.io/docs/installing-snapd) tai [Flatpak](https://flatpak.org/).
    
    Tällä sivulla olevat ohjeet käyttävät ensisijaisesti Snapia tai jakelukohtaisia
-   pakkauksia, jos niitä on.
+   pakkauksia, jos niitä on. Linux Mint-jakelulle saat Snapin asennettua [jakelun ohjetta](https://linuxmint-user-guide.readthedocs.io/en/latest/snap.html#how-to-install-the-snap-store-in-linux-mint-20) seuraamalla.
 
 - Kun olet asentanut tarvittavat esipakkaukset, käynnistä uusi tyhjä pääte.
 
