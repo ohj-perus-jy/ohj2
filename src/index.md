@@ -72,7 +72,7 @@ opettajille sähköpostitse.
 24.4. jälkeen ohjausta on saatavilla ajanvarauksella. Linkki ajanvaraukseen
 tulee myöhemmin saataville. 
 
-<details closed><summary>Haluatko Sisun opintokalenteriin ohjausaikoja näkyviin? (Avaa ohje klikkaamalla) </summary>
+<details closed><summary>Haluatko ohjausaikoja näkyviin Sisun opintokalenteriin? (Avaa ohje klikkaamalla) </summary>
 
 1. Kirjaudu Sisuun
 2. Jos olet jo ilmoittautunut kurssille, klikkaa ylhäällä välilehteä

@@ -8,4 +8,8 @@ Ohjelma lopettaa voi toimintansa tulosteen näyttämisen jälkeen.
 Ohjelman ei tarvitse kysyä syötettä jatkuvasti.
 
 Testaa ohjelmaasi lukemalla käyttäjältä merkkijono ja tulostamalla
-sanojen määrä.
+sanojen määrä, esimerkiksi:
+
+```
+Sanojen määrä: 5
+```

@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 class Opettaja {
     String nimi;
-    ArrayList<String> opetettavatKurssit;
+    List<String> opetettavatKurssit;
 
     public Opettaja() {
         this.opetettavatKurssit = new ArrayList<>();

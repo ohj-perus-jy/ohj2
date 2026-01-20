@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 class Opiskelija extends Henkilo {
-    private ArrayList<String> kaynnissaOlevatKurssit = new ArrayList<>();
+    private List<String> kaynnissaOlevatKurssit = new ArrayList<>();
     int opintopisteet = 0;
 
     public Opiskelija(String nimi, String kayttajatunnus) {
