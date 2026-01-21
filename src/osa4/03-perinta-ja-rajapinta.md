@@ -557,14 +557,3 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 
 ## Tehtävät
-
-<task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.9: Kotityörobotti. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/3-9-kotityorobotti/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava9">Tee tehtävä TIMissä</a></task-link>
-</task>
-

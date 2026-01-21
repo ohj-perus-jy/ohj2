@@ -1,6 +1,6 @@
 # Comparable-rajapinta
 
-### Esimerkki: Comparable-rajapinta ja luonollinen järjestys
+## Esimerkki: Comparable-rajapinta ja luonollinen järjestys
 
 > [!TODO]
 >
@@ -167,7 +167,7 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 </task>
 
 
-### Oma toteutus Comparable-rajapinnalle
+## Oma toteutus Comparable-rajapinnalle
 
 Kokeillaan `Comparable`-rajapinnan toteuttamista omassa luokassamme.
 
@@ -354,7 +354,7 @@ Toisaalta tämä myös tarkoittaa erityisesti, että samalle luokalle voi
 toteuttaa useita eri `Comparable<T>`-rajapintoja, jossa `T` on mikä tahansa muu
 tyyppi.
 
-### Valmiiden vertailumetodien käyttö
+## Valmiiden vertailumetodien käyttö
 
 Yllä olevassa tapauksessa toteutimme `compareTo`-metodin käyttäen suoraan
 `Comparable`-rajapinnan määritelmää.
@@ -423,7 +423,7 @@ käsitellä kaikkia liukulukutyyppien erikoisarvoja, kuten äärettömyyttä tai
 </task>
 
 
-### Useamman attribuutin vertailu
+## Useamman attribuutin vertailu
 
 Monesti luonnollinen järjestys voi määräytyä useamman luokan attribuutin
 mukaan.

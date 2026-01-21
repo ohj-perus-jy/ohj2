@@ -166,27 +166,6 @@ Saadettava <|.. Valo
 @enduml
 ```
 
-<task>
-  <task-title>Tehtävä 3.6: Muunnin. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/3-6-muunnin/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava6">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-
-<task>
-  <task-title>Tehtävä 3.7 Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/3-7-salakirjoitus/handout.md}}
-
-  </handout>
-    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä </a></task-link>
-</task>
-
 ## Usean rajapinnan toteuttaminen
 
 Luokka voi toteuttaa useita rajapintoja. Esimerkiksi Javan sisäänrakennettu
@@ -576,16 +555,6 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 
 </details>
 
-
-<task>
-  <task-title>Tehtävä 3.8: Seikkailupeli. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/3-8-seikkailupeli/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava8">Tee tehtävä TIMissä</a></task-link>
-</task>
 
 
 ## Rajapinnan periminen
