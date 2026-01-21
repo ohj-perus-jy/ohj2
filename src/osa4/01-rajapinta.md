@@ -1,7 +1,7 @@
 # Rajapinta
 
 > [!VAROITUS]
-> Tämä osio julkaistaan 26. tammikuuta 2026.
+> Tämä osio julkaistaan 2. helmikuuta 2026.
 > {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]

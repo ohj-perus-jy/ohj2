@@ -1,12 +1,13 @@
 # Perintä ja rajapinnat olioiden yhteistyössä
 
 > [!VAROITUS]
-> Tämä osio julkaistaan 26. tammikuuta 2026.
+> Tämä osio julkaistaan 2. helmikuuta 2026.
 > {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
 > - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
 >   riippuvuuden välttämiseksi 
+> - Tunnistaa milloin perintää kannattaa käyttää, ja milloin koostaminen on parempi vaihtoehto. ("Composition over inheritance")
 
 Perintä ja rajapinnat voivat toimia, ja usein toimivatkin yhdessä. Perintä
 määrittelee luokkien välisen hierarkian ja jakaa yhteistä toiminnallisuutta, kun

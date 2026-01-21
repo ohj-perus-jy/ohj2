@@ -10,6 +10,9 @@ Lisää aliohjelmiin sopiva käsittely tyhjille listoille.
 
 Voit olettaa, että käyttäjä kirjoittaa vain kokonaislukuja syötteenä.
 
+Valmiiden `Collections`-luokan metodien, kuten `Collections.min()` ja
+`Collections.max()`, käyttö on kielletty.
+
 <details><summary>Vinkki</summary>
 
 Voit muuntaa merkkijonon numeroksi käyttäen

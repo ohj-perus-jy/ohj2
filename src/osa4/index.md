@@ -12,5 +12,7 @@ Tässä osassa käymme tyyppeihin liittyvää asiaa, mihin aiemmin ei ole vielä
 > {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
+>
+> - Osaat käyttää rajapintoja määrittääksesi luokan toimintaa määrittävän sopimuksen
+> - Ymmärrät geneeristen luokkien ja tyyppiparametrien käsitteet
 > - Osaat toteuttaa yleiskäyttöisiä luokkia ja metodeja geneeristen tyyppien avulla
-
