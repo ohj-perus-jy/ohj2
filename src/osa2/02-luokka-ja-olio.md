@@ -114,8 +114,7 @@ public class Rakennus {
     // Olion attribuutti, jolla on oletusarvo.
     private String väri = "sininen";
 
-    public void tulosta()
-    {
+    public void tulosta() {
         // Tämä lokaali muuttuja peittää saman nimen omaavan attribuutin 
         // aliohjelman sisällä.
         String väri = "punainen"; 
