@@ -1,11 +1,16 @@
-# Lisää Javan tyypeistä
+# Rajapintojen ja geneeristen tyyppien perusteet
 
-Tässä osassa käymme tyyppeihin liittyvää asiaa, mihin aiemmin ei ole vielä pureuduttu. Tutustumme
+Tässä osassa tutustumme
+
+- rajapintoihin, jotka määrittelevät luokkien toimintaa ohjaavia sopimuksia,
+- `Comparable`-rajapintaan, joka mahdollistaa olioiden järjestämisen,
+- geneerisiin tyyppeihin, jotka mahdollistavat yleiskäyttöisten luokkien ja metodien toteuttamisen, sekä
+- tyyppiparametreihin, joiden avulla geneerisiä tyyppejä voidaan käyttää joustavasti erilaisissa tilanteissa.
+
+TULEEKO??
 
 - kahteen erityiseen luokkatyyppiin, _luetelmaan_ (engl. *enum*) ja _tietueeseen_ (engl. *record*),
 - hahmonsovitukseen ja _switch_-lausekkeeseen,
-- _Comparable_- ja _Comparator_-rajapintoihin, jotka mahdollistavat arvojen järjestämisen esimerkiksi kokoelmissa ja
-- tyyppiparametreihin ja geneerisiin tyyppeihin.
 
 > [!VAROITUS]
 > Tämä osio julkaistaan 2. helmikuuta 2026.

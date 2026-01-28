@@ -11,13 +11,6 @@
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
 > - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhdestä luokasta
 
-![alt text](images/interfaces.png)
-
-> [!TODO]
-> Lisää monivalintakysymyksiä /-tehtäviä rajapinnoista. Mahdollisesti "ihan
-> oikeita tehtäviä" pisteiden kera? Voisiko olla esim 4 * 0.25 pisteen kysymystä
-> -> 1 pisteen tehtävä?
-
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on
 tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin
 kuin abstrakti luokka, joka luo pohjan luokan metodeille ja attribuuteille,
@@ -29,16 +22,19 @@ kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
 ## Älykoti: säädettävät laitteet{#alykoti-saadettava}
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa
-suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän
-periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus
-vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin
-kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%),
-sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja
-toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata
-tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan
-haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*-
-tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
+Jatketaan [Osassa 3
+aloittamaamme](../osa3/03-abstrakti-luokka.md#alykoti)
+älykoti-esimerkkiä. Jotkin älykotimme laitteet voisivat olla säädettäviä, eli
+niihin voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai
+äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme
+`Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän
+kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan
+haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua
+`vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen.
+Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi
+asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan,
+että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta*
+-painikkeita useita kertoja. 
 
 Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
 Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
