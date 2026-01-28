@@ -5,8 +5,10 @@
 > - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli geneerisiä luokkia ja metodeja
 
 Opimme hyvin varhain, että parametrit mahdollistavat toiston vähentämisen
-yleistämällä ohjelman toimintaa erilaisille arvoille.
-Esimerkiksi, jos haluaisimme selvittää, missä indeksissä haluttu luku sijaitsee...
+yleistämällä ohjelman toimintaa erilaisille arvoille. Parametrien idea on
+erottaa laskennan logiikka itse arvoista. Kun kirjoitamme metodin, laskenta
+määritellään vain kerran. Esimerkiksi, jos haluaisimme selvittää, missä
+indeksissä haluttu luku sijaitsee, voisimme kirjoittaa koodin näin.
 
 ```java
 //-void main() {
@@ -28,7 +30,8 @@ for (int i = 0; i < luvut2.length; i++) {
 //-}
 ```
 
-...voisimme tehdä funktion, joka ottaa taulukon *parametrina*:
+Tämä toimii, mutta koodia on kopioitu turhaan. Tehdään nyt funktio, joka ottaa
+taulukon *parametrina*.
 
 ```java
 int etsiIndeksi(int[] luvut, int etsittava) {
@@ -43,11 +46,12 @@ void main() {
 }
 ```
 
-Huomaamme kuitenkin nopeasti, että sama `etsiIndeksi` funktio ei kuitenkaan 
-toimi muille lukutyypeille, kuten `byte`, `long` taikka `float`.
-Java on kuitekin staattisesti tyypitetty, eli kääntäjän pitää tietää muuttujien
-tyypit ennen ohjelman ajamista. Jos siis haluaisimme etsiä muiden taulukkojen
-suurimpia arvoja, meidän täytyy edelleen kopioida koodia:
+Tätä voi ajatella parametrien käyttönä arvojen tasolla: metodi on yleinen, mutta
+sille annettavat arvot vaihtelevat.
+
+Huomaamme kuitenkin nopeasti, että sama `etsiIndeksi`-funktio ei kuitenkaan
+toimi muille lukutyypeille, kuten `byte`, `long` taikka `float`. Jos haluaisimme etsiä arvoja muun tyyppisistä taulukoista,
+meidän täytyy tehdä erilliset funktiot jokaista tyyppiä varten.
 
 ```java
 int etsiIndeksiInt(int[] luvut, int etsittava) {
@@ -74,8 +78,12 @@ void main() {
     IO.println("Luku -10 on indeksissä " + etsiIndeksiLong(new long[] {-10L, 5L, 1L}, -10L));
 }
 ```
+Koska Java on staattisesti tyypitetty kieli, emme voi kirjoittaa yhtä ja samaa
+metodia, joka toimisi automaattisesti kaikille näille. Ilman tällaista ratkaisua
+päätyisimme helposti tilanteeseen, jossa meillä on joukko lähes identtisiä
+metodeja: `etsiIndeksiInt`, `etsiIndeksiDouble`, `etsiIndeksiString` ja niin
+edelleen. Koodi on käytännössä sama, vain tyypit vaihtuvat. 
 
-Huomataan, että yllä olevat funktiot eroavat vain tyyppin perusteella.
 Oikeastaan `etsiIndeksi`-funktion perusajatus on aina sama:
 
 ```java,ignore
@@ -87,32 +95,33 @@ int etsiIndeksi(TYYPPI[] luvut, TYYPPI etsittava) {
 ```
 
 Jos jotenkin pystyisimme "sijoittamaan" `TYYPPI`:n tilalle haluttu tyyppi,
-pystyisimme tekemään `etsiIndeksi`-funktion, joka olisi edelleen 
-staattisesti tyypitetty, mutta samalla mahdollistaisi toiston vähentämisen
-ennestään.
+pystyisimme tekemään `etsiIndeksi`-funktion, joka olisi edelleen staattisesti
+tyypitetty, mutta samalla mahdollistaisi toiston vähentämisen ennestään.
 
+Javassa tämä onkin mahdollista *tyyppiparametrien* avulla.
 
 ## Tyyppiparametrit 
 
-Nimensä mukaisesti *tyyppiparametrit* ovat parametrit, jonka arvona ovat
-tietotyypit. 
-Tyyppiparametrien tarkoitus on vähentää toistoa
-tapauksissa, jossa sama koodi toimii *erityyppisille*, luopumatta
-staattisen tyypityksen antamista hyödyistä.
+Tyyppiparametri on parametri, jonka arvona on tietotyyppi. Tyyppiparametrin
+tarkoitus on vähentää toistoa tapauksissa, jossa sama koodi toimii eri
+tyyppisille arvoille luopumatta staattisen tyypityksen antamista hyödyistä.
 Lisäksi tyyppiparametrit mahdollistavat ylimääräisten tyyppimuunnosten
 välttämistä jossain tapauksissa.
 
-Tyypiparametreja voidaan määrittää metodeille tavallisten parametrien lisäksi.
-Erikoisuutena on, että tyyppiparametreja voidaan myös määritellä luokille.
-Yhdessä metodien ja luokkien tyyppiparametrit mahdollistavat
-*geneeristä ohjelmointia*, eli tyypistä riippumattomien algoritmien
-ja tietorakenteiden ohjelmointia.
+Tyypiparametri tai -parametrit voidaan määrittää metodille tavallisten
+parametrien lisäksi. Erikoisuutena on, että tyyppiparametreja voidaan myös
+määrittää luokille. Yhdessä metodien ja luokkien tyyppiparametrit
+mahdollistavat *geneeristä ohjelmointia*, eli tyypistä riippumattomien
+algoritmien ja tietorakenteiden ohjelmointia. 
 
-### Tyyppiparametrit metodeissa
+## Tyyppiparametrit ja metodit
 
-Javassa metodeihin kuuluvat tyyppiparametrit ilmoitetaan nuolisulkeiden (`<` ja `>`)
-välissä *ennen metodin palautustyyppiä*.
-Esimerkiksi:
+Metodia, joka määrittelee tyyppiparametrin, kutsutaan *geneeriseksi metodiksi*.
+Geneerisessä metodissa tietotyyppiä ei ole lukittu etukäteen, vaan se ilmaistaan
+symbolilla, joka täsmennetään vasta metodin käyttöhetkellä. Metodin
+tyyppiparametri laitetaan kulmasulkeiden väliin ennen metodin
+palautustyyppiä. Yleinen käytäntö on käyttää yksikirjaimisia, isoja kirjaimia.
+Tavallisin näistä on `T`, joka tulee sanasta Type.
 
 ```java
 // aliohjelma "tulosta", jolla on yksi tyyppiparametri T 
@@ -149,73 +158,119 @@ tyyppiparametrin merkityksestä, kuten
 `V` (**V**alue). Jossain tapauksissa tyyppiparametrien nimeen lisätään
 myös numero, kuten `T1`, `T2`, `T3`, jne.
 
-> [!HUOMAUTUS]
->
-> Huomaa, että yllä olevissa esimerkeissä tyyppiparametri määritellään, mutta
-> tyyppiparametreille ei anneta arvoa kutsuttaessa.
-> Tämä voitaisiin kyllä tehdä; esimerkiksi yllä oleva `tulosta`-aliohjelman
-> kutsulle voidaan määrittää tarkasti tyyppiparametrin tyyppi:
->
-> ```java
-> //-<T> void tulosta(T arvo) {
-> //-    IO.println("Moikka, olen '" + arvo + "' ja olen luokan '" + arvo.getClass() + "' olio!");
-> //-}
-> //-
-> void main() {
->     this.<Double>tulosta(1.0); // sama kuin tulosta(1.0)
->     this.<String>tulosta("kissa"); // tulosta("String")
-> }
-> ```
->
-> Vaikka Java on staattisesti tyypitetty, Javan kääntäjä osaa *päätellä*
-> tyyppiparametrien arvoja kontekstin perustella.
-> Esimerkiksi `tulosta(1.0)`-kutsun `1.0`-lausekkeen tyyppi on `double`, joten
-> Java osaa päätellä, että tyyppiparametrin `T` arvoksi on asetettava `Double`-tyyppi.
->
-> Java osaa päätellä tyyppiparametrien arvoja melko hyvin. On kuitenkin hyvä
-> pitää mielessä, että tyypiparametrille annetaan arvo, vaikka sitä ei aina näe.
-
-Palataan vielä aiempaan `etsiIndeksi`-esimerkkiin.
-Käyttäen tyypiparametreja ja pienellä muutoksella voimme vähentää toistoa:
+Huomaa, että yllä olevissa esimerkeissä tyyppiparametri määritellään, mutta
+tyyppiparametreille ei anneta arvoa kutsuttaessa. Tämä voitaisiin kyllä tehdä;
+esimerkiksi yllä oleva `tulosta`-aliohjelman kutsulle voidaan määrittää
+tarkasti tyyppiparametrin tyyppi:
 
 ```java
-<T> int etsiIndeksi(T[] luvut, T etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i].equals(etsittava)) return i;
+//-<T> void tulosta(T arvo) {
+//-    IO.println("Moikka, olen '" + arvo + "' ja olen luokan '" + arvo.getClass() + "' olio!");
+//-}
+//-
+void main() {
+    this.<Double>tulosta(1.0); // sama kuin tulosta(1.0)
+    this.<String>tulosta("kissa"); // tulosta("String")
+}
+```
+
+Vaikka Java on staattisesti tyypitetty, kääntäjä osaa *päätellä*
+tyyppiparametrien arvoja kontekstin perustella. Esimerkiksi
+`tulosta(1.0)`-kutsussa lausekkeen `1.0` tyyppi on `double`, joten kääntäjä osaa
+päätellä tarvittavan tyyppiparametrin `T` arvon (`Double`). On kuitenkin hyvä
+pitää mielessä, että tyypiparametrille annetaan taustalla arvo, vaikka sitä ei
+itse kirjoittaisikaan näkyville. 
+
+Katsotaan, miten aiempi etsimisongelma ratkeaa geneerisyydellä.
+
+```java
+<T> int etsiIndeksi(T[] taulukko, T etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i].equals(etsittava)) return i;
     return -1;
 }
 
 void main() {
-    IO.println("Luku 3 on indeksissä " + etsiIndeksi(new Integer[] {2, 3, 4}, 1));
-    IO.println("Luku 2.0 on indeksissä " + etsiIndeksi(new Double[] {-10.0, 2.0}, 2.0));
-    IO.println("Luku -10 on indeksissä " + etsiIndeksi(new Long[] {-10L, 5L, 1L}, -10L));
+    Integer[] kokonaisluvut = {2, 3, 4};
+    Double[] liukuluvut = {-10.0, 2.0};
+    String[] elaimet = {"koira", "kissa"};
+
+    System.out.println(etsiIndeksi(kokonaisluvut, 3));
+    System.out.println(etsiIndeksi(liukuluvut, 2.0));
+    System.out.println(etsiIndeksi(elaimet, "kissa"));
 }
 ```
 
 Huomaa, että jouduimme tekemään erityisesti pari muutosta:
 
-* `luvut[i] == etsittava` sijaan jouduimme käyttämään viitetietotyyppimuuttujien
-  yhtäsuuruuden vertailua `luvut[i].equals(etsittava)`;
-* `main`-pääohjelmassa joudumme käyttämään perustietotyyppien `int`, `double` ja
- `long` sijaan käärijäluokkia `Integer`, `Double` ja `Long`.
-   
-Tämä johtuu Javan tyyppiparametrien eräästä oleellisesta rajoittesta:
-**vain viitetietotyyppejä voidaan välittää tyyppiparametreihin**.
-Rajoite puolestaan johtuu Javan tavasta toteuttaa viitetietotyyppejä; muissa 
-ohjelmointikielissä samaa rajoitetta ei välttämättä ole.
-Mainittakoon, että Java-kieltä kehitetään ja on hyvin mahdollista, että
-lähitulevaisuudessa tämä rajoite jää pois.
+Ensinnäkin, vertailu tapahtuu nyt kirjoittamalla
+`taulukko[i].equals(etsittava)`. Tämä johtuu siitä, että tyyppiparametri `T` voi
+edustaa mitä tahansa viitetietotyyppiä, ja viitetietotyyppisten arvojen
+vertailua ei voi tehdä `==`-operaattorilla.
+
+Toiseksi, `main`-pääohjelmassa tulee käyttää perustietotyyppien `int`, `double`
+ja `long` sijaan käärijäluokkia `Integer`, `Double` ja `Long`. Tämä johtuu
+siitä, että Javassa **vain viitetietotyyppejä voidaan käyttää
+tyyppiparametreina**. Rajoite puolestaan johtuu Javan tavasta toteuttaa
+viitetietotyyppit. Mainittakoon, että Java-kieltä kehitetään jatkuvasti, ja on
+hyvin mahdollista, että lähitulevaisuudessa tämä rajoite jää pois.
 
 ### Tyyppiparametrit luokissa ja rajapinnoissa
 
-Tyyppiparametrien todellinen hyöty tapana tuottaa yleistä koodia ilmenee,
-kun tyyppiparametreja määrittää luokalle tai rajapinnalle.
-Olemmekin jo käyttäneet kurssilla tyyppiparametreja valmiissa luokissa, kuten
-`ArrayList<T>`.
+Geneerisyys ei rajoitu vain metodeihin. Tyyppiparametrien todellinen hyöty
+tapana tuottaa koodia joka yleistyy hyvin, ilmenee, kun tyyppiparametreja
+määrittää luokalle tai rajapinnalle. Olemmekin jo käyttäneet kurssilla
+tyyppiparametreja valmiissa luokissa, kuten `ArrayList<T>`. lista itsessään on
+yleinen, mutta sen sisältämä tyyppi täsmennetään.
 
-DZ: Joku yksinkertainen esimerkki? Vaikkapa Osassa 1 oleva salasanatehtävä,
-mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
-luokaksi `Pari<T, U>`.
+> [!TODO]
+> DZ: Joku yksinkertainen esimerkki? Vaikkapa Osassa 1 oleva salasanatehtävä,
+> mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
+> luokaksi `Pari<T, U>`.
+
+Voimme tehdä tällaisia luokkia myös itse. Kuvitellaan tilanne, jossa haluamme tallentaa kaksi toisiinsa liittyvää arvoa, eli parin.
+
+```java
+public class Pari<T, U> {
+    private T eka;
+    private U toka;
+
+    public Pari(T eka, U toka) {
+      this.eka = eka;
+      this.toka = toka;
+    }
+
+    public T getEka() {
+      return eka;
+    }
+
+    public U getToka() {
+      return toka;
+    }
+
+    public void setEka(T eka) {
+      this.eka = eka;
+    }
+
+    public void setToka(U toka) {
+      this.toka = toka;
+    }
+}
+```
+
+Tämän luokan avulla voimme luoda ilmentymiä, joiden arvot voivat olla mitä
+tahansa tyyppejä, ilman, että meidän tarvitsee kirjoittaa erillisiä luokkia
+jokaista käyttötarkoitusta varten. Alla esimerkki
+
+```java
+void main() {
+    Pari<String, Integer> nimiJaIka = new Pari<>("Matti", 30);
+    IO.println("Nimi: " + nimiJaIka.getEka() + ", Ikä: " + nimiJaIka.getToka());
+
+    Pari<Double, Double> koordinaatit = new Pari<>(60.192059, 24.945831);
+    IO.println("Leveysaste: " + koordinaatit.getEka() + ", Pituusaste: " + koordinaatit.getToka());
+}
+```
 
 ## Tyypiparametrit ja polymorfismi
 
