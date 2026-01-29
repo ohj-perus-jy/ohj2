@@ -53,3 +53,24 @@
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
+
+
+<task>
+  <task-title>Tehtävä 4.x: Miksi Comparable. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-5-miksi-comparable/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 4.x: Henkilöt järjestykseen. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-6-henkilöt-järjestykseen/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>

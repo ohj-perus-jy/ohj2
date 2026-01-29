@@ -26,6 +26,7 @@ class Imuri {
     +void tyhjennaSailio()
 }
 
+
 class KasteluKannu {
     -vedenMaara : int
     -kielletytKohteet : List<String>
@@ -34,9 +35,11 @@ class KasteluKannu {
     +void taytaVesi()
 }
 
-Robotti ..> KayttoEsine
-Imuri ..|> KayttoEsine
-KasteluKannu ..|> KayttoEsine
+
+KayttoEsine <|.. Imuri
+KayttoEsine <|.. KasteluKannu
+KayttoEsine <.. Robotti
+
 @enduml
 ```
 
