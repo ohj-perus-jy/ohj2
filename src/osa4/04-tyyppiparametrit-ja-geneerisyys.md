@@ -257,7 +257,7 @@ Käytännössä tämä tarkoittaa, että geneerisen koodin yhteydessä käytetä
 aina kokoelmia (kuten ArrayList<T>) taulukoiden sijaan.
 </details>
 
-### Tyyppiparametrit luokissa ja rajapinnoissa
+## Tyyppiparametrit luokissa ja rajapinnoissa
 
 Geneerisyys ei rajoitu vain metodeihin. Tyyppiparametrien todellinen hyöty
 tapana tuottaa hyvin yleistyvää koodia tulee esiin erityisesti silloin, kun
@@ -270,8 +270,11 @@ lista itsessään on yleinen, mutta sen sisältämä tyyppi täsmennetään.
 > mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
 > luokaksi `Pari<T, U>`.
 
-Voimme tehdä tällaisia luokkia myös itse. Kuvitellaan
-tilanne, jossa haluamme tallentaa kaksi toisiinsa liittyvää arvoa, eli parin.
+Geneerinen luokka on erityisen perusteltu silloin, kun luokka säilyttää jonkin
+tyyppisiä arvoja ja useat metodit liittyvät samaan tyyppiparametriin.
+Esimerkiksi `Pari<T, U>` voisi olla tällainen: luokan tarkoitus on säilyttää
+kahta arvoa, ja on olennaista, että niiden tyypit säilyvät koko elinkaaren
+ajan. 
 
 ```java
 public class Pari<T, U> {
@@ -314,6 +317,82 @@ void main() {
     IO.println("Leveysaste: " + koordinaatit.getEka() + ", Pituusaste: " + koordinaatit.getToka());
 }
 ```
+
+Jos saman toteuttaisi `Object`-tyyppisillä attribuuteilla ja yrittäisi ”paikata”
+sen geneerisillä metodeilla, tyyppiturvallisuus katoaa helposti ja mukaan tulee
+pakollisia tyyppimuunnoksia, mistä taas seuraa mahdollisia ajonaikaisia
+virheitä. 
+
+```java
+public class Pari {
+    private final Object eka;
+    private final Object toka;
+
+    public Pari(Object eka, Object toka) {
+        this.eka = eka;
+        this.toka = toka;
+    }
+
+    public <T> T getEka() {
+        return (T) eka; // tyyppimuunnos, ei käännösaikaista varmistusta
+    }
+}
+```
+
+Yllä olevassa esimerkissä *mukamas* geneerinen metodi ei oikeasti tee luokasta
+tyyppiturvallista, koska luokan tila on edelleen `Object`-tasolla ja
+tyyppimuunnos tapahtuu vasta ajon aikana. Geneerisen luokan idea on nimenomaan
+se, että tyyppi kiinnittyy luokan kenttiin ja niiden käyttöön käännösaikaisesti.
+
+On tärkeää huomata, että geneerisen metodin ja geneerisen luokan valinta ei
+riipu siitä, onko metodi staattinen, vaan siitä, kuuluuko tyyppi luokan pysyvään
+rakenteeseen vai vain yksittäiseen toimintaan. Metodi luokan sisällä voi
+edelleen olla geneerinen, kunhan se käyttää omaa, eri nimistä tyyppiparametria
+eikä sekoitu luokan tyyppiparametriin.
+
+<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: 
+Java ei voi kaikissa tilanteissa päätellä tyyppiä yksikäsitteisesti
+</summary>
+
+Edellä mainittiin, että Java pystyy usein päättelemään geneerisen metodin
+tyyppiparametrin automaattisesti. Tätä ominaisuutta kutsutaan nimellä *type
+inference*. Käytännössä kääntäjä tarkastelee metodikutsun argumentteja ja niiden
+tyyppejä ja päättelee niiden perusteella, mikä tyyppiparametri täyttää metodin
+määrittelyn vaatimukset.
+
+Esimerkiksi kutsussa `etsiIndeksi(kokonaisluvut, 3)` kääntäjä näkee, että taulukon
+tyyppi on `Integer[]` ja etsittävä arvo on `Integer`. Näiden perusteella se
+päättelee, että tyyppiparametrin `T` on oltava `Integer`, eikä kutsussa tarvitse
+kirjoittaa sitä erikseen.
+
+Java sallii myös eksplisiittisen geneerisen metodikutsun, jossa tyyppiparametri
+annetaan itse:
+
+`Etsija.<Integer>etsiIndeksi(kokonaisluvut, 3);`
+
+Vaikka useimmissa käytännön tilanteissa kääntäjän automaattinen päättely on
+kuitenkin riittävä, voi olla tilanteita, joissa kääntäjä ei pysty päättelemään
+tyyppiä yksiselitteisesti tai kun halutaan tehdä tyyppi eksplisiittiseksi
+luettavuuden tai virheiden paikantamisen vuoksi.
+
+Yksi tällainen tapaus syntyy, kun argumenteilla on eri, mutta yhteensopivia
+tyyppejä, eikä ole selvää, mikä niistä pitäisi valita tyyppiparametriksi.
+
+```java
+static <T> T valitse(T a, T b) {
+    return a;
+}
+
+// valitse(1, 1.0);        // KÄÄNNÖSVIRHE: tyyppiä T ei voida päätellä
+Number n = <Number>valitse(1, 1.0); // OK: tyyppi annetaan eksplisiittisesti
+```
+
+Tässä tapauksessa argumentit ovat eri tyyppiä (`Integer` ja `Double`). Molemmat
+perivät `Number`-luokan, mutta kääntäjä ei voi itse päättää, mikä näistä (tai
+niiden yhteinen yläluokka) olisi oikea valinta tyyppiparametrille. Antamalla
+tyyppiparametrin eksplisiittisesti kerromme kääntäjälle, että haluamme käyttää
+metodia `Number`-tyyppisenä.
+</details>
 
 ## Geneerinen metodi ja geneerinen luokka
 
