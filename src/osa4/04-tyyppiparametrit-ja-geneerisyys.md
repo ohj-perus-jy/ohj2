@@ -1,28 +1,36 @@
 # Tyyppiparametrit ja geneerisyys
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 2. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+ 
 > [!Osaamistavoitteet]
 >
-> - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli geneerisiä luokkia ja metodeja
+> - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli
+>   geneerisiä luokkia ja metodeja
 
-Opimme hyvin varhain, että parametrit mahdollistavat toiston vähentämisen
-yleistämällä ohjelman toimintaa erilaisille arvoille. Parametrien idea on
-erottaa laskennan logiikka itse arvoista. Kun kirjoitamme metodin, laskenta
-määritellään vain kerran. Esimerkiksi, jos haluaisimme selvittää, missä
-indeksissä haluttu luku sijaitsee, voisimme kirjoittaa koodin näin.
+Olet oppinut aiemmissa ohjelmointiopinnoissasi, että parametrit mahdollistavat
+toiston vähentämisen yleistämällä ohjelman toimintaa erilaisille arvoille.
+Parametrien idea on erottaa laskennan logiikka itse arvoista. Kun kirjoitamme
+metodin, laskenta määritellään vain kerran. Esimerkiksi, jos haluaisimme *ilman
+parametreja* selvittää, missä indeksissä haluttu luku sijaitsee, voisimme
+kirjoittaa koodin näin.
 
 ```java
 //-void main() {
-int[] luvut1 = {2, 3, 4};
-for (int i = 0; i < luvut1.length; i++) {
-    if (luvut1[i] == 3) {
+int[] taulukko1 = {2, 3, 4};
+// Etsitään luku 3
+for (int i = 0; i < taulukko1.length; i++) {
+    if (taulukko1[i] == 3) {
         IO.println("Luku 3 on indeksissä " + i);
         break;
     }
 }
 
-int[] luvut2 = {-20, 10, 2, 1};
-for (int i = 0; i < luvut2.length; i++) {
-    if (luvut2[i] == 2) {
+int[] taulukko2 = {-20, 10, 2, 1};
+// Etsitään luku 2
+for (int i = 0; i < taulukko2.length; i++) {
+    if (taulukko2[i] == 2) {
         IO.println("Luku 2 on indeksissä " + i);
         break;
     }
@@ -34,9 +42,9 @@ Tämä toimii, mutta koodia on kopioitu turhaan. Tehdään nyt funktio, joka ott
 taulukon *parametrina*.
 
 ```java
-int etsiIndeksi(int[] luvut, int etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i] == etsittava) return i;
+int etsiIndeksi(int[] taulukko, int etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i] == etsittava) return i;
     return -1;
 }
 
@@ -50,32 +58,37 @@ Tätä voi ajatella parametrien käyttönä arvojen tasolla: metodi on yleinen, 
 sille annettavat arvot vaihtelevat.
 
 Huomaamme kuitenkin nopeasti, että sama `etsiIndeksi`-funktio ei kuitenkaan
-toimi muille lukutyypeille, kuten `byte`, `long` taikka `float`. Jos haluaisimme etsiä arvoja muun tyyppisistä taulukoista,
-meidän täytyy tehdä erilliset funktiot jokaista tyyppiä varten.
+toimi muille lukutyypeille, kuten `long` tai `float`, eikä myöskään kokonaan
+muunlaisille tyypeille, kuten `String`. Jos haluaisimme etsiä arvoja muun
+tyyppisistä taulukoista, meidän täytyy tehdä erilliset funktiot jokaista tyyppiä
+varten.
 
 ```java
-int etsiIndeksiInt(int[] luvut, int etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i] == etsittava) return i;
+int etsiIndeksiLong(long[] taulukko, long etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i] == etsittava) return i;
     return -1;
 }
 
-int etsiIndeksiLong(long[] luvut, long etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i] == etsittava) return i;
+int etsiIndeksiFloat(float[] taulukko, float etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i] == etsittava) return i;
     return -1;
 }
 
-int etsiIndeksiDouble(double[] luvut, double etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i] == etsittava) return i;
+int etsiIndeksiString(String[] taulukko, String etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i].equals(etsittava)) return i;
     return -1;
 }
 
 void main() {
-    IO.println("Luku 3 on indeksissä " + etsiIndeksiInt(new int[] {2, 3, 4}, 1));
-    IO.println("Luku 2.0 on indeksissä " + etsiIndeksiDouble(new double[] {-10.0, 2.0}, 2.0));
-    IO.println("Luku -10 on indeksissä " + etsiIndeksiLong(new long[] {-10L, 5L, 1L}, -10L));
+    long[] longTaulukko = {-10L, 5L, 1L};
+    float[] floatTaulukko = {-10.0f, 2.0f};
+    String[] stringTaulukko = {"Koira", "Kissa", "Lintu"};
+    IO.println("Luku -10 on indeksissä " + etsiIndeksiLong(longTaulukko, -10L));
+    IO.println("Luku 2.0 on indeksissä " + etsiIndeksiFloat(floatTaulukko, 2.0f));
+    IO.println("Merkkijono \"Kissa\" on indeksissä " + etsiIndeksiString(stringTaulukko, "Kissa"));
 }
 ```
 Koska Java on staattisesti tyypitetty kieli, emme voi kirjoittaa yhtä ja samaa
@@ -87,18 +100,15 @@ edelleen. Koodi on käytännössä sama, vain tyypit vaihtuvat.
 Oikeastaan `etsiIndeksi`-funktion perusajatus on aina sama:
 
 ```java,ignore
-int etsiIndeksi(TYYPPI[] luvut, TYYPPI etsittava) {
-    for (int i = 0; i < luvut.length; i++)
-        if (luvut[i] == etsittava) return i;
+int etsiIndeksi(TYYPPI[] taulukko, TYYPPI etsittava) {
+    for (int i = 0; i < taulukko.length; i++)
+        if (taulukko[i] == etsittava) return i;
     return -1;
 }
 ```
 
-Jos jotenkin pystyisimme "sijoittamaan" `TYYPPI`:n tilalle haluttu tyyppi,
-pystyisimme tekemään `etsiIndeksi`-funktion, joka olisi edelleen staattisesti
-tyypitetty, mutta samalla mahdollistaisi toiston vähentämisen ennestään.
-
-Javassa tämä onkin mahdollista *tyyppiparametrien* avulla.
+Javassa tämän tapaisen koodin kirjoittaminen on mahdollista *tyyppiparametrien*
+avulla.
 
 ## Tyyppiparametrit 
 
@@ -137,7 +147,7 @@ void main() {
 }
 ```
 
-Kuten tavallisia parametrejakin, myös tyyppiparametreja voi olla useita:
+Kuten tavallisia parametrejakin, myös tyyppiparametreja voi olla useita.
 
 ```java
 <T1, T2> String yhdista(T1 arvo1, T2 arvo2) {
@@ -151,17 +161,16 @@ void main() {
 ```
 
 Tyyppiparametrin nimi seuraa samoja vaatimuksia kuin tavallisen parametrin nimi.
-Yleisin *käytäntö* tällä hetkellä lienee, että tyypiparametrin nimi
-on yleensä yksi isolla kirjoitettu kirjain, joka on johdettu
-tyyppiparametrin merkityksestä, kuten
-`T` (**T**ype), `E` (**E**lement), `K` (**K**ey), `N` (**N**umber), 
-`V` (**V**alue). Jossain tapauksissa tyyppiparametrien nimeen lisätään
-myös numero, kuten `T1`, `T2`, `T3`, jne.
+Yleisin *käytäntö* tällä hetkellä lienee, että tyypiparametrin nimi on yleensä
+yksi isolla kirjoitettu kirjain, joka on johdettu tyyppiparametrin
+merkityksestä, kuten `T` (**T**ype), `E` (**E**lement), `K` (**K**ey), `N`
+(**N**umber), `V` (**V**alue). Jossain tapauksissa tyyppiparametrien nimeen
+lisätään myös numero, kuten `T1`, `T2`, `T3`, jne.
 
 Huomaa, että yllä olevissa esimerkeissä tyyppiparametri määritellään, mutta
 tyyppiparametreille ei anneta arvoa kutsuttaessa. Tämä voitaisiin kyllä tehdä;
 esimerkiksi yllä oleva `tulosta`-aliohjelman kutsulle voidaan määrittää
-tarkasti tyyppiparametrin tyyppi:
+tarkasti tyyppiparametrin tyyppi.
 
 ```java
 //-<T> void tulosta(T arvo) {
@@ -174,12 +183,12 @@ void main() {
 }
 ```
 
-Vaikka Java on staattisesti tyypitetty, kääntäjä osaa *päätellä*
-tyyppiparametrien arvoja kontekstin perustella. Esimerkiksi
-`tulosta(1.0)`-kutsussa lausekkeen `1.0` tyyppi on `double`, joten kääntäjä osaa
-päätellä tarvittavan tyyppiparametrin `T` arvon (`Double`). On kuitenkin hyvä
-pitää mielessä, että tyypiparametrille annetaan taustalla arvo, vaikka sitä ei
-itse kirjoittaisikaan näkyville. 
+Syy, miksi tyyppiparametrin arvoa ei yleensä määritetä erikseen, on se, että
+kääntäjä osaa yleensä päätellä tyyppiparametrin arvon automaattisesti.
+Esimerkiksi `tulosta(1.0)`-kutsussa lausekkeen `1.0` tyyppi on `double`, joten
+kääntäjä osaa päätellä tarvittavan tyyppiparametrin `T` arvon (`Double`). On
+kuitenkin hyvä pitää mielessä, että tyypiparametrille annetaan taustalla arvo,
+vaikka sitä ei itse kirjoittaisikaan näkyville. 
 
 Katsotaan, miten aiempi etsimisongelma ratkeaa geneerisyydellä.
 
@@ -195,9 +204,9 @@ void main() {
     Double[] liukuluvut = {-10.0, 2.0};
     String[] elaimet = {"koira", "kissa"};
 
-    System.out.println(etsiIndeksi(kokonaisluvut, 3));
-    System.out.println(etsiIndeksi(liukuluvut, 2.0));
-    System.out.println(etsiIndeksi(elaimet, "kissa"));
+    IO.println(etsiIndeksi(kokonaisluvut, 3));
+    IO.println(etsiIndeksi(liukuluvut, 2.0));
+    IO.println(etsiIndeksi(elaimet, "kissa"));
 }
 ```
 
@@ -210,10 +219,39 @@ vertailua ei voi tehdä `==`-operaattorilla.
 
 Toiseksi, `main`-pääohjelmassa tulee käyttää perustietotyyppien `int`, `double`
 ja `long` sijaan käärijäluokkia `Integer`, `Double` ja `Long`. Tämä johtuu
-siitä, että Javassa **vain viitetietotyyppejä voidaan käyttää
-tyyppiparametreina**. Rajoite puolestaan johtuu Javan tavasta toteuttaa
-viitetietotyyppit. Mainittakoon, että Java-kieltä kehitetään jatkuvasti, ja on
-hyvin mahdollista, että lähitulevaisuudessa tämä rajoite jää pois.
+siitä, että Javassa vain viitetietotyyppejä voidaan käyttää tyyppiparametreina.
+Rajoite puolestaan johtuu Javan tavasta toteuttaa viitetietotyyppejä.
+Mainittakoon, että Java-kieltä kehitetään jatkuvasti, ja on hyvin mahdollista,
+että lähitulevaisuudessa tämä rajoite jää pois.
+
+<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: Miksi tyyppiparametrit eivät voi olla perustietotyyppejä?</summary>
+
+Java käyttää mekanismia nimeltä *type erasure*, jonka voisi vapaasti suomentaa
+"tyyppien poistamiseksi". Tämä tarkoittaa, että käännettäessä Java-koodi
+tavukoodiksi tyyppiparametrit poistetaan ja korvataan niiden ylärajalla.
+Ylärajalla tarkoitetaan sitä tyyppiä, jota geneerinen parametri varmasti
+edustaa. Jos tyyppiparametrille on asetettu rajoitus, kuten `<T extends
+Number>`, yläraja on tällöin `Number`. Käännöksen jälkeen kaikki `T`:hen
+viittaava koodi käsitellään ikään kuin tyyppi olisi `Number`. Jos taas
+tyyppiparametrille ei ole asetettu rajoitusta, sen yläraja on automaattisesti
+`Object`. Esimerkiksi tyyppiparametri `T` käsitellään käännöksen jälkeen ikään
+kuin se olisi `Object`.
+
+Käytännössä tämä tarkoittaa, että geneerisyys ei ole Javan ajonaikainen
+ominaisuus, vaan käännösaikainen tarkistusmekanismi. Tyyppitiedot poistetaan,
+jotta geneerinen koodi olisi yhteensopivaa vanhemman, ei-geneerisen Java-koodin
+kanssa.
+
+Koska primitiivityypit eivät peri `Object`-luokkaa, ne eivät voi toimia
+tyyppiparametreina. Siksi geneerisissä rakenteissa on aina käytettävä
+käärijäluokkia (`Integer`, `Double`, `Boolean`).
+
+Sama rajoitus näkyy myös taulukoiden kanssa: Java ei salli geneeristen
+taulukoiden luomista. Esimerkiksi lause new T[10] ei ole sallittu, koska
+tyyppiparametri ei ole ajonaikana tiedossa type erasure -mekanismin vuoksi.
+Käytännössä tämä tarkoittaa, että geneerisen koodin yhteydessä käytetään lähes
+aina kokoelmia (kuten ArrayList<T>) taulukoiden sijaan.
+</details>
 
 ### Tyyppiparametrit luokissa ja rajapinnoissa
 
