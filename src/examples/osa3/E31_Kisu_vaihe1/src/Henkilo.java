@@ -1,8 +1,7 @@
 public class Henkilo {
     String nimi;
 
-    String getNimi()
-    {
+    String getNimi() {
         return this.nimi;
     }
 

@@ -7,6 +7,7 @@ public class Kahvinkeitin extends Laite {
         // Keitä kahvia tai kytke keitin pois päältä
         kiehumassa = !kiehumassa;
     }
+
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";

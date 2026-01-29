@@ -5,7 +5,7 @@ Attribuutit:
  * `private boolean lukossa`
  * `private String avainkoodi`
 
-Muodostaja saa oven avainkoodin parametrina: `LukittuOvi(String avainkoodi)`
+Muodostaja saa oven avainkoodin parametrina: `Ovi(String avainkoodi)`
 
 Muodostajan pitää asettaa avainkoodi ja asettaa ovi aluksi lukkoon.
 

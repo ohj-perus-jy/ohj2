@@ -701,7 +701,9 @@ void main() ...
 ```
 
 `import`-määre kertoo kääntäjälle, että ohjelmassa käytetään tyyppejä, jotka
-löytyvät `java.util`-pakkauksesta. Pakkauksiin palataan tarkemmin myöhemmissä
+löytyvät `java.util`-pakkauksesta. Lyhyesti, pakkaus on tapa järjestellä luokkia
+yhteisen nimittäjän alle. Jos olet käyttänyt C#:a aiemmin, likimain vastaava käsite
+siellä on nimiavaruus (namespace). Pakkauksiin palataan tarkemmin myöhemmissä
 osissa; tässä vaiheessa riittää tiedostaa, että kääntäjä ei välttämättä tiedä
 tyyppien olemassaolosta ellei ne tuo näkyviin `import`-määreellä.
 

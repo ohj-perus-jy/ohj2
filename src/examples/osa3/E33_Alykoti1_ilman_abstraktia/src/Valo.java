@@ -10,6 +10,7 @@ public class Valo extends Laite {
             case 100 -> kirkkaus = 0;
         }
     }
+
     @Override
     public void raportoiTila() {
         IO.println("Valon kirkkaus on " + kirkkaus + "%.");

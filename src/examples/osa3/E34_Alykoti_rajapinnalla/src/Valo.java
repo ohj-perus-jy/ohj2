@@ -6,8 +6,7 @@ public class Valo extends Laite implements Saadettava {
     }
 
     @Override
-    public void asetaArvo(int arvo)
-    {
+    public void asetaArvo(int arvo) {
         if (arvo < 0) arvo = 0;
         if (arvo > 100) arvo = 100;
         this.kirkkaus = arvo;

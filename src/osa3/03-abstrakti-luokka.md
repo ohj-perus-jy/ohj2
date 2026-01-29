@@ -1,9 +1,5 @@
 # Abstrakti luokka
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 26. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 > 
 > - Osaat tehdä abstraktin luokan ja abstrakteja metodeja Javassa.
@@ -508,9 +504,7 @@ Konkreettiset metodit voivat olla myös `private`: tällöin kyseessä on vain a
 
 Abstraktia metodia ei voi määritellä `private`-määreellä. 
 
-## Huomautuksia
-
-<details closed><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Abstraktit metodit ja operaatiorunko-malli </summary>
+## Operaatiorunko-malli
 
 Abstraktissa luokassa voi olla myös konkreettinen metodi, jonka toteutuksessa kutsutaan abstraktia metodia. Tällaista toteutusta kutsutaan ohjelmistosuunnittelussa *operaatiorunko*-suunnittelumalliksi. Abstrakti luokka määrittelee toimenpiteelle "kaavan", mutta delegoi osan vaiheista aliluokkien toteutettavaksi.
 
@@ -633,14 +627,46 @@ public class Main {
 
 🤔 Pohdittavaksi: Missä tilanteissa haluaisit estää aliluokkaa ylikirjoittamasta tiettyä metodia? 
 
-</details>
+## Tehtävät
 
 <task>
-  <task-title>Tehtävä 3.5: Abstraktit luokat. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 3.7: Viestit. <points>1 p.</points> </task-title>
   <handout>
 
-  {{#include ../exercises/3-5-abstrakti-luokka-1/handout.md}}
+{{#include ../exercises/3-7-viestit/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava5">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 3.8: Abstrakti ajoneuvo. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/3-8-abstrakti-ajoneuvo/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava8">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+  <task-title>Tehtävä 3.9: Viestikanavat. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/3-9-viestikanavat/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava9">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Tehtävä 3.10: Viestipalvelu. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/3-10-viestipalvelu/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava10">Tee tehtävä TIMissä</a></task-link>
 </task>

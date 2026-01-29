@@ -10,36 +10,33 @@ testaamiseen.
 
 ```
 Kutsutaan perittyjä metodeja:
---- TUOTETIEDOT: Talvitakki Dulce & Käppänä ---
-Hinta: 120.0 euroa
---- TUOTETIEDOT: Ruisleipä Reissurähjä ---
-Hinta: 2.5 euroa
---- TUOTETIEDOT: HighPower ---
-Hinta: 899.0 euroa
+Talvitakki Dulce & Käppänä: 120.0 €
+Ruisleipä Reissurähjä: 2.5 €
+Tietokone HighPower: 899.0 €
 
 ----------------------------
 
 Kutsutaan omia metodeja:
 Testi 1: Sovitetaan M-kokoista käyttäjää:
 Sovitetaan vaatetta Talvitakki Dulce & Käppänä...
-Voi ei. Sinä olet kokoa M, mutta tämä vaate on L.
+Ei välttämättä sopivin koko. Sinä olet kokoa M, mutta tämä vaate on L.
 
 Testi 2: Sovitetaan L-kokoista käyttäjää:
 Sovitetaan vaatetta Talvitakki Dulce & Käppänä...
-Mahtavaa! Koko L istuu sinulle täydellisesti.
+Mahtavaa! Koko L istuu sinulle täydellisesti!
 
 Syödään Ruisleipä Reissurähjä.
 Parasta ennen oli 20.12.2024, toivottavasti on hyvää.
 
-Käynnistetään laite HighPower...
-Virta päällä! Takuuta on jäljellä 24 kk.
---- TUOTETIEDOT: pHone ---
-Hinta: 999.99 euroa
-Käynnistetään laite pHone...
-Virta päällä! Takuuta on jäljellä 24 kk.
-Soitetaan numeroon 0401122330 (Orange 4G)
---- TUOTETIEDOT: Hernepussi ---
-Hinta: 0.99 euroa
+Takuuta jäljellä: 19 kk.
+
+pHone: 999.99 €
+Takuuta puhelimessa jäljellä: 19 kk
+Käyttöjärjestelmä: Orange
+Yhteystyyppi: 4G
+Soitetaan käyttöjärjestelmästä Orange(4G) numeroon 0401122330
+
+Hernepussi: 0.99 €
 Sulatit pakastetta Hernepussi 10 minuuttia. Säilytyssuositus on -18 astetta C.
 Syödään Hernepussi.
 Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
@@ -50,18 +47,19 @@ Parasta ennen oli 31.5.2026, toivottavasti on hyvää.
 
 <details><summary>Tehtävän kuvaus sanallisessa muodossa</summary>
 
-Tässä on kuvaus luokista ja niiden vaadituista ominaisuuksista (vastaavat kuin UML-kaaviossa):
+Tässä on kuvaus uusista luokista ja niiden vaadituista ominaisuuksista. Löydät
+vastaavat tiedot UML-kaaviosta.
 
  1. `Puhelin` (perii `Elektroniikka`)
     * Lisää attribuutit:
-        * `private String kayttojarjestelma` (esim. "Android" tai "iOS")
+        * `private String kayttojarjestelma` (esim. "Droid" tai "AiOS")
         * `private boolean onko5G`
     * Lisää metodit:
         * `public void soita(String numero)`. Metodi tulostaa esimerkiksi:
-          `Soitetaan numeroon 0401234567 (Appleroid, 4G)`
-        * `public void tulostaPuhelimenTiedot()`. Metodin tulee kutsua ensin
-          perittyä metodia (`tulostaPerustiedot();`), ja sitten tulostaa
-          puhelimeen liittyvät lisätiedot (takuu, käyttöjärjestelmä ja 5G-tuki).
+          `Soitetaan käyttöjärjestelmästä Orange(4G) numeroon 0401122330`
+        * `public void tulostaPuhelimenTiedot(int kuukausiaKulunut)`. Metodin tulee kutsua ensin
+          perittyä metodia (`tulostaTiedot()`), ja sitten tulostaa
+          puhelimeen liittyvät lisätiedot (jäljellä olevan takuuajan, käyttöjärjestelmän ja 5G-tuki).
 
  2. `Pakaste` (perii `Ruoka`)
     * Lisää attribuutti:
@@ -101,7 +99,7 @@ class Puhelin {
     -boolean onko5G
     +Puhelin(String nimi, double hinta, int takuuKuukaudet, String kayttojarjestelma, boolean onko5G)
     +void soita(String numero)
-    +void tulostaPerustiedot()
+    +void tulostaPuhelimenTiedot(int kuukausiaKulunut)
 }
 class Pakaste {
     -int lampotilaSuositus

@@ -7,8 +7,7 @@ public class Painike implements Piirrettava, Klikattava {
     private String sisalto;
     private boolean korostettu;
 
-    public Painike(String sisalto)
-    {
+    public Painike(String sisalto) {
         this.sisalto = sisalto;
         this.korostettu = false;
     }

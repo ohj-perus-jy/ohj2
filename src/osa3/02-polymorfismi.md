@@ -1,15 +1,11 @@
 # Polymorfismi
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 26. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 >
 > - Ymmärrät polymorfismin perusajatuksen 
 > - Osaat korvata yliluokan metodin aliluokassa sekä estää korvaamisen `final`-avainsanalla
 > - Osaat kirjoittaa pienen ohjelman, jossa hyödynnetään polymorfismia
-> - Tunnistat Object-luokan korvattavat metodit: `toString()`, `equals()`, `hashCode()`
+> - Tunnistat Object-luokan korvattavia metodeja, kuten `toString()`
 
 ![Bändi](images/band.png)
 
@@ -242,18 +238,44 @@ class A {
 // FILE_END
 // FILE: B.java
 class B extends A {  
+    @Override
     public void moikka() { IO.println("B-olio huutaa moikka!"); }  
+    @Override
     public void huhhuh() { IO.println("B-olio huutaa huh huh!!"); }  
 }  
 // FILE_END
 // FILE: C.java
 class C extends B {  
+    @Override
     public void huhhuh() { IO.println("C-olio huhuilee...."); }  
 }  
 // FILE_END
 ```
 
-TODO: Tarvitaanko tähän väliin UML-kaavio?
+Tämän esimerkin UML-kaavio näyttäisi seuraavalta.
+
+```plantuml
+@startuml
+class A {
+  +hei()
+  +moikka()
+  +huhhuh()
+}
+
+class B {
+  +moikka()
+  +huhhuh()
+}
+
+class C {
+  +huhhuh()
+}
+
+A <|-- B
+B <|-- C
+@enduml
+```
+
 
 ## Esimerkki: Muoto-luokka
 
@@ -544,12 +566,31 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 ## Tehtävät {#tehtavat}
 
 <task>
-  <task-title>Tehtävä 3.4: Korvaaminen, osa 1. <points>1 p.</points> </task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.4: Luokkahierarkia, osa 4. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/3-4-korvaaminen/handout.md}}
+{{#include ../exercises/3-4-verkkokauppa-4/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
+<task>
+  <task-title>Tehtävä 3.5: Korvaaminen, osa 1. <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/3-5-korvaaminen-1/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 3.6: Korvaaminen, osa 2. <points>1 p.</points> </task-title>
+  <handout>
+
+  {{#include ../exercises/3-6-korvaaminen-2/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>

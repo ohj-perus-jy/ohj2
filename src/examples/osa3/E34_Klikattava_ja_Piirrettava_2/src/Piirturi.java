@@ -4,7 +4,8 @@
 public class Piirturi {
     /**
      * Piirrä teksti nätin suorakaiteen sisään
-     * @param teksti Teksti
+     *
+     * @param teksti     Teksti
      * @param korostettu Onko teksti korostettuna vai ei
      */
     public void piirraPainike(String teksti, boolean korostettu) {
@@ -17,10 +18,11 @@ public class Piirturi {
 
     /**
      * Piirrä pelkkä teksti
+     *
      * @param teksti Teksti
      */
     public void piirraTeksti(String teksti) {
-            IO.println(teksti);
+        IO.println(teksti);
     }
 
 
