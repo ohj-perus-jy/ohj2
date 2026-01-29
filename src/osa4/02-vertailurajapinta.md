@@ -151,16 +151,14 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 </details>
 
 <task>
-  <task-title>Tehtävä 4.1: Miksi Comparable? <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 4.x: Miksi Comparable? <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/4-1-miksi-comparable/handout.md}}
 
   </handout>
   
   <task-link>
-<a
-  href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee
+  <a href="">Tee
   tehtävä TIMissa</a>
   </task-link>
   
@@ -172,9 +170,8 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 Kokeillaan `Comparable`-rajapinnan toteuttamista omassa luokassamme.
 
 Otetaan esimerkiksi luokka `Kerailykortti`, joka mallintaa eräässä
-keräilypelissä käytettäviä kortteja.
-Meidän keräilykortti sisältää alkuun vain keräilykortin 
-nimen ja yksilöivän, ykkösestä alkavan tunnistenumeron:
+keräilypelissä käytettäviä kortteja. Meidän keräilykortti sisältää alkuun vain
+keräilykortin nimen ja yksilöivän, ykkösestä alkavan tunnistenumeron:
 
 ```java
 // FILE: Kerailykortti.java
@@ -259,25 +256,22 @@ main.java:11: error: no suitable method found for sort(List<Kerailykortti>)
     Collections.sort(kortit);
 ```
 
-Virheilmoitus on vähintäänkin kryptinen.
-Yksinkertaistetusti virhe johtuu perimmäisesti siitä, että
-`Collections.sort()` ei voi meidän puolestamme arvata, mikä on
-`Kerailykortti`-olioiden luonnollinen järjestys. 
-Onko se kenties kortin nimen
-aakkosjärjestys vai kenties numerotunnisteen mukainen nouseva järjestys?
+Virheilmoitus on vähintäänkin kryptinen. Yksinkertaistetusti virhe johtuu
+perimmäisesti siitä, että `Collections.sort()` ei voi meidän puolestamme arvata,
+mikä on `Kerailykortti`-olioiden luonnollinen järjestys. Onko se kenties kortin
+nimen aakkosjärjestys vai kenties numerotunnisteen mukainen nouseva järjestys?
 Vastataksemme tähän kysymykseen meidän täytyy toteuttaa `Comparable`-rajapinta
 `Kerailykortti`-luokalle.
 
 Kun lähdemme toteuttamaan `Comparable`-rajapintaa keräilykortille, joudumme heti
-pohtimaan, mikä on luonnollinen järjestys keräilykorteillemme.
-Esimerkiksi aakkosjärjestys nimen mukaan voi olla hyödyllinen.
-Toisaalta koska korteilla on numeeriset ykkösestä alkavat
-numerotunnisteet, numerojärjestys tunnisteen mukaan voidaan myös
-mieltää luonnollisemman tuntuiseksi ja yhtälailla tarpeelliseksi.
-Luonnollista järjestystä valittaessa on lisäksi syytä
-pohtia kohdealueen ja sovelluksen tarpeen — mitä luokkaa käyttäjät 
-muut ohjelmoijat tai sovelluksen lopulliset käyttäjät kaipaavat
-tai olettavat keräilykorttien oletusjärjestyksestä?
+pohtimaan, mikä on luonnollinen järjestys keräilykorteillemme. Esimerkiksi
+aakkosjärjestys nimen mukaan voi olla hyödyllinen. Toisaalta koska korteilla on
+numeeriset ykkösestä alkavat numerotunnisteet, numerojärjestys tunnisteen mukaan
+voidaan myös mieltää luonnollisemman tuntuiseksi ja yhtälailla tarpeelliseksi.
+Luonnollista järjestystä valittaessa on lisäksi syytä pohtia kohdealueen ja
+sovelluksen tarpeen — mitä luokkaa käyttäjät muut ohjelmoijat tai sovelluksen
+lopulliset käyttäjät kaipaavat tai olettavat keräilykorttien
+oletusjärjestyksestä?
 
 Päättäkäämme tämän esimerkin puiteissa, että järjestys yksilöllisen tunnisteen
 mukaan on tässä tapauksessa järkevin luonnollinen järjestys.
@@ -413,10 +407,9 @@ käsitellä kaikkia liukulukutyyppien erikoisarvoja, kuten äärettömyyttä tai
 "Not a Number" -arvoja.
 
 <task>
-  <task-title>Tehtävä 4.2: Henkilöt järjestykseen, osa 1 <points>0,5 p.</points> </task-title>
+  <task-title>Tehtävä 4.x: Henkilöt järjestykseen, osa 1 <points>0,5 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/4-2-henkilöt-järjestykseen/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
@@ -489,25 +482,4 @@ void main() {
 }
 // FILE_END
 ```
-
-
-<task> 
-<task-title>
-Tehtävä 4.3: Henkilöt järjestykseen, osa 2. 
-<points>0,5 p.</points> 
-</task-title> 
-  
-  <handout>
-
-{{#include ../exercises/4-3-henkilöt-järjestykseen-2/handout.md}}
-
-  </handout> 
-  
-<task-link>
-<a
-  href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä
-TIMissä</a>
-</task-link> 
-
-</task>
 

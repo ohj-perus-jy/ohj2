@@ -320,9 +320,8 @@ Tehtävä 4.4: Kortit harvinaisuuden mukaan. <points>1 p.</points> </task-title>
 
 <handout>
 
-{{#include ../exercises/4-4-kortit-comparator/handout.md}}
 
-  </handout> 
+</handout> 
   
 <task-link>
 <a
