@@ -147,7 +147,11 @@ void main() {
 }
 ```
 
-Kuten tavallisia parametrejakin, myös tyyppiparametreja voi olla useita.
+Tyyppiparametreja voi olla yksi tai useampia. Ne määritellään pilkulla
+eroteltuina kulmasulkeiden sisällä, ja jokainen niistä voi edustaa toisistaan
+riippumatonta tyyppiä. Esimerkiksi alla olevassa metodissa on kaksi
+tyyppiparametria, `T1` ja `T2`, jotka voivat edustaa mitä tahansa kahta erilaista
+tietotyyppiä.
 
 ```java
 <T1, T2> String yhdista(T1 arvo1, T2 arvo2) {
@@ -256,17 +260,18 @@ aina kokoelmia (kuten ArrayList<T>) taulukoiden sijaan.
 ### Tyyppiparametrit luokissa ja rajapinnoissa
 
 Geneerisyys ei rajoitu vain metodeihin. Tyyppiparametrien todellinen hyöty
-tapana tuottaa koodia joka yleistyy hyvin, ilmenee, kun tyyppiparametreja
-määrittää luokalle tai rajapinnalle. Olemmekin jo käyttäneet kurssilla
-tyyppiparametreja valmiissa luokissa, kuten `ArrayList<T>`. lista itsessään on
-yleinen, mutta sen sisältämä tyyppi täsmennetään.
+tapana tuottaa hyvin yleistyvää koodia tulee esiin erityisesti silloin, kun
+tyyppiparametreja määritellään luokille tai rajapinnoille. Olemmekin jo
+käyttäneet kurssilla tyyppiparametreja valmiissa luokissa, kuten `ArrayList<T>`.
+lista itsessään on yleinen, mutta sen sisältämä tyyppi täsmennetään.
 
 > [!TODO]
 > DZ: Joku yksinkertainen esimerkki? Vaikkapa Osassa 1 oleva salasanatehtävä,
 > mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
 > luokaksi `Pari<T, U>`.
 
-Voimme tehdä tällaisia luokkia myös itse. Kuvitellaan tilanne, jossa haluamme tallentaa kaksi toisiinsa liittyvää arvoa, eli parin.
+Voimme tehdä tällaisia luokkia myös itse. Kuvitellaan
+tilanne, jossa haluamme tallentaa kaksi toisiinsa liittyvää arvoa, eli parin.
 
 ```java
 public class Pari<T, U> {
@@ -310,7 +315,12 @@ void main() {
 }
 ```
 
+## Geneerinen metodi ja geneerinen luokka
+
+
+
 ## Tyypiparametrit ja polymorfismi
+
 
 - Näitä on käytetty mm. listoissa `List<Integer>`
 - Mitä geneerisyydellä (generic programming / generics) tarkoitetaan?
