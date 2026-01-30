@@ -9,4 +9,4 @@ ja lentää pilvien päällä.".
 
 Tee pääohjelma, jossa luot kaksi `Ajoneuvo`-muuttujaa (ei siis `Auto`- tai
 `Lentokone`-tyyppisiä), ja sijoitat niihin `Auto`-olion ja `Lentokone`-olion.
-Kutsut kummankin olion `liiku()`-metodia.
+Kutsu kummankin olion `liiku()`-metodia.
