@@ -396,10 +396,127 @@ metodia `Number`-tyyppisenä.
 
 ## Geneerinen metodi ja geneerinen luokka
 
+## Geneerisyys ja polymorfismi
 
+Geneerisyys ja polymorfismi (tarkemmin alityyppipolymorfismi) ovat kaksi eri
+mekanismia, jotka täydentävät toisiaan. Vaikka molemmat lisäävät koodin
+joustavuutta, ne ratkaisevat eri ongelmia ja toimivat eri vaiheissa ohjelman
+suoritusta.
+
+ 1. Polymorfismi (alityypitys): Ajonaikainen mekanismi, johon tutustuimme
+    Luvussa 3. Sen tehtävä on mahdollistaa olioiden käsittely niiden yliluokan
+    tai rajapinnan kautta, jolloin oikea toiminnallisuus (metodin toteutus)
+    valitaan vasta ohjelman ajon aikana.
+ 2. Geneerisyys (parametrinen polymorfismi): Käännösaikainen mekanismi. Sen
+    tehtävä on varmistaa tyyppiturvallisuus ja vähentää toistoa sallimalla saman
+    koodin toimia eri tyypeillä ilman että tyyppitieto katoaa.
+ 3. Pelkkä polymorfismi (ei tyyppiturvaa) Ennen geneerisyyttä (Java 1.4 ja
+aiemmat) kokoelmat perustuivat pelkkään polymorfismiin ja `Object`-luokkaan.
+
+```java
+// "Raaka" lista (raw type) - ei suositella enää
+List lista = new ArrayList();
+lista.add("teksti");
+lista.add(123); // Sallittu, koska Integer on Object
+
+for (Object o : lista) {
+    // toString() kutsuu kunkin olion omaa toteutusta
+    IO.println(o.toString());
+}
+```
+
+Tässä polymorfismi sinänsä toimii, mutta koodi ei ole tyyppiturvallista.
+Kääntäjä ei voi estää meitä lisäämästä listaan vääriä tyyppejä, mikä johtaa
+virheisiin usein vasta, kun yritämme muuntaa (cast) oliota takaisin
+alkuperäiseen tyyppiinsä.
+
+Geneerisyys tuo koodiin rajoitteet, jotka kääntäjä tarkistaa.
+
+```java
+List<String> sanat = new ArrayList<>();
+sanat.add("kissa");
+sanat.add("koira");
+// sanat.add(123); // KÄÄNNÖSVIRHE!
+```
+
+Tässä geneerisyys estää virheellisen käytön jo ennen kuin ohjelmaa edes ajetaan.
+Tässä esimerkissä emme varsinaisesti hyödynnä polymorfismia omien luokkien
+suhteen, vaan luotamme kääntäjän tiukkaan valvontaan siitä, että lista sisältää
+vain merkkijonoja.
+
+Tehokkainta on yhdistää molemmat: geneerisyys rajaa sallitut tyypit tiettyyn
+perheeseen (esim. `Number`), ja polymorfismi hoitaa kyseisen perheen jäsenten
+yksilöllisen toiminnan.
+
+```java
+// Listalle kelpaa mikä tahansa luku (Integer, Double, Long...)
+List<Number> luvut = new ArrayList<>();
+luvut.add(1);   // Integer on Number
+luvut.add(2.5); // Double on Number
+
+for (Number n : luvut) {
+    // Geneerisyys takaa, että 'n' on vähintään Number.
+    // Polymorfismi (Number-luokan toteutus) hoitaa arvot.
+    IO.println(n.doubleValue());
+}
+```
+
+## Geneeristen tyyppien invarianssi
+
+Vaikka `Integer` on `Number`-luokan alityyppi, `List<Integer>` ei ole
+`List<Number>`-luokan alityyppi. Ne ovat täysin erillisiä tyyppejä, eikä niillä
+ole perintäsuhdetta. Tätä kutsutaan invarianssiksi, eli muuttumattomuudeksi
+tyyppisuhteissa. Geneeriset tyypit ovat oletuksena invariantteja
+turvallisuussyistä:
+
+```java
+// OLETETAAN, että tämä olisi sallittua (Javassa tämä on virhe!):
+List<Integer> kokonaisluvut = new ArrayList<>();
+kokonaisluvut.add(1);
+
+// Jos geneerisyys EI olisi invarianttia, voisimme tehdä näin:
+List<Number> luvut = kokonaisluvut; // (Tämä on se kohta, minkä Java estää)
+
+// Nyt 'luvut' ja 'kokonaisluvut' viittaavat samaan listaan muistissa.
+// Koska 'luvut' on tyyppiä List<Number>, voimme lisätä sinne liukuluvun:
+luvut.add(3.14); 
+
+// MUTTA 'kokonaisluvut' luulee edelleen sisältävänsä vain Integer-lukuja!
+Integer i = kokonaisluvut.get(1); // PAM! Ajonaikainen virhe (ClassCastException)
+```
+
+Jos voisimme kohdella kokonaislukulistaa yleisenä numerolistana, voisimme
+vahingossa ujuttaa sinne desimaalilukuja. Sitten kun alkuperäinen koodi yrittää
+lukea listaa kokonaislukuina, ohjelma kaatuisi. Tämä on erityisen hämmentävää
+siksi, että Javan taulukot (arrays) toimivat eri tavalla. Taulukot ovat
+kovariantteja.
+
+```java
+// Tämä on sallittua Javassa:
+Integer[] kokonaisluvut = {1, 2};
+Number[] luvut = kokonaisluvut; // OK taulukoilla!
+
+// Mutta tämä aiheuttaa virheen vasta ohjelmaa ajettaessa:
+luvut[0] = 3.14; // ArrayStoreException!
+``` 
+
+Taulukoiden kanssa Java hyväksyy riskin ja heittää virheen vasta, kun ohjelma on
+käynnissä. Geneerisyyden (listat yms.) yksi tärkeimmistä tavoitteista oli
+korjata tämä ongelma ja siirtää virhe käännösaikaan.
+
+Jos haluamme hyödyntää polymorfismia geneeristen kokoelmien välillä, meidän on
+käytettävä jokerimerkkejä (wildcards):
+
+```java
+// Nyt tämä on sallittua, mutta lista on "read-only" turvallisuussyistä
+List<? extends Number> luvut = kokonaisluvut;
+
+for (Number n : luvut) {
+    IO.println(n); // Toimii
+}
+```
 
 ## Tyypiparametrit ja polymorfismi
-
 
 - Näitä on käytetty mm. listoissa `List<Integer>`
 - Mitä geneerisyydellä (generic programming / generics) tarkoitetaan?
