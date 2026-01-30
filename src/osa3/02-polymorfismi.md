@@ -392,8 +392,8 @@ Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; pan
  * kaikkia graafiseen käyttöliittymään piirrettäviä komponentteja (`Piirrettava`), kuten painikkeita, tekstikenttiä ja kuvia
  * kaikkia maksutapoja (`Maksutapa`), kuten luottokortti, PayPal ja käteinen
 
-Javassa on mahdollista kiertää yhtenäistä käsittelyä tekemällä tutkimalla, onko
-olio tietyn luokan ilmentymä käyttämällä `instanceof`-operaattoria. Esimerkiksi:
+Javassa on mahdollista kiertää yhtenäistä käsittelyä tutkimalla `instanceof`-operaattorin avulla, 
+onko olio tietyn luokan ilmentymä. Esimerkiksi:
 
 ```java,noplayground
 if (soitin instanceof Kitara) {
