@@ -146,7 +146,7 @@ Katsotaan esimerkin kautta, missä tällainen kutsu on tarpeen.
 Yllä olevassa esimerkissämme on pari ongelmaa. `Henkilo`-luokassa ei ole
 muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tästä
 seuraa, että `Henkilo`-olion muodostamisen jälkeen `nimi`-attribuutti on aina
-`null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin
+`null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakaan
 syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen
 jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen
 asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo
