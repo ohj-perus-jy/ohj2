@@ -534,13 +534,15 @@ void main() {
 
 Tyyppirajoituksia voidaan tehdä myös käyttäen niin sanottuja jokerimerkkiä
 (`?`), joka edustaa tuntematonta tyyppiä. Jokerimerkin avulla on mahdollista
-muun muassa määritellä ala- ja ylärajoituksia geneerisille tyypeille.
-Jokerimerkkiä käytetään usein geneerisissä kokoelmissa, kun halutaan ilmaista,
-että kokoelmasta voi lukea tai siihen voi kirjoittaa tietyn tyyppisiä
+muun muassa määritellä niin sanottuja ala- ja ylärajoituksia geneerisille
+tyypeille. Jokerimerkkiä käytetään usein geneerisissä kokoelmissa, kun halutaan
+ilmaista, että kokoelmasta voi lukea tai siihen voi kirjoittaa tietyn tyyppisiä
 alkioita, mutta tarkkaa tyyppiä ei tiedetä etukäteen. Alla esimerkkejä. 
 
 ```java,ignore
-// Metodi, joka ottaa listan, joka voi sisältää mitä tahansa Number-luokan alityyppejä
+// Metodi, joka ottaa listan, joka voi sisältää mitä tahansa Number-luokan alityyppejä.
+// Listasta voi lukea Number-tyyppisiä arvoja, mutta ei voi lisätä mitään, koska
+// emme tiedä tarkkaa tyyppiä.
 void tulostaLuvut(List<? extends Number> luvut) {
     for (Number n : luvut) {
         IO.println(n); // Huomaa, että emme tiedä tarkkaa tyyppiä, mutta tiedämme että se on Number
@@ -548,8 +550,9 @@ void tulostaLuvut(List<? extends Number> luvut) {
     // luvut.add(10); // KÄÄNNÖSVIRHE: emme voi lisätä, koska emme tiedä tarkkaa tyyppiä
 }
 
-// Metodi, joka ottaa listan, johon voi lisätä Number-tyyppisiä elementtejä (siis 
-// myös Integer, Double, Long jne.) tai sen ylityyppejä (kuten Object)
+/* Ottaa listan, jonka alkioiden tyyppi on Number tai jokin sen ylityyppi 
+ * (esim. Object), joten listaan on turvallista lisätä Number-arvoja, ja siten myös Integer, Double jne. 
+ */
 void lisaaLukuja(List<? super Number> lista) {
     lista.add(10);      // OK: Integer on Number
     lista.add(3.14);    // OK: Double on Number
@@ -558,7 +561,7 @@ void lisaaLukuja(List<? super Number> lista) {
 }
 ```
 
-Emme käsittele jokerimerkkejä tässä osiossa tarkemmin, mutta voit tutustua
+Emme käsittele jokerimerkkiä tässä osiossa tarkemmin, mutta voit tutustua
 niihin omatoimisesti [Javan
 dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/generics/wildcards.html). 
 
