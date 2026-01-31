@@ -13,8 +13,8 @@ Olet oppinut aiemmissa ohjelmointiopinnoissasi, että parametrit mahdollistavat
 toiston vähentämisen yleistämällä ohjelman toimintaa erilaisille arvoille.
 Parametrien idea on erottaa laskennan logiikka itse arvoista. Kun kirjoitamme
 metodin, laskenta määritellään vain kerran. Esimerkiksi, jos haluaisimme *ilman
-parametreja* selvittää, missä indeksissä haluttu luku sijaitsee, voisimme
-kirjoittaa koodin näin.
+parametreja* selvittää, missä indeksissä etsimämme luku ilmaantuu ensimmäistä
+kertaa, voisimme kirjoittaa koodin näin.
 
 ```java
 //-void main() {
@@ -22,7 +22,7 @@ int[] taulukko1 = {2, 3, 4};
 // Etsitään luku 3
 for (int i = 0; i < taulukko1.length; i++) {
     if (taulukko1[i] == 3) {
-        IO.println("Luku 3 on indeksissä " + i);
+        IO.println("Luku 3 on ekan kerran indeksissä " + i);
         break;
     }
 }
@@ -31,7 +31,7 @@ int[] taulukko2 = {-20, 10, 2, 1};
 // Etsitään luku 2
 for (int i = 0; i < taulukko2.length; i++) {
     if (taulukko2[i] == 2) {
-        IO.println("Luku 2 on indeksissä " + i);
+        IO.println("Luku 2 on ekan kerran indeksissä " + i);
         break;
     }
 }
@@ -59,9 +59,8 @@ sille annettavat arvot vaihtelevat.
 
 Huomaamme kuitenkin nopeasti, että sama `etsiIndeksi`-funktio ei kuitenkaan
 toimi muille lukutyypeille, kuten `long` tai `float`, eikä myöskään kokonaan
-muunlaisille tyypeille, kuten `String`. Jos haluaisimme etsiä arvoja muun
-tyyppisistä taulukoista, meidän täytyy tehdä erilliset funktiot jokaista tyyppiä
-varten.
+muunlaisille tyypeille, kuten `String`. Näitä varten täytyisi tehdä erilliset
+funktiot.
 
 ```java
 int etsiIndeksiLong(long[] taulukko, long etsittava) {
@@ -124,14 +123,15 @@ määrittää luokille. Yhdessä metodien ja luokkien tyyppiparametrit
 mahdollistavat *geneeristä ohjelmointia*, eli tyypistä riippumattomien
 algoritmien ja tietorakenteiden ohjelmointia. 
 
-## Tyyppiparametrit ja metodit
+## Geneerinen metodi
 
 Metodia, joka määrittelee tyyppiparametrin, kutsutaan *geneeriseksi metodiksi*.
-Geneerisessä metodissa tietotyyppiä ei ole lukittu etukäteen, vaan se ilmaistaan
-symbolilla, joka täsmennetään vasta metodin käyttöhetkellä. Metodin
-tyyppiparametri laitetaan kulmasulkeiden väliin ennen metodin
-palautustyyppiä. Yleinen käytäntö on käyttää yksikirjaimisia, isoja kirjaimia.
-Tavallisin näistä on `T`, joka tulee sanasta Type.
+Geneerisessä metodissa tietotyyppiä ei ole lukittu metodia määriteltäessä
+tiettyyn tyyppiin etukäteen, vaan tyyppi ilmaistaan symbolilla, joka
+täsmennetään vasta metodia kutsuttaessa. Metodin tyyppiparametri laitetaan
+kulmasulkeiden väliin ennen metodin palautustyyppiä. Yleinen käytäntö on käyttää
+yksikirjaimisia, isoja kirjaimia. Tavallisin näistä on `T`, joka tulee sanasta
+Type.
 
 ```java
 // aliohjelma "tulosta", jolla on yksi tyyppiparametri T 
@@ -147,11 +147,15 @@ void main() {
 }
 ```
 
+Geneerinen metodi voi olla staattinen, ei-staattinen tai konstruktori.
+Tyyppiparametri voi esiintyä metodin palautustyypissä, parametreissa tai
+molemmissa.
+
 Tyyppiparametreja voi olla yksi tai useampia. Ne määritellään pilkulla
 eroteltuina kulmasulkeiden sisällä, ja jokainen niistä voi edustaa toisistaan
 riippumatonta tyyppiä. Esimerkiksi alla olevassa metodissa on kaksi
-tyyppiparametria, `T1` ja `T2`, jotka voivat edustaa mitä tahansa kahta erilaista
-tietotyyppiä.
+tyyppiparametria, `T1` ja `T2`, jotka voivat edustaa mitä tahansa kahta
+erilaista tietotyyppiä.
 
 ```java
 <T1, T2> String yhdista(T1 arvo1, T2 arvo2) {
@@ -164,9 +168,8 @@ void main() {
 }
 ```
 
-Tyyppiparametrin nimi seuraa samoja vaatimuksia kuin tavallisen parametrin nimi.
-Yleisin *käytäntö* tällä hetkellä lienee, että tyypiparametrin nimi on yleensä
-yksi isolla kirjoitettu kirjain, joka on johdettu tyyppiparametrin
+Tyyppiparametrien nimeämisen osalta yleistynyt käytäntö tällä hetkellä lienee,
+että nimi on yleensä yksi suuraakkonen, joka on johdettu tyyppiparametrin
 merkityksestä, kuten `T` (**T**ype), `E` (**E**lement), `K` (**K**ey), `N`
 (**N**umber), `V` (**V**alue). Jossain tapauksissa tyyppiparametrien nimeen
 lisätään myös numero, kuten `T1`, `T2`, `T3`, jne.
@@ -187,14 +190,14 @@ void main() {
 }
 ```
 
-Syy, miksi tyyppiparametrin arvoa ei yleensä määritetä erikseen, on se, että
-kääntäjä osaa yleensä päätellä tyyppiparametrin arvon automaattisesti.
-Esimerkiksi `tulosta(1.0)`-kutsussa lausekkeen `1.0` tyyppi on `double`, joten
-kääntäjä osaa päätellä tarvittavan tyyppiparametrin `T` arvon (`Double`). On
-kuitenkin hyvä pitää mielessä, että tyypiparametrille annetaan taustalla arvo,
-vaikka sitä ei itse kirjoittaisikaan näkyville. 
+Tyyppiparametrin arvoa ei yleensä määritetä kutsussa, sillä kääntäjä osaa
+yleensä päätellä tyyppiparametrin arvon automaattisesti. Esimerkiksi
+`tulosta(1.0)`-kutsussa lausekkeen `1.0` tyyppi on `double`, joten kääntäjä
+päättelee tyyppiparametrin `T` olevan (`Double`). On kuitenkin hyvä pitää
+mielessä, että tyypiparametrille kyllä annetaan taustalla arvo, vaikka sitä ei
+itse kirjoittaisikaan näkyville. 
 
-Katsotaan, miten aiempi etsimisongelma ratkeaa geneerisyydellä.
+Katsotaan, miten aiempi etsimisongelma ratkeaa geneerisen metodin avulla. 
 
 ```java
 <T> int etsiIndeksi(T[] taulukko, T etsittava) {
@@ -205,12 +208,12 @@ Katsotaan, miten aiempi etsimisongelma ratkeaa geneerisyydellä.
 
 void main() {
     Integer[] kokonaisluvut = {2, 3, 4};
-    Double[] liukuluvut = {-10.0, 2.0};
-    String[] elaimet = {"koira", "kissa"};
+    Double[] liukuluvut = {-10.0, 2.0, 0.0, 5.5};
+    String[] elaimet = {"koira", "kissa", "gepardi", "kissa", "gepardi"};
 
     IO.println(etsiIndeksi(kokonaisluvut, 3));
-    IO.println(etsiIndeksi(liukuluvut, 2.0));
-    IO.println(etsiIndeksi(elaimet, "kissa"));
+    IO.println(etsiIndeksi(liukuluvut, 5.4));
+    IO.println(etsiIndeksi(elaimet, "gepardi"));
 }
 ```
 
@@ -257,10 +260,10 @@ Käytännössä tämä tarkoittaa, että geneerisen koodin yhteydessä käytetä
 aina kokoelmia (kuten ArrayList<T>) taulukoiden sijaan.
 </details>
 
-## Tyyppiparametrit luokissa ja rajapinnoissa
+## Geneerinen luokka ja geneerinen rajapinta
 
 Geneerisyys ei rajoitu vain metodeihin. Tyyppiparametrien todellinen hyöty
-tapana tuottaa hyvin yleistyvää koodia tulee esiin erityisesti silloin, kun
+tapana tuottaa yleistyvää koodia tulee esiin erityisesti silloin, kun
 tyyppiparametreja määritellään luokille tai rajapinnoille. Olemmekin jo
 käyttäneet kurssilla tyyppiparametreja valmiissa luokissa, kuten `ArrayList<T>`.
 lista itsessään on yleinen, mutta sen sisältämä tyyppi täsmennetään.
@@ -276,7 +279,7 @@ Esimerkiksi `Pari<T, U>` voisi olla tällainen: luokan tarkoitus on säilyttää
 kahta arvoa, ja on olennaista, että niiden tyypit säilyvät koko elinkaaren
 ajan. 
 
-```java
+```java,ignore
 public class Pari<T, U> {
     private T eka;
     private U toka;
@@ -309,6 +312,31 @@ tahansa tyyppejä, ilman, että meidän tarvitsee kirjoittaa erillisiä luokkia
 jokaista käyttötarkoitusta varten. Alla esimerkki
 
 ```java
+//- public class Pari<T, U> {
+//-     private T eka;
+//-     private U toka;
+//- 
+//-     public Pari(T eka, U toka) {
+//-       this.eka = eka;
+//-       this.toka = toka;
+//-     }
+//- 
+//-     public T getEka() {
+//-       return eka;
+//-     }
+//- 
+//-     public U getToka() {
+//-       return toka;
+//-     }
+//- 
+//-     public void setEka(T eka) {
+//-       this.eka = eka;
+//-     }
+//- 
+//-     public void setToka(U toka) {
+//-       this.toka = toka;
+//-     }
+//- }
 void main() {
     Pari<String, Integer> nimiJaIka = new Pari<>("Matti", 30);
     IO.println("Nimi: " + nimiJaIka.getEka() + ", Ikä: " + nimiJaIka.getToka());
@@ -323,7 +351,7 @@ sen geneerisillä metodeilla, tyyppiturvallisuus katoaa helposti ja mukaan tulee
 pakollisia tyyppimuunnoksia, mistä taas seuraa mahdollisia ajonaikaisia
 virheitä. 
 
-```java
+```java,ignore
 public class Pari {
     private final Object eka;
     private final Object toka;
@@ -393,8 +421,6 @@ niiden yhteinen yläluokka) olisi oikea valinta tyyppiparametrille. Antamalla
 tyyppiparametrin eksplisiittisesti kerromme kääntäjälle, että haluamme käyttää
 metodia `Number`-tyyppisenä.
 </details>
-
-## Geneerinen metodi ja geneerinen luokka
 
 ## Geneerisyys ja polymorfismi
 
