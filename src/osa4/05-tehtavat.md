@@ -9,8 +9,6 @@
 > harjoitustehtäviin. Lue lisää
 > [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
 
-
-
 <task>
   <task-title>Tehtävä 4.1: Muunnin. <points>1 p.</points> </task-title>
   <handout>

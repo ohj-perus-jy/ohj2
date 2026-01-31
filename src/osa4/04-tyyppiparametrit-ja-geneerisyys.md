@@ -487,6 +487,81 @@ for (Number n : luvut) {
 }
 ```
 
+## Tyyppirajoitukset
+
+Tyyppiparametreille voidaan asettaa rajoituksia, jotka määrittelevät, millainen
+tyyppi parametrina voidaan antaa. Tämä tehdään käyttämällä `extends`-avainsanaa
+tyyppiparametrin määrittelyn yhteydessä. Rajoitukset voivat olla luokkia tai
+rajapintoja, ja ne määrittelevät ylärajan tyypille, jota tyyppiparametri voi
+edustaa. Huomaa, että `extends`-avainsanaa käytetään tässä yhteydessä sekä
+luokista että rajapinnoista, vaikka rajapinnat eivät perikään luokkia.
+
+```java
+// Tyyppiparametri T voi olla vain Number-luokan alityyppi
+<T extends Number> void tulostaLuku(T luku) {
+    IO.println("Numero: " + luku.doubleValue());
+}
+
+void main() {
+    tulostaLuku(10);      // OK: Integer on Number
+    tulostaLuku(3.14);    // OK: Double on Number
+    // tulostaLuku("kissa"); // KÄÄNNÖSVIRHE: String ei ole Number
+}
+```
+
+Rajoituksia voidaan asettaa useita käyttämällä `&`-operaattoria, jolloin tyyppiparametrin
+on täytettävä useita ehtoja. Alla on esimerkki metodista, jossa tyyppiparametrin tulee olla
+sekä `Number`-luokan että `Comparable`-rajapinnan alityyyppi.
+
+```java
+// Tyyppiparametri T voi olla vain luokka, joka on sekä Number että Comparable
+<T extends Number & Comparable<T>> void vertaile(T a, T b) {
+    if (a.compareTo(b) < 0) {
+        IO.println(a + " on pienempi kuin " + b);
+    } else if (a.compareTo(b) > 0) {
+        IO.println(a + " on suurempi kuin " + b);
+    } else {
+        IO.println(a + " on yhtä suuri kuin " + b);
+    }
+}
+
+void main() {
+    vertaile(10, 20);      // OK: Integer on Number ja Comparable
+    vertaile(3.14, 2.71);  // OK: Double on Number ja Comparable
+    // vertaile("kissa", "koira"); // KÄÄNNÖSVIRHE: String ei ole Number
+}
+```
+
+Tyyppirajoituksia voidaan tehdä myös käyttäen niin sanottuja jokerimerkkiä
+(`?`), joka edustaa tuntematonta tyyppiä. Jokerimerkin avulla on mahdollista
+muun muassa määritellä ala- ja ylärajoituksia geneerisille tyypeille.
+Jokerimerkkiä käytetään usein geneerisissä kokoelmissa, kun halutaan ilmaista,
+että kokoelmasta voi lukea tai siihen voi kirjoittaa tietyn tyyppisiä
+alkioita, mutta tarkkaa tyyppiä ei tiedetä etukäteen. Alla esimerkkejä. 
+
+```java,ignore
+// Metodi, joka ottaa listan, joka voi sisältää mitä tahansa Number-luokan alityyppejä
+void tulostaLuvut(List<? extends Number> luvut) {
+    for (Number n : luvut) {
+        IO.println(n); // Huomaa, että emme tiedä tarkkaa tyyppiä, mutta tiedämme että se on Number
+    }
+    // luvut.add(10); // KÄÄNNÖSVIRHE: emme voi lisätä, koska emme tiedä tarkkaa tyyppiä
+}
+
+// Metodi, joka ottaa listan, johon voi lisätä Number-tyyppisiä elementtejä (siis 
+// myös Integer, Double, Long jne.) tai sen ylityyppejä (kuten Object)
+void lisaaLukuja(List<? super Number> lista) {
+    lista.add(10);      // OK: Integer on Number
+    lista.add(3.14);    // OK: Double on Number
+    // lista.add("kissa"); // KÄÄNNÖSVIRHE: String ei ole Number    
+    // Integer eka = lista.getFirst(); // KÄÄNNÖSVIRHE: emme tiedä tarkkaa tyyppiä, joten emme voi olettaa että se on Integer
+}
+```
+
+Emme käsittele jokerimerkkejä tässä osiossa tarkemmin, mutta voit tutustua
+niihin omatoimisesti [Javan
+dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/generics/wildcards.html). 
+
 ## Geneeristen tyyppien invarianssi
 
 Vaikka `Integer` on `Number`-luokan alityyppi, `List<Integer>` ei ole
