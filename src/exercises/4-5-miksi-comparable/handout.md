@@ -1,7 +1,4 @@
-
-
-Tutki Javan dokumentaatiota
-Vastaa seuraaviin kysymyksiin `Comparable`-rajapinnasta:
+Tutki Javan dokumentaatiota. Vastaa seuraaviin kysymyksiin `Comparable`-rajapinnasta:
 
 - Mikä on `Comparable`-rajapinnan pääasiallinen tarkoitus? Valitse sopivin vaihtoehto
   1. Tarjota yleiskäyttöinen tapa määrittää eri olioiden välinen luonnollinen järjestys.
