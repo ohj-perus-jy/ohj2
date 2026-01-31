@@ -1,9 +1,24 @@
 (function codeSnippets() {
-    const PLAYGROUND_LANG = "java";
+    const PLAYGROUND_LANGS = ["java",  "javascript"];
     const DATA_URI_PATTERN = /@@@DATA_URI_BEGIN@@@(.+)@@@DATA_URI_END@@@/g;
 
     function get_playgrounds() {
-        return Array.from(document.querySelectorAll(`pre:has(> .language-${PLAYGROUND_LANG}:not(.noplayground):not(.ignore))`));
+        return PLAYGROUND_LANGS.flatMap(lang => Array.from(document.querySelectorAll(`pre:has(> .language-${lang}:not(.noplayground):not(.ignore))`)));
+    }
+
+    function get_language(code_area) {
+        // Use stored language when editable blocks have had language-* stripped.
+        const data_language = code_area.dataset.language;
+        if (data_language) {
+            return data_language;
+        }
+        const code_area_classes = [...code_area.classList.values()];
+        const langClass = code_area_classes.find(cls => cls.startsWith('language-'));
+        let language = null;
+        if (langClass) {
+            language = langClass.substring('language-'.length);
+        }
+        return language;
     }
 
     function fetch_with_timeout(url, options, timeout = 6000) {
@@ -73,7 +88,7 @@
             text = playground_text(code_block);
         }
         
-        let language = PLAYGROUND_LANG;
+        let language = get_language(code_area);
 
         for (const cls of code_area_classes) {
             if (cls.startsWith('feature-')) {
@@ -141,7 +156,14 @@
                 return node.classList.contains('editable');
             })
             .forEach(function(block) {
-                block.classList.remove(`language-${PLAYGROUND_LANG}`);
+                // Preserve original language before removing language-* classes for Ace.
+                const langClass = [...block.classList.values()].find(cls => cls.startsWith('language-'));
+                if (langClass) {
+                    block.dataset.language = langClass.substring('language-'.length);
+                }
+                for (const lang of PLAYGROUND_LANGS) {
+                    block.classList.remove(`language-${lang}`);
+                }
             });
     }
 

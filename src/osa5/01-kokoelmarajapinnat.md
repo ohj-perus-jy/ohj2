@@ -1,5 +1,9 @@
 # Kokoelmarajapinnat
 
+> [!VAROITUS]
+> Tämä osio julkaistaan 9. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
+
 > [!Osaamistavoitteet]
 >
 > - List, Set, Map. Oikean kokoelman valinta käyttötarkoituksen mukaan. 

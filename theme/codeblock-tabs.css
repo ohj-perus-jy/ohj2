@@ -6,6 +6,7 @@
 
 .codeblock-tabs-titles {
     display: flex;
+    flex-wrap: wrap;
     padding: 0;
     margin: 0;
 }
@@ -16,7 +17,7 @@
     padding-inline: 12px;
     padding-block: 12px;
     font-weight: bold;
-    background: var(--code-bg);
+    background: var(--bg);
 }
 
 .codeblock-tabs-titles a:link:hover {
@@ -24,7 +25,8 @@
 }
 
 .codeblock-tabs-titles a:link[aria-selected="true"] {
-    background: var(--quote-bg);
+    background: var(--code-bg);
+    color: var(--fg-bright);
 }
 
 .codeblock-tabs-titles li {
@@ -59,6 +61,7 @@ pre.codeblock-result {
 
 .codeblock-tabs-contents > section > pre > code {
     height: calc(100% - 2 * 1em);
+    padding: 1em !important;
 }
 
 .codeblock-tabs-title-print {

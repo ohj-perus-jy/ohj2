@@ -58,7 +58,7 @@ def write_accordion(buffer, contents):
 
 </section>""")
 
-    buffer.write("</div>\n\n")
+    buffer.write("</div></div>\n\n")
 
 def process_chapter(chapter):
     result = io.StringIO()

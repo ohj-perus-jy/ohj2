@@ -1,0 +1,14 @@
+name: Refresh TIM cache
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  make-curl-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Execute Curl Call
+        # -f to catch errors and -sS to keep logs clean but show errors
+        run: curl -f -sS -X GET https://tim.jyu.fi/cs/refresh

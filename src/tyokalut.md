@@ -2,28 +2,28 @@
 
 **Ohjelmointi 2** -opintojaksolla käytämme seuraavia työkaluja:
 
+- **[Java Development Kit (JDK)](#jdk)** - *ohjelmistokehityspaketti*, joka sisältää
+  muun muassa Java-kääntäjän sekä virtuaalikoneen Java-ohjelmien ajamista
+  varten. 
 
-- **Java Development Kit (JDK)** - Java-kielen *ohjelmistokehityspaketti*. Paketti sisältää kaikki Java-kehittämiseen tarvittavat työkalut, kuten Java-kielen kääntäjän sekä Java-virtuaalikoneen käännettyjen ohjelmien ajamista varten. JDK sisältää myös valmiita kirjastoja yleisimpiin käyttötarkoituksiin (esim. tekstin tulostaminen näytölle, kokoelmien käsittely) ja niiden dokumentaatiot.
+- **[Git](#git)** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka
+  mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
 
-- **Git** - *versiohallintaohjelma* (engl. Version Control Software, VCS), joka mahdollistaa koodin versioinnin ja yhteistyön koodaajien välillä.
+- **[IntelliJ IDEA](#idea)** - *integroitu kehitysympäristö* (engl. Integrated
+  Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
+  Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
 
-- **IntelliJ IDEA** - *integroitu kehitysympäristö* (engl. Integrated Development Environment, IDE).
-  IDE sisältää oleellisimmat toiminnot ohjelmien tekemiseen (koodin muokkaus, kääntäminen, ajaminen, virheenjäljitys).
-  IntelliJ IDEA on erityisesti Java- ja Kotlin-ohjelmille tarkoitettu IDE — se on myös ohjelmoitu suurimmalta osin Javalla.
-  Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
+- **[ComTest](#comtest)** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
 
-- **ComTest** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
-
-
-Yllä olevat ohjelmat löytyvät valmiiksi asennettuna Agoran mikroluokissa.
-*Suosittelemme, että asennat ohjelmat lisäksi niille tietokoneille, joilla aiot suorittaa opintojakson.*
-Erityisesti harjoitustyön tekeminen on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
+Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran
+mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty, 1. ja
+2. kerros). Jos sinulla on oma tietokone, suosittelemme vahvasti, että asennat
+ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen on helpompaa, kun
+kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
 > [!TÄRKEÄÄ]
 >
-> Tämän sivun ohjeet vaativat komentorivin käyttöä.  
->
-> Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
+> Tämän sivun ohjeet vaativat komentorivin käyttöä. Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
 >
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
 > - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
@@ -63,6 +63,7 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
+- CachyOS Linux (`6.18.2-2-cachyos`)
 
 ***
 
@@ -76,11 +77,11 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ### [Windows](#tab/win)
 
-Varmista, että tietokoneesi on ajan tasalla (Windows Update:ssa ei uusia päivityksiä).
+Jos Windows Updatessa on saatavilla käyttöjärjestelmäpäivityksiä, asenna ne.
 
 Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma asennettuna:
 
-1. Avaa PowerShell-komentorivi (*Haku-ikoni* > *Kirjoita PowerShell* > *Windows PowerShell*).
+1. Avaa PowerShell-komentorivi (*Haku-ikoni* <i class="bi bi-chevron-right"></i> *Kirjoita PowerShell* <i class="bi bi-chevron-right"></i> *Windows PowerShell*).
 2. Anna seuraava komento:
 
     ```bash
@@ -104,7 +105,7 @@ Varmista ensin, että tietokoneesi on ajan tasalla.
 
 Varmista sen jälkeen, että tietokoneellasi on Homebrew-pakkaushallintaohjelma asennettuna:
 
-1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
+1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Anna seuraava komento:
 
     ```bash
@@ -115,9 +116,9 @@ Jos saat virheen `command not found: brew`,
 sinun tulee asentaa Homebrew alla olevilla ohjeilla:
 
 <details>
-<summary>Homebrew-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Homebrew-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
-1. Avaa Pääte tai Termimal (*Launchpad* > *Pääte/Terminal*)
+1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Asenna ensin macOS:n kehitystyökalut suorittamalla alla oleva komento:
 
     ```bash
@@ -205,7 +206,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## Git
+## Git {#git}
 
 ### [Windows](#tab/win)
 
@@ -225,7 +226,7 @@ Jos näet git-työkalun version (esim. `git version X.XX.XX`, jossa `X.XX.XX` on
 Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa PowerShell-komentorivi.
 2. Asenna Git for Windows suorittamalla alla oleva komento:
@@ -261,7 +262,7 @@ Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeil
     
     Tekstin `X.XX.XX` tilalla näkyy git-työkalun tarkka versio.
 
-5. Testaa, vielä, että Git Bash on asennettu. Mene *Haku-ikoni* > Kirjoita *Git Bash* > Valitse *Git Bash*.
+5. Testaa, vielä, että Git Bash on asennettu. Mene *Haku-ikoni* <i class="bi bi-chevron-right"></i> Kirjoita *Git Bash* <i class="bi bi-chevron-right"></i> Valitse *Git Bash*.
 
     Jos kaikki toimii, pitäisi avautua Git Bash -komentorivi:
 
@@ -286,7 +287,7 @@ Tarkista ensin, onko sinulla jo Git asennettuna.
 Jos saat tuloksena virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa Pääte.
 2. Git-työkalun pitäisi olla jo valmiiksi asennettu jos teit Valmistelu-vaiheessa olevat asiat. Tarkista, että Git toimii suorittamalla seuraava komento:
@@ -325,7 +326,7 @@ Jos näet git-työkalun version (esim. `git version X.XX.XX`, jossa `X.XX.XX` on
 Jos taas näet virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 <details>
-<summary>Git-työkalun asennusohjeet (<b>Avaa klikkaamalla</b>)</summary>
+<summary>Git-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
 1. Avaa jakelusi pääteohjelma.
 2. Asenna Git-pakkaus: `git`. Pakkauksen nimi on yleensä sama
@@ -355,7 +356,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## IntelliJ IDEA
+## IntelliJ IDEA {#idea}
 
 ### [Windows](#tab/win)
 
@@ -381,13 +382,19 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
 4. Jos sinulla on jo jokin muu kehitysympäristö asennettuna (JetBrains Rider tai Visual Studio Code),
-   IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+   IDEA saattaa kysyä, haluatko tuoda (engl. *import*) asetuksia niistä. Voit 
+   halutessasi tuoda asetukset, voit tehdä asetukset myös myöhemmin ja painaa *Skip Import*.
 
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
 
+Valmis!
 
 ***
 
@@ -412,15 +419,21 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+   Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
+   asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
+   myöhemmin.
 
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
-
+Valmis!
 
 ***
 
@@ -448,13 +461,21 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual Studio Code),
-   IntelliJ IDEA voi kysyä, haluatko tuoda (eng. *import*) asetuksia niistä.
+4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+   Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
+   asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
+   myöhemmin.
 
-   Voit siinä tapauksessa painaa *Skip Import*. IDEAan asetetaan erilliset asetukset myöhemmin.
+5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-5. Kun olet valmis ja pääset *Welcome to IntelliJ IDEA* -ikkunaan, voit sulkea sen.
-   Ohjelman asennus on valmis!
+6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
+     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
+     <i class="bi bi-chevron-right"></i> *Editor* 
+     <i class="bi bi-chevron-right"></i> *General*
+     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
+     kohdasta *Enable local Full Line completion suggestions*.
+
+Valmis!
 
 ***
 
@@ -464,10 +485,11 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-## Java Development Kit (JDK)
+## Java Development Kit (JDK) {#jdk}
 
 
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
+>
 > 
 > 2. Klikkaa ikkunan keskellä tai ylädassa olevaa *New Project* -painiketta:
 > 
@@ -513,13 +535,13 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 > 8. Voit nyt sulkea IntelliJ IDEA:n.
 
 
-## ComTest
+## ComTest {#comtest}
 
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
 >
->    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* > *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
+>    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
 >
-> 2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) > *Settings*.
+> 2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
 >
 > 3. Valitse vasemmalla puolella olevista asetusnäkymistä *Plugins*
 >
@@ -537,3 +559,44 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 ## Mitä seuraavaksi?
 
 Onneksi olkoon! Sinulla on seuraavaksi kaikki tarvittavat kurssityökalut. Voit jatkaa tästä varsinaisiin materiaaleihin.
+
+## Yleiset ongelmat ja ratkaisut
+
+<details>
+<summary>Saan IDEAssa Java-projektia ajaessa virheen <code>error: illegal character: '\ufeff'</code> </summary>
+
+Virhe voi mahdollisesti johtua siitä, että toit Rider-työkalun asetukset
+IDEAan. Riderin asetukset eivät ole täysin yhteensopivia Javan kehityksen kanssa
+eikä IDEA osaa korjata ongelmaa.
+
+Tee seuraavasti:
+
+1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
+  
+   **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
+
+2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
+
+3. Valitse vasemmalla puolella olevista asetusnäkymistä *Editor* <i class="bi
+   bi-chevron-right"></i> *File Encodings*
+
+4. Aseta *Create UTF-8 files* -asetuksen arvoksi **with no BOM**.
+
+6. Paina *Save*.
+
+7. Tee *uusi* projekti ja kokeile ajaa yksinkertainen ohjelma.
+
+</details>
+
+<details>
+<summary>Internal error: com.intellij.platform.ide.bootstrap... Process "C:\...idea64.exe" is still running and does not respond</summary>
+
+Tämä virhe voi johtua siitä, että Rider on jostain syystä jumittunut taustaprosessina
+käyttöjärjestelmässä. 
+
+ 1. Sulje IntelliJ IDEA kokonaan.
+ 2. Avaa Rider.
+ 3. Sulje Rider.
+ 4. Käynnistä IntelliJ IDEA uudelleen.
+
+</details>
