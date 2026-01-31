@@ -9,12 +9,12 @@ String pura(String salattuViesti);
 
 2. Toteuta kolme erilaista luokkaa: `Kaantaja`, `Hakkeri` ja `SeuraavaKirjain`, jotka toteuttavat `Salaaja`-rajapinnan seuraavilla logiikoilla:
 
-  * `Kaantaja` (Peilikuvakirjoitus). Logiikka: Kääntää sanan väärinpäin.
+  * `Kaantaja` (Peilikuvakirjoitus). Kääntää sanan väärinpäin.
     Esimerkki: "Agentti" &rarr; negA". Vihje: Voit käyttää
     `StringBuilder`-luokan `reverse()`-komentoa tai silmukkaa, joka käy sanan
     läpi lopusta alkuun.
 
-  * `Hakkeri` ("Leet-speak"). Logiikka: Korvaa tietyt kirjaimet numeroilla tai merkeillä. Esimerkki: "Agentti" -> "@g3ntt!"
+  * `Hakkeri` ("Leet-speak"). Korvaa tietyt kirjaimet numeroilla tai merkeillä. Esimerkki: "Agentti" -> "@g3ntt!"
 
 ```
 Korvaa 'a' -> '@'
@@ -23,7 +23,7 @@ Korvaa 'i' -> '!'
 Korvaa 'o' -> '0'
 ```
 
-  * `SeuraavaKirjain` (Caesar-siirros). Logiikka: Jokaista kirjainta siirretään aakkosissa yksi eteenpäin. Esimerkki: abc -> bcd. Vihje: Javassa `char` on luku. Voit tehdä `merkki + 1`. 
+  * `SeuraavaKirjain` (Caesar-siirros). Jokaista kirjainta siirretään aakkosissa yksi eteenpäin. Esimerkki: abc -> bcd. Vihje: Javassa `char` on luku. Voit tehdä `merkki + 1`. 
   
 ```
 'a' -> 'b'
