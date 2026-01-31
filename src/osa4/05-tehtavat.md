@@ -100,7 +100,7 @@
   <task-title>Tehtävä 4.9. <points>1 p.</points> </task-title>
   <handout>
 
-{{}}
+{{#include ../exercises/4-9-kontti/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava9">Tee tehtävä TIMissä</a></task-link>
@@ -110,7 +110,7 @@
   <task-title>Tehtävä 4.10. <points>1 p.</points> </task-title>
   <handout>
 
-{{}}
+{{#include ../exercises/4-10-iso-kontti/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava10">Tee tehtävä TIMissä</a></task-link>
@@ -120,7 +120,7 @@
   <task-title>Tehtävä 4.11. <points>1 p.</points> </task-title>
   <handout>
 
-{{}}
+{{#include ../exercises/4-11-tyyppirajoitukset-1/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava11">Tee tehtävä TIMissä</a></task-link>
@@ -130,7 +130,7 @@
   <task-title>Tehtävä 4.12. <points>1 p.</points> </task-title>
   <handout>
 
-{{}}
+{{#include ../exercises/4-12-tyyppirajoitukset-2/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava12">Tee tehtävä TIMissä</a></task-link>
