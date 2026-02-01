@@ -1,11 +1,4 @@
-# Comparable-rajapinta
-
-## Esimerkki: Comparable-rajapinta ja luonollinen järjestys
-
-> [!TODO]
->
-> Tätä osiota voi hieman tiivistää ja liittää osaksi Rajapinnat-kappaletta.
-> 
+# Comparable-rajapinta ja luonnollinen järjestys
 
 Rajapinta
 [`Comparable`](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Comparable.html)
@@ -151,19 +144,14 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 </details>
 
 <task>
-  <task-title>Tehtävä 4.x: Miksi Comparable? <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 4.5: Miksi Comparable. <points>1 p.</points> </task-title>
   <handout>
 
+{{#include ../exercises/4-5-miksi-comparable/handout.md}}
 
   </handout>
-  
-  <task-link>
-  <a href="">Tee
-  tehtävä TIMissa</a>
-  </task-link>
-  
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>
-
 
 ## Oma toteutus Comparable-rajapinnalle
 
@@ -339,14 +327,13 @@ void main() {
 // FILE_END
 ```
 
-Huomaa, että `implements Comparable<Kerailykortti>`-osa luokan määrittelyssä
-tulee kertoa minkä tyypin olioille luokka tarjoaa luonnollisen järjestyksen, samalla
-tavoin kuin listalle kerrotaan minkätyyppisiä olioita lista sisältää (tyylillä
-`List<Kerailykortti>`). Tähän on yleensä helppo valita suoraan luokan oma tyyppi
-ellei ole erityistä syytä valita sen sijaan esimerkiksi yliluokkaa.
-Toisaalta tämä myös tarkoittaa erityisesti, että samalle luokalle voi 
-toteuttaa useita eri `Comparable<T>`-rajapintoja, jossa `T` on mikä tahansa muu
-tyyppi.
+`Comparable` on niin sanottu *geneerinen rajapinta*, eli se ei itsessään kerro
+minkä tyyppisiin olioihin vertailu kohdistuu. 
+Käsittelemme geneeristä ohjelmointia tarkemmin [osassa
+4.4](04-tyyppiparametrit-ja-geneerisyys.md).
+Tästä syystä `Comparable`-rajapinnan toteuttamisessa meidän täytyy kertoa minkä
+tyypin olioille luonnollinen järjestys määritellään. Tässä tapauksessa toteutamme
+järjestyksen keräilykorteille, joten määrittelemme `implements Comparable<Kerailykortti>`. 
 
 ## Valmiiden vertailumetodien käyttö
 
