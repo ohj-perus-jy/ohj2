@@ -1,6 +1,10 @@
-Jatkoa edelliselle tehtävälle. Nyt `Henkilo`-luokassa henkilöiden nimet on jaettu erikseen sukunimeen ja etunimiin.
+Jatkoa edelliselle tehtävälle. Nyt `Henkilo`-luokassa henkilöiden nimet on
+jaettu erikseen sukunimeen ja etunimiin.
 
-Muokkaa uudistettua `Henkilo`-luokkaa niin, että `List<Henkilo>`-tyyppiset listat voidaan järjestää `Collections.sort`-metodilla henkilön sukunimen ja etunimien mukaan aakkosjärjestykseen, niin että järjestys tapahtuu ensin sukunimen mukaan.
+Muokkaa uudistettua `Henkilo`-luokkaa niin, että `List<Henkilo>`-tyyppiset
+listat voidaan järjestää `Collections.sort`-metodilla henkilön sukunimen ja
+etunimien mukaan aakkosjärjestykseen, niin että järjestys tapahtuu ensin
+sukunimen mukaan.
 
 Esimerkiksi listan
 

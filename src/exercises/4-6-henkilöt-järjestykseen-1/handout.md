@@ -1,4 +1,7 @@
-Tehtävässä on pohjana `Henkilo`-luokka omassa tiedostossaan sekä `jarjestaHenkilot`-metodi `main.java`-tiedostossa. Kyseinen metodi ei kuitenkaan toimi, sillä se käyttää Javan valmista `Collections.sort`-metodia ja `Henkilo`-luokasta puuttuu sille tuki.
+Tehtävässä on pohjana `Henkilo`-luokka omassa tiedostossaan sekä
+`jarjestaHenkilot`-metodi `main.java`-tiedostossa. Kyseinen metodi ei kuitenkaan
+toimi, sillä se käyttää Javan valmista `Collections.sort`-metodia ja
+`Henkilo`-luokasta puuttuu sille tuki.
 
 Muokkaa `Henkilo`-luokkaa niin, että `List<Henkilo>`-tyyppiset listat voidaan järjestää `Collections.sort`-metodilla henkilön nimen mukaan aakkosjärjestykseen.
 
