@@ -1,4 +1,4 @@
-# Funktiorajapinnat ja lambda-lausekkeet
+# Funktiorajapinnat ja lambdalausekkeet
 
 > [!VAROITUS]
 > Tämä osio julkaistaan 16. helmikuuta 2026.
@@ -8,17 +8,489 @@
 >
 > - Funktionaalinen ohjelmointi
 > - Funktionaalinen rajapinta ja Javan `Function`, `BiFunction`
-> - lambda-lausekkeet
+> - lambdalausekkeet
 
 
-### Esimerkki: Comparator-rajapinta
+*Funktionaalinen rajapinta* on rajapinta, joka sisältää vain yhden pakollisen
+metodin.
+Esimerkiksi, seuraava rajapinta on funktionaalinen:
 
-> [!WIP]
->
-> Tämä osio on kirjoitettava hieman uusiksi lambdoja ja funktioviitteitä
-> käyttäen. 
-> `Comparator`-rajapintaa käytetään Javassa nykyään aikalailla vain funktiorajapintana.
-> 
+```java,ignore
+/**
+ * Rajapinta, joka kuvastaa jotain funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+```
+
+Lisäksi esimerkiksi [luvussa
+4.1](../osa4/01-rajapinta.md#älykoti-säädettävät-laitteetalykoti-saadettava)
+`Saadattava`-rajapinta on funktionaalinen, koska se sisältää ainoan
+pakollisen metodin `asetaArvo`.
+
+Java tarjoaa erityisen tavan luoda olioita, jotka toteuttavat
+funktiorajapintoja.
+Tämä puolestaan mahdollistaa funktioiden välittämisen
+toisten funktioiden parametrina.
+
+## Olion alustaminen funktiorajapinnasta
+
+Jos haluaisimme luoda olion, jonka voisi sijoittaa `LukuLauseke`-tyyppiseen
+muuttujaan, joutusimme tekemään uuden luokan:
+
+```java
+// FILE: main.java
+public class KerroKahdella implements NumeroFunktio {
+    public int laske(int luku) {
+        return luku * 2;
+    }
+}
+
+void main() {
+    NumeroFunktio kerroKahdella = new KerroKahdella();
+    IO.println(kerroKahdella.laske(1));
+    IO.println(kerroKahdella.laske(2));
+    IO.println(kerroKahdella.laske(3));
+    IO.println(kerroKahdella.laske(4));
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+Tässä siis jouduimme määrittelemään uuden luokan `KerroKahdella`, joka
+sisältää halutun funktion. Sitten jouduimme alustamaan olion luokasta, jotta
+`laske`-funktiota voidaan käyttää.
+
+Koska `NumeroFunktio` on funktionaalinen rajapinta, Java sallii *funktion
+käyttämisen oliona suoraan*:
+
+```java
+// FILE: main.java
+int kerroKahdella(int luku) {
+    return luku * 2;
+}
+
+void main() {
+    NumeroFunktio funktio = this::kerroKahdella;
+    IO.println(funktio.laske(1));
+    IO.println(funktio.laske(2));
+    IO.println(funktio.laske(3));
+    IO.println(funktio.laske(4));
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+Nyt siis emme määritä enää erillistä luokkaa `KerroKahdella`, vaan riittää
+määrittää suoraan metodi `kerroKahdella`. Metodi voidaan sijoittaa suoraan
+`NumeroFunktio`-tyyppiseen muuttujaan. Koska metodin parametrien ja
+palautusarvon tyypit täsmäävät `NumeroFunktio`-funktiorajapinnan
+ainoan metodin kanssa, Java osaa automaattisesti luoda olion, joka toteuttaa
+funktiorajapinnan.
+
+Huomaa erityiesti syntaksi ja miten se eroaa funktion kutsusta. Ensinnäkin,
+`this::kerroKahdella` ei kutsu funktiota, vaan kyseessä on ns. *funktioviite*.
+ Tästä syystä rivillä ei ole funktiokutsulle ominaista
+parametrien välitystä `()`-sulkuja käyttäen.
+Varsinainen kutsu tapahtuu vasta `funktio.laske()`-riveillä, joka kutsuu
+`kerroKahdella`-funktion.
+Jos `funktio`-muuttujan arvoa tulostaa, kokonaisluvun sijaan tulostuukin
+olion tiedot:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+//-int kerroKahdella(int luku) {
+//-    return luku * 2;
+//-}
+//-
+//-void main() {
+NumeroFunktio funktio = this::kerroKahdella;
+IO.println(funktio);
+//-}
+```
+
+Toiseksi, funktioviitteen yhteydessä käytetään `::`-merkintää viittaamaan
+joko olion tai luokan metodiin. Toisin sanoen, `this::kerroKahdella` tarkoittaa,
+että funktioviite koskee nykyisen olion `kerroKahdella`-metodia.
+`this`-viitteen sijaan voidaan käyttää olioviitettä tai luokkametodien
+tapauksessa luokkaa:
+
+
+```java
+// FILE: main.java
+class Ohjelma {
+    public static int kerroKahdellaStatic(int luku) {
+        IO.println("Olen luokkametodi!");
+        return luku * 2;
+    }
+
+    public int kerroKahdellaEiStatic(int luku) {
+        IO.println("Olen oliometodi!");
+        return luku * 2;
+    }
+
+    void main() {
+        // Nyt kerroKahdella on luokkametodi, joten käytetään luokan nimeä
+        // olioviitteen sijaan.
+        NumeroFunktio funktio = Ohjelma::kerroKahdellaStatic;
+        // Tavallisen metodin viite saadaan olioviitteen kautta
+        NumeroFunktio funktio2 = this::kerroKahdellaEiStatic;
+        IO.println(funktio.laske(2));
+        IO.println(funktio2.laske(2));
+    }
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+<details>
+<summary><i class="bi bi-stars jyu-gold"></i> Bonus: Miten funktioviite toimii?</summary>
+
+Alkuun voisi ajatella, että funktioviitteet kirjaimellisesti viittaavaat toiseen
+funktioon. Tällainen toteutus on yleistä esimerkiksi matalamman tason kielissä,
+kuten C:ssa, C++:ssa tai Rustissa. 
+Javassa kuitenkin kyseessä on vanhan ominaisuuden hyväksikäyttö: anonyymit
+luokat.
+
+Yllä oleva koodi voitaisiin kirjoittaa Javan vanhalla syntaksilla seuraavasti:
+
+```java
+// FILE: main.java
+int kerroKahdella(int luku) {
+    return luku * 2;
+}
+
+void main() {
+    // HIGHLIGHT_GREEN_BEGIN
+    NumeroFunktio funktio = new NumeroFunktio() {
+        @Override
+        public int laske(int luku) {
+            return kerroKahdella(luku);
+        }
+    };
+    // HIGHLIGHT_GREEN_END
+
+    IO.println(funktio.laske(1));
+    IO.println(funktio.laske(2));
+    IO.println(funktio.laske(3));
+    IO.println(funktio.laske(4));
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+Tässä luodaan uusi *luokka*, joka toteuttaa rajapinnan `NumeroFunktio`
+ja määrittää metodin `laske`, joka kutsuu `kerroKahdella`-funktiota.
+Samalla `new`-määreellä luodaan luokasta uusi olio.
+
+Funktioviite onkin siis tarkemmin sanottuna *funktio-olio*, joka toteuttaa
+funktiorajapinnan kutsumalla viitattu funktio.
+
+Mainittakoon, että vaikka anonyymejä funktioita käytetään nykyään vähemmän,
+voivat olla silti hyödyllisiä tapauksissa, jossa toteutettava rajapinta 
+ei ole funktionaalinen.
+
+</details>
+
+
+## lambdalausekkeet
+
+Yllä oleva `kerroKahdella`-funktion esimerkki voidaan tiivistää lisää
+siirtämällä `kerroKahdella`-funktion toteutus suoraan `funktio`-muuttujan
+sijoitukseen:
+
+```java
+// FILE: main.java
+void main() {
+    // HIGHLIGHT_GREEN_BEGIN
+    NumeroFunktio funktio = (int luku) -> {
+        return luku * 2;
+    };
+    // HIGHLIGHT_GREEN_END
+    IO.println(funktio.laske(1));
+    IO.println(funktio.laske(2));
+    IO.println(funktio.laske(3));
+    IO.println(funktio.laske(4));
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+Yllä `funktio`-muuttujaan sijoitettu lauseke on nimeltään
+*lambdalauseke* tai *anonyymi funktio*. Kyseessä on siis funktio, jolle
+ei ole annettu nimeä. Lambdalausekkeen rakenne vastaa tavallisen funktion rakennetta:
+
+```java,ignore
+(Tyyppi parametri, Tyyppi parametri2, Tyyppi parametri3) -> {
+    // Funktion runko
+    return tulos; // ei pakollinen; vain jos palauttaa jonkun arvon
+}
+```
+
+Huomaa erityisesti, että kokonaisuus on *lauseke*, jonka voi sijoittaa
+funktiorajapintatyyppisen muuttujan arvoksi.
+
+Lamdalausekkeiden määrittelyä monesti tiivistetään muutamalla tavalla.
+Ensinnäkin, Java osaa päätellä parametrien tyypit automaattisesti
+funktiorajapinnan parametrien tyypeistä, jolloin parametrit voidaan
+jättää usein pois:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+//-void main() {
+NumeroFunktio funktio = (luku) -> {
+    return luku * 2;
+};
+//-IO.println(funktio.laske(1));
+//-IO.println(funktio.laske(2));
+//-IO.println(funktio.laske(3));
+//-IO.println(funktio.laske(4));
+//-}
+```
+
+Toiseksi, *jos lambdalauseke sisältää vain yhden lauseen*, voidaan aaltosulut,
+`return`-määreen ja lopettavan puolipisteen jättää pois. Näin syntyy
+yksirivinen lambdalauseke:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+//-void main() {
+NumeroFunktio funktio = (luku) -> luku * 2;
+//-IO.println(funktio.laske(1));
+//-IO.println(funktio.laske(2));
+//-IO.println(funktio.laske(3));
+//-IO.println(funktio.laske(4));
+//-}
+```
+
+Lopuksi, *jos lambdalausekkeessa on täsmälleen yksi parametri*, voidaan
+parametrin ympärillä olevat sulut jättää pois:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+//-void main() {
+NumeroFunktio funktio = luku -> luku * 2;
+//-IO.println(funktio.laske(1));
+//-IO.println(funktio.laske(2));
+//-IO.println(funktio.laske(3));
+//-IO.println(funktio.laske(4));
+//-}
+```
+
+Lambdalausekkeiden yhteydessä on yleistä käyttää myös tavallista lyhyempiä
+parametrien nimiä, sillä parametrien merkitys on tapana dokumentoida
+funktiorajapinnassa. Täten yllä oleva voidaan tiivistää lopulliseen muotoon:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+//-void main() {
+NumeroFunktio kerroKahdella = x -> x * 2;
+//-IO.println(kerroKahdella.laske(1));
+//-IO.println(kerroKahdella.laske(2));
+//-IO.println(kerroKahdella.laske(3));
+//-IO.println(kerroKahdella.laske(4));
+//-}
+```
+
+Lambdalausekkeita on voi käyttää muuttujien lisäksi parametreina.
+Tämän myötä on mahdollista tehdä funktioita, jotka käsittelevät muita
+funktioita, kuten esimerkiksi:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+/**
+ * Laskee kahden funktion summan tietylle arvolle.
+ *
+ * @param fun1 Ensimmäinen funktio
+ * @param fun2 Toinen funktio
+ * @param arvo Arvo, josta lasketaan summa
+ * @return Funktioiden summa arvolla.
+ */
+int summaaFunktiot(NumeroFunktio fun1, NumeroFunktio fun2, int arvo) { 
+    return fun1.laske(arvo) + fun2.laske(arvo);
+}
+
+void main() {
+    IO.println("3 * 2 + 3 * 3 = " + 
+                summaaFunktiot(x -> x * 2, 
+                               x -> x * x, 
+                               3));
+}
+```
+
+Lambdalausekkeiden runko määrittää oman näkyvyysalueen. Erityisesti
+lambdalausekkeissa saa käyttää lausekkeiden ulkopuolella näkyviä muuttujia
+ja arvoja. Tämä mahdollistaa esimerkiksi funktioita palauttavien funktioiden
+tekemisen:
+
+```java
+//-public interface NumeroFunktio {
+//-    int laske(int luku);
+//-}
+//-
+NumeroFunktio kerroLuvulla(int kerrottava) { 
+    // Tämä palauttaa uuden lambdalausekkeen, joka ottaa parametrina luvun
+    // ja kertoo tämän funktion parametrina annetulla luvulla.
+    return x -> x * kerrottava;
+}
+
+NumeroFunktio summa(NumeroFunktio fun1, NumeroFunktio fun2) {
+    return x -> fun1.laske(x) + fun2.laske(x);
+}
+
+void main() {
+    // Funktio, joka laskee x * 2
+    NumeroFunktio kerroKahdella = kerroLuvulla(2);
+    // Funktio, joka laskee x * 5
+    NumeroFunktio kerroViidella = kerroLuvulla(5);
+    // Funktio, joka laskee kerroKahdella(x) + kerroViidella(x)
+    NumeroFunktio summaFunktio = summa(kerroKahdella, kerroViidella);
+
+    IO.println("2 * 2 = " + kerroKahdella.laske(2));
+    IO.println("2 * 5 = " + kerroViidella.laske(2));
+    IO.println("2 * 2 + 2 * 5 = " + summaFunktio.laske(2));
+}
+```
+
+## Esimerkkejä
+
+### Valmiita funktiorajapintoja
+
+Javassa on joukko valmiita yleisiä funktiorajapintoja, jotka löytyvät
+`java.util.function`-paketista (ks.
+[JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/package-summary.html#class-summary)).
+
+**`Function<T, R>`** ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html)) esittää funktiota, joka ottaa yhden parametrin tyyppiä
+`T` ja paluttaa parametrin tyyppiä `R`.
+Esimerkiksi yllä oleva esimerkki voidaan yksinkertaistaa käyttämällä valmista
+`Function`-rajapintaa `NumeroLauseke`-rajapinnan sijaan:
+
+```java
+//-void main() {
+Function<Integer, Integer> kerroKahdella = x -> x * 2;
+Function<Integer, Integer> potenssiinKaksi = x -> x * x;
+
+IO.println(funktio.apply(1));
+IO.println(funktio2.apply(2));
+//-}
+```
+
+`Function`-rajapinta sisältää apumetodeja `andThen` ja `compose`, joiden
+avulla funktioita voidaan yhdistää toisiinsa:
+
+```java
+//-void main() {
+Function<Integer, Integer> kerroKahdella = x -> x * 2;
+Function<Integer, Integer> potenssiinKaksi = x -> x * x;
+
+// Palauttaa funktion, joka vastaa kutsua kerroKahdella(potenssiinKaksi(x))
+Function<Integer, Integer> kerroJaPotenssiin = kerroKahdella.andThen(potenssiinKaksi);
+// Palauttaa funktion, joka vastaa kutsua potenssiinKaksi(kerroKahdella(x))
+Function<Integer, Integer> potenssiinJaKerro = kerroKahdella.compose(potenssiinKaksi);
+
+IO.println(kerroJaPotenssiin.apply(2));
+IO.println(potenssiinJaKerro.apply(2));
+//-}
+```
+
+Vastaavasti **`BiFunction<T, U, R>`**
+([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/BiFunction.html))
+vastaa funktiota, joka ottaa kaksi parametria ja paluttaa yhden arvon.
+
+**`Consumer<T>`**
+([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Consumer.html))
+ja **`BiConsumer<T, U>`**
+([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/BiConsumer.html))
+puolestaan vastaavat metodeja, jotka ottavat yhden tai kaksi parametria eivätkä
+palauta mitään arvoa.
+Esimerkiksi useat kokoelmat sisältävät `forEach`-funktion, jonka avulla
+voidaan toteuttaa yksinkertaista alkioiden käsittelyä:
+
+```java
+//-void main() {
+List<String> marjoja = List.of("mansikka", "mustikka", "puolukka", "karpalo");
+
+// Huom: IO.println sopii Consumer<T>:hen, 
+// koska se ottaa yhden parametrin eikä palauta mitään
+marjoja.forEach(IO::println);
+
+// Sama kuin
+// for (String marja : marjoja) {
+//     IO.println(marja);
+// }
+
+Map<String, Integer> arvosanat = new HashMap<>(
+            Map.of( "Denis",        1,
+                    "Antti-Jussi",  3,
+                    "Sami",         5,
+                    "Karri",        5)
+    );
+// Myös lambdalausekkeet ovat OK
+arvosanat.forEach((nimi, arvosana) -> IO.println(nimi + " => " + arvosana));
+//-}
+```
+
+### Comparator-rajapinta
 
 Kuten totesimme ylempänä, toisinaan voi olla vaikeaa valita yksittäinen
 järkevä järjestys. 
