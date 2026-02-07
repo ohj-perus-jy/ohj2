@@ -62,7 +62,7 @@ kertoo kokonaislukujen luonnollisen järjestyksen, joka on suuruusjärjestys.
 
 ```java
 //-int kerroJarjestys(Integer luku1, Integer luku2) {
-//-  int tulos = luku1.compareTo(luku1);
+//-  int tulos = luku1.compareTo(luku2);
 //-  if (tulos < 0) {
 //-      IO.println(luku1 + " on pienempi kuin " + luku2);
 //-  } else if (tulos > 0) {
