@@ -393,16 +393,6 @@ kuten lukualueen ylivuotoja. Vastaavasti `Double.compare` osaa
 käsitellä kaikkia liukulukutyyppien erikoisarvoja, kuten äärettömyyttä tai
 "Not a Number" -arvoja.
 
-<task>
-  <task-title>Tehtävä 4.x: Henkilöt järjestykseen, osa 1 <points>0,5 p.</points> </task-title>
-  <handout>
-
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/itkp102/demot/demo1#tehtava_tulostaminen_header">Tee tehtävä TIMissa</a></task-link>
-</task>
-
-
 ## Useamman attribuutin vertailu
 
 Monesti luonnollinen järjestys voi määräytyä useamman luokan attribuutin
