@@ -44,7 +44,7 @@ java: Muoto is abstract; cannot be instantiated
 > [!HUOMAUTUS]
 > Tässä kohtaa voi pysähtyä hetkeksi miettimään tarvitaanko [edellisen osion](02-polymorfismi.md) henkilötietojärjestelmässä laisinkaan henkilö-olioita, vai ovatko kaikki henkilöt jotain muutakin kuin henkilöitä, kuten opiskelijoita tai opettajia.
 
-## Esimerkki: Älykoti
+## Esimerkki: Älykoti {#alykoti}
 
 Älykodissa voisi olla monenlaisia laitteita, kuten valoja, turvakamera sekä tietysti älykahvinkeitin. Sovitaan, että kaikilla laitteilla olisi toiminto `vaihdaTilaa()`, joka suorittaa laitteen päätoiminnon (esim. valot syttyvät tai sammuvat, kamera aloittaa tai päättää videon tallennuksen, kahvinkeitin aloittaa tai lopettaa kahvin keittämisen). Kukin laite voisi myös raportoida oman tilansa `raportoiTila()`-metodilla.
 

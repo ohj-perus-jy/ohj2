@@ -1,22 +1,11 @@
 # Rajapinta
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 2. helmikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 > - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
 > - Osaat määritellä ja käyttää rajapintoja Javassa.
 > - Osaat käyttää rajapintaa aliohjelman parametrina ja muuttujan tyyppinä.
 > - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
-> - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhdestä luokasta
-
-![alt text](images/interfaces.png)
-
-> [!TODO]
-> Lisää monivalintakysymyksiä /-tehtäviä rajapinnoista. Mahdollisesti "ihan
-> oikeita tehtäviä" pisteiden kera? Voisiko olla esim 4 * 0.25 pisteen kysymystä
-> -> 1 pisteen tehtävä?
+> - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhden luokan
 
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on
 tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin
@@ -29,16 +18,19 @@ kyvykkyyden riippumatta siitä, mitä luokkaa olio edustaa.
 
 ## Älykoti: säädettävät laitteet{#alykoti-saadettava}
 
-Jotkin älykotimme laitteet voisivat olla säädettäviä, eli niihin voisi asettaa
-suoraan arvon, kuten kirkkauden, lämpötilan tai äänenvoimakkuuden. Näinhän
-periaatteessa toimimmekin jo esimerkkimme `Valo`-luokassa, jossa kirkkaus
-vaihtelee kolmen arvon välillä. Olion käyttäjän kannalta olisi kuitenkin
-kätevämpää, jos voisi asettaa kirkkauden suoraan haluttuun arvoon (esim. 33%),
-sen sijaan, että pitäisi kutsua `vaihdaTilaa()`-metodia useita kertoja ja
-toivoa, että arvo osuu kohdalleen. Loppukäyttäjän kannalta tätä voisi verrata
-tilanteeseen, jossa käyttäjä voisi asettaa vaikkapa mobiilisovelluksesta suoraan
-haluamansa kirkkauden sen sijaan, että pitäisi klikkailla *Lisää kirkkautta*-
-tai *Vähennä kirkkautta* -painikkeita useita kertoja. 
+Jatketaan [Osassa 3
+aloittamaamme](../osa3/03-abstrakti-luokka.md#alykoti)
+älykoti-esimerkkiä. Jotkin älykotimme laitteet voisivat olla säädettäviä, eli
+niihin voisi asettaa suoraan arvon, kuten kirkkauden, lämpötilan tai
+äänenvoimakkuuden. Näinhän periaatteessa toimimmekin jo esimerkkimme
+`Valo`-luokassa, jossa kirkkaus vaihtelee kolmen arvon välillä. Olion käyttäjän
+kannalta olisi kuitenkin kätevämpää, jos voisi asettaa kirkkauden suoraan
+haluttuun arvoon (esim. 33%), sen sijaan, että pitäisi kutsua
+`vaihdaTilaa()`-metodia useita kertoja ja toivoa, että arvo osuu kohdalleen.
+Loppukäyttäjän kannalta tätä voisi verrata tilanteeseen, jossa käyttäjä voisi
+asettaa vaikkapa mobiilisovelluksesta suoraan haluamansa kirkkauden sen sijaan,
+että pitäisi klikkailla *Lisää kirkkautta*- tai *Vähennä kirkkautta*
+-painikkeita useita kertoja. 
 
 Määritellään rajapinta `Saadettava`, jossa on metodi `asetaArvo(int arvo)`.
 Tiedosto tallennetaan nimellä `Saadettava.java`, eli samaan tapaan kuin luokat.
@@ -165,27 +157,6 @@ Laite <|-- Valo
 Saadettava <|.. Valo
 @enduml
 ```
-
-<task>
-  <task-title>Tehtävä 3.6: Muunnin. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/3-6-muunnin/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava6">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-
-<task>
-  <task-title>Tehtävä 3.7 Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/3-7-salakirjoitus/handout.md}}
-
-  </handout>
-    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava7">Tee tehtävä TIMissä </a></task-link>
-</task>
 
 ## Usean rajapinnan toteuttaminen
 
@@ -577,16 +548,6 @@ Esimerkki on pitkähkö, ja jos haluat ajaa sen omalla tietokoneellasi, lataa se
 </details>
 
 
-<task>
-  <task-title>Tehtävä 3.8: Seikkailupeli. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/3-8-seikkailupeli/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava8">Tee tehtävä TIMissä</a></task-link>
-</task>
-
 
 ## Rajapinnan periminen
 
@@ -644,7 +605,7 @@ public class Main {
 ## Esimerkit
 
 Löydät kaikki tällä sivulla esitellyt esimerkit
-[GitHubista](https://github.com/ohj-perus-jy/ohj2-mdbook-esimerkit)
+[GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3)
 (E34-alkuiset kansiot).
 
 ## Huomautuksia
@@ -657,4 +618,28 @@ dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmeth
 
 <!-- Tehtäväidea tulevaisuutta varten -->
 <!-- Suunnittele `Hälytettävä`-rajapinta, jossa on metodit `trigger()` ja `reset()`. Toteuta rajapintaa hyödyntävä abstrakti `HälytinLaite`, joka pitää kirjaa siitä, montako kertaa hälytys on aktivoitu. Luo kaksi konkreettista laitetta (esim. `SavuHälytin` ja `VesivuotoHälytin`). Mieti, missä kohtaa sijoitat yhteisen lokituksen: rajapintaan (ei mahdollista) vai abstraktiin luokkaan? -->
- 
+
+## Tehtävät
+
+
+<task>
+  <task-title>Tehtävä 4.1: Muunnin. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/4-1-muunnin/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava1">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+<task>
+  <task-title>Tehtävä 4.2: Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/4-2-salakirjoitus/handout.md}}
+
+  </handout>
+    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa4/tehtava2">Tee tehtävä TIMissä </a></task-link>
+</task>
+

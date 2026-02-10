@@ -1,13 +1,17 @@
-# JYU — Ohjelmointi 2 oppimateriaali
+# Ohjelmointi 2 (Jyväskylän yliopisto)
 
 [![CC BY-SA 4.0][cc-by-sa-shield]][cc-by-sa]
 
-## Alustus
+Tämä on Jyväskylän yliopiston Ohjelmointi 2 -kurssin oppimateriaali.
+Materiaali on katseltavissa osoitteessa <https://ohjelmointi2.it.jyu.fi>. 
+
+Tehtävien palauttaminen vaatii opintojaksolle
+[ilmoittautumisen](https://opinto-opas.jyu.fi/2025/fi/opintojakso/tiep111/). 
+
+## Materiaalin kehittäminen omalla koneella
 
 - Asenna Rust ja Cargo (esim. rustup) TAI käytä mukana olevaa DevContaineria
 - Aja ´update-mdbook.sh´ asentaakseen tarvittavat laajennokset
-
-## Kehittäminen
 
 ```bash
 bash ./start.sh
@@ -22,7 +26,8 @@ mdbook serve --hostname 0.0.0.0 --port 3000 --open
 
 ## Pikaohje mdBookin syntaksiin
 
-### Monen tiedoston koodialueet
+Koodiesimerkit voivat sisältää useita tiedostoja. Käytä `// FILE: filename`- ja 
+`// FILE_END`-merkintöjä erottaaksesi eri tiedostot.
 
 ```java
 // FILE: main.java
@@ -48,9 +53,9 @@ public class Kissa {
 // FILE_END
 ```
 
-### Koodin korostukset
-
-Käytä merkintöjä `// HIGHLIGHT_COLOR_BEGIN` ja `// HIGHLIGHT_COLOR_END`, jossa COLOR on jokin seuraavista: `GREEN`, `YELLOW`, `RED`, `BLUE`.
+Koodin korostuksiin voit käyttää merkintöjä `// HIGHLIGHT_COLOR_BEGIN` ja 
+`// HIGHLIGHT_COLOR_END`, jossa `COLOR` on jokin seuraavista: `GREEN`, `YELLOW`,
+`RED`, `BLUE`.
 
 ```java
 public class Kissa {
@@ -76,6 +81,9 @@ public class Kissa {
 
 ### Tehtävälohko
 
+Tehtäviä varten on oma `task`-elementti, joka sisältää tehtävän otsikon,
+tehtävänannon ja linkin TIM-tehtävään.
+
 ````md
 <task>
   <task-title>Ydintehtävä: Tulostaminen <points>1 p.</points> </task-title>
@@ -94,7 +102,6 @@ public class Kissa {
 
 - [mdBook-ohjeet](https://rust-lang.github.io/mdBook/index.html)
 - [KaTeX-ohjeet](https://katex.org/docs/supported)
-
 
 ## License
 
