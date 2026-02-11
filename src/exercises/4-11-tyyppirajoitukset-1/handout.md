@@ -1,12 +1,12 @@
 Lisää edellisen tehtävän `IsoKontti`-luokkaan kaksi metodia.
 
-1. Metodi `summaaNumerot` ottaa parametrina vastaan kontin, joka sisältää 
-   numeroita eli `Number`-luokan **tai sen alityyppien** olioita ja
-   palauttaa näiden summan.
+1. Luokan metodi (*static*) `summaaNumerot` ottaa parametrina `IsoKontti`-olion, 
+   joka sisältää numeroita eli `Number`-luokan **tai sen alityyppien** olioita. 
+   Metodi palauttaa kontin numeroiden summan.
 
-1. Metodi `siirraKaikki` ottaa parametrina toisen kontin ja siirtää nykyisen 
-   kontin sisällön sinne. Toisen kontin täytyy olla tyypiltään sellainen, että 
-   se voi sisältää tämän kontin tyypin olioita.
+1. Olion metodi `siirraKaikki` ottaa parametrina toisen `IsoKontti`-olion ja 
+   siirtää metodia suorittavan kontin sisällön sinne. Toisen kontin täytyy olla 
+   tyypiltään sellainen, että se voi sisältää tämän kontin tyypin olioita.
 
 Tehtävässä on valmiiksi pääohjelma, jolla voit kokeilla luokan toimintaa.
 
