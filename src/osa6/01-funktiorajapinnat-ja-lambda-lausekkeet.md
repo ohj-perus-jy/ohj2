@@ -492,35 +492,66 @@ arvosanat.forEach((nimi, arvosana) -> IO.println(nimi + " => " + arvosana));
 
 ### Comparator-rajapinta
 
-Kuten totesimme ylempänä, toisinaan voi olla vaikeaa valita yksittäinen
-järkevä järjestys. 
+Palataan [luvussa 4.2](../osa4/02-vertailurajapinta.md) esiteltyyn
+vertailurajapintaan `Comparable<T>`. 
+Kuten luvussa oli todettu, kyseinen rajapinta soveltuu olioiden *luonnollisen
+järjestyksen* määrittelyyn.
+
+Toisinaan voi olla vaikeaa valita yksittäinen järkevä järjestys. 
 Yleisestikin, luonnollisen järjestyksen lisäksi voi olla järkevää
 pystyä määrittämään *vaihtoehtoisia* järjestystapoja samalle luokalle.
 
-Esimerkiksi, vaikka kokonaislukujen suuruusjärjestys on järkevä luonnolliseksi
+<!-- Esimerkiksi, vaikka kokonaislukujen suuruusjärjestys on järkevä luonnolliseksi
 järjestykselle, joskus lukuja saatetaan haluta järjestää niiden suuruusluokan
 mukaan tai vaikkapa sen mukaan, kuinka lähellä luvut ovat jotakin toista
 tiettyä lukua. Vastaavasti, vaikka yllä oleville keräilykorteille voisi olla
 järkevää määrätä järjestys tunnisteen mukaan, voi olla mielekästä
-pystyä järjestämään niitä kortin nimen mukaan.
+pystyä järjestämään niitä kortin nimen mukaan. -->
 
 Javan `Comparator`-rajapinta
 [JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html)
 tarjoaa tavan määrittää *vaihtoehtoisia* järjestystapoja tyypeille.
-Lisäksi rajapinta tarjoaa mahdollisuuden määrittää järjestystapoja
-ilman, että alkuperäisen luokan tarvitsisi toteuttaa `Comparable`-rajapintaa.
 
-Rajapinta sisältää ainoastaan yhden pakollisen metodin `compare`, joka
-ottaa parametriksi kaksi samantyyppistä oliota ja palauttaa 
-vertailuluvun samoilla säännöillä kuin `Comparable`-rajapinnan `compareTo`:
+Rajapinta on funktionaalinen rajapinta, joka
+sisältää ainoastaan yhden pakollisen metodin `compare`.
+Funktio ottaa parametrina kaksi saman tyypin oliota ja palauttaa kokonaisluvun
+samoilla säännöillä kuin `Comparable`-rajapinnan `compareTo`:
 
 | Tapaus                             | Merkitys         | Tulkinta                           |
 | ---------------------------------- | ---------------- | ---------------------------------- |
-| `cmp.compareTo(olioA, olioB) < 0`  | `olioA < olioB`  | `olioA` on pienempi kuin `olioB`   |
-| `cmp.compareTo(olioA, olioB) == 0` | `olioA == olioB` | `olioA` on yhtä suuri kuin `olioB` |
-| `cmp.compareTo(olioA, olioB) > 0`  | `olioA > olioB`  | `olioA` on suurempi kuin `olioB`   |
+| `cmp.compare(olioA, olioB) < 0`    | `olioA < olioB`  | `olioA` on pienempi kuin `olioB`   |
+| `cmp.compare(olioA, olioB) == 0`   | `olioA == olioB` | `olioA` on yhtä suuri kuin `olioB` |
+| `cmp.compare(olioA, olioB) > 0`    | `olioA > olioB`  | `olioA` on suurempi kuin `olioB`   |
 
 
+Koska `Comparator` on funktiorajapinta, vaihtoehtoisia järjestyksiä voidaan
+määrittää funktioviitteinä tai lambdalausekkeina:
+
+```java
+//-void vertaa(float luku1, float luku2, Comparator<Float> vertailija) {
+//-    int tulos = vertailija.compare(luku1, luku2);
+//-    
+//-    if (tulos < 0) {
+//-        IO.println("Järjestys: " + luku1 + ", " + luku2);
+//-    } else if (tulos > 0) {
+//-        IO.println("Järjestys: " + luku2 + ", " + luku1);
+//-    } else {
+//-        IO.println("Luvuilla " + luku1 + " ja " + luku2 + " ei ole keskinäistä järjestystä");
+//-    }
+//-}
+//-
+void main() {
+    // Järjestys, jossa desimaaliluvut järjestetään vain kokonaislukuosan mukaan
+    Comparator<Float> kokonaisosaJarjestys = (luku1, luku2) ->
+        Long.compare((long)luku1.doubleValue(), (long)luku2.doubleValue());
+
+    vertaa(1.5f, 2.1f, kokonaisosaJarjestys);
+    vertaa(1.5f, 0.5f, kokonaisosaJarjestys);
+    vertaa(2.1f, 2.5f, kokonaisosaJarjestys);
+}
+```
+
+Palataan vielä luvussa 4.2 olevaan [keräilykorttiesimerkkiin](../osa4/02-vertailurajapinta.md#oma-toteutus-comparable-rajapinnalle).
 Laajenetaan hieman `Kerailykortti`-luokkaa lisäämällä attribuutti
 `sarja`, joka kuvaa korttisarjaa (esim. eläimet, ajoneuvot, jne.):
 
@@ -596,18 +627,33 @@ Tällä hetkellä keräilykorteille on määritelty luonnollinen järjestys site
 ensin keräilykortit järjestetään nimen ja sitten tunnisteen mukaan.
 Haluaisimme kuitenkin tarjota vaihtoehtoisen tavan järjestää keräilykortteja
 sarjan nimen mukaan.
-Tätä varten voimme luoda uuden vertailuluokan, joka toteuttaa
-`Comparator`-rajapinnan:
+Tätä varten voimme käyttää Javan valmista `sort`-metodin versiota, joka
+ottaa parametrina `Comparator`-vertailijan:
 
 ```java
-// FILE: KerailykorttiSarjaVertailija.java
-import java.util.Comparator;
+// FILE: main.java
+void main() {
+    List<Kerailykortti> kortit = Arrays.asList(
+        new Kerailykortti("Loistava Lohikäärme", "Eläimet", 3),
+        new Kerailykortti("Vauhdikas Vespajetti", "Ajoneuvot", 1),
+        new Kerailykortti("Aloittelijan Ameeba", "Eläimet", 1),
+        new Kerailykortti("Mieletön Merihevonen", "Eläimet", 2),
+        new Kerailykortti("Nopea Nopsa", "Ajoneuvot", 2)
+    );
 
-class KerailykorttiSarjaVertailija implements Comparator<Kerailykortti> {
-    @Override
-    public int compare(Kerailykortti kortti1, Kerailykortti kortti2) {
-        return kortti1.getSarja().compareTo(kortti2.getSarja());
-    }
+    IO.println("Ennen järjestämistä:");
+    kortit.forEach(IO::println);
+
+    // Collections.sort tarjoaa version, jossa toiseksi parametrina voi antaa
+    // järjestyksen, jonka mukaan alkioita järjestetään.
+    Comparator<Kerailykortti> sarjanMukaan = 
+        (kortti1, kortti2) -> kortti1.getSarja().compareTo(kortti2.getSarja());
+    Collections.sort(kortit, sarjanMukaan);
+
+    IO.println();
+
+    IO.println("Jälkeen järjestämisen:");
+    kortit.forEach(IO::println);
 }
 // FILE_END
 // FILE: Kerailykortti.java
@@ -643,78 +689,108 @@ class Kerailykortti implements Comparable<Kerailykortti> {
     }
 }
 // FILE_END
-// FILE: main.java
-void main() {
-    List<Kerailykortti> kortit = Arrays.asList(
-        new Kerailykortti("Loistava Lohikäärme", "Eläimet", 3),
-        new Kerailykortti("Vauhdikas Vespajetti", "Ajoneuvot", 1),
-        new Kerailykortti("Aloittelijan Ameeba", "Eläimet", 1),
-        new Kerailykortti("Mieletön Merihevonen", "Eläimet", 2),
-        new Kerailykortti("Nopea Nopsa", "Ajoneuvot", 2)
-    );
-
-    IO.println("Ennen järjestämistä:");
-    for (Kerailykortti kortti : kortit) {
-        IO.println(kortti);
-    }
-
-    // HIGHLIGHT_GREEN_BEGIN
-    KerailykorttiSarjaVertailija vertailija = new KerailykorttiSarjaVertailija();
-    Collections.sort(kortit, vertailija);
-    // HIGHLIGHT_GREEN_END
-
-    IO.println();
-
-    IO.println("Jälkeen järjestämisen:");
-    for (Kerailykortti kortti : kortit) {
-        IO.println(kortti);
-    }
-}
-// FILE_END
 ```
 
-Huomaa erityisesti, että:
-
-- Vaihtoehtoinen vertailu on nyt toteutettu omaan luokkaan `KerailykorttiSarjaVertailija`.
-  Tämä on tarkoituksellista ja se mahdollistaa, että vertailijoita voi tehdä
-  myös sellaisille luokille, joiden koodia ei voi suoraan muokata (esim.
-  Javan sisäänrakennetut luokat).
-- Koska `KerailykorttiSarjaVertailija` on oma luokkansa, määritimme `Kerailykortti`-luokkaan
-  saantimetodin `getSarja()`.
-- Jotta vertailijaa voi käyttää, siitä tulee alustaa olio. Alustuksen jälkeen
-  vertailijaolio voidaan käyttää `Collections.sort`-metodin ylikuormituksen
-  kanssa, joka joka ottaa `Comparator`-olion toisena parametrina.
-
-> [!VAROITUS]
->
-> Yllä olevassa esimerkissä toteutimme `Comparator`-rajapinnan luokassa, jotta esimerkki
-> voidaan pitää yksinkertaisena.
-> 
-> Modernissa Javassa on kuitenkin yleistä, että *vertailuluokkia ei luoda käsin*.
-> `Comparator` on nimittäin ns. *funktiorajapinta*, jonka ansiosta mikä tahansa
-> luokkametodi, jonka määrittely vastaa `compare`-metodia, voidaan sijoittaa
-> suoraan `Comparator`-tyyppiseen muuttujaan tekemättä luokkaa:
->
-> ```java
-> //-void main() {
-> List<Integer> luvut = new ArrayList<>(List.of(5, 4, 2, 1, 3));
-> Comparator<Integer> vertailija = Integer::compare;
-> Collections.sort(luvut, vertailija);
-> IO.println(luvut);
-> //-}
-> ```
->
-> Tutustumme funktiorajapintoihin ja palaamme taas `Comparator`-tyyppiin tarkemmin
-> [osassa 6](../osa6/index.md).
+Huomaa erityisesti, että nyt järjestäminen tehdään `sarjanMukaan`-vertailijan
+mukaan, joka on määritelty lambdalausekkeena.
+Koska vertailija on määritelty `Kerailykortti`-luokan ulkopuolella, lisäsimme
+myös saantimetodin `getSarja()`.
  
 `Comparator`-rajapinta tarjoaa lisäksi muutaman hyödyllisen metodin, jotka
 auttavat algoritmien suunnittelussa.
 
-`Comparator.naturalOrder()` palauttaa `Comparator`-tyyppisen vertailuolion,
+Ensiksi, olioiden vertailu tehdään useimmiten olion omien attribuuttien
+järjestyksen mukaan. Tällaisia tapauksia varten voidaan käyttää
+`Comparator.comparing`-metodia, joka ottaa parametrina lambdalausekkeen, joka
+palauttaa oliosta lasketun arvon, jonka perusteella vertailu tehdään.
+Esimerkiksi, yllä oleva `sarjanMukaan`-vertailija voitaisiin toteuttaa
+seuraavasti suoraviivaisemmin seuraavasti:
+
+```java
+//-void main() {
+//-    List<Kerailykortti> kortit = Arrays.asList(
+//-        new Kerailykortti("Loistava Lohikäärme", "Eläimet", 3),
+//-        new Kerailykortti("Vauhdikas Vespajetti", "Ajoneuvot", 1),
+//-        new Kerailykortti("Aloittelijan Ameeba", "Eläimet", 1),
+//-        new Kerailykortti("Mieletön Merihevonen", "Eläimet", 2),
+//-        new Kerailykortti("Nopea Nopsa", "Ajoneuvot", 2)
+//-    );
+//-
+//-    IO.println("Ennen järjestämistä:");
+//-    kortit.forEach(IO::println);
+//-
+Comparator<Kerailykortti> sarjanMukaan = 
+    Comparator.comparing(Kerailykortti::getSarja);
+//-    Collections.sort(kortit, sarjanMukaan);
+//-
+//-    IO.println();
+//-
+//-    IO.println("Jälkeen järjestämisen:");
+//-    kortit.forEach(IO::println);
+//-}
+//-
+//-class Kerailykortti implements Comparable<Kerailykortti> {
+//-    private String nimi;
+//-    private String sarja;
+//-    private int tunnistenumero;
+//-    
+//-    public Kerailykortti(String nimi, String sarja, int tunnistenumero) {
+//-        this.nimi = nimi;
+//-        this.sarja = sarja;
+//-        this.tunnistenumero = tunnistenumero;
+//-    }
+//-
+//-    public String getSarja() {
+//-        return sarja;
+//-    }
+//-
+//-    @Override
+//-    public int compareTo(Kerailykortti other) {
+//-        int sarjaVertailu = this.sarja.compareTo(other.sarja);
+//-        if (sarjaVertailu != 0) {
+//-            return sarjaVertailu;
+//-        }
+//-        return Integer.compare(this.tunnistenumero, other.tunnistenumero);
+//-    }
+//-
+//-    @Override
+//-    public String toString() {
+//-        return "Kortti: " + nimi + " (Sarja: " + sarja + ", #" + tunnistenumero + ")";
+//-    }
+//-}
+```
+
+Tämä luo uuden vertailijan, joka kutsuu vertailevien olioiden kohdalla
+`getSarja`-metodin ja vertaa niiden arvoja keskenään.
+
+Puolestaan `Comparator.thenComparing` palauttaa vertailijan, joka yhdistää
+kaksi vertailijaa yhteen: ensin verrataan olioita ensimmäisen vertailijan mukaan
+ja jos ensimmäinen vertailija palauttaa `0`, vertaillaan toisen vertailijan
+mukaan.
+Yhdistämällä tämä metodi `Comparator.comparing`-metodiin voidaankin
+tehokkaasti toteuttaa monimutkaisiakin vertailijoita.
+Esimerkiksi `Kerailykortti`-luokan oma `compareTo` voidaan muttaa enemmän
+suoraan luettavaan muotoon:
+
+```java,ignore
+@Override
+public int compareTo(Kerailykortti other) {
+    // Vertailija, joka vertaa kortteja sarjan mukaan
+    Comparator<Kerailykortti> sarjanMukaan = Comparator.comparing(k -> k.sarja);
+    // Vertailija, joka vertaa kortteja tunnistenumeron mukaan
+    Comparator<Kerailykortti> tunnistenumeronMukaan = Comparator.comparing(k -> k.tunnistenumero);
+    
+    // vertaillaan ensin sarjan mukaan ja sitten tunnistenumeron mukaan
+    Comparator<Kerailykortti> vertailu = sarjanMukaan.thenComparing(tunnistenumeronMukaan);
+    return vertailu.compare(this, other);
+}
+```
+
+`Comparator.naturalOrder()` palauttaa `Comparator`-vertailijan,
 joka järjestää oliot niiden *luonnollisen järjestyksen* mukaan.
 Toisin sanoen, tämä mahdollistaa ns. eristää `Comparable`-rajapintaa
 toteuttavan olion `compareTo`-metodin toteutuksen vertailuolioksi.
-Esimerkiksi merkkijonojen aakkosjärjestystä vastaavan vertailuolion saa tällä
+Esimerkiksi merkkijonojen aakkosjärjestystä vastaavan vertailijan saa tällä
 tavoin:
 
 ```java
@@ -726,7 +802,7 @@ void main() {
 }
 ```
 
-`Comparator.reversed()` luo uuden vertailuolion, joka kääntää
+`Comparator.reversed()` luo uuden vertailijan, joka kääntää
 vertailujärjestyksen.
 Tämän avulla esimerkiksi pystyy helposti järjestämään merkkijonot
 käänteiseen aakkosjärjestykseen:
