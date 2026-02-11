@@ -332,7 +332,7 @@ Katsotaan seuraavaksi miten `null`-viittaukset voivat aiheuttaa
 `NullPointerException`-poikkeuksia. Oletetaan, että jostain kumman syystä
 listalle päätyisi `null`-arvo. Tällainen tilanne voisi syntyä esimerkiksi, jos
 henkilöiden tietoja luettaisiin ulkoisesta lähteestä, ja jokin tietue olisi
-puutteellinen.
+puutteellinen, mutta se siitä huolimatta lisättäisiin listalle.
 
 ```java
 //- public class Henkilo {
