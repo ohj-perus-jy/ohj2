@@ -1,8 +1,7 @@
 public class Valo extends Laite {
     private int kirkkaus = 0;
 
-    public Valo(String nimi)
-    {
+    public Valo(String nimi) {
         super(nimi);
     }
 
@@ -21,6 +20,7 @@ public class Valo extends Laite {
             case 100 -> kirkkaus = 0;
         }
     }
+
     @Override
     public void raportoiTila() {
         IO.println("Valon kirkkaus on " + kirkkaus + "%.");

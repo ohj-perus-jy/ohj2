@@ -21,5 +21,6 @@ public abstract class Laite {
     }
 
     public abstract void vaihdaTilaa();
+
     public abstract void raportoiTila();
 }

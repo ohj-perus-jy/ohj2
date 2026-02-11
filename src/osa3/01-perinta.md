@@ -1,9 +1,5 @@
 # Perintä
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 26. tammikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
-
 > [!Osaamistavoitteet]
 >
 > - Ymmärrät perinnän käsitteen olio-ohjelmoinnissa ja osaat periä luokkia Javassa
@@ -150,7 +146,7 @@ Katsotaan esimerkin kautta, missä tällainen kutsu on tarpeen.
 Yllä olevassa esimerkissämme on pari ongelmaa. `Henkilo`-luokassa ei ole
 muodostajaa, jolloin nimen alustaminen tapahtuu `setNimi`-metodin kautta. Tästä
 seuraa, että `Henkilo`-olion muodostamisen jälkeen `nimi`-attribuutti on aina
-`null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakin
+`null`, ennen kuin se erikseen asetetaan. Tämä ei ole hyvä käytäntö kahdestakaan
 syystä: Ensinnäkin, on parempi, että olio on käyttökelpoinen heti luomisen
 jälkeen ilman, että erillisiä asettamisia tarvitsee tehdä. Toiseksi, nimen
 asettaminen julkisen `setNimi`-metodin kautta ei ole hyvä idea, sillä se rikkoo
@@ -498,7 +494,7 @@ mene syvemmälle moniperinnän käsitteeseen, mutta mainittakoon, moniperinnän
 käyttö voi joissain tilanteissa olla ongelmallista (esim.
 [Timanttiongelma](https://en.wikipedia.org/wiki/Multiple_inheritance#The_diamond_problem)). 
 
-Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interface*). Kysymys on kuitenkin monin tavoin eri asiasta. Rajapintoja käsitellään osassa [3.4 Rajapinta](04-rajapinta.md)
+Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman *rajapinnan* käsite (engl. *interface*). Kysymys on kuitenkin monin tavoin eri asiasta. Rajapintoja käsitellään osassa 4 (TODO: linkki kuntoon)
 
 ## Tehtävät
 
@@ -506,7 +502,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
   <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/3-1-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-1-verkkokauppa-1/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava1">Tee tehtävä TIMissä</a></task-link>
@@ -516,18 +512,19 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
   <task-title>Tehtävä 3.2: Luokkahierarkia, osa 2. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/3-2-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-2-verkkokauppa-2/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava2">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/3-3-bonus-luokkahierarkia/handout.md}}
+{{#include ../exercises/3-3-verkkokauppa-3/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa3/tehtava3">Tee tehtävä TIMissä</a></task-link>
 </task>
+

@@ -114,8 +114,7 @@ public class Rakennus {
     // Olion attribuutti, jolla on oletusarvo.
     private String väri = "sininen";
 
-    public void tulosta()
-    {
+    public void tulosta() {
         // Tämä lokaali muuttuja peittää saman nimen omaavan attribuutin 
         // aliohjelman sisällä.
         String väri = "punainen"; 
@@ -497,23 +496,33 @@ public class Rakennus {
 ```
 
 <task>
-  <task-title>Tehtävä 2.1: Luokkia ja olioita, osa 1<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.1: Kello<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-1-luokkia-ja-olioita1/handout.md}}
+{{#include ../exercises/2-1-kello/handout.md}}
   
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava1">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title>Tehtävä 2.2: Oma luokka<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.2: Ajastin<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-2-oma-luokka/handout.md}}
+{{#include ../exercises/2-2-ajastin/handout.md}}
   
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava2">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.3: Oma luokka<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-3-oma-luokka/handout.md}}
+  
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 
@@ -657,13 +666,13 @@ staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka
 kerta luoda IO-oliota ja kutsua sen `println`-metodia.
 
 <task>
-  <task-title>Tehtävä 2.3: Static<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.4: Static<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-3-static/handout.md}}
+{{#include ../exercises/2-4-static/handout.md}}
 
   </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava3">Tee tehtävä TIMissä</a></task-link>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 ## Olion elinkaari
@@ -839,21 +848,21 @@ roskienkeräyksestä suhteellisen helposti lähestyttävässä muodossa.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 2.4: Luokkia ja olioita, osa 2<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.5: Puhelin<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-4-luokkia-ja-olioita2/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava4">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-<task>
-  <task-title>Tehtävä 2.5: Kirjasto<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-5-kirjasto/handout.md}}
+{{#include ../exercises/2-5-puhelin/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 2.6: Kirjasto<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-6-kirjasto/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava6">Tee tehtävä TIMissä</a></task-link>
 </task>

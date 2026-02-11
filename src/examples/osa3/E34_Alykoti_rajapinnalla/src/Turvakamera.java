@@ -1,8 +1,7 @@
 public class Turvakamera extends Laite {
     private boolean tallennusPaalla = false;
 
-    public Turvakamera(String nimi)
-    {
+    public Turvakamera(String nimi) {
         super(nimi);
     }
 
@@ -11,6 +10,7 @@ public class Turvakamera extends Laite {
         // Kytke tallennus päälle/pois
         tallennusPaalla = !tallennusPaalla;
     }
+
     @Override
     public void raportoiTila() {
         String tila = tallennusPaalla ? "päällä" : "pois";

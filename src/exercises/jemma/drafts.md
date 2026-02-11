@@ -74,3 +74,9 @@ salasana koostuu kahdesta
 listasta valitusta yhteenliitetystä sanasta ilman välimerkkejä. Muodosta funktio
 `salasana`, joka ottaa parametrina listan merkkijonoja ja joka palauttaa
 salasanan `String` -tyyppisenä.
+
+
+## Osasta 4 vanhoja juttuja
+
+- kahteen erityiseen luokkatyyppiin, _luetelmaan_ (engl. *enum*) ja _tietueeseen_ (engl. *record*),
+- hahmonsovitukseen ja _switch_-lausekkeeseen,

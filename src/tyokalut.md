@@ -588,3 +588,16 @@ Tee seuraavasti:
 7. Tee *uusi* projekti ja kokeile ajaa yksinkertainen ohjelma.
 
 </details>
+
+<details>
+<summary>Internal error: com.intellij.platform.ide.bootstrap... Process "C:\...idea64.exe" is still running and does not respond</summary>
+
+Tämä virhe voi johtua siitä, että Rider on jostain syystä jumittunut taustaprosessina
+käyttöjärjestelmässä. 
+
+ 1. Sulje IntelliJ IDEA kokonaan.
+ 2. Avaa Rider.
+ 3. Sulje Rider.
+ 4. Käynnistä IntelliJ IDEA uudelleen.
+
+</details>

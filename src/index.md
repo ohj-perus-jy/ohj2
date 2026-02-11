@@ -52,7 +52,7 @@ mihin ohjausryhmään olet ilmoittautunut.
 | Tukikanava                                           | Aika                      | Paikka/Linkki                                                                                                                   |
 | ---------------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | Lähiohjaus                                           | ke 8-18, to 8-18, pe 8-14 | Agoralla luokat [Ag B212.1 Finland](https://navi.jyu.fi/space/m118988) ja [Ag B211.1 Sovjet](https://navi.jyu.fi/space/m118987) |
-| Etäohjaus                                            | ke 8-18, to 8-18, pe 8-14 | [Ohjelmointi 2 Teams-kanava](#teams-jy)                                                                                         |
+| Etäohjaus                                            | ke 8-18, to 8-18, pe 8-14 | [Ohjelmointi 2 Teams-kanava](#teams)                                                                                            |
 | Vastuuopettajien ja tuntiopettajien sähköpostiosoite | Jatkuva                   | ohj2-opet@jyu.onmicrosoft.com                                                                                                   |
 
 <!--
@@ -93,7 +93,12 @@ tulee myöhemmin saataville.
 
 </details>
 
-## Ohjeet Teams-ohjauksiin liittymiseksi (JY tutkinto-opiskelijat) {#teams-jy}
+## Ohjeet etäohjaukseen liittymiseksi {#teams}
+
+<details><summary>Teams-kanavalle liittyminen: Jyväskylän yliopiston tutkinto-opiskelijat</summary>
+## Ohjeet etäohjaukseen liittymiseksi {#teams}
+
+<details><summary>Teams-kanavalle liittyminen: Jyväskylän yliopiston tutkinto-opiskelijat</summary>
 
 1. Kirjaudu yliopiston tunnuksellasi Microsoft Teamsiin osoitteessa
     <https://teams.microsoft.com>. Käyttäjätunnus on muotoa
@@ -114,7 +119,12 @@ tulee myöhemmin saataville.
  5. Testaa kaverin kanssa, että puhelu ja ruudun jakaminen toimii. Sinun tulee
 tarvittaessa sallia oikeudet käyttöjärjestelmäsi asetuksista. 
 
-## Ohjeet Teams-ohjauksiin liittymiseksi (JY Avoin yliopisto, erilliset opinto-oikeudet) {#teams-avoin}
+</details>
+
+<details><summary>Teams-kanavalle liittyminen: Jyväskylän yliopiston Avoin yliopisto sekä erilliset opinto-oikeudet</summary>
+</details>
+
+<details><summary>Teams-kanavalle liittyminen: Jyväskylän yliopiston Avoin yliopisto sekä erilliset opinto-oikeudet</summary>
 
 Lähetä sähköpostilla alla oleva pyyntö osoitteeseen `ohj2-opet@jyu.onmicrosoft.com`.
 
@@ -130,7 +140,12 @@ Terveisin, [oma nimi]
 
 Liitämme sinut viimeistään seuraavana arkipäivänä.
 
-## Etäohjauksiin osallistuminen ilman Teamsia {#zoom}
+</details>
+
+<details><summary>Etäohjauksiin osallistuminen ilman Teamsia</summary>
+</details>
+
+<details><summary>Etäohjauksiin osallistuminen ilman Teamsia</summary>
 
 Jos et millään onnistu kirjautumaan Teamsiin tai et halua olla Teams-kanavalla,
 voit pyytää etäohjausta Zoomin kautta seuraavasti: 
@@ -151,6 +166,8 @@ voit pyytää etäohjausta Zoomin kautta seuraavasti:
  8. Odota, että ohjaaja tulee huoneeseesi. Saatat joutua hyväksymään hänen
     sisäänpääsyn (riippuu kokoushuoneesi asetuksista)
 
+</details>
+</details>
 
 ## Navigointi tässä materiaalissa
 

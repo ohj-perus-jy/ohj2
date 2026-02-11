@@ -2,9 +2,8 @@ public class Ympyra extends Muoto {
 
     double sade;
 
-    public Ympyra(double r)
-    {
-        this.sade =r;
+    public Ympyra(double r) {
+        this.sade = r;
     }
 
     @Override

@@ -6,15 +6,16 @@ public abstract class Tyokalu {
 
     /**
      * Käytä laitetta
+     *
      * @param tunnit Montako tuntia laitetta käytetään.
      */
-    public void kayta(int tunnit)
-    {
+    public void kayta(int tunnit) {
         this.kayttotunnit = tunnit;
     }
 
     /**
      * Huolla laitetta
+     *
      * @return Onnistuiko huolto
      */
     public abstract boolean huolla();

@@ -20,29 +20,33 @@ käsiksi.
 Javassa oletuksena luokan jäsenet ovat ns. `package-private`-näkyvyydellä, mikä
 tarkoittaa, että ne ovat näkyvissä vain samassa pakkauksessa oleville luokille.
 Alla olevassa taulukossa on yhteenveto eri näkyvyysmääreiden vaikutuksista;
-Oletus-sarake viittaa `package-private`-näkyvyyteen. 
+Oletus-rivi viittaa `package-private`-näkyvyyteen. 
 
-|                            | Luokka | Pakkaus | Aliluokka | Muu maailma |
-| -------------------------- | ------ | ------- | --------- | ----------- |
-| `public`                   | Kyllä  | Kyllä   | Kyllä     | Kyllä       |
-| `protected`                | Kyllä  | Kyllä   | Kyllä     | Ei          |
-| `package-private` (oletus) | Kyllä  | Kyllä   | Ei        | Ei          |
-| `private`                  | Kyllä  | Ei      | Ei        | Ei          |
+|             | Luokka | Pakkaus | Aliluokka | Muu maailma |
+| ----------- | ------ | ------- | --------- | ----------- |
+| `public`    | Kyllä  | Kyllä   | Kyllä     | Kyllä       |
+| `protected` | Kyllä  | Kyllä   | Kyllä     | Ei          |
+| *oletus*    | Kyllä  | Kyllä   | Ei        | Ei          |
+| `private`   | Kyllä  | Ei      | Ei        | Ei          |
 
-Ensimmäinen sarake ilmaisee, onko luokan oliolla itsellään pääsy määritellyn
-näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin jäseniinsä.
-Toinen sarake ilmaisee, onko muilla samassa pakkauksessa olevilla oliolla pääsy
-jäseneen. Kolmas sarake ilmaisee, onko luokasta perityillä aliluokan olioilla,
-jotka sijaitsevat pakkauksen ulkopuolella, pääsy jäseneen. Neljäs sarake
-ilmaisee, onko millä tahansa oliolla pääsy jäseneen. 
+Ensimmäinen sarake ("luokka") ilmaisee, onko luokan oliolla itsellään pääsy
+määritellyn näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin
+jäseniinsä. Toinen sarake ("pakkaus") ilmaisee, onko muilla samassa pakkauksessa
+olevilla oliolla pääsy jäseneen. Kolmas sarake ("aliluokka") ilmaisee, onko
+luokasta perityillä aliluokan olioilla, jotka sijaitsevat pakkauksen
+ulkopuolella, pääsy jäseneen. Neljäs sarake ilmaisee, onko millä tahansa oliolla
+pääsy jäseneen. 
 
-Jos ja kun muut ohjelmoijat (tai sinä itse) käyttävät tekemääsi luokkaa,
-näkyvyysmääreet auttavat varmistamaan, että luokkaasi käytetään sillä tavalla,
-jolla olet suunnitellut sen käytettävän. Pääsääntö on, että ohjelmoijan tulisi
-käyttää mahdollisimman rajoittavaa näkyvyysmäärettä, ellei ole erityistä syytä
-käyttää jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään
-tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Vältä julkisia
-attribuutteja, ellei kyseessä ole vakio.  
+Kun muut ohjelmoijat tai sinä itse käyttävät tekemääsi luokkaa, näkyvyysmääreet
+auttavat varmistamaan, että luokkaasi käytetään sillä tavalla, jolla olet
+suunnitellut sen käytettävän. Pääsääntö on, että ohjelmoijan tulisi käyttää
+mahdollisimman rajoittavaa näkyvyysmäärettä, ellei ole erityistä syytä käyttää
+jotain muuta. Tämä auttaa suojaamaan luokan sisäistä tilaa ja estämään
+tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Erityisesti julkisten
+attribuuttien kohdalla tulisi pohtia tarkkaan, onko niille todella tarvetta,
+sillä ne altistavat luokan sisäisen tilan suoraan ulkopuolisille. Tällä
+opintojaksolla pyrimme suunnittelemaan ohjelmat niin, ettei julkisia
+attribuutteja -- poislukien vakiot -- tarvita.
 
 > [!HUOMAUTUS]
 > Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia
@@ -785,41 +789,41 @@ osassa.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 2.6: Ovi<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.7: Ovi<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-6-ovi/handout.md}}
-
-  </handout>
-  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava6">Tee tehtävä TIMissä</a></task-link>
-</task>
-
-<task>
-  <task-title>Tehtävä 2.7: Säästölipas<points>1 p.</points></task-title>
-  <handout>
-
-{{#include ../exercises/2-7-saastolipas/handout.md}}
+{{#include ../exercises/2-7-ovi/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava7">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title>Tehtävä 2.8: Sähköverkko<points>1 p.</points></task-title>
+  <task-title>Tehtävä 2.8: Säästölipas<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-8-sahkoverkko/handout.md}}
+{{#include ../exercises/2-8-saastolipas/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava8">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i>Bonus: Tehtävä 2.9: Varaukset<points>1 p.</points></task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i>Bonus: Tehtävä 2.9: Sähköverkko<points>1 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/2-9-varaukset/handout.md}}
+{{#include ../exercises/2-9-sahkoverkko/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava9">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+<task>
+  <task-title><i class="bi bi-stars jyu-gold"></i>Bonus: Tehtävä 2.10: Varaukset<points>1 p.</points></task-title>
+  <handout>
+
+{{#include ../exercises/2-10-varaukset/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa2/tehtava10">Tee tehtävä TIMissä</a></task-link>
 </task>

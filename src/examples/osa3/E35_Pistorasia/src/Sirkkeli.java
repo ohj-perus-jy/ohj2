@@ -15,6 +15,7 @@ public class Sirkkeli extends Tyokalu implements Verkkovirtalaite {
 
     /**
      * Huolletaan sirkkeli.
+     *
      * @return Onnistuiko huolto.
      */
     @Override

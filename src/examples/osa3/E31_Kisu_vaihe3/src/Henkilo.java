@@ -11,15 +11,13 @@ class Henkilo {
      */
     private boolean kirjautunut;
 
-    public Henkilo(String nimi, String kayttajatunnus)
-    {
+    public Henkilo(String nimi, String kayttajatunnus) {
         this.nimi = nimi;
         this.kayttajatunnus = kayttajatunnus;
         this.kirjautunut = false;
     }
 
-    public String getNimi()
-    {
+    public String getNimi() {
         return nimi;
     }
 

@@ -1,9 +1,6 @@
-import java.util.ArrayList;
-
 class Sihteeri extends Henkilo {
 
-    public Sihteeri(String nimi, String kayttajatunnus)
-    {
+    public Sihteeri(String nimi, String kayttajatunnus) {
         super(nimi, kayttajatunnus);
     }
 

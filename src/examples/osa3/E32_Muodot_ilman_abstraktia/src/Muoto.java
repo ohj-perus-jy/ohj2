@@ -1,3 +1,5 @@
 public class Muoto {
-    public double laskeAla(){ return 0.0; }
+    public double laskeAla() {
+        return 0.0;
+    }
 }

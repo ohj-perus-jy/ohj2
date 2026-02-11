@@ -2,8 +2,7 @@ public class Kahvinkeitin extends Laite {
 
     private boolean kiehumassa = false;
 
-    public Kahvinkeitin(String nimi)
-    {
+    public Kahvinkeitin(String nimi) {
         super(nimi);
     }
 
@@ -18,6 +17,7 @@ public class Kahvinkeitin extends Laite {
         // Keitä kahvia tai kytke keitin pois päältä
         kiehumassa = !kiehumassa;
     }
+
     @Override
     public void raportoiTila() {
         String tila = kiehumassa ? "päällä" : "pois";

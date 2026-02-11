@@ -72,7 +72,7 @@ voit pyytää etäohjausta Zoomin kautta seuraavasti:
 
  1. Asenna Zoom sovellus koneellesi osoitteesta <https://zoom.us/download> (muut kuin tutkinto-opiskelijat) tai <https://jyufi.zoom.us> (tutkinto-opiskelijat; Valitse Download Client ihan alhaalta)
  2. Kirjaudu Zoomiin valitsemallasi tilillä, esim. Google-kirjautumista käyttäen (muut kuin tutkinto-opiskelijat) tai Single Sign-on / SSO -toiminnolla (tutkinto-opiskelijat; käytä company domainia `jyufi`)
- 3. Aloita kokous New meeting toiminnolla
+ 3. Aloita kokous New meeting -toiminnolla
  4. Testaa Audio <i class="bi bi-chevron-right"></i> Test speaker & mikrofone toiminnolla että äänet pelittää
  5. Ota kokouslinkki talteen Participants <i class="bi bi-chevron-right"></i> Copy invite link
  6. Avaa ohjauspyyntölomake: [https://forms.gle/5QULUPBHjjqS4ndf6](https://forms.gle/5QULUPBHjjqS4ndf6)
