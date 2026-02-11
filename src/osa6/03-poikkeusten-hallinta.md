@@ -371,7 +371,7 @@ joka rikkoo `main()`-metodin odotuksen siitä, että listalla on vain
 `getNimi()`-metodia `null`-viittaukselle.
 
 Toki tämä tilanne voitaisiin käsitellä `try-catch`-rakenteella, tai toisaalta
-tarkastamalla tulostettaessa, onko `h`-olio `null`-viittaus. Tämä on kuitenkin
+tarkastamalla `if`-lauseella tulostettaessa, onko `h`-olio `null`-viittaus. Tämä on kuitenkin
 melkoisen tympeää, eikä ratkaise ongelman juurisyytä. 
 
 ## Useat poikkeusoliot
