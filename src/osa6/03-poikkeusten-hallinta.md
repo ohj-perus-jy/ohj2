@@ -101,10 +101,10 @@ Esimerkissä tapahtuu seuraavaa:
 
 ## Tarkastetut ja tarkastamattomat poikkeukset
 
-Java jakaa poikkeukset kahteen kategoriaan: tarkastettuihin (engl. *checked*) ja
-tarkastamattomiin (engl. *unchecked*). Nimitys tulee siitä, että tarkastettujen
-poikkeusten kohdalla käsittelyn olemassaolo tarkastetaan käännösaikana, kun taas
-tarkastamattomien poikkeusten käsittelyä ei tarkasteta.
+Javassa poikkeukset jaetaan kahteen kategoriaan: tarkastettuihin (engl.
+*checked*) ja tarkastamattomiin (engl. *unchecked*). Nimitys tulee siitä, että
+tarkastettujen poikkeusten kohdalla käsittelyn olemassaolo tarkastetaan
+käännösaikana, kun taas tarkastamattomien poikkeusten käsittelyä ei tarkasteta.
 
 *Tarkastetut poikkeukset* kuvaavat ympäristöstä tai syötteestä johtuvia ongelmia
 joihin ohjelma voi usein reagoida hallitusti. Tyypillisiä esimerkkejä ovat
