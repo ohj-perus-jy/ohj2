@@ -31,7 +31,9 @@ ilman, että koko ohjelma kaatuu.
 Poikkeusten hallinta Javassa perustuu kolmeen pääkomponenttiin:
 
 1. Poikkeusten heittäminen (engl. *throwing exceptions*): Kun virhe tapahtuu,
-   luodaan poikkeusolio ja heitetään se ajonaikaiselle järjestelmälle.
+   poikkeusolio luodaan joko ohjelmakoodissa tai JVM:n toimesta. Tämän jälkeen
+   JVM keskeyttää normaalin suoritusvirran ja alkaa etsiä sopivaa käsittelijää
+   kutsupinosta.
 2. Poikkeusten käsittely (engl. *catching exceptions*): Ohjelmoija voi määritellä
    koodilohkoja, jotka käsittelevät tiettyjä poikkeuksia `try-catch`-rakenteella.
 3. Lopullinen siivous (engl. *finally*): `finally`-lohko, joka suoritetaan aina
