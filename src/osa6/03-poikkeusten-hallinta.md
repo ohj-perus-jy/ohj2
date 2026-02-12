@@ -36,9 +36,9 @@ Poikkeusten hallinta Javassa perustuu kolmeen pääkomponenttiin:
    kutsupinosta.
 2. Poikkeusten käsittely (engl. *catching exceptions*): Ohjelmoija voi määritellä
    koodilohkoja, jotka käsittelevät tiettyjä poikkeuksia `try-catch`-rakenteella.
-3. Lopullinen siivous (engl. *finally*): `finally`-lohko, joka suoritetaan aina
+3. Lopullinen varmistus (engl. *finally*): `finally`-lohko, joka suoritetaan aina
    riippumatta siitä, tapahtuiko poikkeus vai ei, esimerkiksi resurssien
-   vapauttamiseksi.   
+   vapauttamiseksi tai tilan palauttamiseksi.
 
 Palaamme esimerkkeihin kohta, mutta pohditaan ensin järjestelmän toimintaa
 korkealla tasolla. 
@@ -195,10 +195,11 @@ void metodi() throws Poikkeustyyppi1, Poikkeustyyppi2 {
 
 ## finally
 
-`finally`-lohkoa käytetään tilanteissa, joissa jokin siivousvaihe täytyy tehdä
-aina riippumatta siitä, onnistuiko `try`-lohkon suoritus tai tapahtuiko
-poikkeus. Tyypillisiä esimerkkejä ovat tiedoston, verkkoyhteyden tai muun
-resurssin sulkeminen.
+`finally`-lohkoa käytetään tilanteissa, joissa `try`-lohkon aikana avatut
+resurssit täytyy vapauttaa tai suoritusympäristön tila palauttaa varmasti
+riippumatta siitä, onnistuiko `try`-lohkon suoritus tai tapahtuiko poikkeus.
+Tyypillisiä esimerkkejä ovat tiedoston, verkkoyhteyden tai muun resurssin
+sulkeminen.
 
 Kun käytössä on `try-catch-finally`, suoritus etenee näin:
 
