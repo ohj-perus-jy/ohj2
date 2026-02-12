@@ -200,6 +200,8 @@ Bonus: Tietojen hakeminen verkosta (eli HTTP/2 Client API, kuten `HttpClient`, `
 
 #### Viikko 7: Projektin hallinta; GUI-alkeet
 
+
+
 Ensimmäinen tutorial-viikko: JavaFX-projektin tekeminen
 Viikoilla 7-8 edistetään yhtä JavaFX-sovellusta yhdessä.
 Muutama ajatus projektiksi (**me päätämme, mikä otetaan**, kaikki opiskelijat tekevät saman):
@@ -221,6 +223,12 @@ Aiheina:
 - GUI:n perusteet: JavaFX ja sen rakenne (View, Controller, Model)
 - Ohjattu JavaFX-projekti, osa 1:
    - JavaFX lisääminen projektiin ja yksinkertaisen ohjelman käynnistäminen
+     - **Huom:** Denis testasi tämän, ja vaatii useampia vaiheita jos tekee käsin:
+       1. JavaFX-Maven -plugarin lisääminen pom.xml:ään
+       2. JavaFX-riippuvuukisen lisääminen pom.xml:ään
+       3. maven-ajokonfiguraation lisääminen IntelliJ:hin
+     - Vaihtoehtona voi kokeilla Maven Archetype, joka on vähän kuin dotnet start (eli valmis pohja) -> ainakin <https://mvnrepository.com/artifact/io.github.sosuisen/jfx-sss-vanilla> on tuore
+     - On melko helppoa ja nopeaa ladata meidän oma pohja Maveniin
    - SceneBuilderin asennus ja käyttö
    - Kontrollit: painikkeet, labelit, syötteet
    - Asettelut: VBox, HBox, BorderPane
