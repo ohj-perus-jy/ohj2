@@ -10,17 +10,54 @@
 > - Kolmannen osapuolen riippuvuuksia (miten etsitään ja lisätään kirjasto)
 > - Pakkaukset Javassa? (Vai jo luvussa 2?)
 
-## Build-työkalut
+Oletetaan, että haluat tehdä Java-ohjelman, joka hakee tietoa verkosta
+HTTP-kutsulla. Kirjoitat seuraavan koodin:
 
-Kun ohjelmistoa kehitetään, koodin kirjoittaminen on vasta ensimmäinen askel.
-Koodi täytyy myös kääntää, siihen täytyy liittää muiden tekemiä apukirjastoja,
-linkittää mahdollisesti muita tiedostoja, ja lopulta se on pakattava muotoon,
-jota voidaan ajaa tietokoneella tai palvelimella.
+```java
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
-Tätä prosessia hoitavat **rakennustyökalut** (engl. *build tools*), kuten Apache
-Maven ja Gradle. Mutta mitä ne oikeastaan tekevät?
+public class Main {
+    public static void main(String[] args) throws Exception {
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url("https://api.github.com/zen")
+                .header("User-Agent", "Demo")
+                .build();
 
-## Analogia: Huonekalusuunnittelija
+        Response response = client.newCall(request).execute();
+        System.out.println(response.body().string());
+        response.close();
+    }
+}
+```
+
+Yrität kääntää ohjelman, mutta saat virheilmoituksen, että `okhttp3`-pakettia ei
+löydy. Kysymys kuuluu: mistä tämä kirjasto pitäisi saada? Jos löydätkin sen
+jostain, ja lataat sen `.jar`-tiedostona, niin mihin tuo tiedosto pitäisi
+laittaa? Entä jos kirjasto tarvitsee itse tuekseen muita kirjastoja?
+
+Tässä kohtaa törmätään modernin ohjelmistokehityksen ytimeen: oma koodi ei
+riitä. Tarvitsemme muiden kirjoittamia kirjastoja. Kun käytät toisen kehittäjän
+tekemää kirjastoa, projektisi *riippuu* siitä; Tätä kutsutaan riippuvuudeksi
+(dependency). HTTP-esimerkissä riippuvuus on OkHttp-kirjasto. 
+
+Riippuvuuksien hallinta tarkoittaa:
+
+ * kirjaston oikean version hakemista
+ * sen lisäämistä projektin *classpathiin*
+ * kirjaston omien riippuvuuksien huomioimista
+ * versioristiriitojen estämistä
+
+Kirjastojen hallinta käsin on kovin työlästä, ja siksi on kehitetty työkaluja,
+jotka hoitavat tämän puolestasi. Näitä työkaluja kutsutaan build-työkaluiksi, ja
+niistä tunnetuimpia Java-maailmassa ovat **Maven** ja **Gradle**. Build-työkalu
+automatisoi koko prosessin: se hakee tarvittavat kirjastot, huolehtii niiden
+versioista ja kääntää koodisi. Build-työkalu voi tehdä muutakin: se ajaa
+mahdolliset testit ja pakkaa lopulta valmiin ohjelman jakelukuntoon.
+
+<details><summary>Analogia: Huonekalusuunnittelija</summary>
 
 Ajattele rooliasi ohjelmoijana ikään kuin IKEAn huonekalusuunnittelijana. Et
 itse rakenna jokaista huonekalua asiakkaalle, vaan luot tarkan
@@ -81,6 +118,8 @@ IKEA-vertauksessa tämä on se vaihe, kun tehdas laittaa valmiit litteät laatik
 rekkaan ja ne kuljetetaan paikallisen tavaratalon noutovaraston hyllylle
 asiakkaiden haettavaksi.
 
+</details>
+
 ## Ensimmäinen Java-projekti Gradlella
 
 Kokeillaan tehdä itse ensimmäinen Java-projekti Gradlella. 
@@ -98,41 +137,21 @@ läjä tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin.
 
 ```bob
 
-.gradle
- |
- '-..
-.idea
- |
- '-..
-gradle
- |
- '-..
 src
- |
- +-main
- +-java
- |  |
- |  '- org.example
- |      |
- |      '-Main.java
- +- test
- |  |
- |  '-..
- +-.gitignore
+ ├─ main --> java
+ └─ test --> java
 build.gradle.kts
-gradlew
-gradlew.bat
 settings.gradle.kts
+gradlew
 ```
 
-Tässä vaiheessa tärkeimmät näistä ovat `build.gradle.kts` ja
-`settings.gradle.kts`. Näissä määritellään, miten projekti rakennetaan, mitä
-riippuvuuksia se tarvitsee, ja muita tärkeitä asetuksia. `src`-kansio puolestaan
-sisältää varsinaisen Java-koodin. `gradle`-kansio sisältää Gradlen omat
-tiedostot, joita ei tarvitse muuttaa. `gradlew` ja `gradlew.bat` ovat Gradle
-Wrapper -tiedostoja, jotka mahdollistavat Gradlen käytön ilman, että käyttäjällä
-tarvitsee olla Gradlea asennettuna. Käytännössä nämä tiedostot lataavat ja
-asentavat oikean Gradle-version automaattisesti, kun projekti avataan.
+Tässä vaiheessa tärkeimmät näistä ovat 
+
+ * `settings.gradle.kts`: määrittelee esimerkiksi projektin nimen,
+ * `build.gradle.kts`: määrittelee, miten projekti rakennetaan, mitä riippuvuuksia se tarvitsee, ja muita tärkeitä asetuksia.
+ * `src`-kansio: sisältää varsinaisen Java-koodin.
+ * `gradlew` ja `gradlew.bat`: Ns. *wrapper*-tiedostoja, jotka mahdollistavat
+   Gradlen käytön ilman, että käyttäjällä tarvitsee olla Gradlea asennettuna.
 
 Katsotaan aluksi `settings.gradle.kts`-tiedostoa. Siinä on nyt määritelty
 projektin nimi:
@@ -141,9 +160,9 @@ projektin nimi:
 rootProject.name = "EkaGradleProjekti"
 ```
 
-Tässä tiedostossa voit määritellä myös moniprojektirakenteen, jos haluat jakaa
-projektisi useampaan osaan. Mutta nyt keskitytään vain tähän yksinkertaiseen
-projektiin.
+Tässä tiedostossa voidaan määritellä myös niin sanottu moniprojektirakenteen,
+jos haluat jakaa projektisi useampaan osaan. Keskitytään kuitenkin tällä kertaa
+yksinkertaiseen projektiin.
 
 Avaa sitten `build.gradle.kts`-tiedosto. 
 
@@ -160,61 +179,10 @@ aikanaan käytämme JavaFX:ää, tähän kohtaan ilmestyvät JavaFX:n riippuvuud
  * `tasks.test`-osiossa on määritetty, että testit ajetaan JUnit Platformilla, joka
 on JUnit 5:n testialusta.
 
-Avaa nyt `Main.java`-tiedostoa. Lisätään sinne seuraava koodi, joka tekee
-HTTP-kutsun GitHubin julkiseen API-osoitteeseen ja tulostaa vastauksen. Tämä
-esimerkki käyttää OkHttp-kirjastoa, joka on suosittu HTTP-asiakas Javaan.
-
-```java
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-
-public class Main {
-
-    public static void main(String[] args) {
-
-        // Luodaan HTTP-asiakas. Tämä olio vastaa yhteyksien hallinnasta.
-        OkHttpClient client = new OkHttpClient();
-
-        // Rakennetaan HTTP GET -pyyntö GitHubin julkiseen API-osoitteeseen.
-        // User-Agent -otsake lisätään, koska GitHub API vaatii sen.
-        Request request = new Request.Builder()
-                .url("https://api.github.com/zen")
-                .header("User-Agent", "Gradle-Demo")
-                .build();
-
-        // Vastaus-olio alustetaan nulliksi, jotta se voidaan sulkea finally-lohkossa.
-        Response response = null;
-
-        try {
-            // Lähetetään HTTP-pyyntö palvelimelle (synkroninen kutsu).
-            response = client.newCall(request).execute();
-
-            // Tulostetaan HTTP-statuskoodi (esim. 200 = OK).
-            IO.println("HTTP status: " + response.code());
-
-            // Tulostetaan vastauksen runko 
-            IO.println("Response body:");
-            IO.println(response.body().string());
-
-        } catch (Exception e) {
-            // Jos verkko- tai muu virhe tapahtuu, tulostetaan virheilmoitus.
-            IO.println("Virhe HTTP-kutsussa: " + e.getMessage());
-
-        } finally {
-            // Varmistetaan, että vastaus suljetaan.
-            // Tämä vapauttaa resurssit (esim. yhteyden).
-            if (response != null) {
-                response.close();
-            }
-        }
-    }
-}
-```
-
-Projekti ei kuitenkaan käänny vielä, koska OkHttp-kirjasto ei ole vielä
-projektin riippuvuuksissa. Lisätään siis `build.gradle.kts`-tiedostoon OkHttp:n
-riippuvuus.
+Avaa nyt `Main.java`-tiedostoa. Lisää sinne sivun alussa esitetty HTTP-kutsun
+esimerkkikoodi ja yritä kääntää se. Projekti ei kuitenkaan käänny vielä, koska
+OkHttp-kirjasto ei ole vielä projektin riippuvuuksissa. Lisätään siis
+`build.gradle.kts`-tiedostoon OkHttp:n riippuvuus.
 
 ```kotlin
 dependencies {
@@ -222,6 +190,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
 }
 ```
+
+Lisää myös aivan koodin alkuun `package org.example;`, jotta koodi on oikeassa
+paketissa. Palaamme tämän tarkempaan merkitykseen hieman alempana. 
 
 Tallenna tiedosto ja käännä projekti uudestaan. Nyt Gradle hakee
 OkHttp-kirjaston Maven Central -varastosta, lataa sen ja liittää sen
@@ -233,9 +204,18 @@ projektiisi. Tämän jälkeen käännös onnistuu, ja voit ajaa `Main`-luokan
 > uudelleen sync- tai reload-toiminnolla. Käynnistä tarvittaessa IDE
 > uudestaan, jos ongelmia ilmenee.
 
-## Kääntäminen ja testaaminen
+TODO: Mitä käännöksessä tapahtuu...
 
-Build-työkalut hoitavat myös käännösprosessin...
+TODO: Gradle-wrapperin käyttäminen
+
+```bash
+./gradlew compileJava
+./gradlew test
+./gradlew build
+./gradlew clean
+```
+
+TODO: Miksi käyttäisin gradle-wrapperia
 
 ## Pakkaaminen ja jakelu
 
@@ -249,4 +229,3 @@ tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
 
 
 ## Pakkaukset Javassa
-
