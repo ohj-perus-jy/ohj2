@@ -200,24 +200,42 @@ Bonus: Tietojen hakeminen verkosta (eli HTTP/2 Client API, kuten `HttpClient`, `
 
 #### Viikko 7: Projektin hallinta; GUI-alkeet
 
+Ensimmäinen tutorial-viikko: JavaFX-projektin tekeminen
+Viikoilla 7-8 edistetään yhtä JavaFX-sovellusta yhdessä.
+Muutama ajatus projektiksi (**me päätämme, mikä otetaan**, kaikki opiskelijat tekevät saman):
+   - Kulujen seurantasovellus: voi syöttää menoja ja tuottoja; sovellus laskee, kuinka pitkälle rahaa riittää, tallentaa tiedot JSONiin
+      -  Viikko 7: Yksinkertainen dialogin, johon voi syöttää 3 menoa ja 3 tuottoa ja se laskee summan 
+      -  Viikko 8: Taulukkonäkymä, jossa näkyy kulut ja menot, tiedot tallennetaan JSONiin
+   - Muistikorttien tekosovellus: voi tehdä oppimiskortteja termien oppimiseen (vrt. flashcard-kortti)
+      - Viikko 7: Dialogi, joka näyttää "kysymyskortin"; painikkeen painaminen "kääntää" vastauksen näkyviin
+      - Viikko 8: Dialogi, jolla voi lisätä useita kysymyskortteja, kortit tallenetaan JSONiin
+   - Kaupan varastohallinta
+      - Viikko 7: Kirjautumisdialogi
+      - Viikko 8: Taulukko, jossa on tuotteita, määriä ja hinta; mahdollisuus lisätä tuotteita, muokata määrää jne
+   - Joku pelillistetty, esim. "virtuaalisen hahmon luominen" tai joku "D&D-hahmon luominen"
+      - Viikko 7: Dialogi, jolla syötetään hahmon tiedot (nimi, voima, taidot, jne.), mahdollisuus satunnaistaa statseja
+      - Viikko 8: Useiden hahmojen hallinta  
+
 Aiheina:
 
-- Gradel/Maven jatkuu: miten luodaan oma projekti ihan nollasta
-- Git-repon setuppaus, olennaiset tiedostot (README, LICENSE, .gitignore, ehkä .gitattributes)
-- JavaFX lisääminen projektiin ja yksinkertaisen ohjelman käynnistäminen
-- GUI:n tekeminen SceneBuilderilla, FXML-alkeet (ymmärtää kytkentä FXML<->SceneBuilder)
-   - Tähän MVC-mallista vähintään VC-osa: käyttöliittymää (FXML, "View") vastaa sitä ohjaava luokka (Java-tiedosto, "Controller"), joka vastaa käyttöliittymän ja datan välisestä kytkennästä. Data elää omissa luokissa ("Model")
-   - MVC:tä ei välttistä tässä tarvitse vielä käyttää terminä, koska ei vielä mennä siihen Model-osaan.
-   - Yksinkertaiset kontrollit: painikkeet, labelit, erilaiset syötteet
-   - Yksinkertaiset asettelut: VBox, HBox, BorderPane
+- GUI:n perusteet: JavaFX ja sen rakenne (View, Controller, Model)
+- Ohjattu JavaFX-projekti, osa 1:
+   - JavaFX lisääminen projektiin ja yksinkertaisen ohjelman käynnistäminen
+   - SceneBuilderin asennus ja käyttö
+   - Kontrollit: painikkeet, labelit, syötteet
+   - Asettelut: VBox, HBox, BorderPane
    - Tapahtumankäsittely
 
+Tämän viikon tehtävät ovat tutorialin tiettyjen vaiheiden edistäminen ja palauttaminen.
+Bonustehtävänä voi olla jonkin toisen yksinkertaisen JavaFX-projektin tekeminen.
 
-Tässä viikkotehtävät kietoutuisivat "yhteen" niin, että olisi enemmän tutorial kyseessä.
-
-TODO: Pitäisikö ottaa mallia Full Stack MOOCista, jossa esimerkeillä tehdään jotain ja sitten tehtävänä on tehdä jotain samanlaista mutta ei ihan (tämä olisi se "tutorial")
+Ajatus: Tässä projektin tekeminen on "vaihe" eikä tehtävä, vaihe on pakko suorittaa.
+Lisänä voi olla esimerkiksi yksi tai kaksi perustehtävää, jotka seuraavat 50 % suoritusvaatimusta.
+Vaihtoehtoisesti osassa ei ole enää yhtään perustehtäviä, jolloin 50 % * 0 tehtävää = 0 tehtävää on pakko tehdä. Sen sijaan vaiheet ovat pakollisia. Vaiheita voi olla vähän, esim. 1-3.
 
 #### Viikko 8: MVC, Käyttöliittymän testaus
+
+Toinen tutorial-viikko: JavaFX-projektin laajentaminen
 
 Aiheina:
 
@@ -226,17 +244,55 @@ Aiheina:
    - Viimeistään tässä mainitaan terminä ja luodaan yhteys JavaFX:n ja MVC:n välillä
    - datan ja GUI:n liimaaminen yhteen, `Observable`-suunnittelumalli
    - datan lataaminen ja tallentaminen soveltamalla edellisen viikkojen aiheita
-- Bonus: viimeistään tässä tietojen haku netistä?
-- Testaaminen (JUnit, integraatiotestauksen perusteet)
-- Versiohallinta yhdelle henkilölle (`add`/`commit`/`push`), dokumentaatio, hyvät git-käytänteet (commit-viestit, haarat)
+- JSON, datan hakeminen ja tallentaminen
 
 Tässä jatketaan tutorialin tekemistä ja lopuksi palautetaan. 
-Palautettu projekti joko vertaisarvioidaan tai itsearvioidaan.
+
+Palautettu projekti ei arvioida, lasketaan vaan tehdyksi.
 
 
 #### Viikko 9: Koodin laatu, suunnittelumallit
 
-Aiheina:
+Tässä aloitetaan oman itsenäisen projektin tekemistä.
+Voidaan tarjota kaksi vaihtoehtoa: joko tekee täysin oman projektin, jossa pitää olla
+datan lataamista ja tallentamista, N kpl dialogeja, testejä TAI valitsee
+yhden kolmesta laajentamispolusta, jolla laajentaa tutoriaalin suuremmaksi kokonaisuudeksi.
+
+Tässä jotain ideoita mahdollisille laajentamispoluille riippuen valitusta aiheesta:
+
+- Kulujen seurantasovellus:
+  1. Analytiikan ja datan visualisoinnin lisäys ulkoisella kirjastolla (esim. JavaFX Charts), analytiikka päivittyy automaattisesti, kun data muuttuu. Kulujen seuranta, ennustaminen, ennustaminen (tähän sopiva kirjasto) -> kiinnostava erityisesti datatieteen opiskelijoille
+  2. Toistuvat kulut (esim. vuokra), kuukausittaisten varojen tallentaminen
+  3. Valuutanmuunnokset, haetaan netistä valuuttakurssi (joku API) ja sallitaan tallentaa kuluja eri rahayksikköinä
+- Muistikorttisovellus:
+  1. Toteuta jokin opiskelualgoritmi, joka automaattisesti valitsee, mitä kortteja pitää harjoitella (vrt. Anki) -> algoritmin tutkiminen verkosta ([spaced repetition algorithm](https://faqs.ankiweb.net/what-spaced-repetition-algorithm)) ja toteuttaminen Javalla
+  2. Mahdollisuus upottaa kuvia tai jopa audiota (MediaPlayer/ImageView -komponentit)
+  3. Tenttimoodi (monivalintatenttien generointi korteista) -> dynaaminen käyttöliittymän tekeminen
+  4. Anki-korttipakkojen importtaus: <https://ankiweb.net/shared/decks> -> ZIP-tiedostojen käsittely, yksinkertainen parsiminen, HTTP
+- Varastosovellus:
+  1. Kojelauta -> mitkä tuotteet lopussa (alle 5 jäljellä), yleinen analytiikka tuotteista
+  2. Tietokanta -> korvaa JSON SQL:llä (esim. SQLite käyttäen JDBC)
+  3. Tuki useille käyttäjille -> erilaiset roolit (myyjä, hallinto, jne), tapahtumaloki tilanteen seurantaan
+- Hahmon luominen -sovellus
+  1. Mahdollisuus lisätä esineitä hahmolle ja niiden lukumäärä
+  2. Hahmon ulkoasun editori (StackPane + kuvia): voi luoda oman hahmon
+
+
+Aiheita:
+
+- UML-suunnittelu
+- Git-repon setuppaus, olennaiset tiedostot (README, LICENSE, .gitignore, ehkä .gitattributes)
+- Git-versiohallinnan kertausta ja harjoittelua
+- Testaaminen (JUnit, olio-ohjelmien testaaminen)
+
+Asioita nyt vähän vähemmän, suurempana tehtävänä oman idean valinta, repon setuppaus ja valmistelu.
+
+
+#### Viikko 10: Suunnittelumalleja
+
+Jatketaan projektin työstämistä. 
+Tässä vaiheessa hieman koodin laadusta:
+
 
 - SOLID
 - Koodihaju, refaktorointi
@@ -249,35 +305,27 @@ Aiheina:
   - ehkä tasolla miksi on olemassa
   - itse mallien tutkinta ja sovellus jää oman kiinnostuksen tasolle (esim. tehtävä)
 
-
-#### Viikko 10: Projektin hallinta ryhmässä
-
-Aiheina:
-
-- Luokkakaaviot, UML
-- Git-versiohallintaa (haarat, merge, rebase)
-
-Tässä aloitetaan omatoiminen projekti. Tehtävänä suunnittelun tekeminen, GUI:n suunnittelun aloitus ja repon setuppaus.
-
 #### Viikko 11: Extraa
 
 Ei pisteellisiä tehtäviä, mutta lisäaiheita omaan tutkintaan mm.
 
 - Moniajo (säie, virtuaalinen säie)
 - Suorituskyvyn optimointi
+- Hyödyllisiä kirjastoja
+  - GraphFx, ControlsFx 
 
 
 #### Viikko 12: Projektin hallinta
 
-Ei pisteellisiä tehtäviä, mutta lisäaiheita omaan tutkintaan mm.
+Keskitytään projektin tekemiseen ja viimeistelyyn.
 
-- Ohjelmointisuuntauksia eli -paradigmoja
-    - Prototyyppipohjainen olio-ohjelmointi
-    - Metodit vs. viestit (vrt. Smalltalk, joka usein lasketaan "aidommaksi" näkemyksestä siitä, mitä olio-ohjelmointi on [Alan Kay:n määritelmän mukaan])
-- Ehkä jotain muunnelmia tai "sukulaisia" olio-ohjelmoinnille
-    - Aktorit (olio-ohjelmointi monisäikeisessä ympäristössä)
-    - ECS (nykyään käytetty paljon peleissä)
+Ajatus: projekti voitaisiin palauttaa tämän viikon puolivälissä (tai jopa viikolla 11)
+ja sen jälkeen pitää vertaisarvioida kahden muun henkilön projekteja. 
+Vertaisarvioijalla on checklist-tyyppinen lista, jonka avulla antaa arvionsa?
+Tuntiopettajalle jää tarkastaa vertaisarviot ja jos kovin eri niin tarkistaa?
 
+Vaihtoehtoisesti viikko 12 varattu työn dokumentoinnille ja näyttämiselle TA:lle,
+ei vertaisarviointia.
 
 <details closed>
 <summary>
