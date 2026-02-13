@@ -23,7 +23,9 @@ lukemisessa ja parsimisessa samalla.
 
 Tämän jälkeen voisi siirtyä files.Apiin. 
 
-JSON Jacsksonilla. Tulostele jotain kivaa. Tästä tehtäviä. 
+JSON Jacsksonilla. Lue JSONia ja kirjoita JSONia. Tulostele jotain kivaa. Tästä tehtäviä. 
+
+Ehkä? CSV -> Json voi muuntaa. Asenna riippuvuus Mavenilla. Sitten luetaan CSV-tiedosto, ja muunnetaan se JSON-muotoon.
 
 BufferedReader?? Onko syytä selittää ollenkaan? Kun tarttee tehokkaasti lukea
 tavuja, niin se  ovi olla hyvä... Ehkä bonustiedoksi? 
