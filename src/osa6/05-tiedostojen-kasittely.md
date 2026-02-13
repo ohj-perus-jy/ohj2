@@ -23,5 +23,7 @@ lukemisessa ja parsimisessa samalla.
 
 Tämän jälkeen voisi siirtyä files.Apiin. 
 
+JSON Jacsksonilla. Tulostele jotain kivaa. Tästä tehtäviä. 
+
 BufferedReader?? Onko syytä selittää ollenkaan? Kun tarttee tehokkaasti lukea
 tavuja, niin se  ovi olla hyvä... Ehkä bonustiedoksi? 
