@@ -51,11 +51,15 @@ Riippuvuuksien hallinta tarkoittaa:
  * versioristiriitojen estämistä
 
 Kirjastojen hallinta käsin on kovin työlästä, ja siksi on kehitetty työkaluja,
-jotka hoitavat tämän puolestasi. Näitä työkaluja kutsutaan build-työkaluiksi, ja
-niistä tunnetuimpia Java-maailmassa ovat **Maven** ja **Gradle**. Build-työkalu
+jotka hoitavat tämän puolestasi. Näitä työkaluja kutsutaan *build-työkaluiksi*.
+Niistä tunnetuimpia Java-maailmassa ovat **Maven** ja **Gradle**. Build-työkalu
 automatisoi koko prosessin: se hakee tarvittavat kirjastot, huolehtii niiden
 versioista ja kääntää koodisi. Build-työkalu voi tehdä muutakin: se ajaa
 mahdolliset testit ja pakkaa lopulta valmiin ohjelman jakelukuntoon.
+
+Esittelemme seuraavaksi Maven-työkalun käyttöä IDEAssa. Aivan hyvin saman asian
+voisi tehdä myös Gradlella tai Antilla. Maven on alkuvaiheessa ehkä hieman
+helppokäyttöisempi, joten valitsemme sen tähän esimerkkiin.
 
 <details><summary>Analogia: Huonekalusuunnittelija</summary>
 
@@ -95,7 +99,6 @@ hallinta on keskeinen osa modernia Java-kehitystä, ja se auttaa varmistamaan,
 että projekti käyttää oikeita versioita kirjastoista ja että kaikki tarvittavat
 osat ovat saatavilla.
 
-
 **2. Kääntäminen ja testaaminen (Laadunvalvonta)**
 
 Ennen kuin paketti laitetaan kiinni, työkalu varmistaa, että kaikki toimii. Se
@@ -120,45 +123,42 @@ asiakkaiden haettavaksi.
 
 </details>
 
-## Ensimmäinen Java-projekti Gradlella
+## Ensimmäinen Java-projekti Mavenilla
 
-Kokeillaan tehdä itse ensimmäinen Java-projekti Gradlella. 
+Kokeillaan tehdä itse ensimmäinen Java-projekti Mavenilla. 
 
  1. Aloita luomalla uusi projekti. 
- 2. Anna projektin nimeksi "EkaGradleProjekti". 
- 3. Valitse IDEAssa Build System -kohdassa Gradle. 
- 4. Valitse DSL-kohdassa Kotlin -- tämä valinta liittyy siihen, millä
-syntaksilla build-tiedosto kirjoitetaan, ei siihen, millä kielellä oma koodisi
-kirjoitetaan. 
-5. Klikkaa sitten Create.
+ 2. Anna projektin nimeksi "EkaMavenProjekti". 
+ 3. Valitse IDEAssa Build System -kohdassa Maven. 
+ 4. Klikkaa sitten Create.
 
-Hetken mietittimisen jälkeen sinulle pitäisi syntyä projekti, jossa on melkoinen
-läjä tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin.
+Jos jostain syystä Mavenia ei ole valittavissa, asenna se IDEAn pluginien
+hallinnan kautta: File <i class="bi bi-chevron-right"></i> Settings <i class="bi
+bi-chevron-right"></i> Plugins <i class="bi bi-chevron-right"></i>Marketplace <i
+class="bi bi-chevron-right"></i> Etsi "Maven" <i class="bi
+bi-chevron-right"></i> Install <i class="bi bi-chevron-right"></i> Käynnistä
+IDEA uudestaan.
+
+Pienen miettimisen jälkeen sinulle pitäisi syntyä projekti, jossa on läjä
+tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin. Projektisi
+kansiorakenne näyttää suunnilleen tältä:
 
 ```bob
-
 src
  ├─ main --> java
  └─ test --> java
-build.gradle.kts
-settings.gradle.kts
-gradlew
+pom.xml
 ```
 
-Tässä vaiheessa tärkeimmät näistä ovat 
+ * `src`-kansio: sisältää varsinaisen Java-koodin (`main/.../java`) ja testikoodin
+   (`test/java`).
+ * `pom.xml`-tiedosto: Mavenin konfiguraatiotiedosto, jossa määritellään
+   projektin riippuvuudet, rakennusasetukset ja muut tärkeät tiedot.
+ * Lisäksi projektiin syntyy automaattisesti `.gitignore`-tiedosto, sekä
+   `.mvn`-kansio, johon tutustumme myöhemmin. 
 
- * `settings.gradle.kts`: määrittelee esimerkiksi projektin nimen,
- * `build.gradle.kts`: määrittelee, miten projekti rakennetaan, mitä riippuvuuksia se tarvitsee, ja muita tärkeitä asetuksia.
- * `src`-kansio: sisältää varsinaisen Java-koodin.
- * `gradlew` ja `gradlew.bat`: Ns. *wrapper*-tiedostoja, jotka mahdollistavat
-   Gradlen käytön ilman, että käyttäjällä tarvitsee olla Gradlea asennettuna.
-
-Katsotaan aluksi `settings.gradle.kts`-tiedostoa. Siinä on nyt määritelty
-projektin nimi:
-
-```kotlin
-rootProject.name = "EkaGradleProjekti"
-```
+Katsotaan aluksi `pom.xml`-tiedostoa, joka on Maven-projektin sydän. Siinä
+määritellään...
 
 Tässä tiedostossa voidaan määritellä myös niin sanottu moniprojektirakenteen,
 jos haluat jakaa projektisi useampaan osaan. Keskitytään kuitenkin tällä kertaa
@@ -166,18 +166,20 @@ yksinkertaiseen projektiin.
 
 Avaa sitten `build.gradle.kts`-tiedosto. 
 
- * `plugin`-osiossa on määritetty,
-että käytetään Java-kieltä. 
- * `group`- ja `version`-osioissa on määritetty
-projektin "ryhmä", eli organisaatio, joka projektia kehittää, sekä projektin versio. 
+ * `plugin`-osiossa määritellään, että projekti käyttää Java-pluginia, jonka
+   myötä Gradle muun muassa tietää, että projektissa on `src/main/java`- sekä
+   `src/test/java`-kansiot. 
+ * `group`- ja `version`-osioissa määritellään projektin "ryhmä", eli
+   organisaatio, joka projektia kehittää, sekä projektin versio. Organisaatio
+   liittyy myöhemmin käsiteltävään pakkausjärjestelmään.
  * `repositories`-osiossa on määritetty, että riippuvuudet haetaan Maven Central
--varastosta. 
+   -varastosta. 
  * `dependencies`-osiossa on määritetty, että projekti tarvitsee JUnit-kirjaston
--testaukseen. Tässä vaiheessa ei ole vielä muita riippuvuuksia, mutta tähän
-kohtaan lisätään myöhemmin kaikki ne kirjastot, joita projektisi tarvitsee. Kun
-aikanaan käytämme JavaFX:ää, tähän kohtaan ilmestyvät JavaFX:n riippuvuudet.
+   -testaukseen. Tässä vaiheessa ei ole vielä muita riippuvuuksia, mutta tähän
+   kohtaan lisätään myöhemmin kaikki ne kirjastot, joita projektisi tarvitsee. Kun
+   aikanaan käytämme JavaFX:ää, tähän kohtaan ilmestyvät JavaFX:n riippuvuudet.
  * `tasks.test`-osiossa on määritetty, että testit ajetaan JUnit Platformilla, joka
-on JUnit 5:n testialusta.
+   on JUnit 5:n testialusta.
 
 Avaa nyt `Main.java`-tiedostoa. Lisää sinne sivun alussa esitetty HTTP-kutsun
 esimerkkikoodi ja yritä kääntää se. Projekti ei kuitenkaan käänny vielä, koska
