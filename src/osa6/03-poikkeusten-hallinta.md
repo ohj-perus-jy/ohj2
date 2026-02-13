@@ -207,6 +207,10 @@ Kun käytössä on `try-catch-finally`, suoritus etenee näin:
  2. Jos poikkeus tapahtuu, sopiva `catch` suoritetaan.
  3. Lopuksi `finally` suoritetaan aina.
 
+Alla on esimerkki tiedoston lukemisesta `Scanner`-luokan avulla, jossa
+`finally`-lohko varmistaa, että tiedoston lukija suljetaan, vaikka lukeminen
+epäonnistuisi poikkeuksen vuoksi. TODO: Lyhyt selitys Scannerista. 
+
 ```java
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -243,7 +247,10 @@ Otetaan tästä esimerkki myöhemmissä osissa, kun olemme tutustuneet
 ## Esimerkki tarkastetusta poikkeuksesta
 
 Oletetaan, että haluamme lukea tiedoston sisältöä. Tehdään se käyttäen
-modernista Javasta löytyvää `Files.readString()`-metodia.
+modernista Javasta löytyvää `Files.readString()`-metodia. Huomaa, että tätä
+metodia käytettäessä ei tarvita `finally`-lohkoa, koska kyseinen metodi
+huolehtii tiedoston sulkemisesta automaattisesti. Jatkon kannalta on kuitenkin
+tärkeä muista, että näin ei ole kaikkien Files-luokan metodien, esim [Files.lines](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html#lines(java.nio.file.Path)) kanssa. 
 
 ```java
 import java.nio.file.Files;
