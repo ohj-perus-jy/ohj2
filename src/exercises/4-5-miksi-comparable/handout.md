@@ -1,0 +1,1 @@
+Tutki Javan dokumentaatiota. Vastaa kysymyksiin `Comparable`-rajapinnasta.

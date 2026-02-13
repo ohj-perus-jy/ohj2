@@ -52,8 +52,8 @@ h1 code, h2 code, h3 code, h4 code, h5 code, h6 code {
 .hide-boring .boring { display: none; }
 .hidden { display: none !important; }
 
-h2, h3 { margin-block-start: 2.5em; }
-h4, h5 { margin-block-start: 2em; }
+h2, h3 { margin-block-start: 2em; }
+h4, h5 { margin-block-start: 1.5em; }
 
 .header + .header h3,
 .header + .header h4,
@@ -67,11 +67,46 @@ h3:target::before,
 h4:target::before,
 h5:target::before,
 h6:target::before {
-    display: inline-block;
-    content: "»";
-    margin-inline-start: -30px;
-    width: 30px;
+    display: inline;
+    content: "» ";
+    /*margin-inline-start: 15px;
+    width: 30px;*/
 }
+
+details {
+    background: var(--code-bg);
+    /* add drop shadow to details to make it stand out */
+    /* box-shadow: 0 2px 2px var(--details-border); */    
+    border: 1px solid var(--details-border);
+    padding: 1em;
+    overflow: hidden;
+} 
+
+details summary {
+    user-select: none;
+}
+
+details summary:hover {
+    cursor: pointer;
+}
+
+/* Not all browsers support this animation yet; see https://caniuse.com/?search=calc-size() */
+@supports (interpolate-size: allow-keywords) {
+    :root {
+        interpolate-size: allow-keywords;
+    }
+
+    ::details-content {
+        transition: height 0.25s ease, content-visibility 0.25s ease allow-discrete;
+        height: 0;
+        overflow: clip;
+    }
+
+    [open]::details-content {
+        height: auto;
+    }
+}
+
 
 /* This is broken on Safari as of version 14, but is fixed
    in Safari Technology Preview 117 which I think will be Safari 14.2.
@@ -87,9 +122,25 @@ h6:target::before {
     padding: 0 var(--page-padding);
     margin-block-start: calc(0px - var(--menu-bar-height)); /* Compensate for the #menu-bar-hover-placeholder */
 }
+
 .page-wrapper {
     box-sizing: border-box;
     background-color: var(--bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Fallback for browsers that don't support svh */
+    min-height: 100svh;
+}
+.page-wrapper > footer {
+    margin-top: auto;
+    padding-top: 2em;
+    position: relative;
+    z-index: 200;
+}
+.chapter-navigation {
+    position: relative;
+    z-index: 0;
+    margin-bottom: 2em;
 }
 html:not(.js) .page-wrapper,
 .js:not(.sidebar-resizing) .page-wrapper {
@@ -100,20 +151,27 @@ html:not(.js) .page-wrapper,
     transition: margin-right 0.3s ease, transform 0.3s ease; /* Animation: slide away */
 }
 
+@media only screen and (min-width: 1300px) {
+    .page-wrapper {
+        min-width: min(100%, calc(var(--content-max-width) + (var(--page-padding) * 2)));
+    }
+}
+
 .content {
     overflow-y: auto;
-    padding: 0 5px 50px 5px;
+    padding: 0 0px 50px 5px;
 }
+
 .content main {
     margin-inline-start: auto;
     margin-inline-end: auto;
     max-width: var(--content-max-width);
 }
-.content p { line-height: 1.45em; }
-.content ol { line-height: 1.45em; }
-.content ul { line-height: 1.45em; }
-.content a { text-decoration: none; }
-.content a:hover { text-decoration: underline; }
+.content p { line-height: 1.55em; }
+.content ol { line-height: 1.55em; }
+.content ul { line-height: 1.55em; }
+.content a, footer a { text-decoration: none; }
+.content a:hover, footer a:hover { text-decoration: underline; }
 .content nav a:hover { text-decoration: none; }
 .content img, .content video { max-width: 100%; }
 .content .header:link,
@@ -126,11 +184,11 @@ html:not(.js) .page-wrapper,
 }
 
 table {
-    margin: 0 auto;
+    margin: auto auto 1.5em auto;
     border-collapse: collapse;
 }
 table td {
-    padding: 3px 20px;
+    padding: 5px 20px;
     border: 1px var(--table-border-color) solid;
 }
 table thead {
@@ -150,7 +208,6 @@ table thead tr {
 table tbody tr:nth-child(2n) {
     background: var(--table-alternate-bg);
 }
-
 
 blockquote {
     margin: 20px 0;
@@ -205,6 +262,42 @@ sup {
        for an explanation.
     */
     line-height: 0;
+}
+
+
+footer {
+    padding: 2em 0;
+    margin-top: 3em;
+    color: var(--fg);
+    /*background-color: var(--footer-bg, var(--theme-hover));*/
+    /*border-block-color: var(--footer-border, transparent);*/
+    /*border-block-width: 1px;*/
+    /*border-block-style: solid;*/
+}
+
+footer > div.footer-content {
+    padding-inline: 20px;
+    max-width: var(--content-max-width);
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    column-gap: 1em;
+    margin: auto;
+}
+
+footer a {
+    color: var(--links);
+}
+
+footer img {
+    max-width: 100px;
+    vertical-align: middle;
+}
+
+footer > div.footer-content > div {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25em;
 }
 
 .footnote-definition {
@@ -283,4 +376,15 @@ sup {
 
 .result-no-output {
     font-style: italic;
+}
+
+
+div:has(> svg.svgbob) {
+    width: 100% !important;
+    overflow-x: auto;
+    overflow-y: clip;
+}
+
+svg.svgbob {
+    width: initial !important;
 }

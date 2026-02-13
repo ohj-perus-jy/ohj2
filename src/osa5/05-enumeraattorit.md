@@ -1,5 +1,0 @@
-# Enumeraattorit
-
-> [!Osaamistavoitteet]
->
-> - Enumeraattorit

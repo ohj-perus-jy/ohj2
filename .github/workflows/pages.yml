@@ -35,7 +35,10 @@ jobs:
         with:
           path: |
             ~/.cargo
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml') }}
+            ~/.cargo-target-cache
+            preprocessors/rust/**/target
+
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.toml', 'update-mdbook.sh') }}
           restore-keys: |
             ${{ runner.os }}-cargo-
       - name: Install mdBook

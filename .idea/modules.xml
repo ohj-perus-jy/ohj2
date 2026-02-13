@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E22_Rakennus_ja_this/E22_Rakennus_ja_this.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E22_Rakennus_ja_this/E22_Rakennus_ja_this.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E22_Rakennus_ja_this/E22_Rakennus_ja_this2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E22_Rakennus_ja_this/E22_Rakennus_ja_this2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe1/E31_Kisu_vaihe1.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe1/E31_Kisu_vaihe1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe2/E31_Kisu_vaihe2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe2/E31_Kisu_vaihe2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe3/E31_Kisu_vaihe3.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe3/E31_Kisu_vaihe3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe4/E31_Kisu_vaihe4.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E31_Kisu_vaihe4/E31_Kisu_vaihe4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe3/E31_Kisu_vaihe5.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe3/E31_Kisu_vaihe5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe4/E31_Kisu_vaihe6.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe4/E31_Kisu_vaihe6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe2/E31_Kisu_vaihe7.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E31_Kisu_vaihe2/E31_Kisu_vaihe7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E32_Muodot_ilman_abstraktia/E32_Muodot_ilman_abstraktia2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E33_Alykoti1_ilman_abstraktia/E33_Alykoti1_ilman_abstraktia2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E33_Alykoti2_abstraktilla/E33_Alykoti2_abstraktilla2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E33_Muodot_abstraktilla_luokalla/E33_Muodot_abstraktilla_luokalla2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E33_TemplateMethod/E33_TemplateMethod.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E33_TemplateMethod/E33_TemplateMethod.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E33_TemplateMethod/E33_TemplateMethod2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E33_TemplateMethod/E33_TemplateMethod2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E34_Alykoti_rajapinnalla/E34_Alykoti_rajapinnalla2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E34_Klikattava_ja_Piirrettava/E34_Klikattava_ja_Piirrettava2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E34_Klikattava_ja_Piirrettava_2/E34_Klikattava_ja_Piirrettava_2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E34_Klikattava_ja_Piirrettava_2/E34_Klikattava_ja_Piirrettava_2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E34_Klikattava_ja_Piirrettava_2/E34_Klikattava_ja_Piirrettava_3.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E34_Klikattava_ja_Piirrettava_2/E34_Klikattava_ja_Piirrettava_3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E34_LSP1/E34_LSP1.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E34_LSP1/E34_LSP1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E34_LSP1/E34_LSP2.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E34_LSP1/E34_LSP2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/examples/osa3/E35_Pistorasia/E35_Pistorasia.iml" filepath="$PROJECT_DIR$/src/examples/osa3/E35_Pistorasia/E35_Pistorasia.iml" />
+      <module fileurl="file://$PROJECT_DIR$/book/examples/osa3/E35_Pistorasia/E35_Pistorasia2.iml" filepath="$PROJECT_DIR$/book/examples/osa3/E35_Pistorasia/E35_Pistorasia2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ohj2.iml" filepath="$PROJECT_DIR$/.idea/ohj2.iml" />
+    </modules>
+  </component>
+</project>
