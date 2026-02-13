@@ -229,3 +229,9 @@ tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
 
 
 ## Pakkaukset Javassa
+
+
+## Tehtävät
+
+Tee Maven-projekti. Lisää siihen riippuvuudet okHttp-kirjastoon sekä
+Jackson-kirjastoon. 
