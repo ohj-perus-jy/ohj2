@@ -185,9 +185,16 @@ projekti, joka ei käytä ulkoisia kirjastoja) `pom.xml`-tiedosto näyttää suu
 Tiedoston alussa määritellään tyypillistä XML-rakennetta, jonka jälkeen tulee
 `<groupId>`, `<artifactId>` ja `<version>`-elementit. Nämä ovat ikään kuin
 projektisi tunniste, joka yksilöi juuri sinun projektisi muiden Maven-projektien
-joukossa. Tässä vaiheessa näillä tunnisteilla ei ole hirveästi merkitystä, mutta
-jos julkaiset projektisi esimerkiksi Maven Central -varastoon, nämä tunnisteet
-ovat tärkeitä. 
+joukossa. 
+
+ * `groupId` toimii projektin "organisaatiotunnisteena". Se on usein käänteinen
+   verkkotunnus, kuten fi.jyu.ohjelmointi. 
+ * `artifactId` on projektin nimi, ja 
+ * `version` kertoo projektin version. 
+
+Näiden kolmen yhdistelmä muodostaa projektin yksilöllisen tunnisteen. Tässä
+vaiheessa näillä tunnisteilla ei ole hirveästi merkitystä, mutta jos julkaiset
+projektisi esimerkiksi Maven Central -varastoon, nämä tunnisteet ovat tärkeitä. 
 
 Loput rivit määrittelevät projektin Java-version sekä koodin merkistökoodauksen. 
 
@@ -199,16 +206,13 @@ tiedostosta `<dependencies>`-elementti. Lisää se (ja sen vastinpari
 `</dependencies>`), mikäli kyseistä elementtiä ei vielä ole. 
 
 ```xml
-<dependencies>
-    <!-- Source: https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
-    <dependency>
-        <groupId>com.squareup.okhttp3</groupId>
-        <artifactId>okhttp</artifactId>
-        <version>4.12.0</version>
-        <scope>compile</scope>
-    </dependency>
-</dependencies>
+<dependency>
+    <groupId>com.squareup.okhttp3</groupId>
+    <artifactId>okhttp-jvm</artifactId>
+    <version>5.3.2</version>
+</dependency>
 ```
+
 IDEA valittaa vielä, että okhttp-pakettia ei löydy. Riippuvuuksien lisäämisen
 jälkeen Maven-projekti täytyy virkistää klikkaamalla projektinäkymässä projektin
 nimen päältä hiiren oikealla, valitsemalla Maven ja Sync project. Tämän jälkeen
@@ -216,21 +220,50 @@ IDEA lataa tarvittavat okhttp-riippuvuuden, ja myös kyseisen kirjaston
 itsensä vaatimat muut riippuvuudet. 
 
 Lisää myös aivan koodin alkuun `package org.example;`, jotta koodi on oikeassa
-paketissa. Palaamme tämän tarkempaan merkitykseen hieman alempana. 
+pakkauksessa. Palaamme pakkauksen tarkempaan merkitykseen hieman alempana. 
 
-Tallenna tiedosto ja käännä projekti uudestaan. Nyt Maven hakee
-OkHttp-kirjaston Maven Central -varastosta, lataa sen ja liittää sen
-projektiisi. Tämän jälkeen käännös onnistuu, ja voit ajaa `Main`-luokan
-`main`-metodia, jolloin näet HTTP-kutsun tulokset konsolissa.
+Tallenna tiedosto ja käännä projekti uudestaan. Nyt Maven hakee OkHttp-kirjaston
+Maven Central -varastosta ja liittää sen projektiisi. Tämän jälkeen käännös
+onnistuu, ja voit ajaa `Main`-luokan `main`-metodia, jolloin näet HTTP-kutsun
+tulokset konsolissa.
 
 ## Maven Central
 
-Riippuvuuksien
+Riippuvuus-XML:iä ei tarvitse itse keksiä. Yksi suosituimmista Java-kirjastojen
+varastoista on Sonatype-yrityksen ylläpitämä [Maven
+Central](https://central.sonatype.com/), joka on julkinen varasto, josta voit
+hakea ja ladata Java-kirjastoja sekä liittää niitä projektiisi. 
 
-## Pakkaaminen ja jakelu
+Voit etsiä tarvitsemasi kirjastot ja niiden riippuvuudet helposti Maven
+Centralista, ja kopioida sieltä suoraan XML-koodin `pom.xml`-tiedostoosi.
+Kokeillaan etsiä äsken mainittu okHttp-kirjasto Maven Centralista. 
 
-Build-työkalut voivat pakata käännetyn koodin ja kaikki tarvittavat riippuvuudet
-yhdeksi tiedostoksi, kuten JAR- tai WAR-tiedostoksi...
+ 1. Mene osoitteeseen <https://central.sonatype.com/>
+ 2. Kirjoita hakukenttään "okhttp" ja paina Enter.
+ 3. Ensimmäinen hakutulos vie vanhempaan okHttp-kirjastoon, joka on nimeltään
+    "okhttp". Valitse sen sijaan toinen hakutulos, joka on uudempi. 
+ 4. Näet Snippets-kohdassa valmiin XML-koodin, jonka *yleensä* voit kopioida suoraan
+    `pom.xml`-tiedostoosi.
+ 5. Kopioi XML-koodi ja liitä se `pom.xml`-tiedostoon `<dependencies>`-elementin
+    sisälle.
+
+Aivan kaikkien kirjastojen kohdalla XML:ää ei voi välttämättä suoraan kopioida,
+vaan sinun täytyy tarkistaa kirjaston dokumentaatiosta, onko XML
+Maven-yhteensopiva. Juurikin [okHttp-kirjaston
+kohdalla](https://square.github.io/okhttp/#maven-and-jvm-projects) on niin, että
+XML:ää tarvitsee hivenen muuttaa, koska tarvitsemme nimen omaan
+`okhttp-jvm`-version, joka on Maven-yhteensopiva. 
+
+Tässä tapauksessa riittää, että vaihdetaan `artifactId`-elementti
+`okhttp-jvm`:ksi, ja XML on valmis.
+
+Riippuvuuden sisältämien luokkien käyttäminen edellyttää vielä, että lisäät
+luokan alkuun `import`-lauseen, joka tuo tarvittavat luokat näkyviin.
+Esimerkiksi OkHttp-kirjaston `OkHttpClient`-luokan käyttämiseksi sinun täytyy
+lisätä `import okhttp3.OkHttpClient;`-lause luokan alkuun. Joskus voi olla
+tarvetta tuoda useita luokkia samasta paketista, jolloin voit käyttää
+jokerimerkkiä, kuten `import okhttp3.*;`, joka tuo kaikki `okhttp3`-paketin
+luokat näkyviin.
 
 ## Kolmannen osapuolen riippuvuudet
 
@@ -241,7 +274,15 @@ tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
 ## Pakkaukset Javassa
 
 
+
 ## Tehtävät
 
-Tee Maven-projekti. Lisää siihen riippuvuudet okHttp-kirjastoon sekä
-Jackson-kirjastoon. 
+<task>
+  <task-title>Tehtävä 6.8: Riippuvuudet. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-8-riippuvuudet/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava8">Tee tehtävä TIMissä</a></task-link>
+</task>
