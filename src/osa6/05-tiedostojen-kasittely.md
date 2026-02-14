@@ -289,11 +289,11 @@ merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa.
    käsiteltävä erikseen, koska lambda-lausekkeet eivät salli tarkistamattomien
    poikkeusten heittämistä suoraan. Tämä voi tehdä virheiden käsittelystä hieman
    monimutkaisempaa verrattuna perinteiseen silmukkaan.
- * laiskuus voi yllättää: Stream ei tee mitään ennen terminaalioperaatiota
+ * laiskuus voi yllättää: Stream ei tee mitään ennen keräysoperaatiota
    (`forEach`, `toList`, `collect`, `count`, …). Tämä voi aiheuttaa yllätyksiä, kuten
    että koodi näyttää lukevan tiedoston, mutta mitään ei tapahdu, jos
-   terminaalioperaatio puuttuu. Myöskään poikkeukset eivät synny siinä kohdassa,
-   missä tiedosto avataan, vaan vasta terminaalivaiheessa.
+   keräysvaihe puuttuu. Myöskään poikkeukset eivät synny siinä kohdassa,
+   missä tiedosto avataan, vaan vasta keräysvaiheessa.
 
 </details>
 
