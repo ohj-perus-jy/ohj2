@@ -1,5 +1,4 @@
-Tee ohjelma, joka kysyy käyttäjältä kaksi desimaalilukua ja laskutoimituksen
-sekä tulostaa laskutoimituksen tuloksen seuraavasti:
+Tee ohjelma, joka kysyy käyttäjältä kaksi desimaalilukua sekä laskutoimituksen, ja tulostaa laskutoimituksen tuloksen seuraavasti:
 
 ```
 Luku 1 > 12.0
@@ -18,6 +17,7 @@ syötteenä.
 Sen sijaan tee laskutoimituksia vastaavat lambdalausekkeet ja tallenna
 ne hakurakenteeseen käyttäen laskutoimituksen merkkiä avaimena.
 
+Ohjelman suoritus päättyy laskutoimituksen tuloksen näyttämisen jälkeen.
 
 <details><summary>Vinkki 1</summary>
 
@@ -50,10 +50,3 @@ Map<String, BiFunction<Double, Double, Double>> laskutoimitukset = Map.of(
 `...` tilalle riittää asettaa sopiva lambdalauseke.
 
 </details>
-
-
-
-
-
-
-
