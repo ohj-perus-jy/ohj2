@@ -12,4 +12,5 @@ static boolean onkoIkaa(int ika) throws IkaException
 
 Jos ikä on negatiivinen, heitä poikkeus `IkaException` viestillä "Ikä ei voi olla negatiivinen.".
 
-Muokkaa `main`-metodia niin, että se kääntyy. 
+Poista `if`-rakenne ja muokkaa `main`-metodia niin, että se kääntyy ja tulostaa
+oikeat asiat. 

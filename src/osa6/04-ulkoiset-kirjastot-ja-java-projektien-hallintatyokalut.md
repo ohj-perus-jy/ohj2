@@ -157,72 +157,113 @@ pom.xml
  * Lisäksi projektiin syntyy automaattisesti `.gitignore`-tiedosto, sekä
    `.mvn`-kansio, johon tutustumme myöhemmin. 
 
-Katsotaan aluksi `pom.xml`-tiedostoa, joka on Maven-projektin sydän. Siinä
-määritellään...
+Vilkaistaan `pom.xml`-tiedostoa, joka on Maven-projektin sydän. Avatessasi
+tiedston, näet XML-muotoista tekstiä. Tämä tiedosto määrittelee projektisi
+rakenteen, riippuvuudet ja muut asetukset. "Vanilla"-Java-projektin (ts.
+projekti, joka ei käytä ulkoisia kirjastoja) `pom.xml`-tiedosto näyttää suunnilleen tältä:
 
-Tässä tiedostossa voidaan määritellä myös niin sanottu moniprojektirakenteen,
-jos haluat jakaa projektisi useampaan osaan. Keskitytään kuitenkin tällä kertaa
-yksinkertaiseen projektiin.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-Avaa sitten `build.gradle.kts`-tiedosto. 
+    <groupId>org.example</groupId>
+    <artifactId>EkaMaven</artifactId>
+    <version>1.0-SNAPSHOT</version>
 
- * `plugin`-osiossa määritellään, että projekti käyttää Java-pluginia, jonka
-   myötä Gradle muun muassa tietää, että projektissa on `src/main/java`- sekä
-   `src/test/java`-kansiot. 
- * `group`- ja `version`-osioissa määritellään projektin "ryhmä", eli
-   organisaatio, joka projektia kehittää, sekä projektin versio. Organisaatio
-   liittyy myöhemmin käsiteltävään pakkausjärjestelmään.
- * `repositories`-osiossa on määritetty, että riippuvuudet haetaan Maven Central
-   -varastosta. 
- * `dependencies`-osiossa on määritetty, että projekti tarvitsee JUnit-kirjaston
-   -testaukseen. Tässä vaiheessa ei ole vielä muita riippuvuuksia, mutta tähän
-   kohtaan lisätään myöhemmin kaikki ne kirjastot, joita projektisi tarvitsee. Kun
-   aikanaan käytämme JavaFX:ää, tähän kohtaan ilmestyvät JavaFX:n riippuvuudet.
- * `tasks.test`-osiossa on määritetty, että testit ajetaan JUnit Platformilla, joka
-   on JUnit 5:n testialusta.
+    <properties>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+</project>
+```
+
+Tiedoston alussa määritellään tyypillistä XML-rakennetta, jonka jälkeen tulee
+`<groupId>`, `<artifactId>` ja `<version>`-elementit. Nämä ovat ikään kuin
+projektisi tunniste, joka yksilöi juuri sinun projektisi muiden Maven-projektien
+joukossa. 
+
+ * `groupId` toimii projektin "organisaatiotunnisteena". Se on usein käänteinen
+   verkkotunnus, kuten fi.jyu.ohjelmointi. 
+ * `artifactId` on projektin nimi, ja 
+ * `version` kertoo projektin version. 
+
+Näiden kolmen yhdistelmä muodostaa projektin yksilöllisen tunnisteen. Tässä
+vaiheessa näillä tunnisteilla ei ole hirveästi merkitystä, mutta jos julkaiset
+projektisi esimerkiksi Maven Central -varastoon, nämä tunnisteet ovat tärkeitä. 
+
+Loput rivit määrittelevät projektin Java-version sekä koodin merkistökoodauksen. 
 
 Avaa nyt `Main.java`-tiedostoa. Lisää sinne sivun alussa esitetty HTTP-kutsun
 esimerkkikoodi ja yritä kääntää se. Projekti ei kuitenkaan käänny vielä, koska
-OkHttp-kirjasto ei ole vielä projektin riippuvuuksissa. Lisätään siis
-`build.gradle.kts`-tiedostoon OkHttp:n riippuvuus.
+OkHttp-kirjasto ei ole vielä projektin riippuvuuksissa. Riippuvuuksien
+lisääminen Maven-projektiin tapahtuu muokkaamalla `pom.xml`-tiedostoa. Etsi
+tiedostosta `<dependencies>`-elementti. Lisää se (ja sen vastinpari
+`</dependencies>`), mikäli kyseistä elementtiä ei vielä ole. 
 
-```kotlin
-dependencies {
-    [...]
-    implementation("com.squareup.okhttp3:okhttp:4.10.0")
-}
+```xml
+<dependency>
+    <groupId>com.squareup.okhttp3</groupId>
+    <artifactId>okhttp-jvm</artifactId>
+    <version>5.3.2</version>
+</dependency>
 ```
+
+IDEA valittaa vielä, että okhttp-pakettia ei löydy. Riippuvuuksien lisäämisen
+jälkeen Maven-projekti täytyy virkistää klikkaamalla projektinäkymässä projektin
+nimen päältä hiiren oikealla, valitsemalla Maven ja Sync project. Tämän jälkeen
+IDEA lataa tarvittavat okhttp-riippuvuuden, ja myös kyseisen kirjaston
+itsensä vaatimat muut riippuvuudet. 
 
 Lisää myös aivan koodin alkuun `package org.example;`, jotta koodi on oikeassa
-paketissa. Palaamme tämän tarkempaan merkitykseen hieman alempana. 
+pakkauksessa. Palaamme pakkauksen tarkempaan merkitykseen hieman alempana. 
 
-Tallenna tiedosto ja käännä projekti uudestaan. Nyt Gradle hakee
-OkHttp-kirjaston Maven Central -varastosta, lataa sen ja liittää sen
-projektiisi. Tämän jälkeen käännös onnistuu, ja voit ajaa `Main`-luokan
-`main`-metodia, jolloin näet HTTP-kutsun tulokset konsolissa.
+Tallenna tiedosto ja käännä projekti uudestaan. Nyt Maven hakee OkHttp-kirjaston
+Maven Central -varastosta ja liittää sen projektiisi. Tämän jälkeen käännös
+onnistuu, ja voit ajaa `Main`-luokan `main`-metodia, jolloin näet HTTP-kutsun
+tulokset konsolissa.
 
-> [!HUOMAUTUS]
-> Jotta IDE tunnistaa riippuvuudet, saatat joutua lataamaan projektin tiedostot
-> uudelleen sync- tai reload-toiminnolla. Käynnistä tarvittaessa IDE
-> uudestaan, jos ongelmia ilmenee.
+## Maven Central
 
-TODO: Mitä käännöksessä tapahtuu...
+Riippuvuus-XML:iä ei tarvitse itse keksiä. Yksi suosituimmista Java-kirjastojen
+varastoista on Sonatype-yrityksen ylläpitämä [Maven
+Central](https://central.sonatype.com/), joka on julkinen varasto, josta voit
+hakea ja ladata Java-kirjastoja sekä liittää niitä projektiisi. 
 
-TODO: Gradle-wrapperin käyttäminen
+Voit etsiä tarvitsemasi kirjastot ja niiden riippuvuudet helposti Maven
+Centralista, ja kopioida sieltä suoraan XML-koodin `pom.xml`-tiedostoosi.
+Kokeillaan etsiä äsken mainittu okHttp-kirjasto Maven Centralista. 
 
-```bash
-./gradlew compileJava
-./gradlew test
-./gradlew build
-./gradlew clean
-```
+ 1. Mene osoitteeseen <https://central.sonatype.com/>
+ 2. Kirjoita hakukenttään "okhttp" ja paina Enter.
+ 3. Ensimmäinen hakutulos vie vanhempaan okHttp-kirjastoon, joka on nimeltään
+    "okhttp". Valitse sen sijaan toinen hakutulos, joka on uudempi. 
+ 4. Näet Snippets-kohdassa valmiin XML-koodin, jonka *yleensä* voit kopioida suoraan
+    `pom.xml`-tiedostoosi.
+ 5. Kopioi XML-koodi ja liitä se `pom.xml`-tiedostoon `<dependencies>`-elementin
+    sisälle.
 
-TODO: Miksi käyttäisin gradle-wrapperia
+Aivan kaikkien kirjastojen kohdalla XML:ää ei voi välttämättä suoraan kopioida,
+vaan sinun täytyy tarkistaa kirjaston dokumentaatiosta, onko XML
+Maven-yhteensopiva. Juurikin [okHttp-kirjaston
+kohdalla](https://square.github.io/okhttp/#maven-and-jvm-projects) on niin, että
+XML:ää tarvitsee hivenen muuttaa, koska tarvitsemme nimen omaan
+`okhttp-jvm`-version, joka on Maven-yhteensopiva. 
 
-## Pakkaaminen ja jakelu
+Tässä tapauksessa riittää, että vaihdetaan `artifactId`-elementti
+`okhttp-jvm`:ksi, ja XML on valmis.
 
-Build-työkalut voivat pakata käännetyn koodin ja kaikki tarvittavat riippuvuudet
-yhdeksi tiedostoksi, kuten JAR- tai WAR-tiedostoksi...
+Riippuvuuden sisältämien luokkien käyttäminen edellyttää vielä, että lisäät
+luokan alkuun `import`-lauseen, joka tuo tarvittavat luokat näkyviin.
+Esimerkiksi OkHttp-kirjaston `OkHttpClient`-luokan käyttämiseksi sinun täytyy
+lisätä `import okhttp3.OkHttpClient;`-lause luokan alkuun. Joskus voi olla
+tarvetta tuoda useita luokkia samasta paketista, jolloin voit käyttää
+jokerimerkkiä, kuten `import okhttp3.*;`, joka tuo kaikki `okhttp3`-paketin
+luokat näkyviin.
 
 ## Kolmannen osapuolen riippuvuudet
 
@@ -233,7 +274,97 @@ tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
 ## Pakkaukset Javassa
 
 
+Kun Java-ohjelma kasvaa useista luokista koostuvaksi kokonaisuudeksi, luokkien
+järjestäminen satunnaisesti samaan kansioon ei enää riitä. Tarvitsemme tavan
+ryhmitellä toisiinsa liittyvät luokat loogisiksi kokonaisuuksiksi. Tätä varten
+Java tarjoaa pakkaukset (engl. *packages*). Pakkaus on nimetty luokkien
+kokoelma. Se toimii samalla sekä loogisena ryhmittelykeinona että teknisenä
+nimialueena (*namespace*), joka estää nimikonfliktit. Ilman pakkauksia kahdella
+eri kirjastolla ei voisi olla samaa luokan nimeä. Esimerkiksi sekä oma ohjelmasi
+että jokin ulkoinen kirjasto voisi sisältää luokan nimeltä User. Pakkausten
+ansiosta nämä voidaan erottaa toisistaan täydellisen nimensä perusteella,
+esimerkiksi
+
+```
+fi.jyu.ohjelmointi.User
+```
+
+ja
+
+```
+com.example.library.User
+```
+
+Vaikka luokkien yksinkertainen nimi on sama (User), niiden täydellinen nimi on
+eri, eikä ristiriitaa synny.
+
+Luokka kuuluu pakkaukseen, jos sen lähdekooditiedoston alussa on
+`package`-lause. Esimerkiksi:
+
+```java,ignore
+package org.example;
+
+public class Main {
+    static void main() {
+        IO.println("Hei maailma!");
+    }
+}
+```
+
+Tämä tarkoittaa, että `Main`-luokka kuuluu pakkaukseen `org.example`. Pakkaus on
+osa luokan täydellistä nimeä, joten tämän luokan täydellinen nimi on
+`org.example.Main`.
+
+Pakkaus liittyy suoraan myös projektin kansiorakenteeseen. Jokainen pakkauksen
+osa vastaa yhtä kansiota. Esimerkiksi pakkaus `org.example` vastaa
+kansiorakennetta `src/main/java/org/example/Main.java`. Tämä ei ole pelkkä
+suositus, vaan Java-kääntäjä edellyttää, että tiedoston sijainti vastaa sen
+pakkausmäärittelyä.
+
+Pakkauksia käytetään myös muiden kirjastojen luokkien hyödyntämiseen. Kun
+kirjasto lisätään projektiin, sen luokat sijaitsevat omissa pakkauksissaan.
+Näiden luokkien käyttäminen edellyttää `import`-lausetta. Esimerkiksi
+OkHttp-kirjaston OkHttpClient-luokka kuuluu pakkaukseen okhttp3, ja sen
+käyttämiseksi kirjoitetaan `import okhttp3.OkHttpClient;`. `Import`-lause ei
+kopioi luokkaa omaan projektiisi, vaan kertoo kääntäjälle, mistä paketista
+luokka löytyy. Ilman `import`-lausetta luokkaa voisi käyttää vain sen
+täydellisellä nimellä:
+
+```
+okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
+```
+
+Käytännössä `import`-lause tekee koodista selkeämpää ja helpommin luettavaa.
+
+Pakkausten nimissä käytetään vakiintunutta nimeämiskäytäntöä, joka perustuu
+käänteiseen verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa
+pakkaus voisi olla
+
+```
+fi.jyu.ohjelmointi.ekamavenprojekti
+```
+
+Tämä käytäntö auttaa varmistamaan, että pakkausten nimet ovat
+maailmanlaajuisesti yksilöllisiä, mikä on erityisen tärkeää, jos kirjasto
+julkaistaan muiden käytettäväksi.
+
+Aivan pienissä ohjelmissa pakkauksia ei käytännössä tarvita, ja compact Java
+-tyylisen ohjelman kaikki luokat voidaan sijoittaa samaan kansioon ilman
+pakkauksia. Pakkaukset ovat kuitenkin keskeinen osa suurten Java-ohjelmien
+rakennetta. Ne auttavat pitämään koodin järjestyksessä ja estävät
+nimikonfliktit. Ne muodostavat myös perustan Java-kirjastojen ja
+build-työkalujen, kuten Mavenin, käyttämälle standardoidulle kansiorakenteelle.
+Tämä rakenne varmistaa, että sekä kehitystyökalut että ajoympäristö löytävät
+luokat oikeista paikoista ja voivat käyttää niitä oikein. 
+
 ## Tehtävät
 
-Tee Maven-projekti. Lisää siihen riippuvuudet okHttp-kirjastoon sekä
-Jackson-kirjastoon. 
+<task>
+  <task-title>Tehtävä 6.8: Riippuvuudet. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-8-riippuvuudet/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava8">Tee tehtävä TIMissä</a></task-link>
+</task>
