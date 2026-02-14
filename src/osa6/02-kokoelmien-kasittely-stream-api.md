@@ -144,7 +144,7 @@ Samalla `mapToInt` muuttaa striimin `IntStream`-tyyppiseksi striimiksi
 `IntStream` sopii erityisesti kokonaislukujen käsittelyyn paremmin, sillä se
 sisältää kokonaislukujen kanssa yhteensopivia kerääjiä.
 
-**4. Kerjääjäfunktio**
+**4. Kerääjäfunktio**
 
 Striimien lopuksi kutsutaan yleensä jokin *kerääjäfunktio*, joka
 ottaa vastaan striimin lopussa olevat alkiot ja palauttaa ne ohjelmalle.
