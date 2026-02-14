@@ -6,9 +6,10 @@
 
 > [!Osaamistavoitteet]
 >
-> - Funktionaalinen ohjelmointi
-> - Funktionaalinen rajapinta ja Javan `Function`, `BiFunction`
-> - lambdalausekkeet
+> - Ymmärrät funktionaalisen rajapinnan käsitteen
+> - Osaat käyttää lambdalausekkeita ja funktioviitteitä funktiorajapintojen toteuttamiseen
+> - Tunnet Javan yleisimmät valmiit funktiorajapinnat (esim. `Function`, `Consumer`)
+> - Osaat määrittää olioille vaihtoehtoisia järjestyksiä `Comparator`-rajapinnan ja lambdalausekkeiden avulla
 
 
 *Funktionaalinen rajapinta* on rajapinta, joka sisältää vain yhden pakollisen
@@ -27,7 +28,7 @@ public interface NumeroFunktio {
 
 Lisäksi esimerkiksi [luvussa
 4.1](../osa4/01-rajapinta.md#älykoti-säädettävät-laitteetalykoti-saadettava)
-`Saadattava`-rajapinta on funktionaalinen, koska se sisältää ainoan
+`Saadettava`-rajapinta on funktionaalinen, koska se sisältää ainoan
 pakollisen metodin `asetaArvo`.
 
 Java tarjoaa erityisen tavan luoda olioita, jotka toteuttavat
@@ -37,7 +38,7 @@ toisten funktioiden parametrina.
 
 ## Olion alustaminen funktiorajapinnasta
 
-Jos haluaisimme luoda olion, jonka voisi sijoittaa `LukuLauseke`-tyyppiseen
+Jos haluaisimme luoda olion, jonka voisi sijoittaa `NumeroFunktio`-tyyppiseen
 muuttujaan, joutusimme tekemään uuden luokan:
 
 ```java
@@ -106,7 +107,7 @@ palautusarvon tyypit täsmäävät `NumeroFunktio`-funktiorajapinnan
 ainoan metodin kanssa, Java osaa automaattisesti luoda olion, joka toteuttaa
 funktiorajapinnan.
 
-Huomaa erityiesti syntaksi ja miten se eroaa funktion kutsusta. Ensinnäkin,
+Huomaa erityisesti syntaksi ja miten se eroaa funktion kutsusta. Ensinnäkin,
 `this::kerroKahdella` ei kutsu funktiota, vaan kyseessä on ns. *funktioviite*.
  Tästä syystä rivillä ei ole funktiokutsulle ominaista
 parametrien välitystä `()`-sulkuja käyttäen.
@@ -221,7 +222,7 @@ ja määrittää metodin `laske`, joka kutsuu `kerroKahdella`-funktiota.
 Samalla `new`-määreellä luodaan luokasta uusi olio.
 
 Funktioviite onkin siis tarkemmin sanottuna *funktio-olio*, joka toteuttaa
-funktiorajapinnan kutsumalla viitattu funktio.
+funktiorajapinnan kutsumalla viitattua funktiota.
 
 Mainittakoon, että vaikka anonyymejä funktioita käytetään nykyään vähemmän,
 voivat olla silti hyödyllisiä tapauksissa, jossa toteutettava rajapinta 
@@ -230,7 +231,7 @@ ei ole funktionaalinen.
 </details>
 
 
-## lambdalausekkeet
+## Lambdalausekkeet
 
 Yllä oleva `kerroKahdella`-funktion esimerkki voidaan tiivistää lisää
 siirtämällä `kerroKahdella`-funktion toteutus suoraan `funktio`-muuttujan
@@ -349,7 +350,7 @@ NumeroFunktio kerroKahdella = x -> x * 2;
 //-}
 ```
 
-Lambdalausekkeita on voi käyttää muuttujien lisäksi parametreina.
+Lambdalausekkeita voi käyttää muuttujien lisäksi parametreina.
 Tämän myötä on mahdollista tehdä funktioita, jotka käsittelevät muita
 funktioita, kuten esimerkiksi:
 
@@ -421,7 +422,7 @@ Javassa on joukko valmiita yleisiä funktiorajapintoja, jotka löytyvät
 [JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/package-summary.html#class-summary)).
 
 **`Function<T, R>`** ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html)) esittää funktiota, joka ottaa yhden parametrin tyyppiä
-`T` ja paluttaa parametrin tyyppiä `R`.
+`T` ja palauttaa parametrin tyyppiä `R`.
 Esimerkiksi yllä oleva esimerkki voidaan yksinkertaistaa käyttämällä valmista
 `Function`-rajapintaa `NumeroLauseke`-rajapinnan sijaan:
 
@@ -430,8 +431,8 @@ Esimerkiksi yllä oleva esimerkki voidaan yksinkertaistaa käyttämällä valmis
 Function<Integer, Integer> kerroKahdella = x -> x * 2;
 Function<Integer, Integer> potenssiinKaksi = x -> x * x;
 
-IO.println(funktio.apply(1));
-IO.println(funktio2.apply(2));
+IO.println(kerroKahdella.apply(1));
+IO.println(potenssiinKaksi.apply(2));
 //-}
 ```
 
@@ -455,7 +456,7 @@ IO.println(potenssiinJaKerro.apply(2));
 
 Vastaavasti **`BiFunction<T, U, R>`**
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/BiFunction.html))
-vastaa funktiota, joka ottaa kaksi parametria ja paluttaa yhden arvon.
+vastaa funktiota, joka ottaa kaksi parametria ja palauttaa yhden arvon.
 
 **`Consumer<T>`**
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Consumer.html))
@@ -864,7 +865,7 @@ IO.println(Arrays.toString(jono));
 <task> 
 
 <task-title>
-Tehtävä 4.4: Kortit harvinaisuuden mukaan. <points>1 p.</points> </task-title> 
+Tehtävä 6.1: Kortit harvinaisuuden mukaan. <points>1 p.</points> </task-title> 
 
 <handout>
 
@@ -873,7 +874,7 @@ Tehtävä 4.4: Kortit harvinaisuuden mukaan. <points>1 p.</points> </task-title>
   
 <task-link>
 <a
-  href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a>
+  href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava1">Tee tehtävä TIMissä</a>
 </task-link> 
 
 </task>

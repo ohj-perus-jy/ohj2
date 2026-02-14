@@ -6,9 +6,11 @@
 
 > [!Osaamistavoitteet]
 >
-> - Ainakin map, filter, reduce
-> - lambda-lausekkeiden käyttö Stream API:ssa
-> - `Stream`, `IntStream`, ero iteraattoreihin
+> - Ymmärrät deklaratiivisen ja imperatiivisen ohjelmoinnin eron kokoelmien käsittelyssä
+> - Tunnet Stream API:n keskeiset käsitteet (väli- ja lopetusoperaatiot)
+> - Osaat käyttää striimejä kokoelmien suodattamiseen, muuntamiseen ja lajitteluun
+> - Osaat hyödyntää `Optional`-tyyppiä mahdollisesti puuttuvien arvojen käsittelyssä
+> - Tunnet perustietotyypeille tarkoitetut striimit, kuten `IntStream` ja `DoubleStream`
 
 
 Olemme toistaiseksi käyttäneet silmukoita datan käsittelyyn.
@@ -32,7 +34,7 @@ Tällaista ohjelmointitapaa kutsutaan *imperatiiviseksi*, eli kirjoitamme
 koodiin, mitä tietokoneen pitäisi tehdä vaihe vaiheelta 
 päästäkseen haluttuun lopputulokseen.
 
-Etenkin datan prosessoinnissa on useimmin helpommin käsitellä data
+Etenkin datan prosessoinnissa on usein helpompaa käsitellä data
 *deklaratiivisesti* eli kirjoittamalla, millaisen lopputuloksen halutaan.
 Javan Stream API tarjoaa deklaratiivisen tavan käsitellä kokoelmia ja
 tietovirtoja lambdalausekkeiden avulla. 
@@ -63,7 +65,7 @@ Tarkastellaan jokainen vaihe kerrallaan.
 
 **1. Kokoelman muuntaminen striimiksi**
 
-Aivan alkuun muunnamme numerolistan `Steam<T>`-tyyppiseksi olioksi eli
+Aivan alkuun muunnamme numerolistan `Stream<T>`-tyyppiseksi olioksi eli
 striimiksi ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)).
 Striimin voi ajatella ikään kuin koneena, joka
 ottaa kokoelman ja tuottaa yhden alkion kerrallaan *tietovirtana*:
@@ -112,11 +114,11 @@ perusteella joko antaa alkion mennä läpi tai suodattaa sen pois:
 
 Striimien tärkein työkalu ovat erilaiset *käsittelijät*, jotka ovat yksittäisiä
 alkioita käsiteltäviä funktioita. 
-Käsittelijäfunktio alkaavat yleensä nimellä `map`, kuten `mapToInt()`.
+Käsittelijäfunktiot alkavat yleensä nimellä `map`, kuten `mapToInt()`.
 Käsittelijät ottavat yhden alkion kerrallaan ja voivat tuottaa
 yhden tai useamman uuden alkion tietovirtaan.
 Voit ajatella käsittelijät ikään kuin koneina, jotka ottavat sisään alkioita
-tietovirrasta ja tuottaavat tietovirtaan uusia alkioita.
+tietovirrasta ja tuottavat tietovirtaan uusia alkioita.
 
 Esimerkiksi `mapToInt()` on käsittelijä, joka ottaa alkion, korvaa alkion
 kokonaisluvulla annetun lambdalausekkeen avulla ja tuottaa tietovirtaan
@@ -144,7 +146,7 @@ Samalla `mapToInt` muuttaa striimin `IntStream`-tyyppiseksi striimiksi
 `IntStream` sopii erityisesti kokonaislukujen käsittelyyn paremmin, sillä se
 sisältää kokonaislukujen kanssa yhteensopivia kerääjiä.
 
-**4. Kerjääjäfunktio**
+**4. Kerääjäfunktio**
 
 Striimien lopuksi kutsutaan yleensä jokin *kerääjäfunktio*, joka
 ottaa vastaan striimin lopussa olevat alkiot ja palauttaa ne ohjelmalle.
@@ -254,7 +256,7 @@ Oletetaan, että teemme kaupan ostos- ja varastohallintajärjestelmää.
 Käyttäjät voivat ostaa erilaisia tuotteita eri päivämäärinä. 
 Haluamme laskea erilaisia tilastoja kaupan hallinnolle.
 
-Käyttäjien ostoksia mallinetaan ostotapahtumina, jotka sisältävät yhteenvetona
+Käyttäjien ostoksia mallinnetaan ostotapahtumina, jotka sisältävät yhteenvetona
 ostotapahtuman hinnan ja ostopäivämäärän:
 
 
@@ -268,8 +270,8 @@ public class Ostotapahtuma {
 Haluaisimme selvittää ostosten keskimääräistä hintaa syyskuun aikana.
 
 Sen sijaan, että kirjoittaisimme silmukan ja `if`-ehtoja, voimme käyttää
-striimeja ja välioperaatoita. Ensiksi, haluamme keskittyä vain syyskuun
-osototapahtumiin. Tätä varten voimme käyttää `filter()`-metodia, joka suodattaa
+striimejä ja välioperaatioita. Ensiksi haluamme keskittyä vain syyskuun
+ostotapahtumiin. Tätä varten voimme käyttää `filter()`-metodia, joka suodattaa
 striimistä alkioita annetun `boolean`-funktion perusteella:
 
 ```java
@@ -497,7 +499,7 @@ tähän hetken päästä alempana.
 
 Kaikki striimin metodit, jotka palauttavat jotain muuta kuin
 uuden striimit ovat *lopetusoperaatioita*. 
-Lopetusoperaatiot yleensä käyvät läpi striimissa kaikki alkiot ja tuottavat
+Lopetusoperaatiot yleensä käyvät läpi striimissä kaikki alkiot ja tuottavat
 arvon tai sivuvaikutuksen. 
 
 Yleisin hyödyllinen lopetusoperaatio on striimin alkioiden kerääminen
@@ -538,7 +540,7 @@ Stream<Integer> arvosanojaStream = arvosanoja.stream()
 // toList() lopettaa striimin
 List<Integer> arvosanojaLista = arvosanojaStream.toList();
 
-// VIRHE: yritetään käyttää jo käytettyä striimia
+// VIRHE: yritetään käyttää jo käytettyä striimiä
 long arvosanatLkm = arvosanojaStream.count();
 //-}
 ```
@@ -679,7 +681,7 @@ public class Ostotapahtuma {
 Lopuksi, striimeillä on myös joitain tilastoihin liittyviä operaatioita.
 Esimerkiksi aiemmin koodissa mainittu `count()`-metodi palauttaa kokonaislukuna,
 kuinka monta alkiota striimissä on.
-Lisäksi perustietotyyppeille tarkoitetuissa striimeissä `IntStream`,
+Lisäksi perustietotyypeille tarkoitetuissa striimeissä `IntStream`,
 `DoubleStream` ja `LongStream` löytyy muun muassa seuraavia tilastometodeja:
 
 - `sum()` - summaa luvut yhteen
