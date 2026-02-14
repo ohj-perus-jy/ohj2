@@ -534,22 +534,30 @@ eksplisiittisesti.
 
 *Osa tämä osan tekstistä pohjautuu [Java-dokumentaatioon poikkeuksista](https://dev.java/learn/exceptions/).*
 
+<task>
+<task-title>Tehtävä 6.5 : Poikkeukset, osa 1. <points>1 p.</points> </task-title>
+<handout>
+{{#include ../exercises/6-5-poikkeukset-1/handout.md}}
+</handout>
+<task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
+
 
 <task>
-  <task-title>Tehtävä 6.6: Poikkeukset, osa 1. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 6.6: Poikkeukset, osa 2. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/6-6-poikkeukset-1/handout.md}}
+{{#include ../exercises/6-6-poikkeukset-2/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava6">Tee tehtävä TIMissä</a></task-link>
 </task>
 
 <task>
-  <task-title>Tehtävä 6.7: Poikkeukset, osa 2. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 6.7: Poikkeukset, osa 3. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/6-7-poikkeukset-2/handout.md}}
+{{#include ../exercises/6-7-poikkeukset-3/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava7">Tee tehtävä TIMissä</a></task-link>
