@@ -1,21 +1,24 @@
 # Kokoelmien käsittely: Stream API
 
-> [!VAROITUS]
-> Tämä osio julkaistaan 16. helmikuuta 2026.
-> {{#include ../ei-julkaistu.md}}
+> [!VAROITUS] Tämä osio julkaistaan 16. helmikuuta 2026. {{#include
+> ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
 >
-> - Ymmärrät deklaratiivisen ja imperatiivisen ohjelmoinnin eron kokoelmien käsittelyssä
+> - Ymmärrät deklaratiivisen ja imperatiivisen ohjelmoinnin eron kokoelmien
+>   käsittelyssä
 > - Tunnet Stream API:n keskeiset käsitteet (väli- ja lopetusoperaatiot)
-> - Osaat käyttää striimejä kokoelmien suodattamiseen, muuntamiseen ja lajitteluun
-> - Osaat hyödyntää `Optional`-tyyppiä mahdollisesti puuttuvien arvojen käsittelyssä
-> - Tunnet perustietotyypeille tarkoitetut striimit, kuten `IntStream` ja `DoubleStream`
+> - Osaat käyttää striimejä kokoelmien suodattamiseen, muuntamiseen ja
+>   lajitteluun
+> - Osaat hyödyntää `Optional`-tyyppiä mahdollisesti puuttuvien arvojen
+>   käsittelyssä
+> - Tunnet perustietotyypeille tarkoitetut striimit, kuten `IntStream` ja
+>   `DoubleStream`
 
 
-Olemme toistaiseksi käyttäneet silmukoita datan käsittelyyn.
-Jos haluaisimme esimerkiksi laskea listan jokaisen parillisen alkion summan,
-kirjoittaisimme sen tavallisesti näin:
+Olemme toistaiseksi käyttäneet silmukoita kokoelmien käsittelyyn. Jos haluamme
+esimerkiksi laskea listasta jokaisen parillisen alkion summan, kirjoitamme
+ratkaisun tavallisesti näin:
 
 ```java
 //-void main() {
@@ -30,45 +33,46 @@ IO.println("Summa: " + summa);
 //-}
 ```
 
-Tällaista ohjelmointitapaa kutsutaan *imperatiiviseksi*, eli kirjoitamme
-koodiin, mitä tietokoneen pitäisi tehdä vaihe vaiheelta 
-päästäkseen haluttuun lopputulokseen.
+Tätä ohjelmointitapaa kutsutaan *imperatiiviseksi*. Siinä kirjoitamme vaihe
+vaiheelta, *mitä tietokoneen pitäisi tehdä* päästäkseen haluttuun
+lopputulokseen.
 
-Etenkin datan prosessoinnissa on usein helpompaa käsitellä data
-*deklaratiivisesti* eli kirjoittamalla, millaisen lopputuloksen halutaan.
-Javan Stream API tarjoaa deklaratiivisen tavan käsitellä kokoelmia ja
-tietovirtoja lambdalausekkeiden avulla. 
-Sen avulla yllä oleva silmukka voidaan korvata yhdellä rivillä:
+Datan prosessoinnissa on kuitenkin usein selkeämpää kuvata, *millaisen*
+lopputuloksen haluamme, sen sijaan että kertoisimme tarkat suoritusvaiheet. Tätä
+kutsutaan *deklaratiiviseksi* ohjelmoinniksi. Javan Stream API tarjoaa tähän
+työkalut hyödyntämällä lambdalausekkeita. Sen avulla voimme korvata yllä olevan
+silmukan yhdellä rivillä:
 
 ```java
 //-void main() {
 List<Integer> numeroita = List.of(508, 18, 17, -148, 67, 42, -41);
-int summa = numeroita.stream().filter(i -> i % 2 == 0).mapToInt(i -> i.intValue()).sum();
+int summa = numeroita.stream().filter(i -> i % 2 == 0).mapToInt(Integer::intValue).sum();
 IO.println("Summa: " + summa);
 //-}
 ```
 
 ## Striimien perustoiminta
 
-Tarkastellaan yllä olevaa esimerkkiä tarkemmin.
-Huomaamme ensin, että yksi rivi koostuu kolmesta metodikutsusta:
+Tarkastellaan yllä olevaa esimerkkiä tarkemmin. Huomaamme, että rivi koostuu
+neljästä eri osasta:
 
 ```java,ignore
-numeroita                       // Käsiteltävä lista
-  .stream()                     // 1.
-  .filter(i -> i % 2 == 0)      // 2.
-  .mapToInt(i -> i.intValue())  // 3.
-  .sum();                       // 4.
+numeroita                       //    Käsiteltävä kokoelma
+  .stream()                     // 1. Muunto striimiksi
+  .filter(i -> i % 2 == 0)      // 2. Suodatus
+  .mapToInt(Integer::intValue)  // 3. Muunnos perustietotyypiksi
+  .sum();                       // 4. Arvon laskeminen
 ```
 
-Tarkastellaan jokainen vaihe kerrallaan.
+Käydään jokainen vaihe läpi.
 
 **1. Kokoelman muuntaminen striimiksi**
 
-Aivan alkuun muunnamme numerolistan `Stream<T>`-tyyppiseksi olioksi eli
-striimiksi (engl. *stream*) ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)).
-Striimin voi ajatella ikään kuin koneena, joka
-ottaa kokoelman ja tuottaa yhden alkion kerrallaan *tietovirtana*:
+Kaikilla Javan kokoelmilla on `stream()`-metodi, joka palauttaa
+`Stream<T>`-tyyppisen olion eli striimin
+([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)).
+Striimiä voi ajatella liukuhihnana tai koneena, joka ottaa kokoelman ja tuottaa
+siitä yhden alkion kerrallaan *tietovirtana*:
 
 ```bob
 \   42   /
@@ -84,10 +88,10 @@ ottaa kokoelman ja tuottaa yhden alkion kerrallaan *tietovirtana*:
 
 **2. Suodatinfunktio `filter`**
 
-Striimin `filter()` on metodi, joka
-suorittaa parametrina annetun lambdalausekkeen jokaiselle alkiolle.
-Jos lauseke palauttaa alkiolle `true`, alkio jatkaa eteenpäin tietovirrassa.
-Jos taas lauseke palauttaa `false`, alkio poistetaan tietovirrasta.
+Striimin `filter()` on metodi, joka suorittaa parametrina annetun
+lambdalausekkeen jokaiselle alkiolle. Jos lauseke palauttaa alkiolle `true`,
+alkio jatkaa eteenpäin tietovirrassa. Jos taas lauseke palauttaa `false`, alkio
+poistetaan tietovirrasta.
 
 Toisin sanoen, `filter()` on eräänlainen *suodatin*, joka lambdalausekkeen
 perusteella joko antaa alkion mennä läpi tai suodattaa sen pois:
@@ -110,80 +114,69 @@ perusteella joko antaa alkion mennä läpi tai suodattaa sen pois:
                          `---' 
 ```
 
-**3. Käsittelijäfunktio `map`**
+**3. Muunnosfunktio `map`**
 
-Striimien tärkein työkalu ovat erilaiset *käsittelijät*, jotka ovat yksittäisiä
-alkioita käsiteltäviä funktioita. 
-Käsittelijäfunktiot alkavat yleensä nimellä `map`, kuten `mapToInt()`.
-Käsittelijät ottavat yhden alkion kerrallaan ja voivat tuottaa
-yhden tai useamman uuden alkion tietovirtaan.
-Voit ajatella käsittelijät ikään kuin koneina, jotka ottavat sisään alkioita
-tietovirrasta ja tuottavat tietovirtaan uusia alkioita.
+Striimien tärkeimpiä työkaluja ovat erilaiset *muunnokset* eli kuvaukset. Nämä
+metodit alkavat yleensä sanalla `map`. Ne ottavat yhden alkion kerrallaan ja
+muuttavat sen joksikin muuksi.
 
-Esimerkiksi `mapToInt()` on käsittelijä, joka ottaa alkion, korvaa alkion
-kokonaisluvulla annetun lambdalausekkeen avulla ja tuottaa tietovirtaan
-tuotetun kokonaisluvun alkuperäisen alkion sijaan:
+Esimerkiksi `mapToInt()` on muunnos, joka ottaa alkion ja muuttaa sen
+`int`-tyyppiseksi luvuksi annetun funktion avulla. Tässä käytämme
+`Integer::intValue` -funktioviitettä, joka muuttaa `Integer`-olion tavalliseksi
+kokonaisluvuksi.
 
 ```bob
 \   42   /
  \  67  /
   \-148/                tietovirta -->
    \  /                                            
-+---\/---+             +--------+             +--------------+      int
-|        |    .---.    |        |    .---.    |              |     .---.  
-| Stream |---( -148)---| filter |---( 18  )---|   mapToInt   |----( 508 )----->
-|        |    `---'    |"i%2==0"|    `---'    |"i.intValue()"|     `---' 
-+--------+             +--------+             +--------------+    
++---\/---+             +--------+             +-------------------+      int
+|        |    .---.    |        |    .---.    |                   |     .---.  
+| Stream |---( -148)---| filter |---( 18  )---|   mapToInt        |----( 508 )----->
+|        |    `---'    |"i%2==0"|    `---'    |"Integer::intValue"|     `---' 
++--------+             +--------+             +-------------------+    
 ```
 
-Tässä tapauksessa `i.intValue()` muuttaa `Integer`-tyyppisen käärijäluokan 
-olion tavalliseksi `int`-tyyppiseksi kokonaisluvuksi.
-Tämä muunnos tarvitaan, koska yleinen `Stream<T>` on geneerinen luokka,
-ja Javassa geneeristen luokkien tyyppiparametrina ei voi olla perustietotyyppi.
-
-Samalla `mapToInt` muuttaa striimin `IntStream`-tyyppiseksi striimiksi
+Tarvitsemme tämän vaiheen siksi, että yleinen `Stream<T>` on geneerinen, ja
+Javassa geneeristen tyyppien sisällä ei voi olla perustietotyyppejä (kuten
+`int`). Kutsumalla `mapToInt()` striimi muuttuu `IntStream`-tyyppiseksi
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/IntStream.html)).
-`IntStream` sopii erityisesti kokonaislukujen käsittelyyn paremmin, sillä se
-sisältää kokonaislukujen kanssa yhteensopivia kerääjiä.
+`IntStream` on optimoitu juuri numeroiden käsittelyyn ja se tarjoaa valmiita
+tilastollisia metodeja, kuten `sum()`.
 
-**4. Kerääjäfunktio**
+**4. Arvon laskeminen**
 
-Striimien lopuksi kutsutaan yleensä jokin *kerääjäfunktio*, joka
-ottaa vastaan striimin lopussa olevat alkiot ja palauttaa ne ohjelmalle.
-Kerääjäfunktiot voidaan ajatella koneina, jotka ottavat vastaan
-tietovirran loppuun tulevia alkioita ja "pakkaavat" alkiot ohjelmoijalle
-sopivaan muotoon.
+Striimin päätteeksi kutsumme aina jotain lopetusfunktiota. Se ottaa vastaan
+tietovirran lopussa olevat alkiot ja palauttaa ne ohjelmalle halutussa muodossa
+(esim. summana tai listana).
 
-Tässä esimerkissä käytämme `sum()`-kerääjää, joka ottaa kokonaisluvut
-ja palauttaa niiden summan:
+Tässä esimerkissä käytimme `sum()`-metodia, joka laskee luvut yhteen ja
+palauttaa lopputuloksen yhtenä lukuna:
 
 ```bob
 \   42   /
  \  67  /
   \-148/                tietovirta -->
    \  /                                            
-+---\/---+   +--------+   +--------------+      \+------+   
-|        |   |        |   |              |    508\      |  
-| Stream |---| filter |---|   mapToInt   |--- 18  \ sum |---> 420
-|        |   |"i%2==0"|   |"i.intValue()"|  "-148"/     | 
-+--------+   +--------+   +--------------+    42 /+-----+ 
-                                                /
++---\/---+   +--------+   +-------------------+      \+------+   
+|        |   |        |   |                   |    508\      |  
+| Stream |---| filter |---|   mapToInt        |--- 18  \ sum |---> 420
+|        |   |"i%2==0"|   |"Integer::intValue"|  "-148"/     | 
++--------+   +--------+   +-------------------+    42 /+-----+ 
+                                                     /
 ```
 
 ## Striimien käyttäminen
 
-Striimit tarjoavat vaihtoehtoisen tavan käsitellä kokoelmia ja dataa.
-Kaikki, mitä on mahdollista tehdä striimeillä on myös mahdollista
-kirjoittaa tavallisina silmukkoina.
-Huomaamme kuitenkin, että yhdistämällä Stream API -funktioita voidaan saada
-hyvin ytimekkäitä ratkaisua sellaisiin ongelmiin, joiden ratkaisu olisi
-vaatinut useita rivejä koodia.
+Kaikki, mitä on mahdollista tehdä striimeillä, voitaisiin kirjoittaa myös
+tavallisina silmukoina. Kuitenkin yhdistämällä eri Stream API -funktioita saamme
+usein hyvin ytimekkäitä ratkaisuja ongelmiin, jotka muuten vaatisivat useita
+rivejä imperatiivista koodia.
 
 ### Striimien luominen
 
-
-Yleisin striimien käyttötapa on kokoelmien käsittely; kaikilla kokoelmilla
-on `stream()`-metodi, joka palauttaa kokoelmaa käsittelevän striimin.
+Yleisin tapa on luoda striimi suoraan kokoelmasta. Kaikilla Javan
+`Collection`-rajapinnan toteuttavilla luokilla on `stream()`-metodi:
 
 ```java
 //-void main() {
@@ -205,9 +198,7 @@ Stream<String> automerkkejaStream = automerkkeja.stream();
 //-}
 ```
 
-Stream-olioita voidaan kuitenkin luoda hyvin monipuolisesti, eikä se rajoitu
-vain kokoelmiin.
-Esimerkiksi taulukoista voidaan luoda striimi `Arrays.stream`-metodilla:
+Myös taulukoista voidaan luoda striimi `Arrays.stream`-metodilla:
 
 ```java
 //-void main() {
@@ -223,20 +214,18 @@ Stream<String> opettajatStream = Arrays.stream(opettajat);
 ```
 
 Mainittakoon tässä vaiheessa, että perustietotyypeille on olemassa omat
-striimiluokat `IntStream`, `DoubleStream`, `LongStream`, jne. 
-Nämä erikoisluokat tarjoavat muun muassa erilaisia tilastofunktioita, kuten
-`max`, `min`, `average` ja `sum`.
-Kokoelmien tapauksessa perustietotyypit kääritään kuitenkin aina käärijäluokkaan,
-jolloin striimit ovat muotoa `Stream<Integer>`, `Stream<Double>`,
-`Stream<Long>`. `Stream`-luokka tarjoaa aiemmin mainitut `map`,
-`mapToDouble` ja vastaavia metodeja, jolla striimin voi muuttaa
+striimiluokat `IntStream`, `DoubleStream`, `LongStream`, jne. Nämä erikoisluokat
+tarjoavat muun muassa erilaisia tilastofunktioita, kuten `max`, `min`, `average`
+ja `sum`. Kokoelmien tapauksessa perustietotyypit kääritään kuitenkin aina
+käärijäluokkaan, jolloin striimit ovat muotoa `Stream<Integer>`,
+`Stream<Double>`, `Stream<Long>`. `Stream`-luokka tarjoaa aiemmin mainitut
+`mapToInt`, `mapToDouble` ja vastaavia metodeja, jolla striimin voi muuttaa
 perustietotyyppiversioon.
 
-On myös mahdollista luoda striimejä, jotka tuottavat äärettömästi arvoja.
-`Stream.generate` kutsuu jatkuvasti parametrina annettua funktiota ja tuottaa
-sen arvoja tietovirtaan. Äärettömien striimien tapauksessa on käytettävä
-alkioita rajoittavia metodeja, kuten `limit`, joka päästää läpi vain annetun
-määrän ensimmäistä alkiota:
+Voimme myös luoda striimejä, jotka tuottavat äärettömästi arvoja. Esimerkiksi
+`Stream.generate` kutsuu annettua funktiota toistuvasti. Tällöin on käytettävä
+alkioita rajoittavia metodeja, kuten `limit`, joka pysäyttää tietovirran halutun
+määrän jälkeen:
 
 ```java
 //-void main() {
@@ -248,31 +237,24 @@ IO.println(kymmenenRisuaitaa);
 
 ### Striimin välioperaatiot
 
-Kaikki striimin metodit, jotka palauttavat uuden `Stream`-olion ovat
-ns. *välioperaatioita* (engl. *intermediate operations*). Esimerkiksi yllä mainittu suodatus ja käsittely ovat
-välioperaatioita, jotka muokkaavat tietovirrassa liikkuvia alkioita.
+Kaikki striimin metodit, jotka palauttavat uuden `Stream`-olion, ovat ns.
+*välioperaatioita* (engl. *intermediate operations*). Niitä käytetään
+tietovirrassa liikkuvien alkioiden muokkaamiseen ja suodattamiseen.
 
-Oletetaan, että teemme kaupan ostos- ja varastohallintajärjestelmää.
-Käyttäjät voivat ostaa erilaisia tuotteita eri päivämäärinä. 
-Haluamme laskea erilaisia tilastoja kaupan hallinnolle.
+Kuvitellaan, että ylläpidämme kaupan ostostietoja. Haluamme selvittää syyskuun
+ostosten keskihinnan.
 
-Käyttäjien ostoksia mallinnetaan ostotapahtumina, jotka sisältävät yhteenvetona
-ostotapahtuman hinnan ja ostopäivämäärän:
-
-
-```java
+```java,ignore
 public class Ostotapahtuma {
   private double hinta;
   private LocalDate pvm;
 }
 ```
 
-Haluaisimme selvittää ostosten keskimääräistä hintaa syyskuun aikana.
-
-Sen sijaan, että kirjoittaisimme silmukan ja `if`-ehtoja, voimme käyttää
-striimejä ja välioperaatioita. Ensiksi haluamme keskittyä vain syyskuun
-ostotapahtumiin. Tätä varten voimme käyttää `filter()`-metodia, joka suodattaa
-striimistä alkioita annetun `boolean`-funktion perusteella:
+Sen sijaan, että kirjoittaisimme silmukan ja `if`-ehtoja, rakennetaan haluttua
+tulosta antavan striimin vaihe vaiheelta. Aloitetaan ensin ottamalla mukaan vain
+syyskuun mukaan. Voimme käyttää `filter()`-metodia, joka suodattaa striimistä
+alkioita annetun `boolean`-funktion perusteella:
 
 ```java
 // FILE: main.java
@@ -323,11 +305,11 @@ public class Ostotapahtuma {
 
 Nyt kun meillä on vain syyskuun ostokset suodatettu mukaan, haluamme laskea
 niiden keskiarvohinnan. Keskiarvo voidaan laskea vain luvuista, kun taas
-ostotapahtuma on `Ostotapahtuma`-tyyppinen.
-Voimme käyttää striimin `map`-metodia, joka muuntaa jokaisen alkion arvon
-toiseksi annetun muunnosfunktion perusteella.
-Meidän muunnosfunktiossa riittää hakea `Ostotapahtuma`-olion
-`hinta`-attribuutti, jolloin näin saadaan striimin luvuista:
+ostotapahtuma on `Ostotapahtuma`-tyyppinen. Voimme käyttää striimin
+`map`-metodia, joka muuntaa jokaisen alkion arvon toiseksi annetun
+muunnosfunktion perusteella. Meidän muunnosfunktiossa riittää hakea
+`Ostotapahtuma`-olion `hinta`-attribuutti, jolloin näin saadaan striimin
+luvuista:
 
 ```java
 // FILE: main.java
@@ -380,8 +362,8 @@ public class Ostotapahtuma {
 ```
 
 Huomaa, että tuloksena on `Stream<Double>`, eli käärijäluokkaan tallennettu
-liukuluku. Jotta keskiarvon laskenta olisi helpompaa, muunnetaan 
-`Double`-alkiot perustyyppiinsä `mapToDouble()`-metodilla:
+liukuluku. Jotta keskiarvon laskenta olisi helpompaa, muunnetaan `Double`-alkiot
+perustyyppiinsä `mapToDouble()`-metodilla:
 
 ```java
 // FILE: main.java
@@ -436,8 +418,8 @@ public class Ostotapahtuma {
 // FILE_END
 ```
 
-`DoubleStream` sisältää valmiiksi `average()`-metodin, joka kerää
-ja palauttaa striimissä olevien alkioiden keskiarvon:
+`DoubleStream` sisältää valmiiksi `average()`-metodin, joka kerää ja palauttaa
+striimissä olevien alkioiden keskiarvon:
 
 ```java
 // FILE: main.java
@@ -491,20 +473,20 @@ public class Ostotapahtuma {
 // FILE_END
 ```
 
-Huomaa, että `average()` on striimiä lopettava funktio ja että se palauttaa
-`OptionalDouble`-tyyppisen arvon tavallisen `double`-arvon sijaan. Palaamme
-tähän hetken päästä alempana.
+Huomaa, että `average()` ei palauta suoraan `double`-arvoa, vaan
+`OptionalDouble`-olion. Tämä johtuu siitä, että jos striimi on tyhjä
+(esimerkiksi yhtään syyskuun ostosta ei löytyisi), keskiarvoa ei voida laskea.
+Palaamme tähän hetken päästä alempana.
 
 ### Striimien lopetusoperaatiot
 
-Kaikki striimin metodit, jotka palauttavat jotain muuta kuin
-uuden striimin ovat *lopetusoperaatioita* (engl. *terminal operations*). 
-Lopetusoperaatiot yleensä käyvät läpi striimissä kaikki alkiot ja tuottavat
-arvon tai sivuvaikutuksen. 
+Kaikki striimin metodit, jotka palauttavat jotain muuta kuin uuden striimin ovat
+*lopetusoperaatioita* (engl. *terminal operations*). Lopetusoperaatiot yleensä
+käyvät läpi striimissä kaikki alkiot ja tuottavat arvon tai sivuvaikutuksen. 
 
 Yleisin hyödyllinen lopetusoperaatio on striimin alkioiden kerääminen
-kokoelmaksi. Esimerkiksi `toList()`-metodi kerää striimin alkiot listaksi
-ja `toArray()`-metodi taulukoksi:
+kokoelmaksi. Esimerkiksi `toList()`-metodi kerää striimin alkiot listaksi ja
+`toArray()`-metodi taulukoksi:
 
 ```java
 //-void main() {
@@ -526,9 +508,9 @@ IO.println(Arrays.toString(oikeitaArvosanojaTaulu));
 //-}
 ```
 
-Huomaa, että lopetusoperaation jälkeen striimi yleensä lasketaan
-käytetyksi, eikä jo käytettyä striimiä voi enää yleensä käyttää sen jälkeen.
-Jo käytetyn striimin uudelleenkäyttäminen aiheuttaa yleensä virheen:
+Huomaa, että lopetusoperaation jälkeen striimi yleensä lasketaan käytetyksi,
+eikä jo käytettyä striimiä voi enää yleensä käyttää sen jälkeen. Jo käytetyn
+striimin uudelleenkäyttäminen aiheuttaa yleensä virheen:
 
 ```java,ignore
 //-void main() {
@@ -549,8 +531,8 @@ long arvosanatLkm = arvosanojaStream.count();
 java.lang.IllegalStateException: stream has already been operated upon or closed
 ```
 
-Kuten kokoelmissa, myös striimeissä on `forEach()`-metodi, jonka avulla
-voi suorittaa mielivaltaista koodia jokaiselle alkiolle:
+Kuten kokoelmissa, myös striimeissä on `forEach()`-metodi, jonka avulla voi
+suorittaa mielivaltaista koodia jokaiselle alkiolle:
 
 ```java
 //-void main() {
@@ -560,9 +542,9 @@ IntStream.range(0, 10)      // Striimi kokonaisluvuista 0-9
 //-}
 ```
 
-Striimit sisältävät myös muutaman apufunktion yleisempiin ongelmiin.
-`min()` ja `max()` -metodit keräävät striimin alkiot ja palauttavat
-alkioista suurimman. Kummatkin metodit ottavat parametrina `Comparator`-vertailijafunktion.
+Striimit sisältävät myös muutaman apufunktion yleisempiin ongelmiin. `min()` ja
+`max()` -metodit keräävät striimin alkiot ja palauttavat alkioista suurimman.
+Kummatkin metodit ottavat parametrina `Comparator`-vertailijafunktion.
 
 ```java
 //-void main() {
@@ -577,11 +559,12 @@ IO.println("Lyhin: " + lyhinNimi);
 ```
 
 Huomaa, että `max()`, `min()` ja monet muut striimin lopetusfunktiot eivät
-palauta arvoja suoraan, vaan `Optional<T>`-olion ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs//api/java.base/java/util/Optional.html)).
+palauta arvoja suoraan, vaan `Optional<T>`-olion
+([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs//api/java.base/java/util/Optional.html)).
 Nimensä mukaan tällainen olio kuvastaa arvon mahdollista puuttumista.
-Esimerkiksi, jos striimissä ei ole yhtään alkiota tai jos lopetusfunktio
-ei voi muuten laskea arvoa, se palauttaa `Optional.empty`-arvon kuvastamaan
-laskennan epäonnistumista:
+Esimerkiksi, jos striimissä ei ole yhtään alkiota tai jos lopetusfunktio ei voi
+muuten laskea arvoa, se palauttaa `Optional.empty`-arvon kuvastamaan laskennan
+epäonnistumista:
 
 ```java
 //-void main() {
@@ -619,10 +602,10 @@ Mainittakoon, että `Optional<T>`-tyyppi sisältää joukon muita apufunktioita,
 joilla voi välttyä ylimääräisiltä `if`-rakenteilta.
 
 Palataan vielä hetkeksi striimeihin. Striimit soveltuvat kätevästi arvojen
-etsimiseen kokoelmista; `findFirst()`-metodi palauttaa ensimmäisen alkion,
-joka pääsee "tietovirran loppuun" asti.
-Esimerkiksi, jos haluaisimme löytää varastosovelluksesta ostotapahtuman,
-joka oli tehty syyskuussa ja ylittänyt hinnaltaan 100 €:
+etsimiseen kokoelmista; `findFirst()`-metodi palauttaa ensimmäisen alkion, joka
+pääsee "tietovirran loppuun" asti. Esimerkiksi, jos haluaisimme löytää
+varastosovelluksesta ostotapahtuman, joka oli tehty syyskuussa ja ylittänyt
+hinnaltaan 100 €:
 
 ```java
 // FILE: main.java
@@ -680,9 +663,9 @@ public class Ostotapahtuma {
 
 Lopuksi, striimeillä on myös joitain tilastoihin liittyviä operaatioita.
 Esimerkiksi aiemmin koodissa mainittu `count()`-metodi palauttaa kokonaislukuna,
-kuinka monta alkiota striimissä on.
-Lisäksi perustietotyypeille tarkoitetuissa striimeissä `IntStream`,
-`DoubleStream` ja `LongStream` löytyy muun muassa seuraavia tilastometodeja:
+kuinka monta alkiota striimissä on. Lisäksi perustietotyypeille tarkoitetuissa
+striimeissä `IntStream`, `DoubleStream` ja `LongStream` löytyy muun muassa
+seuraavia tilastometodeja:
 
 - `sum()` - summaa luvut yhteen
 - `min()`/`max()` - etsii pienimmän/suurimman luvun
