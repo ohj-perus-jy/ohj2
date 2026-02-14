@@ -12,7 +12,7 @@
 > - Osaat määrittää olioille vaihtoehtoisia järjestyksiä `Comparator`-rajapinnan ja lambdalausekkeiden avulla
 
 
-*Funktionaalinen rajapinta* on rajapinta, joka sisältää vain yhden pakollisen
+*Funktionaalinen rajapinta* (engl. *functional interface*) on rajapinta, joka sisältää vain yhden pakollisen
 metodin.
 Esimerkiksi, seuraava rajapinta on funktionaalinen:
 
@@ -108,7 +108,8 @@ ainoan metodin kanssa, Java osaa automaattisesti luoda olion, joka toteuttaa
 funktiorajapinnan.
 
 Huomaa erityisesti syntaksi ja miten se eroaa funktion kutsusta. Ensinnäkin,
-`this::kerroKahdella` ei kutsu funktiota, vaan kyseessä on ns. *funktioviite*.
+`this::kerroKahdella` ei kutsu funktiota, vaan kyseessä on ns. *funktioviite*
+(engl. *method reference*).
  Tästä syystä rivillä ei ole funktiokutsulle ominaista
 parametrien välitystä `()`-sulkuja käyttäen.
 Varsinainen kutsu tapahtuu vasta `funktio.laske()`-riveillä, joka kutsuu
@@ -263,7 +264,7 @@ public interface NumeroFunktio {
 ```
 
 Yllä `funktio`-muuttujaan sijoitettu lauseke on nimeltään
-*lambdalauseke* tai *anonyymi funktio*. Kyseessä on siis funktio, jolle
+*lambdalauseke* (engl. *lambda expression*) tai *anonyymi funktio* (engl. *anonymous function*). Kyseessä on siis funktio, jolle
 ei ole annettu nimeä. Lambdalausekkeen rakenne vastaa tavallisen funktion rakennetta:
 
 ```java,ignore
@@ -276,7 +277,7 @@ ei ole annettu nimeä. Lambdalausekkeen rakenne vastaa tavallisen funktion raken
 Huomaa erityisesti, että kokonaisuus on *lauseke*, jonka voi sijoittaa
 funktiorajapintatyyppisen muuttujan arvoksi.
 
-Lamdalausekkeiden määrittelyä monesti tiivistetään muutamalla tavalla.
+Lambdalausekkeiden määrittelyä monesti tiivistetään muutamalla tavalla.
 Ensinnäkin, Java osaa päätellä parametrien tyypit automaattisesti
 funktiorajapinnan parametrien tyypeistä, jolloin parametrit voidaan
 jättää usein pois:
@@ -424,7 +425,7 @@ Javassa on joukko valmiita yleisiä funktiorajapintoja, jotka löytyvät
 **`Function<T, R>`** ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html)) esittää funktiota, joka ottaa yhden parametrin tyyppiä
 `T` ja palauttaa parametrin tyyppiä `R`.
 Esimerkiksi yllä oleva esimerkki voidaan yksinkertaistaa käyttämällä valmista
-`Function`-rajapintaa `NumeroLauseke`-rajapinnan sijaan:
+`Function`-rajapintaa `NumeroFunktio`-rajapinnan sijaan:
 
 ```java
 //-void main() {

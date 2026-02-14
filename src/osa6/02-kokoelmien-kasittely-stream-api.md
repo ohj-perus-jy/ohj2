@@ -66,7 +66,7 @@ Tarkastellaan jokainen vaihe kerrallaan.
 **1. Kokoelman muuntaminen striimiksi**
 
 Aivan alkuun muunnamme numerolistan `Stream<T>`-tyyppiseksi olioksi eli
-striimiksi ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)).
+striimiksi (engl. *stream*) ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/stream/Stream.html)).
 Striimin voi ajatella ikään kuin koneena, joka
 ottaa kokoelman ja tuottaa yhden alkion kerrallaan *tietovirtana*:
 
@@ -183,7 +183,7 @@ vaatinut useita rivejä koodia.
 
 
 Yleisin striimien käyttötapa on kokoelmien käsittely; kaikilla kokoelmilla
-on `steam()`-metodi, joka palauttaa kokoelmaa käsittelevän striimin.
+on `stream()`-metodi, joka palauttaa kokoelmaa käsittelevän striimin.
 
 ```java
 //-void main() {
@@ -228,7 +228,7 @@ Nämä erikoisluokat tarjoavat muun muassa erilaisia tilastofunktioita, kuten
 `max`, `min`, `average` ja `sum`.
 Kokoelmien tapauksessa perustietotyypit kääritään kuitenkin aina käärijäluokkaan,
 jolloin striimit ovat muotoa `Stream<Integer>`, `Stream<Double>`,
-`Stream<Long>`. `Stream`-luokka tarjoaa aiemmin mainitut `mapToString`,
+`Stream<Long>`. `Stream`-luokka tarjoaa aiemmin mainitut `map`,
 `mapToDouble` ja vastaavia metodeja, jolla striimin voi muuttaa
 perustietotyyppiversioon.
 
@@ -248,8 +248,8 @@ IO.println(kymmenenRisuaitaa);
 
 ### Striimin välioperaatiot
 
-Kaikki striimin metodit, jotka palauttavat uuden `Stream`-oliot ovat
-ns. *välioperaatioita*. Esimerkiksi yllä mainittu suodatus ja käsittely ovat
+Kaikki striimin metodit, jotka palauttavat uuden `Stream`-olion ovat
+ns. *välioperaatioita* (engl. *intermediate operations*). Esimerkiksi yllä mainittu suodatus ja käsittely ovat
 välioperaatioita, jotka muokkaavat tietovirrassa liikkuvia alkioita.
 
 Oletetaan, että teemme kaupan ostos- ja varastohallintajärjestelmää.
@@ -498,7 +498,7 @@ tähän hetken päästä alempana.
 ### Striimien lopetusoperaatiot
 
 Kaikki striimin metodit, jotka palauttavat jotain muuta kuin
-uuden striimit ovat *lopetusoperaatioita*. 
+uuden striimin ovat *lopetusoperaatioita* (engl. *terminal operations*). 
 Lopetusoperaatiot yleensä käyvät läpi striimissä kaikki alkiot ja tuottavat
 arvon tai sivuvaikutuksen. 
 
@@ -620,7 +620,7 @@ joilla voi välttyä ylimääräisiltä `if`-rakenteilta.
 
 Palataan vielä hetkeksi striimeihin. Striimit soveltuvat kätevästi arvojen
 etsimiseen kokoelmista; `findFirst()`-metodi palauttaa ensimmäisen alkion,
-joka pääsee "tietovirtaan loppuun" asti.
+joka pääsee "tietovirran loppuun" asti.
 Esimerkiksi, jos haluaisimme löytää varastosovelluksesta ostotapahtuman,
 joka oli tehty syyskuussa ja ylittänyt hinnaltaan 100 €:
 
