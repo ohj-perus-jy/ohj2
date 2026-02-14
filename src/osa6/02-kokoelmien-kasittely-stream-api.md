@@ -1,7 +1,8 @@
 # Kokoelmien käsittely: Stream API
 
-> [!VAROITUS] Tämä osio julkaistaan 16. helmikuuta 2026. {{#include
-> ../ei-julkaistu.md}}
+> [!VAROITUS] 
+> Tämä osio julkaistaan 16. helmikuuta 2026.
+> {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
 >
@@ -680,3 +681,23 @@ IntStream lukuja = new Random().ints(20, 0, 100);
 IO.println(lukuja.summaryStatistics());
 //-}
 ```
+
+<task>
+  <task-title>Tehtävä 6.3: Musiikkilista <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-3-musiikkilista/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava3">Tee tehtävä TIMissa</a></task-link>
+</task>
+
+<task>
+  <task-title>Tehtävä 6.4: Keskiarvo raja-arvoilla <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-4-sademaara/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava4">Tee tehtävä TIMissa</a></task-link>
+</task>

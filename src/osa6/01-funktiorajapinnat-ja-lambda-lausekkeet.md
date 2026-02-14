@@ -1,7 +1,8 @@
 # Funktiorajapinnat ja lambdalausekkeet
 
-> [!VAROITUS] Tämä osio julkaistaan 16. helmikuuta 2026. {{#include
-> ../ei-julkaistu.md}}
+> [!VAROITUS] 
+> Tämä osio julkaistaan 16. helmikuuta 2026. 
+> {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
 >
