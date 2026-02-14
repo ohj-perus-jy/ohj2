@@ -341,7 +341,7 @@ käänteiseen verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa
 pakkaus voisi olla
 
 ```
-fi.jyu.ohjelmointi.ekamavenprojekti
+fi.jyu.ohj2.ekamaven
 ```
 
 Tämä käytäntö auttaa varmistamaan, että pakkausten nimet ovat
@@ -356,6 +356,12 @@ nimikonfliktit. Ne muodostavat myös perustan Java-kirjastojen ja
 build-työkalujen, kuten Mavenin, käyttämälle standardoidulle kansiorakenteelle.
 Tämä rakenne varmistaa, että sekä kehitystyökalut että ajoympäristö löytävät
 luokat oikeista paikoista ja voivat käyttää niitä oikein. 
+
+IDEAssa pakkauksen saa näppärästi määritettyä Maven-projektia luotaessa.
+Tehdessäsi uutta projektia, valitse Advanced settings, ja kirjoita
+GroupID-kenttään haluamasi pakkauksen nimi. IDEA tekee näin automaattisesti
+oikean kansiorakenteen ja lisää `Main.java`-tiedoston määrittelemääsi
+pakkaukseen.
 
 ## Tehtävät
 
