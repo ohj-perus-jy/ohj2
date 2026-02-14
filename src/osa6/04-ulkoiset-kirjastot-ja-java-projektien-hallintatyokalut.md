@@ -11,7 +11,7 @@
 > - Pakkaukset Javassa? (Vai jo luvussa 2?)
 
 Oletetaan, että haluat tehdä Java-ohjelman, joka hakee tietoa verkosta
-HTTP-kutsulla. Kirjoitat seuraavan koodin:
+HTTP-kutsulla. Löydät netistä seuraavan esimerkkikoodin. 
 
 ```java
 import okhttp3.OkHttpClient;
@@ -41,24 +41,26 @@ laittaa? Entä jos kirjasto tarvitsee itse tuekseen muita kirjastoja?
 Tässä kohtaa törmätään modernin ohjelmistokehityksen ytimeen: oma koodi ei
 riitä. Tarvitsemme muiden kirjoittamia kirjastoja. Kun käytät toisen kehittäjän
 tekemää kirjastoa, projektisi *riippuu* siitä; Tätä kutsutaan riippuvuudeksi
-(dependency). HTTP-esimerkissä riippuvuus on OkHttp-kirjasto. 
+(dependency). Äskeisessä esimerkissä riippuvuus on OkHttp-kirjasto. 
 
 Riippuvuuksien hallinta tarkoittaa:
 
- * kirjaston oikean version hakemista
- * sen lisäämistä projektin *classpathiin*
- * kirjaston omien riippuvuuksien huomioimista
- * versioristiriitojen estämistä
+ * kirjaston oikean version hakemista,
+ * sen lisäämistä projektin *classpathiin*,
+ * kirjaston omien riippuvuuksien huomioimista, ja
+ * versioristiriitojen estämistä.
 
 Kirjastojen hallinta käsin on kovin työlästä, ja siksi on kehitetty työkaluja,
 jotka hoitavat tämän puolestasi. Näitä työkaluja kutsutaan *build-työkaluiksi*.
-Niistä tunnetuimpia Java-maailmassa ovat **Maven** ja **Gradle**. Build-työkalu
-automatisoi koko prosessin: se hakee tarvittavat kirjastot, huolehtii niiden
-versioista ja kääntää koodisi. Build-työkalu voi tehdä muutakin: se ajaa
-mahdolliset testit ja pakkaa lopulta valmiin ohjelman jakelukuntoon.
+Vapaa suomennos voisi olla *rakennustyökalu*, mutta käytämme tässä yhteydessä
+vakiintunutta englanninkielistä termiä build-työkalu. Niistä tunnetuimpia
+Java-maailmassa ovat **Maven** ja **Gradle**. Build-työkalu automatisoi yllä
+mainitun riippuvuuksien hallintatyön. Build-työkalu voi tehdä muutakin: se voi
+ajaa mahdolliset testit ja myös pakata valmiin ohjelman jakelukuntoon.
 
 Esittelemme seuraavaksi Maven-työkalun käyttöä IDEAssa. Aivan hyvin saman asian
-voisi tehdä myös Gradlella tai Antilla. Maven on alkuvaiheessa ehkä hieman
+voisi tehdä myös [Gradlella](https://gradle.org/) tai
+[Antilla](https://ant.apache.org/). Maven on alkuvaiheessa ehkä aavistuksen
 helppokäyttöisempi, joten valitsemme sen tähän esimerkkiin.
 
 <details><summary>Analogia: Huonekalusuunnittelija</summary>
@@ -123,14 +125,14 @@ asiakkaiden haettavaksi.
 
 </details>
 
-## Ensimmäinen Java-projekti Mavenilla
+## Ensimmäinen projekti Mavenilla
 
 Kokeillaan tehdä itse ensimmäinen Java-projekti Mavenilla. 
 
  1. Aloita luomalla uusi projekti. 
  2. Anna projektin nimeksi "EkaMavenProjekti". 
  3. Valitse IDEAssa Build System -kohdassa Maven. 
- 4. Klikkaa sitten Create.
+ 4. Klikkaa Create.
 
 Jos jostain syystä Mavenia ei ole valittavissa, asenna se IDEAn pluginien
 hallinnan kautta: File <i class="bi bi-chevron-right"></i> Settings <i class="bi
@@ -158,7 +160,7 @@ pom.xml
    `.mvn`-kansio, johon tutustumme myöhemmin. 
 
 Vilkaistaan `pom.xml`-tiedostoa, joka on Maven-projektin sydän. Avatessasi
-tiedston, näet XML-muotoista tekstiä. Tämä tiedosto määrittelee projektisi
+tiedston näet XML-muotoista tekstiä. Tämä tiedosto määrittelee projektisi
 rakenteen, riippuvuudet ja muut asetukset. "Vanilla"-Java-projektin (ts.
 projekti, joka ei käytä ulkoisia kirjastoja) `pom.xml`-tiedosto näyttää suunnilleen tältä:
 
@@ -188,7 +190,7 @@ projektisi tunniste, joka yksilöi juuri sinun projektisi muiden Maven-projektie
 joukossa. 
 
  * `groupId` toimii projektin "organisaatiotunnisteena". Se on usein käänteinen
-   verkkotunnus, kuten fi.jyu.ohjelmointi. 
+   verkkotunnus, kuten `fi.jyu.ohjelmointi`. 
  * `artifactId` on projektin nimi, ja 
  * `version` kertoo projektin version. 
 
@@ -213,19 +215,18 @@ tiedostosta `<dependencies>`-elementti. Lisää se (ja sen vastinpari
 </dependency>
 ```
 
-IDEA valittaa vielä, että okhttp-pakettia ei löydy. Riippuvuuksien lisäämisen
-jälkeen Maven-projekti täytyy virkistää klikkaamalla projektinäkymässä projektin
-nimen päältä hiiren oikealla, valitsemalla Maven ja Sync project. Tämän jälkeen
-IDEA lataa tarvittavat okhttp-riippuvuuden, ja myös kyseisen kirjaston
-itsensä vaatimat muut riippuvuudet. 
+IDEA valittaa vielä, että okhttp-jvm-pakettia ei löydy. Riippuvuuksien
+lisäämisen jälkeen Maven-projekti täytyy virkistää klikkaamalla
+projektinäkymässä projektin nimen päältä hiiren oikealla, valitsemalla Maven ja
+Sync project. Tämän jälkeen IDEA lataa tarvittavat okhttp-riippuvuuden, ja myös
+kyseisen kirjaston itsensä vaatimat muut riippuvuudet. 
 
 Lisää myös aivan koodin alkuun `package org.example;`, jotta koodi on oikeassa
 pakkauksessa. Palaamme pakkauksen tarkempaan merkitykseen hieman alempana. 
 
-Tallenna tiedosto ja käännä projekti uudestaan. Nyt Maven hakee OkHttp-kirjaston
-Maven Central -varastosta ja liittää sen projektiisi. Tämän jälkeen käännös
-onnistuu, ja voit ajaa `Main`-luokan `main`-metodia, jolloin näet HTTP-kutsun
-tulokset konsolissa.
+Tallenna tiedosto ja käännä projekti. Nyt Maven hakee OkHttp-kirjaston Maven
+Central -varastosta ja linkittää sen projektiisi. Tämän jälkeen käännös
+onnistuu, ja näet HTTP-kutsun tulokset konsolissa.
 
 ## Maven Central
 
@@ -273,7 +274,6 @@ tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
 
 ## Pakkaukset Javassa
 
-
 Kun Java-ohjelma kasvaa useista luokista koostuvaksi kokonaisuudeksi, luokkien
 järjestäminen satunnaisesti samaan kansioon ei enää riitä. Tarvitsemme tavan
 ryhmitellä toisiinsa liittyvät luokat loogisiksi kokonaisuuksiksi. Tätä varten
@@ -281,7 +281,7 @@ Java tarjoaa pakkaukset (engl. *packages*). Pakkaus on nimetty luokkien
 kokoelma. Se toimii samalla sekä loogisena ryhmittelykeinona että teknisenä
 nimialueena (*namespace*), joka estää nimikonfliktit. Ilman pakkauksia kahdella
 eri kirjastolla ei voisi olla samaa luokan nimeä. Esimerkiksi sekä oma ohjelmasi
-että jokin ulkoinen kirjasto voisi sisältää luokan nimeltä User. Pakkausten
+että jokin ulkoinen kirjasto voisi sisältää luokan nimeltä `User`. Pakkausten
 ansiosta nämä voidaan erottaa toisistaan täydellisen nimensä perusteella,
 esimerkiksi
 
@@ -289,14 +289,15 @@ esimerkiksi
 fi.jyu.ohjelmointi.User
 ```
 
-ja
+missä `fi.jyu.ohjelmointi` on pakkauksen nimi, ja
 
 ```
 com.example.library.User
 ```
 
-Vaikka luokkien yksinkertainen nimi on sama (User), niiden täydellinen nimi on
-eri, eikä ristiriitaa synny.
+missä `com.example.library` on toisen pakkauksen nimi. Vaikka luokkien
+yksinkertainen nimi on sama, niiden täydellinen nimi on eri, eikä ristiriitaa
+synny.
 
 Luokka kuuluu pakkaukseen, jos sen lähdekooditiedoston alussa on
 `package`-lause. Esimerkiksi:
@@ -313,7 +314,8 @@ public class Main {
 
 Tämä tarkoittaa, että `Main`-luokka kuuluu pakkaukseen `org.example`. Pakkaus on
 osa luokan täydellistä nimeä, joten tämän luokan täydellinen nimi on
-`org.example.Main`.
+`org.example.Main`. Maven-projektissa pakkauksen oletusnimi on juuri
+`org.example`, mutta voit muuttaa sen haluamaksesi.
 
 Pakkaus liittyy suoraan myös projektin kansiorakenteeseen. Jokainen pakkauksen
 osa vastaa yhtä kansiota. Esimerkiksi pakkaus `org.example` vastaa
@@ -336,12 +338,12 @@ okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
 
 Käytännössä `import`-lause tekee koodista selkeämpää ja helpommin luettavaa.
 
-Pakkausten nimissä käytetään vakiintunutta nimeämiskäytäntöä, joka perustuu
+Pakkausten nimissä käytetään vakiintunutta käytäntöä, joka perustuu
 käänteiseen verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa
-pakkaus voisi olla
+pakkauksen nimi voisi olla
 
 ```
-fi.jyu.ohj2.ekamaven
+fi.jyu.ohj2.munekamavenprojekti
 ```
 
 Tämä käytäntö auttaa varmistamaan, että pakkausten nimet ovat
