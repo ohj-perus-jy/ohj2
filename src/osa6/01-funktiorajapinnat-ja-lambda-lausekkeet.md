@@ -398,6 +398,16 @@ arvosanat.forEach((nimi, arvosana) -> IO.println(nimi + " => " + arvosana));
 //-}
 ```
 
+<task>
+  <task-title>Tehtävä 6.1: Laskukone <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-1-laskukone/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava1">Tee tehtävä TIMissa</a></task-link>
+</task>
+
 ### Comparator-rajapinta
 
 Palataan [luvussa 4.2](../osa4/02-vertailurajapinta.md) esiteltyyn
@@ -751,11 +761,15 @@ IO.println(nimet);
 //-}
 ```
 
-<task> <task-title>Tehtävä 6.1: Kortit harvinaisuuden mukaan. <points>1
-p.</points> </task-title> <handout> {{#include
-../exercises/6-1-laskukone/handout.md}} </handout> <task-link><a
-href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava1">Tee
-tehtävä TIMissä</a></task-link> </task>
+<task>
+  <task-title>Tehtävä 6.2: Vertailu harvinaisuuden mukaan <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/6-2-vertailu-harvinaisuus/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava2">Tee tehtävä TIMissa</a></task-link>
+</task>
 
 <!-- ## Tietue (kannattaako esitellä tässä vai mennäänkö vain luokilla?)
 
