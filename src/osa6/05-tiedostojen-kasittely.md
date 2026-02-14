@@ -194,7 +194,108 @@ public class LueNumerotScannerilla {
 
 ## Tietovirrat (Stream) 
 
-Miten Streamit eroaa Files API:sta? Lyhyt teoria ja konkreettisia käyttöesimerkkejä.
+Kokoelmien ohella (ks. [osa 6.2](./02-kokoelmien-kasittely-stream-api.md)) myös
+tiedostoja (ja muitakin ulkoisia resursseja) voidaan käsitellä virtoina
+`Stream`-luokan avulla. Erityisen hyödyllisiä Streamit ovat silloin, kun
+halutaan tehdä monimutkaisempia datan käsittelyä, joka vaatii useita peräkkäisiä
+operaatioita, kuten muunnoksia (map), suodatuksia (filter) ja keräilyä (esim.
+collect). Streamin avulla tämä onnistuu ketjutettujen metodikutsujen avulla,
+joka tekee koodista joskus selkeämpää ja helpommin luettavaa. 
+
+Luettaessa tiedostoa virtana tyypillinen aloitus on `Files.lines(polku)`, joka
+antaa rivit "laiskasti", mikä tarkoittaa, että kaikkia rivejä ei lueta etukäteen
+muistiin, vaan niitä luetaan sitä mukaa kun niitä tarvitaan. Tämä onkin
+keskeinen ero `readAllLines`-metodiin: `Files.lines` sopii myös hyvin suurille
+tiedostoille, koska se ei vaadi koko tiedoston lataamista muistiin.
+
+Tehdään aluksi yksinkertainen esimerkki, jossa toistetaan aiempi kuvio, mutta
+nyt käytetään `Files.lines`-metodia ja Stream-käsittelyä. Käytämme aiemmin
+opittua `map`-operaatiota muuntamaan jokaisen rivin taulukkomuotoon. Käytämme
+kerääjäfunktiona `forEach`-metodia, joka suorittaa annetun lambda-lausekkeen
+jokaiselle riville. Tässä parsimme rivit samalla tavalla kuin aiemmissa
+esimerkeissä, ja lopuksi tulostamme nimet ja iät.
+
+```java,ignore
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class TiedostonLukijaStream {
+    static void main() {
+        try {
+            Files.lines(Paths.get("data.csv"))
+                    .skip(1) // Ohitetaan otsikkorivi
+                    .map(line -> line.split(",")) // Pilkotaan rivi sarakkeiksi
+                    .forEach(parts -> {
+                        String nimi = parts[0]; // Ensimmäinen sarake on nimi
+                        int ika = Integer.parseInt(parts[1]); // Toinen sarake on ikä, parsitaan intiksi
+                        IO.println("Nimi: " + nimi + ", Ikä: " + ika);
+                    });
+        } catch (IOException e) {
+            IO.println("Tiedostoa ei löydy tai sitä ei voi lukea: " + e.getMessage());
+        }
+    }
+}
+``` 
+
+Jatketaan esimerkkiä hieman. Suodatetaan sellaiset henkilöt pois, joiden ikä on
+alle 18 vuotta, ja lopuksi tulostetaan nimet aakkosjärjestyksessä.
+
+```java,ignore
+//-import java.io.IOException;
+//-import java.nio.file.Files;
+//-import java.nio.file.Paths;
+//-import java.util.List;
+//-
+//-public class TiedostonLukijaStream {
+//-    static void main() {
+//-        try {
+            List<String> nimet = Files.lines(Paths.get("data.csv"))
+                    .skip(1) // Ohitetaan otsikkorivi
+                    .map(line -> line.split(",")) // Pilkotaan rivi sarakkeiksi
+            // HIGHLIGHT_GREEN_BEGIN
+                    .filter(parts -> Integer.parseInt(parts[1]) >= 18) // Suodatetaan alle 18-vuotiaat
+                    .map(parts -> parts[0]) // Otetaan vain nimi
+                    .sorted() // Järjestetään nimet aakkosjärjestykseen
+                    .toList(); // Kerätään tulokset listaksi
+
+            nimet.forEach(IO::println); // Tulostetaan nimet
+            // HIGHLIGHT_GREEN_END
+//-        } catch (IOException e) {
+//-            IO.println("Tiedostoa ei löydy tai sitä ei voi lukea: " + e.getMessage());
+//-        }
+//-    }
+//-}
+```
+
+Virtapohjaisessa käsittely on varsin näppärää, kun käsittely on suhteellisen
+yksinkertaista ja lineaarisesti etenevää. Virtapohjainen käsittely voi kuitenkin
+merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa. 
+
+<details><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Stream-käsittelyn haasteista tarkemmin</summary>
+
+ * kertakäyttöisyys: Stream-olion voi käyttää vain kerran, minkä jälkeen se on
+   suljettava. Jos haluat käsitellä samaa dataa uudestaan,
+   sinun täytyy luoda uusi Stream-olio.
+ * debuggaaminen: Ketjutus piilottaa välitulokset. Jos jokin map/filter-vaihe
+   heittää poikkeuksen, pinoloki kertoo kyllä missä lambdassa oltiin, mutta
+   "mikä rivi" ja "millä välituloksella" ei näy ilman erillisiä tulostuksia tai
+   erillisen
+   [`peek()`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#peek-java.util.function.Consumer-)-metodin
+   kutsumista. Lambda-lausekkeita ei voi askeltaa yhtä suoraviivaisesti kuin
+   perinteistä `for`-silmukkaa. 
+ * virheiden käsittely: lambda-lausekkeiden sisällä tapahtuvat tarkistamattomat
+   poikkeukset (esim. `NumberFormatException` `Integer.parseInt()`-kutsussa) on
+   käsiteltävä erikseen, koska lambda-lausekkeet eivät salli tarkistamattomien
+   poikkeusten heittämistä suoraan. Tämä voi tehdä virheiden käsittelystä hieman
+   monimutkaisempaa verrattuna perinteiseen silmukkaan.
+ * laiskuus voi yllättää: Stream ei tee mitään ennen terminaalioperaatiota
+   (`forEach`, `toList`, `collect`, `count`, …). Tämä voi aiheuttaa yllätyksiä, kuten
+   että koodi näyttää lukevan tiedoston, mutta mitään ei tapahdu, jos
+   terminaalioperaatio puuttuu. Myöskään poikkeukset eivät synny siinä kohdassa,
+   missä tiedosto avataan, vaan vasta terminaalivaiheessa.
+
+</details>
 
 ## Tiedostojen käsittely BufferedReader- ja BufferedWriter-luokilla
 
