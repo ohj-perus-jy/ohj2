@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/E65-1_Scanner/E65-1_Scanner.iml" filepath="$PROJECT_DIR$/E65-1_Scanner/E65-1_Scanner.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E65-2_FilesApi/E65-2_FilesApi.iml" filepath="$PROJECT_DIR$/E65-2_FilesApi/E65-2_FilesApi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E65-3_Scanner2/E65-3_Scanner2.iml" filepath="$PROJECT_DIR$/E65-3_Scanner2/E65-3_Scanner2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E65-4_Stream1/E65-4_Stream1.iml" filepath="$PROJECT_DIR$/E65-4_Stream1/E65-4_Stream1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/E65-5_Stream2/E65-5_Stream2.iml" filepath="$PROJECT_DIR$/E65-5_Stream2/E65-5_Stream2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Osa6.iml" filepath="$PROJECT_DIR$/Osa6.iml" />
+    </modules>
+  </component>
+</project>
