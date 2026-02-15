@@ -159,16 +159,21 @@ public interface NumeroFunktio {
 <summary><i class="bi bi-stars jyu-gold"></i> Bonus: Miten funktioviite toimii?</summary>
 
 Saatat miettiä, miten funktio voi yhtäkkiä "muuttua" olioksi. Javassa kyseessä
-on oikeastaan tekninen temppu. Ennen lambdalausekkeita sama asia Javassa tehtiin
+on oikeastaan tekninen temppu. Ennen funktioviitteitä sama asia Javassa tehtiin
 *anonyymeillä luokilla*. 
 
-Kääntäjä muuttaa lambdalausekkeen taustalla suunnilleen tällaiseksi rakenteeksi:
+Kääntäjä muuttaa funktioviitteen `this::kerroKahdella` suunnilleen tällaiseksi
+rakenteeksi:
 
 ```java,ignore
-NumeroFunktio f = new NumeroFunktio() {
+int kerroKahdella(int luku) {
+    return luku * 2;
+}
+
+NumeroFunktio funktio = new NumeroFunktio() {
     @Override
     public int laske(int luku) {
-        return luku * 2; // Lambdan toteutus
+        return kerroKahdella(luku);
     }
 };
 ```
