@@ -269,8 +269,76 @@ luokat näkyviin.
 ## Kolmannen osapuolen riippuvuudet
 
 Java-projekteissa on usein tarpeen käyttää kolmannen osapuolen kirjastoja, jotka
-tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa...
+tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa.
+Maven-projekteissa on oletuksena käytettävissä Maven Central -varasto 
+sekä käyttäjän *paikallinen* varasto. Jos haluamme käyttää jotain riippuvuutta,
+joka ei sijaitse Maven Central -varastossa, voimme lisätä muitakin varastoja 
+projektin käyttöön määrittelemällä ne `pom.xml`-tiedostossa seuraavasti.
 
+```
+<repositories>
+    <repository>
+        <id>varaston-tunnus</id>
+        <url>varaston-url</url>
+        <!-- Muut asetukset -->
+    </repository>
+
+    <!-- Muut varastot -->
+</repositories>
+```
+
+Projektin käytössä olevien varastojen lista löytyy Intellij IDEA:n asetuksista: 
+
+`File > Settings > Build, Execution, Deployment > Build Tools > Maven > Repositories`
+
+### Paikalliset riippuvuudet
+
+Maven asentaa kaikki lataamansa riippuvuudet paikalliseen kansioon, minkä 
+jälkeen ne ovat kaikkien projektien käytettävissä. Tämä kansio löytyy 
+käyttäjähakemiston alta polusta `.m2/repository`. Tähän paikalliseen varastoon 
+on myös mahdollista lisätä itse paketteja, jolloin niihin voi viitata 
+tavalliseen tapaan `pom.xml`-tiedostosta. 
+
+Minkä tahansa jar-tiedoston voi lisätä paikalliseen repositorioon esimerkiksi 
+seuraavalla komennolla. Tämä kuitenkin vaatii Maven-komentorivityökalujen 
+asentamisen, joten emme tällä kurssilla tule sitä käyttämään.
+
+```
+mvn install:install-file \
+   -Dfile=<tiedostopolku> \
+   -DgroupId=<organisaatiotunniste> \
+   -DartifactId=<projektitunniste> \
+   -Dversion=<versionumero> \
+   -Dpackaging=jar \
+   -DgeneratePom=true
+```
+
+Kannattaa kuitenkin pitää mielessä, että nämä riippuvuudet ovat tällöin 
+käytettävissä vain laitteella, jossa tämä manuaalinen lisääminen paikalliseen 
+varastoon on suoritettu.
+
+Voimme myös lisätä paikallisen riippuvuuden projektiin ilman, että se lisätään
+paikalliseen varastoon. Tämä mahdollistaa esimerkiksi riippuvuuden sijoittamisen
+projektin kansioon, jolloin se on helpompi lisätä myös projektin versionhallintaan.
+
+Riippuvuus lisätään `pom.xml`-tiedostoon tavalliseen tapaan, mutta lisäämme 
+`scope`-asetuksen ja annamme sen arvoksi `system`, jotta voimme käyttää 
+`systemPath`-asetusta määrittämään paikallisen riippuvuuden tiedostopolun.
+
+Muuttuja `${project.basedir}` viittaa projektin juureen, joten tässä esimerkissä
+riippuvuuden tiedostopolku on projektin hakemistossa sijaitseva `lib/tiedosto.jar`.
+
+```
+<dependencies>
+    <dependency>
+        <groupId>organisaatiotunniste</groupId>
+        <artifactId>projektitunniste</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/tiedosto.jar</systemPath>
+    </dependency>
+</dependencies>
+```
 
 ## Pakkaukset Javassa
 
