@@ -1,13 +1,12 @@
-Laajenna `Kerailykortti` luokka lisäämällä
-siihen attribuutti `String harvinaisuus`. Keräilykortin harvinaisuus voi olla
-yksi seuraavista arvoista (vähiten harvinaisesta harvinaisempaan):
-`C`, `U`, `R`, `RR`, `RRR`, `SR`, `AR`, `SAR`, `UR`.
+Laajenna `Kerailykortti`-luokkaa lisäämällä sille attribuutti `String
+harvinaisuus`. Keräilykortin harvinaisuus voi olla yksi seuraavista arvoista
+(vähiten harvinaisesta harvinaisimpaan): `C`, `U`, `R`, `RR`, `RRR`, `SR`, `AR`,
+`SAR`, `UR`.
 
 Kirjoita vertailija, joka järjestää listassa olevat kortit niiden harvinaisuuden
-mukaan. Voit käyttää esimerkiksi seuraavaa valmista korttikokoelmaa
-hyödyksesi:
+mukaan. Voit käyttää seuraavaa valmista korttikokoelmaa koodisi testaamiseen:
 
-<details><summary>Mallilista erilaisista korteista</summary>
+<details closed><summary>Mallilista erilaisista korteista</summary>
 
 ```java,ignore
 List<Kerailykortti> kortit = new ArrayList<>(List.of(
@@ -43,6 +42,6 @@ List<Kerailykortti> kortit = new ArrayList<>(List.of(
 </details>
 
 Kirjoita `main()`-ohjelma, joka järjestää ja tulostaa keräilykortit
-harvinaisuuden mukaan laskevasti (yleisimmät kortit ensin, harvinaisimmat viimeiseksi).
+harvinaisuuden mukaan (yleisimmät kortit ensin, harvinaisimmat viimeiseksi).
 Kortit, joiden harvinaisuus on jokin muu kuin yllä mainitut tai `null`, tulee
-olla listan alussa.
+sijoittaa listan alkuun.

@@ -1,25 +1,25 @@
-Tee ohjelma, joka kysyy käyttäjältä kaksi desimaalilukua sekä laskutoimituksen, ja tulostaa laskutoimituksen tuloksen seuraavasti:
+Tee ohjelma, joka kysyy käyttäjältä kaksi desimaalilukua sekä laskutoimituksen
+ja tulostaa lopputuloksen seuraavasti:
 
-```
+```text
 Luku 1 > 12.0
 Luku 2 > 3.0
 Laskutoimitus (+, -, *, /) > +
 12.0 + 3.0 = 15.0
 ```
 
-Tässä vaiheessa sinun ei tarvitse käsitellä virheellisiä syötteita, vaan
-voit olettaa, että luvut annetaan aina lukuina.
-Sallitut laskutoimitukset ovat summa (`+`), erotus (`-`), kertolasku (`*`)
-ja jakolasku (`/`). Voit olettaa, että vain nämä laskutoimituksia käytetään
-syötteenä.
+Tässä vaiheessa sinun ei tarvitse käsitellä virheellisiä syötteitä, vaan voit
+olettaa, että luvut annetaan aina lukuina. Sallitut laskutoimitukset ovat summa
+(`+`), erotus (`-`), tulo (`*`) ja osamäärä (`/`). Voit olettaa, että vain näitä
+laskutoimituksia käytetään syötteenä.
 
-**Älä käytä yhtään silmukkaa tai ehtorakennetta.**
-Sen sijaan tee laskutoimituksia vastaavat lambdalausekkeet ja tallenna
-ne hakurakenteeseen käyttäen laskutoimituksen merkkiä avaimena.
+**Älä käytä silmukoita tai ehtorakenteita.** Sen sijaan toteuta laskutoimitukset
+lambdalausekkeina ja tallenna ne hakurakenteeseen käyttäen laskutoimituksen
+merkkiä avaimena.
 
-Ohjelman suoritus päättyy laskutoimituksen tuloksen näyttämisen jälkeen.
+Ohjelman suoritus päättyy tuloksen näyttämisen jälkeen.
 
-<details><summary>Vinkki 1</summary>
+<details closed><summary>Vinkki 1</summary>
 
 Voit käyttää lambdalausekkeiden tyyppinä `BiFunction<Double, Double, Double>`
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/BiFunction.html))
@@ -28,25 +28,23 @@ tai `DoubleBinaryOperator`
 
 </details>
 
-<details><summary>Vinkki 2</summary>
+<details closed><summary>Vinkki 2</summary>
 
-Voit käyttää hakurakenteen tyyppinä 
-`Map<String, BiFunction<Double, Double, Double>>`
-tai
-`Map<String, DoubleBinaryOperator>`.
+Voit käyttää hakurakenteen tyyppinä `Map<String, BiFunction<Double, Double,
+Double>>` tai `Map<String, DoubleBinaryOperator>`.
 
-Voit joko valita hakurakenteelle tietyn toteutuksen tai alustaa
-muuttumattoman hakurakenteen `Map.of`-metodilla:
+Voit joko valita hakurakenteelle tietyn toteutuksen tai alustaa muuttumattoman
+hakurakenteen `Map.of`-metodilla:
 
 ```java,ignore
 Map<String, BiFunction<Double, Double, Double>> laskutoimitukset = Map.of(
     "+", ...,
     "-", ...,
     "*", ...,
-    "-", ...
+    "/", ...
 );
 ```
 
-`...` tilalle riittää asettaa sopiva lambdalauseke.
+`...`-kohdan tilalle riittää asettaa sopiva lambdalauseke.
 
 </details>

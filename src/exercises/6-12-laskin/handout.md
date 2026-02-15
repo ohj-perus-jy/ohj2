@@ -1,8 +1,9 @@
-Tee yksinkertainen laskinohjelma, joka kysyy jatkuvasti käyttäjältä
-kaksi lukuja sekä laskutoimituksen ja tulostaa laskutuloksen.
+Tee yksinkertainen laskinohjelma, joka kysyy käyttäjältä toistuvasti kaksi lukua
+sekä laskutoimituksen ja tulostaa laskutoimituksen tuloksen.
+
 Ohjelman tulisi toimia suunnilleen seuraavasti:
 
-```
+```text
 Anna laskutoimitus muodossa <luku> <operaattori> <luku>.
 Kirjoita "sulje" sulkeaksesi ohjelman.
 
@@ -22,29 +23,30 @@ Anna laskutoimitus muodossa <luku> <operaattori> <luku>.
 Ohjelma sulkeutuu.
 ```
 
-Ohjelman on käsiteltävä käyttäjän syötteessä olevia virheitä.
-Ohjelma ei saa kaatua käyttäjän virheellisesti muodostetun syötteen takia.
+Ohjelman on käsiteltävä käyttäjän syötteessä olevat virheet siten, ettei ohjelma
+kaadu virheellisen syötteen vuoksi.
 
-Toteuta peruslaskutoimituksista summa (`+`), erotus (`-`), tulo (`*`) ja osamäärä
-(`/`). Keksi lisäksi vähintään kaksi omaa vapaavalintaista laskutoimitusta ja toteuta ne.
+Toteuta peruslaskutoimituksista summa (`+`), erotus (`-`), tulo (`*`) ja
+osamäärä (`/`). Keksi lisäksi vähintään kaksi omaa vapaavalintaista
+laskutoimitusta ja toteuta ne.
 
-**Älä käytä ehtorakenteita laskutoimitusten toteuttamisessa.** 
-Voit kuitenkin käyttää ehtorakenteita ja `try/catch`-rakenteita
-oikeellisuustarkistusten yhteydessä.
+**Älä käytä ehtorakenteita varsinaisten laskutoimitusten valitsemiseen.** Voit
+kuitenkin käyttää ehtorakenteita sekä `try/catch`-rakenteita syötteen
+oikeellisuuden tarkistamiseen.
 
-<details><summary>Vinkki 1</summary>
+<details closed><summary>Vinkki 1</summary>
 
-Voit toteuttaa operaatiot lambdalausekkeina.
-Käytä lambdalausekkeiden tyyppinä `BiFunction<Double, Double, Double>`
+Voit toteuttaa operaatiot lambdalausekkeina. Käytä lambdalausekkeiden tyyppinä
+`BiFunction<Double, Double, Double>`
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/BiFunction.html))
 tai `DoubleBinaryOperator`
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/DoubleBinaryOperator.html)).
 
 </details>
 
-<details><summary>Vinkki 2</summary>
+<details closed><summary>Vinkki 2</summary>
 
-Voit käyttää `Scanner`-tyyppiä käyttäjän syötteen lukemiseksi:
+Voit käyttää `Scanner`-luokkaa käyttäjän syötteen lukemiseen:
 
 ```java,ignore
 Scanner lukija = new Scanner(kayttajanSyote);
@@ -57,10 +59,3 @@ double luku2 = lukija.nextDouble();
 Saatat joutua lisäämään tarvittavat poikkeustenkäsittelyt.
 
 </details>
-
-
-
-
-
-
-

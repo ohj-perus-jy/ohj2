@@ -1,5 +1,5 @@
-Olkoon käytössä luokka `Kappale`, joka edustaa yksittäistä
-musiikkikappaletta. Kappaleella on nimi, genre ja kesto sekunteina:
+Olkoon käytössä luokka `Kappale`, joka edustaa yksittäistä musiikkikappaletta.
+Kappaleella on nimi, genre ja kesto sekunteina:
 
 ```java,ignore
 class Kappale {
@@ -9,18 +9,17 @@ class Kappale {
 }
 ```
 
-Lisää luokalle tarvittavat julkisuusmääreet,
-rakentaja, tarpeelliset getterit sekä sopiva `toString()`-metodin toteutus.
+Lisää luokalle tarvittavat näkyvyysmääreet, muodostaja, tarpeelliset
+saantimetodit (getterit) sekä sopiva `toString()`-metodin toteutus.
 
-Tee funktio 
-`teeSoittolista(kappaleet, genre, kappaleita)`,
-joka palauttaa korkeintaan `kappaleita` verran kappaleita, joiden
-genre vastaa `genre`-parametria. Kappaleet tulee olla järjestettynä
-keston mukaan lyhyemmästä pisimpään. 
+Tee funktio `teeSoittolista(kappaleet, genre, kappaleita)`, joka palauttaa
+korkeintaan `kappaleita`-muuttujan ilmoittaman määrän kappaleita, joiden genre
+vastaa annettua `genre`-parametria. Kappaleiden tulee olla järjestettynä keston
+mukaan lyhyemmästä pisimpään.
 
-Voit käyttää alla olevaa mallilistaa koodin testaamiseksi:
+Voit käyttää seuraavaa mallilistaa koodisi testaamiseen:
 
-<details><summary>Lista mallikappaleista</summary>
+<details closed><summary>Lista mallikappaleista</summary>
 
 ```java
 List<Kappale> biisilista = List.of(
@@ -61,9 +60,9 @@ List<Kappale> biisilista = List.of(
 
 </details>
 
-**Älä käytä silmukoita,** vaan toteuta `teeSoittolista` käyttäen striimeja.
+**Älä käytä silmukoita**, vaan toteuta `teeSoittolista` käyttäen striimejä.
 
-<details><summary>Vinkki</summary>
+<details closed><summary>Vinkki</summary>
 
 Saatat tarvita ainakin seuraavia `Stream`-metodeja:
 
