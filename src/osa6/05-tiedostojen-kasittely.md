@@ -171,7 +171,7 @@ Files.writeString(
 // ...
 ```
 
-## Tiedoston käsittely Scanner-oliolla
+## Lukeminen Scanner-oliolla
 
 Scanner sopii tilanteisiin, joissa haluat lukea tekstiä ikään kuin palasissa:
 esimerkiksi kokonainen rivi kerrallaan, seuraavaan välilyöntiin asti tai jopa
@@ -278,21 +278,23 @@ public class LueNumerotScannerilla {
 }
 ```
 
+Scanner-oliolla ei voi kirjoittaa tiedostoon, se on vain lukutyökalu.
+
 ## Tietovirrat (Stream) 
 
-Kokoelmien ohella (ks. [osa 6.2](./02-kokoelmien-kasittely-stream-api.md)) myös
-tiedostoja (ja muitakin ulkoisia resursseja) voidaan käsitellä virtoina
-`Stream`-luokan avulla. Erityisen hyödyllisiä Streamit ovat silloin, kun
-halutaan tehdä monimutkaisempia datan käsittelyä, joka vaatii useita peräkkäisiä
-operaatioita, kuten muunnoksia (map), suodatuksia (filter) ja keräilyä (esim.
-collect). Streamin avulla tämä onnistuu ketjutettujen metodikutsujen avulla,
-joka tekee koodista joskus selkeämpää ja helpommin luettavaa. 
+Kokoelmien ohella (ks. [osa 6.2](./02-kokoelmien-kasittely-stream-api.md)) mmyös
+tiedostoja (ja muitakin ulkoisia resursseja) voidaan käsitellä Stream-rajapinnan
+avulla. Streamit ovat hyödyllisiä silloin, kun dataan halutaan tehdä useita
+peräkkäisiä operaatioita, kuten muunnoksia (map), suodatuksia (filter) ja
+keräilyä (esim. toList, collect). Tällöin käsittely kuvataan ketjuna, joka
+kertoo selkeästi mitä datalle tehdään vaihe vaiheelta.
 
-Luettaessa tiedostoa virtana tyypillinen aloitus on `Files.lines(polku)`, joka
-antaa rivit "laiskasti", mikä tarkoittaa, että kaikkia rivejä ei lueta etukäteen
-muistiin, vaan niitä luetaan sitä mukaa kun niitä tarvitaan. Tämä onkin
-keskeinen ero `readAllLines`-metodiin: `Files.lines` sopii myös hyvin suurille
-tiedostoille, koska se ei vaadi koko tiedoston lataamista muistiin.
+Luettaessa tiedostoa virtana tyypillinen aloitus on Files.lines(polku). Se
+tuottaa rivit laiskasti: rivejä ei lueta etukäteen kokonaan muistiin, vaan niitä
+luetaan sitä mukaa kuin streamiä kulutetaan. Tämä on keskeinen ero
+readAllLines-metodiin: Files.lines sopii myös suurille tiedostoille, koska se ei
+vaadi koko tiedoston lataamista muistiin. Koska tiedostoa luetaan taustalla,
+stream täytyy sulkea.
 
 Tehdään aluksi yksinkertainen esimerkki, jossa toistetaan aiempi kuvio, mutta
 nyt käytetään `Files.lines`-metodia ja Stream-käsittelyä. Käytämme aiemmin
@@ -336,17 +338,16 @@ alle 18 vuotta, ja lopuksi tulostetaan nimet aakkosjärjestyksessä.
 //-public class TiedostonLukijaStream {
 //-    static void main() {
 //-        try {
-            List<String> nimet = Files.lines(Paths.get("data.csv"))
-                    .skip(1) // Ohitetaan otsikkorivi
-                    .map(line -> line.split(",")) // Pilkotaan rivi sarakkeiksi
-            // HIGHLIGHT_GREEN_BEGIN
-                    .filter(parts -> Integer.parseInt(parts[1]) >= 18) // Suodatetaan alle 18-vuotiaat
-                    .map(parts -> parts[0]) // Otetaan vain nimi
-                    .sorted() // Järjestetään nimet aakkosjärjestykseen
-                    .toList(); // Kerätään tulokset listaksi
-
-            nimet.forEach(IO::println); // Tulostetaan nimet
-            // HIGHLIGHT_GREEN_END
+List<String> nimet = Files.lines(Paths.get("data.csv"))
+        .skip(1) // Ohitetaan otsikkorivi
+        .map(line -> line.split(",")) // Pilkotaan rivi sarakkeiksi
+// HIGHLIGHT_GREEN_BEGIN
+        .filter(parts -> Integer.parseInt(parts[1]) >= 18) // Suodatetaan alle 18-vuotiaat
+        .map(parts -> parts[0]) // Otetaan vain nimi
+        .sorted() // Järjestetään nimet aakkosjärjestykseen
+        .toList(); // Kerätään tulokset listaksi
+nimet.forEach(IO::println); // Tulostetaan nimet
+// HIGHLIGHT_GREEN_END
 //-        } catch (IOException e) {
 //-            IO.println("Tiedostoa ei löydy tai sitä ei voi lukea: " + e.getMessage());
 //-        }
@@ -383,10 +384,18 @@ merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa.
 
 </details>
 
-## Tiedostojen käsittely BufferedReader- ja BufferedWriter-luokilla
+## BufferedReader ja BufferedWriter
 
-Kun tarttee tehokkaasti lukea tavuja, niin se  ovi olla hyvä... Ehkä
-bonustiedoksi? 
+[BufferedReader](https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html)
+ja
+[BufferedWriter](https://docs.oracle.com/javase/8/docs/api/java/io/BufferedWriter.html)
+ovat "perinteisiä" työkalut tekstitiedostojen käsittelyyn silloin, kun haluat
+lukea ja kirjoittaa rivi kerrallaan ja hallita käsittelysilmukkaa tarkasti. Ne
+puskuroivat I/O:ta, eli eivät tee järjestelmäkutsua jokaisesta yksittäisestä
+merkistä, vaan lukevat ja kirjoittavat suuremmissa paloissa. Tämä parantaa
+suorituskykyä erityisesti suurilla tiedostoilla ja tekee käsittelystä
+ennustettavaa. Jätämme näiden opiskelun omatoimiseksi, valinnaiseksi
+harjoitukseksi.
 
 ## CSV-tiedostojen käsittely
 
