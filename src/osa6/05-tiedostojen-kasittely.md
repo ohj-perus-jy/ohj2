@@ -86,7 +86,6 @@ public class TiedostonLukija {
 }
 ```
 
-
 Samalla idealla &ndash; eli kokonainen tiedosto kerrallaan &ndash; voit myös
 kirjoittaa tiedostoon. Kun koko sisältö on yhtenä merkkijonona, voit käyttää
 `Files.writeString()`-metodia. Ennen kirjoittamista tulee varmistaa, että
@@ -152,9 +151,25 @@ public class KirjoitaTiedostoRiveina {
         }
     }
 }
-
 ```
 
+On myös mahdollista lisätä tekstiä olemassa olevan tiedoston loppuun. Se vaatii
+parin lisäargumentin antamista. Alla lyhyt esimerkki `Files.write()`-metodin
+käytöstä, jossa teksti lisätään olemassa olevan tiedoston loppuun.
+
+```java,ignore
+// ...
+Path polku = Path.of("data", "tulos.txt");
+String rivi = "Uusi rivi, joka lisätään tiedoston loppuun.\n";
+Files.writeString(
+        polku,
+        rivi,
+        StandardCharsets.UTF_8, // Käytetään UTF-8-koodausta
+        StandardOpenOption.CREATE, // Luo tiedosto, jos sitä ei ole
+        StandardOpenOption.APPEND // Lisää tekstiä olemassa olevan tiedoston loppuun
+);
+// ...
+```
 
 ## Tiedoston käsittely Scanner-oliolla
 
