@@ -6,9 +6,11 @@
 
 > [!Osaamistavoitteet]
 >
-> - Build-työkalut (Gradle/Maven)
-> - Kolmannen osapuolen riippuvuuksia (miten etsitään ja lisätään kirjasto)
-> - Pakkaukset Javassa? (Vai jo luvussa 2?)
+> - Ymmärrät, miksi rakennustyökaluja (kuten Maven tai Gradle) tarvitaan modernissa ohjelmistokehityksessä.
+> - Tunnet Maven-projektin perusrakenteen ja `pom.xml`-tiedoston merkityksen.
+> - Osaat etsiä ja lisätä ulkoisia riippuvuuksia projektiisi.
+> - Ymmärrät Javan pakkausrakenteen (`package`) merkityksen koodin organisoinnissa ja nimikonfliktien estämisessä.
+> - Osaat hyödyntää `import`-lauseita eri pakkauksissa sijaitsevien luokkien käyttämiseen.
 
 Oletetaan, että haluat tehdä Java-ohjelman, joka hakee tietoa verkosta
 HTTP-kutsulla. Löydät netistä seuraavan esimerkkikoodin. 

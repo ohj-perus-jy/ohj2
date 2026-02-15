@@ -6,11 +6,12 @@
 
 > [!Osaamistavoitteet]
 >
-> - Osaat käsitellä tiedostoja Javan valmiiden rajapintojen kautta (Tiedostomuotojen käsittely "käsin" (CSV) ja kirjastolla (JSON))
-> - Files API
-> - Tietovirrat (Stream) ja sen oheisluokat (BufferedReader/Writer, Scanner)
-> - Yksinkertaisen tiedoston lukeminen (CSV-tyylinen)
-> - Jokin JSON-kirjasto ja JSON-tiedoston lukeminen: Gson, Jackson, org.json???
+> - Osaat lukea ja kirjoittaa tekstitiedostoja Javan `Files`-luokan avulla.
+> - Osaat käyttää `Scanner`-luokkaa tiedon lukemiseen ja parsimiseen tiedostosta.
+> - Osaat käsitellä tiedostoja riveittäin hyödyntäen Stream-rajapintaa.
+> - Tunnet JSON-tiedostomuodon perusteet.
+> - Osaat käyttää Jackson-kirjastoa JSON-datan lukemiseen ja kirjoittamiseen.
+> - Ymmärrät, miten Javan `record`-tietueet soveltuvat datan mallintamiseen.
 
 Tiedoston käsittelyssä on aina sama peruskaari: avaat resurssin, luet tai
 kirjoitat dataa tietyssä muodossa, ja suljet resurssin. Java tarjoaa tähän
