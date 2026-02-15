@@ -17,17 +17,18 @@ CSharp
   java  
 ```
 
-
 Tee ohjelma, joka:
 
  * Lukee kaikki rivit.
  * Poistaa sanoista ylimääräiset välilyönnit  ja muuttaa sanat pieniksi
    kirjaimiksi. Vinkki: `String.trim()` ja `String.toLowerCase()`.
  * Poistaa tyhjät rivit.
- * Poistaa duplikaatit.
- * Järjestää sanat aakkosjärjestykseen.
- * Kirjoittaa uuden tiedoston data/sanat-siisti.txt, jossa on siistitty sanalista (yksi sana per rivi).
- * Kirjoittaa lisäksi tiedoston data/raportti.txt, jossa on:
+ * Poistaa duplikaatit. (Vinkki: `distinct()`-metodi Stream API:lla, tai
+   `Set`-kokoelma.)
+ * Järjestää sanat aakkosjärjestykseen. (Vinkki: `sorted()`-metodi Stream
+   API:lla, tai `Collections.sort()`-metodi Listalla.)
+ * Kirjoittaa uuden tiedoston `output/sanat-siisti.txt`, jossa on siistitty sanalista (yksi sana per rivi).
+ * Kirjoittaa lisäksi tiedoston `output/raportti.txt`, jossa on:
     * alkuperäisten rivien määrä
     * siistittyjen sanojen määrä
     * pisin sana (jos useita, mikä tahansa kelpaa). Vinkki: Jos ratkaiset
@@ -36,7 +37,7 @@ Tee ohjelma, joka:
 Vinkki: tee ensin `List<String> siistit = ...`, ja kirjoita lopuksi
 `Files.write(...)` kahteen eri tiedostoon.
 
-Tulosteen pitäisi näyttää tältä: 
+`raportti.txt`:n pitäisi näyttää tältä: 
 
 ```
 Alkuperäisiä rivejä: 1074
