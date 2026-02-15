@@ -19,7 +19,7 @@ opiskelijat.add("Aino");
 opiskelijat.add("Ville");
 opiskelijat.add("Aino");
 
-System.out.println(opiskelijat.get(1)); // Ville
+IO.println(opiskelijat.get(1)); // Ville
 //-}
 ```
 

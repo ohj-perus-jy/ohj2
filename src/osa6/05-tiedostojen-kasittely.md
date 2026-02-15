@@ -271,9 +271,9 @@ public class LueNumerotScannerilla {
             sc.close();
         }
 
-        System.out.println("Lukuja: " + maara);
-        System.out.println("Summa: " + summa);
-        System.out.println("Keskiarvo: " + (maara == 0 ? 0 : summa / maara));
+        IO.println("Lukuja: " + maara);
+        IO.println("Summa: " + summa);
+        IO.println("Keskiarvo: " + (maara == 0 ? 0 : summa / maara));
     }
 }
 ```

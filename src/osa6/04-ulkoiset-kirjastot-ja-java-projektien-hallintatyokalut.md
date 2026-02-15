@@ -27,7 +27,7 @@ public class Main {
                 .build();
 
         Response response = client.newCall(request).execute();
-        System.out.println(response.body().string());
+        IO.println(response.body().string());
         response.close();
     }
 }
