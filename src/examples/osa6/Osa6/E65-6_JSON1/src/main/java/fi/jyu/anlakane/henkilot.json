@@ -1,0 +1,12 @@
+[
+  {
+    "nimi": "Maija",
+    "ika": 25,
+    "kaupunki": "Jyväskylä"
+  },
+  {
+    "nimi": "Matti",
+    "ika": 30,
+    "kaupunki": "Tampere"
+  }
+]
