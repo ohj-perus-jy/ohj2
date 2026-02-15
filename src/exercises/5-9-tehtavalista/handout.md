@@ -22,10 +22,10 @@ Lisää luokkaan seuraavat metodit:
 - `merkitseTehdyksi`, joka merkitsee seuraavana tehtävälistalla olevan tehtävän
   suoritetuksi.
 
-- `kumoaMerkitseTehdyksi`, joka palauttaa viimeksi tehdyn tehtävän suoritettujen
+- `kumoaTehty`, joka palauttaa viimeksi tehdyn tehtävän suoritettujen
   tehtävienlistalta takaisin tehtävälistan alkuun.
 
-- `tulostaTehtavat`, joka tulostaa tekemättömät ja tehdyt tehtävät omina
+- `tulosta`, joka tulostaa tekemättömät ja tehdyt tehtävät omina
   listoinaan. Tulostusmuoto ei ole hirveän tärkeä, kunhan tulosteesta näkee
   selvästi eri listat.
 

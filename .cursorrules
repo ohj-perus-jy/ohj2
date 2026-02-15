@@ -1,0 +1,102 @@
+# ohj2 Project Instructions & Context (Master File)
+
+## 1. Project Structure
+
+- **Root:** `src/` contains all markdown content.
+- **Chapters:** `osa1/`, `osa2/`, ..., `osa12/`.
+- **Chapter Structure (index.md):**
+  - Title (`# Otsikko`).
+  - Warning/Status callouts (if any).
+  - Learning Objectives (`> [!Osaamistavoitteet]`) immediately following headers/warnings.
+  - Short, direct introductory text using the "me" (we) voice.
+  - Brief overview paragraphs without unnecessary sub-headers for short content.
+- **Content File Structure:**
+  - `01-topic.md`, `02-topic.md`: Content files.
+  - `XX-tehtavat.md`: Collection of all exercises for the chapter.
+- **Key Files:**
+  - `SUMMARY.md`: Table of Contents (mdbook structure).
+  - `suorittaminen.md`: Grading and completion modes.
+  - `tyokalut.md`: Tooling instructions.
+  - `tyyliopas.md`: Style guide (infer style from content).
+- **Assets:**
+  - `images/`: Images and screencasts (`.cast`).
+  - `examples/`: Java source code included in markdown.
+  - `exercises/`: Task handouts included in markdown.
+
+## 2. Writing Style & Tone
+
+- **Language:** Finnish (Standard, professional, educational).
+- **Voice (Strict Mandate):**
+  - **Instructor/Shared Context:** Use "me" (we) forms (e.g., "Olemme oppineet...", "Tässä osassa tutustumme...").
+  - **Student Actions/Objectives:** Use "sinä" (you) forms or imperative (e.g., "Hyödynnät...", "Tee seuraavasti...").
+- **Tone:** Encouraging, clear, and **extremely concise**. Avoid fluff like "moving towards professional development"; state exactly what is being learned.
+- **Terminology:**
+  - Use standard Finnish CS terminology (e.g., "luokka" (class), "olio" (object), "perintä" (inheritance), "rajapinta" (interface)).
+  - English terms are often provided in parentheses on first use (e.g., "*kapselointi* (engl. *encapsulation*)").
+  - Comparisons with other languages (C#, Python, JS) are used to help students with prior experience.
+
+## 3. Formatting Conventions
+
+- **Callouts:**
+  - `> [!Osaamistavoitteet]`: At the start of `index.md` or major sections.
+  - `> [!TÄRKEÄÄ]`: Critical information.
+  - `> [!VINKKI]`: Helpful tips.
+  - `> [!HUOMAUTUS]`: Notes/Observations.
+  - `> [!VAROITUS]`: Warnings (e.g., about bad practices, AI usage).
+- **Code Blocks:**
+  - Java: ` ```java `
+  - Non-runnable/Partial: ` ```java,ignore ` or ` ```java,noplayground `
+  - Inclusions: `{{#include ../path/to/file.java}}` (Preferred for maintainability).
+  - **Output/Comments:** 
+    - NEVER write what code prints in comments (e.g., `// Tulostaa: 6`) if the block is runnable; students run it to see.
+    - If a block is non-runnable but output is relevant, add a separate ` ```text ` block immediately below to simulate the result.
+- **Interactive Elements:**
+  - Editable code blocks: ` ```java,editable `
+  - Highlight markers: `// HIGHLIGHT_GREEN_BEGIN/END` (also RED, YELLOW, BLUE) inside code blocks.
+  - Multi-file examples: `// FILE: Filename.java` and `// FILE_END` markers.
+  - Details/Summary: `<details closed><summary>Title</summary>Content</details>` (`closed` attribute is preferred).
+  - Icons: `<i class="bi bi-..."></i>` (Bootstrap) or `<i class="fa fa-..."></i>` (FontAwesome).
+  - Keyboard keys: `<kbd>Key</kbd>`.
+  - Anchors: Custom anchors like `{#anchor}` in headers.
+  - Tabs: Tabbed content using `### [Label](#tab/id)`, content, and `***` separator.
+- **Tasks (Custom Tags):**
+  - `<task>` wrapper.
+  - `<task-title>` with `<points>` inside.
+  - `<handout>` containing `{{#include ...}}`.
+  - `<task-link>` to TIM.
+- **Visuals:**
+  - Diagrams: `plantuml`, `mermaid`, or `svgbob`.
+  - Multimedia: `<video src="..." controls></video>` or `<asciinema src="..." ...></asciinema>`.
+  - Images: `![alt](path)` or `<img>` tag for size control.
+
+## 4. Coding Conventions (Java 21+)
+
+- **Main Method:** Instance `void main()` is preferred over `public static void main(String[] args)`.
+- **I/O:** Use `IO.println()`, `IO.print()`, `IO.readln()` (course-specific helper).
+- **Comments:** Use `//-` for hidden lines in examples.
+- **Style:**
+  - **Classes:** PascalCase (`Kissa`).
+  - **Methods/Variables:** camelCase (`tulostaNimi`).
+  - **Constants:** UPPER_SNAKE_CASE (`MAX_VALUE`).
+  - **Indentation:** 4 spaces.
+  - **Braces:** K&R style (opening brace on the same line).
+
+## 5. Pedagogical Approach
+
+- **Analogy First:** Always start with a real-world problem or analogy before technical definitions.
+  - *Examples:* Blueprints (Classes), Car/Engine (Encapsulation), Sockets/Plugs (Interfaces), Library/Shelves (Hash Tables).
+- **Evolutionary Learning:** Show "bad" or procedural code first to highlight a problem, then refactor it using the new concept.
+- **Step-by-step Simplification:** When explaining modern features (like lambdas), start with the most verbose implementation (e.g., a separate class) and simplify incrementally (e.g., to method reference, then lambda), explaining exactly what gets hidden at each step.
+- **Conceptual Shift:** Explicitly guide the shift from procedural ("data and functions") to object-oriented ("state and methods") thinking.
+- **Deep "Why":** Explain the logic behind rules (e.g., *why* `hashCode` is needed, *why* `T` can't be primitive).
+- **Under the Hood:** Use `Bonus` sections (in `<details>`) to explain how modern shortcuts are implemented using older features (e.g., lambdas vs anonymous classes).
+- **Safety & Best Practices:** Use `> [!VAROITUS]` for pitfalls. Emphasize "Single Responsibility" and maintainability.
+- **Comprehensive Explanations:** Break down complex examples (like `Comparator` combinations) into their individual components.
+- **Tool Support:** Provide specific instructions for IntelliJ IDEA (debugger, auto-generation) while maintaining conceptual focus.
+- **Primary Sources:** Encourage reading official JavaDocs, teaching how to navigate them despite the difficulty.
+
+## 6. Common Tasks
+
+- **Proofreading:** Check for typos, grammar (Finnish cases), and clarity.
+- **Normalization:** Ensure headers are capitalized correctly and callouts/tags are used consistently.
+- **Structure:** Ensure the file hierarchy in `SUMMARY.md` matches the file system.

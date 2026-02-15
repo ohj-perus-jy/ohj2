@@ -64,6 +64,7 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Arch Linux (`6.17.7-arch1-1`)
 - CachyOS Linux (`6.18.2-2-cachyos`)
+- Linux Mint 22.2 (`6.14.0-37-generic`)
 
 ***
 
@@ -176,7 +177,7 @@ sinun tulee asentaa Homebrew alla olevilla ohjeilla:
     ```
     
     Versionumero `X.X.X` voi olla mikä tahansa; olennaista on, että tuloste ilmestyy näkyviin.
-</summary>
+</details>
 
 ***
 
@@ -194,7 +195,7 @@ Ota huomioon seuraavat asiat seuratessa ohjeita:
    kuten [Snap](https://snapcraft.io/docs/installing-snapd) tai [Flatpak](https://flatpak.org/).
    
    Tällä sivulla olevat ohjeet käyttävät ensisijaisesti Snapia tai jakelukohtaisia
-   pakkauksia, jos niitä on.
+   pakkauksia, jos niitä on. Linux Mint-jakelulle saat Snapin asennettua [jakelun ohjetta](https://linuxmint-user-guide.readthedocs.io/en/latest/snap.html#how-to-install-the-snap-store-in-linux-mint-20) seuraamalla.
 
 - Kun olet asentanut tarvittavat esipakkaukset, käynnistä uusi tyhjä pääte.
 
