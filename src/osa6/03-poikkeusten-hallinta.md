@@ -65,27 +65,27 @@ käsittelyn prosessia. Oletetaan, että `main()`-metodi kutsuu metodia `a()`, jo
 puolestaan kutsuu metodia `b()`, ja `b()` edelleen `c()`-metodia. 
 
 ```bob
-                       +-----.----------------------+
-Heittää poikkeuksen ---|c( ) | Metodi, jossa virhe  |
-                       |-----' tapahtui             |----.
-                       +----------------------------+    | Etsitään
-                                     ^                   | sopivaa 
-                                     | kutsuu            | käsittelijää
-                       +-----.----------------------+    |
-Heittää poikkeuksen ---|b( ) | Metodi, jossa ei ole |<---'
-          eteenpäin    |-----' poikkeuskäsittelijää |----.
-                       +----------------------------+    | Etsitään   
-                                     ^                   | sopivaa 
-                                     | kutsuu            | käsittelijää
-                       +-----.----------------------+    |
-  Ottaa poikkeuksen ---|a( ) | Metodi, jossa on     |<---'
-             kiinni    |-----' poikkeuskäsittelijä  | 
-                       +----------------------------+               
-                                     ^ 
-                                     | kutsuu 
-                       +----------------------------+ 
-                       |           main( )          | 
-                       +----------------------------+ 
+                         +-----.------------------------+
+"Heittää poikkeuksen" ---|"c()"| "Metodi, jossa virhe"  |
+                         |-----' "tapahtui"             |----.
+                         +------------------------------+    | "Etsitään"     
+                                        ^                    | "sopivaa"      
+                                        | kutsuu             | "käsittelijää" 
+                         +-----.------------------------+    | 
+"Heittää poikkeuksen" ---|"b()"| "Metodi, jossa ei ole" |<---'                
+          "eteenpäin"    |-----' "poikkeuskäsittelijää" |----. 
+                         +------------------------------+    | "Etsitään"   
+                                        ^                    | "sopivaa" 
+                                        | kutsuu             | "käsittelijää"
+                         +-----.------------------------+    |
+  "Ottaa poikkeuksen" ---|"a()"| "Metodi, jossa on"     |<---'
+             "kiinni"    |-----' "poikkeuskäsittelijä"  | 
+                         +------------------------------+               
+                                        ^                  
+                                        | kutsuu         
+                         +------------------------------+ 
+                         |           "main()"           | 
+                         +------------------------------+                     .
 ```
 
 Esimerkissä tapahtuu seuraavaa:
