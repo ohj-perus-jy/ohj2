@@ -108,7 +108,7 @@ public class KirjoitaTiedostoWriteString {
         Path polku = Path.of("data", "tulos.txt");
 
         try {
-            Files.createDirectories(polku.getParent()); // varmistetaan, että data/ on olemassa
+            Files.createDirectories(polku.getParent()); // varmistetaan, että data-kansio on olemassa
 
             String sisalto = "Hei!\nTämä on uusi tiedosto.\n";
             Files.writeString(polku, sisalto, StandardCharsets.UTF_8);
@@ -397,11 +397,198 @@ suorituskykyä erityisesti suurilla tiedostoilla ja tekee käsittelystä
 ennustettavaa. Jätämme näiden opiskelun omatoimiseksi, valinnaiseksi
 harjoitukseksi.
 
-## CSV-tiedostojen käsittely
+## JSON-muotoinen tiedosto
+
+JSON (JavaScript Object Notation) on suosittu tiedonvaihtomuoto, joka on paljon
+käytetty erityisesti web-kehityksessä. JSON-tiedostot ovat avain-arvo-pareja
+sisältäviä tekstitiedostoja, jotka voivat sisältää monimutkaisia
+tietorakenteita, kuten taulukkoja ja olioita.
+
+JSON voi sisältää seuraavan tyyppisiä arvoja:
+
+ * merkkijono (`"Maija"`)
+ * luku (`25`)
+ * totuusarvo (`true` / `false`)
+ * tyhjä arvo (`null`)
+ * taulukko (`[...]`)
+ * olio (`{...}`)
+
+Esimerkiksi tiedosto `henkilot.json` voi näyttää tältä:
+
+```json
+[
+  {
+    "nimi": "Maija",
+    "ika": 25,
+    "kaupunki": "Jyväskylä"
+  },
+  {
+    "nimi": "Matti",
+    "ika": 30,
+    "kaupunki": "Tampere"
+  }
+]
+```
+
+CSV:hen verrattuna JSONin etu on se, että kentät voivat olla sisäkkäisiä ja
+rivit eivät ole sidottuja yhteen taulukkomalliin. Haittapuolena rakenne on usein
+hieman raskaampi lukea silmämääräisesti verrattuna CSV:hen. Lisäksi niissä on
+hieman enemmän syntaksia, mikä tekee niistä hieman monimutkaisempia käsitellä
+"käsin" ilman erillistä kirjastoa.
+
+## Record-luokka JSONin mallintamiseen
+
+Esitellään tässä kohtaa lyhyesti Javan *record*-käsite. Javan record on
+erityinen luokka, joka on suunniteltu pienten, suoraviivaisten datarakenteiden
+kuten JSONin kaltaisen rakenteisen datan mallintamiseen. Kun määrittelet
+recordin, Java muodostaa automaattisesti joitain rutiineja sinulle valmiiksi
+taustalla. Saat valmiina: 
+
+ * automaattisen konstruktorin, joka ottaa kaikki kentät argumentteina,
+ * kenttiä vastaavat "getterit", joiden nimet ovat suoraan kenttien nimet, esim.
+`nimi()` eikä `getNimi()`,
+ * `equals()`- ja `hashCode()`-toteutukset,
+ * selkeän `toString()`-tulostuksen.
+
+Record-olion *komponentit* (eli attribuutit) ovat käytännössä final-kenttiä,
+mikä tarkoittaa, että recordit ovat pääosin muuttumattomia olioita. 
+
+Näin recordit ovat luonnollinen pari JSON-kirjastoille: JSON-olio vastaa usein
+suoraan yhtä "datakimppua", jonka voi mallintaa recordilla ilman ylimääräistä
+koodia. Siinä missä perinteinen luokka kirjoitetaan usein niin, että
+määritellään kentät, konstruktorit ja getterit erikseen, recordissa sama asia
+ilmaistaan tiiviisti yhdellä rivillä. 
+
+On hyvä huomata, että recordiin saa kyllä kirjoittaa metodeja ja tarkistuksia,
+mutta perusajatus on pitää se pienenä ja keskittyä datan esittämiseen. Jos
+luokkaan alkaa kertyä paljon muuttuvaa tilaa tai monimutkaista
+toiminnallisuutta, tavallinen luokka on yleensä parempi valinta.
+
+Määritellään datalle nyt tietotyyppi käyttäen record-rakennetta:
+
+```java
+public record Henkilo(String nimi, int ika, String kaupunki) {}
+```
+
+Kenttien nimien kannattaa vastata JSON-avaimia (`nimi`, `ika`, `kaupunki`),
+jotta muunnos toimii automaattisesti.
 
 ## JSON-tiedostojen käsittely Jackson-kirjastolla
 
-JSON Jacsksonilla. Lue JSONia ja kirjoita JSONia. Tulostele jotain kivaa. Tästä tehtäviä. 
+JSONin käsittely onnistuu toki käsin merkkijonoja pilkkomalla, mutta käytännössä
+tämä on virhealtista. Siksi JSONia kannattaa käsitellä siihen tarkoitetulla
+kirjastolla. Yksi yleisimmistä Java-kirjastoista on **Jackson**.
 
-Ehkä? CSV -> Json voi muuntaa. Asenna riippuvuus Mavenilla. Sitten luetaan CSV-tiedosto, ja muunnetaan se JSON-muotoon.
+Lisää `pom.xml`-tiedostoon Jackson-riippuvuus:
+
+```xml
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.17.2</version>
+</dependency>
+```
+
+Riippuvuuden lisäämisen jälkeen virkistä Maven-projektisi. 
+
+**JSONin lukeminen tiedostosta:** Kun JSON-tiedosto on mallinnettu
+record-luokalla, sen lukeminen on hyvin suoraviivaista. Lukeminen aloitetaan
+luomalla `ObjectMapper`-olio, joka on Jackson-kirjaston keskeinen työkalu JSONin
+muuntamiseen Java-olioiksi ja päinvastoin. Tämän jälkeen käytetään
+`readValue()`-metodia, joka ottaa JSON-tiedoston ja kertoo, minkä tyyppiseksi
+JSONin pitäisi muuntaa. Tässä tapauksessa JSON on taulukkomuodossa, joka vastaa
+listaa `Henkilo`-olioita, joten tyyppinä käytetään `new TypeReference<List<Henkilo>>() {}`. 
+
+Koska on mahdollista, että JSON-tiedoston lukeminen epäonnistuu (esim. tiedosto
+ei löydy, JSON on virheellistä tai tyyppimuunnos epäonnistuu), tulee mahdolliset
+`IOException`-poikkeukset käsitellä käyttäen `try-catch`-rakennetta.
+
+Alla oleva esimerkki lukee tiedoston `henkilot.json` listaksi
+`Henkilo`-olioita:
+
+```java
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.util.List;
+
+public class LueJson {
+    public record Henkilo(String nimi, int ika, String kaupunki) {}
+
+    public static void main(String[] args) {
+        ObjectMapper mapper = new ObjectMapper();
+        Path polku = Path.of("data", "henkilot.json");
+
+        try {
+            List<Henkilo> henkilot = mapper.readValue(
+                    polku.toFile(),
+                    new TypeReference<List<Henkilo>>() {}
+            );
+
+            henkilot.forEach(h ->
+                    IO.println(h.nimi() + " (" + h.ika() + "), " + h.kaupunki())
+            );
+        } catch (IOException e) {
+            IO.println("JSONin lukeminen epäonnistui: " + e.getMessage());
+        }
+    }
+}
+```
+
+**JSONin kirjoittaminen tiedostoon** on aavistuksen lukemista helpompaa, kun
+data on mallinnettu record-luokalla. Kirjoittaminen tapahtuu
+`writeValue()`-metodilla, joka ottaa tiedoston ja tallennettavan olion, ja
+muuntaa sen JSON-muotoon. Tiedoston kirjoittaminen voi epäonnistua, joten sekin
+tulee käsitellä `try-catch`-rakenteella.
+
+Seuraava esimerkki kirjoittaa listan
+henkilöitä tiedostoon `henkilot-uusi.json`:
+
+```java
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+public class KirjoitaJson {
+    public record Henkilo(String nimi, int ika, String kaupunki) {}
+
+    public static void main(String[] args) {
+        ObjectMapper mapper = new ObjectMapper()
+                .enable(SerializationFeature.INDENT_OUTPUT); // kauniimpi sisennys
+
+        List<Henkilo> henkilot = List.of(
+                new Henkilo("Aino", 22, "Turku"),
+                new Henkilo("Pekka", 41, "Oulu")
+        );
+
+        Path polku = Path.of("data", "henkilot-uusi.json");
+
+        try {
+            Files.createDirectories(polku.getParent());
+            mapper.writeValue(polku.toFile(), henkilot);
+            IO.println("Kirjoitettiin JSON: " + polku.toAbsolutePath());
+        } catch (IOException e) {
+            IO.println("JSONin kirjoittaminen epäonnistui: " + e.getMessage());
+        }
+    }
+}
+```
+
+## Tehtävät
+
+
+<task>
+  <task-title>Tehtävä 6.11: Lue henkilöt JSON-tiedostosta. <points>1 p.</points> </task-title>
+  <handout>
+
+
+{{#include ../exercises/6-11-json-1/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava11">Tee tehtävä TIMissä</a></task-link>
+</task>
 
