@@ -80,6 +80,7 @@ details {
     border: 1px solid var(--details-border);
     padding: 1em;
     overflow: hidden;
+    margin-block: 1em;
 } 
 
 details summary {
