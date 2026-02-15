@@ -47,11 +47,12 @@ Nyt voimme käyttää `data.csv`-tiedostoa ohjelmassamme.
 
 ## Tiedoston käsittely Files API:lla
 
-`Files`-luokka tarjoaa suoraviivaisen tavan lukea koko tiedosto kerralla
-sellaisissa tilanteissa, joissa tiedoston koko on kohtuullinen. Voit esimerkiksi
-lukea koko tiedoston muistiin rivilistana `Files.readAllLines()`-metodilla tai
-merkkijonona `Files.readString()`-metodilla. Jos datan sisältää vaikkapa lukuja,
-päivämääriä tai muuta erikoisempaa, tulee ne käsitellä erikseen. 
+`Files`-luokka (tai oikeammin sanottuna `java.nio.file`-paketin API) tarjoaa
+suoraviivaisen tavan lukea koko tiedosto kerralla sellaisissa tilanteissa,
+joissa tiedoston koko on kohtuullinen. Voit esimerkiksi lukea koko tiedoston
+muistiin rivilistana `Files.readAllLines()`-metodilla tai merkkijonona
+`Files.readString()`-metodilla. Jos datan sisältää vaikkapa lukuja, päivämääriä
+tai muuta erikoisempaa, tulee ne käsitellä erikseen. 
 
 Tehdään yllä oleva esimerkki käyttäen `Files`-luokan `readAllLines()`-metodia.
 Tämä metodi lukee koko tiedoston muistiin listana merkkijonoja, joissa jokainen
@@ -84,6 +85,76 @@ public class TiedostonLukija {
     }
 }
 ```
+
+
+Samalla idealla &ndash; eli kokonainen tiedosto kerrallaan &ndash; voit myös
+kirjoittaa tiedostoon. Kun koko sisältö on yhtenä merkkijonona, voit käyttää
+`Files.writeString()`-metodia. Ennen kirjoittamista tulee varmistaa, että
+ kansio, johon tiedosto kirjoitetaan, pitää olla olemassa. Tämä voidaan tehdä
+seuraavasti:
+
+```java,ignore
+Path polku = Path.of("data", "tulos.txt"); // Polku-olio, joka sisältää tiedon kansiosta ja tiedostosta
+Files.createDirectories(polku.getParent()); // Varmistetaan, että data-kansio on olemassa
+``` 
+
+```java
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+public class KirjoitaTiedostoWriteString {
+    public static void main(String[] args) {
+        Path polku = Path.of("data", "tulos.txt");
+
+        try {
+            Files.createDirectories(polku.getParent()); // varmistetaan, että data/ on olemassa
+
+            String sisalto = "Hei!\nTämä on uusi tiedosto.\n";
+            Files.writeString(polku, sisalto, StandardCharsets.UTF_8);
+
+            IO.println("Kirjoitettiin: " + polku.toAbsolutePath());
+        } catch (IOException e) {
+            IO.println("Kirjoittaminen epäonnistui: " + e.getMessage());
+        }
+    }
+}
+```
+
+Kun data on riveinä, esimerkiksi listana, on usein luontevaa kirjoittaa se
+riveittäin käyttäen `Files.write()`-metodia. 
+
+```java
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+
+public class KirjoitaTiedostoRiveina {
+    public static void main(String[] args) {
+        Path polku = Path.of("data", "data.csv");
+
+        List<String> rivit = List.of(
+                "nimi,ika",
+                "Maija,25",
+                "Matti,30"
+        );
+
+        try {
+            Files.createDirectories(polku.getParent());
+            Files.write(polku, rivit, StandardCharsets.UTF_8);
+
+            IO.println("Kirjoitettiin: " + polku.toAbsolutePath());
+        } catch (IOException e) {
+            IO.println("Kirjoittaminen epäonnistui: " + e.getMessage());
+        }
+    }
+}
+
+```
+
 
 ## Tiedoston käsittely Scanner-oliolla
 
