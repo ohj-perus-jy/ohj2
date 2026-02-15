@@ -279,43 +279,39 @@ järjestäminen satunnaisesti samaan kansioon ei enää riitä. Tarvitsemme tava
 ryhmitellä toisiinsa liittyvät luokat loogisiksi kokonaisuuksiksi. Tätä varten
 Java tarjoaa pakkaukset (engl. *packages*). Pakkaus on nimetty luokkien
 kokoelma. Se toimii samalla sekä loogisena ryhmittelykeinona että teknisenä
-nimialueena (*namespace*), joka estää nimikonfliktit. Ilman pakkauksia kahdella
-eri kirjastolla ei voisi olla samaa luokan nimeä. Esimerkiksi sekä oma ohjelmasi
-että jokin ulkoinen kirjasto voisi sisältää luokan nimeltä `User`. Pakkausten
-ansiosta nämä voidaan erottaa toisistaan täydellisen nimensä perusteella,
-esimerkiksi
+nimialueena (*namespace*), joka estää nimikonfliktit. 
 
-```
-fi.jyu.ohjelmointi.User
-```
-
-missä `fi.jyu.ohjelmointi` on pakkauksen nimi, ja
-
-```
-com.example.library.User
-```
-
-missä `com.example.library` on toisen pakkauksen nimi. Vaikka luokkien
-yksinkertainen nimi on sama, niiden täydellinen nimi on eri, eikä ristiriitaa
-synny.
-
-Luokka kuuluu pakkaukseen, jos sen lähdekooditiedoston alussa on
-`package`-lause. Esimerkiksi:
+Luokan alussa voidaan määrittää `package`-lause, joka määrittelee pakkauksen,
+johon luokka kuuluu.
 
 ```java,ignore
-package org.example;
+package fi.jyu.ohjelmointi; 
 
-public class Main {
-    static void main() {
-        IO.println("Hei maailma!");
-    }
+class User
+{
+    // ...
 }
 ```
 
-Tämä tarkoittaa, että `Main`-luokka kuuluu pakkaukseen `org.example`. Pakkaus on
-osa luokan täydellistä nimeä, joten tämän luokan täydellinen nimi on
-`org.example.Main`. Maven-projektissa pakkauksen oletusnimi on juuri
-`org.example`, mutta voit muuttaa sen haluamaksesi.
+Nyt `User`-luokka kuuluu pakkaukseen `fi.jyu.ohjelmointi`. Luokan täydellinen
+nimi on `fi.jyu.ohjelmointi.User`, mutta samassa pakkauksessa olevat luokat
+voivat käyttää toistensa jäseniä suoraan ilman täydellisiä nimiä. Samaan
+pakkaukseen kuuluvat luokat voivat käyttää toistensa jäseniä ilman erillisiä
+`import`-lauseita, ja ilman tarvetta käyttää luokkien täydellisiä nimiä. 
+
+```java,ignore
+package fi.jyu.ohjelmointi;
+
+class Main
+{
+    static void main() {
+        User user = new User();
+        // ...
+        // Voidaan myös tehdä näin, mutta se on turhaa, koska Main ja User kuuluvat samaan pakkaukseen:
+        fi.jyu.ohjelmointi.User user2 = new User();
+    }
+}
+```
 
 Pakkaus liittyy suoraan myös projektin kansiorakenteeseen. Jokainen pakkauksen
 osa vastaa yhtä kansiota. Esimerkiksi pakkaus `org.example` vastaa
@@ -326,7 +322,7 @@ pakkausmäärittelyä.
 Pakkauksia käytetään myös muiden kirjastojen luokkien hyödyntämiseen. Kun
 kirjasto lisätään projektiin, sen luokat sijaitsevat omissa pakkauksissaan.
 Näiden luokkien käyttäminen edellyttää `import`-lausetta. Esimerkiksi
-OkHttp-kirjaston OkHttpClient-luokka kuuluu pakkaukseen okhttp3, ja sen
+OkHttp-kirjaston `OkHttpClient`-luokka kuuluu pakkaukseen okhttp3, ja sen
 käyttämiseksi kirjoitetaan `import okhttp3.OkHttpClient;`. `Import`-lause ei
 kopioi luokkaa omaan projektiisi, vaan kertoo kääntäjälle, mistä paketista
 luokka löytyy. Ilman `import`-lausetta luokkaa voisi käyttää vain sen
@@ -336,7 +332,37 @@ täydellisellä nimellä:
 okhttp3.OkHttpClient client = new okhttp3.OkHttpClient();
 ```
 
-Käytännössä `import`-lause tekee koodista selkeämpää ja helpommin luettavaa.
+Palataan vielä `User`-luokan esimerkkiin. Samassa projektissa voisi olla
+toinenkin pakkaus, nimieltään `com.example.library`, joka sisältää
+`User`-luokan.
+
+```java,ignore
+package com.example.library;
+
+class User
+{
+    // ...
+}
+```
+
+Vaikka projektissa on nyt kaksi `User`-luokkaa, niiden täydelliset nimet
+eroavat, eikä ristiriitaa synny. Joskus voidaan haluta käyttää molempia
+`User`-luokkia samassa kooditiedostossa. Tällöin luokat tuodaan projektiin
+`import`-lauseilla, ja niitä käytetään täydellisillä nimillä, jotta voidaan
+erottaa, kumpaa `User`-luokkaa tarkoitetaan.
+
+```java,ignore
+import fi.jyu.ohjelmointi.User;
+import com.example.library.User;
+
+void main() {
+    fi.jyu.ohjelmointi.User user1 = new fi.jyu.ohjelmointi.User();
+    com.example.library.User user2 = new com.example.library.User();
+}
+```
+
+Tällainen tilanne on ehkä käytännössä harvinainen, mutta se korostaa pakkauksen
+merkitystä nimialueena.
 
 Pakkausten nimissä käytetään vakiintunutta käytäntöä, joka perustuu
 käänteiseen verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa
