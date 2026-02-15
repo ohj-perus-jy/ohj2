@@ -6,11 +6,14 @@
 
 > [!Osaamistavoitteet]
 >
-> - Ymmärrät, miksi rakennustyökaluja (kuten Maven tai Gradle) tarvitaan modernissa ohjelmistokehityksessä.
+> - Ymmärrät, miksi rakennustyökaluja (kuten Maven tai Gradle) tarvitaan
+>   modernissa ohjelmistokehityksessä.
 > - Tunnet Maven-projektin perusrakenteen ja `pom.xml`-tiedoston merkityksen.
 > - Osaat etsiä ja lisätä ulkoisia riippuvuuksia projektiisi.
-> - Ymmärrät Javan pakkausrakenteen (`package`) merkityksen koodin organisoinnissa ja nimikonfliktien estämisessä.
-> - Osaat hyödyntää `import`-lauseita eri pakkauksissa sijaitsevien luokkien käyttämiseen.
+> - Ymmärrät Javan pakkausrakenteen (`package`) merkityksen koodin
+>   organisoinnissa ja nimikonfliktien estämisessä.
+> - Osaat hyödyntää `import`-lauseita eri pakkauksissa sijaitsevien luokkien
+>   käyttämiseen.
 
 Oletetaan, että haluat tehdä Java-ohjelman, joka hakee tietoa verkosta
 HTTP-kutsulla. Löydät netistä seuraavan esimerkkikoodin. 
@@ -144,8 +147,8 @@ bi-chevron-right"></i> Install <i class="bi bi-chevron-right"></i> Käynnistä
 IDEA uudestaan.
 
 Pienen miettimisen jälkeen sinulle pitäisi syntyä projekti, jossa on läjä
-tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin. Projektisi
-kansiorakenne näyttää suunnilleen tältä:
+tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin. Projektisi kansiorakenne
+näyttää suunnilleen tältä:
 
 ```bob
 src
@@ -154,17 +157,18 @@ src
 pom.xml
 ```
 
- * `src`-kansio: sisältää varsinaisen Java-koodin (`main/.../java`) ja testikoodin
-   (`test/java`).
+ * `src`-kansio: sisältää varsinaisen Java-koodin (`main/.../java`) ja
+   testikoodin (`test/java`).
  * `pom.xml`-tiedosto: Mavenin konfiguraatiotiedosto, jossa määritellään
    projektin riippuvuudet, rakennusasetukset ja muut tärkeät tiedot.
  * Lisäksi projektiin syntyy automaattisesti `.gitignore`-tiedosto, sekä
    `.mvn`-kansio, johon tutustumme myöhemmin. 
 
 Vilkaistaan `pom.xml`-tiedostoa, joka on Maven-projektin sydän. Avatessasi
-tiedston näet XML-muotoista tekstiä. Tämä tiedosto määrittelee projektisi
+tiedoston näet XML-muotoista tekstiä. Tämä tiedosto määrittelee projektisi
 rakenteen, riippuvuudet ja muut asetukset. "Vanilla"-Java-projektin (ts.
-projekti, joka ei käytä ulkoisia kirjastoja) `pom.xml`-tiedosto näyttää suunnilleen tältä:
+projekti, joka ei käytä ulkoisia kirjastoja) `pom.xml`-tiedosto näyttää
+suunnilleen tältä:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -207,7 +211,7 @@ esimerkkikoodi ja yritä kääntää se. Projekti ei kuitenkaan käänny vielä,
 OkHttp-kirjasto ei ole vielä projektin riippuvuuksissa. Riippuvuuksien
 lisääminen Maven-projektiin tapahtuu muokkaamalla `pom.xml`-tiedostoa. Etsi
 tiedostosta `<dependencies>`-elementti. Lisää se (ja sen vastinpari
-`</dependencies>`), mikäli kyseistä elementtiä ei vielä ole. 
+`</dependencies>`), mikäli kyseistä elementtiä ei vielä ole.
 
 ```xml
 <dependency>
@@ -245,8 +249,8 @@ Kokeillaan etsiä äsken mainittu okHttp-kirjasto Maven Centralista.
  2. Kirjoita hakukenttään "okhttp" ja paina Enter.
  3. Ensimmäinen hakutulos vie vanhempaan okHttp-kirjastoon, joka on nimeltään
     "okhttp". Valitse sen sijaan toinen hakutulos, joka on uudempi. 
- 4. Näet Snippets-kohdassa valmiin XML-koodin, jonka *yleensä* voit kopioida suoraan
-    `pom.xml`-tiedostoosi.
+ 4. Näet Snippets-kohdassa valmiin XML-koodin, jonka *yleensä* voit kopioida
+    suoraan `pom.xml`-tiedostoosi.
  5. Kopioi XML-koodi ja liitä se `pom.xml`-tiedostoon `<dependencies>`-elementin
     sisälle.
 
@@ -272,9 +276,9 @@ luokat näkyviin.
 
 Java-projekteissa on usein tarpeen käyttää kolmannen osapuolen kirjastoja, jotka
 tarjoavat valmiita toiminnallisuuksia ja säästävät kehitysaikaa.
-Maven-projekteissa on oletuksena käytettävissä Maven Central -varasto 
-sekä käyttäjän *paikallinen* varasto. Jos haluamme käyttää jotain riippuvuutta,
-joka ei sijaitse Maven Central -varastossa, voimme lisätä muitakin varastoja 
+Maven-projekteissa on oletuksena käytettävissä Maven Central -varasto sekä
+käyttäjän *paikallinen* varasto. Jos haluamme käyttää jotain riippuvuutta, joka
+ei sijaitse Maven Central -varastossa, voimme lisätä muitakin varastoja
 projektin käyttöön määrittelemällä ne `pom.xml`-tiedostossa seuraavasti.
 
 ```
@@ -291,18 +295,19 @@ projektin käyttöön määrittelemällä ne `pom.xml`-tiedostossa seuraavasti.
 
 Projektin käytössä olevien varastojen lista löytyy Intellij IDEA:n asetuksista: 
 
-`File > Settings > Build, Execution, Deployment > Build Tools > Maven > Repositories`
+`File > Settings > Build, Execution, Deployment > Build Tools > Maven >
+Repositories`
 
 ### Paikalliset riippuvuudet
 
-Maven asentaa kaikki lataamansa riippuvuudet paikalliseen kansioon, minkä 
-jälkeen ne ovat kaikkien projektien käytettävissä. Tämä kansio löytyy 
-käyttäjähakemiston alta polusta `.m2/repository`. Tähän paikalliseen varastoon 
-on myös mahdollista lisätä itse paketteja, jolloin niihin voi viitata 
+Maven asentaa kaikki lataamansa riippuvuudet paikalliseen kansioon, minkä
+jälkeen ne ovat kaikkien projektien käytettävissä. Tämä kansio löytyy
+käyttäjähakemiston alta polusta `.m2/repository`. Tähän paikalliseen varastoon
+on myös mahdollista lisätä itse paketteja, jolloin niihin voi viitata
 tavalliseen tapaan `pom.xml`-tiedostosta. 
 
-Minkä tahansa jar-tiedoston voi lisätä paikalliseen repositorioon esimerkiksi 
-seuraavalla komennolla. Tämä kuitenkin vaatii Maven-komentorivityökalujen 
+Minkä tahansa jar-tiedoston voi lisätä paikalliseen repositorioon esimerkiksi
+seuraavalla komennolla. Tämä kuitenkin vaatii Maven-komentorivityökalujen
 asentamisen, joten emme tällä kurssilla tule sitä käyttämään.
 
 ```
@@ -315,20 +320,22 @@ mvn install:install-file \
    -DgeneratePom=true
 ```
 
-Kannattaa kuitenkin pitää mielessä, että nämä riippuvuudet ovat tällöin 
-käytettävissä vain laitteella, jossa tämä manuaalinen lisääminen paikalliseen 
+Kannattaa kuitenkin pitää mielessä, että nämä riippuvuudet ovat tällöin
+käytettävissä vain laitteella, jossa tämä manuaalinen lisääminen paikalliseen
 varastoon on suoritettu.
 
 Voimme myös lisätä paikallisen riippuvuuden projektiin ilman, että se lisätään
 paikalliseen varastoon. Tämä mahdollistaa esimerkiksi riippuvuuden sijoittamisen
-projektin kansioon, jolloin se on helpompi lisätä myös projektin versionhallintaan.
+projektin kansioon, jolloin se on helpompi lisätä myös projektin
+versionhallintaan.
 
-Riippuvuus lisätään `pom.xml`-tiedostoon tavalliseen tapaan, mutta lisäämme 
-`scope`-asetuksen ja annamme sen arvoksi `system`, jotta voimme käyttää 
+Riippuvuus lisätään `pom.xml`-tiedostoon tavalliseen tapaan, mutta lisäämme
+`scope`-asetuksen ja annamme sen arvoksi `system`, jotta voimme käyttää
 `systemPath`-asetusta määrittämään paikallisen riippuvuuden tiedostopolun.
 
 Muuttuja `${project.basedir}` viittaa projektin juureen, joten tässä esimerkissä
-riippuvuuden tiedostopolku on projektin hakemistossa sijaitseva `lib/tiedosto.jar`.
+riippuvuuden tiedostopolku on projektin hakemistossa sijaitseva
+`lib/tiedosto.jar`.
 
 ```
 <dependencies>
@@ -434,9 +441,9 @@ void main() {
 Tällainen tilanne on ehkä käytännössä harvinainen, mutta se korostaa pakkauksen
 merkitystä nimialueena.
 
-Pakkausten nimissä käytetään vakiintunutta käytäntöä, joka perustuu
-käänteiseen verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa
-pakkauksen nimi voisi olla
+Pakkausten nimissä käytetään vakiintunutta käytäntöä, joka perustuu käänteiseen
+verkkotunnukseen. Esimerkiksi Jyväskylän yliopiston projektissa pakkauksen nimi
+voisi olla
 
 ```
 fi.jyu.ohj2.munekamavenprojekti

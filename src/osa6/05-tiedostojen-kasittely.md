@@ -7,7 +7,8 @@
 > [!Osaamistavoitteet]
 >
 > - Osaat lukea ja kirjoittaa tekstitiedostoja Javan `Files`-luokan avulla.
-> - Osaat käyttää `Scanner`-luokkaa tiedon lukemiseen ja parsimiseen tiedostosta.
+> - Osaat käyttää `Scanner`-luokkaa tiedon lukemiseen ja parsimiseen
+>   tiedostosta.
 > - Osaat käsitellä tiedostoja riveittäin hyödyntäen Stream-rajapintaa.
 > - Tunnet JSON-tiedostomuodon perusteet.
 > - Osaat käyttää Jackson-kirjastoa JSON-datan lukemiseen ja kirjoittamiseen.
@@ -15,7 +16,7 @@
 
 Tiedoston käsittelyssä on aina sama peruskaari: avaat resurssin, luet tai
 kirjoitat dataa tietyssä muodossa, ja suljet resurssin. Java tarjoaa tähän
-useita valmiita vaihtoehtoja. Valinta riippuu siitä, luetko luetko dataa vain
+useita valmiita vaihtoehtoja. Valinta riippuu siitä, luetko dataa vain
 riveittäin vai tarvitsetko rivien pilkkomista ja parsimista arvoiksi (esim.
 luvut), haluatko käsitellä suurta tiedostoa suorituskykyisesti, ja missä
 muodossa data on.
@@ -283,19 +284,19 @@ Scanner-oliolla ei voi kirjoittaa tiedostoon, se on vain lukutyökalu.
 
 ## Tietovirrat (Stream) 
 
-Kokoelmien ohella (ks. [osa 6.2](./02-kokoelmien-kasittely-stream-api.md)) mmyös
+Kokoelmien ohella (ks. [osa 6.2](./02-kokoelmien-kasittely-stream-api.md)) myös
 tiedostoja (ja muitakin ulkoisia resursseja) voidaan käsitellä Stream-rajapinnan
 avulla. Streamit ovat hyödyllisiä silloin, kun dataan halutaan tehdä useita
 peräkkäisiä operaatioita, kuten muunnoksia (map), suodatuksia (filter) ja
 keräilyä (esim. toList, collect). Tällöin käsittely kuvataan ketjuna, joka
 kertoo selkeästi mitä datalle tehdään vaihe vaiheelta.
 
-Luettaessa tiedostoa virtana tyypillinen aloitus on Files.lines(polku). Se
+Luettaessa tiedostoa virtana tyypillinen aloitus on `Files.lines(polku)`. Se
 tuottaa rivit laiskasti: rivejä ei lueta etukäteen kokonaan muistiin, vaan niitä
 luetaan sitä mukaa kuin streamiä kulutetaan. Tämä on keskeinen ero
-readAllLines-metodiin: Files.lines sopii myös suurille tiedostoille, koska se ei
-vaadi koko tiedoston lataamista muistiin. Koska tiedostoa luetaan taustalla,
-stream täytyy sulkea.
+`readAllLines`-metodiin: `Files.lines` sopii myös suurille tiedostoille, koska
+se ei vaadi koko tiedoston lataamista muistiin. Koska tiedostoa luetaan
+taustalla, stream täytyy sulkea.
 
 Tehdään aluksi yksinkertainen esimerkki, jossa toistetaan aiempi kuvio, mutta
 nyt käytetään `Files.lines`-metodia ja Stream-käsittelyä. Käytämme aiemmin
@@ -363,8 +364,8 @@ merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa.
 <details><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Stream-käsittelyn haasteista tarkemmin</summary>
 
  * kertakäyttöisyys: Stream-olion voi käyttää vain kerran, minkä jälkeen se on
-   suljettava. Jos haluat käsitellä samaa dataa uudestaan,
-   sinun täytyy luoda uusi Stream-olio.
+   suljettava. Jos haluat käsitellä samaa dataa uudestaan, sinun täytyy luoda
+   uusi Stream-olio.
  * debuggaaminen: Ketjutus piilottaa välitulokset. Jos jokin map/filter-vaihe
    heittää poikkeuksen, pinoloki kertoo kyllä missä lambdassa oltiin, mutta
    "mikä rivi" ja "millä välituloksella" ei näy ilman erillisiä tulostuksia tai
@@ -378,10 +379,10 @@ merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa.
    poikkeusten heittämistä suoraan. Tämä voi tehdä virheiden käsittelystä hieman
    monimutkaisempaa verrattuna perinteiseen silmukkaan.
  * laiskuus voi yllättää: Stream ei tee mitään ennen keräysoperaatiota
-   (`forEach`, `toList`, `collect`, `count`, …). Tämä voi aiheuttaa yllätyksiä, kuten
-   että koodi näyttää lukevan tiedoston, mutta mitään ei tapahdu, jos
-   keräysvaihe puuttuu. Myöskään poikkeukset eivät synny siinä kohdassa,
-   missä tiedosto avataan, vaan vasta keräysvaiheessa.
+   (`forEach`, `toList`, `collect`, `count`, …). Tämä voi aiheuttaa yllätyksiä,
+   kuten että koodi näyttää lukevan tiedoston, mutta mitään ei tapahdu, jos
+   keräysvaihe puuttuu. Myöskään poikkeukset eivät synny siinä kohdassa, missä
+   tiedosto avataan, vaan vasta keräysvaiheessa.
 
 </details>
 
@@ -545,8 +546,7 @@ Kirjoittaminen tapahtuu `writeValue()`-metodilla, joka ottaa tiedoston ja
 tallennettavan olion, ja muuntaa sen JSON-muotoon. Tiedoston kirjoittaminen voi
 epäonnistua, joten sekin tulee käsitellä `try-catch`-rakenteella.
 
-Seuraava esimerkki kirjoittaa listan
-henkilöitä tiedostoon `henkilot-uusi.json`:
+Seuraava esimerkki kirjoittaa listan henkilöitä tiedostoon `henkilot-uusi.json`:
 
 ```java
 import com.fasterxml.jackson.databind.ObjectMapper;

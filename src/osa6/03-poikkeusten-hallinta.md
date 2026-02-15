@@ -6,10 +6,13 @@
 
 > [!Osaamistavoitteet]
 >
-> - Ymmärrät, mikä poikkeus on ja miten se eroaa ohjelman normaalista käskynkulusta.
-> - Tiedät eron tarkastettujen (checked) ja tarkastamattomien (unchecked) poikkeusten välillä.
+> - Ymmärrät, mikä poikkeus on ja miten se eroaa ohjelman normaalista
+>   käskynkulusta.
+> - Tiedät eron tarkastettujen (checked) ja tarkastamattomien (unchecked)
+>   poikkeusten välillä.
 > - Osaat käsitellä poikkeuksia `try-catch-finally` -rakenteella.
-> - Osaat heittää poikkeuksia (`throw`) ja ilmoittaa niistä metodin määrittelyssä (`throws`).
+> - Osaat heittää poikkeuksia (`throw`) ja ilmoittaa niistä metodin
+>   määrittelyssä (`throws`).
 > - Ymmärrät poikkeusten hyödyt koodin luettavuuden ja virhehallinnan kannalta.
 > - Osaat luoda omia poikkeusluokkia.
 
@@ -18,7 +21,8 @@ event*), on tilanne, joka syntyy ohjelman suorituksen aikana ja keskeyttää
 ohjelman normaalin käskynkulun. Poikkeus voi syntyä esimerkiksi seuraavissa
 tilanteissa:
 
-- Käyttäjä antaa virheellisen syötteen (esimerkiksi tekstin, kun odotetaan numeroa).
+- Käyttäjä antaa virheellisen syötteen (esimerkiksi tekstin, kun odotetaan
+  numeroa).
 - Yritetään lukea tiedostoa, jota ei ole olemassa.
 - Verkko- tai tietokantayhteys katkeaa kesken suorituksen.
 - Jaetaan nollalla laskutoimituksessa.
@@ -27,8 +31,8 @@ tilanteissa:
 
 Javassa poikkeusten hallintaan on sisäänrakennettu mekanismi, joka mahdollistaa
 virhetilanteiden hallitun käsittelyn ohjelmakoodissa. Tämän mekanismin avulla
-ohjelmoija voi määritellä, miten ohjelman tulee reagoida erilaisiin virhetilanteisiin
-ilman, että koko ohjelma kaatuu.
+ohjelmoija voi määritellä, miten ohjelman tulee reagoida erilaisiin
+virhetilanteisiin ilman, että koko ohjelma kaatuu.
 
    
 ## Poikkeusten heittäminen ja käsittely
@@ -39,10 +43,11 @@ Poikkeusten hallinta Javassa perustuu kolmeen pääkomponenttiin:
    poikkeusolio luodaan joko ohjelmakoodissa tai JVM:n toimesta. Tämän jälkeen
    JVM keskeyttää normaalin suoritusvirran ja alkaa etsiä sopivaa käsittelijää
    kutsupinosta.
-2. Poikkeusten käsittely (engl. *catching exceptions*): Ohjelmoija voi määritellä
-   koodilohkoja, jotka käsittelevät tiettyjä poikkeuksia `try-catch`-rakenteella.
-3. Lopullinen varmistus (engl. *finally*): `finally`-lohko, joka suoritetaan aina
-   riippumatta siitä, tapahtuiko poikkeus vai ei, esimerkiksi resurssien
+2. Poikkeusten käsittely (engl. *catching exceptions*): Ohjelmoija voi
+   määritellä koodilohkoja, jotka käsittelevät tiettyjä poikkeuksia
+   `try-catch`-rakenteella.
+3. Lopullinen varmistus (engl. *finally*): `finally`-lohko, joka suoritetaan
+   aina riippumatta siitä, tapahtuiko poikkeus vai ei, esimerkiksi resurssien
    vapauttamiseksi tai tilan palauttamiseksi.
 
 Palaamme esimerkkeihin kohta, mutta pohditaan ensin järjestelmän toimintaa
@@ -99,10 +104,11 @@ Esimerkissä tapahtuu seuraavaa:
  mutta metodissa `c()` ei ole sopivaa käsittelijää. 
  2. Ajonaikainen järjestelmä katsoo kutsupinossa seuraavana olevaa metodia, joka
  on `b()`. 
- 3. Metodi `b()`:llä ei myöskään ole sopivaa käsittelijää, joten tutkitaan edelleen
- seuraavaa metodia, joka on `a()`. 
+ 3. Metodi `b()`:llä ei myöskään ole sopivaa käsittelijää, joten tutkitaan
+ edelleen seuraavaa metodia, joka on `a()`. 
  4. `a()`-metodilla on sopiva käsittelijä, joka ottaa poikkeuksen kiinni. 
- 5. Ohjelma jatkaa suoritustaan, kun `a()`-metodissa oleva käsittelijä on suoritettu.
+ 5. Ohjelma jatkaa suoritustaan, kun `a()`-metodissa oleva käsittelijä on
+    suoritettu.
 
 ## Tarkastetut ja tarkastamattomat poikkeukset
 
@@ -118,8 +124,8 @@ tiedoston avaaminen voi epäonnistua, koska tiedostoa ei ole olemassa tai siihen
 ei ole lukuoikeuksia, vaikka ohjelmakoodi itsessään olisi täysin oikein.
 Tällaisia poikkeuksia ovat esimerkiksi 
 
- * `IOException`, joka kuvaa syötteeseen tai tulosteeseen liittyviä ongelmia, kuten tiedoston
-   lukemisen epäonnistumista, ja
+ * `IOException`, joka kuvaa syötteeseen tai tulosteeseen liittyviä ongelmia,
+   kuten tiedoston lukemisen epäonnistumista, ja
  * `SQLException`, joka liittyy tietokantatoimintoihin.
 
 Tarkastetut poikkeukset periytyvät `Exception`-luokasta. 
@@ -130,7 +136,8 @@ kuin olet osoittanut, että olet ottanut huomioon mahdolliset ongelmat.*"
 
 Tällöin on tehtävä jompikumpi seuraavista:
 
- 1. käsiteltävä poikkeus `try–catch`-rakenteella (vrt. ylemmän kuvion `a()`-metodi), tai
+ 1. käsiteltävä poikkeus `try–catch`-rakenteella (vrt. ylemmän kuvion
+    `a()`-metodi), tai
  2. ilmoitettava metodin määrittelyssä `throws`-määreellä, että poikkeus voi
     siirtyä kutsujalle (vrt. ylemmän kuvion `b()`- ja `c()`-metodit).
 
@@ -142,11 +149,14 @@ sitä siten tarvitse käsitellä tai ilmoittaa etukäteen. Tällainen poikkeus v
 kuitenkin laueta ohjelman ohjelman suorituksenaikana. Tyypillisiä
 tarkastamattomia poikkeuksia ovat
  
- * `NullPointerException`, joka tapahtuu, kun yritetään käyttää olion viitettä, joka on `null`,
- * `IllegalArgumentException`, joka tapahtuu, kun metodille annetaan sopimaton argumentti,
- * `ArrayIndexOutOfBoundsException`, joka tapahtuu, kun yritetään käyttää taulukon indeksiä, joka on taulukon
-   raja-arvojen ulkopuolella, ja
- * `ArithmeticException`, joka tapahtuu, kun tapahtuu laskuvirhe, kuten jakaminen nollalla.
+ * `NullPointerException`, joka tapahtuu, kun yritetään käyttää olion viitettä,
+   joka on `null`,
+ * `IllegalArgumentException`, joka tapahtuu, kun metodille annetaan sopimaton
+   argumentti,
+ * `ArrayIndexOutOfBoundsException`, joka tapahtuu, kun yritetään käyttää
+   taulukon indeksiä, joka on taulukon raja-arvojen ulkopuolella, ja
+ * `ArithmeticException`, joka tapahtuu, kun tapahtuu laskuvirhe, kuten
+   jakaminen nollalla.
 
 Tarkastamattomat poikkeukset periytyvät `RuntimeException`-luokasta.
   
@@ -255,7 +265,9 @@ Oletetaan, että haluamme lukea tiedoston sisältöä. Tehdään se käyttäen
 modernista Javasta löytyvää `Files.readString()`-metodia. Huomaa, että tätä
 metodia käytettäessä ei tarvita `finally`-lohkoa, koska kyseinen metodi
 huolehtii tiedoston sulkemisesta automaattisesti. Jatkon kannalta on kuitenkin
-tärkeä muista, että näin ei ole kaikkien Files-luokan metodien, esim [Files.lines](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html#lines(java.nio.file.Path)) kanssa. 
+tärkeä muista, että näin ei ole kaikkien Files-luokan metodien, esim
+[Files.lines](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/nio/file/Files.html#lines(java.nio.file.Path))
+kanssa. 
 
 ```java
 import java.nio.file.Files;
@@ -380,14 +392,14 @@ void kasitteleListaa(List<Henkilo> henkilot) {
 
 Tämähän ei ole `main()`-metodin näkökulmasta ollenkaan ilmeistä -- se hoitaa
 vain omaa hommaansa. Ongelma onkin siinä, että `kasitteleListaa()`-metodi
-aiheuttaa sivuvaikutuksen (muuttaa listan sisältöä) nimen omaan sillä tavalla,
+aiheuttaa sivuvaikutuksen (muuttaa listan sisältöä) nimenomaan sillä tavalla,
 joka rikkoo `main()`-metodin odotuksen siitä, että listalla on vain
 `Henkilo`-olioita. Ongelma ilmenee, kun `main()`-metodi yrittää kutsua
 `getNimi()`-metodia `null`-viittaukselle.
 
 Toki tämä tilanne voitaisiin käsitellä `try-catch`-rakenteella, tai toisaalta
-tarkastamalla `if`-lauseella tulostettaessa, onko `h`-olio `null`-viittaus. Tämä on kuitenkin
-melkoisen tympeää, eikä ratkaise ongelman juurisyytä. 
+tarkastamalla `if`-lauseella tulostettaessa, onko `h`-olio `null`-viittaus. Tämä
+on kuitenkin melkoisen tympeää, eikä ratkaise ongelman juurisyytä.
 
 ## Useat poikkeusoliot
 
@@ -429,7 +441,8 @@ voit määritellä oman poikkeusluokan.
 Yleensä valinta tehdään näin:
 
 1. Peri luokka `Exception`-luokasta, jos haluat tarkastetun poikkeuksen.
-2. Peri luokka `RuntimeException`-luokasta, jos haluat tarkastamattoman poikkeuksen.
+2. Peri luokka `RuntimeException`-luokasta, jos haluat tarkastamattoman
+   poikkeuksen.
 
 Alla on esimerkki tarkastetusta omasta poikkeuksesta:
 
