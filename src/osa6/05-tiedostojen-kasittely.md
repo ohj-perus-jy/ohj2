@@ -582,6 +582,19 @@ public class KirjoitaJson {
 
 
 <task>
+  <task-title>Tehtävä 6.9: Sanat. <points>1 p.</points> </task-title>
+  <handout>
+
+
+{{#include ../exercises/6-9-sanat/handout.md}}
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa6/tehtava9">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
+
+<task>
   <task-title>Tehtävä 6.11: Lue henkilöt JSON-tiedostosta. <points>1 p.</points> </task-title>
   <handout>
 
