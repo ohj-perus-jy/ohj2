@@ -1,59 +1,120 @@
 # Malli ja Observable-rajapinta
 
-Osassa 7 tehtävät mallinnettiin käyttöliittymäkomponentteina (`CheckBox`).
-Ratkaisu oli hyvä aloitus, mutta pidemmällä aikavälillä se tekee sovelluksesta
-jäykän: data ja käyttöliittymä ovat liian vahvasti sidottuja toisiinsa.
+Osassa 7 TODO-tehtävät mallinnettiin käyttöliittymäkomponentteina (`CheckBox`).
+Ratkaisu oli sinänsä hyvä aloitus, mutta pidemmällä aikavälillä se tekee
+sovelluksesta jäykän: data ja käyttöliittymä ovat liian vahvasti sidottuja
+toisiinsa.
 
 Tässä luvussa erotamme datan omaksi malliksi ja kytkemme sen JavaFX:n
 `Observable`-rajapintoihin.
 
 ## Miksi erillinen malli?
 
-Kun tehtävä on oma olionsa, voimme:
+Tässä yhteydessä sanalla *malli* tarkoitetaan sovelluksen datan rakennetta ja
+siihen liittyvää tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis
+kysymykseen siitä, mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää
+ruudulla. 
 
-- tallentaa ja ladata sen helpommin tiedostosta
-- testata sovelluslogiikkaa ilman käyttöliittymää
-- käyttää samaa dataa useassa näkymässä
-- lisätä ominaisuuksia (kuvaus, prioriteetti, deadline) ilman UI-hakkerointia
+TODO-sovelluksessamme on jatkon kannalta hyödyllistä, että tehtävä kuvataan
+erillisenä oliona eikä esimerkiksi `CheckBox`-komponenttina.
+
+Kun tehtävä on oma malliolionsa, samaa tietoa voidaan käsitellä riippumatta
+siitä, näytetäänkö tieto taulukkona, listana tai jossain erillisessä
+muokkausikkunassa. Tämä tekee sovelluksesta joustavamman, koska uusia kenttiä,
+kuten kuvaus, prioriteetti tai määräpäivä, voidaan lisätä suoraan malliin ilman
+että käyttöliittymälogiikkaa täytyy kirjoittaa alusta uudelleen. Samalla
+tiedoston tallennus ja lataus selkeytyvät, koska tallennamme varsinaista
+sovellusdataa emmekä käyttöliittymäkomponenttien sisäistä tilaa.
+
+Pelkkä malli ei kuitenkaan vielä yksin ratkaise käyttöliittymän päivittymistä.
+Jos tehtävädata muuttuu ohjelman ajon aikana, näkymän pitäisi reagoida tähän
+automaattisesti ilman, että jokaisen muutoksen jälkeen kirjoitetaan erikseen
+päivityskoodia kaikkiin käyttöliittymäkomponentteihin. Tässä kohtaa tulevat
+mukaan JavaFX:n *observable*-rakenteet, joiden avulla data ja käyttöliittymä
+voidaan kytkeä toisiinsa hallitusti.
 
 ## Mitä Observable tarkoittaa JavaFX:ssä?
 
-JavaFX:ssä sana *observable* tarkoittaa, että olio osaa ilmoittaa muutoksista.
-Käytännössä osa luokista toteuttaa tämän suoraan, ja osa rakentuu sen päälle:
+JavaFX:ssä sana **observable** (*havaittava*) tarkoittaa sitä, että olio osaa
+ilmoittaa muutoksistaan muille sovelluksen osille automaattisesti. Tämä on
+perustana sille, miten käyttöliittymä saadaan päivittymään heti, kun data muuttuu.
 
-- `ObservableList<T>`: kuunnellaan listan lisäyksiä/poistoja.
-- `ObservableValue<T>`: kuunnellaan yksittäisen arvon muutoksia.
-- `Property`-tyypit (`StringProperty`, `BooleanProperty`, ...): erityisiä
-  `ObservableValue`-tyyppejä, joita voi myös sitoa (`bind`).
+Käytännössä käytämme kolmea pääasiallista tyyppiä:
+
+* `ObservableList<T>` ilmoittaa, kun listaan lisätään tai siitä poistetaan alkioita.
+* `ObservableValue<T>` ilmoittaa, kun sen sisältämä yksittäinen arvo muuttuu.
+* **Property**-tyypit, kuten `StringProperty` ja `BooleanProperty`, ovat näiden
+  havaittavien arvojen käytännöllisiä toteutuksia. Niitä voi myös **sitoa**
+  (*binding*) toisiinsa, jolloin yhden arvon muutos heijastuu automaattisesti toiseen.
 
 ## Hyvin pieni esimerkki ensin
 
-Ennen TODO-mallia katsotaan miniesimerkki pelkällä merkkijonolistalla:
+Ennen `Tehtava`-mallia katsotaan tarkemmin, miten JavaFX:n automaattinen tiedonvälitys
+toimii. Alla olevassa esimerkissä luomme listan, joka osaa kertoa itsestään muille:
 
 ```java
+// 1. Luodaan erikoistyyppinen lista tavallisen ArrayListin sijaan
 ObservableList<String> nimet = FXCollections.observableArrayList();
 
+// 2. Rekisteröidään "kuuntelija", joka reagoi heti kun listan sisältö muuttuu
 nimet.addListener((ListChangeListener<String>) change -> {
-    while (change.next()) {
+    while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
         if (change.wasAdded()) {
             System.out.println("Lisättiin: " + change.getAddedSubList());
         }
     }
 });
 
+// 3. Muutetaan dataa
 nimet.add("Ada");
 nimet.add("Linus");
 ```
 
-Mitä tästä kannattaa huomata:
+### Mitä tässä tapahtuu?
 
-- Muutoksia ei tarvitse erikseen “pollata”.
-- Kun listaan lisätään arvo, kuuntelija saa tiedon heti.
+Tavallinen `ArrayList` on passiivinen: jos lisäät sinne alkion, kukaan muu ei tiedä
+siitä, ellei se erikseen käy tarkistamassa listan kokoa. `ObservableList` taas on
+aktiivinen. Kun kutsumme `nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen
+kaikille sen tilaajille.
 
-Jos sama lista on kytketty esimerkiksi `ListView`-komponenttiin
-`listView.setItems(nimet)`, käyttöliittymä päivittyy automaattisesti.
+Esimerkin `while (change.next())` saattaa näyttää monimutkaiselta, mutta se on
+JavaFX:n vakiotapa käsitellä listamuutoksia. Yhdellä kertaa listaan saattaa tulla
+useita muutoksia (esim. `addAll`), ja silmukka varmistaa, että jokainen niistä
+käsitellään.
 
-## Pieni Tehtava-malli (ilman propertyjä)
+### Kytkentä käyttöliittymään (FXML)
+
+Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa listan
+tilaaja on yleensä jokin käyttöliittymäkomponentti.
+
+Kuvitellaan, että meillä on FXML-tiedostossa `ListView`-komponentti:
+
+```xml
+<!-- fxml-tiedosto -->
+<ListView fx:id="nimitulosteet" />
+```
+
+Controller-luokassa kytkemme datan ja näkymän toisiinsa yhdellä komennolla:
+
+```java
+@FXML private ListView<String> nimitulosteet;
+
+public void initialize() {
+    // Kytketään lista ja komponentti toisiinsa
+    nimitulosteet.setItems(nimet);
+}
+```
+
+Tämän kytkennän jälkeen **meidän ei tarvitse koskaan kutsua mitään "päivitä näkymä"
+-metodia**. Kun koodissa tehdään `nimet.add("Uusi nimi")`, nimi ilmestyy ruudulle
+automaattisesti. `ListView` on sisäisesti lisännyt itsensä listan kuuntelijaksi
+samalla tavalla kuin teimme esimerkin `addListener`-kohdassa.
+
+Tavoitteenamme on siis **yksisuuntainen riippuvuus**: logiikkamme muokkaa vain
+puhdasta dataa (listaa), ja JavaFX huolehtii siitä, että näkymä heijastaa aina
+datan nykyistä tilaa.
+
+## Pieni Tehtävä-malli (ilman propertyjä)
 
 Ennen laajaa mallia tehdään ensin tarkoituksella pieni malli:
 
@@ -91,11 +152,9 @@ Sitten lista:
 private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
 ```
 
-Nyt meillä on jo kolme tärkeää asiaa:
-
-- tehtävä on *dataolio*, ei UI-komponentti
-- tehtävät ovat yhdessä listassa
-- lista on observable, joten näkymä voi kuunnella sitä suoraan
+Tässä vaiheessa tehtävä on jo selkeä *dataolio* eikä käyttöliittymäkomponentti.
+Lisäksi tehtävät ovat yhdessä listassa, ja koska lista on observable, näkymä voi
+kuunnella sitä suoraan.
 
 ## Miksi tämä ei vielä riitä?
 
@@ -201,12 +260,10 @@ public record TehtavaDto(
 ) {}
 ```
 
-Silloin muunnos tehdään eksplisiittisesti:
-
-- `Tehtava -> TehtavaDto` tallennuksessa
-- `TehtavaDto -> Tehtava` latauksessa
-
-Tämä pitää käyttöliittymämallin ja tiedostomuodon erillään.
+Silloin muunnos tehdään eksplisiittisesti niin, että tallennuksessa
+`Tehtava` muunnetaan `TehtavaDto`:ksi ja latauksessa `TehtavaDto`
+muunnetaan takaisin `Tehtava`:ksi. Tämä pitää käyttöliittymämallin ja
+tiedostomuodon erillään.
 
 <task>
   <task-title>Tehtävä 8.1: TODO-ohjelma, vaihe 7. <points>1 p.</points> </task-title>
