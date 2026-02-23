@@ -65,7 +65,7 @@ Tässä jouduimme kirjoittamaan melko paljon koodia (uusi luokka, metodin
 ylikirjoitus) vain yhtä pientä oliota varten. Nyt on kuitenkin niin, että
 `NumeroFunktio` on funktionaalinen rajapinta: sillä on vain yksi pakollinen
 metodi. Javassa on mahdollista käyttää olemassa olevaa metodia *ilman* luokan
-rakenteltua ikään kuin tämä metodi olisi kyseisen rajapinnan toteuttava olio.
+rakentelua ikään kuin tämä metodi olisi kyseisen rajapinnan toteuttava olio.
 Tätä kutsutaan *funktioviitteeksi* (engl. *method reference*).
 
 ```java
@@ -301,7 +301,7 @@ Emme siis tarvinneet erillistä luokkaa, emmekä edes erillistä metodia!
 
 Lambdalausekkeiden suurin etu on juuri niiden tiiviys. Java osaa päätellä monta
 asiaa automaattisesti, jolloin koodia vielä tästäkin voidaan lyhentää.
-Ensinnäkin, parametrien tyypit voidaan päätellä funktiorajapinnan parametrien
+Ensinnäkin parametrien tyypit voidaan päätellä funktiorajapinnan parametrien
 tyypeistä, joten tyypit voidaan usein jättää pois. Yllä olevassa esimerkissämme
 voimme jättää pois `int`-tyypin, koska `NumeroFunktio.laske`-metodi ottaa
 parametrina kokonaisluvun, eikä tätä tarvitse erikseen mainita lambdalausekkeessa.
@@ -490,7 +490,7 @@ Javan `Comparator`-rajapinta
 ([JavaDoc](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/Comparator.html))
 tarjoaa tavan määrittää *vaihtoehtoisia* järjestystapoja. Rajapinta sisältää
 vain yhden pakollisen metodin (`compare`), eli se on funktionaalinen rajapinta.
-Rajapinnan `compare` toimii samalla periaattella kuin `Comparable.compareTo`:
+Rajapinnan `compare` toimii samalla periaatteella kuin `Comparable.compareTo`:
 
 
 | Tapaus                   | Merkitys | Tulkinta                            |
@@ -515,7 +515,7 @@ IO.println(nimet); // [Aino, Ville, Matti]
 
 Palataan vielä luvussa 4.2 olevaan
 [keräilykorttiesimerkkiin](../osa4/02-vertailurajapinta.md#oma-toteutus-comparable-rajapinnalle).
-Laajenetaan hieman `Kerailykortti`-luokkaa lisäämällä attribuutti `sarja`, joka
+Laajennetaan hieman `Kerailykortti`-luokkaa lisäämällä attribuutti `sarja`, joka
 kuvaa korttisarjaa (esim. eläimet, ajoneuvot, jne.):
 
 
