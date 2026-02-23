@@ -249,7 +249,7 @@ kirjoitetaan erillinen `tallenna()`-kutsu.
 ## JSON ja propertyt
 
 Jackson ei suoraan tykkää JavaFX-property-objekteista. Käytännössä on selkeintä
-tehdä erillinen DTO-luokka tiedostomuotoa varten:
+tehdä erillinen tiedonvälitysluokka (data transfer object, DTO) tiedostomuotoa varten:
 
 ```java
 public record TehtavaDto(
