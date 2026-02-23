@@ -70,17 +70,23 @@ nimet.add("Ada");
 nimet.add("Linus");
 ```
 
-### Mitä tässä tapahtuu?
+Voit halutessasi tehdä kurssin JavaFX-arkkityypin
+(`io.github.ohj-perus-jy:javafx-fxml-template`), tyhjentää `main`-metodin, ja
+laittaa tämän koodin testiksi siihen. Näet, että kun `nimet.add("Ada")` ja
+`nimet.add("Linus")` suoritetaan, konsoliin tulostuu tieto siitä, että nimi on
+lisätty.
 
-Tavallinen `ArrayList` on passiivinen: jos lisäät sinne alkion, kukaan muu ei tiedä
-siitä, ellei se erikseen käy tarkistamassa listan kokoa. `ObservableList` taas on
-aktiivinen. Kun kutsumme `nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen
-kaikille sen tilaajille.
+**Mitä tässä tapahtuu?** Tavallinen `ArrayList` on passiivinen: jos lisäät sinne
+alkion, mikään toinen olio ei tiedä siitä, ellei se toinen erikseen käy
+tarkistamassa listan kokoa. `ObservableList` taas on aktiivinen. Kun kutsumme
+`nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen kaikille muutoksista
+kiinnostuneille, jotka ovat rekisteröityneet kuuntelijoiksi. Näitä kuuntelijoita
+kutsutaan *tilaajiksi* (subscribers).
 
-Esimerkin `while (change.next())` saattaa näyttää monimutkaiselta, mutta se on
-JavaFX:n vakiotapa käsitellä listamuutoksia. Yhdellä kertaa listaan saattaa tulla
-useita muutoksia (esim. `addAll`), ja silmukka varmistaa, että jokainen niistä
-käsitellään.
+Yllä olevan esimerkin `while (change.next())` saattaa näyttää monimutkaiselta,
+mutta se on JavaFX:n vakiotapa käsitellä listamuutoksia. Yhdellä kertaa listaan
+saattaa tulla useita muutoksia (esim. `addAll`), ja silmukka varmistaa, että
+jokainen niistä käsitellään.
 
 ### Kytkentä käyttöliittymään (FXML)
 
