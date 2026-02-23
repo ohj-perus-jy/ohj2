@@ -99,8 +99,8 @@ listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
 
 ## Kytkentä käyttöliittymään (FXML)
 
-Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa listan
-tilaaja on yleensä jokin käyttöliittymäkomponentti.
+Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa
+listan muutosten tilaaja on yleensä jokin käyttöliittymäkomponentti.
 
 Tehdään pari muutosta, jotta pääsemme näkemään tämän käytännössä. Palauta
 `main`-metodissa olevan `launch()`-kutsu takaisin. Siirrä
