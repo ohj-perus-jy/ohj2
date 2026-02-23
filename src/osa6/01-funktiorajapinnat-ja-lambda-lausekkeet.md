@@ -30,14 +30,15 @@ Myös luvussa 4.1 esimerkkinä tehty
 [Saadettava-rajapinta](../osa4/01-rajapinta.md#alykoti-saadettava) on
 funktionaalinen, sillä se sisältää vain yhden metodin: `asetaArvo`.
 
-Java tarjoaa erityisen yksinkertaistetun tavan luoda olioita, jotka toteuttavat
+Java tarjoaa yksinkertaistetun tavan luoda olioita, jotka toteuttavat
 funktionaalisia rajapintoja. Tämä mahdollistaa koodin, jossa voimme käsitellä
 funktioita lähes samalla tavalla kuin käsittelemme dataa.
 
 ## Olion alustaminen funktiorajapinnasta
 
-Perinteisesti, jos haluamme luoda olion, joka toteuttaa
-`NumeroFunktio`-rajapinnan, meidän täytyy ensin määritellä uusi luokka:
+Jos haluamme luoda olion, joka toteuttaa `NumeroFunktio`-rajapinnan, voimme
+määritellä luokan, joka toteuttaa rajapinnan ja sitten ylikirjoittaa metodin
+`laske`.
 
 ```java
 // FILE: main.java
@@ -61,9 +62,10 @@ public interface NumeroFunktio {
 ```
 
 Tässä jouduimme kirjoittamaan melko paljon koodia (uusi luokka, metodin
-ylikirjoitus) vain yhtä pientä oliota varten. Koska `NumeroFunktio` on
-funktionaalinen rajapinta, Java tarjoaa suoraviivaisemman tavan: voimme käyttää
-olemassa olevaa metodia ikään kuin se olisi kyseisen rajapinnan toteuttava olio.
+ylikirjoitus) vain yhtä pientä oliota varten. Nyt on kuitenkin niin, että
+`NumeroFunktio` on funktionaalinen rajapinta: sillä on vain yksi pakollinen
+metodi. Javassa on mahdollista käyttää olemassa olevaa metodia *ilman* luokan
+rakenteltua ikään kuin tämä metodi olisi kyseisen rajapinnan toteuttava olio.
 Tätä kutsutaan *funktioviitteeksi* (engl. *method reference*).
 
 ```java
@@ -183,42 +185,12 @@ funktionaalinen.
 
 </details>
 
-
 ## Lambdalausekkeet
 
-Aina emme haluaisi kirjoittaa uutta metodia pelkästään funktioviitteen takia.
-Tällöin voimme kirjoittaa funktion toteutuksen suoraan *lausekkeena*.
-Lausekkeena kirjoitettu funktio on nimeltään *lambdalauseke* (engl. *lambda
-expression*).
-
-```java
-// FILE: main.java
-void main() {
-    // HIGHLIGHT_GREEN_BEGIN
-    NumeroFunktio funktio = (int luku) -> {
-        return luku * 2;
-    };
-    // HIGHLIGHT_GREEN_END
-    IO.println(funktio.laske(1));
-    IO.println(funktio.laske(2));
-    IO.println(funktio.laske(3));
-    IO.println(funktio.laske(4));
-}
-// FILE_END
-// FILE: NumeroFunktio.java
-/**
- * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
- * ja palauttaa toisen luvun.
- */
-public interface NumeroFunktio {
-    int laske(int luku);
-}
-// FILE_END
-```
-
-Lambdalausekkeelle ei tarvitse antaa erikseen nimeä.
-Tästä syystä niitä kutsutaan myös *anonyymeiksi
-funktioiksi* (engl. *anonymous function*).
+Javassa on mahdollista kirjoittaa funktion toteutus ilman erillistä metodia,
+suoraan siinä kohdassa, missä funktio tarvitaan. Tällaista lausekemuodossa
+kirjoitettua funktiota kutsutaan *lambdalausekkeeksi* (engl. *lambda
+expression*). 
 
 Lambdalausekkeen perusrakenne on seuraava:
 
@@ -238,13 +210,101 @@ Jos parametreja on useampi, ne erotetaan pilkulla:
 }
 ```
 
-Kullekin parametrille tulee määritellä tyyppi, joka vastaa funktionaalisen
-rajapinnan metodin parametreja.
+Lambdalausekkeelle ei tarvitse antaa erikseen nimeä. Tästä syystä niitä
+kutsutaan myös *anonyymeiksi funktioiksi* (engl. *anonymous function*). Alla
+esimerkki, tulostetaan listan alkioita lambdalausekkeella. 
 
-Lambdalausekkeiden suurin etu on niiden tiiviys. Java osaa päätellä monta asiaa
-automaattisesti, jolloin koodia voidaan lyhentää. Ensinnäkin, parametrien tyypit
-voidaan päätellä funktiorajapinnan parametrien tyypeistä, joten tyypit voidaan
-usein jättää pois.
+```java
+// FILE: main.java
+void main() {
+    // Välitetään anonyymi funktio suoraan forEach-metodille
+    List<String> marjoja = List.of("mansikka", "mustikka", "puolukka", "mansikka");
+    // tulosta vain mansikat
+    marjoja.forEach(marja -> {
+        if (marja.equals("mansikka")) {
+            IO.println(marja);
+        }
+    });
+    
+}
+// FILE_END
+```
+
+Tämähän olisi voitu kirjoittaa myös perinteisellä aliohjelmakutsulla:
+
+```java,ignore
+void main() {
+    List<String> marjoja = List.of("mansikka", "mustikka", "puolukka");
+    tulostaMansikat(marjoja);
+}
+
+void tulostaMansikat(List<String> marjoja) {
+    for (String marja : marjoja) {
+        if (marja.equals("mansikka")) {
+            IO.println(marja);
+        }
+    }
+}
+```
+
+Oleellinen ajatus on tämä: lambdalauseke ei ole irrallinen koodinpätkä, vaan se
+on olio, joka toteuttaa funktionaalisen rajapinnan. Kullekin parametrille tulee
+määritellä tyyppi, joka vastaa funktionaalisen rajapinnan metodin parametreja.
+Palataan esimerkkiimme `NumeroFunktio`-rajapinnasta. Toteutetaan nyt
+lambdalausekkeena funktio, joka kertoo syötetyn luvun kahdella. Tällaisen
+lausekkeen tulee ottaa parametrina yksi kokonaisluku ja palauttaa kokonaisluku.
+Muoto on seuraava: 
+
+```java,ignore
+(int luku) -> {
+    return luku * 2;
+}
+```
+
+Koska tällainen lambdalauseke toteuttaa `NumeroFunktio`-rajapinnan, voimme
+sijoittaa sen `NumeroFunktio`-tyyppiseen muuttujaan:
+
+```java,ignore
+NumeroFunktio funktio = (int luku) -> {
+    return luku * 2;
+};
+```
+
+Nyt voimme kutsua `funktio`-muuttujan `laske`-metodia, koska olemme toteuttaneet
+`NumeroFunktio`-rajapinnan.
+
+
+```java
+// FILE: main.java
+void main() {
+    NumeroFunktio funktio = (int luku) -> {
+        return luku * 2;
+    };
+    IO.println(funktio.laske(1));
+    IO.println(funktio.laske(2));
+    IO.println(funktio.laske(3));
+    IO.println(funktio.laske(4));
+}
+// FILE_END
+// FILE: NumeroFunktio.java
+/**
+ * Rajapinta, joka kuvastaa funktiota, joka ottaa parametrina luvun
+ * ja palauttaa toisen luvun.
+ */
+public interface NumeroFunktio {
+    int laske(int luku);
+}
+// FILE_END
+```
+
+Emme siis tarvinneet erillistä luokkaa, emmekä edes erillistä metodia!
+
+Lambdalausekkeiden suurin etu on juuri niiden tiiviys. Java osaa päätellä monta
+asiaa automaattisesti, jolloin koodia vielä tästäkin voidaan lyhentää.
+Ensinnäkin, parametrien tyypit voidaan päätellä funktiorajapinnan parametrien
+tyypeistä, joten tyypit voidaan usein jättää pois. Yllä olevassa esimerkissämme
+voimme jättää pois `int`-tyypin, koska `NumeroFunktio.laske`-metodi ottaa
+parametrina kokonaisluvun, eikä tätä tarvitse erikseen mainita lambdalausekkeessa.
 
 ```java
 //-public interface NumeroFunktio {
