@@ -194,61 +194,133 @@ private void lisaaNimi() {
 }
 ```
 
-Tässä kohdassa kesken....
+Tavoitteenamme on siis **yksisuuntainen riippuvuus**: JavaFX huolehtii siitä,
+että näkymä päivittyy, kun data muuttuu, mutta ei itse muuta dataa. Vastaavasti
+logiikka, joka muuttaa dataa, ei pidä riippua siitä, miten data näytetään. 
 
-Tavoitteenamme on siis **yksisuuntainen riippuvuus**: logiikkamme muokkaa vain
-puhdasta dataa (listaa), ja JavaFX huolehtii siitä, että näkymä heijastaa aina
-datan nykyistä tilaa.
+## Pieni Tehtävä-malli (ensin tavallisilla kentillä)
 
-## Pieni Tehtävä-malli (ilman propertyjä)
+Siirrytään nyt nimilistasta TODO-dataan. Käytetään ensin mahdollisimman pientä
+`Tehtava`-mallia, jotta näemme selvästi:
 
-Ennen laajaa mallia tehdään ensin tarkoituksella pieni malli:
+1. mitä `ObservableList` hoitaa automaattisesti
+2. mitä se ei vielä hoida
 
-```java
-public class Tehtava {
-    private String otsikko;
-    private boolean tehty;
-
-    public Tehtava(String otsikko, boolean tehty) {
-        this.otsikko = otsikko;
-        this.tehty = tehty;
-    }
-
-    public String getOtsikko() {
-        return otsikko;
-    }
-
-    public void setOtsikko(String otsikko) {
-        this.otsikko = otsikko;
-    }
-
-    public boolean isTehty() {
-        return tehty;
-    }
-
-    public void setTehty(boolean tehty) {
-        this.tehty = tehty;
-    }
-}
-```
-
-Sitten lista:
+Lähtötilanne on nyt tämä: tehtävät ovat käyttöliittymässä (`VBox` +
+`CheckBox`) ja tallennus lukee ne takaisin komponenteista (`haeTehtavat`).
+Seuraavaksi siirretään "totuus" mallilistaan. Lisää `MainController`-luokkaan uusi attribuutti:
 
 ```java
 private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
 ```
 
-Tässä vaiheessa tehtävä on jo selkeä *dataolio* eikä käyttöliittymäkomponentti.
-Lisäksi tehtävät ovat yhdessä listassa, ja koska lista on observable, näkymä voi
-kuunnella sitä suoraan.
+Ajatus on se, että `tehtavat`-lista olisi jatkossa päädata ja `VBox`-komponentit
+ovat vain näkymää.
 
-## Miksi tämä ei vielä riitä?
+Nykyisessä koodissa `lisaaTehtava()` lisää suoraan `CheckBox`in `VBox`:iin.
+Muuta se lisäämään `Tehtava` listaan:
 
-`ObservableList` kertoo, kun listaan lisätään tai poistetaan tehtäviä.
-Mutta jos yhden tehtävän sisäinen kenttä muuttuu (`otsikko`/`tehty`), lista ei
-yksin aina riitä automaattiseen UI-päivitykseen.
+```java
+private void lisaaTehtava() {
+    String teksti = uusiTehtavaNimi.getText();
+    if (teksti == null || teksti.isBlank()) {
+        uusiTehtavaNimi.requestFocus();
+        return;
+    }
+    tehtavat.add(new Tehtava(teksti.trim(), false));
+    uusiTehtavaNimi.clear();
+    uusiTehtavaNimi.requestFocus();
+}
+```
 
-Siksi JavaFX-sovelluksissa kannattaa käyttää mallin kentissä propertyjä.
+Nyt lisää metodi, joka rakentaa `VBox`-sisällön aina `tehtavat`-listasta:
+
+```java
+private void paivitaNakyma() {
+    tekemattomat.getChildren().clear();
+    tehdyt.getChildren().clear();
+
+    for (Tehtava tehtava : tehtavat) {
+        CheckBox cb = luoCheckBox(tehtava);
+        if (tehtava.getTehty()) {
+            tehdyt.getChildren().add(cb);
+        } else {
+            tekemattomat.getChildren().add(cb);
+        }
+    }
+}
+```
+
+### Vaihe 4: kuuntele listaa yhdessä paikassa
+
+Kytke `initialize()`-metodissa listan muutokset näkymään ja tallennukseen:
+
+```java
+@Override
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+        paivitaNakyma();
+        tallenna();
+    });
+
+    tehtavat.addAll(lataaTehtavat());
+    paivitaNakyma();
+
+    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
+
+Huomaa, että `lataa()` kannattaa muuttaa palauttamaan lista:
+
+```java
+private List<Tehtava> lataaTehtavat() {
+    Path path = Path.of("tehtavat.json");
+    if (Files.notExists(path)) {
+        return List.of();
+    }
+    try {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(path.toFile(), new TypeReference<>() {});
+    } catch (JacksonException je) {
+        IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
+        return List.of();
+    }
+}
+```
+
+### Vaihe 5: CheckBox-tapahtuma muuttaa mallia
+
+Aiemmassa ratkaisussa `CheckBox`-tapahtuma siirteli komponentteja `VBox`ien
+välillä, ja data luettiin myöhemmin takaisin UI:sta. Koska koko siirtymän
+tärkein ajatus on, että käyttöliittymä ei enää ole datan säilytyspaikka, meidän
+pitää muuttaa tapahtumankäsittelijä niin, että se muuttaa mallia eikä
+UI-komponentteja.
+
+Kun checkboxia klikataan, tapahtumankäsittelijä päivittää `tehtavat`-listaa.
+Valitettavasti meillä ei ole vielä tapaa päivittää `Tehtava`-olion sisäistä
+tilaa esimerkiksi `tehtava.setTehty(true)`-kutsulla. Tarkemmin sanoen voisimme
+toki tuollaisen metodin tehdä, mutta `ObservableList` ei huomaisi, että olion
+sisäinen tila on muuttunut, koska `ObservableList` tarkkailee oletuksena vain
+listan rakennetta (alkioiden määrä ja järjestys), ei listalla olevien olioiden
+sisäisiä kenttiä. JavaFX:ssä on kyllä keino ratkaista tämä, mutta katsotaan
+aluksi hieman yksinkertaisempaa tapaa. 
+
+Tehdään uusi `Tehtava`-olio, joka on muuten sama kuin vanha, mutta
+`tehty`-kenttä on päinvastainen. Tämä on hieman kömpelöä, mutta toimii:
+
+```java
+private CheckBox luoCheckBox(Tehtava tehtava) {
+    CheckBox cb = new CheckBox(tehtava.getTeksti());
+    cb.setSelected(tehtava.getTehty());
+    cb.setOnAction(event -> {
+        tehtavat.remove(tehtava);
+        tehtavat.add(new Tehtava(tehtava.getTeksti(), cb.isSelected()));
+    });
+    return cb;
+}
+```
+
 
 ## Laajennetaan Tehtava-malli property-pohjaiseksi
 
