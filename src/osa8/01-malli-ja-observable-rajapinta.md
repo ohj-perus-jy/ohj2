@@ -57,7 +57,7 @@ toimii. Alla olevassa esimerkissä luomme listan, joka osaa kertoa itsestään m
 ObservableList<String> nimet = FXCollections.observableArrayList();
 
 // 2. Rekisteröidään "kuuntelija", joka reagoi heti kun listan sisältö muuttuu
-nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
+nimet.addListener((ListChangeListener<String>) change -> {
     while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
         if (change.wasAdded()) {
             IO.println("Listalle lisättiin: " + change.getAddedSubList());
@@ -84,6 +84,11 @@ kiinnostuneille, jotka ovat rekisteröityneet kuuntelijoiksi. Näitä kuuntelijo
 kutsutaan *tilaajiksi* (subscribers). Meidän tapauksessamme tilaaja on
 lambda-funktio, joka tulostaa konsoliin, mitä on tapahtunut.
 
+TODO: Sananen tyyppimuunnoksesta lambda-lausekkeessa. Mitä `change`-parametri
+itse asiassa sisältää? 
+
+<details><summary> Valinnaista lisätietoa: Miksi lambda-lausekkeessa tarvitaan tyyppimuunnos? </summary>
+
 Vielä sananen `change`-parametrista, joka näyttää hieman monimutkaiselta.
 `Change` on geneerinen olio, joka sisältää tietoa listassa kulloinkin tapahtuneesta
 muutoksesta. `Change`-oliota käytetään `ListChangeListener`-rajapinnan
@@ -92,6 +97,8 @@ extends E> c);`. Nyt meillä `E` on `String`, joten täydellinen tyyppi on
 `ListChangeListener.Change<? extends String>`. Syy tälle syntaksille on siinä,
 että listat ovat geneerisiä, ja tällä tavalla erilaisia listamuutoksia (lisäys,
 poisto, korvaus, jne.) voidaan käsitellä samalla `Change`-oliolla.
+
+</details>
 
 Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
 listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
@@ -129,7 +136,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
+        //- // nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
+        nimet.addListener((ListChangeListener<String>) change -> {
             while (change.next()) { 
                 if (change.wasAdded()) {
                     IO.println("Listalle lisättiin: " + change.getAddedSubList());
@@ -339,7 +347,15 @@ private CheckBox luoCheckBox(Tehtava tehtava) {
 ```
 
 
+Cb-olion tilan muuttaminen aiheuttaa kaksi muutosta `tehtavat`-listaan: vanhan
+`Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Tämä on tietysti
+vähän turhaa, mutta toimii, koska `ObservableList` huomaa molemmat muutokset ja
+päivittää näkymän automaattisesti.
+
 ## Laajennetaan Tehtava-malli property-pohjaiseksi
+
+
+
 
 ```java
 public class Tehtava {
