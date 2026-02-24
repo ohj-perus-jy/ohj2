@@ -201,11 +201,34 @@ logiikka, joka muuttaa dataa, ei pidä riippua siitä, miten data näytetään.
 ## Pieni Tehtävä-malli (ensin tavallisilla kentillä)
 
 Siirrytään nyt nimilistasta takaisin TODO-sovellukseemme. Lähtötilanne on nyt
-tämä: tehtävät ovat käyttöliittymässä (`VBox` + `CheckBox`) ja tallennus lukee
-ne takaisin komponenteista (`haeTehtavat`). Seuraavaksi siirretään "totuus"
-mallilistaan. Ajatus on se, että `tehtavat`-lista olisi jatkossa päädata ja
-`VBox`-komponentit ovat vain näkymää. Lisää `MainController`-luokkaan uusi
-attribuutti:
+tämä: 
+
+ * tehtävien lukeminen tapahtuu `lataaTehtavat()`-metodissa, joka hakee datan
+   JSON-tiedostosta, muuttaa sen ensin `Tehtava`-olioiksi, ja sitten luo
+   `CheckBox`-komponentteja.
+ * Tehtävien lisääminen tapahtuu `lisaaTehtava()`-metodissa, joka luo uuden
+   `CheckBox`-komponentin ja lisää sen suoraan `VBox`-komponenttiin.
+ * Tehtävien tilan muuttaminen tapahtuu `CheckBox`-tapahtumankäsittelijässä, joka
+   siirtää `CheckBox`-komponentteja `VBox`-komponenttien välillä.
+ * Tehtävien tallennus tapahtuu `tallenna()`-metodissa, joka hakee datan takaisin
+   `VBox`-komponenteista ja kirjoittaa sen JSON-tiedostoon.
+
+Seuraavaksi siirretään "totuus" mallilistaan. Ajatus on se, että
+`tehtavat`-lista olisi jatkossa päädata ja `VBox`-komponentit ovat vain näkymää.
+Tavoite olisi seuraava:
+
+ * `lataaTehtavat()`-metodi hakee datan JSON-tiedostosta, muuttaa sen
+   `Tehtava`-olioiksi, kuten ennenkin, mutta ei luo `CheckBox`-komponentteja.
+   Sen sijaan se palauttaa listan `Tehtava`-olioita, joka asetetaan
+   `tehtavat`-attribuuttiin.
+ * `lisaaTehtava()`-metodi luo uuden `Tehtava`-olion ja lisää sen `tehtavat`-listaan.
+ * Tehtävien tilan muuttaminen tapahtuu `CheckBox`-tapahtumankäsittelijässä, joka
+   muuttaa mallin tilaa eikä siirtele komponentteja.
+ * Näkymä päivittyy automaattisesti, kun mallin data muuttuu.
+ * `tallenna()`-metodi hakee datan suoraan mallista eikä tarvitse tietää
+   näkymästä mitään.
+
+Aloitetaan lisäämällä `MainController`-luokkaan uusi attribuutti:
 
 ```java
 private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
