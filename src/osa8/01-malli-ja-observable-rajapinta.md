@@ -200,22 +200,16 @@ logiikka, joka muuttaa dataa, ei pidä riippua siitä, miten data näytetään.
 
 ## Pieni Tehtävä-malli (ensin tavallisilla kentillä)
 
-Siirrytään nyt nimilistasta TODO-dataan. Käytetään ensin mahdollisimman pientä
-`Tehtava`-mallia, jotta näemme selvästi:
-
-1. mitä `ObservableList` hoitaa automaattisesti
-2. mitä se ei vielä hoida
-
-Lähtötilanne on nyt tämä: tehtävät ovat käyttöliittymässä (`VBox` +
-`CheckBox`) ja tallennus lukee ne takaisin komponenteista (`haeTehtavat`).
-Seuraavaksi siirretään "totuus" mallilistaan. Lisää `MainController`-luokkaan uusi attribuutti:
+Siirrytään nyt nimilistasta takaisin TODO-sovellukseemme. Lähtötilanne on nyt
+tämä: tehtävät ovat käyttöliittymässä (`VBox` + `CheckBox`) ja tallennus lukee
+ne takaisin komponenteista (`haeTehtavat`). Seuraavaksi siirretään "totuus"
+mallilistaan. Ajatus on se, että `tehtavat`-lista olisi jatkossa päädata ja
+`VBox`-komponentit ovat vain näkymää. Lisää `MainController`-luokkaan uusi
+attribuutti:
 
 ```java
 private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
 ```
-
-Ajatus on se, että `tehtavat`-lista olisi jatkossa päädata ja `VBox`-komponentit
-ovat vain näkymää.
 
 Nykyisessä koodissa `lisaaTehtava()` lisää suoraan `CheckBox`in `VBox`:iin.
 Muuta se lisäämään `Tehtava` listaan:
