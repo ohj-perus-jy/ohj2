@@ -57,10 +57,10 @@ toimii. Alla olevassa esimerkissä luomme listan, joka osaa kertoa itsestään m
 ObservableList<String> nimet = FXCollections.observableArrayList();
 
 // 2. Rekisteröidään "kuuntelija", joka reagoi heti kun listan sisältö muuttuu
-nimet.addListener((ListChangeListener<String>) change -> {
+nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
     while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
         if (change.wasAdded()) {
-            System.out.println("Lisättiin: " + change.getAddedSubList());
+            IO.println("Listalle lisättiin: " + change.getAddedSubList());
         }
     }
 });
@@ -70,38 +70,97 @@ nimet.add("Ada");
 nimet.add("Linus");
 ```
 
-### Mitä tässä tapahtuu?
+Voit halutessasi tehdä kurssin JavaFX-arkkityypin
+(`io.github.ohj-perus-jy:javafx-fxml-template`), laittaa `main`-metodissa olevan
+`launch()`-kutsun kommenttiin, ja laittaa tämän koodin testiksi siihen. Näet,
+että kun `nimet.add("Ada")` ja `nimet.add("Linus")` suoritetaan, konsoliin
+tulostuu tieto siitä, että nimi on lisätty.
 
-Tavallinen `ArrayList` on passiivinen: jos lisäät sinne alkion, kukaan muu ei tiedä
-siitä, ellei se erikseen käy tarkistamassa listan kokoa. `ObservableList` taas on
-aktiivinen. Kun kutsumme `nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen
-kaikille sen tilaajille.
+**Mitä tässä tapahtuu?** Tavallinen `ArrayList` on passiivinen: jos lisäät sinne
+alkion, mikään toinen olio ei tiedä siitä, ellei se toinen erikseen käy
+tarkistamassa listan kokoa. `ObservableList` taas on aktiivinen. Kun kutsumme
+`nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen kaikille muutoksista
+kiinnostuneille, jotka ovat rekisteröityneet kuuntelijoiksi. Näitä kuuntelijoita
+kutsutaan *tilaajiksi* (subscribers). Meidän tapauksessamme tilaaja on
+lambda-funktio, joka tulostaa konsoliin, mitä on tapahtunut.
 
-Esimerkin `while (change.next())` saattaa näyttää monimutkaiselta, mutta se on
-JavaFX:n vakiotapa käsitellä listamuutoksia. Yhdellä kertaa listaan saattaa tulla
-useita muutoksia (esim. `addAll`), ja silmukka varmistaa, että jokainen niistä
-käsitellään.
+Vielä sananen `change`-parametrista, joka näyttää hieman monimutkaiselta.
+`Change` on geneerinen olio, joka sisältää tietoa listassa kulloinkin tapahtuneesta
+muutoksesta. `Change`-oliota käytetään `ListChangeListener`-rajapinnan
+`onChanged`-metodissa; tuon metodin esittelyrivi on `void onChanged(Change<?
+extends E> c);`. Nyt meillä `E` on `String`, joten täydellinen tyyppi on
+`ListChangeListener.Change<? extends String>`. Syy tälle syntaksille on siinä,
+että listat ovat geneerisiä, ja tällä tavalla erilaisia listamuutoksia (lisäys,
+poisto, korvaus, jne.) voidaan käsitellä samalla `Change`-oliolla.
 
-### Kytkentä käyttöliittymään (FXML)
+Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
+listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
+`addAll`), ja silmukka varmistaa, että jokainen niistä käsitellään.
 
-Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa listan
-tilaaja on yleensä jokin käyttöliittymäkomponentti.
+## Kytkentä käyttöliittymään (FXML)
 
-Kuvitellaan, että meillä on FXML-tiedostossa `ListView`-komponentti:
+Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa
+listan muutosten tilaaja on yleensä jokin käyttöliittymäkomponentti.
+
+Tehdään pari muutosta, jotta pääsemme näkemään tämän käytännössä. Palauta
+`main`-metodissa olevan `launch()`-kutsu takaisin. Siirrä
+`ObservableList<String> nimet`-määrittely `MainController.java`-tiedostoon
+attribuutiksi, ja laita `initialize()`-metodiin `nimet.addListener(...)`-kutsu
+sekä `nimet.add(...)`-kutsut. 
+
+Tiedostojen pitäisi nyt näyttää suunnilleen tältä. Import-lauseet on jätetty
+pois tilan säästämiseksi. 
+
+`Main.java`
+
+```java,ignore
+public class Main {
+    public static void main(String[] args) {
+        Application.launch(App.class, args);
+    }
+}
+```
+
+`MainController.java`
+
+```java
+public class MainController implements Initializable {
+    ObservableList<String> nimet = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
+            while (change.next()) { 
+                if (change.wasAdded()) {
+                    IO.println("Listalle lisättiin: " + change.getAddedSubList());
+                }
+            }
+        });
+
+        nimet.add("Ada");
+        nimet.add("Linus");
+    }
+}
+```
+
+Tehdään nyt FXML-tiedostoon komponentti, joka osaa näyttää
+`ObservableList`-listan sisällön; `ListView` osaa juurikin tämän. Lisää
+FXML-tiedostoon valmiina olevan VBoxin sisään tämä rivi: 
 
 ```xml
-<!-- fxml-tiedosto -->
 <ListView fx:id="nimitulosteet" />
 ```
 
 Controller-luokassa kytkemme datan ja näkymän toisiinsa yhdellä komennolla:
 
-```java
+```java,ignore
 @FXML private ListView<String> nimitulosteet;
 
 public void initialize() {
     // Kytketään lista ja komponentti toisiinsa
     nimitulosteet.setItems(nimet);
+
+    // ... loput initialize-koodista ...
 }
 ```
 
@@ -109,6 +168,33 @@ Tämän kytkennän jälkeen **meidän ei tarvitse koskaan kutsua mitään "päiv
 -metodia**. Kun koodissa tehdään `nimet.add("Uusi nimi")`, nimi ilmestyy ruudulle
 automaattisesti. `ListView` on sisäisesti lisännyt itsensä listan kuuntelijaksi
 samalla tavalla kuin teimme esimerkin `addListener`-kohdassa.
+
+Tätä on tietysti vielä pikkuisen hankala nähdä, koska `initialize()`-metodissa
+on suoraan kovakoodattuna `nimet.add("Ada")` ja `nimet.add("Linus")`. Kokeillaan
+siis vielä, että saamme listaan uusia nimiä suoraan käyttöliittymästä. Lisää
+FXML:ään `TextField` ja `Button`, joiden avulla käyttäjä voi syöttää uuden nimen
+listaan.
+
+```xml
+<TextField fx:id="nimikentta" />
+<Button text="Lisää nimi" onAction="#lisaaNimi" />
+```
+
+Nyt `Button`-komponenttimme on määritetty kutsumaan `lisaaNimi`-metodia, kun
+sitä klikataan. FXML-kielessä kutsuttavan metodin nimeä edeltää `#`-merkki.
+Toteutetaan tämä metodi `MainController`-luokassa:
+
+```java
+@FXML private TextField nimikentta;
+
+@FXML
+private void lisaaNimi() {
+    String uusiNimi = nimikentta.getText();
+    nimet.add(uusiNimi);
+}
+```
+
+Tässä kohdassa kesken....
 
 Tavoitteenamme on siis **yksisuuntainen riippuvuus**: logiikkamme muokkaa vain
 puhdasta dataa (listaa), ja JavaFX huolehtii siitä, että näkymä heijastaa aina
