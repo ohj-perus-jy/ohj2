@@ -47,7 +47,7 @@ Käytännössä käytämme kolmea pääasiallista tyyppiä:
   havaittavien arvojen käytännöllisiä toteutuksia. Niitä voi myös **sitoa**
   (*binding*) toisiinsa, jolloin yhden arvon muutos heijastuu automaattisesti toiseen.
 
-## Hyvin pieni esimerkki ensin
+## Hyvin pieni esimerkki ensin {#ensimmainen-esimerkki}
 
 Ennen `Tehtava`-mallia katsotaan tarkemmin, miten JavaFX:n automaattinen tiedonvälitys
 toimii. Alla olevassa esimerkissä luomme listan, joka osaa kertoa itsestään muille:
@@ -355,8 +355,6 @@ päivittää näkymän automaattisesti.
 ## Laajennetaan Tehtava-malli property-pohjaiseksi
 
 
-
-
 ```java
 public class Tehtava {
     private final StringProperty otsikko = new SimpleStringProperty("");
@@ -398,63 +396,18 @@ public enum Prioriteetti {
 }
 ```
 
-## Listan perusoperaatiot
-
-Kun malli on kunnossa, ViewModeliin (tai vastaavaan logiikkaluokkaan) voi tehdä
-perusmetodit:
-
-```java
-public ObservableList<Tehtava> getTehtavat() {
-    return tehtavat;
-}
-
-public void lisaaTehtava(String otsikko) {
-    if (otsikko == null || otsikko.isBlank()) {
-        return;
-    }
-    tehtavat.add(new Tehtava(otsikko.trim(), false));
-}
-
-public void poistaTehtava(Tehtava tehtava) {
-    tehtavat.remove(tehtava);
-}
-```
-
-## Reagointi muutoksiin yhdessä paikassa
-
 Tallennuksen voi kytkeä listan muutoksiin:
 
 ```java
 tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
-    while (change.next()) {
-        if (change.wasAdded() || change.wasRemoved()) {
-            tallenna();
-        }
-    }
-});
+      tallenna();
+  }
+);
 ```
 
 Näin tallennus voidaan tehdä yhdessä paikassa ilman, että jokaiseen nappiin
 kirjoitetaan erillinen `tallenna()`-kutsu.
 
-## JSON ja propertyt
-
-Jackson ei suoraan tykkää JavaFX-property-objekteista. Käytännössä on selkeintä
-tehdä erillinen tiedonvälitysluokka (data transfer object, DTO) tiedostomuotoa varten:
-
-```java
-public record TehtavaDto(
-        String otsikko,
-        String kuvaus,
-        boolean tehty,
-        String prioriteetti
-) {}
-```
-
-Silloin muunnos tehdään eksplisiittisesti niin, että tallennuksessa
-`Tehtava` muunnetaan `TehtavaDto`:ksi ja latauksessa `TehtavaDto`
-muunnetaan takaisin `Tehtava`:ksi. Tämä pitää käyttöliittymämallin ja
-tiedostomuodon erillään.
 
 <task>
   <task-title>Tehtävä 8.1: TODO-ohjelma, vaihe 7. <points>1 p.</points> </task-title>

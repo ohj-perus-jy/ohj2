@@ -14,26 +14,19 @@ jokainen rivi on yksi tehtävä ja sarakkeet ovat tehtävän ominaisuuksia, kute
 otsikko, prioriteetti ja tehty/tekemättä-tila.
 
 Tässä luvussa hyödynnämme myös JavaFX:n *propertyjä* ja databinding-ajattelua.
-Property (esimerkiksi StringProperty tai BooleanProperty) on JavaFX:n tapa
-mallintaa arvoja niin, että niiden muutoksia voidaan kuunnella. Käytännössä tämä
-tarkoittaa sitä, että taulukon solut kytketään suoraan `Tehtava`-olion
-attribuuttien arvoihin. Tällöin käyttöliittymässä oleva näkymä pysyy
-automaattisesti synkronissa datan kanssa: kun arvo muuttuu datassa, näkymä
-päivittyy, ja kun käyttäjä muuttaa arvoa taulukossa, muutos päivittyy samaan
-propertyyn. 
-
-Tämä on tärkeä ero verrattuna “kopioi arvo käyttöliittymään” -ajatteluun.
-Taulukon soluun ei yleensä aseteta irrallista arvoa käsin, vaan solu lukee arvon
-rivin olion propertystä. Siksi sama data voi olla käytössä yhtä aikaa sekä
-ohjelman logiikassa että käyttöliittymässä ilman, että meidän tarvitsee jatkuvasti
-synkronoida arvoja käsin.
+JavaFX-property (esimerkiksi `StringProperty` tai `BooleanProperty`) on
+erityinen olio, joka sisältää arvon ja jonka muutoksia voidaan kuunnella. Tämä
+on tärkeää käyttöliittymissä, koska taulukon sarakkeet eivät yleensä lue arvoja
+suoraan tavallisista kentistä, vaan ne kytketään propertyihin. Tällöin
+käyttöliittymässä oleva näkymä pysyy synkronissa datan kanssa: kun arvo muuttuu
+datassa, näkymä päivittyy, ja kun käyttäjä muuttaa arvoa taulukossa, muutos
+päivittyy samaan propertyyn. 
 
 Seuraavaksi rakennamme taulukon FXML:ään ja kytkemme sen kontrollerissa dataan.
 Etenemme luvussa ohjelman toiminnan kannalta luontevassa järjestyksessä: ensin
 määrittelemme näkymän rakenteen FXML:ssä, sitten kytkemme sarakkeet
 `Tehtava`-olion propertyihin kontrollerissa, ja lopuksi teemme
-boolean-sarakkeesta klikattavan checkbox-sarakkeen, jonka muutokset voidaan
-tallentaa automaattisesti.
+boolean-sarakkeesta klikattavan checkbox-sarakkeen.
 
 ## FXML-rakenne
 
@@ -95,14 +88,14 @@ private TableColumn<Tehtava, Boolean> tehtyCol;
 `TableColumn<Tehtava, String>` tarkoittaa kahta asiaa:
 
  * ensimmäinen tyyppi (`Tehtava`) = minkä tyyppisiä olioita taulukon riveillä on
- * toinen tyyppi (`String`) = minkä tyyppinen arvo tässä sarakkeessa näytetään
+ * toinen tyyppi (`String`) = minkä tyyppinen arvo tässä sarakkeessa näytetään / käsitellään
 
 Siksi `otsikkoCol` näyttää `String`-arvon (tehtävän otsikko), `prioriteettiCol`
-näyttää `Prioriteetti`-arvon (tehtävän prioriteetti) ja `tehtyCol` näyttää
-`Boolean`-arvon (tehtävän tehty/tekemättä-tila).
+näyttää `Prioriteetti`-arvon ja `tehtyCol` näyttää `Boolean`-arvon (tehtävän
+tehty/tekemättä-tila).
 
-On erittäin tärkeää huomata, että sarake ei sisällä kokonaista `Tehtava`-oliota,
-vaan se näyttää yhden ominaisuuden kyseisestä oliosta.
+On tärkeä huomata, että sarake ei sisällä kokonaista `Tehtava`-oliota, vaan se
+näyttää yhden ominaisuuden kyseisestä oliosta.
 
 Seuraavaksi `initialize()`-metodissa kytketään taulukko dataan ja sarakkeet
 propertyihin.
@@ -157,6 +150,10 @@ ne voidaan myös luoda kokonaan Java-koodissa. SceneBuilder helpottaa usein FXML
 rakenteen tekemistä, mutta sarakkeiden varsinainen datakytkentä tehdään silti
 yleensä controllerissa.
 
+Voimme poistaa `tehtavat.addListener(...)`-kutsusta `paivitaNakyma()`-kutsun
+kokonaan, koska `TableView` hoitaa näkymän päivittämisen automaattisesti --
+joskin [TODO] ei vielä toimi. 
+
 ## CheckBox-sarake ja tehtävien muutosten tallentaminen
 
 `tehtyCol` on erityistapaus, koska se näyttää boolean-arvon (true / false).
@@ -179,7 +176,7 @@ Nyt jokainen `tehtyCol`-sarakkeen solu näkyy checkboxina.
    sarakkeen muokattavuus ei yleensä riitä, myös taulukon pitää olla muokattava.)
 
 Tässä vaiheessa käyttäjä voi klikata checkboxia taulukossa, ja `tehtyProperty`
-muuttuu myös taustalla. Mutta vielä yksi tärkeä asia puuttuu: miten muutos
+muuttuu myös taustalla. Yksi tärkeä asia kuitenkin puuttuu: miten muutos
 tallennetaan tiedostoon?
 
 Pelkkä klikattava checkbox ei automaagisesti kutsu `tallenna()`-metodia.
@@ -189,13 +186,39 @@ Tämä tehdään lisäämällä kuuntelija `tehtyProperty`:n.
 ## Tallennus propertyn muutoksesta
 
 Yksi ratkaisu olisi sellainen, että kytkisimme `Tehtava`-olion `tehtyProperty`:n
-muutokseen kuuntelijan, joka kutsuu tallennusta. Tämä tarkoittaa, että aina kun
-`tehtyProperty` muuttuu (esimerkiksi checkboxia klikataan), tallennus tapahtuu
-automaattisesti. Tämä olisi sinänsä kätevää, mutta pieneksi ongelmaksi
-muodostuu, että Jackson-kirjaston kautta ladatut `Tehtava`-oliot eivät tätä
-kuuntelijaa saa. Jackson-nimittäin luo `Tehtava`-olion suoraan konstruktorilla,
-eikä se käytä setter-metodeja, joissa kuuntelija voisi olla. Voisimme kyllä
-lisätä kuuntelijan erikseen jokaiselle `Tehtava`-oliolle.
+muutokseen kuuntelijan, joka kutsuu tallennusta. 
+
+```java,ignore
+tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
+```
+
+Tämä tarkoittaa, että aina kun `tehtyProperty` muuttuu (esimerkiksi checkboxia
+klikataan), tallennus tapahtuu automaattisesti. Tämä olisi sinänsä kätevää,
+mutta pieneksi ongelmaksi muodostuu, että Jackson-kirjaston kautta ladatut
+`Tehtava`-oliot eivät tätä kuuntelijaa saa. Jackson-nimittäin luo
+`Tehtava`-olion suoraan konstruktorilla, eikä se käytä setter-metodeja, joissa
+kuuntelija voisi olla. Jos nyt muutamme UI:ssa `tehtavat.json`-tiedostosta
+ladatun tehtävän tilaa, tallennus ei tapahdu, koska kuuntelija ei ole koskaan
+lisätty.
+
+Voisimme kyllä lisätä kuuntelijan erikseen jokaiselle `Tehtava`-oliolle
+`initialize()`-metodissa silmukassa &nbsp; tämä olisi ihan toimiva ratkaisu.
+Katsoimme saman tapaista esimerkkiä [osan 8.1 alussa](./01-malli-ja-observable-rajapinta.md#ensimmainen-esimerkki).
+
+```java,ignore
+public void initialize(...) {
+    // ...
+    tehtavat.addListener((ListChangeListener<String>) change -> {
+        while (change.next()) {
+            if (change.wasAdded()) {
+                for (Tehtava t : change.getAddedSubList()) {
+                    t.tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
+                }
+            }
+        }
+    });
+}
+```
 
 Tähän on kuitenkin toinenkin, aavistuksen elegantimpi ratkaisu. Muistamme, että
 `ObservableList` osaa ilmoittaa, kun sen sisältö muuttuu. Sille voidaan
@@ -214,7 +237,7 @@ taulukon niistä `Observable`-olioista (käytännössä propertyistä), joita li
 halutaan seuraavan jokaisessa `Tehtava`-oliossa. Ekstraktori ei siis korvaa
 propertyjen kuuntelijoita tallennusta varten; Tallennuskuuntelija kertoo mitä
 tehdään, kun arvo muuttuu (esim. `tallenna()`), kun taas extractor kertoo
-listalle mitä propertyjä kannattaa ylipäätään seurata.
+listalle mitä propertyjä kannattaa ylipäätään seurata. 
 
 ## Miksi tallennus sidotaan propertyyn eikä checkboxin klikkaukseen?
 
@@ -257,19 +280,14 @@ näkyvät taulukossa ensin ja tehdyt lopussa.
 
 ## Poisto valitusta rivistä
 
-`TableView` pitää valitun rivin helposti saatavilla:
+TODO: KAppale kesken. Täydennä poiston toteutus sekä käyttöliittymään että
+kontrolleriin. 
 
-```java
-poistaPainike.setOnAction(e -> {
-    Tehtava valittu = tehtavaTaulu.getSelectionModel().getSelectedItem();
-    if (valittu != null) {
-        viewModel.poistaTehtava(valittu);
-    }
-});
-```
 
-Tällä muutoksella näkymä muuttuu selvästi hallittavammaksi ja valmiiksi
-seuraavaan vaiheeseen: tehtävän yksityiskohtien muokkaukseen.
+
+
+## Tehtävät
+
 
 <task>
   <task-title>Tehtävä 8.3: TODO-ohjelma, vaihe 9. <points>1 p.</points> </task-title>
