@@ -276,6 +276,17 @@ private void paivitaNakyma() {
 }
 ```
 
+Myös `luoCheckBox`-metodi pitää muuttaa, jotta se rakentaa `CheckBox`in
+parametrina saamastaan `Tehtava`-oliosta.
+
+```java,ignore
+private CheckBox luoCheckBox(Tehtava tehtava) {
+    CheckBox cb = new CheckBox(tehtava.getTeksti());
+    cb.setSelected(tehtava.getTehty());
+    return cb;
+}
+```
+
 ### Vaihe 4: kuuntele listaa yhdessä paikassa
 
 Kytke `initialize()`-metodissa listan muutokset näkymään ja tallennukseen:
@@ -314,7 +325,7 @@ private List<Tehtava> lataaTehtavat() {
 }
 ```
 
-### Vaihe 5: CheckBox-tapahtuma muuttaa mallia
+## CheckBox-tapahtuma muuttaa mallia
 
 Aiemmassa ratkaisussa `CheckBox`-tapahtuma siirteli komponentteja `VBox`ien
 välillä, ja data luettiin myöhemmin takaisin UI:sta. Koska koko siirtymän
@@ -345,7 +356,6 @@ private CheckBox luoCheckBox(Tehtava tehtava) {
     return cb;
 }
 ```
-
 
 Cb-olion tilan muuttaminen aiheuttaa kaksi muutosta `tehtavat`-listaan: vanhan
 `Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Tämä on tietysti
