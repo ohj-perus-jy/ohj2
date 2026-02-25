@@ -327,11 +327,10 @@ private List<Tehtava> lataaTehtavat() {
 
 ## CheckBox-tapahtuma muuttaa mallia
 
-Aiemmassa ratkaisussa `CheckBox`-tapahtuma siirteli komponentteja `VBox`ien
-välillä, ja data luettiin myöhemmin takaisin UI:sta. Koska koko siirtymän
-tärkein ajatus on, että käyttöliittymä ei enää ole datan säilytyspaikka, meidän
-pitää muuttaa tapahtumankäsittelijä niin, että se muuttaa mallia eikä
-UI-komponentteja.
+Edellisessä vaiheessa paivitaNakyma() alkoi kutsua metodia luoCheckBox(tehtava).
+Se oli tarkoituksellista: näkymä rakennetaan nyt Tehtava-olioista. Täydennetään
+nyt tämä metodi niin, että checkboxin klikkaus muuttaa mallia eikä siirtele
+CheckBox-komponentteja VBox-säiliöiden välillä.
 
 Kun checkboxia klikataan, tapahtumankäsittelijä päivittää `tehtavat`-listaa.
 Valitettavasti meillä ei ole vielä tapaa päivittää `Tehtava`-olion sisäistä
@@ -342,8 +341,10 @@ listan rakennetta (alkioiden määrä ja järjestys), ei listalla olevien olioid
 sisäisiä kenttiä. JavaFX:ssä on kyllä keino ratkaista tämä, mutta katsotaan
 aluksi hieman yksinkertaisempaa tapaa. 
 
-Tehdään uusi `Tehtava`-olio, joka on muuten sama kuin vanha, mutta
-`tehty`-kenttä on päinvastainen. Tämä on hieman kömpelöä, mutta toimii:
+Tehdään uusi Tehtava-olio, joka on muuten sama kuin vanha, mutta jonka
+tehty-arvoksi asetetaan checkboxin uusi tila (`cb.isSelected()`). Tämä on hieman
+kömpelöä, koska luodaan uusi olio vanhan päivittämisen sijaan. Tämä kuitenkin
+toimii tässä vaiheessa.
 
 ```java
 private CheckBox luoCheckBox(Tehtava tehtava) {
