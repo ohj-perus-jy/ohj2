@@ -178,15 +178,19 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //- // nimet.addListener((ListChangeListener.Change<? extends String> change) -> {
         nimet.addListener((ListChangeListener<String>) change -> {
-            while (change.next()) { 
+            while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
                 if (change.wasAdded()) {
                     IO.println("Listalle lisättiin: " + change.getAddedSubList());
                 }
             }
+            int koko = nimet.size();
+            IO.println("Listalla on nyt " + koko + " nimeä.");
         });
 
         nimet.add("Ada");
         nimet.add("Linus");
+        nimet.add("Grace");
+        nimet.remove("Linus");
     }
 }
 ```
