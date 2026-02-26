@@ -1,10 +1,5 @@
 # Malli ja Observable-rajapinta
 
-Osassa 7 TODO-tehtävät mallinnettiin käyttöliittymäkomponentteina (`CheckBox`).
-Ratkaisu oli sinänsä hyvä aloitus, mutta pidemmällä aikavälillä se tekee
-sovelluksesta jäykän: data ja käyttöliittymä ovat liian vahvasti sidottuja
-toisiinsa.
-
 Tässä luvussa erotamme datan omaksi malliksi ja kytkemme sen JavaFX:n
 `Observable`-rajapintoihin.
 
@@ -15,8 +10,17 @@ siihen liittyvää tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis
 kysymykseen siitä, mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää
 ruudulla. 
 
-TODO-sovelluksessamme on jatkon kannalta hyödyllistä, että tehtävä kuvataan
-erillisenä oliona eikä esimerkiksi `CheckBox`-komponenttina.
+Osassa 7 Todo-sovelluksemme tehtävät mallinnettiin käyttöliittymässä olevien
+komponenttien avulla (`CheckBox`). Ratkaisu oli sinänsä hyvä aloitus, mutta
+pidemmällä aikavälillä se tekee sovelluksesta jäykän: data ja käyttöliittymä
+ovat liian vahvasti sidottuja toisiinsa. Esimerkiksi, jos haluamme lisätä
+tehtäville uusia ominaisuuksia, kuten pidempi kuvaus tai vaikkapa prioriteetti,
+meidän pitäisi muuttaa koko käyttöliittymälogiikkaa esimerkiksi perimällä
+`CheckBox`-komponenttia uudeksi `TehtavaCheckBox`-komponentiksi, joka osaa
+näyttää kaikki uudet kentät. Ensinnäkin tämä sitoo datan sen näyttämiseen, mikä
+ei ole hyvä suunnitteluperiaate. Toisekseen jos haluamme näyttää samaa dataa
+jossain muussa kuin valintapainikkeina, meidän pitäisi kirjoittaa erikseen
+logiikkaa jokaiseen uuteen näkymään.
 
 Kun tehtävä on oma malliolionsa, samaa tietoa voidaan käsitellä riippumatta
 siitä, näytetäänkö tieto taulukkona, listana tai jossain erillisessä
@@ -43,26 +47,29 @@ Käytännössä käytämme kolmea pääasiallista tyyppiä:
 
 * `ObservableList<T>` ilmoittaa, kun listaan lisätään tai siitä poistetaan alkioita.
 * `ObservableValue<T>` ilmoittaa, kun sen sisältämä yksittäinen arvo muuttuu.
-* **Property**-tyypit, kuten `StringProperty` ja `BooleanProperty`, ovat näiden
-  havaittavien arvojen käytännöllisiä toteutuksia. Niitä voi myös **sitoa**
-  (*binding*) toisiinsa, jolloin yhden arvon muutos heijastuu automaattisesti toiseen.
-
+* **Property**-tyypit ovat havaittavia arvoja niitä vastaaville tyypeille.
+  Esimerkiksi `StringProperty` on havaittava versio `String`-tyypistä,
+  `BooleanProperty` vastaavasti `Boolean`-tyypistä ja niin edelleen. Havaittavia
+  arvoja voidaan sitoa toisiinsa, jolloin yhden arvon muutos aiheuttaa
+  automaattisesti toisen arvon päivittymisen. Esimerkiksi jos tehtävän otsikko
+  on `StringProperty`-tyyppinen olio, se voidaan sitoa `Label`-komponenttiin,
+  jolloin `Label`-teksti päivittyy automaattisesti, kun tehtävän otsikko
+  muuttuu.
+  
 ## Hyvin pieni esimerkki ensin {#ensimmainen-esimerkki}
 
 Ennen `Tehtava`-mallia katsotaan tarkemmin, miten JavaFX:n automaattinen tiedonvälitys
 toimii. Alla olevassa esimerkissä luomme listan, joka osaa kertoa itsestään muille:
 
-```java
-// 1. Luodaan erikoistyyppinen lista tavallisen ArrayListin sijaan
+
+```java,ignore
+// 1. Luodaan havaittavia lista tavallisen ArrayListin sijaan
 ObservableList<String> nimet = FXCollections.observableArrayList();
 
 // 2. Rekisteröidään "kuuntelija", joka reagoi heti kun listan sisältö muuttuu
 nimet.addListener((ListChangeListener<String>) change -> {
-    while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
-        if (change.wasAdded()) {
-            IO.println("Listalle lisättiin: " + change.getAddedSubList());
-        }
-    }
+    int koko = nimet.size();
+    IO.println("Listalla on nyt " + koko + " nimeä.");
 });
 
 // 3. Muutetaan dataa
@@ -81,11 +88,46 @@ alkion, mikään toinen olio ei tiedä siitä, ellei se toinen erikseen käy
 tarkistamassa listan kokoa. `ObservableList` taas on aktiivinen. Kun kutsumme
 `nimet.add("Ada")`, lista lähettää välittömästi ilmoituksen kaikille muutoksista
 kiinnostuneille, jotka ovat rekisteröityneet kuuntelijoiksi. Näitä kuuntelijoita
-kutsutaan *tilaajiksi* (subscribers). Meidän tapauksessamme tilaaja on
-lambda-funktio, joka tulostaa konsoliin, mitä on tapahtunut.
+kutsutaan *tilaajiksi* (subscribers). Yllä olevassa esimerkissä tilaaja on
+lambda-funktio, joka tulostaa konsoliin listan koon muutoksen jälkeen. 
 
-TODO: Sananen tyyppimuunnoksesta lambda-lausekkeessa. Mitä `change`-parametri
-itse asiassa sisältää? 
+Lambda-lausekkeen `change`-parametri sisältää kuvauksen juuri tapahtuneesta
+muutoksesta tai muutoksista, jos niitä tapahtui useita: mitä indeksejä muutos
+koski, lisättiinkö vai poistettiinko alkioita, ja mitä alkioita lisättiin tai
+poistettiin. Kyseisellä oliolla on käytettävissään metodeja, kuten `wasAdded()`,
+`wasRemoved()`, `getAddedSubList()` ja `getRemoved()`, joiden avulla voidaan
+lukea tarkasti, mitä muutoksia tapahtui. TODO: JavaDoc. Yllä olevassa
+esimerkissämmehän emme tuota parametria käyttäneet lainkaan. 
+
+Lisätään kuuntelijaan ehto, jonka perusteella listaan lisättäessä tulostetaan
+jotakin, mutta poistettaessa ei.
+
+```java,ignore
+nimet.addListener((ListChangeListener<String>) change -> {
+    while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
+        if (change.wasAdded()) {
+            IO.println("Listalle lisättiin: " + change.getAddedSubList());
+        }
+    }
+    int koko = nimet.size();
+    IO.println("Listalla on nyt " + koko + " nimeä.");
+});
+
+nimet.add("Ada");
+nimet.add("Linus");
+nimet.add("Grace");
+nimet.remove("Linus");
+```
+
+Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
+listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
+`addAll`), ja silmukka varmistaa, että jokainen niistä käsitellään.
+
+Kuuntelijoita voi olla useita. Jokainen `addListener(...)` rekisteröi uuden
+tilaajan samaan listaan. Kun listassa tapahtuu muutos, JavaFX ilmoittaa siitä
+kaikille rekisteröidyille kuuntelijoille yksi kerrallaan. Esimerkiksi yksi
+kuuntelija voi päivittää käyttöliittymää, toinen voi kirjoittaa lokia ja kolmas
+voi tehdä validointia.
 
 <details><summary> Valinnaista lisätietoa: Miksi lambda-lausekkeessa tarvitaan tyyppimuunnos? </summary>
 
@@ -100,9 +142,7 @@ poisto, korvaus, jne.) voidaan käsitellä samalla `Change`-oliolla.
 
 </details>
 
-Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
-listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
-`addAll`), ja silmukka varmistaa, että jokainen niistä käsitellään.
+
 
 ## Kytkentä käyttöliittymään (FXML)
 
