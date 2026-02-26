@@ -203,7 +203,7 @@ FXML-tiedostoon valmiina olevan VBoxin sisään tämä rivi:
 <ListView fx:id="nimitulosteet" />
 ```
 
-Controller-luokassa kytkemme datan ja näkymän toisiinsa yhdellä komennolla:
+Kontrolleriluokassa kytkemme datan ja näkymän toisiinsa yhdellä komennolla:
 
 ```java,ignore
 @FXML private ListView<String> nimitulosteet;
@@ -259,7 +259,7 @@ tämä:
    JSON-tiedostosta, muuttaa sen ensin `Tehtava`-olioiksi, ja sitten luo
    `CheckBox`-komponentteja.
  * Tehtävien lisääminen tapahtuu `lisaaTehtava()`-metodissa, joka luo uuden
-   `CheckBox`-komponentin ja lisää sen suoraan `VBox`-komponenttiin.
+   `CheckBox`-komponentin ja lisää sen `VBox`-komponenttiin.
  * Tehtävien tilan muuttaminen tapahtuu `CheckBox`-tapahtumankäsittelijässä, joka
    siirtää `CheckBox`-komponentteja `VBox`-komponenttien välillä.
  * Tehtävien tallennus tapahtuu `tallenna()`-metodissa, joka hakee datan takaisin
@@ -274,9 +274,9 @@ Tavoite olisi seuraava:
    Sen sijaan se palauttaa listan `Tehtava`-olioita, joka asetetaan
    `tehtavat`-attribuuttiin.
  * `lisaaTehtava()`-metodi luo uuden `Tehtava`-olion ja lisää sen `tehtavat`-listaan.
- * Tehtävien tilan muuttaminen tapahtuu `CheckBox`-tapahtumankäsittelijässä, joka
-   muuttaa mallin tilaa eikä siirtele komponentteja.
  * Näkymä päivittyy automaattisesti, kun mallin data muuttuu.
+ * Kun tehtävä merkitään tehdyksi (tai päinvastoin), muutetaan mallin tilaa eikä
+   siirrellä komponentteja VBoxista toiseen.
  * `tallenna()`-metodi hakee datan suoraan mallista eikä tarvitse tietää
    näkymästä mitään.
 
