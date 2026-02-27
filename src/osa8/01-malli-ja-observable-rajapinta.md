@@ -296,7 +296,9 @@ private void paivitaNakyma() {
 }
 ```
 
-Myös tallennus muuttuu suoraviivaisemmaksi. Meidän ei tarvitse enää lukea tietoja käyttöliittymäkomponenteista, vaan voimme kirjoittaa suoraan listan sisällön JSON-tiedostoon:
+Myös tallennus muuttuu suoraviivaisemmaksi. Meidän ei tarvitse enää lukea
+tietoja käyttöliittymäkomponenteista, vaan voimme kirjoittaa suoraan listan
+sisällön JSON-tiedostoon:
 
 ```java
 private void tallenna() {
@@ -309,29 +311,13 @@ private void tallenna() {
 }
 ```
 
-Nyt voimme kytkeä kaiken yhteen `initialize()`-metodissa. Voimme hyödyntää `ObservableList`-listan kuuntelijaa, jotta `paivitaNakyma()` ja `tallenna()` ajetaan automaattisesti aina, kun lista muuttuu.
+Vastaavasti lataaminen on helpompaa, koska saamme suoraan listan
+`Tehtava`-olioita ilman, että meidän tarvitsee rakentaa niistä
+`CheckBox`-komponentteja. Palautetaan tästä metodista lista `Tehtava`-olioita,
+jotka voidaan suoraan lisätä mallilistaan.
 
 ```java
-public void initialize(URL url, ResourceBundle resourceBundle) {
-    // Ladataan tehtävät ja lisätään ne listaan (tämä aktivoi kuuntelijan)
-    tehtavat.addAll(lataaTehtavat());
-
-    // Asetetaan listalle kuuntelija
-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
-        paivitaNakyma();
-        tallenna();
-    });
-
-    // Enter ja nappi vain lisäävät uuden tehtävän listaan
-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
-}
-```
-
-Nyt meidän on vielä muutettava `lataaTehtavat()`-metodia niin, että se palauttaa listan `Tehtava`-olioita suoraan ilman käyttöliittymäkosketusta:
-
-```java
-private List<Tehtava> lataaTehtavat() {
+private List<Tehtava> lataa() {
     Path path = Path.of("tehtavat.json");
     if (Files.notExists(path)) {
         return List.of();
@@ -346,36 +332,72 @@ private List<Tehtava> lataaTehtavat() {
 }
 ```
 
-## CheckBox-tapahtuma muuttaa mallia
+Nyt voimme kytkeä kaiken yhteen `initialize()`-metodissa. Voimme hyödyntää
+`ObservableList`-listan kuuntelijaa, jotta `paivitaNakyma()` ja `tallenna()`
+ajetaan automaattisesti aina, kun lista muuttuu.
 
-Nyt sovelluksemme osaa jo lisätä tehtäviä mallin kautta, mutta checkboxien klikkaaminen on vielä ongelma. `luoCheckBox` sisältää edelleen logiikkaa, joka siirtelee checkboxia käsin `VBox`-säiliöiden välillä:
+```java
+public void initialize(URL url, ResourceBundle resourceBundle) {
 
-```java,ignore
-// VANHA VERSIO (poistuva logiikka korostettu)
-private CheckBox luoCheckBox(String teksti, boolean valittu) {
-    CheckBox tehtava = new CheckBox(teksti);
-    tehtava.setSelected(valittu);
-    tehtava.setOnAction(event -> {
-        // HIGHLIGHT_RED_BEGIN
-        if (tehtava.isSelected()) {
-            tekemattomat.getChildren().remove(tehtava);
-            tehdyt.getChildren().add(tehtava);
-        } else {
-            tehdyt.getChildren().remove(tehtava);
-            tekemattomat.getChildren().add(tehtava);
-        }
-        // HIGHLIGHT_RED_END
+    // Asetetaan listalle kuuntelija
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+        paivitaNakyma();
         tallenna();
     });
-    return tehtava;
+
+    // Ladataan tehtävät ja lisätään ne listaan (tämä aktivoi kuuntelijan)
+    tehtavat.addAll(lataa());
+
+    // Enter ja nappi vain lisäävät uuden tehtävän listaan
+    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
 }
 ```
 
-Nyt meidän on muutettava ajattelutapaa: **checkbox ei enää siirrä itseään, vaan se muuttaa mallia.** Kun malli muuttuu, `tehtavat`-listan kuuntelija herää ja kutsuu `paivitaNakyma()`-metodia. Tuo metodi puolestaan tyhjentää molemmat VBoxit ja sijoittaa tehtävät oikeisiin laatikoihin niiden tilan perusteella.
+Checkboxin tilan muutos ei kuitenkaan vielä tallennu JSONiin. Korjataan tämä
+seuraavaksi. 
 
-Valitettavasti tavallinen `Tehtava`-olio ei osaa ilmoittaa sisäisen tilansa muuttumisesta. Jos kutsuisimme vain `tehtava.setTehty(true)`, `ObservableList` ei huomaisi mitään, koska itse listaan ei tullut uutta oliota. Tässä vaiheessa käytämme "remove/add"-kikkaa: poistamme vanhan olion ja lisäämme tilalle uuden, jolla on päivitetty tila.
+## CheckBox-tapahtuma muuttaa mallia
 
-Tässä on `luoCheckBox`-metodin uusi versio. Huomaa, miten kaikki `getChildren().remove()` -kutsut ovat poistuneet, koska `paivitaNakyma()` hoitaa sijoittelun jatkossa:
+Nyt sovelluksemme osaa jo lisätä tehtäviä mallin kautta, mutta checkboxien
+klikkaaminen on vielä ongelma. `luoCheckBox` sisältää edelleen logiikkaa, joka
+siirtelee checkboxia käsin `VBox`-säiliöiden välillä:
+
+```java,ignore
+// VANHA VERSIO (poistuva logiikka korostettu)
+private CheckBox luoCheckBox(Tehtava tehtava) {
+    CheckBox cb = new CheckBox(tehtava.getTeksti());
+    cb.setSelected(tehtava.getTehty());
+    cb.setOnAction(event -> {
+        // HIGHLIGHT_RED_BEGIN
+        if (cb.isSelected()) {
+            tekemattomat.getChildren().remove(cb);
+            tehdyt.getChildren().add(cb);
+        } else {
+            tehdyt.getChildren().remove(cb);
+            tekemattomat.getChildren().add(cb);
+        }
+        tallenna();
+        // HIGHLIGHT_RED_END
+    });
+    return cb;
+}
+```
+
+Nyt meidän on muutettava ajattelutapaa. Checkboxin ei tule siirtää itseään, vaan
+muuttaa mallia. Kun malli muuttuu, `tehtavat`-listan kuuntelija herää ja
+kutsuu `paivitaNakyma()`-metodia. Tuo metodi puolestaan tyhjentää molemmat
+VBoxit ja sijoittaa tehtävät oikeisiin laatikoihin niiden tilan perusteella.
+
+Valitettavasti tavallinen `Tehtava`-olio ei osaa ilmoittaa sisäisen tilansa
+muuttumisesta. Jos kutsuisimme vain `tehtava.setTehty(true)`, `ObservableList`
+ei huomaisi mitään, koska itse listaan ei tullut uutta oliota. Tässä vaiheessa
+käytämme "remove/add"-kikkaa: poistamme vanhan olion ja lisäämme tilalle uuden,
+jolla on päivitetty tila.
+
+Tässä on `luoCheckBox`-metodin uusi versio. Huomaa, miten kaikki
+`getChildren().remove()` -kutsut ovat poistuneet, koska `paivitaNakyma()` hoitaa
+sijoittelun jatkossa:
 
 ```java
 private CheckBox luoCheckBox(Tehtava tehtava) {
@@ -395,19 +417,21 @@ private CheckBox luoCheckBox(Tehtava tehtava) {
 
 Nyt prosessi on looginen ja reaktiivinen: 
 
-1. **Käyttäjä klikkaa CheckBoxia.**
-2. `luoCheckBox`-metodin `setOnAction` muuttaa mallilistaa (`remove` & `add`). **Tässä vaiheessa VBox-komponentteihin ei vielä kosketa.**
+1. Käyttäjä klikkaa CheckBoxia.
+2. `luoCheckBox`-metodin `setOnAction` muuttaa mallilistaa (`remove` & `add`). Tässä vaiheessa VBox-komponentteihin ei vielä kosketa.
 3. `tehtavat`-listan kuuntelija (`addListener`) huomaa, että listan sisältö muuttui.
 4. Kuuntelija kutsuu `paivitaNakyma()`- ja `tallenna()`-metodeja.
-5. **Vasta nyt `paivitaNakyma()` tyhjentää VBoxit ja rakentaa ne uudestaan mallin uuden tilan mukaiseksi.**
+5. Vasta nyt `paivitaNakyma()` tyhjentää VBoxit ja rakentaa ne uudestaan mallin uuden tilan mukaiseksi.
 
-Tämä tarkoittaa, että vaikka toiminto lähti liikkeelle yhdestä checkboxista, koko näkymän päivitys on keskitetty yhteen paikkaan. Tämä ratkaisu on toki hieman tehoton (koko käyttöliittymä rakennetaan uudestaan yhden klikkauksen takia), mutta se opettaa tärkeän asian: sovelluksen tila on listassa. 
- Seuraavaksi katsomme, miten JavaFX:n *property*-tyypit ratkaisevat tämän tyylikkäämmin ilman koko näkymän jatkuvaa uudelleenrakentamista.
+Tämä ratkaisu on hieman tehoton, koska koko käyttöliittymä rakennetaan uudestaan
+yhden klikkauksen takia. Toisaalta checkbox-olion tilan muuttaminen aiheuttaa
+kaksi muutosta `tehtavat`-listaan: vanhan `Tehtava`-olion poiston ja uuden
+`Tehtava`-olion lisäyksen. Tämä on tietysti vähän turhaa, mutta toimii, koska
+`ObservableList` huomaa molemmat muutokset ja päivittää näkymän automaattisesti.
 
-Cb-olion tilan muuttaminen aiheuttaa kaksi muutosta `tehtavat`-listaan: vanhan
-`Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Tämä on tietysti
-vähän turhaa, mutta toimii, koska `ObservableList` huomaa molemmat muutokset ja
-päivittää näkymän automaattisesti.
+Opimme kuitenkin tärkeän asian: sovelluksen tila on listassa. Seuraavaksi
+katsomme, miten JavaFX:n *property*-tyypit ratkaisevat tämän tyylikkäämmin ilman
+koko näkymän jatkuvaa uudelleenrakentamista.
 
 ## Laajennetaan Tehtava-malli property-pohjaiseksi
 
