@@ -113,6 +113,56 @@ alkuperäinen `Tehtava`-olio lähettää ilmoituksen (observablena), johon
 `TableView` on valmiiksi tarttunut. Niinpä alkuperäinen taulukkonäkymä päivittyy
 lennosta!
 
+### Validointi
+
+Tallennusta ei pidä sallia, jos otsikko on tyhjä. Käyttäjän syötteet on aina
+syytä tarkistaa (validoida) ennen kuin niitä sijoitetaan malliolioon. Voimme
+päivittää `tallenna()`-metodiamme siten, että se hylkää virheelliset syötteet:
+
+```java
+@FXML
+private void tallenna() {
+    String otsikko = otsikkoKentta.getText();
+    
+    // Nollataan mahdolliset aiemmat virhetyylit
+    otsikkoKentta.setStyle("");
+    otsikkoKentta.setTooltip(null);
+    
+    if (otsikko == null || otsikko.isBlank()) {
+        // Vaihdetaan reunus punaiseksi virheen merkiksi
+        otsikkoKentta.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+        
+        // Asetetaan Tooltip, joka näkyy kun käyttäjä vie hiiren kentän päälle
+        Tooltip virhe = new Tooltip("Tehtävän otsikko ei saa olla tyhjä!");
+        otsikkoKentta.setTooltip(virhe);
+        
+        return; 
+    }
+
+    // Jos kaikki on kunnossa, päivitetään malliolio
+    muokattava.setOtsikko(otsikko.trim());
+    muokattava.setKuvaus(kuvausKentta.getText().trim());
+    muokattava.setPrioriteetti(prioriteettiCombo.getValue());
+
+    sulje();
+}
+```
+
+> [!NOTE]
+> **Miksi emme käytä tässä suoraan databindingiä (bindBidirectional)?**
+>
+> Olisihan se kätevää sitoa tekstikenttä suoraan olion propertyyn, eikö vain?
+> Mutta jos tekisimme niin
+> (`otsikkoKentta.textProperty().bindBidirectional(muokattava.otsikkoProperty())`),
+> jokainen näppäimen painallus muuttaisi dataa välittömästi taustalla. Jos
+> käyttäjä kirjoittaisi jotain väärin tai iskisikin lopulta
+> "Peruuta"-painiketta, alkuperäinen `Tehtava` olisi jo ehditty pilata ja
+> tallentaa levylle taulukon havahtumisen myötä.
+>
+> Siksi otamme syötteet vastaan tavallisina tekstikenttinä, **validoimme ne
+> ensin**, ja vasta painettaessa "Tallenna" siirrämme hyväksytyt syötteet
+> varsinaiseen malliolioon.
+
 ## 3. Pääohjain lataa uuden näkymän (MainController)
 
 Pääkontrollerissa (`MainController`) tehtävänämme on nyt lisätä ohjeet

@@ -105,7 +105,11 @@ rajapinnan toteuttaja tiedostojumpan sijaan:
 ```java
 public class Tehtavakokoelma {
     private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList(
-            t -> new javafx.beans.Observable[]{t.tehtyProperty()}
+            t -> new javafx.beans.Observable[]{
+                t.tehtyProperty(),
+                t.otsikkoProperty(),
+                t.prioriteettiProperty()
+            }
     );
     
     // Riippuvuus tallennusmekanismista on nyt rajapinnan takana!

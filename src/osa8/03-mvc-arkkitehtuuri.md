@@ -81,9 +81,13 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class Tehtavakokoelma {
-    // 1. Ekstraktori takaa, että jos tehtävän 'tehtyProperty' muuttuu, lista huomaa sen
+    // 1. Ekstraktori takaa, että jos tehtävän propertyt muuttuvat, lista huomaa sen
     private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList(
-            t -> new javafx.beans.Observable[]{t.tehtyProperty()}
+            t -> new javafx.beans.Observable[]{
+                t.tehtyProperty(),
+                t.otsikkoProperty(),
+                t.prioriteettiProperty()
+            }
     );
     
     // Tiedoston tallennuspolku ja datan käsittelijä
