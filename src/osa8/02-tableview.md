@@ -13,14 +13,14 @@ luonteeltaan rivi–sarake-muotoisia. Ajattele esimerkiksi taulukkoa, jossa
 jokainen rivi on yksi tehtävä ja sarakkeet ovat tehtävän ominaisuuksia, kuten
 otsikko, prioriteetti ja tehty/tekemättä-tila.
 
-Tässä luvussa hyödynnämme myös JavaFX:n *propertyjä* ja databinding-ajattelua.
+Tässä luvussa hyödynnämme myös JavaFX:n _propertyjä_ ja databinding-ajattelua.
 JavaFX-property (esimerkiksi `StringProperty` tai `BooleanProperty`) on
 erityinen olio, joka sisältää arvon ja jonka muutoksia voidaan kuunnella. Tämä
 on tärkeää käyttöliittymissä, koska taulukon sarakkeet eivät yleensä lue arvoja
 suoraan tavallisista kentistä, vaan ne kytketään propertyihin. Tällöin
 käyttöliittymässä oleva näkymä pysyy synkronissa datan kanssa: kun arvo muuttuu
 datassa, näkymä päivittyy, ja kun käyttäjä muuttaa arvoa taulukossa, muutos
-päivittyy samaan propertyyn. 
+päivittyy samaan propertyyn.
 
 Seuraavaksi rakennamme taulukon FXML:ään ja kytkemme sen kontrollerissa dataan.
 Etenemme luvussa ohjelman toiminnan kannalta luontevassa järjestyksessä: ensin
@@ -56,8 +56,8 @@ siihen.
 `<columns>`-lohko sisältää taulukon sarakkeet. Jokainen `TableColumn` kuvaa yhtä
 näkyvää saraketta taulukossa. Sarakkeella on tässä kaksi olennaista asiaa:
 
- * `fx:id`, jonka avulla kontrolleri pääsee käsiksi juuri tähän sarakkeeseen
- * `text`, joka näkyy sarakkeen otsikkona käyttöliittymässä
+- `fx:id`, jonka avulla kontrolleri pääsee käsiksi juuri tähän sarakkeeseen
+- `text`, joka näkyy sarakkeen otsikkona käyttöliittymässä
 
 On tärkeä huomata, että tässä vaiheessa sarakkeet ovat vasta "tyhjiä kuoria". Ne
 näkyvät taulukossa otsikoineen, mutta niissä ei vielä näy mitään dataa.
@@ -68,9 +68,9 @@ Seuraavassa vaiheessa kerromme, mitä arvoa kukin sarake näyttää kustakin
 
 Kun FXML-rakenne on määritelty, kontrollerin tehtävä on yhdistää näkymä ja data.
 Tämä tapahtuu kahdessa osassa. Ensin kontrolleriin määritellään viittaukset
-FXML:ssä luotuihin komponentteihin. Sen jälkeen `initialize()`-metodissa asetetaan
-taulukolle data ja kerrotaan jokaiselle sarakkeelle, mitä propertyä sen tulee
-näyttää.
+FXML:ssä luotuihin komponentteihin. Sen jälkeen `initialize()`-metodissa
+asetetaan taulukolle data ja kerrotaan jokaiselle sarakkeelle, mitä propertyä
+sen tulee näyttää.
 
 Controlleriin lisätään ensin `@FXML`-kentät:
 
@@ -87,8 +87,9 @@ private TableColumn<Tehtava, Boolean> tehtyCol;
 
 `TableColumn<Tehtava, String>` tarkoittaa kahta asiaa:
 
- * ensimmäinen tyyppi (`Tehtava`) = minkä tyyppisiä olioita taulukon riveillä on
- * toinen tyyppi (`String`) = minkä tyyppinen arvo tässä sarakkeessa näytetään / käsitellään
+- ensimmäinen tyyppi (`Tehtava`) = minkä tyyppisiä olioita taulukon riveillä on
+- toinen tyyppi (`String`) = minkä tyyppinen arvo tässä sarakkeessa näytetään /
+  käsitellään
 
 Siksi `otsikkoCol` näyttää `String`-arvon (tehtävän otsikko), `prioriteettiCol`
 näyttää `Prioriteetti`-arvon ja `tehtyCol` näyttää `Boolean`-arvon (tehtävän
@@ -115,26 +116,27 @@ public void initialize() {
 
 Käydään tämä rauhassa rivi riviltä läpi.
 
- * **`setItems(...)` — mitä taulukko näyttää riveinä?** Tämä rivi kertoo
-taulukolle, mistä sen rivit tulevat. Meidän tapauksessamme `tehtavat` on
-`ObservableList<Tehtava>`, joka sisältää kaikki tehtävät. Sana
-*Observable* tarkoittaa, että lista osaa ilmoittaa muutoksista, eli esimerkiksi
-jos rivejä lisätään tai poistetaan, `TableView` päivittää näkymän
-automaattisesti. Ilman tätä riviä taulukko olisi olemassa, mutta se olisi tyhjä.
- * **`setCellValueFactory(...)` — mitä kukin sarake näyttää?** Esimerkiksi
-   ```java,ignore
-   otsikkoCol.setCellValueFactory(cd -> cd.getValue().otsikkoProperty());
-   ```
-   tarkoittaa käytännössä: *Kun taulukko tarvitsee arvon `otsikkoCol`-sarakkeeseen
-   jollekin riville, hae kyseisen rivin `Tehtava`-oliosta `otsikkoProperty()`.*
-   
-Tässä 
+- **`setItems(...)` — mitä taulukko näyttää riveinä?** Tämä rivi kertoo
+  taulukolle, mistä sen rivit tulevat. Meidän tapauksessamme `tehtavat` on
+  `ObservableList<Tehtava>`, joka sisältää kaikki tehtävät. Sana _Observable_
+  tarkoittaa, että lista osaa ilmoittaa muutoksista, eli esimerkiksi jos rivejä
+  lisätään tai poistetaan, `TableView` päivittää näkymän automaattisesti. Ilman
+  tätä riviä taulukko olisi olemassa, mutta se olisi tyhjä.
+- **`setCellValueFactory(...)` — mitä kukin sarake näyttää?** Esimerkiksi
+  ```java,ignore
+  otsikkoCol.setCellValueFactory(cd -> cd.getValue().otsikkoProperty());
+  ```
+  tarkoittaa käytännössä: _Kun taulukko tarvitsee arvon
+  `otsikkoCol`-sarakkeeseen jollekin riville, hae kyseisen rivin
+  `Tehtava`-oliosta `otsikkoProperty()`._
 
- * `cd` tulee sanasta cell data (solun dataa kuvaava olio), 
- * `cd.getValue()` palauttaa kyseisen rivin `Tehtava`-olion
- * `otsikkoProperty()` palauttaa propertyn, josta sarake lukee näytettävän arvon. 
-   
-Sama idea toistuu muille sarakkeille. Tämä on juuri *databinding*-ajattelun ydin
+Tässä
+
+- `cd` tulee sanasta cell data (solun dataa kuvaava olio),
+- `cd.getValue()` palauttaa kyseisen rivin `Tehtava`-olion
+- `otsikkoProperty()` palauttaa propertyn, josta sarake lukee näytettävän arvon.
+
+Sama idea toistuu muille sarakkeille. Tämä on juuri _databinding_-ajattelun ydin
 tässä yhteydessä: sarake ei saa "kopiota" arvosta, vaan se kytketään propertyyn,
 joka kuuluu rivin olioon.
 
@@ -146,13 +148,13 @@ merkittävästi. Koodi kertoo enemmän siitä, mitä halutaan näyttää, eikä 
 siitä, miten jokainen pikseli päivitetään.
 
 Huomautuksena: sarakkeet voidaan määritellä FXML:ään (kuten tässä teemme), mutta
-ne voidaan myös luoda kokonaan Java-koodissa. SceneBuilder helpottaa usein FXML:n
-rakenteen tekemistä, mutta sarakkeiden varsinainen datakytkentä tehdään silti
-yleensä controllerissa.
+ne voidaan myös luoda kokonaan Java-koodissa. SceneBuilder helpottaa usein
+FXML:n rakenteen tekemistä, mutta sarakkeiden varsinainen datakytkentä tehdään
+silti yleensä controllerissa.
 
 Voimme poistaa `tehtavat.addListener(...)`-kutsusta `paivitaNakyma()`-kutsun
 kokonaan, koska `TableView` hoitaa näkymän päivittämisen automaattisesti --
-joskin [TODO] ei vielä toimi. 
+joskin [TODO] ei vielä toimi.
 
 ## CheckBox-sarake ja tehtävien muutosten tallentaminen
 
@@ -169,11 +171,11 @@ tehtavaTaulu.setEditable(true);
 
 Tässä tapahtuu kolme asiaa:
 
- * `setCellFactory(...)` määrittää, millaisena soluna sarake piirretään.
-Nyt jokainen `tehtyCol`-sarakkeen solu näkyy checkboxina.
- * `tehtyCol.setEditable(true)` sallii tämän sarakkeen muokkauksen.
- * `tehtavaTaulu.setEditable(true)` sallii muokkauksen taulukkotasolla. (Pelkkä
-   sarakkeen muokattavuus ei yleensä riitä, myös taulukon pitää olla muokattava.)
+- `setCellFactory(...)` määrittää, millaisena soluna sarake piirretään. Nyt
+  jokainen `tehtyCol`-sarakkeen solu näkyy checkboxina.
+- `tehtyCol.setEditable(true)` sallii tämän sarakkeen muokkauksen.
+- `tehtavaTaulu.setEditable(true)` sallii muokkauksen taulukkotasolla. (Pelkkä
+  sarakkeen muokattavuus ei yleensä riitä, myös taulukon pitää olla muokattava.)
 
 Tässä vaiheessa käyttäjä voi klikata checkboxia taulukossa, ja `tehtyProperty`
 muuttuu myös taustalla. Yksi tärkeä asia kuitenkin puuttuu: miten muutos
@@ -186,7 +188,7 @@ Tämä tehdään lisäämällä kuuntelija `tehtyProperty`:n.
 ## Tallennus propertyn muutoksesta
 
 Yksi ratkaisu olisi sellainen, että kytkisimme `Tehtava`-olion `tehtyProperty`:n
-muutokseen kuuntelijan, joka kutsuu tallennusta. 
+muutokseen kuuntelijan, joka kutsuu tallennusta.
 
 ```java,ignore
 tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
@@ -203,7 +205,8 @@ lisätty.
 
 Voisimme kyllä lisätä kuuntelijan erikseen jokaiselle `Tehtava`-oliolle
 `initialize()`-metodissa silmukassa &nbsp; tämä olisi ihan toimiva ratkaisu.
-Katsoimme saman tapaista esimerkkiä [osan 8.1 alussa](./01-malli-ja-observable-rajapinta.md#ensimmainen-esimerkki).
+Katsoimme saman tapaista esimerkkiä
+[osan 8.1 alussa](./01-malli-ja-observable-rajapinta.md#ensimmainen-esimerkki).
 
 ```java,ignore
 public void initialize(...) {
@@ -222,8 +225,8 @@ public void initialize(...) {
 
 Tähän on kuitenkin toinenkin, aavistuksen elegantimpi ratkaisu. Muistamme, että
 `ObservableList` osaa ilmoittaa, kun sen sisältö muuttuu. Sille voidaan
-kuitenkin antaa niin sanottu *ekstraktori* (extractor), joka kertoo listalle, mitä kunkin
-olion propertyjä seurataan. 
+kuitenkin antaa niin sanottu _ekstraktori_ (extractor), joka kertoo listalle,
+mitä kunkin olion propertyjä seurataan.
 
 Muuta `ObservableList`-kokoelman luonti seuraavasti:
 
@@ -237,7 +240,7 @@ taulukon niistä `Observable`-olioista (käytännössä propertyistä), joita li
 halutaan seuraavan jokaisessa `Tehtava`-oliossa. Ekstraktori ei siis korvaa
 propertyjen kuuntelijoita tallennusta varten; Tallennuskuuntelija kertoo mitä
 tehdään, kun arvo muuttuu (esim. `tallenna()`), kun taas extractor kertoo
-listalle mitä propertyjä kannattaa ylipäätään seurata. 
+listalle mitä propertyjä kannattaa ylipäätään seurata.
 
 ## Miksi tallennus sidotaan propertyyn eikä checkboxin klikkaukseen?
 
@@ -249,7 +252,7 @@ kautta. Mutta jos sama `tehtyProperty` muuttuu myöhemmin jostakin muusta syyst�
 Kun tallennus sidotaan propertyn muutokseen, logiikka on yleisempi ja
 turvallisempi:
 
-*Aina kun tehtävän tila muuttuu, tallenna.*
+_Aina kun tehtävän tila muuttuu, tallenna._
 
 Tämä on databinding- ja property-ajattelun suuri etu: muutokset havaitaan
 datatasolla, ei vain yksittäisen käyttöliittymätoiminnon kautta.
@@ -263,9 +266,9 @@ tapa on käyttää `SortedList`-kokoelmaa, joka käärii alkuperäisen
 
 Ajatus on tämä
 
- * varsinainen data on edelleen ObservableList<Tehtava>-listassa
- * taulukolle annetaan näkyväksi dataksi SortedList<Tehtava>
- * lajittelukomparaattori määrittää, että tekemättömät tulevat ennen tehtyjä
+- varsinainen data on edelleen ObservableList<Tehtava>-listassa
+- taulukolle annetaan näkyväksi dataksi SortedList<Tehtava>
+- lajittelukomparaattori määrittää, että tekemättömät tulevat ennen tehtyjä
 
 ```java,ignore
 SortedList<Tehtava> lajitellut = new SortedList<>(tehtavat,
@@ -277,17 +280,43 @@ tehtavaTaulu.setItems(lajitellut);
 Koska `false` (tekemätön) tulee ennen `true` (tehty), tekemättömät tehtävät
 näkyvät taulukossa ensin ja tehdyt lopussa.
 
-
 ## Poisto valitusta rivistä
 
-TODO: KAppale kesken. Täydennä poiston toteutus sekä käyttöliittymään että
-kontrolleriin. 
+Nyt kun meillä on taulukko, voimme käyttää sitä poistamaan valittuja tehtäviä.
+Ensin meidän on luotava käyttöliittymään painike poistamista varten, esimerkiksi
+painike, jonka teksinä on "Poista valittu". Sido painike FXML-ohjaimeen (esim.
+`onAction="#poistaValittu"`).
 
+Jotta poisto toimii oikein, käyttöliittymän on ensin tiedettävä, mikä rivi
+taulukosta on valittuna. `TableView` pitää kirjaa valitusta rivistä omassa
+`SelectionModel`issaan. Voimme saada valitun `Tehtava`-olion sitä kautta.
 
+Lisää ohjaimeen seuraava metodi:
 
+```java
+@FXML
+private void poistaValittu() {
+    // 1. Hae valittu tehtävä taulukon valintamallista
+    Tehtava valittuTehtava = tehtavaTaulu.getSelectionModel().getSelectedItem();
+
+    // 2. Jos mitään ei ole valittu, ei tehdä mitään
+    if (valittuTehtava == null) {
+        return;
+    }
+
+    // 3. Poistetaan tehtävä mallilistasta
+    tehtavat.remove(valittuTehtava);
+    
+    // 4. Tallennetaan muutos
+    tallenna();
+}
+```
+
+Tämä metodi huolehtii hienosti siitä, että oikea tehtävä poistetaan taustalla
+olevasta listasta, ja omdatabindingin ansiosta `TableView` päivittyy jälleen
+kerran automaattisesti ilman että taulukkoa täytyy käsin virkistää!
 
 ## Tehtävät
-
 
 <task>
   <task-title>Tehtävä 8.3: TODO-ohjelma, vaihe 9. <points>1 p.</points> </task-title>
@@ -295,5 +324,5 @@ kontrolleriin.
 
 {{#include ../exercises/8-3-todo-9/handout.md}}
 
-  </handout>
+</handout>
 </task>

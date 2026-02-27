@@ -1,10 +1,10 @@
 # JavaFX osa 2, MVC
 
 > [!VAROITUS]
-> Tämä osio julkaistaan 2. maaliskuuta 2026.
-> {{#include ../ei-julkaistu.md}}
+> Tämä osio julkaistaan 2. maaliskuuta 2026. {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
+>
 > - Osaat erottaa datan, sovelluslogiikan ja käyttöliittymän toisistaan
 >   JavaFX-projektissa.
 > - Osaat käyttää JavaFX:n `Observable`-rajapintoja ja kokoelmia niin, että
@@ -37,3 +37,11 @@ Tässä osassa refaktoroimme sovelluksen rakennetta ja jatkamme sitä eteenpäin
 - Varmistamme ratkaisun toimivuutta yksikkötesteillä.
 
 Nämä muutokset valmistavat suoraan harjoitustyön toiseen vaiheeseen.
+
+- [Malli ja Observable-rajapinta](./01-malli-ja-observable-rajapinta.md)
+- [TableView ja databinding](./02-tableview.md)
+- [MVC-arkkitehtuuri](./03-mvc-arkkitehtuuri.md)
+- [Useita näkymiä ja tehtävän muokkaus](./04-useita-nakymia.md)
+- [Yksikkötestaus](./05-yksikkotestaus.md)
+- [Versionhallinnan etäkäyttö (Git)](./06-versionhallinnan-etakaytto.md)
+- [Tehtävät](./07-tehtavat.md)

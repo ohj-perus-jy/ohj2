@@ -1,88 +1,131 @@
 # Yksikkötestaus
 
-Nyt sovellus sisältää jo useita kerroksia (malli, repository, viewmodel).
-Ilman testejä regressioiden riski kasvaa nopeasti.
+Nyt kun olemme siirtyneet MVC-arkkitehtuuriin ja luoneet
+`Tehtavakokoelma`-luokan, olemme saavuttaneet jotain erittäin tärkeää: olemme
+erottaneet käyttöliittymän kokonaan irti sovelluksen logiikasta ja datasta.
 
-Tässä luvussa rakennetaan yksikkötestit erityisesti niihin osiin, jotka eivät
-vaadi JavaFX-käyttöliittymän käynnistämistä.
+Tällä on ratkaiseva ohjelmistotuotannollinen hyöty. Jos yrittäisimme testata
+koodia käyttöliittymän kautta (esim. simuloimalla napin painalluksia), testaus
+olisi hidasta, altista satunnaisille virheille ja vaatisi raskaiden
+JavaFX-kirjastojen käynnistämisen. Koska kokoelmalla on nyt selkeä
+ohjelmointirajapinta (metodit `lisaaTehtava`, `poistaTehtava` jne.), voimme
+rakentaa **yksikkötestejä**, jotka kutsuvat suoraan kokoelmaa ja tarkistavat
+asioiden toimiutuvuuden millisekunneissa ilman ruudulle aukeavia ikkunoita.
 
-## Mitä kannattaa testata?
+Tässä luvussa opimme myös, miksi erillinen `TehtavaRepository`-rajapinta
+I/O-operaatioiden takana on testattavuudelle kultaa.
 
-`Model`
+## Tiedostojen ja I/O:n abstrahointi testeissä
 
-- oletusarvot (uusi tehtävä on tekemätön)
-- kenttien asettaminen/getterit
+Mietitäänpä tilannetta, jossa lähtisimme testaamaan `Tehtavakokoelma`-luokkaa.
+Mitä tapahtuu, jos kutsumme vahingossa kokoelmaa siten, että se tallentaa dataa
+kovalevylle samalla kun ohjelman varsinainen käyttäjä muokkaa omia tehtäviään?
+Tai mitä jos testisovellus jättää jälkeensä roskatiedostoja aina kun testit
+ajetaan? Tiedosto-operaatiot (I/O) testeissä ovat yleensä pahasta: ne tekevät
+testeistä hitaita ja vaikeasti hallittavia.
 
-`ViewModel`
+Siksi loimme arkkitehtuuriluvussa `TehtavaRepository`-rajapinnan.
 
-- tyhjän tehtävän lisäys estetään
-- tehtävä lisätään trimmatulla otsikolla
-- poisto toimii valitulle tehtävälle
+Testejä varten voimme luoda luokan (ns. _Mock_- tai _Fake_-luokan), joka
+**teeskentelee** tallentavansa tietoja tiedostoon, mutta todellisuudessa
+tallentaakin ne vain normaaliin Java-listaan keskusmuistissa (In-Memory). Koska
+`Tehtavakokoelma` puhuttelee vain rajapintaa, se ei edes tiedä juttelevansa
+testiluokalle!
 
-`Repository`
-
-- tallennus ja lataus onnistuu
-- puuttuva tiedosto käsitellään hallitusti
-
-## JUnit 5 -esimerkki ViewModelille
+Luodaan ensin tämä _vale-säilö_ samaan pakettiin, mihin yksikkötestit myöhemmin
+kirjoitetaan (normaalisti src/test/java...-kansion alle):
 
 ```java
-class TodoViewModelTest {
+public class MockTehtavaRepository implements TehtavaRepository {
 
-    @Test
-    void lisaaTehtava_hylkaaTyhjan() {
-        TodoViewModel vm = new TodoViewModel(new InMemoryRepository());
+    // Keskusmuistissa oleva data "tiedoston" sijaan
+    private List<TehtavaDto> tallennetutData = new ArrayList<>();
 
-        vm.lisaaTehtava("   ");
-
-        assertEquals(0, vm.getTehtavat().size());
+    @Override
+    public List<TehtavaDto> lataa() {
+        return tallennetutData; // Palautetaan vain lista muistista
     }
 
-    @Test
-    void lisaaTehtava_trimmaaTekstin() {
-        TodoViewModel vm = new TodoViewModel(new InMemoryRepository());
-
-        vm.lisaaTehtava("  Osta maitoa  ");
-
-        assertEquals(1, vm.getTehtavat().size());
-        assertEquals("Osta maitoa", vm.getTehtavat().getFirst().getOtsikko());
+    @Override
+    public void tallenna(List<TehtavaDto> tehtavat) {
+        // Kun kokoelma yrittää "tallentaa" levylle, kopioidaankin data vain tähän listaan!
+        this.tallennetutData = new ArrayList<>(tehtavat);
+    }
+    
+    // Testejä varten apumetodi asioiden todentamiseen
+    public List<TehtavaDto> haeTallennetut() {
+        return this.tallennetutData;
     }
 }
 ```
 
-## Repositoryn integraatiotyyppinen testi
+## Tehtavakokoelman testaaminen JUnit 5:llä
 
-Testaa tallennus/lataus kierroksena:
+Nyt voimme turvallisin mielin testata mallia. JUnit 5 -testiluokan runko voisi
+näyttää tältä:
 
 ```java
-@Test
-void jsonRepository_roundtrip() throws IOException {
-    Path temp = Files.createTempFile("todo", ".json");
-    JsonTehtavaRepository repo = new JsonTehtavaRepository(temp);
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-    List<TehtavaDto> alku = List.of(
-            new TehtavaDto("A", "kuvaus", false, "KESKI")
-    );
-    repo.tallenna(alku);
-    List<TehtavaDto> luettu = repo.lataa();
+class TehtavakokoelmaTest {
 
-    assertEquals(1, luettu.size());
-    assertEquals("A", luettu.getFirst().otsikko());
+    @Test
+    void lisaaTehtava_lisaaTehtavanJaTallentaaSen() {
+        // 1. Arrange: Valmistellaan testidata ja testattava luokka.
+        // SYÖTETÄÄN VALE-SÄILÖ!
+        MockTehtavaRepository mockRepo = new MockTehtavaRepository();
+        Tehtavakokoelma malli = new Tehtavakokoelma(mockRepo);
+        
+        // 2. Act: Kutsutaan sitä metodia, jota testataan
+        malli.lisaaTehtava("Käy kaupassa");
+        
+        // 3. Assert: Tarkistetaan, että lopputulos on toivottu
+        assertEquals(1, malli.getTehtavat().size(), "Listassa pitäisi olla 1 tehtävä.");
+        assertEquals("Käy kaupassa", malli.getTehtavat().get(0).getOtsikko(), "Otsikon pitäisi täsmätä");
+        
+        // Varmistetaan mock-luokan avulla, että kokoelma muisti myös PYYTÄÄ TALLENNUSTA repositorylta!
+        assertEquals(1, mockRepo.haeTallennetut().size(), "Data olisi pitänyt tallentaa rajapinnan läpi!");
+    }
+
+    @Test
+    void lisaaTehtava_eiLisaaTyhjaaOtsikkoa() {
+        MockTehtavaRepository mockRepo = new MockTehtavaRepository();
+        Tehtavakokoelma malli = new Tehtavakokoelma(mockRepo);
+        
+        malli.lisaaTehtava("   "); // Tyhjä syöte
+        
+        assertEquals(0, malli.getTehtavat().size(), "Tyhjiä tehtäviä ei saa lisätä listaan.");
+    }
 }
 ```
 
-## Testattavuuden perussääntö
+Huomaa kuinka vähän yllä oleva testi tekee töitä saavuttaakseen lähes laajan
+peiton! Ensimmäinen testi paitsi validoi itse lisäämisen onnistumisen
+ominaisuuksineen, myös todentaa epäsuorasti, että malliluokkamme todella osaa
+tallentaa datan (koska se valui alaspäin `mockRepo`-luokan listaan). Tämä on
+uskomattoman voimakasta!
 
-Mitä vähemmän logiikkaa on controllerissa, sitä helpompi sovellus on testata.
-Siksi tämä osa painottaa ViewModeliin siirrettyä logiikkaa.
+Kuvitteleppa vaihtoehtoehtoisesti: ilman puhdasta MVC-arkkitehturaamme olisimme
+yrittäneet kutsua suoraan controllerin logiikkaa `Main.java` luokasta ja
+taistelisimme saadaksemme "VBox" elementtiboksien Checkboxien lukumäärän
+tarkistettua, samalla varoitellen sitä sekoittamasta
+`tehtavat.json`-originaalitietokantaamme.
 
-## Ennen harjoitustyön vaihe 2 palautusta
+## Yhteenveto I/O-abstraktioista
 
-Varmista vähintään:
+Oikean arkkitehtuurijärjestelyn suurin hyöty näkyy yleensä ensimmäisenä
+testauksen sujuvuudessa. Kuvion voi ajatella menevän näin: `UI (Controller)` ->
+`Business Logic (Tehtavakokoelma)` -> `Data Provider (TehtavaRepository)`
 
-- `mvn test` menee läpi
-- tehtävän lisäys, poisto, muokkaus ja tallennus toimivat
-- sovellus käynnistyy ilman vanhaa `tehtavat.json`-tiedostoa
+UI:n testaus automatisoidusti on vaikeaa. Data providerin (oikean tallentamisen)
+automaattinen testaus on tyypillisesti melko hidasta. Mutta eristetty _business
+logic_ eli sovelluksen hermokeskus voidaan suorittaa puhtaana logiikkakoodina
+sekunnin murto-osiin käyttämällä rajapintojen (interfaces) mahdollistamia
+vale-luokkia ympärillä olevien vaikeiden järjestelmien korvaamisessa
+testiajonaikaisesti.
+
+## Tehtävät
 
 <task>
   <task-title>Tehtävä 8.5: TODO-ohjelma, vaihe 11. <points>1 p.</points> </task-title>
@@ -90,5 +133,5 @@ Varmista vähintään:
 
 {{#include ../exercises/8-5-todo-11/handout.md}}
 
-  </handout>
+</handout>
 </task>
