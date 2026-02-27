@@ -10,33 +10,33 @@ siihen liittyvää tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis
 kysymykseen siitä, mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää
 ruudulla.
 
-Osan 7 jälkeen Todo-sovelluksemme jäi tilaan, jossatehtävät mallinnettiin
-käyttöliittymässä olevien komponenttien avulla (`CheckBox`). Ratkaisu oli
-sinänsä hyvä aloitus, mutta pidemmällä aikavälillä se tekee sovelluksesta
-jäykän: data ja käyttöliittymä ovat liian vahvasti sidottuja toisiinsa.
-Esimerkiksi, jos haluamme lisätä tehtäville uusia ominaisuuksia, kuten pidempi
+Osan 7 jälkeen Todo-sovelluksemme jäi tilaan, jossa tehtävät mallinnettiin
+käyttöliittymässä olevien valintaruutukomponenttien avulla. Ratkaisu oli sinänsä
+hyvä aloitus, mutta pidemmällä aikavälillä se tekee sovelluksesta jäykän.
+Esimerkiksi jos haluamme lisätä tehtäville uusia ominaisuuksia, kuten pidempi
 kuvaus tai vaikkapa prioriteetti, meidän pitäisi muuttaa koko
-käyttöliittymälogiikkaa esimerkiksi perimällä `CheckBox`-komponenttia uudeksi
+käyttöliittymälogiikkaa esimerkiksi perimällä `CheckBox`-komponentti uudeksi
 `TehtavaCheckBox`-komponentiksi, joka osaa näyttää kaikki uudet kentät.
 Ensinnäkin tämä sitoo datan sen näyttämiseen, mikä ei ole hyvä
-suunnitteluperiaate. Toisekseen jos haluamme näyttää samaa dataa jossain muussa
-kuin valintapainikkeina, meidän pitäisi kirjoittaa erikseen logiikkaa jokaiseen
-uuteen näkymään.
+suunnitteluperiaate. Toisekseen, jos haluamme näyttää samaa dataa jossain muussa
+muodossa kuin valintapainikkeina, meidän pitäisi kirjoittaa erikseen logiikkaa
+jokaiseen uuteen näkymään.
 
 Kun tehtävä on oma malliolionsa, samaa tietoa voidaan käsitellä riippumatta
-siitä, näytetäänkö tieto taulukkona, listana tai jossain erillisessä
+siitä, näytetäänkö tieto taulukkona, listana tai erillisessä
 muokkausikkunassa. Tämä tekee sovelluksesta joustavamman, koska uusia kenttiä,
 kuten kuvaus, prioriteetti tai määräpäivä, voidaan lisätä suoraan malliin ilman
 että käyttöliittymälogiikkaa täytyy kirjoittaa alusta uudelleen. Samalla
 tiedoston tallennus ja lataus selkeytyvät, koska tallennamme varsinaista
-sovellusdataa emmekä käyttöliittymäkomponenttien sisäistä tilaa.
+sovellusdataa emmekä käyttöliittymäkomponenttien tilaa.
 
 Pelkkä malli ei kuitenkaan vielä yksin ratkaise käyttöliittymän päivittymistä.
 Jos tehtävädata muuttuu ohjelman ajon aikana, näkymän pitäisi reagoida tähän
 automaattisesti ilman, että jokaisen muutoksen jälkeen kirjoitetaan erikseen
-päivityskoodia kaikkiin käyttöliittymäkomponentteihin. Tässä kohtaa tulevat
-mukaan JavaFX:n _observable_-rakenteet, joiden avulla data ja käyttöliittymä
-voidaan kytkeä toisiinsa hallitusti.
+päivityskoodia kaikkiin käyttöliittymäkomponentteihin. 
+
+Tässä kohtaa tulevat mukaan JavaFX:n _observable_-rakenteet, joiden avulla data
+ja käyttöliittymä voidaan kytkeä toisiinsa hallitusti.
 
 ## Mitä Observable tarkoittaa JavaFX:ssä?
 
@@ -45,19 +45,20 @@ ilmoittaa muutoksistaan muille sovelluksen osille automaattisesti. Tämä on
 perustana sille, miten käyttöliittymä saadaan päivittymään heti, kun data
 muuttuu.
 
-Käytännössä käytämme kolmea pääasiallista tyyppiä:
+Käytämme pääasiassa seuraavia tyyppiä:
 
-- `ObservableList<T>` ilmoittaa, kun listaan lisätään tai siitä poistetaan
+- `ObservableList<T>`,  joka ilmoittaa, kun listaan lisätään tai siitä poistetaan
   alkioita.
-- `ObservableValue<T>` ilmoittaa, kun sen sisältämä yksittäinen arvo muuttuu.
-- **Property**-tyypit ovat havaittavia arvoja niitä vastaaville tyypeille.
-  Esimerkiksi `StringProperty` on havaittava versio `String`-tyypistä,
-  `BooleanProperty` vastaavasti `Boolean`-tyypistä ja niin edelleen. Havaittavia
-  arvoja voidaan sitoa toisiinsa, jolloin yhden arvon muutos aiheuttaa
-  automaattisesti toisen arvon päivittymisen. Esimerkiksi jos tehtävän otsikko
-  on `StringProperty`-tyyppinen olio, se voidaan sitoa `Label`-komponenttiin,
-  jolloin `Label`-teksti päivittyy automaattisesti, kun tehtävän otsikko
+- `ObservableValue<T>`, joka ilmoittaa, kun sen sisältämä yksittäinen arvo
   muuttuu.
+- **Property**-tyyppejä, jotka ovat havaittavia versioita niitä vastaavista
+  primitiivityypeistä. Esimerkiksi `StringProperty` on havaittava versio
+  `String`-tyypistä, `BooleanProperty` vastaavasti `Boolean`-tyypistä ja niin
+  edelleen. Havaittavia tyyppejä voidaan sitoa toisiinsa, jolloin yhden arvon
+  muutos aiheuttaa automaattisesti toisen arvon päivittymisen. Esimerkiksi jos
+  tehtävän otsikko on `StringProperty`-tyyppinen olio, se voidaan sitoa
+  `Label`-komponenttiin, jolloin `Label`-teksti päivittyy automaattisesti, kun
+  tehtävän otsikko muuttuu.
 
 ## Hyvin pieni esimerkki ensin {#ensimmainen-esimerkki}
 
@@ -94,7 +95,7 @@ kiinnostuneille, jotka ovat rekisteröityneet kuuntelijoiksi. Näitä kuuntelijo
 kutsutaan _tilaajiksi_ (subscribers). Yllä olevassa esimerkissä tilaaja on
 lambda-funktio, joka tulostaa konsoliin listan koon muutoksen jälkeen.
 
-Lambda-lausekkeen `change`-parametri sisältää kuvauksen juuri tapahtuneesta
+Lambda-funktion `change`-parametri sisältää kuvauksen juuri tapahtuneesta
 muutoksesta tai muutoksista, jos niitä tapahtui useita: mitä indeksejä muutos
 koski, lisättiinkö vai poistettiinko alkioita, ja mitä alkioita lisättiin tai
 poistettiin. Kyseisellä oliolla on käytettävissään metodeja, kuten `wasAdded()`,
@@ -103,7 +104,7 @@ lukea tarkasti, mitä muutoksia tapahtui. TODO: JavaDoc. Yllä olevassa
 esimerkissämmehän emme tuota parametria käyttäneet lainkaan.
 
 Lisätään kuuntelijaan ehto, jonka perusteella listaan lisättäessä tulostetaan
-jotakin, mutta poistettaessa ei.
+jotakin, mutta poistettaessa ei. Tässä kohtaa tarvitsemme `change`-parametria.
 
 ```java,ignore
 nimet.addListener((ListChangeListener<String>) change -> {
@@ -123,8 +124,9 @@ nimet.remove("Linus");
 ```
 
 Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
-listamuutoksia. Yhdellä kertaa listaan saattaa tulla useita muutoksia (esim.
-`addAll`), ja silmukka varmistaa, että jokainen niistä käsitellään.
+listalla tapahtuneita muutoksia. Yhdellä kertaa listaan saattaa tulla useita
+muutoksia (esim. `addAll`). Silmukka varmistaa, että jokainen niistä
+käsitellään.
 
 Kuuntelijoita voi olla useita. Jokainen `addListener(...)` rekisteröi uuden
 tilaajan samaan listaan. Kun listassa tapahtuu muutos, JavaFX ilmoittaa siitä
@@ -226,7 +228,7 @@ kuuntelijaksi samalla tavalla kuin teimme esimerkin `addListener`-kohdassa.
 
 Tätä on tietysti vielä pikkuisen hankala nähdä, koska `initialize()`-metodissa
 on suoraan kovakoodattuna `nimet.add("Ada")` ja `nimet.add("Linus")`. Kokeillaan
-siis vielä, että saamme listaan uusia nimiä suoraan käyttöliittymästä. Lisää
+siis vielä, että saamme listaan uusia nimiä käyttöliittymästä käsin. Lisää
 FXML:ään `TextField` ja `Button`, joiden avulla käyttäjä voi syöttää uuden nimen
 listaan.
 
@@ -452,20 +454,25 @@ kaksi muutosta `tehtavat`-listaan: vanhan `Tehtava`-olion poiston ja uuden
 Opimme kuitenkin tärkeän asian: sovelluksen tila on nyt siirtynyt
 `tehtavat`-listaan käyttöliittymäkomponenttien sisältä. Seuraavaksi katsomme,
 miten JavaFX:n _property_-tyypit ratkaisevat mallin mallintamisen tyylikkäämmin
-niin, ettei koko näkymää tarvitse jatkuvasti rakentaa uudelleen yhden pienen
-muutoksen (kuten checkboxin klikkauksen) takia.
+niin, ettei koko näkymää tarvitse jatkuvasti rakentaa uudelleen.
 
 ## Laajennetaan Tehtava-malli property-pohjaiseksi
 
-Kuten aikaisemmin opimme, "Observable" tarkoittaa sellaista arvoa, jonka
-muutoksia voidaan kuunnella. Kokoelmien lisäksi JavaFX:ssä voidaan kuunnella
-myös yksittäisten arvojen muutoksia käyttämällä _Property_-tyyppejä.
-Yksinkertaisesti sanottuna, kun aiemmin tehtävällä oli tavallinen
-`boolean tehty` -muuttuja, joka oli piilotettu ohjelman uumeniin, muutamme sen
-nyt _observable_-tyyppiseksi, jolloin esimerkiksi tuleva `TableView`-komponentti
-voi tilata ilmoituksen (kuunnella) juuri tämän yhden tehtävän tilan muutoksista.
+Kuten aikaisemmin opimme, observable tarkoittaa arvoa, jonka muutoksia voidaan
+kuunnella. Kokoelmien lisäksi JavaFX:ssä voidaan kuunnella myös yksittäisten
+arvojen muutoksia käyttämällä _Property_-tyyppejä. Yksinkertaisesti sanottuna,
+kun aiemmin tehtävällä oli tavallinen `boolean tehty` -muuttuja, joka oli
+piilotettu ohjelman uumeniin, muutamme sen nyt _observable_-tyyppiseksi,
+`BooleanProperty tehty`-muuttujaksi. Property-tyypit "käärivät" tavalliset
+arvot, kuten `boolean` tai `String`, ja tarjoavat mekanismin ilmoittaa, kun
+niiden arvo muuttuu. JavaFX:n `TableView`-komponentti, joka osaa näyttää arvoja
+taulukkomuodossa (käytämme sitä hetken kuluttua), voi tilata ilmoituksen
+(eli kuunnella) juuri tämän yhden tehtävän tilan muutoksista.
 
-Päivitetään `Tehtava`-luokka käyttämään `Property`-kääreitä:
+Päivitetään `Tehtava`-mallimme käyttämään `Property`-kääreitä. Lisätään samalla
+vaivalla myös pari uutta kenttää: kuvaus ja prioriteetti. Kuvaus on
+tekstikenttä, joka antaa lisätietoa tehtävästä. Prioriteetti kertoo tehtävän
+tärkeyden. Käytämme näitä hieman myöhemmin. 
 
 ```java
 import javafx.beans.property.BooleanProperty;
@@ -514,22 +521,25 @@ public class Tehtava {
 }
 ```
 
-Prioriteetti voidaan kätevästi mallintaa enumilla:
+Prioriteetti voidaan kätevästi mallintaa niin sanotulla *enumilla* eli
+luettelotyypillä, joka määrittelee rajatun joukon vakioarvoja. Meidän
+tapauksessamme prioriteetilla on kolme mahdollista arvoa: matala, keski ja
+korkea. Enum on tapa mallintaa tällaisia vaihtoehtoja tyypin tasolla. 
 
-```java
+```java,ignore
 public enum Prioriteetti {
     MATALA, KESKI, KORKEA
 }
 ```
 
-Näin tallennus voidaan tehdä yhdessä paikassa ilman, että jokaiseen nappiin
+Nyt tallennus voidaan tehdä yhdessä paikassa ilman, että jokaiseen nappiin
 kirjoitetaan erillinen `tallenna()`-kutsu.
 
-Nyt olemme saavuttaneet tilanteen, jossa sekä kokonainen lista
-(`ObservableList`) että listan yksittäiset alkiot (`Property`) osaavat kertoa
-tilansa muutoksista. Olemme valmiita irrottautumaan pitkältä tuntuvalta
-`paivitaNakyma()` metodista kokonaan, joka rakensi `CheckBox`-komponentteja
-`VBox`-laatikoiden sisään – otetaan seuraavassa luvussa avuksi `TableView`!
+Olemme saavuttaneet tilanteen, jossa sekä kokonainen lista (`ObservableList`)
+että listan yksittäiset alkiot (`Property`) osaavat kertoa tilansa muutoksista.
+Olemme valmiita irrottautumaan pitkältä tuntuvalta `paivitaNakyma()` metodista
+kokonaan, joka rakensi `CheckBox`-komponentteja `VBox`-laatikoiden sisään –
+otetaan seuraavassa luvussa avuksi `TableView`!
 
 <task>
   <task-title>Tehtävä 8.1: TODO-ohjelma, vaihe 7. <points>1 p.</points> </task-title>
