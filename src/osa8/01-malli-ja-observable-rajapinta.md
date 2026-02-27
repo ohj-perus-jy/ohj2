@@ -327,31 +327,74 @@ parametrina saamastaan `Tehtava`-oliosta.
 private CheckBox luoCheckBox(Tehtava tehtava) {
     CheckBox cb = new CheckBox(tehtava.getTeksti());
     cb.setSelected(tehtava.getTehty());
+    cb.setOnAction(event -> {
+        if (cb.isSelected()) {
+            tekemattomat.getChildren().remove(cb);
+            tehdyt.getChildren().add(cb);
+        } else {
+            tehdyt.getChildren().remove(cb);
+            tekemattomat.getChildren().add(cb);
+        }
+        tallenna();
+    });
     return cb;
 }
 ```
 
-### Vaihe 4: kuuntele listaa yhdessä paikassa
+Lopuksi muutetaan `initialize()`-metodia hieman, jotta päivittää näkymän ja
+tallentaa aina tehtävää lisättäessä.
 
-Kytke `initialize()`-metodissa listan muutokset näkymään ja tallennukseen:
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    lataa();
+    uusiTehtavaNimi.setOnAction(event -> {
+        lisaaTehtava();
+        paivitaNakyma();
+        tallenna();
+    });
+    lisaaUusiTehtavaPainike.setOnAction(event -> {
+        lisaaTehtava();
+        paivitaNakyma();
+        tallenna();
+    });
+}
+```
+
+Koodissa on taas toistoa. Kytketään näkymän päivittäminen ja tallennus suoraan
+listalla tapahtuvaan muutokseen. 
 
 ```java
-@Override
 public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    // ...
+    // HIGHLIGHT_RED_BEGIN
+    uusiTehtavaNimi.setOnAction(event -> {
+        lisaaTehtava();
+        paivitaNakyma();
+        tallenna();
+    });
+    lisaaUusiTehtavaPainike.setOnAction(event -> {
+        lisaaTehtava();
+        paivitaNakyma();
+        tallenna();
+    });
+    // HIGHLIGHT_RED_END
+    // HIGHLIGHT_GREEN_BEGIN
     tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
         paivitaNakyma();
         tallenna();
     });
 
-    tehtavat.addAll(lataaTehtavat());
-    paivitaNakyma();
-
     uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
     lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+    // HIGHLIGHT_GREEN_END
+    // ...
 }
 ```
 
-Huomaa, että `lataa()` kannattaa muuttaa palauttamaan lista:
+Nyt aina kun lisäämme tehtävän listaan, näkymä päivittyy ja data tallentuu. 
+Tämä auttaa myös tehtävien lataamisessa JSONista. Muutetaan `lataa()`-metodia
+hieman, että se palauttaa listan `Tehtava`-olioita. Refaktoroidaan myös nimeksi `lataaTehtavat()`, jotta se kuvaa paremmin, mitä metodi tekee.
 
 ```java
 private List<Tehtava> lataaTehtavat() {
@@ -369,12 +412,18 @@ private List<Tehtava> lataaTehtavat() {
 }
 ```
 
+Nyt meidän on helppo asettaa `tehtavat`-lista `initialize()`-metodissa:
+
+```java,ignore
+tehtavat.addAll(lataaTehtavat());
+```
+
 ## CheckBox-tapahtuma muuttaa mallia
 
-Edellisessä vaiheessa paivitaNakyma() alkoi kutsua metodia luoCheckBox(tehtava).
-Se oli tarkoituksellista: näkymä rakennetaan nyt Tehtava-olioista. Täydennetään
-nyt tämä metodi niin, että checkboxin klikkaus muuttaa mallia eikä siirtele
-CheckBox-komponentteja VBox-säiliöiden välillä.
+`paivitaNakyma()` kutsuu edelleen `luoCheckBox()`-metodia. Tämä oli
+tarkoituksellista, koska näkymä rakennettiin Tehtava-olioista. Täydennetään nyt
+tämä metodi niin, että checkboxin klikkaus muuttaa mallia eikä siirtele
+`CheckBox`-komponentteja VBox-säiliöiden välillä.
 
 Kun checkboxia klikataan, tapahtumankäsittelijä päivittää `tehtavat`-listaa.
 Valitettavasti meillä ei ole vielä tapaa päivittää `Tehtava`-olion sisäistä
