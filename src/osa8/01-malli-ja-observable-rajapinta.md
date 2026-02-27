@@ -10,7 +10,7 @@ siihen liittyvää tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis
 kysymykseen siitä, mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää
 ruudulla. 
 
-Osassa 7 Todo-sovelluksemme tehtävät mallinnettiin käyttöliittymässä olevien
+Osan 7 jälkeen Todo-sovelluksemme jäi tilaan, jossatehtävät mallinnettiin käyttöliittymässä olevien
 komponenttien avulla (`CheckBox`). Ratkaisu oli sinänsä hyvä aloitus, mutta
 pidemmällä aikavälillä se tekee sovelluksesta jäykän: data ja käyttöliittymä
 ovat liian vahvasti sidottuja toisiinsa. Esimerkiksi, jos haluamme lisätä
@@ -252,42 +252,15 @@ logiikka, joka muuttaa dataa, ei pidä riippua siitä, miten data näytetään.
 
 ## Pieni Tehtävä-malli (ensin tavallisilla kentillä)
 
-Siirrytään nyt nimilistasta takaisin TODO-sovellukseemme. Lähtötilanne on nyt
-tämä: 
+Siirrytään nyt nimilistasta takaisin Todo-sovellukseemme. Tavoitteenamme on siirtää sovelluksen "totuus" mallilistaan niin, että `VBox`-komponentit ovat vain näkymää, joka päivittyy datan perusteella.
 
- * tehtävien lukeminen tapahtuu `lataaTehtavat()`-metodissa, joka hakee datan
-   JSON-tiedostosta, muuttaa sen ensin `Tehtava`-olioiksi, ja sitten luo
-   `CheckBox`-komponentteja.
- * Tehtävien lisääminen tapahtuu `lisaaTehtava()`-metodissa, joka luo uuden
-   `CheckBox`-komponentin ja lisää sen `VBox`-komponenttiin.
- * Tehtävien tilan muuttaminen tapahtuu `CheckBox`-tapahtumankäsittelijässä, joka
-   siirtää `CheckBox`-komponentteja `VBox`-komponenttien välillä.
- * Tehtävien tallennus tapahtuu `tallenna()`-metodissa, joka hakee datan takaisin
-   `VBox`-komponenteista ja kirjoittaa sen JSON-tiedostoon.
-
-Seuraavaksi siirretään "totuus" mallilistaan. Ajatus on se, että
-`tehtavat`-lista olisi jatkossa päädata ja `VBox`-komponentit ovat vain näkymää.
-Tavoite olisi seuraava:
-
- * `lataaTehtavat()`-metodi hakee datan JSON-tiedostosta, muuttaa sen
-   `Tehtava`-olioiksi, kuten ennenkin, mutta ei luo `CheckBox`-komponentteja.
-   Sen sijaan se palauttaa listan `Tehtava`-olioita, joka asetetaan
-   `tehtavat`-attribuuttiin.
- * `lisaaTehtava()`-metodi luo uuden `Tehtava`-olion ja lisää sen `tehtavat`-listaan.
- * Näkymä päivittyy automaattisesti, kun mallin data muuttuu.
- * Kun tehtävä merkitään tehdyksi (tai päinvastoin), muutetaan mallin tilaa eikä
-   siirrellä komponentteja VBoxista toiseen.
- * `tallenna()`-metodi hakee datan suoraan mallista eikä tarvitse tietää
-   näkymästä mitään.
-
-Aloitetaan lisäämällä `MainController`-luokkaan uusi attribuutti:
+Aloitetaan lisäämällä `MainController`-luokkaan uusi attribuutti, joka toimii sovelluksen datana:
 
 ```java
 private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
 ```
 
-Nykyisessä koodissa `lisaaTehtava()` lisää suoraan `CheckBox`in `VBox`:iin.
-Muuta se lisäämään `Tehtava` listaan:
+Muutetaan nyt `lisaaTehtava()`-metodi niin, että se ei enää lisää `CheckBox`-komponenttia suoraan `VBoxiin`, vaan lisää uuden `Tehtava`-olion listaamme:
 
 ```java
 private void lisaaTehtava() {
@@ -296,19 +269,25 @@ private void lisaaTehtava() {
         uusiTehtavaNimi.requestFocus();
         return;
     }
+    // Lisätään mallilistaan, ei enää suoraan käyttöliittymään
     tehtavat.add(new Tehtava(teksti.trim(), false));
     uusiTehtavaNimi.clear();
     uusiTehtavaNimi.requestFocus();
 }
 ```
 
-Nyt lisää metodi, joka rakentaa `VBox`-sisällön aina `tehtavat`-listasta:
+Jotta näkymä päivittyisi, tarvitsemme metodin, joka osaa rakentaa `VBox`-sisällöt aina mallilistan sisällön perusteella. 
+
+Tässä kohtaa on luontevaa muuttaa myös `luoCheckBox`-metodin esittelyrivi. Aiemmin annoimme sille parametrina tekstin ja valintatiedon erikseen (`String, boolean`), mutta nyt kun meillä on koko `Tehtava`-olio käytettävissä, annetaan se suoraan parametrina. Näin metodi saa kaiken tarvitsemansa tiedon yhdellä kertaa.
 
 ```java
 private void paivitaNakyma() {
+    // Tyhjennetään nykyiset listat
     tekemattomat.getChildren().clear();
     tehdyt.getChildren().clear();
 
+    // Rakennetaan näkymä uudestaan mallin perusteella.
+    // Metodi luoCheckBox(tehtava) saa nyt koko olion parametrina.
     for (Tehtava tehtava : tehtavat) {
         CheckBox cb = luoCheckBox(tehtava);
         if (tehtava.getTehty()) {
@@ -320,81 +299,39 @@ private void paivitaNakyma() {
 }
 ```
 
-Myös `luoCheckBox`-metodi pitää muuttaa, jotta se rakentaa `CheckBox`in
-parametrina saamastaan `Tehtava`-oliosta.
+Myös tallennus muuttuu suoraviivaisemmaksi. Meidän ei tarvitse enää lukea tietoja käyttöliittymäkomponenteista, vaan voimme kirjoittaa suoraan listan sisällön JSON-tiedostoon:
 
-```java,ignore
-private CheckBox luoCheckBox(Tehtava tehtava) {
-    CheckBox cb = new CheckBox(tehtava.getTeksti());
-    cb.setSelected(tehtava.getTehty());
-    cb.setOnAction(event -> {
-        if (cb.isSelected()) {
-            tekemattomat.getChildren().remove(cb);
-            tehdyt.getChildren().add(cb);
-        } else {
-            tehdyt.getChildren().remove(cb);
-            tekemattomat.getChildren().add(cb);
-        }
-        tallenna();
-    });
-    return cb;
+```java
+private void tallenna() {
+    try {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.writeValue(Path.of("tehtavat.json"), tehtavat);
+    } catch (IOException e) {
+        IO.println("Tallennus epäonnistui: " + e.getMessage());
+    }
 }
 ```
 
-Lopuksi muutetaan `initialize()`-metodia hieman, jotta päivittää näkymän ja
-tallentaa aina tehtävää lisättäessä.
-
-```java,ignore
-public void initialize(URL url, ResourceBundle resourceBundle) {
-    lataa();
-    uusiTehtavaNimi.setOnAction(event -> {
-        lisaaTehtava();
-        paivitaNakyma();
-        tallenna();
-    });
-    lisaaUusiTehtavaPainike.setOnAction(event -> {
-        lisaaTehtava();
-        paivitaNakyma();
-        tallenna();
-    });
-}
-```
-
-Koodissa on taas toistoa. Kytketään näkymän päivittäminen ja tallennus suoraan
-listalla tapahtuvaan muutokseen. 
+Nyt voimme kytkeä kaiken yhteen `initialize()`-metodissa. Voimme hyödyntää `ObservableList`-listan kuuntelijaa, jotta `paivitaNakyma()` ja `tallenna()` ajetaan automaattisesti aina, kun lista muuttuu.
 
 ```java
 public void initialize(URL url, ResourceBundle resourceBundle) {
+    // Ladataan tehtävät ja lisätään ne listaan (tämä aktivoi kuuntelijan)
+    tehtavat.addAll(lataaTehtavat());
 
-    // ...
-    // HIGHLIGHT_RED_BEGIN
-    uusiTehtavaNimi.setOnAction(event -> {
-        lisaaTehtava();
-        paivitaNakyma();
-        tallenna();
-    });
-    lisaaUusiTehtavaPainike.setOnAction(event -> {
-        lisaaTehtava();
-        paivitaNakyma();
-        tallenna();
-    });
-    // HIGHLIGHT_RED_END
-    // HIGHLIGHT_GREEN_BEGIN
+    // Asetetaan listalle kuuntelija
     tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
         paivitaNakyma();
         tallenna();
     });
 
+    // Enter ja nappi vain lisäävät uuden tehtävän listaan
     uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
     lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
-    // HIGHLIGHT_GREEN_END
-    // ...
 }
 ```
 
-Nyt aina kun lisäämme tehtävän listaan, näkymä päivittyy ja data tallentuu. 
-Tämä auttaa myös tehtävien lataamisessa JSONista. Muutetaan `lataa()`-metodia
-hieman, että se palauttaa listan `Tehtava`-olioita. Refaktoroidaan myös nimeksi `lataaTehtavat()`, jotta se kuvaa paremmin, mitä metodi tekee.
+Nyt meidän on vielä muutettava `lataaTehtavat()`-metodia niin, että se palauttaa listan `Tehtava`-olioita suoraan ilman käyttöliittymäkosketusta:
 
 ```java
 private List<Tehtava> lataaTehtavat() {
@@ -412,44 +349,63 @@ private List<Tehtava> lataaTehtavat() {
 }
 ```
 
-Nyt meidän on helppo asettaa `tehtavat`-lista `initialize()`-metodissa:
-
-```java,ignore
-tehtavat.addAll(lataaTehtavat());
-```
-
 ## CheckBox-tapahtuma muuttaa mallia
 
-`paivitaNakyma()` kutsuu edelleen `luoCheckBox()`-metodia. Tämä oli
-tarkoituksellista, koska näkymä rakennettiin Tehtava-olioista. Täydennetään nyt
-tämä metodi niin, että checkboxin klikkaus muuttaa mallia eikä siirtele
-`CheckBox`-komponentteja VBox-säiliöiden välillä.
+Nyt sovelluksemme osaa jo lisätä tehtäviä mallin kautta, mutta checkboxien klikkaaminen on vielä ongelma. `luoCheckBox` sisältää edelleen logiikkaa, joka siirtelee checkboxia käsin `VBox`-säiliöiden välillä:
 
-Kun checkboxia klikataan, tapahtumankäsittelijä päivittää `tehtavat`-listaa.
-Valitettavasti meillä ei ole vielä tapaa päivittää `Tehtava`-olion sisäistä
-tilaa esimerkiksi `tehtava.setTehty(true)`-kutsulla. Tarkemmin sanoen voisimme
-toki tuollaisen metodin tehdä, mutta `ObservableList` ei huomaisi, että olion
-sisäinen tila on muuttunut, koska `ObservableList` tarkkailee oletuksena vain
-listan rakennetta (alkioiden määrä ja järjestys), ei listalla olevien olioiden
-sisäisiä kenttiä. JavaFX:ssä on kyllä keino ratkaista tämä, mutta katsotaan
-aluksi hieman yksinkertaisempaa tapaa. 
+```java,ignore
+// VANHA VERSIO (poistuva logiikka korostettu)
+private CheckBox luoCheckBox(String teksti, boolean valittu) {
+    CheckBox tehtava = new CheckBox(teksti);
+    tehtava.setSelected(valittu);
+    tehtava.setOnAction(event -> {
+        // HIGHLIGHT_RED_BEGIN
+        if (tehtava.isSelected()) {
+            tekemattomat.getChildren().remove(tehtava);
+            tehdyt.getChildren().add(tehtava);
+        } else {
+            tehdyt.getChildren().remove(tehtava);
+            tekemattomat.getChildren().add(tehtava);
+        }
+        // HIGHLIGHT_RED_END
+        tallenna();
+    });
+    return tehtava;
+}
+```
 
-Tehdään uusi Tehtava-olio, joka on muuten sama kuin vanha, mutta jonka
-tehty-arvoksi asetetaan checkboxin uusi tila (`cb.isSelected()`). Tämä on hieman
-kömpelöä, koska luodaan uusi olio vanhan päivittämisen sijaan. Tämä kuitenkin
-toimii tässä vaiheessa.
+Nyt meidän on muutettava ajattelutapaa: **checkbox ei enää siirrä itseään, vaan se muuttaa mallia.** Kun malli muuttuu, `tehtavat`-listan kuuntelija herää ja kutsuu `paivitaNakyma()`-metodia. Tuo metodi puolestaan tyhjentää molemmat VBoxit ja sijoittaa tehtävät oikeisiin laatikoihin niiden tilan perusteella.
+
+Valitettavasti tavallinen `Tehtava`-olio ei osaa ilmoittaa sisäisen tilansa muuttumisesta. Jos kutsuisimme vain `tehtava.setTehty(true)`, `ObservableList` ei huomaisi mitään, koska itse listaan ei tullut uutta oliota. Tässä vaiheessa käytämme "remove/add"-kikkaa: poistamme vanhan olion ja lisäämme tilalle uuden, jolla on päivitetty tila.
+
+Tässä on `luoCheckBox`-metodin uusi versio. Huomaa, miten kaikki `getChildren().remove()` -kutsut ovat poistuneet, koska `paivitaNakyma()` hoitaa sijoittelun jatkossa:
 
 ```java
 private CheckBox luoCheckBox(Tehtava tehtava) {
     CheckBox cb = new CheckBox(tehtava.getTeksti());
     cb.setSelected(tehtava.getTehty());
+
     cb.setOnAction(event -> {
+        // MUUTOS: Emme enää siirrä komponenttia käsin VBoxista toiseen.
+        // Sen sijaan päivitämme mallilistaa, mikä laukaisee näkymän päivityksen.
         tehtavat.remove(tehtava);
         tehtavat.add(new Tehtava(tehtava.getTeksti(), cb.isSelected()));
     });
+
     return cb;
 }
 ```
+
+Nyt prosessi on looginen ja reaktiivinen: 
+
+1. **Käyttäjä klikkaa CheckBoxia.**
+2. `luoCheckBox`-metodin `setOnAction` muuttaa mallilistaa (`remove` & `add`). **Tässä vaiheessa VBox-komponentteihin ei vielä kosketa.**
+3. `tehtavat`-listan kuuntelija (`addListener`) huomaa, että listan sisältö muuttui.
+4. Kuuntelija kutsuu `paivitaNakyma()`- ja `tallenna()`-metodeja.
+5. **Vasta nyt `paivitaNakyma()` tyhjentää VBoxit ja rakentaa ne uudestaan mallin uuden tilan mukaiseksi.**
+
+Tämä tarkoittaa, että vaikka toiminto lähti liikkeelle yhdestä checkboxista, koko näkymän päivitys on keskitetty yhteen paikkaan. Tämä ratkaisu on toki hieman tehoton (koko käyttöliittymä rakennetaan uudestaan yhden klikkauksen takia), mutta se opettaa tärkeän asian: sovelluksen tila on listassa. 
+ Seuraavaksi katsomme, miten JavaFX:n *property*-tyypit ratkaisevat tämän tyylikkäämmin ilman koko näkymän jatkuvaa uudelleenrakentamista.
 
 Cb-olion tilan muuttaminen aiheuttaa kaksi muutosta `tehtavat`-listaan: vanhan
 `Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Tämä on tietysti
