@@ -20,10 +20,24 @@
 
 Osassa 7 teimme toimivan TODO-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.
-Ratkaisu toimii, mutta sitä on vaikea laajentaa:
+Ratkaisu toimii, mutta nyt sovelluksen ydinlogiikka ja käyttöliittymmä
+ovat erittäin tiukasti sidottuna toisiinsa.
+Esimerkiksi tehtävän tila mallinetaan suoraan
+`CheckBox`-käyttöliittymäkomponentilla, joka ei ole sovelluksen kohdealueen 
+kannalta ydinkäsite. Sovelluksen tarkoituksena onkin hallita tehtäviä eikä
+valintaruutuja; käyttöliittymän on oltava vain tapa *esittää* data.
 
-- Tehtävässä ei ole kunnollista erillistä malliolioa.
-- Käyttöliittymä ja logiikka ovat tiukasti sidottuja toisiinsa.
+Sovelluksen ydintoiminnan ja käyttöliittymän tiukka sidonta kostautuu myös, kun
+sovellusta halutaan laajentaa. Jos haluaisimme jatkossa tallentaa lisäksi
+vaikkapa tehtävien tarkempia kuvauksia, prioriteettitasoa tai vaikkapa mallintaa
+tehtävien alitehtäviä, käyttöliittymäkomponenttien käyttämien sekä tilan
+esittämiseen että käsittelyyn monimutkaistaa koodia. Kun esityslogiikan ja
+sovelluksen ydinlogiikan eroa on vaikeaa nähdä, muutosten tekeminen
+jompaankumpaan muuttuu hankalaksi.
+
+
+
+
 - Uusien ominaisuuksien lisääminen kasvattaa kontrolleria nopeasti liian
   suureksi.
 
