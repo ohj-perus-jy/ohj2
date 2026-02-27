@@ -32,7 +32,9 @@ MVC-mallissa sovellus jaetaan kolmeen osaan:
 - **Toteutus:** Olemme jo tehneet `Tehtava`-luokan mallintamaan yksittäistä
   tehtävää. Nyt luomme `Tehtavakokoelma`-luokan, joka pitää sisällään koko
   sovelluksen tilan (tehtävälistan) ja tarjoaa metodit tehtävien lisäämiseen,
-  poistamiseen ja tallentamiseen.
+  poistamiseen ja tallentamiseen. Koska `Tehtava` on itsessään Jacksonin
+  ymmärtämää muotoa (siinä on tyhjä konstruktori sekä setterit ja getterit), se
+  voidaan myös sellaisenaan tallentaa tiedostoon.
 - **Rajoitukset:** Ei tiedä mitään JavaFX-näkymästä (`TableView`, `TextField`),
   vaan luottaa _observable_-rakenteisiin kertoakseen muutoksista kiinnostuneille
   osapuolille.
@@ -54,100 +56,28 @@ fi.jyu.ohj2.nimi.todo
 │   ├── Prioriteetti.java
 │   ├── Tehtava.java
 │   └── Tehtavakokoelma.java
-├── persistence
-│   ├── JsonTehtavaRepository.java
-│   └── TehtavaRepository.java
 └── ui
     ├── Main.java
     └── MainController.java
 ```
 
-## Datatallennuksen eriyttäminen (Repository)
-
-Ennen kuin siirrämme listan kontrollerista malliluokkaan, mietitään miten tiedon
-lataus ja tallennus kannattaa hoitaa.
-
-Vaikka voisimme kirjoittaa JSON-tallennuskoodin suoraan malliluokkaan
-(`Tehtavakokoelma`), hyvä suunnitteluperiaate ohjaa erottamaan tallennuksen
-omaksi kokonaisuudekseen. Yksi hyvin yleinen tapa tässä on käyttää
-_Repository_-rajapintaa (säilö).
-
-Rajapinnan tehokkuus piilee siinä, että `Tehtavakokoelma`-luokan ei tarvitse
-tietää, _miten_ tai _minne_ data tallennetaan (onko se JSON-tiedosto, tietokanta
-vai vain muisti). Se käyttää ainoastaan tallennus- ja latausmetodeja. Tämä on
-elintärkeää erityisesti sovelluksen testaamisessa myöhemmin!
-
-Luodaan pakettiin `persistence` rajapinta:
-
-```java
-package fi.jyu.ohj2.nimi.todo.persistence;
-
-import java.io.IOException;
-import java.util.List;
-
-public interface TehtavaRepository {
-    List<TehtavaDto> lataa() throws IOException;
-    void tallenna(List<TehtavaDto> tehtavat) throws IOException;
-}
-```
-
-(Huomaa: käytämme tässä Dto-luokkaa [Data Transfer Object], joka on
-yksinkertainen record/luokka pelkkää tiedostosiirtoa varten ilman
-JavaFX-property -kääreitä.)
-
-Toteutamme tämän rajapinnan jo tutulla Jacksonilla
-`JsonTehtavaRepository`-luokassa:
-
-```java
-package fi.jyu.ohj2.nimi.todo.persistence;
-
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.List;
-
-public class JsonTehtavaRepository implements TehtavaRepository {
-    private final Path tallennustiedosto;
-    private final ObjectMapper mapper = new ObjectMapper();
-
-    public JsonTehtavaRepository(Path tallennustiedosto) {
-        this.tallennustiedosto = tallennustiedosto;
-    }
-
-    @Override
-    public List<TehtavaDto> lataa() throws IOException {
-        if (Files.notExists(tallennustiedosto)) {
-            return List.of();
-        }
-        return mapper.readValue(tallennustiedosto.toFile(), new TypeReference<>() {});
-    }
-
-    @Override
-    public void tallenna(List<TehtavaDto> tehtavat) throws IOException {
-        mapper.writeValue(tallennustiedosto.toFile(), tehtavat);
-    }
-}
-```
-
 ## Keskeinen tietomalli: Tehtavakokoelma
 
-Nyt siirrämme sovelluksen sydämen, eli tehtävälistan hallinnan, pois
-kontrollerista omaan logiikkaluokkaansa. Luodaan pakettiin `model` luokka
-`Tehtavakokoelma`:
+Siirrämme nyt sovelluksen sydämen, eli tehtävälistan hallinnan ja tietojen luku-
+ja tallennusoperaatiot, pois kontrollerista omaan logiikkaluokkaansa. Luodaan
+pakettiin `model` luokka `Tehtavakokoelma`:
 
 ```java
 package fi.jyu.ohj2.nimi.todo.model;
 
-import fi.jyu.ohj2.nimi.todo.persistence.TehtavaDto;
-import fi.jyu.ohj2.nimi.todo.persistence.TehtavaRepository;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 public class Tehtavakokoelma {
@@ -156,12 +86,11 @@ public class Tehtavakokoelma {
             t -> new javafx.beans.Observable[]{t.tehtyProperty()}
     );
     
-    // 2. Riippuvuus tallennusmekanismista rajapinnan kautta
-    private final TehtavaRepository repository;
+    // Tiedoston tallennuspolku ja datan käsittelijä
+    private final Path tallennustiedosto = Path.of("tehtavat.json");
+    private final ObjectMapper mapper = new ObjectMapper();
 
-    public Tehtavakokoelma(TehtavaRepository repository) {
-        this.repository = repository;
-        
+    public Tehtavakokoelma() {
         // Asetetaan tallennuskuuntelija listalle mallin sisällä
         this.tehtavat.addListener((javafx.collections.ListChangeListener<Tehtava>) change -> {
             tallenna();
@@ -171,28 +100,17 @@ public class Tehtavakokoelma {
     // --- Ohjelman logiikkametodit ---
 
     public void lataa() throws IOException {
-        List<TehtavaDto> dtot = repository.lataa();
-        List<Tehtava> muunnetut = dtot.stream()
-                .map(d -> {
-                    Tehtava t = new Tehtava(d.otsikko(), d.tehty());
-                    t.setKuvaus(d.kuvaus());
-                    t.setPrioriteetti(Prioriteetti.valueOf(d.prioriteetti()));
-                    return t;
-                })
-                .toList();
-        tehtavat.setAll(muunnetut);
+        if (Files.exists(tallennustiedosto)) {
+            // Jackson osaa suoraan palauttaa listan Tehtava-olioita, kun annoimme tyhjän konstruktorin ja getterit/setterit
+            List<Tehtava> ladatut = mapper.readValue(tallennustiedosto.toFile(), new TypeReference<>() {});
+            tehtavat.setAll(ladatut);
+        }
     }
 
     private void tallenna() {
         try {
-            List<TehtavaDto> dtot = tehtavat.stream()
-                    .map(t -> new TehtavaDto(
-                            t.getOtsikko(), 
-                            t.getKuvaus(), 
-                            t.isTehty(), 
-                            t.getPrioriteetti().name()))
-                    .toList();
-            repository.tallenna(dtot);
+            // Kirjoitetaan lista suoraan jsoniin
+            mapper.writeValue(tallennustiedosto.toFile(), tehtavat);
         } catch (IOException e) {
             // Reaalimaailmassa heitettäisiin poikkeus eteenpäin tai kirjattaisiin lokiin
             System.err.println("Tallennus epäonnistui: " + e.getMessage());
@@ -220,15 +138,13 @@ public class Tehtavakokoelma {
 
 Huomaa, miten kaikki säännöt ("otsikko ei saa olla tyhjä", "päivitä tiedosto kun
 lisätään tai ominaisuus muuttuu") asuvat nyt täällä malliluokassa! Täällä ei ole
-tippaakaan koodia, joka tietäisi Tekstikentistä, ja `tallenna()`-logiikka ei
-välitä puhuuko se tiedostolle vai tietokannalle. Se puhuu
-`repository`-rajapinnalle.
+tippaakaan koodia, joka tietäisi Tekstikentistä.
 
 ## Kontrollerin uusi rooli
 
 Päivitetään lopuksi `MainController`. Kontrollerin rooli on nyt hyvin selkeä
-"virkailija" mallin ja näkymän välissä. Se ottaa `Tehtavakokoelma` -mallin
-käyttöönsä ja delegoi itse tekemisen eteenpäin:
+"virkailija" mallin ja näkymän välissä. Se ottaa kokoelmiin liittyvän logiikan
+pois harteiltaan ja vain viestii käyttöliittymän ja `Tehtavakokoelman` välillä:
 
 ```java
 package fi.jyu.ohj2.nimi.todo.ui;
@@ -236,7 +152,6 @@ package fi.jyu.ohj2.nimi.todo.ui;
 import fi.jyu.ohj2.nimi.todo.model.Prioriteetti;
 import fi.jyu.ohj2.nimi.todo.model.Tehtava;
 import fi.jyu.ohj2.nimi.todo.model.Tehtavakokoelma;
-import fi.jyu.ohj2.nimi.todo.persistence.JsonTehtavaRepository;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -244,7 +159,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.CheckBoxTableCell;
 
 import java.io.IOException;
-import java.nio.file.Path;
 
 public class MainController {
     @FXML private TextField uusiTehtavaNimi;
@@ -253,10 +167,8 @@ public class MainController {
     @FXML private TableColumn<Tehtava, Prioriteetti> prioriteettiCol;
     @FXML private TableColumn<Tehtava, Boolean> tehtyCol;
 
-    // 1. Luodaan uusi ylätason malli ja sille säilö
-    private final Tehtavakokoelma malli = new Tehtavakokoelma(
-            new JsonTehtavaRepository(Path.of("tehtavat.json"))
-    );
+    // 1. Luodaan uusi ylätason malli 
+    private final Tehtavakokoelma malli = new Tehtavakokoelma();
 
     @FXML
     public void initialize() {
@@ -307,8 +219,8 @@ helppolukuista!
   testata Java-ohjelmana `Tehtavakokoelma`-luokan avulla täysin ilman
   käyttöliittymän pyörittämistä tai klikkailua.
 - Saman mallin (`Tehtavakokoelma` tilaoineen) voi tarvittaessa luovuttaa useiden
-  eri näkymien (esim. useat tiettyjen prioriteettien taulukot) käyttöön
-  vaivattomasti.
+  eri näkymien (esim. useat tiettyjen prioriteettien taulukot tai
+  muokkausikkuna) käyttöön vaivattomasti.
 
 ## Tehtävät
 
