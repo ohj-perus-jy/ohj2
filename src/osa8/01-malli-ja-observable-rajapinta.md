@@ -142,12 +142,9 @@ poisto, korvaus, jne.) voidaan käsitellä samalla `Change`-oliolla.
 
 </details>
 
-
-
 ## Kytkentä käyttöliittymään (FXML)
 
-Vaikka esimerkissä tulostimme tiedon vain konsoliin, oikeassa sovelluksessa
-listan muutosten tilaaja on yleensä jokin käyttöliittymäkomponentti.
+Oikeassa sovelluksessa muutoksista ei yleensä tulostella konsoliin, vaan listan muutosten tilaaja on yleensä jokin käyttöliittymäkomponentti.
 
 Tehdään pari muutosta, jotta pääsemme näkemään tämän käytännössä. Palauta
 `main`-metodissa olevan `launch()`-kutsu takaisin. Siirrä
@@ -246,9 +243,9 @@ private void lisaaNimi() {
 }
 ```
 
-Tavoitteenamme on siis **yksisuuntainen riippuvuus**: JavaFX huolehtii siitä,
-että näkymä päivittyy, kun data muuttuu, mutta ei itse muuta dataa. Vastaavasti
-logiikka, joka muuttaa dataa, ei pidä riippua siitä, miten data näytetään. 
+JavaFX huolehtii siitä,
+että näkymä päivittyy, kun data muuttuu. 
+Toisaalta se, mitä näkymässä tapahtuu, ei vaikuta datan rakenteeseen tai tilaan. Näin data ja näkymä ovat erillään toisistaan, ja molempia voidaan muuttaa ilman, että toinen niistä vaikuttaa toiseen.
 
 ## Pieni Tehtävä-malli (ensin tavallisilla kentillä)
 
