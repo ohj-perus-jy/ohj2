@@ -256,7 +256,7 @@ flowchart TD
     "]
     Label["
         Label
-        text: Hello JavaFx
+        text: Hello JavaFX
     "]
     Button["
         Button

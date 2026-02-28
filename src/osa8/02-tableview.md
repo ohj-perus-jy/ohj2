@@ -2,22 +2,54 @@
 
 Osassa 7 tehtävät näytettiin `VBox`-säiliöissä `CheckBox`-komponentteina. Tämä
 on oikein hyvä tapa opetella käyttöliittymän perusidea: luodaan komponentteja ja
-lisätään ne näkymään. Menetelmä alkaa kuitenkin muuttua hankalaksi, kun dataa on
-enemmän tai kun käyttöliittymältä halutaan enemmän toiminnallisuutta
-(esimerkiksi lajittelu, rivin valinta, muokkaus tai useiden kenttien näyttäminen
-siististi vierekkäin).
+lisätään ne näkymään. 
+Huomasimme edellisessä osassa, että mallin ja käyttöliittymän erottaminen
+toisistaan vaatii `paivitaNakyma()`-metodia, joka kutsutaan aina, kun malli
+muuttuu. Näkymän päivittäminen mallin muuttuessa voi kuitenkin osoittautua
+pullonkaulaksi sovelluksen koon kasvaessa, ja näkymän päivittämisen optimointi
+on itsessään hankala ongelma, johon ei tämän kurssin puitteissa pureuduta.
 
-Tässä kohtaa käyttöön tulee `TableView`, eli taulukkokomponentti. `TableView` on
-JavaFX:n valmis komponentti sellaisten tietojen näyttämiseen, jotka ovat
-luonteeltaan rivi–sarake-muotoisia. Ajattele esimerkiksi taulukkoa, jossa
+Tässä kohtaa onkin parempi nojautua JavaFX:n valmiin näkymäkomponentteihin, jotka
+osaavat tehokkaasti esittää olioita ja reagoida niiden muutoksiin.
+Otamme tässä luvussa käyttöön `TableView`- eli taulukkokomponentin
+`TableView` on
+JavaFX:n valmis komponentti, jolla olioita voidaan esittää riveinä ja olioiden
+ominaisuuksia sarakkeina.
+Ajattele esimerkiksi taulukkoa, jossa
 jokainen rivi on yksi tehtävä ja sarakkeet ovat tehtävän ominaisuuksia, kuten
 otsikko, prioriteetti ja tehty/tekemättä-tila.
 
-Tässä luvussa hyödynnämme myös JavaFX:n _propertyjä_ ja databinding-ajattelua.
-JavaFX-property (esimerkiksi `StringProperty` tai `BooleanProperty`) on
-erityinen olio, joka sisältää arvon ja jonka muutoksia voidaan kuunnella. Tämä
-on tärkeää käyttöliittymissä, koska taulukon sarakkeet eivät yleensä lue arvoja
-suoraan tavallisista kentistä, vaan ne kytketään propertyihin. Tällöin
+## Esivalmistelu: Tehtävä-luokka havaittavaksi
+
+JavaFX:n `TableView` osaa reagoida olioiden määrän muutosten lisäksi
+olioiden attribuuttien muutoksiin. Esimerkiksi, jos jos jonkun tehtävän teksti
+muutetaan käyttöliittymässä, `TableView` osaa havaita muutoksen automaattisesti.
+Tätä varten kuitenkaan pelkästään `ObservableList`-listan käyttö ei riitä, koska
+se osaa havaita vain tehtävien lisäämistä ja poistamista.
+Sen sijaan meidän tulee tehdä itse *tehtävät ja niiden ominasuudet
+havaittaviksi*.
+
+Olion yksittäisi ominaisuuksia voidaan muuttaa havaittaviksi käyttäen
+`Property`-tyyppejä. Property-tyypit "käärivät" tavalliset
+arvot, kuten `boolean` tai `String`, ja tarjoavat mekanismin ilmoittaa, kun
+niiden arvo muuttuu. Esimerkiksi `StringProperty` on havaittava versio
+`String`-tyypistä, `BooleanProperty` vastaavasti `Boolean`-tyypistä ja niin
+edelleen. Havaittavat tyypit mahdollistavat sen, että olion yksittäisiä
+attribuuttien arvojen muutosta voidaan havaita samalla tavalla kuin
+`ObservableList`-listassa voidaan havaita olioiden lisäämistä ja poistoa.
+
+Päivitetään `Tehtava`-mallimme käyttämään `Property`-kääreitä, jotta tehtävän
+kaikki tiedot ovat havaittavia.
+Yksinkertaisesti sanottuna,
+kun aiemmin tehtävällä oli tavallinen `boolean tehty` -muuttuja, joka oli
+piilotettu ohjelman uumeniin, muutamme sen nyt _observable_-tyyppiseksi,
+`BooleanProperty tehty`-muuttujaksi.
+
+
+
+
+
+ Tällöin
 käyttöliittymässä oleva näkymä pysyy synkronissa datan kanssa: kun arvo muuttuu
 datassa, näkymä päivittyy, ja kun käyttäjä muuttaa arvoa taulukossa, muutos
 päivittyy samaan propertyyn.

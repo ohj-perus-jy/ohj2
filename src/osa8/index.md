@@ -20,42 +20,38 @@
 
 Osassa 7 teimme toimivan TODO-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.
-Ratkaisu toimii, mutta nyt sovelluksen ydinlogiikka ja käyttöliittymmä
-ovat erittäin tiukasti sidottuna toisiinsa.
-Esimerkiksi tehtävän tila mallinetaan suoraan
-`CheckBox`-käyttöliittymäkomponentilla, joka ei ole sovelluksen kohdealueen 
-kannalta ydinkäsite. Sovelluksen tarkoituksena onkin hallita tehtäviä eikä
-valintaruutuja; käyttöliittymän on oltava vain tapa *esittää* data.
 
-Sovelluksen ydintoiminnan ja käyttöliittymän tiukka sidonta kostautuu myös, kun
-sovellusta halutaan laajentaa. Jos haluaisimme jatkossa tallentaa lisäksi
-vaikkapa tehtävien tarkempia kuvauksia, prioriteettitasoa tai vaikkapa mallintaa
-tehtävien alitehtäviä, käyttöliittymäkomponenttien käyttämien sekä tilan
-esittämiseen että käsittelyyn monimutkaistaa koodia. Kun esityslogiikan ja
-sovelluksen ydinlogiikan eroa on vaikeaa nähdä, muutosten tekeminen
-jompaankumpaan muuttuu hankalaksi.
+Ratkaisu oli sinänsä
+hyvä aloitus, mutta pidemmällä aikavälillä se tekee sovelluksesta jäykän.
+Esimerkiksi jos haluamme lisätä tehtäville uusia ominaisuuksia, kuten pidempi
+kuvaus tai vaikkapa prioriteetti, meidän pitäisi lisätä ja hallita uusia
+komponentteja tai rakentaa kokonaan uusi `TehtavaCheckBox`-komponentti.
+Jos sitten vielä haluaisimme muokata tehtävän data lomakkeena, joutuisimme
+tekemään ehkä oman `TehtavaForm`-komponentin. Silloin taas on epäselvää, kumpi
+datan esitysmuodoista on "oikea": pitääkö `TehtavaCheckBox`-tehtävän tiedot
+siirtää aina `TehtavaForm`-tehtäviin vai toisinpäin?
+Tämä puolestaan sekoittaa ja monimutkaistaa koodin välisiä vastuita.
+
+Oliopohjaista suunnittelua mukaillen voimme päätellä, että *kohdealueen
+ydintoiminta ja sen esittäminen käyttäjälle ovat kaksi erillistä vastuuta*.
+TODO-sovelluksen tehtävien tiedot ja niiden hallinta olisi parasta mallintaa
+omana kokonaisuutena. Puolestaan käyttöliittymän ainoa vastuu tulisi olla
+esittää kohdealueen data. Toisin sanoen, valintaruudut ovat tapa esittää
+tehtäviä, ja valintaruutu ei ole tehtävä itsessään.
 
 
+Tässä osassa jatkamme osan 7 TODO-sovelluksen työstämistä.
+Keskitymme nyt sovelluksen käyttöliittymän ja ydintoiminnan
+erottamiseen. Lopuksi katsomme, miten tämä erottaminen mahdollistaa
+ydintoiminnan oikeellisuuden varmistamista automaattisilla testeilla.
 
+JavaFX tarjoaa aputyökaluja, jolla käyttöliittymä ja ydinlogiikka voidaan pitää
+ns. "löyhästi sidottuna". Tässä osassa:
 
-- Uusien ominaisuuksien lisääminen kasvattaa kontrolleria nopeasti liian
-  suureksi.
-
-Tässä osassa refaktoroimme sovelluksen rakennetta ja jatkamme sitä eteenpäin:
-
-- Siirrämme tehtävädatan omaan malliin ja käytämme `ObservableList`-kokoelmaa.
-- Jäsennämme sovelluksen MVC-arkkitehtuurin mukaisesti selkeisiin kerroksiin.
-- Vaihdamme näkymän `TableView`-pohjaiseksi.
+- Siirrämme kaikki tehtävien tiedot `Tehtava`-luokkaan ja mallinnamme tehtävät `ObservableList`-kokoelmalla.
+- Käytämme `TableView`-näkymää tehtävien datan esittämiseen.
+- Jäsennämme sovelluksen luokat MVC-arkkitehtuurin mukaisesti kolmeen vastuualueeseen.
 - Lisäämme tehtävän muokkausikkunan, jossa voi muokata kuvausta, prioriteettia
   ja määräpäivää.
 - Varmistamme ratkaisun toimivuutta yksikkötesteillä.
-
-Nämä muutokset valmistavat suoraan harjoitustyön toiseen vaiheeseen.
-
-- [Malli ja Observable-rajapinta](./01-malli-ja-observable-rajapinta.md)
-- [TableView ja databinding](./02-tableview.md)
-- [MVC-arkkitehtuuri](./03-mvc-arkkitehtuuri.md)
-- [Useita näkymiä ja tehtävän muokkaus](./04-useita-nakymia.md)
-- [Yksikkötestaus](./05-yksikkotestaus.md)
-- [Versionhallinnan etäkäyttö (Git)](./06-versionhallinnan-etakaytto.md)
-- [Tehtävät](./07-tehtavat.md)
+- Julkaisemme valmiin projektimme GitLab- tai GitHub-etävarastopalvelussa.
