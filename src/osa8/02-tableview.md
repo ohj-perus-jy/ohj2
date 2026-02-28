@@ -533,64 +533,171 @@ taas tallentaa muutokset tiedostoon.
 
 ## Tehdyt tehtävät taulukon loppuun
 
-`TableView` tukee lajittelua, mutta tehtyjen tehtävien siirtäminen taulukon
-loppuun kannattaa toteuttaa tietoisesti määritellyllä lajittelulla. Yksi hyvä
-tapa on käyttää `SortedList`-kokoelmaa, joka käärii alkuperäisen
-`ObservableList<Tehtava>`-listan.
+Palautetaan nyt takaisin aiemman `VBox`-pohjaisen toteutuksen ominaisuus: tehdyt
+tehtävät asetetaan aina listan loppuun.
 
-Ajatus on tämä
+Tämä onnistuu jo käyttöliittymässä käsin, sillä `TableView` tukee lajittelua
+klikkaamalla sarakkeen otsikosta. Tehdään kuitenkin tämä kontrollerissa, jotta
+käyttäjän ei tarvitse kytkeä lajittelua päälle käsin.
 
-- varsinainen data on edelleen ObservableList<Tehtava>-listassa
-- taulukolle annetaan näkyväksi dataksi SortedList<Tehtava>
-- lajittelukomparaattori määrittää, että tekemättömät tulevat ennen tehtyjä
+JavaFX tarjoaa useamman tavan hoitaa lajittelu. Eräs tapa tehdä *pysyvä*
+lajittelu on käyttää `ObservableList`-listan `sorted()`-metodia, joka
+ottaa parametriksi `Comparator`-vertailijan ja palauttaa `SortedList`-listan
+(ks.
+[JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.base/javafx/collections/ObservableList.html#sorted(java.util.Comparator))).
+`SortedList`-listan voi puolestaan sitoa `TableView`-näkymään:
 
 ```java,ignore
-SortedList<Tehtava> lajitellut = new SortedList<>(tehtavat,
-        Comparator.comparing(Tehtava::isTehty)); // false ennen true
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    // HIGHLIGHT_GREEN_BEGIN
+    SortedList<Tehtava> tehtavatLajiteltu = tehtavat.sorted(Comparator.comparing(Tehtava::getTehty));
+    // HIGHLIGHT_GREEN_END
+    // HIGHLIGHT_YELLOW_BEGIN
+    tehtavaTaulu.setItems(tehtavatLajiteltu);
+    // HIGHLIGHT_YELLOW_END
 
-tehtavaTaulu.setItems(lajitellut);
+    // metodin loppuosa piilotettu...
+//-    tehtavaTaulu.setEditable(true);
+//-
+//-    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+//-    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+//-    tehtySarake.setCellFactory(CheckBoxTableCell.forTableColumn(tehtySarake));
+//-    tehtavaTaulu.getColumns().add(tehtySarake);
+//-
+//-    TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+//-    tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+//-    tehtavaTaulu.getColumns().add(tekstiSarake);
+//-
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
 ```
 
-Koska `false` (tekemätön) tulee ennen `true` (tehty), tekemättömät tehtävät
-näkyvät taulukossa ensin ja tehdyt lopussa.
+`SortedList`-lista sisältää alkuperäisen listan alkiot järjestettynä annetun
+vertailijan mukaan. Kummatkin listat ovat sidottuja toisiinsa: alkion lisääminen
+järjestettyyn listaan lisää alkion alkuperäiseen listaan ja toisinpäin.
+Tässäkin korostuu, kuinka databinding-periaate suoraviivaistaa näkymän
+päivittämistä.
+
+Kokeile ajaa sovellus. Nyt tekemättömät tehtävät
+näkyvät taulukossa ensin ja tehdyt lopussa, sillä `boolean`-tyypin
+oletusvertailija asettaa `false`-arvot ennen `true`-arvoja.
 
 ## Poisto valitusta rivistä
 
-Nyt kun meillä on taulukko, voimme käyttää sitä poistamaan valittuja tehtäviä.
-Ensin meidän on luotava käyttöliittymään painike poistamista varten, esimerkiksi
-painike, jonka teksinä on "Poista valittu". Sido painike FXML-ohjaimeen (esim.
-`onAction="#poistaValittu"`).
+Nyt kun meillä on taulukko, voimme käyttää sitä toteuttamaan tehtävien
+poistamisen helposti.
 
+Avaa `main.fxml` SceneBuilderssa ja lisää uusi `Button`-painikekomponentti `HBox`-komponentin
+alapuolelle. Aseta painikkeen tekstiksi "Poista tehtävä" ja anna painikkeelle
+fx:id-tunnisteeksi `poistaValittuPainike`:
+
+<img src="images/scenebuilder-delete-button.png">
+
+Tallenna FXML-tiedosto. Lisää sitten `MainController`-luokkaan painiketta
+vastaava attribuutti:
+
+```java,ignore
+@FXML
+private Button poistaValittuPainike;
+```
+
+Lisätään sitten `poistaValitt()`-metodi, joka hoitaa poistamisen.
 Jotta poisto toimii oikein, käyttöliittymän on ensin tiedettävä, mikä rivi
-taulukosta on valittuna. `TableView` pitää kirjaa valitusta rivistä omassa
-`SelectionModel`issaan. Voimme saada valitun `Tehtava`-olion sitä kautta.
-
-Lisää ohjaimeen seuraava metodi:
+taulukosta on valittuna. `TableView` pitää kirjaa valituista riveistä
+erillisessä `SelectionModel`-oliossa, johon pääsee käsiksi
+`getSelectionModel()`-saantimetodilla. Voimme saada valitun `Tehtava`-olion
+sitä kautta.
 
 ```java
-@FXML
 private void poistaValittu() {
     // 1. Hae valittu tehtävä taulukon valintamallista
     Tehtava valittuTehtava = tehtavaTaulu.getSelectionModel().getSelectedItem();
-
     // 2. Jos mitään ei ole valittu, ei tehdä mitään
     if (valittuTehtava == null) {
         return;
     }
-
     // 3. Poistetaan tehtävä mallilistasta
     tehtavat.remove(valittuTehtava);
-    
-    // 4. Tallennetaan muutos
-    tallenna();
 }
 ```
 
-Tämä metodi huolehtii hienosti siitä, että oikea tehtävä poistetaan taustalla
-olevasta listasta, ja omdatabindingin ansiosta `TableView` päivittyy jälleen
-kerran automaattisesti ilman että taulukkoa täytyy käsin virkistää!
+Lopuksi lisätään `poistaValittuPainike`-painikkeelle tapahtumakäsittelijä, joka
+kutsuu tätä uutta metodia:
 
-## Tehtävät
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+//-    SortedList<Tehtava> tehtavatLajiteltu = tehtavat.sorted(Comparator.comparing(Tehtava::getTehty));
+//-    tehtavaTaulu.setItems(tehtavatLajiteltu);
+//-    tehtavaTaulu.setEditable(true);
+//-
+//-    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+//-    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+//-    tehtySarake.setCellFactory(CheckBoxTableCell.forTableColumn(tehtySarake));
+//-    tehtavaTaulu.getColumns().add(tehtySarake);
+//-
+//-    TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+//-    tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+//-    tehtavaTaulu.getColumns().add(tekstiSarake);
+//-
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+    // metodin alkuosa piilotettu...
+
+    poistaValittuPainike.setOnAction(event -> poistaValittu());
+}
+```
+
+Kokeile ajaa sovellus. Kun valitset tehtävän taulukosta ja painat "Poista
+tehtävä" -tehtävä poistuu taulukosta. Tämäkin toimii datan sidonnan takia:
+painike poistaa tehtävän `tehtavat`-listasta, mikä automaattisesti muuttaa
+lajitellun `tehtavatLajiteltu`-listan. Puolestaan muutos
+`tehtavatLajiteltu`-listassa aiheuttaa `TableView`-näkymän päivittymisen ilman
+erillistä toimintaa. Tässäkin siis mallin muokkaus ja näkymän päivitys ovat vain
+löyhästi kytkettyjä toisiinsa *observable*-rakenteiden avustuksella.
+
+<details><summary><i class="bi bi-stars jyu-gold">Bonus: Painikkeen klikkaamisen estäminen jos tehtävää ei valittu</i></summary>
+
+Nyt "Poista tehtävä" -painike on aika klikattavissa vaikka tehtävää ei ole
+valittu.
+Hieman käyttäjäystävällisemmin olisi, että painike olisi klikattavissa vain, jos
+taulukossa on ylipäätään valittuna jokin tehtävä.
+
+`Button`-komponentissa on olemassa `setDisable()`-metodi sekä sitä vastaava
+havaittava `disableProperty()`, joiden avulla painike voidaan kytkeä pois
+päältä.
+Vastaavasti taulukon `SelectionModel`-oliolla on olemassa
+`selectedItemProperty()`, joka on havaittava ominaisuus tällä hetkellä valitusta
+tehtävästä.
+
+Koska `selectedItemProperty()` on havaittava ominaisuus, voimme toteuttaa
+painikkeen kytkemisen päälle ja pois lisäämällä havaitsija:
+
+```java,ignore
+    poistaValittuPainike.setDisable(true);
+    tehtavaTaulu.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        if (newValue == null) {
+            poistaValittuPainike.setDisable(true);
+        } else {
+            poistaValittuPainike.setDisable(false);
+        }
+    });
+```
+
+TODO: Bindings-luokka ja bind-metodi
+
+</details>
+
 
 <task>
   <task-title>Tehtävä 8.3: TODO-ohjelma, vaihe 9. <points>1 p.</points> </task-title>
