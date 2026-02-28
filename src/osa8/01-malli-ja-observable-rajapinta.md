@@ -565,6 +565,30 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 
+Koska nyt tallennuskin tapahtuu aina, kun lista muuttuu, voimme myös poistaa erillisen
+`tallenna()`-metodikutsun `lisaaTehtava()`-metodista:
+
+```java,ignore
+private void lisaaTehtava() {
+    // metodin alkuosa piilotettu...
+
+//-    String teksti = uusiTehtavaNimi.getText();
+//-    if (teksti == null || teksti.isBlank()) {
+//-        uusiTehtavaNimi.requestFocus();
+//-        return;
+//-    }
+//-    teksti = teksti.trim();
+//-    tehtavat.add(new Tehtava(teksti, false));
+//-    uusiTehtavaNimi.clear();
+//-    uusiTehtavaNimi.requestFocus();
+    // HIGHLIGHT_RED_BEGIN
+    tallenna();
+    // HIGHLIGH_RED_END
+}
+```
+
+
+
 Nyt jos kokeilet sovellusta nyt, jo tiedostosta ladatut tiedostot näkyvät
 käyttöliittymässä, ja uusien tehtävien lisääminen toimii.
 

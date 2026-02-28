@@ -43,251 +43,493 @@ kaikki tiedot ovat havaittavia.
 Yksinkertaisesti sanottuna,
 kun aiemmin tehtävällä oli tavallinen `boolean tehty` -muuttuja, joka oli
 piilotettu ohjelman uumeniin, muutamme sen nyt _observable_-tyyppiseksi,
-`BooleanProperty tehty`-muuttujaksi.
-
-
-
-
-
- Tällöin
-käyttöliittymässä oleva näkymä pysyy synkronissa datan kanssa: kun arvo muuttuu
-datassa, näkymä päivittyy, ja kun käyttäjä muuttaa arvoa taulukossa, muutos
-päivittyy samaan propertyyn.
-
-Seuraavaksi rakennamme taulukon FXML:ään ja kytkemme sen kontrollerissa dataan.
-Etenemme luvussa ohjelman toiminnan kannalta luontevassa järjestyksessä: ensin
-määrittelemme näkymän rakenteen FXML:ssä, sitten kytkemme sarakkeet
-`Tehtava`-olion propertyihin kontrollerissa, ja lopuksi teemme
-boolean-sarakkeesta klikattavan checkbox-sarakkeen.
-
-## FXML-rakenne
-
-Aloitetaan näkymästä. FXML-tiedostossa määritellään, että käyttöliittymässä on
-taulukko (`TableView`) ja sen sisällä kolme saraketta (`TableColumn`). Tässä
-vaiheessa emme vielä kerro, mistä data tulee tai mitä sarakkeet näyttävät
-käyttäjälle. Määrittelemme vain rakenteen: taulukko on olemassa, ja siinä on
-sarakkeet otsikolle, prioriteetille ja tehty-tilalle.
-
-```xml
-<TableView fx:id="tehtavaTaulu">
-    <columns>
-        <TableColumn fx:id="otsikkoCol" text="Tehtävä" />
-        <TableColumn fx:id="prioriteettiCol" text="Prioriteetti" />
-        <TableColumn fx:id="tehtyCol" text="Tehty" />
-    </columns>
-</TableView>
-```
-
-Tässä on hyvä pysähtyä muutaman asian äärelle.
-
-`TableView` on itse taulukko. Se näyttää rivejä, mutta ei vielä tiedä, millaisia
-olioita rivit ovat. Se tieto annetaan kontrollerin puolella Java-koodissa.
-FXML:ssä tärkeintä on antaa taulukolle fx:id, jotta kontrolleri voi viitata
-siihen.
-
-`<columns>`-lohko sisältää taulukon sarakkeet. Jokainen `TableColumn` kuvaa yhtä
-näkyvää saraketta taulukossa. Sarakkeella on tässä kaksi olennaista asiaa:
-
-- `fx:id`, jonka avulla kontrolleri pääsee käsiksi juuri tähän sarakkeeseen
-- `text`, joka näkyy sarakkeen otsikkona käyttöliittymässä
-
-On tärkeä huomata, että tässä vaiheessa sarakkeet ovat vasta "tyhjiä kuoria". Ne
-näkyvät taulukossa otsikoineen, mutta niissä ei vielä näy mitään dataa.
-Seuraavassa vaiheessa kerromme, mitä arvoa kukin sarake näyttää kustakin
-`Tehtava`-oliosta.
-
-## Sarakkeiden kytkeminen propertyihin
-
-Kun FXML-rakenne on määritelty, kontrollerin tehtävä on yhdistää näkymä ja data.
-Tämä tapahtuu kahdessa osassa. Ensin kontrolleriin määritellään viittaukset
-FXML:ssä luotuihin komponentteihin. Sen jälkeen `initialize()`-metodissa
-asetetaan taulukolle data ja kerrotaan jokaiselle sarakkeelle, mitä propertyä
-sen tulee näyttää.
-
-Controlleriin lisätään ensin `@FXML`-kentät:
-
-```java
-@FXML
-private TableView<Tehtava> tehtavaTaulu;
-@FXML
-private TableColumn<Tehtava, String> otsikkoCol;
-@FXML
-private TableColumn<Tehtava, Prioriteetti> prioriteettiCol;
-@FXML
-private TableColumn<Tehtava, Boolean> tehtyCol;
-```
-
-`TableColumn<Tehtava, String>` tarkoittaa kahta asiaa:
-
-- ensimmäinen tyyppi (`Tehtava`) = minkä tyyppisiä olioita taulukon riveillä on
-- toinen tyyppi (`String`) = minkä tyyppinen arvo tässä sarakkeessa näytetään /
-  käsitellään
-
-Siksi `otsikkoCol` näyttää `String`-arvon (tehtävän otsikko), `prioriteettiCol`
-näyttää `Prioriteetti`-arvon ja `tehtyCol` näyttää `Boolean`-arvon (tehtävän
-tehty/tekemättä-tila).
-
-On tärkeä huomata, että sarake ei sisällä kokonaista `Tehtava`-oliota, vaan se
-näyttää yhden ominaisuuden kyseisestä oliosta.
-
-Seuraavaksi `initialize()`-metodissa kytketään taulukko dataan ja sarakkeet
-propertyihin.
+`BooleanProperty tehty`-muuttujaksi:
 
 ```java,ignore
-@FXML
-public void initialize() {
-    tehtavaTaulu.setItems(tehtavat);
+import javafx.beans.property.*;
 
-    otsikkoCol.setCellValueFactory(cd -> cd.getValue().otsikkoProperty());
-    prioriteettiCol.setCellValueFactory(cd -> cd.getValue().prioriteettiProperty());
-    tehtyCol.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
-    
-    // ...
+public class Tehtava {
+    // Alkuperäiset attribuutit on korvattu Property-kääreillä
+    private final StringProperty teksti = new SimpleStringProperty("");
+    private final BooleanProperty tehty = new SimpleBooleanProperty(false);
+
+    @SuppressWarnings("unused")
+    public Tehtava() {}
+
+    public Tehtava(String teksti, boolean tehty) {
+        setTeksti(teksti);
+        setTehty(tehty);
+    }
+
+    // --- Property-setterit ja getterit ---
+    // Huomaa, että JavaFX-tyylissä on tapana tarjota kolme metodia per property:
+    // 1. Tavallinen get-metodi (palauttaa esim. boolean)
+    // 2. Tavallinen set-metodi (ottaa esim. boolean)
+    // 3. property-metodi (palauttaa itse Property-olion, esim. BooleanProperty)
+
+    public boolean getTehty() { return this.tehty.get(); }
+    public void setTehty(boolean tehty) { this.tehty.set(tehty); }
+    public BooleanProperty tehtyProperty() { return this.tehty; }
+
+    public String getTeksti() { return this.teksti.get(); }
+    public void setTeksti(String teksti) { this.teksti.set(teksti); }
+    public StringProperty tekstiProperty() { return this.teksti; }
+
+    @Override
+    public String toString() {
+        return getTeksti() + ": " + (getTehty() ? "TEHTY" : "EI TEHTY");
+    }
 }
 ```
 
-Käydään tämä rauhassa rivi riviltä läpi.
+Nyt yksittäisen tehtävän ominaisuudet ovat *observable* eli havaittavia. 
+Tämä mahdollistaa käyttöliittymän näkymän *sitomista* (engl. binding) dataan
+ilman tiukka riippuvutta: Näkymä voi kuunnella tehtävien ominaisuuksien muutoksia.
+Heti, kun arvo muuttuu datassa, näkymä päivittyy, ja kun käyttäjä muuttaa arvoa 
+näkymässä, muutos päivittyy samaan propertyyn.
+Palaamme tähän ajatukseen kohtapuolin tarkemmin.
 
-- **`setItems(...)` — mitä taulukko näyttää riveinä?** Tämä rivi kertoo
-  taulukolle, mistä sen rivit tulevat. Meidän tapauksessamme `tehtavat` on
-  `ObservableList<Tehtava>`, joka sisältää kaikki tehtävät. Sana _Observable_
-  tarkoittaa, että lista osaa ilmoittaa muutoksista, eli esimerkiksi jos rivejä
-  lisätään tai poistetaan, `TableView` päivittää näkymän automaattisesti. Ilman
-  tätä riviä taulukko olisi olemassa, mutta se olisi tyhjä.
-- **`setCellValueFactory(...)` — mitä kukin sarake näyttää?** Esimerkiksi
-  ```java,ignore
-  otsikkoCol.setCellValueFactory(cd -> cd.getValue().otsikkoProperty());
-  ```
-  tarkoittaa käytännössä: _Kun taulukko tarvitsee arvon
+## TableView-komponentin lisääminen ja käyttöliittymän siistiminen
+
+Aloitetaan näkymästä: avaa `main.fxml` SceneBuilderissa.
+Poista käyttöliittymästä `tehdyt` ja `tekemattomat` `VBox`-komponentit sekä
+niihin liittyvät nimiöt. Poistamisen jälkeen hierarkiaan jää vain
+`HBox`-komponentti, jossa on syötekenttä ja painike:
+
+<img src="images/scenebuilder-cleanup.png">
+
+Sen jälkeen etsi Library-näkymästä `TableView`-komponentti ja lisää se
+syötekentän yläpuolelle. Ole tarkkana: valitse nimenomaan `TableView` eikä
+`TreeTableView`!
+Valitse lisätty `TableView` ja aseta sen Vgrow-asetukseksi `ALWAYS`, jotta se
+täyttää kaiken vapaan tilan. Anna vielä `TableView`-komponentille fx:id-arvoksi
+`tehtavaTaulu`:
+
+<img src="images/scenebuilder-tableview-add.png">
+
+Lopuksi, valitse ja poista Hierarchy-paneelista kummatkin
+`TableColumn`-komponentit. Lopullinen hierarkia näyttää siis täältä:
+
+<img src="images/scenebuilder-tableview-hierarchy.png">
+
+Tallenna FXML-tiedosto.
+Vilä muutama sana ennen kuin jatketaan.
+`TableView` on itse taulukko. Se näyttää rivejä, mutta ei vielä tiedä, millaisia
+olioita rivit ovat. Se tieto annetaan kontrollerin puolella Java-koodissa.
+`TableView` sisältää useita `TableColum`-komponentteja, jotka esittävät olion
+ominaisuuksia sarakkeina. Tieto siitä, mitä sarakkeessa näytetään, annetaan myös
+Java-koodissa. 
+
+Siistitään samalla `MainController`-luokka. Ensiksi, poista vanhat `VBox
+tekemattomat` ja `VBox tehdyt` -attribuutit ja lisää niiden tilalle
+`tehtavaTaulu`-attribuutti taulukolle:
+
+```java,ignore
+// HIGHLIGHT_RED_BEGIN
+@FXML
+private VBox tekemattomat;
+
+@FXML
+private VBox tehdyt;
+// HIGHLIGHT_RED_END
+// HIGHLIGHT_GREEN_BEGIN
+@FXML
+private TableView<Tehtava> tehtavaTaulu;
+// HIGHLIGHT_GREEN_END
+```
+
+Huomaa, että `tehtavaTaulu`-attribuutin tyyppi on `TableView<Tehtava>`.
+Kerromme jo tässä, että `TableView` näyttää `Tehtava`-olioiden tietoja.
+
+Muutoksen myötä näkymän päivittämisen tarkoitettu `paivitaNakyma()`-metodi
+muuttuu turhaksi, sillä jatkossa `TableView` hoitaa näkymän päivittämisen
+automaattisesti itse. Poistetaan siis `paivitaNakyma()`-metodi:
+
+```java,ignore
+// Poista koko metodi; TableView hoitaa näkymän päivittämisen itse
+// HIGHLIGHT_RED_BEGIN
+private void paivitaNakyma() {
+//-    // Tyhjennetään nykyiset listat
+//-    tekemattomat.getChildren().clear();
+//-    tehdyt.getChildren().clear();
+//-
+//-    // Rakennetaan näkymä uudestaan tehtävien perusteella.
+//-    // Metodi luoCheckBox(tehtava) saa nyt koko olion parametrina.
+//-    for (Tehtava tehtava : tehtavat) {
+//-        CheckBox cb = luoCheckBox(tehtava);
+//-        if (tehtava.getTehty()) {
+//-            tehdyt.getChildren().add(cb);
+//-        } else {
+//-            tekemattomat.getChildren().add(cb);
+//-        }
+//-    }
+}
+// HIGHLIGHT_RED_END
+```
+
+Vastaavasti `initialize()`-metodissa oleva `tehtavat`-listan havaitisjasta
+voidaan poistaa `paivitaNakyma()`-kutsu:
+
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+        // HIGHLIGHT_RED_BEGIN
+        paivitaNakyma();
+        // HIGHLIGHT_RED_END
+        tallenna();
+    });
+    // metodin loppuosa piilotettu...
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
+
+
+## Tehtävien ja ominaisuuksien sitominen taulukkoon
+
+Kun FXML-rakenne on määritelty, sidomme taulukon näkymän ja mallin yhteen.
+Ensiksi sidomme `tehtavat`-listan taulukkoon käyttäen `setItems()`-metodia:
+
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    // HIGHLIGHT_GREEN_BEGIN
+    tehtavaTaulu.setItems(tehtavat);
+    // HIGHLIGHT_GREEN_END
+
+    // metodin loppuosa piilotettu...
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
+
+Kuten edellisessä luvussa `ListView`-komponentin esimerkissä, tässä *sidomme
+datan* (engl. data binding) tehtävälistan ja taulukkonäkymän kanssa.
+JavaFX lisää oman havaitsijan listalle ja päivittää taulukon rivit aina, kun
+tehtävälistassa olevien tehtäviä poistetaan tai lisätään.
+
+Seuraavaksi määrittelemme taulukon sarakkeet ja sidomme tehtävän yksittäiset
+attribuutit sarakkeisiin. Luodaan alkuun `tehty`-attribuuttille sarake:
+
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    tehtavaTaulu.setItems(tehtavat);
+
+    // HIGHLIGHT_GREEN_BEGIN
+    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty"); /* 1. */
+    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());   /* 2. */
+    tehtavaTaulu.getColumns().add(tehtySarake);                             /* 3. */
+    // HIGHLIGHT_GREEN_END
+
+    // metodin loppuosa piilotettu...
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
+
+Sarakkeen luominen tapahtuu siis seuraavasti:
+
+1. Luodaan uusi sarake alustamalla `TableColumn<Tehtava, Boolean>`-olio. Ensimmäinen tyyppiparametri `Tehtava` kertoo, minkä typpisiä olioita taulukon riveillä on.
+Puolestaan toinen tyyppiparametri `Boolean` kertoo, minkä tyyppisiä arvoja
+sarakkeessa näytetään.
+2. *Sidotaan* tehtävän `tehtyProperty`-ominaisuus sarakkeeseen. Käytännössä tämä
+   tarkoitaa: _Kun taulukko tarvitsee arvon
   `otsikkoCol`-sarakkeeseen jollekin riville, hae kyseisen rivin
-  `Tehtava`-oliosta `otsikkoProperty()`._
+  `Tehtava`-oliosta `tehtyProperty()`._
+  
+   Aina, kun
+   taulukkoon luodaan uusi tehtävärivi, JavaFX kutsuu
+   `setCellValueFactory()`-metodilla asetetun *rakentajan*, joka on
+   lambdalauseke. Rakentajan parametri `cd` on tyypiltään `CellDataFeatures`,
+   joka sisältää taulukkoon lisättävän rivin yksittäisen solun tiedot.
+   Palautusarvossa `cd.getValue()` palauttaa lisättävän rivin `Tehtava`-olion.
+   Puolestaan `tehtyProperty()` palauttaa tehtävän tehty-tilan havaittavana
+   propertyna, jonka arvoa solu näyttää ja seuraa.
+   Erityisesti emme palauteta tehtävän tämänhetkistä arvoa, vaan sidomme solun
+   arvon propertyyn, joka kuuluu rivin tehtävään. 
+3. Lisätään sarake näkyviin tauluun.
 
-Tässä
-
-- `cd` tulee sanasta cell data (solun dataa kuvaava olio),
-- `cd.getValue()` palauttaa kyseisen rivin `Tehtava`-olion
-- `otsikkoProperty()` palauttaa propertyn, josta sarake lukee näytettävän arvon.
-
-Sama idea toistuu muille sarakkeille. Tämä on juuri _databinding_-ajattelun ydin
-tässä yhteydessä: sarake ei saa "kopiota" arvosta, vaan se kytketään propertyyn,
-joka kuuluu rivin olioon.
-
-Miksi tämä on parempi kuin arvojen asettaminen käsin? Jos tekisimme tämän ilman
-propertyjä ja `TableView`:ta, joutuisimme usein itse luomaan jokaiselle riville
+*Datan sitominen* eli ns. *databinding* on taulukkonäkymän toiminnan ytimessä.
+Jos tekisimme taulukon ilman propertyjä ja `TableView`:ta, joutuisimme usein
+itse luomaan jokaiselle riville
 komponentit, täyttämään ne arvoilla sekä päivittämään näkymän erikseen, kun data
 muuttuu. `TableView` yhdessä propertyjen kanssa vähentää tätä käsityötä
-merkittävästi. Koodi kertoo enemmän siitä, mitä halutaan näyttää, eikä niinkään
-siitä, miten jokainen pikseli päivitetään.
+merkittävästi. Koodi kertoo enemmän siitä, mitä halutaan näyttää ja JavaFX:n
+harteille jätetään itse käyttöliittymän näyttäminen.
 
-Huomautuksena: sarakkeet voidaan määritellä FXML:ään (kuten tässä teemme), mutta
-ne voidaan myös luoda kokonaan Java-koodissa. SceneBuilder helpottaa usein
-FXML:n rakenteen tekemistä, mutta sarakkeiden varsinainen datakytkentä tehdään
-silti yleensä controllerissa.
+Viedään koodi loppuun lisäämälle vielä sarake tehtävän tekstille:
 
-Voimme poistaa `tehtavat.addListener(...)`-kutsusta `paivitaNakyma()`-kutsun
-kokonaan, koska `TableView` hoitaa näkymän päivittämisen automaattisesti --
-joskin [TODO] ei vielä toimi.
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    tehtavaTaulu.setItems(tehtavat);
 
-## CheckBox-sarake ja tehtävien muutosten tallentaminen
+    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+    tehtavaTaulu.getColumns().add(tehtySarake);
 
-`tehtyCol` on erityistapaus, koska se näyttää boolean-arvon (true / false).
-Pelkkä true tai false tekstinä ei ole käyttöliittymässä kovin hyvä ratkaisu.
-Käyttäjälle luonnollisempi tapa on klikata suoraan valintaruutua. Tätä varten
-boolean-sarakkeelle voidaan asettaa `CheckBoxTableCell`.
+    // HIGHLIGHT_GREEN_BEGIN
+    TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+    tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+    tehtavaTaulu.getColumns().add(tekstiSarake);
+    // HIGHLIGHT_GREEN_END
 
-```java
-tehtyCol.setCellFactory(CheckBoxTableCell.forTableColumn(tehtyCol));
-tehtyCol.setEditable(true);
-tehtavaTaulu.setEditable(true);
+    // metodin loppuosa piilotettu...
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
 ```
 
-Tässä tapahtuu kolme asiaa:
+Mainittakoon, että sarakkeet voidaan määritellä myös SceneBuilderissa FXML:ään.
+Monimutkaisemmissa taulukoissa voi olla kätevää määritellä sarakkeita etukäteen
+SceneBuilderissa ja ainoastaan käyttää kontrolleria sitoakseen data ja sarake.
 
-- `setCellFactory(...)` määrittää, millaisena soluna sarake piirretään. Nyt
-  jokainen `tehtyCol`-sarakkeen solu näkyy checkboxina.
-- `tehtyCol.setEditable(true)` sallii tämän sarakkeen muokkauksen.
-- `tehtavaTaulu.setEditable(true)` sallii muokkauksen taulukkotasolla. (Pelkkä
-  sarakkeen muokattavuus ei yleensä riitä, myös taulukon pitää olla muokattava.)
+Kokeile käynnistää sovellus. Nyt tehtävät näkyvät taulukkonäkymässä, ja
+tehtävien lisääminen lisää ne taulukkonäkymään. Lisäksi taulukkonäkymä tarjoaa
+tavan lajitella tehtäviä ja siirtää sarakkeita haluamallaan tavalla:
 
-Tässä vaiheessa käyttäjä voi klikata checkboxia taulukossa, ja `tehtyProperty`
-muuttuu myös taustalla. Yksi tärkeä asia kuitenkin puuttuu: miten muutos
-tallennetaan tiedostoon?
+<video src="images/todo-app-tableview-initial.mp4" controls></video>
 
-Pelkkä klikattava checkbox ei automaagisesti kutsu `tallenna()`-metodia.
-Checkbox muuttaa datan arvoa, mutta tallennuslogiikka täytyy kytkeä erikseen.
-Tämä tehdään lisäämällä kuuntelija `tehtyProperty`:n.
+Huomaa, että meidän ei tarvinnut enää muokata yhtään tehtävän lisäämiseen,
+lataamiseen tai tallentamiseen liittyvää toimintoa, sillä mallin hallinta on
+erotettu näkymän esittämisestä.
 
-## Tallennus propertyn muutoksesta
+## Tehty-sarake valintaruuduksi
+
+Oletuksena taulukossa näytetään arvojen merkkijonoesityksiä, minkä takia
+tehty-tila näytetään `false` ja `true` -teksteinä. Olisi kuitenkin mukavaa, jos
+tehtävän tila olisi edelleen valintaruutu, joka voisi merkata tehdyksi.
+
+Tätä varten taulukkojen `TableColumn`-sarakekomponenteissa on olemassa
+`setCellFactory()`-metodi, jonka avulla sarakkeessa näytetävien solujen ulkoasua
+voi muuttaa. Lisäksi JavaFX tarjoaa valmiita rakentajia yleisimille
+saraketyypeille. Esimerkiksi valintaruutuja voi luoda käyttäen
+`CheckBoxTableCell`-luokkaa (ks.
+[JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.controls/javafx/scene/control/cell/CheckBoxTableCell.html)).
+Luokassa oleva `forTableColumn`-luokkametodi palauttaa oikeanmuotoisen
+rakentajan, jonka voi antaa `setCellFactory()`-metodille.
+
+Lisäksi meidän tulee sallia taulukon arvojen muokkaamisen `setEditable()`-metodilla.
+
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    tehtavaTaulu.setItems(tehtavat);
+    // HIGHLIGH_GREEN_BEGIN
+    tehtavaTaulu.setEditable(true);
+    // HIGHLIGH_GREEN_END
+
+    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+    // HIGHLIGH_GREEN_BEGIN
+    tehtySarake.setCellFactory(CheckBoxTableCell.forTableColumn(tehtySarake));
+    // HIGHLIGH_GREEN_END
+    tehtavaTaulu.getColumns().add(tehtySarake);
+
+    // metodin loppuosa piilotettu...
+//-    TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+//-    tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+//-    tehtavaTaulu.getColumns().add(tekstiSarake);
+//-
+//-    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+//-        tallenna();
+//-    });
+//-
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
+
+Kun sovelluksen käynnistää, Tehty-sarake esittää tehtävien tilan
+valintaruutuina, joita voi klikata:
+
+<img src="images/todo-app-tableview-checkbox.png">
+
+Erityisesti aiempi tehty datan sitominen takaa, että valintaruudun tila ja
+tehtäväolion tila pysyvät ajan tasalla: valintaruudun klikkaaminen muuttaa olion
+tilaa, ja olion tilan muutos vaikuttaa taulukon näkymään.
+
+Nyt kun valintaruutujen luominen on `TableView`-komponentin vastuulla, voimme
+poistaa oman `luoCheckBox()`-metodin:
+
+```java,ignore
+// Ei tarvita enää; TableView tekee valintaruudut itse
+// HIGHLIGHT_RED_BEGIN
+private CheckBox luoCheckBox(Tehtava t) {
+    // metodin toteutus piilotettu...
+//-    CheckBox cb = new CheckBox(t.getTeksti());
+//-    cb.setSelected(t.getTehty());
+//-    cb.setOnAction(event -> {
+//-        tehtavat.remove(t);
+//-        tehtavat.add(new Tehtava(t.getTeksti(), !t.getTehty()));
+//-    });
+//-    return cb;
+}
+// HIGHLIGHT_RED_END
+```
+
+Kuitenkin huomaamme nopeasti ongelman: valintaruudun klikkaaminen ei enää
+tallenna muuttunutta tilaa tiedostoon. 
+Tämä on osin odotettua: vanhassa toteutuksessa valintaruudun klikkaaminen
+pakotti muutoksen `tehtavat`-listaan käyttäen `remove()` ja `add()`-metodeja,
+jotka puolestaan ilmoittivat muutoksesta `initialize()`-metodissa olevalla
+havaitsijalle.
+Valintaruutu ainoastaan muuttaa datan arvoa, jolloin `tehtavat`-lista ei muutu
+eikä listan havaitsijassa olevaa `tallenna()`-metodia ikinä suoriteta.
+
+## Tallennus tehtävän tilan muutoksesta
 
 Yksi ratkaisu olisi sellainen, että kytkisimme `Tehtava`-olion `tehtyProperty`:n
-muutokseen kuuntelijan, joka kutsuu tallennusta.
+muutokseen havaitsijan, joka kutsuu tallennusta.
+Tämä onnistuisi vaikkapa `lisaaTehtava()`-metodissa:
 
 ```java,ignore
-tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
+private void lisaaTehtava() {
+    // metodin alkuosa piilotettu...
+
+//-    String teksti = uusiTehtavaNimi.getText();
+//-    if (teksti == null || teksti.isBlank()) {
+//-        uusiTehtavaNimi.requestFocus();
+//-        return;
+//-    }
+//-    teksti = teksti.trim();
+    // Näin **voitaisiin** tehdä, mutta älä tee tätä nyt!
+    // HIGHLIGHT_GREEN_BEGIN
+    Tehtava tehtava = new Tehtava(teksti, false);
+    tehtava.tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
+    // HIGHLIGHT_GREEN_END
+    tehtavat.add(tehtava);
+
+    // metodin loppuosa piilotettu...
+//-    uusiTehtavaNimi.clear();
+//-    uusiTehtavaNimi.requestFocus();
+}
 ```
 
-Tämä tarkoittaa, että aina kun `tehtyProperty` muuttuu (esimerkiksi checkboxia
-klikataan), tallennus tapahtuu automaattisesti. Tämä olisi sinänsä kätevää,
-mutta pieneksi ongelmaksi muodostuu, että Jackson-kirjaston kautta ladatut
-`Tehtava`-oliot eivät tätä kuuntelijaa saa. Jackson-nimittäin luo
-`Tehtava`-olion suoraan konstruktorilla, eikä se käytä setter-metodeja, joissa
-kuuntelija voisi olla. Jos nyt muutamme UI:ssa `tehtavat.json`-tiedostosta
+Tämä tarkoittaisi, että aina kun `tehtyProperty` muuttuu (esimerkiksi valintaruutua
+klikataan tai muuteaan `setTehty()`-metodilla), tallennus tapahtuu
+automaattisesti.
+
+Tämä olisi sinänsä kätevää, mutta pieneksi ongelmaksi
+muodostuu, että Jackson-kirjaston kautta ladatut
+`Tehtava`-oliot eivät tätä kuuntelijaa saa.
+Jos nyt muutamme UI:ssa `tehtavat.json`-tiedostosta
 ladatun tehtävän tilaa, tallennus ei tapahdu, koska kuuntelija ei ole koskaan
 lisätty.
+Joutuisimme siis lisäämään saman havaitsijan myös `lataa()`-metodiin sekä
+muutenkin kaikkiin paikkoihin, jossa `Tehtava`-olioita saatetaan luoda.
 
-Voisimme kyllä lisätä kuuntelijan erikseen jokaiselle `Tehtava`-oliolle
-`initialize()`-metodissa silmukassa &nbsp; tämä olisi ihan toimiva ratkaisu.
-Katsoimme saman tapaista esimerkkiä
-[osan 8.1 alussa](./01-malli-ja-observable-rajapinta.md#ensimmainen-esimerkki).
+Mietitään hetki tilannetta. Voisimme kyllä ratkaista yllä olevaa tekemällä jokin
+apumetodi, joka alustaa `Tehtava`-olion ja tarvittavan havaitsijan. 
+Tosaalta voisimme hyödyntää `ObservableList`-listan `addListener()`-metodia: lisätään
+`initialize()`-metodissa `tehtavat`-listalle uusi havaitsija, joka toimisi
+[luvun 8.1 alun esimerkin
+tapaisesti](./01-malli-ja-observable-rajapinta.md#johdatteleva-esimerkki).
+Havaitsija kävisi läpi kaikki lisättävät tehtävät ja 
+lisäisi niiden
+`tehtyProperty`-ominaisuudelle havaitsijan automaattisesti:
+
 
 ```java,ignore
-public void initialize(...) {
-    // ...
-    tehtavat.addListener((ListChangeListener<String>) change -> {
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    // Parempi, mutta älä tee tätäkään pelkästään tallentamista varten!
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
         while (change.next()) {
             if (change.wasAdded()) {
-                for (Tehtava t : change.getAddedSubList()) {
-                    t.tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
+                for (Tehtava tehtava : change.getAddedSubList()) {
+                    tehtava.tehtyProperty().addListener((obs, vanhaArvo, uusiArvo) -> tallenna());
                 }
             }
         }
     });
+
+    // metodin loppuosa piilotettu...
 }
 ```
 
-Tähän on kuitenkin toinenkin, aavistuksen elegantimpi ratkaisu. Muistamme, että
-`ObservableList` osaa ilmoittaa, kun sen sisältö muuttuu. Sille voidaan
-kuitenkin antaa niin sanottu _ekstraktori_ (extractor), joka kertoo listalle,
-mitä kunkin olion propertyjä seurataan.
+Nyt aina, kun `tehtavat`-listaan lisätään uusi tehtävä, seuraamme
+automaattisesti tehtävän tehty-tilaa ja tallennamme kaikki tehtävät muutoksesta.
+Tämä pätee sekä käyttöliittymän että tiedoston kautta lisätyille tehtäville.
 
+Tässä ratkaisussa kuitenkin edelleen jokaisen tehtäväolion `tehty`-ominaisuus
+saa oman havaitsijan, mikä on hieman outoa.
+Perimmäisesti **kaikkien** tehtävien tallentaminen ei ole yksittäisen tehtävän
+vastuu, vaikka kytkös olisi tehty löyhästi *observable*-tyylisesti.
+Pikemmin, kaikkien tehtävien tallentamisen (tai ainakin sen alustaminen)
+pitäisi olla vähintäänkin tehtävien listan vastuulla.
+
+Tähän ongelmaan onkin olemassa toinenkin, aavistuksen elegantimpi ratkaisu. 
+`ObservableList`-olioille voi sen luomisen yhteydessä määritellä niin sanottu
+*ekstraktori* (engl. extractor), joka kertoo listalle, mitä kunkin olion
+propertyjä tulee seurata.
 Muuta `ObservableList`-kokoelman luonti seuraavasti:
 
 ```java,ignore
+// Parempi tapa, käytä tätä!
 private final ObservableList<Tehtava> tehtavat 
    = FXCollections.observableArrayList(tehtava -> new Observable[] {tehtava.tehtyProperty()});
 ```
 
 Tässä `tehtava -> new Observable[] { ... }` on ekstraktori. Se palauttaa
-taulukon niistä `Observable`-olioista (käytännössä propertyistä), joita listan
-halutaan seuraavan jokaisessa `Tehtava`-oliossa. Ekstraktori ei siis korvaa
-propertyjen kuuntelijoita tallennusta varten; Tallennuskuuntelija kertoo mitä
-tehdään, kun arvo muuttuu (esim. `tallenna()`), kun taas extractor kertoo
-listalle mitä propertyjä kannattaa ylipäätään seurata.
+taulukon niistä `Observable`-olioista, joita listan
+halutaan seuraavan jokaisessa `Tehtava`-oliossa. 
+Tällöin `ObservableList` ilmoittaa listan muutosten (olio lisätty/poistettu)
+*lisäksi* listan alkioiden ominaisuuksien muutoksista.
+Toisin sanoen, `addListener()`-metodilla olevat havaitsijat
+saavat nyt tiedon aina, kun listaan lisätään tehtävi, listasta poistetaan
+tehtäviä ja kun listassa olevien tehtävien `tehtyProperty`-ominaisuuden arvo vaihtuu.
 
-## Miksi tallennus sidotaan propertyyn eikä checkboxin klikkaukseen?
+Käytännössä yllä oleva muutos tarkoittaa, että `initialize()`-metodissa jo oleva
+havaitsija suoritetaan aina, kun listan tehtävät tai listassa olevien tehtävien
+`tehtyProperty` muuttuu:
 
-Tämä on hyvä suunnitteluratkaisu. Jos tallennus sidotaan checkboxin
-klikkaukseen, tallennus toimii vain silloin, kun muutos tapahtuu juuri sitä
-kautta. Mutta jos sama `tehtyProperty` muuttuu myöhemmin jostakin muusta syystä
-(esimerkiksi toisesta metodista), tallennus ei ehkä tapahdu.
+```java,ignore
+public void initialize(URL url, ResourceBundle resourceBundle) {
+    // metodin alkuosa piilotettu...
+//-    tehtavaTaulu.setItems(tehtavat);
+//-    tehtavaTaulu.setEditable(true);
+//-
+//-    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+//-    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+//-    tehtySarake.setCellFactory(CheckBoxTableCell.forTableColumn(tehtySarake));
+//-    tehtavaTaulu.getColumns().add(tehtySarake);
+//-
+//-    TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+//-    tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+//-    tehtavaTaulu.getColumns().add(tekstiSarake);
 
-Kun tallennus sidotaan propertyn muutokseen, logiikka on yleisempi ja
-turvallisempi:
+    // Tämä on jo olemassa!
+    // Nyt tätä suoritetaan aina, kun
+    // - Tehtävä lisätään
+    // - Tehtävä poistetaan
+    // - Jonkun tehtävän tehty-ominaisuus muuttuu (esim. taulukon kautta)
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+        tallenna();
+    });
 
-_Aina kun tehtävän tila muuttuu, tallenna._
+    // metodin loppuosa piilotettu...
+//-    lataa();
+//-    uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+//-    lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+}
+```
 
-Tämä on databinding- ja property-ajattelun suuri etu: muutokset havaitaan
-datatasolla, ei vain yksittäisen käyttöliittymätoiminnon kautta.
+Kokeile nyt ajaa sovellus. Huomaat, että tehtävien merkkaaminen tehdyksi nyt
+taas tallentaa muutokset tiedostoon.
 
 ## Tehdyt tehtävät taulukon loppuun
 
