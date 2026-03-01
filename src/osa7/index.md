@@ -1,7 +1,7 @@
 # JavaFX osa 1, SceneBuilder
 
 > [!VAROITUS]
-> Tämä osio julkaistaan 23. helmikuuta 2026.
+> Tämä osa julkaistaan 23. helmikuuta 2026.
 > {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
