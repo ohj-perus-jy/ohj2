@@ -1,18 +1,160 @@
 # Yksikkötestaus
 
+Yksikkötestauksen perusidea on yksinkertainen: testataan ohjelman pieniä osia,
+kuten yksittäisiä luokkia tai metodeja, erillään muusta järjestelmästä. Tavoite
+on varmistaa, että kukin osa toimii oikein omalla vastuullaan. Kun testin
+ajatus pidetään pienenä ja tarkkarajaisena, virheiden paikantaminen on paljon
+helpompaa kuin tilanteessa, jossa koko ohjelmaa yritetään testata kerralla.
+
+Yksikkötestit ovat hyödyllisiä, koska ne paljastavat virheitä nopeasti jo
+kehitysvaiheessa. Toiseksi ne toimivat eräänlaisena turvaverkkona: jos muutamme
+koodia myöhemmin, ajamalla yksikkötestit näemme nopeasti rikkoutuiko jokin
+aiemmin toiminut ominaisuus. Kolmanneksi ne pakottavat ohjelmoijan miettimään,
+millainen luokan rajapinta on ja mitä sen oikeastaan pitäisi tehdä.
+
+Ajatellaan esimerkiksi `Tehtavakokoelma`-luokkaa. Voimme kirjoittaa testin,
+joka lisää kokoelmaan yhden tehtävän ja tarkistaa, että listassa on nyt yksi
+alkio. Voimme kirjoittaa toisen testin, joka yrittää lisätä tyhjän otsikon ja
+tarkistaa, ettei tehtävää lisätä lainkaan. Kolmas testi voisi poistaa valitun
+tehtävän ja varmistaa, että listan koko pienenee oikein. Jokaisessa näistä
+testeistä tarkistetaan yksi selkeä käyttäytyminen.
+
+## JUnit 5
+
+Java-maailmassa yksikkötestejä tehdään usein **JUnit**-kirjastolla. JUnit antaa
+valmiit työkalut testimetodien kirjoittamiseen sekä odotettujen tulosten
+tarkistamiseen. 
+
+Kirjoitushetkellä ajantasainen JUnit-version on 6.0.3, joka tunnetaan myös
+nimellä JUnit Jupiter. JUnit otetaan käyttöön lisäämällä sen riippuvuus
+projektin `pom.xml`-tiedostoon `junit-jupiter`-riippuvuus.
+
+```xml
+<dependency>
+    <groupId>org.junit.jupiter</groupId>
+    <artifactId>junit-jupiter</artifactId>
+    <version>5.10.2</version>
+    <scope>test</scope>
+</dependency>
+```
+
+Testit kirjoitetaan tavallisesti hakemistoon `src/test/java`.
+
+Kokeillaan tehdä pääluokkaamme ensin aliohjelma `Keskiarvo`, joka laskee
+keskiarvon kuitenkin niin, jos listassa on `lopetusluku` tai sitä suurempi luku,
+kaikki sen jälkeen olevat luvut jätetään huomioimatta. 
+
+```java,ignore
+public static double keskiarvo(List<Integer> luvut, int lopetusluku) {
+    if (luvut.isEmpty()) {
+        throw new IllegalArgumentException("Lista ei saa olla tyhjä");
+    }
+    int summa = 0;
+    int lukujenMaara = 0;
+    for (int luku : luvut) {
+        if (luku >= lopetusluku) {
+            break;
+        }
+        summa += luku;
+        lukujenMaara++;
+    }
+    return (double) summa / lukujenMaara;
+}
+```
+
+Tehdään sitten tälle metodille yksikkötesti. Tee `test/java`-kansioon uusi
+luokka `KeskiarvoTest` ja kirjoita siihen seuraavat kaksi testimetodia. Muuta
+ensimmäinen `import`-lause vastaamaan oman pääluokkasi nimeä.
+
+```java,ignore
+import fi.jyu.ohj2.Main;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class KeskiarvoTest {
+
+    @Test
+    void keskiarvoLaskeeOikein() {
+        List<Integer> luvut = List.of(1, 2, 3, 4, 5);
+        double tulos = Main.keskiarvo(luvut, 10);
+        assertEquals(3.0, tulos, "Keskiarvon pitäisi olla 3.0");
+    }
+
+    @Test
+    void keskiarvoLopettaaOikein() {
+        List<Integer> luvut = List.of(1, 2, 3, 10, 4, 5);
+        double tulos = Main.keskiarvo(luvut, 10);
+        assertEquals(2.0, tulos, "Keskiarvon pitäisi olla 2.0, koska 10 ja sen jälkeen olevat luvut jätetään huomioimatta");
+    }   
+}
+```
+
+Testit voi ajaa esimerkiksi `public class KeskiarvoTest`-luokan vasemmalla
+puolella olevasta vihreästä nuolesta. JUnit ajaa testit ja näyttää tulokset
+IDE:n testinäkymässä. Jos kaikki testit menevät läpi, näet vihreän merkin. Jos
+jokin testi epäonnistuu, näet punaisen merkin ja virheilmoituksen, joka kertoo
+mikä meni pieleen.
+
+Meiltä puuttuu yksi tärkeä testi: mitä tapahtuu, jos yhtään validia lukua ei
+ole? Sovitaan tässä, että aliohjelmamme tulisi heittää
+`IllegalArgumentException`- poikkeus. Kirjoitetaan vielä testi, joka varmistaa,
+että tämä tapahtuu:
+
+```java,ignore
+@Test
+void keskiarvoHeittaaPoikkeuksenTyhjallaListalla() {
+    @Test
+    void eiYhtaanLukuaMukaanKeskiarvoon() {
+        List<Integer> luvut = List.of(10, 20, 30, 40, 50, 60);
+        IllegalArgumentException exception =
+                assertThrows(IllegalArgumentException.class, () -> {
+                    Main.keskiarvo(luvut, 10);
+                });
+        assertEquals("Yhtään lukua ei tullut mukaan keskiarvoon", exception.getMessage());
+    }
+}
+```
+
+Nyt testitulos näyttää punaista:
+
+```
+org.opentest4j.AssertionFailedError: Expected java.lang.IllegalArgumentException to be thrown, but nothing was thrown.
+```
+
+Nollalla jakaminen ei `double`-luvuilla laskettaessa heitä poikkeusta, vaan
+palauttaa `NaN`-arvon. Korjataan tämä aliohjelmassamme.
+
+```java,ignore
+public static double keskiarvo(List<Integer> luvut, int lopetusluku) {
+    // ... aiempi koodi ennallaan ...
+    // HIGHLIGHT_GREEN_BEGIN
+    if (lukujenMaara == 0) {
+        throw new IllegalArgumentException("Yhtään lukua ei tullut mukaan keskiarvoon");
+    }
+    // HIGHLIGHT_GREEN_END
+    return (double) summa / lukujenMaara;
+}
+```
+
+Nyt kaikki testit menevät läpi!
+
+## Yksikkötestaus ja MVC-arkkitehtuuri
+
 Nyt kun olemme siirtyneet MVC-arkkitehtuuriin ja luoneet
-`Tehtavakokoelma`-luokan, olemme saavuttaneet jotain erittäin tärkeää: olemme
-erottaneet käyttöliittymän kokonaan irti sovelluksen logiikasta ja datasta.
+`Tehtavakokoelma`-luokan, olemme erottaneet käyttöliittymän kokonaan irti
+sovelluksen logiikasta ja datasta. Tällä on ratkaiseva ohjelmistotuotannollinen
+hyöty. Jos yrittäisimme testata koodia käyttöliittymän kautta esimerkiksi
+simuloimalla napin painalluksia, testaus olisi hidasta, altista satunnaisille
+virheille ja vaatisi raskaiden JavaFX-kirjastojen käynnistämisen. Koska
+kokoelmalla on nyt selkeä ohjelmointirajapinta (metodit `lisaaTehtava`,
+`poistaTehtava` jne.), voimme rakentaa **yksikkötestejä**, jotka kutsuvat
+suoraan kokoelmaa ja tarkistavat asioiden toimiutuvuuden millisekunneissa ilman
+ruudulle aukeavia ikkunoita.
 
-Tällä on ratkaiseva ohjelmistotuotannollinen hyöty. Jos yrittäisimme testata
-koodia käyttöliittymän kautta (esim. simuloimalla napin painalluksia), testaus
-olisi hidasta, altista satunnaisille virheille ja vaatisi raskaiden
-JavaFX-kirjastojen käynnistämisen. Koska kokoelmalla on nyt selkeä
-ohjelmointirajapinta (metodit `lisaaTehtava`, `poistaTehtava` jne.), voimme
-rakentaa **yksikkötestejä**, jotka kutsuvat suoraan kokoelmaa ja tarkistavat
-asioiden toimiutuvuuden millisekunneissa ilman ruudulle aukeavia ikkunoita.
-
-Tässä osassa opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
+Seuraavaksi opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
 tiedosto-operaatioista testeissä.
 
 ## Ongelma: Tiedostojen ja I/O:n testaus on vaarallista
@@ -146,12 +288,72 @@ public class Tehtavakokoelma {
 (Muista vihdoin vaihtaa `MainController`issa uusi rivi muotoon
 `new Tehtavakokoelma(new JsonTehtavaRepository(Path.of("tehtavat.json")));`)
 
+
+## Mock- ja Fake-luokat
+
+Testauksessa käytetään usein niin sanottuja *mock*- tai *fake*-olioita, kun
+testattava luokka tekee yhteistyötä jonkin toisen olion kanssa. Ajatus on, että
+oikean yhteistyöolion tilalle annetaan testissä kevyt korvike, jonka toimintaa
+on helpompi hallita. Näin testi voidaan kohdistaa juuri siihen luokkaan, jota
+halutaan testata, ilman että mukana on turhaan tiedostoja, tietokantoja,
+verkkoa tai muuta raskasta ympäristöä.
+
+Ajatellaan yksinkertaista esimerkkiä, jossa luokka `Pakkasvahti` kysyy
+lämpötilan toiselta oliolta, esimerkiksi `Lampoanturi`-rajapinnan kautta. Jos
+haluamme testata, toimiiko `Pakkasvahti` oikein, emme välttämättä halua käyttää
+oikeaa anturia, koska sellaista ei ehkä testissä ole olemassa tai sen palauttama
+arvo vaihtelee koko ajan. Sen sijaan voimme tehdä valeanturin, joka palauttaa
+aina esimerkiksi arvon `21.5`. Tällöin testi on ennustettava: tiedämme tarkalleen,
+mitä arvoa `Pakkasvahti` saa ja mitä sen pitäisi tehdä sillä.
+
+Esimerkiksi:
+
+```java
+public interface Lampoanturi {
+    double mittaaLampotila();
+}
+
+public class Pakkasvahti {
+    private final Lampoanturi anturi;
+
+    public Pakkasvahti(Lampoanturi anturi) {
+        this.anturi = anturi;
+    }
+
+    public boolean onkoPakkasta() {
+        return anturi.mittaaLampotila() < 0;
+    }
+}
+```
+
+Oikeassa ohjelmassa `Lampoanturi` voisi lukea arvon fyysiseltä laitteelta, mutta
+testissä voimme käyttää yksinkertaista valeoliota:
+
+```java
+public class ValeLampoanturi implements Lampoanturi {
+    @Override
+    public double mittaaLampotila() {
+        return 21.5;
+    }
+}
+```
+
+Tällöin `Pakkasvahti`-luokkaa testatessa tiedämme varmasti, että anturi
+palauttaa aina saman arvon.
+
+Tällaiset korvikeoliot ovat hyödyllisiä erityisesti silloin, kun oikea riippuvuus
+on hidas, vaikeasti hallittava tai aiheuttaa sivuvaikutuksia. Seuraavaksi
+hyödynnämme samaa ajatusta todo-sovelluksessa tekemällä vale-säilön, joka
+teeskentelee tallentavansa dataa, mutta pitääkin sen vain muistissa testin ajan.
+
 ## Testaaminen vale-säilöllä JUnit 5:ssä
 
 Testiympäristössä (eli `src/test/java...`-kansiossa) voimme nyt luoda luokan
 (ns. _Mock_- tai _Fake_-luokan), joka **teeskentelee** tallentavansa tietoja
 tiedostoon, mutta todellisuudessa tallentaakin ne vain normaaliin Java-listaan
 laitteen välimuistiin.
+
+
 
 ```java
 public class MockTehtavaRepository implements TehtavaRepository {
