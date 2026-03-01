@@ -17,7 +17,7 @@ käyttäjältä syötettä.
 
 Tässä osassa tutustumme kolmesta tavasta viimeiseen. Teemme dialogin, jossa
 käyttäjä voi muokata yksittäisen tehtävän yksityiskohtaiset tiedot. Dialogi
-avautuu, kun käyttäjä tuplaklikkaa tehtävästä.
+avautuu, kun käyttäjä tuplaklikkaa tehtävää.
 
 ## Esivalmistelu: lisää tietoja tehtäviin
 
@@ -27,10 +27,10 @@ että jatkossa tehtävällä olisi
 - Otsikko, joka näytetään taulukossa
 - Tehty/ei-tehty tila, kuten nytkin
 - Tarkempi kuvaus
-- Prioriteetti, jossa on kolme sallittua arvoa: korkea, keski, matala
+- Prioriteetti, jossa on kolme sallittua arvoa: matala, keski, korkea
 
 Ensimmäiset kaksi hoituvat nykyisillä tehtävän attribuuteilla; refaktoroimme
-vaan `teksti`-attribuutin `otsikko`-attribuutiksi.
+vain `teksti`-attribuutin `otsikko`-attribuutiksi.
 Puolestaan tarkempi kuvaus voidaan mallintaa merkkijonona.
 
 Prioriteetti voitaisiin mallintaa numerolla 0, 1 ja 2. Java kuitenkin tarjoaa
@@ -123,11 +123,11 @@ public class Tehtava {
 
 Huomaa, että `teksti`-attribuutin refaktorointi edellyttää, että refaktoroit
 myös `get`-, `set`- ja `property`-metodit sekä kontrollerissa olevat viitteet.
-Voit helposti muuttaa nimi siirtämällä kursori uudelleenimettävän kohteen
+Voit helposti muuttaa nimen siirtämällä kursorin uudelleennimettävän kohteen
 kohdalle, klikkaamalla hiiren toissijaisella painikkeella ja valitsemalla
 **Rename**. Tämän jälkeen anna attribuutille uusi nimi ja paina
 <kbd>Enter</kbd>. IDEA tämän jälkeen kysyy, haluatko samalla uudelleennimetä
-metodit sekä kaikki muut mahdolliset paikat, jossa attribuuttia käytetään.
+metodit sekä kaikki muut mahdolliset paikat, joissa attribuuttia käytetään.
 
 <video src="images/intellij-rename-attr.mp4" controls></video>
 
@@ -136,7 +136,7 @@ Vaihtoehtoisesti voit uudelleennimetä attribuutit ja metodit käsin. Muista, et
 nimettävä uudelleen.
 
 Tallenna muutokset. Kun ajat ohjelman nyt, huomaat että vanhoista tehtävistä
-katosivat otsikot, sillä muutimme attribuutin nimen. Koska vaan testaamme
+katosivat otsikot, sillä muutimme attribuutin nimen. Koska vain testaamme
 sovelluksen toimintaa, voit yksinkertaisesti poistaa `tehtavat.json`-tiedoston
 projektiselaimesta. Jos IDEA kysyy, haluatko poistamisen yhteydessä tehdä ns.
 turvallisen poiston ("Safe delete"), ota se pois päältä.
@@ -192,7 +192,7 @@ Anna myös kentille ja painikkeille sopivat fx:id-tunnisteet:
 
 Tallenna FXML-tiedosto.
 
-<details><summary>Voit myös kopioida valmiin FXML-tiedoston täältä</summary>
+<details closed><summary>Voit myös kopioida valmiin FXML-tiedoston täältä</summary>
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -319,8 +319,8 @@ Rivien muokkaamista varten `TableView` tarjoaa `setRowFactory()`-metodin (ks.
 [JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.controls/javafx/scene/control/TableView.html#setRowFactory(javafx.util.Callback))).
 Metodille annetaan lambdalauseke, joka kutsutaan aina, kun tauluun lisätään uusi
 rivi. Lambdalausekkeen tulee luoda ja palauttaa `TableRow`-olio uudelle
-lisättävälle rivillle. Tämän kautta voimme samalla lisätä uusille riveille
-`onMouseClicked`-tapahumakäsittelijän, joka laukeaa aina, kun riviä klikataan.
+lisättävälle riville. Tämän kautta voimme samalla lisätä uusille riveille
+`onMouseClicked`-tapahtumakäsittelijän, joka laukeaa aina, kun riviä klikataan.
 
 Lisäämme `setRowFactory()`-metodin `MainController`-luokan
 `initialize()`-metodiin samaan kohtaan, jossa taulukon sarakkeet alustetaan:
@@ -347,7 +347,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
         // Luodaan TableRow-olio riville
         TableRow<Tehtava> row = new TableRow<>();
 
-        // Lisätään uudelle riville tapahtumakäsitteliä klikkauksille
+        // Lisätään uudelle riville tapahtumakäsittelijä klikkauksille
         row.setOnMouseClicked(event -> {
             // Jos oli tuplaklikkaus eikä tyhjän rivialueen klikkaus, niin käsitellään tapahtuma
             if (event.getClickCount() == 2 && !row.isEmpty()) {
@@ -396,7 +396,7 @@ private void avaaTehtavanMuokkaus(Tehtava tehtava) {
 
 Huomaa, että `avaaTehtavanMuokkaus()`-metodin logiikka on sama kuin [osassa
 7.1](../osa7/01-javafx-perusteet.md#javafx-sovelluksen-käynnistys-ja-ydinluokat)
-käsitelty `App`-luokassa oleva sovelluksen käynnistyskoodi muutamalla aerolla:
+käsitelty `App`-luokassa oleva sovelluksen käynnistyskoodi muutamalla erolla:
 
 1. **Näkymän alustaminen:** lataamme näkymän FXML-tiedostosta käyttäen
    `FXMLLoader`-apuluokkaa. Tämän jälkeen alustamme varsinaisen
@@ -411,7 +411,7 @@ käsitelty `App`-luokassa oleva sovelluksen käynnistyskoodi muutamalla aerolla:
    Lisäksi teemme ikkunasta *modaalisen* `initModality()`-metodilla (ks.
    [JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.graphics/javafx/stage/Stage.html#initModality(javafx.stage.Modality))).
    Ikkunan muuttaminen modaaliseksi tarkoittaa, että pääikkunassa olevia
-   komponetteja ei voi klikata kunnes modaalinen ikkuna on sulkeutunut. Tämä on
+   komponentteja ei voi klikata kunnes modaalinen ikkuna on sulkeutunut. Tämä on
    hyvä ratkaisu dialogeille, jotka vaativat käyttäjän huomiota.
 
 4. **Ikkunan näyttäminen:** lopuksi näytämme ikkunan. Käytämme tässä
@@ -457,7 +457,7 @@ public void setTehtava(Tehtava tehtava) {
 > [!HUOMAUTUS]
 >
 > Tässäkin voisimme käyttää datan sidontaa ja sitoa kenttien arvojen
-> ominaissuudet tehtäväolion ominaisuuksiin seuraavasti:
+> ominaisuudet tehtäväolion ominaisuuksiin seuraavasti:
 >
 > ```java,ignore
 > // Sitoo otsikkokentän tekstin tehtävän otsikko-attribuuttiin
@@ -473,7 +473,7 @@ public void setTehtava(Tehtava tehtava) {
 Palataan `MainController`-luokan `avaaTehtavanMuokkaus()`-metodiin. 
 Nyt ennen ikkunan luomista voimme hakea `TehtavaEditController`-luokasta luotu
 ilmentymä ja välittää sille muokattava tehtävä. Näkymälle luotu
-kontrolleriluokan olio samme `FXMLLoader`-olion `getController()`-metodilla (ks.
+kontrolleriluokan olio saamme `FXMLLoader`-olion `getController()`-metodilla (ks.
 [JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.fxml/javafx/fxml/FXMLLoader.html#getController())).
 
 ```java,ignore
@@ -513,8 +513,8 @@ dialogin kentät täyttyvät tehtävän tiedoista:
 
 Huomaamme tässä vaiheessa pienen bugin: prioriteetti-alasvetolaatikossa ei vielä
 näy kaikkia prioriteettivaihtoehtoja. 
-Korjaamme tämän asettamalla `ComboBox`-komponettiin näytettävät
-`Prioriteetti`-arvot käyttäen `setItems()`-metodia samanakaltaisesti kuin
+Korjaamme tämän asettamalla `ComboBox`-komponenttiin näytettävät
+`Prioriteetti`-arvot käyttäen `setItems()`-metodia samankaltaisesti kuin
 aiemmin osassa esitellyssä `ListView`-komponentissa:
 
 ```java,ignore
@@ -524,8 +524,8 @@ public void initialize(URL location, ResourceBundle resources) {
 ```
 
 Tässä `Prioriteetti.values()` palauttaa taulukon kaikista mahdollisista
-`Prioriteetti`-luetelman arvoista (eli `MATALA`, `KESKI` ja `SUURI`). Nämä
-kääritään `ObservableList`-olioon ja asettaan näytettäväksi
+`Prioriteetti`-luetelman arvoista (eli `MATALA`, `KESKI` ja `KORKEA`). Nämä
+kääritään `ObservableList`-olioon ja asetetaan näytettäväksi
 `ComboBox`-komponentissa.
 Nyt alasvetovalikossa kaikki mahdolliset vaihtoehdot ovat valittavissa:
 
@@ -579,7 +579,7 @@ Tehdään tätä varten apumetodi `validoi()`, joka tarkistaa otsikkokentän
 oikeellisuuden ja palauttaa `boolean`-arvona, onko kaikki kentät oikein (`true`)
 tai väärin (`false`). Lisäksi, jos otsikkokenttä ei sisällä mitään arvoa,
 väritetään kentän reunus punaisella ja lisätään syötekenttään virhe
-vihjetekstina (`Tooltip`):
+vihjetekstinä (`Tooltip`):
 
 ```java,ignore
 private boolean validoi() {
@@ -664,7 +664,7 @@ Tällöin `tehtava`-lista ilmoittaa kaikista tehtävien ominaisuuksiin tehdyist�
 muutoksista. Toisin sanoen aina, kun jokin tehtävän ominaisuus muuttuu,
 `Tehtavakokoelma`-luokassa määritelty havaitsija tallentaa kaikki tehtävät.
 
-<details><summary><i class="bs bs-stars jyu-gold"></i>Bonus: Tallentaminen pienellä viiveellä</summary>
+<details closed><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Tallentaminen pienellä viiveellä</summary>
 Yllä oleva ratkaisu ei ole ideaalinen: nyt jokainen tehtävän `set`-metodin kutsuminen
 aiheuttaa kaikkien tehtävien tallentumista. 
 
