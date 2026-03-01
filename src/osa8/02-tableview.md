@@ -246,31 +246,18 @@ Sarakkeen luominen tapahtuu siis seuraavasti:
    Ensimmäinen tyyppiparametri `Tehtava` kertoo, minkä typpisiä olioita taulukon
    riveillä on. Toinen tyyppiparametri `Boolean` kertoo, minkä tyyppisiä
    arvoja sarakkeessa näytetään.
-2. Sidotaan tehtävän `tehtyProperty`-ominaisuus sarakkeeseen. Käytännössä tämä
-   tarkoittaa: _Kun taulukko tarvitsee arvon `tehtySarake`-sarakkeeseen jollekin
-   riville, hae kyseisen rivin `Tehtava`-oliosta `tehtyProperty()`._
-  
-   Aina, kun taulukkoon luodaan uusi tehtävärivi, JavaFX kutsuu
-   `setCellValueFactory()`-metodilla asetetun *rakentajan*, joka on
-   lambdalauseke. Rakentajan parametri `cd` on tyypiltään `CellDataFeatures`,
-   joka sisältää taulukkoon lisättävän rivin yksittäisen solun tiedot. *TODO:
-   Seuraava virke vaatii selventämistä.* Palautusarvon `cd.getValue()` palauttaa
-   lisättävän rivin `Tehtava`-olion. Puolestaan `tehtyProperty()` palauttaa
-   tehtävän tehty-tilan havaittavana propertyna, jonka arvoa solu näyttää ja
-   seuraa. *TODO: Mielestäni seuraava virke on toistoa, ja turha.* Erityisesti
-   emme palauta tehtävän tämänhetkistä arvoa, vaan sidomme solun arvon
-   propertyyn, joka kuuluu rivin tehtävään. 
+2. Sidotaan `tehtySarake`-sarake `tehtyProperty`-ominaisuuden arvoon.   
+   `setCellValueFactory()` määrittää, mistä oliosta tai ominaisuudesta sarakkeen
+   näytettävä arvo otetaan. JavaFX kutsuu tässä annettua lambdalauseketta aina,
+   kun se tarvitsee juuri tässä sarakkeessa näytettävän arvon. Lambdan parametri
+   `cd` ("cell data") sisältää tiedon, minkä rivin tietoja ollaan
+   käsittelemässä, ja `cd.getValue()` palauttaa kyseisen rivin `Tehtava`-olion.
+   Edelleen `Tehtava`-olion `tehtyProperty()` sisältää
+   `ObservableValue<Boolean>`-olion, eli juurikin sellaisen, jota `TableView`
+   pystyy seuraamaan.
 3. Lisätään sarake näkyviin tauluun.
 
-*Datan sitominen* eli ns. *databinding* on taulukkonäkymän toiminnan ytimessä.
-Jos tekisimme taulukon ilman propertyjä ja `TableView`:ta, joutuisimme usein
-itse luomaan jokaiselle riville komponentit, täyttämään ne arvoilla sekä
-päivittämään näkymän erikseen, kun data muuttuu. `TableView` yhdessä propertyjen
-kanssa vähentää tätä käsityötä merkittävästi. Koodi kertoo enemmän siitä, mitä
-halutaan näyttää ja JavaFX:n harteille jätetään itse käyttöliittymän
-näyttäminen.
-
-Viedään koodi loppuun lisäämälle vielä sarake tehtävän tekstille:
+Tehdään sarake myös tehtävän tekstille.
 
 ```java,ignore
 public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -310,7 +297,15 @@ tavan lajitella tehtäviä ja siirtää sarakkeita haluamallaan tavalla:
 
 Huomaa, että meidän ei tarvinnut enää muokata yhtään tehtävän lisäämiseen,
 lataamiseen tai tallentamiseen liittyvää toimintoa, sillä mallin hallinta on
-erotettu näkymän esittämisestä.
+erotettu näkymän esittämisestä. 
+
+*Datan sitominen* eli ns. *databinding* on taulukkonäkymän toiminnan ytimessä.
+Jos tekisimme taulukon ilman propertyjä ja `TableView`:ta, joutuisimme usein
+itse luomaan jokaiselle riville komponentit, täyttämään ne arvoilla sekä
+päivittämään näkymän erikseen, kun data muuttuu. `TableView` yhdessä propertyjen
+kanssa vähentää tätä käsityötä merkittävästi. Koodi kertoo enemmän siitä, mitä
+halutaan näyttää ja JavaFX:n harteille jätetään itse käyttöliittymän
+näyttäminen.
 
 ## Tehty-sarake valintaruuduksi
 
@@ -467,11 +462,10 @@ tehty-tilaa ja tallentaisimme tehtävät muutoksen jälkeen. Tämä pätisi sek�
 käyttöliittymän että tiedoston kautta lisätyille tehtäville.
 
 Tässä ratkaisussa kuitenkin edelleen jokaisen tehtäväolion `tehty`-ominaisuus
-saa oman havaitsijan, mikä on hieman outoa. *TODO: Seuraavat virkkeet vaativat
-uudelleenmuotoilua.* Perimmäisesti **kaikkien** tehtävien tallentaminen ei ole
-yksittäisen tehtävän vastuu, vaikka kytkös olisi tehty löyhästi
-*observable*-tyylisesti. Pikemmin, kaikkien tehtävien tallentamisen (tai ainakin
-sen alustaminen) pitäisi olla vähintäänkin tehtävien listan vastuulla.
+saa oman havaitsijan, mikä on hieman outoa. Yllä olevassa esimerkissä kaikkien
+tehtävien tallentaminen sidotaan suoraan yksittäisen tehtävän tehty-tilan
+muutokseen. Sen sijaan olisi loogisempaa, että kaikkien tehtävien tallennus
+olisi sidottu kaikkia tehtäviä sisältävään tehtavat-listaan.
 
 Tähän ongelmaan on olemassa toinenkin, aavistuksen elegantimpi ratkaisu.
 `ObservableList`-oliolle voi sen luomisen yhteydessä määritellä niin sanottu
@@ -492,10 +486,6 @@ muutoksista. Toisin sanoen, `addListener()`-metodilla olevat havaitsijat saavat
 nyt tiedon aina, kun listaan lisätään tehtävä, listasta poistetaan tehtävä (tätä
 tosin emme ole vielä toteuttaneet) ja kun listassa olevien tehtävien
 `tehtyProperty`-ominaisuuden arvo vaihtuu.
-
-*TODO: Toistoa? Poista?* Käytännössä yllä oleva muutos tarkoittaa, että
-`initialize()`-metodissa jo oleva havaitsija suoritetaan aina, kun listan
-tehtävät tai listassa olevien tehtävien `tehtyProperty` muuttuu:
 
 ```java,ignore
 public void initialize(URL url, ResourceBundle resourceBundle) {
