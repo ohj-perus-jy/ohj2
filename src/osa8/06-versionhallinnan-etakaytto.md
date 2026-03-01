@@ -6,7 +6,7 @@ koodisi on turvassa kiintolevyn rikkoutumiselta ja jotta voisit jakaa sitä
 muille (esimerkiksi harjoitustyön ohjaajalle), koodi pitää viedä
 **etävarastoon** (remote repository).
 
-Tässä luvussa siirrämme paikallisen projektin GitHubiin, GitLabiin tai muuhun
+Tässä osassa siirrämme paikallisen projektin GitHubiin, GitLabiin tai muuhun
 valitsemaasi palveluun.
 
 ## 1. Etävaraston luominen palvelussa

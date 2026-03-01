@@ -298,7 +298,7 @@ public class KodinSahkot {
 // FILE_END
 ```
 
-Kuten Luvussa [3.2 Polymorfismi](02-polymorfismi.md#is-a-suhde) opimme, meidän
+Kuten Osassa [3.2 Polymorfismi](02-polymorfismi.md#is-a-suhde) opimme, meidän
 ei olisi pääohjelmassa pakko määritellä `paahdin`- ja `sirkkeli`-muuttujia
 konkreettisten tyyppien (`Leivanpaahdin` ja `Sirkkeli`) avulla, vaan voisimme
 määritellä molemmat `Verkkovirtalaite`-tyyppisiksi. Tässähän nimittäin meitä
@@ -435,7 +435,7 @@ noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai
 vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan
 määrittelemiä sopimuksia.
 
-Palataan hetkeksi [Luvussa 3.2 alustettuun](02-polymorfismi.md)
+Palataan hetkeksi [Osassa 3.2 alustettuun](02-polymorfismi.md)
 soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka
 määrittelee yleisölle musiikkia metodin `soita()`. 
 

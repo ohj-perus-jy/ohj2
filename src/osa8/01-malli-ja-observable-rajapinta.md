@@ -1,6 +1,6 @@
 # Malli ja Observable-rajapinta
 
-[Luvussa 7.5](../osa7/05-tehtavien-lukeminen-tallennus.md)
+[Osassa 7.5](../osa7/05-tehtavien-lukeminen-tallennus.md)
 teimme luokan `Tehtava`, jonka tarkoituksena oli mallintaa JSON-tiedostoon
 tallennettavan tehtävän tiedon. Kuitenkin käyttöliittymässä tehtävät käsiteltiin
 `CheckBox`-olioina. Jouduimmekin aina tehtävien tallentamisen ja lataamisen
@@ -763,7 +763,7 @@ Olemme saavuttaneet tilanteen, jossa sekä kokonainen lista (`ObservableList`)
 että listan yksittäiset alkiot (`Property`) osaavat kertoa tilansa muutoksista.
 Olemme valmiita irrottautumaan pitkältä tuntuvalta `paivitaNakyma()` metodista
 kokonaan, joka rakensi `CheckBox`-komponentteja `VBox`-laatikoiden sisään –
-otetaan seuraavassa luvussa avuksi `TableView`! -->
+otetaan seuraavassa osassa avuksi `TableView`! -->
 
 <task>
   <task-title>Tehtävä 8.1: TODO-ohjelma, vaihe 7. <points>1 p.</points> </task-title>

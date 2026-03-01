@@ -13,7 +13,7 @@ itsestään ei kuitenkaan ole mielekästä luoda ilmentymiä eli olioita.
 
 Ajatellaan vaikkapa *tuolia*. Vaikka sana tuoli varmasti herättää meissä mielikuvan jostain tietynlaisesta tuolista, niin todellisuudessa tuoleja on monenlaisia: on puutuoleja, keinutuoleja, työtuoleja ja niin edelleen. Jokainen näistä tuolityypeistä on omanlainen ja hieman erilainen. Voidaan argumentoida, että tuoli-käsite itsessään on abstraktio. Tuolihan on oikeastaan vain asia, joka mahdollistaa istumisen. Tarvitaan aina jokin erikoistava käsite, kuten työtuoli, joka todella kuvaa millaisesta konkreettisesta tuolista on kysymys, ja jollaisia lopulta voidaan valmistaa tuotantolinjalla. 
 
-Otetaan toinen esimerkki, joka on ehkä jo hieman lähempänä oikeaa koodia. Jatketaan edellisessä luvussa esitettyä `Muoto`-esimerkkiä. Voisimme periaatteessa luoda `Muoto`-luokan ilmentymän ja kutsua sen `laskeAla()`-metodia.
+Otetaan toinen esimerkki, joka on ehkä jo hieman lähempänä oikeaa koodia. Jatketaan edellisessä osassa esitettyä `Muoto`-esimerkkiä. Voisimme periaatteessa luoda `Muoto`-luokan ilmentymän ja kutsua sen `laskeAla()`-metodia.
 
 ```java,ignore
 Muoto muoto = new Muoto();

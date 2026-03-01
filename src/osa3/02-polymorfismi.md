@@ -32,7 +32,7 @@ Tämä lähestymistapa ei ole laajennettavissa. Jos yrittäisimme käsitellä so
 
 > [!HUOMAUTUS]
 > Soitin-luokka määritellään tässä tavallisena luokkana, mutta se voisi olla myös abstrakti luokka, ja se olisikin tässä tapauksessa luontevaa. 
-> Koska abstrakti luokka käsitellään vasta luvussa [3.3 Abstraktit luokat](03-abstrakti-luokka.md), määrittelemme Soittimen tässä tavallisena luokkana.
+> Koska abstrakti luokka käsitellään vasta osassa [3.3 Abstraktit luokat](03-abstrakti-luokka.md), määrittelemme Soittimen tässä tavallisena luokkana.
 
 ```java,ignore
 public class Soitin {
@@ -384,7 +384,7 @@ public class Ympyra extends Muoto {
 
 Polymorfismi mahdollistaa monin tavoin joustavan ja laajennettavan koodin kirjoittamisen. Olio-ohjelmoinnissa polymorfismia tarvitaan erityisesti siksi, että sen avulla voimme tarjota yhtenäisen tavan käsitellä keskenään hyvinkin erilaisia olioita.
 
-Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme rajapintoihin luvussa [4.1 Rajapinta](../osa4/01-rajapinta.md)), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
+Kun useat luokat perivät saman yliluokan (tai toteuttavat saman rajapinnan; paneudumme rajapintoihin osassa [4.1 Rajapinta](../osa4/01-rajapinta.md)), ne voidaan käsitellä yhden yhteisen tyypin kautta. Tämä mahdollistaa sen, että ohjelma voi käsitellä joukkoa erilaisia olioita kuten:
 
  * kaikkia soittimia (`Soitin`), kuten kitarat, pianot ja rummut
  * kaikkia ajoneuvoja (`Ajoneuvo`), vaikka ne olisivatkin erilaisia, kuten autoja, polkupyöriä ja lentokoneita

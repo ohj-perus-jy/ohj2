@@ -56,7 +56,7 @@ paluuarvo, (2) nimi, (3) parametrit ja (4) runko-osa.
    Parametreja voi olla nolla tai useampia, ja ne erotetaan toisistaan pilkulla.
    Jokaisella parametrilla on oma tyyppi ja nimi.
 
-Kutsutaan näitä kolmea palasta yhdessä aliohjelman *esittelyriviksi*. [Luvussa
+Kutsutaan näitä kolmea palasta yhdessä aliohjelman *esittelyriviksi*. [Osassa
 2](../osa2/index.md) tutustutaan myös olio-ohjelmointiin liittyviin määreisiin
 (engl. *modifier*), joita esittelyriville voi lisätä.
 

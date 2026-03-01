@@ -426,7 +426,7 @@ joustavuutta, ne ratkaisevat eri ongelmia ja toimivat eri vaiheissa ohjelman
 suoritusta.
 
  1. Polymorfismi (alityypitys): Ajonaikainen mekanismi, johon tutustuimme
-    [Luvussa 3](../osa3/02-polymorfismi.md). Sen tehtävä on mahdollistaa
+    [osassa 3](../osa3/02-polymorfismi.md). Sen tehtävä on mahdollistaa
     olioiden käsittely niiden yliluokan tai rajapinnan kautta, jolloin oikea
     toiminnallisuus (metodin toteutus) valitaan vasta ohjelman ajon aikana.
  2. Geneerisyys (parametrinen polymorfismi): Käännösaikainen mekanismi. Sen

@@ -12,7 +12,7 @@ ohjelmointirajapinta (metodit `lisaaTehtava`, `poistaTehtava` jne.), voimme
 rakentaa **yksikkötestejä**, jotka kutsuvat suoraan kokoelmaa ja tarkistavat
 asioiden toimiutuvuuden millisekunneissa ilman ruudulle aukeavia ikkunoita.
 
-Tässä luvussa opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
+Tässä osassa opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
 tiedosto-operaatioista testeissä.
 
 ## Ongelma: Tiedostojen ja I/O:n testaus on vaarallista

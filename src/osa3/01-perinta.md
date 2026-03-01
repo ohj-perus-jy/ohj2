@@ -337,7 +337,7 @@ attribuuteista ja metodeista sekä niiden näkyvyydestä. Attribuutit tyyppeinee
 merkitään luokan nimen alle, ja metodit, myös muodostajat, vastaavasti ihan
 alimmaiseksi. Perittyjä attribuutteja metodeja, kuten tässä attribuutti `nimi`
 ja metodi `getNimi()`, ei yleensä merkitä kaavioon, paitsi jos ne
-ylikirjoitetaan aliluokassa&mdash;tästä lisää [Luvussa 3.2](02-polymorfismi.md).
+ylikirjoitetaan aliluokassa&mdash;tästä lisää [Osassa 3.2](02-polymorfismi.md).
 Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi,
 ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi. Tietojen
 merkitseminen kaavioon mahdollistaa rakenteiden kuvailemisen ilman, että
@@ -480,7 +480,7 @@ class Opiskelija extends Henkilo {
 ```
 
 Tässä esimerkissä tällä ei ole mitään vaikutusta, koska `getNimi()` on sama sekä
-yliluokassa että aliluokassa. Seuraavassa luvussa [3.2
+yliluokassa että aliluokassa. Seuraavassa osassa [3.2
 Polymorfismi](02-polymorfismi.md) käsitellään tilannetta, jossa aliluokassa on
 määritelty saman niminen metodi kuin yliluokassa. Tällöin `super`-avainsanalla
 voidaan viitata nimenomaisesti yliluokan metodiin.

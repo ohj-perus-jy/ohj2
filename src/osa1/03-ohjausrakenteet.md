@@ -8,7 +8,7 @@
 
 Ohjelmointi on harvoin pelkkää koodirivien suorittamista peräkkäin. Jotta
 ohjelmista saadaan hyödyllisiä, niiden täytyy pystyä tekemään päätöksiä,
-toistamaan asioita ja hallinnoimaan tietoa järkevästi. Tässä luvussa käymme läpi
+toistamaan asioita ja hallinnoimaan tietoa järkevästi. Tässä osassa käymme läpi
 Javan logiikan, toistorakenteet sekä kaksi tapaa säilöä tietoa: perinteiset
 taulukot ja joustavat listat. 
 

@@ -19,7 +19,7 @@ hahmottamista:
 
 <img src="images/scenebuilder-outline.png">
 
-Tämän luvun jälkeen voit palata takaisin perusnäkymään valitsemalla **View** <i
+Tämän osan jälkeen voit palata takaisin perusnäkymään valitsemalla **View** <i
 class="bi bi-chevron-right"></i> **Hide Outlines**.
 
 ## Ikkunan ja komponenttien koko

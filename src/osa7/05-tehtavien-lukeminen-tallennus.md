@@ -6,7 +6,7 @@ Toteutetaan vielä kaksi viimeistä toiminnallisuutta:
 * Tehtävät tallennetaan tiedostoon, jotta ne säilyvät sovelluksen sulkemisen jälkeen
 * Tehtävät haetaan tiedostosta sovelluksen käynnistyessä
 
-[Luvussa 6.5](../osa6/05-tiedostojen-kasittely.md) opimme, miten olioita voi
+[Osassa 6.5](../osa6/05-tiedostojen-kasittely.md) opimme, miten olioita voi
 tallentaa tiedostoihin käyttäen JSON-tiedostomuotoa.
 Suunnitellaan hieman tiedostomuotoa. Tällä hetkellä yksittäinen tehtävä
 voitaisiin mallintaa kahdella attribuutilla: tehtävän *teksti* merkkijonona sekä

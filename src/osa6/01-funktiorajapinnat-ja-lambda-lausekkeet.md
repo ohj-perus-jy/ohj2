@@ -26,7 +26,7 @@ public interface NumeroFunktio {
 }
 ```
 
-Myös luvussa 4.1 esimerkkinä tehty
+Myös osassa 4.1 esimerkkinä tehty
 [Saadettava-rajapinta](../osa4/01-rajapinta.md#alykoti-saadettava) on
 funktionaalinen, sillä se sisältää vain yhden metodin: `asetaArvo`.
 
@@ -453,7 +453,7 @@ IO.println(nimet); // [Aino, Ville, Matti]
 //-}
 ```
 
-Palataan vielä luvussa 4.2 olevaan
+Palataan vielä osassa 4.2 olevaan
 [keräilykorttiesimerkkiin](../osa4/02-vertailurajapinta.md#oma-toteutus-comparable-rajapinnalle).
 Laajenetaan hieman `Kerailykortti`-luokkaa lisäämällä attribuutti `sarja`, joka
 kuvaa korttisarjaa (esim. eläimet, ajoneuvot, jne.):

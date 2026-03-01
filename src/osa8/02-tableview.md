@@ -11,7 +11,7 @@ on itsessään hankala ongelma, johon ei tämän kurssin puitteissa pureuduta.
 
 Tässä kohtaa onkin parempi nojautua JavaFX:n valmiin näkymäkomponentteihin, jotka
 osaavat tehokkaasti esittää olioita ja reagoida niiden muutoksiin.
-Otamme tässä luvussa käyttöön `TableView`- eli taulukkokomponentin
+Otamme tässä osassa käyttöön `TableView`- eli taulukkokomponentin
 `TableView` on
 JavaFX:n valmis komponentti, jolla olioita voidaan esittää riveinä ja olioiden
 ominaisuuksia sarakkeina.
@@ -208,7 +208,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 
-Kuten edellisessä luvussa `ListView`-komponentin esimerkissä, tässä *sidomme
+Kuten edellisessä osassa `ListView`-komponentin esimerkissä, tässä *sidomme
 datan* (engl. data binding) tehtävälistan ja taulukkonäkymän kanssa.
 JavaFX lisää oman havaitsijan listalle ja päivittää taulukon rivit aina, kun
 tehtävälistassa olevien tehtäviä poistetaan tai lisätään.

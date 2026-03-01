@@ -18,7 +18,7 @@
 
 Tässä vaiheessa on hyvä hetki aloittaa versionhallinta. Käytämme
 Git-versionhallintaa, joka on laajasti käytetty työkalu ohjelmistokehityksessä.
-Tämän luvun jälkeen teet jokaisesta tutoriaalin tehtävästä oman Git-commitin, joka kuvaa
+Tämän osan jälkeen teet jokaisesta tutoriaalin tehtävästä oman Git-commitin, joka kuvaa
 tehtävän aikana tehtyjä muutoksia. 
 
 Gitin käyttämiseen on monenlaisia käyttöliittymiä &ndash; myös IDEAssa on

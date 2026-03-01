@@ -7,7 +7,7 @@ useita ikkunoita auki (_Stage_), joista kukin esittää omaa näkymäänsä (_Sc
 Voidaan myös ladata kokonaan uusi _Scene_ ja vaihtaa se olemassa olevan _Stagen_
 sisälle.
 
-Tässä luvussa opimme avaamaan uuden dialogin (`Stage`), joka pysäyttää muun
+Tässä osassa opimme avaamaan uuden dialogin (`Stage`), joka pysäyttää muun
 ohjelman suorituksen (eli on _modaalinen_), ja miten sille siirretään dataa
 muokattavaksi. Muistetaan edellisistä luvuista `Tehtavakokoelma` ja observable
 propertyt – kun avaamme muokkausikkunan ja muokkaamme sille annettua

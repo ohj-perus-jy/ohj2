@@ -9,7 +9,7 @@ kietoutuneet `MainController`-luokkaan. Tämä tekee kontrollerista nopeasti lii
 raskaan ylläpitää ja vaikean testata. Ratkaisu tähän on **MVC-arkkitehtuuri**
 (Model-View-Controller).
 
-Tässä luvussa jaamme sovelluksemme vastuualueisiin: käyttöliittymä, data ja
+Tässä osassa jaamme sovelluksemme vastuualueisiin: käyttöliittymä, data ja
 ohjauslogiikka erotetaan toisistaan. Erityisesti siirrämme datan hallinnan ja
 tallennuksen kontrollerista omaan malliluokkaansa.
 

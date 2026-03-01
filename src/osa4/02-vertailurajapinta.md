@@ -265,7 +265,7 @@ järjestetään numerotunnisteen mukaan. Tätä varten tarvitsemme rajapinnan
 toteutuksen luokan määrittelyyn sekä toteutuksen edellä mainitulle
 `compareTo`-metodille.
 
-Käytämme toteutuksessa luvun alussa olevaa [palautustaulukkoa](#comparable-rajapinta-ja-luonnollinen-järjestys):
+Käytämme toteutuksessa osan alussa olevaa [palautustaulukkoa](#comparable-rajapinta-ja-luonnollinen-järjestys):
 
 ```java
 // FILE: Kerailykortti.java
