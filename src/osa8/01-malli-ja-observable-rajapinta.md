@@ -1,19 +1,20 @@
 # Malli ja Observable-rajapinta
 
-[Osassa 7.5](../osa7/05-tehtavien-lukeminen-tallennus.md)
-teimme luokan `Tehtava`, jonka tarkoituksena oli mallintaa JSON-tiedostoon
-tallennettavan tehtävän tiedon. Kuitenkin käyttöliittymässä tehtävät käsiteltiin
-`CheckBox`-olioina. Jouduimmekin aina tehtävien tallentamisen ja lataamisen
-yhteydessä muuntaa tehtäväoliot muodosta toiseen.
+[Osassa 7.5](../osa7/05-tehtavien-lukeminen-tallennus.md) teimme
+`Tehtava`-luokan, jonka tarkoituksena oli mallintaa JSON-tiedostoon
+tallennettavan tehtävän tiedon. Käyttöliittymässä tehtävät käsiteltiin
+`CheckBox`-olioina. Tehtävien tallentamisen ja lataamisen yhteydessä muunsimme
+tehtäväoliot muodosta toiseen (`CheckBox` <-> `Tehtava`). Kuten [tämän osan
+johdannossa mainittiin](./index.md), tämä muuntaminen ei pidemmällä aikavälillä ole hyvä
+ratkaisu.
 
 Ensimmäinen päävaihe datan ja käyttöliittymän vastuiden erottamisessa olisikin
-vähentää datan toistoa. Eräs selkeä tapa on tehdä `Tehtava`-luokasta ainoan
-tavan mallintaa yksittäisen tehtävän toiminnot ja tila.
-Käyttöliittymäkielessä `Tehtava`-luokasta tulee ns. *malliluokka* (engl. model
-class). Malli-termillä tarkoitetaan tässä sovelluksen datan rakennetta ja
-siihen liittyvää tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis
-kysymykseen siitä, mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää
-ruudulla.
+vähentää datan toistoa. Eräs selkeä tapa on tehdä `Tehtava`-luokasta ainoa tapa
+mallintaa yksittäisen tehtävän toiminnot ja tila. Käyttöliittymäkielessä
+`Tehtava`-luokasta tulee niin kutsuttu *malliluokka* (engl. model class).
+Malli-termillä tarkoitetaan sovelluksen datan rakennetta ja siihen liittyvää
+tilaa ilman käyttöliittymäriippuvuuksia. Malli vastaa siis kysymykseen siitä,
+mitä tietoa sovelluksessa on, ei siihen, miltä tieto näyttää ruudulla.
 
 <!-- Kun tehtävä on oma malliolionsa, samaa tietoa voidaan käsitellä riippumatta
 siitä, näytetäänkö tieto taulukkona, listana tai erillisessä
@@ -23,39 +24,40 @@ että käyttöliittymälogiikkaa täytyy kirjoittaa alusta uudelleen. Samalla
 tiedoston tallennus ja lataus selkeytyvät, koska tallennamme varsinaista
 sovellusdataa emmekä käyttöliittymäkomponenttien tilaa. -->
 
-Heti ensimmäisessä ongelmaksi nousee, miten `Tehtava`-olion tiedot saadaan
-käyttöliittymälle.
-Lisäksi jos tehtävädata muuttuu ohjelman ajon aikana, näkymän pitäisi reagoida tähän
-automaattisesti ilman, että jokaisen muutoksen jälkeen kirjoitetaan erikseen
-päivityskoodia kaikkiin käyttöliittymäkomponentteihin. 
+Heti ensimmäiseksi ongelmaksi nousee, miten `Tehtava`-olion tiedot saadaan
+käyttöliittymälle. Lisäksi jos tehtävädata muuttuu ohjelman ajon aikana, näkymän
+pitäisi reagoida tähän automaattisesti ilman, että jokaisen muutoksen jälkeen
+kirjoitetaan erikseen päivityskoodia kaikkiin käyttöliittymäkomponentteihin. 
 
 Tässä kohtaan meitä auttavat JavaFX:n `Observable`-rakenteet, joiden avulla data
 ja käyttöliittymä voidaan kytkeä toisiinsa hallitusti.
 
-## Johdatus `Observable`-rakenteisiin
+## `Observable`-rakenteet
 
-Sana **observable** (havaittava) tarkoittaa, että olio osaa
-ilmoittaa muutoksistaan muille sovelluksen olioille.
-Oliot, jotka kuuntelevat havaittavan olion muutoksia kutsutaan puolestaan
-**havaitsijoiksi** (observer), **tilaajiksi** (subscriber) tai
-**kuuntelijoiksi** (listener).
+Sana **observable** (havaittava) tarkoittaa, että olio osaa ilmoittaa
+muutoksistaan muille sovelluksen olioille. Oliot, jotka kuuntelevat havaittavan
+olion muutoksia kutsutaan puolestaan **havaitsijoiksi** (observer),
+**tilaajiksi** (subscriber) tai **kuuntelijoiksi** (listener). Näillä termeillä
+tarkoitetaan käytännössä samaa asiaa, vaikka eri konteksteissa saatetaan käyttää
+painotuksista riippuen eri termejä. 
 
-Haivaitsijat ja havaittat oliot liittyvät syvemmin ns.
+Haivaitsijat ja havaittavat oliot liittyvät syvemmin ohjelmistosuunnittelun
 *observer*-suunnittelumalliin, jota käsitellään tarkemmin myöhemmissä osissa.
-Tässä vaiheessa oleellista on ymmärtää, että JavaFX:ssä observable-rakenteet toimivat
-perustana sille, miten käyttöliittymä saadaan päivittymään heti, kun data
-muuttuu.
+Tässä vaiheessa oleellista on ymmärtää, että JavaFX:ssä observable-rakenteet
+toimivat perustana sille, miten käyttöliittymä saadaan päivittymään heti, kun
+data muuttuu.
 
 JavaFX:ssä käytämme pääosin seuraavia `Observable`-rakenteita:
 
 - `ObservableList<T>`,  joka ilmoittaa, kun listaan lisätään tai siitä poistetaan
-  alkioita.
+  alkioita,
 - `ObservableValue<T>`, joka ilmoittaa, kun sen sisältämä yksittäinen arvo
-  muuttuu.
-- `Property`-tyyppejä, jotka ovat havaittavia versioita niitä vastaavista
+  muuttuu,
+- `Property`-tyyppejä, jotka ilmoittavat aina, kun sen sisältämä arvo muuttuu.
+  `Property`-tyypit ovat havaittavia versioita niitä vastaavista
   primitiivityypeistä. Esimerkiksi `StringProperty` on havaittava versio
   `String`-tyypistä, `BooleanProperty` vastaavasti `Boolean`-tyypistä ja niin
-  edelleen. Havaittavat tyypit voivat ilmoittaa aina, kun sen sisältämä arvo muuttuu.
+  edelleen. 
 
 <!-- Havaittavia tyyppejä voidaan sitoa toisiinsa, jolloin yhden arvon
   muutos aiheuttaa automaattisesti toisen arvon päivittymisen. Esimerkiksi jos
@@ -65,34 +67,34 @@ JavaFX:ssä käytämme pääosin seuraavia `Observable`-rakenteita:
 
 ### Johdatteleva esimerkki
 
-Unohdetaan ihan hetkeksi meidän Todo-sovellus ja yritetään saada kiinni
-`Observable`-tyyppien toiminnasta tarkemmin.
+Unohdetaan ihan hetkeksi Todo-sovellus ja yritetään saada kiinni
+`Observable`-tyyppien toiminnasta johdattelevan esimerkin avulla.
 
-Tehdään aivan uusi JavaFX projekti seuraamalla [luvussa
+Tehdään uusi JavaFX projekti seuraamalla [osan
 7.1](../osa7/01-javafx-perusteet.md#ensimmäinen-javafx-sovellus) ohjeita.
 Anna sovellukselle jokin toinen nimi ja groupId-arvo, vaikkapa
 `ObservableEsimerkki` ja `fi.jyu.ohj2.esimerkit.observable`.
 
-Aivan alkuun kommentoi pois `Main`-luokan `main()`-pääohjelmasta
-`Application.launch()`-kutsun:
+Kommentoi pois `Main`-luokan `main()`-pääohjelmasta
+`Application.launch()`-kutsu:
 
 ```java,ignore
 public static void main(String[] args) {
-    // HIGHLIGHT_YELLOW_BEGIN
+    // HIGHLIGHT_GREEN_BEGIN
     // Application.launch(App.class, args);
-    // HIGHLIGHT_YELLOW_END
+    // HIGHLIGHT_GREEN_END
 }
 ```
 
-Sovelluksemme käyttäytyy nyt kuin tavallinen komentoriviohjelma.
-Kokeile alkuun lisätä ja ajaa alla oleva esimerkki.
-Lisää tarvittaessa import-määre: `import javafx.collections.*;`.
+Sovelluksemme käyttäytyy nyt kuin tavallinen komentoriviohjelma. Kokeile alkuun
+lisätä ja ajaa alla oleva esimerkki. Lisää tarvittaessa import-määre: `import
+javafx.collections.*;`.
 
 ```java
 //-// ==========================================
-//-// ÄLÄ KOPIOI
-//-// Tämä koodi on olemassa alkeellisesti mallintamaan ObservableList-luokan 
-//-// toimintaa. Todellisuudessa ObservableList on toteutettuna valmiiksi JavaFX:ssä.
+//-// ÄLÄ KOPIOI TÄTÄ PIILOSSA OLEVAA KOODIA.
+//-// Tämä koodi on olemassa, jotta mdbookissa voidaan matkia ObservableList-luokan 
+//-// toimintaa. JavaFX-sovelluksessa ObservableList on toteutettuna valmiiksi.
 //-// ==========================================
 //-static interface ListChangeListener<E> {
 //-    void onChanged(Change<E> c);
@@ -148,38 +150,37 @@ public static void main(String[] args) {
 ```
 
 Kun ajat koodin, näet, että aina kun `nimet.add()` suoritetaan, konsoliin
-tulostuu tieto siitä, että nimi on lisätty.
-Teksti tulostuu myös, vaikka `nimet.add()` kutsuttaisiin aliohjelmasta
-tai vaikka käytettäisiin mitä muuta tahansa tapaa lisätä alkioita listaan.
+tulostuu tieto siitä, että nimi on lisätty. Teksti tulostuu aina kun
+`nimet`-listaan tehdään muutos mistä päin ohjelmaa tahansa. 
 
-`ObservableList`-olion oleellinen ero tavalliseen listaan on sen
-`addListener`-metodi. Jos lisäät alkioita tavalliseen `ArrayList`-listaan,
-mikään toinen olio ei automaattisesti tiedä siitä, ellei se erikseen käy
-tarkistamassa listan kokoa. 
+`ObservableList`-olion oleellinen ero tavalliseen listaan on, että sillä on
+`addListener`-metodi, jonka avulla voidaan rekisteröidä muuta koodia
+havaitsemaan, kun listaan tehdään muutoksia. Jos lisäät alkioita tavalliseen
+`ArrayList`-listaan, mikään toinen olio ei automaattisesti tiedä siitä, ellei se
+erikseen käy tarkistamassa listan kokoa. `ObservableList` taas on aktiivinen.
+Kun kutsumme `nimet.add()`, lista lähettää ilmoituksen kaikille muutoksista
+kiinnostuneille, jotka ovat rekisteröityneet havaitsijoiksi
+`addListener()`-metodin avulla. 
 
-`ObservableList` taas on aktiivinen. Kun kutsumme
-`nimet.add()`, lista lähettää välittömästi ilmoituksen kaikille muutoksista
-kiinnostuneille, jotka ovat rekisteröityneet havaitsijoiksi `addListener()`-metodilla.
 Yllä olevassa esimerkissä havaitsija on lambdalauseke, joka tulostaa konsoliin
 listan koon muutoksen jälkeen. 
 
 Lambdan `change`-parametri sisältää kuvauksen juuri tapahtuneesta
 muutoksesta tai muutoksista, jos niitä tapahtui useita: mitä indeksejä muutos
 koski, lisättiinkö vai poistettiinko alkioita, ja mitä alkioita lisättiin tai
-poistettiin. Kyseisellä oliolla on käytettävissään metodeja, kuten `wasAdded()`,
-`wasRemoved()`, `getAddedSubList()` ja `getRemoved()`, joiden avulla voidaan
-lukea tarkasti, mitä muutoksia tapahtui ([ks.
+poistettiin. Kyseisellä oliolla on käytettävissään metodeja, joiden avulla
+voidaan selvittää muutokseen liittyviä yksityiskohtia, kuten `wasAdded()`,
+`wasRemoved()`, `getAddedSubList()` ja `getRemoved()` ([ks.
 JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.base/javafx/collections/ListChangeListener.Change.html)). 
 
-Kokeillaan kyseisen `change`-parametrin käyttöä.
-Lisätään kuuntelijaan ehto, jonka perusteella listaan lisättäessä tulostetaan
-jotakin, mutta poistettaessa ei.
+Kokeillaan `change`-parametrin käyttöä. Lisätään kuuntelijaan ehto, jonka
+perusteella listaan lisättäessä tulostetaan jotakin, mutta poistettaessa ei.
 
 ```java
 //-// ==========================================
-//-// ÄLÄ KOPIOI
-//-// Tämä koodi on olemassa alkeellisesti mallintamaan ObservableList-luokan 
-//-// toimintaa. Todellisuudessa ObservableList on toteutettuna valmiiksi JavaFX:ssä.
+//-// ÄLÄ KOPIOI TÄTÄ PIILOSSA OLEVAA KOODIA.
+//-// Tämä koodi on olemassa, jotta mdbookissa voidaan matkia ObservableList-luokan 
+//-// toimintaa. JavaFX-sovelluksessa ObservableList on toteutettuna valmiiksi.
 //-// ==========================================
 //-static interface ListChangeListener<E> {
 //-    void onChanged(Change<E> c);
@@ -222,11 +223,13 @@ public static void main(String[] args) {
     nimet.addListener((ListChangeListener<String>) change -> {
         // HIGHLIGHT_GREEN_BEGIN
         while (change.next()) { // Käydään läpi kaikki tapahtuneet muutokset
-            if (change.wasAdded()) {
+            if (change.wasAdded()) { // Tarkistetaan, oliko muutos lisäys
                 IO.println("Listalle lisättiin: " + change.getAddedSubList());
             }
         }
         // HIGHLIGHT_GREEN_END
+        // Tämä osa koodista suoritetaan edelleen aina kuuntelijaa kutsuttaessa, 
+        // riippumatta siitä, oliko muutos lisäys vai poisto
         int koko = nimet.size();
         IO.println("Listalla on nyt " + koko + " nimeä.");
     });
@@ -244,15 +247,13 @@ public static void main(String[] args) {
 
 Yllä olevan esimerkin `while (change.next())` on JavaFX:n tapa käsitellä
 listalla tapahtuneita muutoksia. Yhdellä kertaa listaan saattaa tulla useita
-muutoksia (esim. alkioiden lisäys, alkoiden poisto, alkioiden siirtäminen
-indeksistä). Silmukka varmistaa, että jokainen niistä
-käsitellään.
+muutoksia (esim. alkioiden lisäys, alkoiden poisto, alkioiden siirtäminen).
+Silmukka varmistaa, että jokainen niistä käsitellään.
 
 Kuuntelijoita voi olla useita. Jokainen `addListener(...)` rekisteröi uuden
-havaitsijan samaan listaan. Kun listassa tapahtuu muutos, JavaFX ilmoittaa siitä
-kaikille rekisteröidyille havaitsijoille yksi kerrallaan. Tällöin esimerkiksi yksi
-havaitsija voi päivittää käyttöliittymää, toinen voi kirjoittaa lokia ja kolmas
-voi tehdä validointia.
+kuuntelijan. Kun listassa tapahtuu muutos, JavaFX ilmoittaa siitä kaikille
+kuuntelijoille yksi kerrallaan. Yksi havaitsija voi esimerkiksi päivittää
+käyttöliittymää, toinen voi kirjoittaa lokia ja kolmas voi tehdä validointia.
 
 <details><summary> Valinnaista lisätietoa: Miksi lambdalausekkeessa tarvitaan tyyppimuunnos? </summary>
 
@@ -271,8 +272,9 @@ listamuutoksia (lisäys, poisto, korvaus, jne.) voidaan käsitellä samalla
 
 ### Kytkentä käyttöliittymään
 
-JavaFX:ssä havaittavia olioita käytetään siten, että muutosten havaitsija
-on käyttöliittymä itse. Katsotaan vielä, miten tämä toimii käytännössä.
+JavaFX:ssä havaittavia olioita käytetään siten, että muutosten havaitsija on
+jokin käyttöliittymässä oleva komponentti. Katsotaan vielä, miten tämä toimii
+käytännössä.
 
 Palauta `Main`-luokka alkuperäiseen tilaan, jossa `main()`-metodissa on
 vain `Application.launch()`-kutsu. Ota sen jälkeen pohjaksi alla oleva valmis kontrolleriluokka
@@ -336,39 +338,43 @@ Kokeile ajaa sovellus, jonka pitäisi näyttää suunnilleen täältä:
 
 <img src="images/list-app.png" width="300">
 
-Tutkitaan kontrollerissa olevia attribuutteja.
-Attribuutit `nimikentta` ja `nimipainike` vastaavat käyttöliittymässä olevaa kenttää ja painiketta.
-Puolestaan `nimet` on lista nimistä käyttäen `ObservableList`-listaa; siis sama lista
-kuin yllä olevissa esimerkeissä.
-Lopuksi `nimitulosteet` on `ListView`-komponentti, joka on *näykymäkomponentti*,
-joka osaa näyttää `ObservableList`-listan sisällön käyttöliittymässä (ks. [JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.controls/javafx/scene/control/ListView.html)).
+Kontrollerissa olevat attribuutit `nimikentta` ja `nimipainike` vastaavat
+käyttöliittymässä olevaa kenttää ja painiketta. Puolestaan `nimet` on lista
+nimistä käyttäen `ObservableList`-listaa; siis sama lista kuin ylempänä olevissa
+esimerkeissä. Lopuksi `nimitulosteet` on `ListView`-komponentti
+([JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/javafx.controls/javafx/scene/control/ListView.html)),
+joka osaa näyttää `ObservableList`-listan sisällön käyttöliittymässä.
+View-sanalla varustettuja komponentteja, kuten `ListView`, kutsutaan usein
+*näkymäkomponenteiksi* (view component).
 
 Alkuun `ListView` ei tiedä, minkä listan sisältöä näytetään. 
-*Kytketään* nyt nimilista ja näkymäkomponentti toisiinsa kontrolleriluokassa:
-
+Kytketään nyt nimilista ja näkymäkomponentti toisiinsa kontrolleriluokassa:
 
 ```java,ignore
 public void initialize(URL url, ResourceBundle resourceBundle) {
-    nimitulostet.setItems(nimet);
+    // HIGHLIGHT_GREEN_BEGIN
+    nimitulosteet.setItems(nimet);
 
     nimet.add("Denis");
     nimet.add("Antti-Jussi");
     nimet.add("Sami");
+    // HIGHLIGHT_GREEN_END
 }
 ```
 
-Tämän kytkennän jälkeen **meidän ei tarvitse koskaan kutsua mitään "päivitä
-lista" -metodia**. Kun koodissa tehdään `nimet.add("Uusi nimi")`, nimi ilmestyy
-ruudulle automaattisesti. `ListView` on sisäisesti lisännyt itsensä listan
-havaitsijaksi samalla tavalla kuin teimme esimerkin `addListener`-kohdassa.
+Näin asetamme `nimitulosteet`-komponentin `nimet`-listan havaitsijaksi.
+Varsinainen `addListener()`-kutsu tapahtuu `setItems()`-metodissa aivan samalla
+tavalla kuin teimme itse aiemmin. Tämän kytkennän jälkeen meidän ei tarvitse
+koskaan kutsua mitään "päivitä lista" -metodia. Kun koodissa tehdään
+`nimet.add("Uusi nimi")`, nimi ilmestyy ruudulle automaattisesti. 
 
 Tätä on tietysti vielä pikkuisen hankala nähdä, koska `initialize()`-metodissa
-on suoraan kovakoodattuna `nimet.add("Ada")` ja `nimet.add("Linus")`. Lisätään
-vielä painikkeelle tapahtumakäsittelijä, joka lisää listaan uuden nimen:
+nimien lisäys kovakoodattuna. Lisätään vielä painikkeelle tapahtumankäsittelijä,
+joka lisää listaan uuden nimen.
 
 ```java,ignore
 public void initialize(URL url, ResourceBundle resourceBundle) {
-    nimitulostet.setItems(nimet);
+    nimitulosteet.setItems(nimet);
 
     // HIGHLIGHT_RED_BEGIN
     nimet.add("Denis");
@@ -387,27 +393,27 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 
-Kokeile nyt ajaa sovellus ja lisätä nimiä käyttöliittymän kautta:
+Kokeile nyt ajaa sovellus ja lisätä nimiä käyttöliittymän kautta.
 
 <video src="images/list-app-works.mp4" controls></video>
 
-Huomaa: JavaFX havaitsee listan lisäyksiä ja huolehtii siitä, että näkymä
-vastaa dataa.
-Näin malli ja näkymä ovat erillään toisistaan ja hoitavat omia vastuitaan: malli
-vastaa datan tilasta ja käyttöliittymä vain datan esittämisestä.
+TODO: Tämä kappale pois -- toistoa?
+Huomaa: JavaFX havaitsee listan lisäyksiä ja huolehtii siitä, että näkymä vastaa
+dataa. Näin malli ja näkymä ovat erillään toisistaan ja hoitavat omia
+vastuitaan: malli vastaa datan tilasta ja käyttöliittymä vain datan
+esittämisestä.
 
 ## Tehtävä malliluokaksi
 
-Palataan nyt takaisin Todo-sovellukseemme.
-Tavoitteenname olisi nyt vastaavasti mallintaa kaikki tehtävän tila
-`Tehtava`-luokalla, jolloin tehtävästä tulisi todellinen malliluokka.
-Puolestaan `VBox`-komponentit ja `CheckBox`-valintaruudut hoitaisivat vain datan
+Palataan nyt takaisin Todo-sovellukseemme. Tavoitteenamme olisi nyt mallintaa
+kaikki tehtävän tila `Tehtava`-luokalla, jolloin tehtävästä tulisi todellinen
+malliluokka. Puolestaan `VBox`- ja `CheckBox`-komponentit hoitaisivat vain datan
 esittämisen. 
 
 Aloitetaan lisäämällä `MainController`-luokkaan `ObservableList`-attribuutti, joka
 toimii kaikkien tehtävien säiliönä.
 
-```java
+```java,ignore
 private ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList();
 ```
 
@@ -453,45 +459,45 @@ private void tallenna() {
 }
 ```
 
-Lisäksi `lataa()`-metodi yksinkertaistuu käyttämällä listojen `addAll`-metodia,
-joka lisää kaikki alkiot mukaan kerralla:
+Lisäksi `lataa()`-metodi yksinkertaistuu, kun voimme käyttää `addAll()`-metodia,
+joka lisää kaikki alkiot kerralla:
 
 ```java,ignore
-    private void lataa() {
-        Path path = Path.of("tehtavat.json");
-        if (Files.notExists(path)) {
-            return;
-        }
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            List<Tehtava> kaikkiTehtavat = mapper.readValue(path.toFile(), new TypeReference<>() {});
-            // HIGHLIGHT_RED_BEGIN
-            kaikkiTehtavat.forEach(tehtava -> {
-                CheckBox checkbox = luoCheckBox(tehtava.getTeksti(), tehtava.getTehty());
-                if (tehtava.getTehty()) {
-                    tehdyt.getChildren().add(checkbox);
-                } else {
-                    tekemattomat.getChildren().add(checkbox);
-                }
-            });
-            // HIGHLIGHT_RED_END
-            // HIGHLIGHT_GREEN_BEGIN
-            tehtavat.addAll(kaikkiTehtavat);
-            // HIGHLIGHT_GREEN_END
-        } catch (JacksonException je) {
-            IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
-        }
+private void lataa() {
+    Path path = Path.of("tehtavat.json");
+    if (Files.notExists(path)) {
+        return;
     }
+    try {
+        ObjectMapper mapper = new ObjectMapper();
+        List<Tehtava> kaikkiTehtavat = mapper.readValue(path.toFile(), new TypeReference<>() {});
+        // HIGHLIGHT_RED_BEGIN
+        kaikkiTehtavat.forEach(tehtava -> {
+            CheckBox checkbox = luoCheckBox(tehtava.getTeksti(), tehtava.getTehty());
+            if (tehtava.getTehty()) {
+                tehdyt.getChildren().add(checkbox);
+            } else {
+                tekemattomat.getChildren().add(checkbox);
+            }
+        });
+        // HIGHLIGHT_RED_END
+        // HIGHLIGHT_GREEN_BEGIN
+        tehtavat.addAll(kaikkiTehtavat);
+        // HIGHLIGHT_GREEN_END
+    } catch (JacksonException je) {
+        IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
+    }
+}
 ```
 
 Nyt tehtävien luominen, tallentaminen ja lataaminen on toiminnallisesti erotettu
 käyttöliittymän komponenteista. Toisin sanoen, `Tehtava`-luokka ja
 `tehtavat`-lista muodostavat yhdessä sovelluksen mallin.
 
-Luonnollisesti muutoksen seurauksena nyt sovelluksen
-avaaminen ja tehtävien lisääminen ei näy käyttöliittymässä, koska mallin ja
-käyttöliittymän välillä ei ole mitään kytkentää.
-Toteutetaan nyt liittymän päivittäminen tehtävien perusteella.
+Luonnollisesti muutoksen seurauksena nyt sovelluksen avaaminen ja tehtävien
+lisääminen ei näy käyttöliittymässä, koska mallin ja käyttöliittymän välillä ei
+ole mitään kytkentää. Toteutetaan nyt käyttöliittymän päivittäminen tehtävien
+perusteella.
 
 Tässä kohtaa on myös luontevaa muuttaa myös `luoCheckBox`-metodin esittelyrivi.
 Aiemmin annoimme sille parametrina tekstin ja valintatiedon erikseen
@@ -500,7 +506,7 @@ annetaan se suoraan parametrina. Näin metodi saa kaiken tarvitsemansa tiedon
 yhdellä kertaa.
 
 ```java,ignore
-// HIGHLIGHT_YELLOW_START
+// HIGHLIGHT_YELLOW_BEGIN
 private CheckBox luoCheckBox(Tehtava t) {
     CheckBox tehtava = new CheckBox(t.getTeksti());
     tehtava.setSelected(t.getTehty());
@@ -541,12 +547,11 @@ private void paivitaNakyma() {
 }
 ```
 
-Nyt voimme kytkeä kaiken yhteen.
-Kuitenkin nyt sen sijaan, että `paivitaNakyma()` kutsuttaisiin tehtävien
-lisäämisen tai lataamisen yhteydessä, kytkemme malli ja näkymä löyhästi
-`ObservableList`-listan avulla.
-Lisäämmekin listalle havaitsija, joka pävittää näkymän ja tallentaa tehtävät
-aina, kun tehtävälista muuttuu:
+Nyt voimme kytkeä kaiken yhteen. Kuitenkin nyt sen sijaan, että
+`paivitaNakyma()` kutsuttaisiin tehtävien lisäämisen tai lataamisen yhteydessä,
+kytkemme malli ja näkymä löyhästi `ObservableList`-listan avulla. Lisätään
+listalle havaitsija, joka pävittää näkymän ja tallentaa tehtävät aina, kun
+tehtävälista muuttuu:
 
 
 ```java
@@ -571,7 +576,6 @@ Koska nyt tallennuskin tapahtuu aina, kun lista muuttuu, voimme myös poistaa er
 ```java,ignore
 private void lisaaTehtava() {
     // metodin alkuosa piilotettu...
-
 //-    String teksti = uusiTehtavaNimi.getText();
 //-    if (teksti == null || teksti.isBlank()) {
 //-        uusiTehtavaNimi.requestFocus();
@@ -581,24 +585,22 @@ private void lisaaTehtava() {
 //-    tehtavat.add(new Tehtava(teksti, false));
 //-    uusiTehtavaNimi.clear();
 //-    uusiTehtavaNimi.requestFocus();
+    // ...
     // HIGHLIGHT_RED_BEGIN
     tallenna();
-    // HIGHLIGH_RED_END
+    // HIGHLIGHT_RED_END
 }
 ```
 
-
-
-Nyt jos kokeilet sovellusta nyt, jo tiedostosta ladatut tiedostot näkyvät
+Jos kokeilet sovellusta nyt, tiedostosta ladatut tiedostot näkyvät
 käyttöliittymässä, ja uusien tehtävien lisääminen toimii.
-
 
 ## CheckBox-tapahtuma muuttaa mallia
 
-Tällä hetkellä `luoCheckBox` sisältää edelleen logiikkaa, joka
-siirtelee checkboxia käsin `VBox`-säiliöiden välillä. 
-Tässä on nyt hieman turhaa toistoa näkymän päivittämiseen verrattuna, joten
-otetaan jo tässä vaiheessa vanha koodi pois:
+Tällä hetkellä `luoCheckBox`-metodi sisältää edelleen logiikkaa, joka siirtelee
+checkboxia käsin VBox-säiliöiden välillä. Tässä on nyt hieman turhaa toistoa
+näkymän päivittämiseen verrattuna, joten otetaan jo tässä vaiheessa vanha koodi
+pois:
 
 ```java,ignore
 private CheckBox luoCheckBox(Tehtava t) {
@@ -620,10 +622,10 @@ private CheckBox luoCheckBox(Tehtava t) {
 }
 ```
 
-Nyt meidän on muutettava ajattelutapaa.
-Valintaruudun klikkaamisen ei tulisi siirtää itse itseään, vaan ainoastaan
-muuttaa mallia. Puolestaan kun malli muuttuu, `tehtavat`-listan havaitsija herää
-ja päivittää näkymää juuri tehtyä `paivitaNakyma()`-metodia käyttäen.
+Nyt meidän on muutettava ajattelutapaa. Valintaruudun klikkaamisen ei tulisi
+siirtää itse itseään, vaan ainoastaan muuttaa mallia. Puolestaan kun malli
+muuttuu, `tehtavat`-listan havaitsija päivittää näkymää
+`paivitaNakyma()`-metodia käyttäen.
 
 Tässä vaiheessa `Tehtava`-olio ei *vielä* osaa ilmoittaa sisäisen tilansa
 muuttumisesta. Jos kutsuisimme vain `tehtava.setTehty(true)`, `ObservableList`
@@ -663,14 +665,13 @@ Nyt valintaruudun toiminta on suoraviivaisempi:
 
 Erityiesti valintaruudun vastuu on nyt yksikäsitteinen: mallin muuttaminen.
 
-Mainittakoon, että tämä ratkaisu on hieman tehoton.
-Nyt koko käyttöliittymä rakennetaan uudestaan
-yhden klikkauksen takia. Toisaalta checkbox-olion tilan muuttaminen aiheuttaa
-kaksi erillistiä muutosta `tehtavat`-listaan: vanhan `Tehtava`-olion poiston ja uuden
-`Tehtava`-olion lisäyksen. Toisin sanoen, `paivitaNakyma()` tulee kutsutuksi
-kahdesti aina, kun valintaruutua klikataan.
-Tämä on tietysti vähän turhaa, mutta toimii, koska
-`ObservableList` huomaa molemmat muutokset ja päivittää näkymän automaattisesti.
+Mainittakoon, että tämä ratkaisu on hieman tehoton. Nyt koko käyttöliittymä
+rakennetaan uudestaan yhden klikkauksen takia. Toisaalta checkbox-olion tilan
+muuttaminen aiheuttaa kaksi erillistiä muutosta `tehtavat`-listaan: vanhan
+`Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Toisin sanoen,
+`paivitaNakyma()` tulee kutsutuksi kahdesti aina, kun valintaruutua klikataan.
+Tämä on tietysti vähän turhaa, mutta toimii, koska `ObservableList` huomaa
+molemmat muutokset ja päivittää näkymän automaattisesti.
 
 Saavutimme kuitenkin päätavoitteemme: sovelluksen tilan ja sen muutoksen
 mallintaminen on siirtynyt `tehtavat`-listan ja `Tehtava`-olioiden vastuulle.

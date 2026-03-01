@@ -21,24 +21,21 @@
 Osassa 7 teimme toimivan Todo-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.
 
-Ratkaisu oli sinänsä
-hyvä aloitus, mutta pidemmällä aikavälillä se tekee sovelluksesta jäykän.
-Esimerkiksi jos haluamme lisätä tehtäville uusia ominaisuuksia, kuten pidempi
-kuvaus tai vaikkapa prioriteetti, meidän pitäisi lisätä ja hallita uusia
-komponentteja tai rakentaa kokonaan uusi `TehtavaCheckBox`-komponentti.
-Jos sitten vielä haluaisimme muokata tehtävän data lomakkeena, joutuisimme
-tekemään ehkä oman `TehtavaForm`-komponentin. Silloin taas on epäselvää, kumpi
-datan esitysmuodoista on "oikea": pitääkö `TehtavaCheckBox`-tehtävän tiedot
-siirtää aina `TehtavaForm`-tehtäviin vai toisinpäin?
-Tämä puolestaan sekoittaa ja monimutkaistaa koodin välisiä vastuita.
+Ratkaisu oli sinänsä hyvä aloitus, mutta pidemmällä aikavälillä se tekee
+sovelluksesta jäykän. Esimerkiksi jos haluamme lisätä tehtäville uusia
+ominaisuuksia, kuten pidemmän kuvauksen tai vaikkapa prioriteetin, meidän
+pitäisi lisätä uusia komponentteja, kuten `TehtavaCheckBox`-komponentti.
+Edelleen jos haluaisimme muokata tehtävän dataa lomakkeena, joutuisimme tekemään
+oman `TehtavaForm`-komponentin. Silloin taas on epäselvää, kumpi datan
+esitysmuodoista on "oikea": pitääkö `TehtavaCheckBox`-tehtävän tiedot siirtää
+aina `TehtavaForm`-tehtäviin vai toisinpäin? 
 
-Oliopohjaista suunnittelua mukaillen voimme päätellä, että *kohdealueen
-ydintoiminta ja sen esittäminen käyttäjälle ovat kaksi erillistä vastuuta*.
-Todo-sovelluksen tehtävien tiedot ja niiden hallinta olisi parasta mallintaa
-omana kokonaisuutena. Puolestaan käyttöliittymän ainoa vastuu tulisi olla
-esittää kohdealueen data. Toisin sanoen, valintaruudut ovat tapa esittää
-tehtäviä, ja valintaruutu ei ole tehtävä itsessään.
-
+Oliopohjaista suunnittelua mukaillen *kohdealueen ydintoiminta ja sen
+esittäminen käyttäjälle ovat kaksi erillistä vastuuta*. Todo-sovelluksen
+tehtävien tiedot ja niiden hallinta olisi parasta mallintaa omana
+kokonaisuutena. Puolestaan käyttöliittymän ainoa vastuu tulisi olla esittää
+kohdealueen data. Valintaruudut eivät itsessään ole tehtävä, vaan vain tapa
+esittää niitä.
 
 Tässä osassa jatkamme osan 7 Todo-sovelluksen työstämistä.
 Keskitymme nyt sovelluksen käyttöliittymän ja ydintoiminnan
