@@ -141,6 +141,17 @@ public static double keskiarvo(List<Integer> luvut, int lopetusluku) {
 
 Nyt kaikki testit menevät läpi!
 
+<task>
+  <task-title>Tehtävä 8.5: Testaus. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/8-5-testaus/handout.md}}
+
+</handout>
+  <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava5">Tee tehtävä TIMissä</a></task-link>
+</task>
+
+
 ## Yksikkötestaus ja MVC-arkkitehtuuri
 
 Nyt kun olemme siirtyneet MVC-arkkitehtuuriin ja luoneet
@@ -150,43 +161,48 @@ hyöty. Jos yrittäisimme testata koodia käyttöliittymän kautta esimerkiksi
 simuloimalla napin painalluksia, testaus olisi hidasta, altista satunnaisille
 virheille ja vaatisi raskaiden JavaFX-kirjastojen käynnistämisen. Koska
 kokoelmalla on nyt selkeä ohjelmointirajapinta (metodit `lisaaTehtava`,
-`poistaTehtava` jne.), voimme rakentaa **yksikkötestejä**, jotka kutsuvat
-suoraan kokoelmaa ja tarkistavat asioiden toimiutuvuuden millisekunneissa ilman
-ruudulle aukeavia ikkunoita.
+`poistaTehtava` jne.), voimme rakentaa yksikkötestejä, jotka kutsuvat suoraan
+kokoelmaa ja tarkistavat asioiden toimiutuvuuden millisekunneissa ilman ruudulle
+aukeavia ikkunoita.
 
 Seuraavaksi opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
 tiedosto-operaatioista testeissä.
 
-## Ongelma: Tiedostojen ja I/O:n testaus on vaarallista
+## IO on ongelmallista testauksessa
 
 Mietitäänpä tilannetta, jossa lähtisimme testaamaan uutta hienoa
 `Tehtavakokoelma`-luokkaamme. Mitä tapahtuu, jos testi tekee kokoelmaan kymmenen
 uutta tehtävää ja testaa, että lukumäärä täsmää? Koska laitoimme observerin
 varoittamaan muutoksista ja kutsumaan kokoelman `tallenna()`-metodia, ohjelma
-tallentaa nämä testitehtävät **oikealle kovalevylle** (esim.
+tallentaa nämä testitehtävät oikealle kovalevylle (esim.
 `tehtavat.json`-tiedostoon).
 
-Oikealle kovalevylle kirjoittaminen on testeissä yleensä pahasta, sillä se tekee
-testeistä erittäin hitaita pyöriä, jos satoja testejä ajettaisiin sekunneissa
-peräjälkeen.
+Oikealle kovalevylle kirjoittaminen on testeissä yleensä pahasta. Tyypillisessä
+tuotantosovelluksessa testejä saatetaan ajaa satoja peräjälkeen, ja levy-IO
+(input/output) tekee testeistä erittäin hitaita. Lisäksi, jos testit
+epäonnistuvat tai keskeytyvät kesken, ne voivat jättää levylle sotkuisen tilan,
+jossa on puoliksi kirjoitettuja tiedostoja tai vanhentunutta dataa. 
 
 ## Ratkaisu: Datatallennuksen eriyttäminen abstraktioiden taakse (Repository-suunnittelumalli)
 
 Jotta pääsemme näistä ongelmista eroon tehdessämme yksikkötestejä, turvaudumme
 ohjelmistosuunnittelun klassiseen temppuun: erotamme tallennuspaikan
-(`tehtavat.json` via `ObjectMapper`) suorasta käytöstä. Hyvä suunnitteluperiaate
-ohjaa erottamaan tallennuksen omaksi kokonaisuudekseen, ja tähän käytetään usein
-_Repository_-rajapintaa (säilö).
+(`tehtavat.json`-tallennus `ObjectMapper`-olion kautta) suorasta käytöstä. Hyvä
+suunnitteluperiaate ohjaa erottamaan tallennuksen omaksi kokonaisuudekseen, ja
+tähän käytetään usein niin kutsuttua *repository-suunnittelumallia*.
 
-Rajapinnan tehokkuus piilee siinä, että `Tehtavakokoelma`-luokan ei sen jälkeen
-enää tarvitse tietää, _miten_ tai _minne_ data tallennetaan (onko se
-JSON-tiedosto, tietokanta vai vain keskusmuistilista testausta varten).
+Repository-suunnittelumalli tarkoittaa sitä, että datan tallennus ja lataus
+piilotetaan oman rajapinnan tai luokan taakse. Tällöin muu ohjelma ei käsittele
+suoraan tiedostoja, tietokantoja tai muita tallennusmekanismeja, vaan käyttää
+repository-rajapinnan (esim. `TehtavaRepository`) tarjoamia metodeja.
 
-### 1. Luodaan rajapinta `TehtavaRepository`
+Katsotaan Todo-sovelluksessamme, miten tämä toteutaan käytännössä.
 
-Luodaan pakettiin `persistence` uusi rajapinta:
+**1. Luodaan rajapinta `TehtavaRepository`**. Tyypillistä on, että lataamiseen
+ja tallentamiseen liittyvät metodit määritellään pakkaukseen `persistence`.
+Tehdään mekin niin. 
 
-```java
+```java,ignore
 package fi.jyu.ohj2.nimi.todo.persistence;
 
 import fi.jyu.ohj2.nimi.todo.model.Tehtava;
@@ -199,10 +215,10 @@ public interface TehtavaRepository {
 }
 ```
 
-### 2. Irroitetaan JSON-tallennuskoodi mallista omaan toteutukseensa `JsonTehtavaRepository`
-
-Kopioidaan tallennuskoodit `Tehtavakokoelmasta` uuteen omistettuun luokkaan,
-joka on rajapinnan mukainen suorittaja (implementaatio):
+**2. Irroitetaan JSON-tallennuskoodi mallista omaan toteutukseensa
+`JsonTehtavaRepository`**. Tehdään tämä samaiseen `persistence`-pakkaukseen.
+Kopioidaan lataamiseen ja tallentamiseen liittyvät koodit `Tehtavakokoelmasta`
+uuteen luokkaan, joka toteuttaa `TehtavaRepository`-rajapinnan. 
 
 ```java
 package fi.jyu.ohj2.nimi.todo.persistence;
@@ -239,10 +255,9 @@ public class JsonTehtavaRepository implements TehtavaRepository {
 }
 ```
 
-### 3. Päivitetään Tehtavakokoelma huolimaan kuka tahansa tallentaja
-
-Muokkaamme `Tehtavakokoelman` konstruktoria niin, että sille _annetaan_ jokin
-rajapinnan toteuttaja tiedostojumpan sijaan:
+**3. Päivitetään Tehtavakokoelma huolimaan kuka tahansa tallentaja**. Muokataan
+`Tehtavakokoelman` konstruktoria niin, että sille _annetaan_ jokin rajapinnan
+toteuttaja tiedostojumpan sijaan:
 
 ```java
 public class Tehtavakokoelma {
@@ -285,9 +300,19 @@ public class Tehtavakokoelma {
 }
 ```
 
-(Muista vihdoin vaihtaa `MainController`issa uusi rivi muotoon
-`new Tehtavakokoelma(new JsonTehtavaRepository(Path.of("tehtavat.json")));`)
+Vaihda myös `MainController`issa rivi (TODO: Mikä rivi??) muotoon
+`new Tehtavakokoelma(new JsonTehtavaRepository(Path.of("tehtavat.json")));`.
 
+Repository tukee Todo-sovelluksemme tapauksessa MVC-mallin mukaista toteutusta,
+koska sen avulla mallikerroksen sisällä vastuut pidetään erillään.
+`Tehtavakokoelma` kuuluu malliin, mutta sen ei tarvitse tietää tallennuksen
+teknisistä yksityiskohdista. Se voi pyytää repositorya lataamaan tai
+tallentamaan tehtävät ja keskittyä itse sovelluslogiikkaan. Näin myös
+kontrolleri ja näkymä pysyvät erossa tiedostokäsittelystä.
+
+Rajapinnan tehokkuus piilee siinä, että `Tehtavakokoelma`-luokan ei sen jälkeen
+enää tarvitse tietää, _miten_ tai _minne_ data tallennetaan (onko se
+JSON-tiedosto, tietokanta vai vain keskusmuistilista testausta varten).
 
 ## Mock- ja Fake-luokat
 
@@ -352,8 +377,6 @@ Testiympäristössä (eli `src/test/java...`-kansiossa) voimme nyt luoda luokan
 (ns. _Mock_- tai _Fake_-luokan), joka **teeskentelee** tallentavansa tietoja
 tiedostoon, mutta todellisuudessa tallentaakin ne vain normaaliin Java-listaan
 laitteen välimuistiin.
-
-
 
 ```java
 public class MockTehtavaRepository implements TehtavaRepository {
