@@ -2,11 +2,11 @@
 
 Nyt kun meillä on luotuna `Tehtava`-malli propertyineen ja pystymme näyttämään
 listan tehtäviä `TableView`-komponentissa, on aika pohtia koko sovelluksen
-rakennetta.
+arkkitehtuuria.
 
-Tällä hetkellä kaikki sovelluksen ohjauslogiikka, data ja tiedostokäsittely ovat
+<!-- Tällä hetkellä kaikki sovelluksen ohjauslogiikka, data ja tiedostokäsittely ovat
 kietoutuneet `MainController`-luokkaan. Tämä tekee kontrollerista nopeasti liian
-raskaan ylläpitää ja vaikean testata. 
+raskaan ylläpitää ja vaikean testata.  -->
 
 Sovelluksen arkkitehtuuri tarkoittaa sitä, miten ohjelman eri osat ja
 vastuualueet järjestetään järkeväksi kokonaisuudeksi. Hyvä arkkitehtuuri tekee
@@ -14,7 +14,9 @@ koodista helpommin ymmärrettävää, laajennettavaa ja testattavaa. Tässä
 projektissa sille on tarvetta erityisesti siksi, että tehtävien käsittely,
 tallennus ja käyttöliittymä eivät kasautuisi yhteen samaan luokkaan.
 
-Eräs arkkitehtuuriratkaisu tähän sovellukseen on **MVC**
+Arkkitehtuuria ei usein tarvitse miettiä nollasta, vaan on olemassa valmiita
+yleisesti hyväksi todettua artkkitehtuuriratkaisuja.
+Eräs ratkaisu sovelluksen arkkitehtuurin suunnitteluun on **MVC**
 (Model-View-Controller).
 
 MVC-arkkitehtuurissa sovellus jaetaan kolmeen osaan: malliin (Model),
@@ -27,25 +29,23 @@ malliluokkaansa.
 
 Käytännön sovelluksessa ei yleensä ole vain yhtä mallia, yhtä näkymää ja yhtä
 kontrolleria. Samassa ohjelmassa voi olla useita malleja eri
-datakokonaisuuksille, useita näkymiä eri ruuduille tai käyttötilanteille sekä
+tiedoille, useita näkymiä eri ruuduille tai käyttötilanteille sekä
 useita kontrollereita, jotka vastaavat omista käyttöliittymän osistaan. MVC
 kuvaa siis ennen kaikkea vastuiden jakamisen periaatetta, ei sitä, että koko
-sovellus pitäisi rakentaa vain yhdestä Model-, View- ja Controller-kolmikosta.
+sovellus pitäisi rakentaa vain yhdestä Model-, View- ja Controller-luokasta.
 
-Tässä osassa jaamme sovelluksemme vastuualueisiin: käyttöliittymä, data ja
-ohjauslogiikka erotetaan toisistaan. Erityisesti siirrämme datan hallinnan ja
-tallennuksen kontrollerista omaan malliluokkaansa.
+Tässä osassa tunnistamme sovelluksemme osien vastuualueet ja erotamme
+loput datan hallinnan ja tallennuksen toimintoja kontrollerista omaan malliluokkaansa.
 
-## Kerrosten vastuut
+## MVC-arkkitehtuurin kerrokset ja vastuut
 
-Katsotaan tarkemmin, mitkä ovat kunkin kerroksen vastuut ja miten kukin kerros
-toteutetaan tässä projektissa.
+Katsotaan tarkemmin, mitkä ovat kunkin kerroksen eli osan vastuut MVC-arkkitehtuurissa ja
+miten kukin kerros toteutetaan tässä projektissa.
 
 ### Näkymä (view)
 
 - **Vastuu:** Miltä sovellus näyttää.
-- **Toteutus:** FXML-tiedostot kuvaavat käyttöliittymän rakenteen (`TableView`,
-  painikkeet, kentät).
+- **Toteutus Todo-sovelluksessa:** FXML-tiedostot, jotka kuvaavat käyttöliittymän rakenteen.
 - **Rajoitukset:** Ei sisällä lainkaan sovelluslogiikkaa (ei esim. tiedä miten
   tehtävät tallennetaan kovalevylle).
 
@@ -53,8 +53,8 @@ toteutetaan tässä projektissa.
 
 - **Vastuu:** Mitä dataa sovelluksessa on ja miten sitä käsitellään
   (liiketoimintalogiikka).
-- **Toteutus:** Olemme jo tehneet `Tehtava`-luokan mallintamaan yksittäistä
-  tehtävää. Tässä osassa luomme `Tehtavakokoelma`-luokan, joka pitää sisällään
+- **Toteutus Todo-sovelluksessa:** Olemme jo tehneet `Tehtava`-luokan mallintamaan yksittäistä
+  tehtävää. Tässä osassa luomme lisäksi `Tehtavakokoelma`-luokan, joka pitää sisällään
   koko sovelluksen tilan (tehtävälistan) ja tarjoaa metodit tehtävien
   lisäämiseen, poistamiseen ja tallentamiseen. 
   <!-- Koska `Tehtava` on itsessään Jacksonin ymmärtämää muotoa (siinä on tyhjä 
@@ -63,36 +63,36 @@ toteutetaan tässä projektissa.
   vaan luottaa observable-rakenteisiin kertoakseen muutoksista kiinnostuneille
   osapuolille.
 
+
 ### Ohjain (controller)
 
 - **Vastuu:** Toimia tulkkina näkymän ja mallin välillä.
-- **Toteutus:** `MainController` reagoi käyttäjän tekemiin toimintoihin, kuten
+- **Toteutus Todo-sovelluksessa:** `MainController` reagoi käyttäjän tekemiin toimintoihin, kuten
   painikkeen painallukseen, kutsuu mallin (`Tehtavakokoelma`) metodeja, ja sitoo
-  näkymän (`TableView`) kiinni mallin tarjoamaan observable-dataan.
+  näkymän (`TableView`) kiinni malliin `Observable`-tietorakenteiden avulla.
 
-## Yhden vastuun periaate (engl. Single Responsibility Principle)
+## MVC kannustaa noudattamaan yhden vastuun periaatetta
 
-*Yksi vastuu* on yksi ohjelmistosuunnittelun periaate, jonka mukaan jokaisella
+*Yksi vastuu* (engl. Single Responsibility) on yksi ohjelmistosuunnittelun
+periaate, jonka mukaan jokaisella
 luokalla tai ohjelman osalla pitäisi olla yksi selkeä vastuualue; yksi
 pääasiallinen syy muuttua. Ajatus on, että samaan luokkaan ei tule kasata
 asioita, jotka muuttuvat eri syistä. Yhden vastuun periaate on yksi [viidestä
-SOLID-periaatteesta](https://en.wikipedia.org/wiki/SOLID).
-
+SOLID-periaatteesta](https://en.wikipedia.org/wiki/SOLID), johon palataan
+tarkemmin myöhemmässä osassa.
 "Syy muuttua" tarkoittaa tässä yhteydessä tarvetta tai vaatimusta, jonka vuoksi
 luokan toteutusta joudutaan muuttamaan. 
 
 Todo-sovelluksessamme esimerkiksi tehtävien tallentaminen tiedostoon voisi
 muuttua siksi, että haluamme vaihtaa JSON-tiedoston tietokantaan. Käyttöliittymä
-puolestaan voi muuttua siksi, että haluamme näyttää tehtävät eri tavalla, lisätä
-uuden näkymän tai muuttaa painikkeiden toimintaa. Jos sama luokka huolehtisi
+puolestaan voi muuttua siksi, että haluamme näyttää tehtävät eri tavalla,
+tai vaikkapa tarjota sama sovellus komentorivi- tai verkkoversiona.
+Jos sama luokka huolehtisi
 sekä tallennuksesta että käyttöliittymästä, nämä kaksi erilaista muutostarvetta
 sotkeutuisivat toisiinsa.
 
-MVC liittyy tähän siten, että se auttaa jakamaan vastuut konkreettisesti
-ohjelman eri osiin, kuten yllä kuvailimme. MVC ei automaattisesti takaa
-täydellistä rakennetta, mutta se tukee yhden vastuun periaatetta, koska eri
+MVC-arkkitehtuuri tukee yhden vastuun periaatteen noudattamista, koska eri
 syistä muuttuvat asiat erotetaan lähtökohtaisesti eri kerroksiin.
-
 Tässä projektissa periaate näkyy esimerkiksi näin:
 
 - `Tehtava` ja `Tehtavakokoelma` kuuluvat malliin, koska niiden tehtävä on
@@ -100,113 +100,150 @@ Tässä projektissa periaate näkyy esimerkiksi näin:
 - `MainController` ei tallenna tiedostoja itse, vaan delegoi sen mallille.
 - FXML-näkymä ei sisällä sovelluslogiikkaa, vaan vain käyttöliittymän rakenteen.
 
-Jos `MainController` vastaisi samaan aikaan nappien käsittelystä, syötteiden
+Jos `MainController` vastaisi samaan aikaan painikkeiden käsittelystä, syötteiden
 tarkistuksesta, tehtävien tallennuksesta ja tiedoston lukemisesta, luokalla
 olisi monta eri syytä muuttua. Tällöin sitä olisi vaikeampi testata, ylläpitää
 ja laajentaa turvallisesti.
 
-Voit halutessasi tutustua yhden vastuun periaatteeseen ja MVC:hen lisää näistä
+<!-- DZ: Ehkä palataan tähän osassa 9? -->
+<!-- Voit halutessasi tutustua yhden vastuun periaatteeseen ja MVC:hen lisää näistä
 linkeistä: (1) Robert C. Martin: [The Single Responsibility
 Principle](https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html).
 (2) Apple:
-[Model-View-Controller](https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html)
+[Model-View-Controller](https://developer.apple.com/library/archive/documentation/General/Conceptual/CocoaEncyclopedia/Model-View-Controller/Model-View-Controller.html) -->
 
-## Esimerkkirakenne
+## Sovelluksen pakkausten refaktorointi
 
-Arkkitehtuuria selkeyttää kooditiedostojen jakaminen pakkauksiin vastuun mukaan:
+JavaFX-sovelluksessa MVC-arkkitehtuurin mukainen jako on helpointa nähdä
+projektin pakkauksista ja kansiorakenteesta.
+Tällä hetkellä sovelluksemme luokat jakautuvat seuraaviin pakkauksiin:
+
+```bob
+fi.jyu.ohj2.nimi.todo
+├── data
+│   └── Tehtava
+├── App
+├── Main
+└── MainController
+```
+
+Refaktoroidaan nykyisten pakkausten nimet ja jaetaan luokat uusiin pakkauksiin niin, että
+MVC-arkkitehtuurin mukainen vastuunjako näkyy selkeämmin:
 
 ```text
 fi.jyu.ohj2.nimi.todo
 ├── model
-│   ├── Prioriteetti.java
-│   ├── Tehtava.java
-│   └── Tehtavakokoelma.java
-└── ui
-    ├── Main.java
-    └── MainController.java
+│   └── Tehtava
+├── controller
+│   └── MainController
+├── App
+└── Main
 ```
 
-Kontrolleri sijoitetaan tässä samaan `ui`-pakkaukseen näkymän kanssa, koska se on
-käytännössä käyttöliittymäkerroksen osa: se reagoi näkymän tapahtumiin ja
-välittää kutsut mallille, mutta ei itse hallitse dataa. Erilliselle
-`controller`-pakkaukselle olisi hyvä peruste etenkin silloin, jos sovelluksessa on
-useita kontrollereita, mutta tässä esimerkissä `ui`-pakkaus pitää rakenteen
-yksinkertaisena.
+Aloitetaan muuttamalla nykyinen `data`-alipakkaus `model`-alipakkaukseen.
+Avaa IntelliJ IDEA:n projektiselain ja klikkaa hiiren toissijaisella
+painikkeella `data`-alipakkauksesta. Valitse sitten **Rename** avautuneesta
+valikosta. Tämän jälkeen vaihda avautuneesta valikosta pakkauksen
+`data`-loppuosa `model`-loppuosaan ja paina **Refactor**:
+
+<video src="images/intellij-refactor-rename.mp4" controls></video>
+
+Tee tämän jälkeen uusi alipakkaus nimeltään `controller` (ks. [osa
+](../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut.md#pakkaukset-javassa))
+ja raahaa `MainController`-luokka uuteen pakkaukseen:
+
+<video src="images/intellij-refactor-new-package.mp4" controls></video>
+
+Huomaa, että IDEA osaa automaattisesti refaktoroida luokkien sisällä olevia
+`package`-määreitä sekä FXML-tiedostossa olevan luokkaviitteen.
 
 ## Tehtavakokoelma
 
 Siirrämme nyt sovelluksen sydämen, eli tehtävälistan hallinnan ja tietojen luku-
-ja tallennusoperaatiot, pois kontrollerista omaan luokkaansa. Luodaan
-`model`-pakkaukseen luokka `Tehtavakokoelma`. Import-lauseet on jätetty pois
-tilan säästämiseksi.
+ja tallennusoperaatiot, pois kontrollerista omaan luokkaansa.
+Kyseinen toiminnallisuus liittyy selvästi sovelluksen dataan ja sen käsittelyyn,
+joten tehtävälista ja sen hallinta kuuluu MVC-arkkitehtuurissa mallikerrokseen.
+
+Luodaan `model`-pakkaukseen luokka `Tehtavakokoelma` ja siirretään siihen
+tehtävien hallintaan kuuluvat toiminnot: `tehtava`-lista, listaan liittyvä
+alustus, `lataa()`-metodi ja `tallenna()`-metodi.
+Seuraamme myös kapselointiperiaatetta: teemme `tehtavat`-listasta `private`
+ja temme apumetodit `getTehtavat()`. `lisaaTehtava()` sekä `poistaTehtava()`, joilla hoidetaan
+tehtävien lisääminen ja poistaminen sekä kytkentä käyttöliittymään.
+Samalla teemme pari pientä refaktorointia: siirrämme tallennustiedoston
+sijainnin sekä `ObjectMapper`-olion kokoelman attribuutteihin, sillä kumpaakin
+käytetään latauksen ja tallennuksen yhteydessä.
+
 
 ```java,ignore
-package fi.jyu.ohj2.nimi.todo.model;
+package fi.jyu.ohj2.dezhidki.todo.model;
+
+//-import javafx.beans.Observable;
+//-import javafx.collections.FXCollections;
+//-import javafx.collections.ListChangeListener;
+//-import javafx.collections.ObservableList;
+//-import tools.jackson.core.JacksonException;
+//-import tools.jackson.core.type.TypeReference;
+//-import tools.jackson.databind.ObjectMapper;
+//-
+//-import java.nio.file.Files;
+//-import java.nio.file.Path;
+//-import java.util.List;
+// import-määreet piilotettu tilan säästämiseksi
 
 public class Tehtavakokoelma {
-    // 1. Ekstraktori takaa, että jos tehtävän propertyt muuttuvat, lista huomaa sen
     private final ObservableList<Tehtava> tehtavat = FXCollections.observableArrayList(
-            t -> new javafx.beans.Observable[]{ // TODO: Tarvitaanko "javafx.beans."?
-                t.tehtyProperty(),
-                t.otsikkoProperty(),
-                t.prioriteettiProperty()
-            }
+            tehtava -> new Observable[]{tehtava.tehtyProperty()}
     );
-    
-    // Tiedoston tallennuspolku ja datan käsittelijä
-    private final Path tallennustiedosto = Path.of("tehtavat.json");
+
+    private final Path tiedostoPolku = Path.of("tehtavat.json");
     private final ObjectMapper mapper = new ObjectMapper();
 
     public Tehtavakokoelma() {
-        // Asetetaan tallennuskuuntelija listalle mallin sisällä
-        this.tehtavat.addListener((javafx.collections.ListChangeListener<Tehtava>) change -> {
+        tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
             tallenna();
         });
     }
 
-    // --- Ohjelman logiikkametodit ---
-
-    public void lataa() throws IOException {
-        if (Files.exists(tallennustiedosto)) {
-            // Lataaminen tiedostosta Jacksonin avulla
-            List<Tehtava> ladatut = mapper.readValue(tallennustiedosto.toFile(), new TypeReference<>() {});
-            tehtavat.setAll(ladatut);
-        }
-    }
-
-    private void tallenna() {
-        try {
-            // Kirjoitetaan lista JSON-muodossa tiedostoon
-            mapper.writeValue(tallennustiedosto.toFile(), tehtavat);
-        } catch (IOException e) {
-            // Tuotantosovelluksessa heitettäisiin poikkeus eteenpäin 
-            // tai kirjattaisiin lokiin. Tässä esimerkissä vain tulostetaan virhe.
-            System.err.println("Tallennus epäonnistui: " + e.getMessage());
-        }
-    }
-
-    // --- Julkiset metodit kontrollerin käyttöön ---
-
     public ObservableList<Tehtava> getTehtavat() {
-        return tehtavat;
+            return tehtavat;
     }
 
-    public void lisaaTehtava(String otsikko) {
-        if (otsikko == null || otsikko.isBlank()) return;
-        tehtavat.add(new Tehtava(otsikko.trim(), false));
+    public void tallenna() {
+        mapper.writeValue(tiedostoPolku, tehtavat);
+    }
+
+    public void lataa() {
+        if (Files.notExists(tiedostoPolku)) {
+            return;
+        }
+        try {
+            List<Tehtava> kaikkiTehtavat = mapper.readValue(tiedostoPolku, new TypeReference<>() {});
+            tehtavat.addAll(kaikkiTehtavat);
+        } catch (JacksonException je) {
+            IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
+        }
+    }
+
+    public void lisaaTehtava(String teksti) {
+        if (teksti == null || teksti.isBlank()) {
+            return;
+        }
+        teksti = teksti.trim();
+        tehtavat.add(new Tehtava(teksti, false));
     }
 
     public void poistaTehtava(Tehtava tehtava) {
-        if (tehtava != null) {
-            tehtavat.remove(tehtava);
+        if (tehtava == null) {
+            return;
         }
+        tehtavat.remove(tehtava);
     }
 }
 ```
 
 Huomaa, miten kaikki säännöt ("otsikko ei saa olla tyhjä", "päivitä tiedosto kun
-lisätään tai ominaisuus muuttuu") asuvat nyt täällä malliluokassa! Täällä ei ole
-tippaakaan koodia, joka tietäisi tekstikentistä.
+lisätään tai ominaisuus muuttuu") asuvat nyt täällä malliluokassa!
 
 ## Kontrollerin uusi rooli
 
@@ -228,69 +265,103 @@ testata itsenäisesti ilman käyttöliittymää, ja kontrolleri pysyy
 yksinkertaisempana. 
 
 ```java,ignore
-package fi.jyu.ohj2.nimi.todo.ui;
+package fi.jyu.ohj2.nimi.todo.controller;
 
-public class MainController {
-    @FXML private TextField uusiTehtavaNimi;
-    @FXML private TableView<Tehtava> tehtavaTaulu;
-    @FXML private TableColumn<Tehtava, String> otsikkoCol;
-    @FXML private TableColumn<Tehtava, Prioriteetti> prioriteettiCol;
-    @FXML private TableColumn<Tehtava, Boolean> tehtyCol;
+//-import fi.jyu.ohj2.nimi.todo.model.Tehtava;
+//-import fi.jyu.ohj2.nimi.todo.model.Tehtavakokoelma;
+//-import javafx.collections.transformation.SortedList;
+//-import javafx.fxml.FXML;
+//-import javafx.fxml.Initializable;
+//-import javafx.scene.control.Button;
+//-import javafx.scene.control.TableColumn;
+//-import javafx.scene.control.TableView;
+//-import javafx.scene.control.TextField;
+//-import javafx.scene.control.cell.CheckBoxTableCell;
+//-
+//-import java.net.URL;
+//-import java.util.Comparator;
+//-import java.util.ResourceBundle;
+// import-määreet piilotettu tilan säästämiseksi
 
-    // 1. Luodaan uusi ylätason malli 
-    private final Tehtavakokoelma malli = new Tehtavakokoelma();
+public class MainController implements Initializable {
+    @FXML
+    private Button lisaaUusiTehtavaPainike;
 
     @FXML
-    public void initialize() {
-        // Alustetaan taulukon databinding propertyihin
-        otsikkoCol.setCellValueFactory(cd -> cd.getValue().otsikkoProperty());
-        prioriteettiCol.setCellValueFactory(cd -> cd.getValue().prioriteettiProperty());
-        tehtyCol.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
-        
-        tehtyCol.setCellFactory(CheckBoxTableCell.forTableColumn(tehtyCol));
-        tehtyCol.setEditable(true);
+    private TextField uusiTehtavaNimi;
+
+    @FXML
+    private TableView<Tehtava> tehtavaTaulu;
+
+    @FXML
+    private Button poistaValittuPainike;
+
+    // HIGHLIGHT_YELLOW_BEGIN
+    private Tehtavakokoelma tehtavakokoelma = new Tehtavakokoelma();
+    // HIGHLIGHT_YELLOW_END
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        // HIGHLIGHT_YELLOW_BEGIN
+        SortedList<Tehtava> tehtavatLajiteltu = tehtavakokoelma.getTehtavat().sorted(Comparator.comparing(Tehtava::getTehty));
+        // HIGHLIGHT_YELLOW_END
+        tehtavaTaulu.setItems(tehtavatLajiteltu);
         tehtavaTaulu.setEditable(true);
 
-        try {
-            malli.lataa();
-        } catch (IOException e) {
-            System.err.println("Lataus epäonnistui: " + e.getMessage());
-        }
+        TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty");
+        tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());
+        tehtySarake.setCellFactory(CheckBoxTableCell.forTableColumn(tehtySarake));
+        tehtavaTaulu.getColumns().add(tehtySarake);
 
-        // 2. Kytketään mallin tarjoama obserable lista kiinni taulukkoon
-        tehtavaTaulu.setItems(malli.getTehtavat());
+        TableColumn<Tehtava, String> tekstiSarake = new TableColumn<>("Tehtävä");
+        tekstiSarake.setCellValueFactory(cd -> cd.getValue().tekstiProperty());
+        tehtavaTaulu.getColumns().add(tekstiSarake);
+
+        // HIGHLIGHT_YELLOW_BEGIN
+        tehtavakokoelma.lataa();
+        // HIGHLIGHT_YELLOW_END
+        uusiTehtavaNimi.setOnAction(event -> lisaaTehtava());
+        lisaaUusiTehtavaPainike.setOnAction(event -> lisaaTehtava());
+        poistaValittuPainike.setOnAction(event -> poistaValittu());
     }
 
-    @FXML
     private void lisaaTehtava() {
-        // Annetaan työn tekeminen mallin vastuulle
-        malli.lisaaTehtava(uusiTehtavaNimi.getText());
+        // HIGHLIGHT_YELLOW_BEGIN
+        tehtavakokoelma.lisaaTehtava(uusiTehtavaNimi.getText());
+        // HIGHLIGHT_YELLOW_END
         uusiTehtavaNimi.clear();
         uusiTehtavaNimi.requestFocus();
     }
 
-    @FXML
     private void poistaValittu() {
-        Tehtava valittu = tehtavaTaulu.getSelectionModel().getSelectedItem();
-        // Delegoituminen mallille
-        malli.poistaTehtava(valittu);
+        Tehtava valittuTehtava = tehtavaTaulu.getSelectionModel().getSelectedItem();
+        // HIGHLIGHT_YELLOW_BEGIN
+        tehtavakokoelma.poistaTehtava(valittuTehtava);
+        // HIGHLIGHT_YELLOW_END
     }
+
+    // HIGHLIGHT_RED_BEGIN
+    private void tallenna() {
+//-        ObjectMapper mapper = new ObjectMapper();
+//-        mapper.writeValue(Path.of("tehtavat.json"), tehtavat);
+    }
+
+    private void lataa() {
+//-        Path path = Path.of("tehtavat.json");
+//-        if (Files.notExists(path)) {
+//-            return;
+//-        }
+//-        try {
+//-            ObjectMapper mapper = new ObjectMapper();
+//-            List<Tehtava> kaikkiTehtavat = mapper.readValue(path.toFile(), new TypeReference<>() {});
+//-            tehtavat.addAll(kaikkiTehtavat);
+//-        } catch (JacksonException je) {
+//-            IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
+//-        }
+    }
+    // HIGHLIGHT_RED_END
 }
 ```
-
-Käyttöliittymäkontrollerin rivimäärä on pienentynyt huomattavasti ja logiikka on
-helppolukuista!
-
-## Miksi MVC auttaa tässä projektissa?
-
-- Jokaisella osalla on selkeä vastuu (Yhtenäisyys- eli Single Responsibility
-  -periaate).
-- Logiikka (listan hallinta, syötteen kelpoisuuden tarkistus, tallennus) voidaan
-  testata Java-ohjelmana `Tehtavakokoelma`-luokan avulla täysin ilman
-  käyttöliittymän pyörittämistä tai klikkailua.
-- Saman mallin (`Tehtavakokoelma` tilaoineen) voi tarvittaessa luovuttaa useiden
-  eri näkymien (esim. useat tiettyjen prioriteettien taulukot tai
-  muokkausikkuna) käyttöön vaivattomasti.
 
 ## Tehtävät
 
