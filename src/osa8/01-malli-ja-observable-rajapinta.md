@@ -65,7 +65,7 @@ JavaFX:ssä käytämme pääosin seuraavia `Observable`-rakenteita:
 
 ### Johdatteleva esimerkki
 
-Unohdetaan ihan hetkeksi meidän TODO-sovellus ja yritetään saada kiinni
+Unohdetaan ihan hetkeksi meidän Todo-sovellus ja yritetään saada kiinni
 `Observable`-tyyppien toiminnasta tarkemmin.
 
 Tehdään aivan uusi JavaFX projekti seuraamalla [luvussa
@@ -398,7 +398,7 @@ vastaa datan tilasta ja käyttöliittymä vain datan esittämisestä.
 
 ## Tehtävä malliluokaksi
 
-Palataan nyt takaisin TODO-sovellukseemme.
+Palataan nyt takaisin Todo-sovellukseemme.
 Tavoitteenname olisi nyt vastaavasti mallintaa kaikki tehtävän tila
 `Tehtava`-luokalla, jolloin tehtävästä tulisi todellinen malliluokka.
 Puolestaan `VBox`-komponentit ja `CheckBox`-valintaruudut hoitaisivat vain datan
@@ -766,7 +766,7 @@ kokonaan, joka rakensi `CheckBox`-komponentteja `VBox`-laatikoiden sisään –
 otetaan seuraavassa osassa avuksi `TableView`! -->
 
 <task>
-  <task-title>Tehtävä 8.1: TODO-ohjelma, vaihe 7. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 8.1: Todo-ohjelma, vaihe 7. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/8-1-todo-7/handout.md}}

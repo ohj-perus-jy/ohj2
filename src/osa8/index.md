@@ -7,18 +7,18 @@
 >
 > - Osaat erottaa datan, sovelluslogiikan ja käyttöliittymän toisistaan
 >   JavaFX-projektissa.
-> - Osaat käyttää JavaFX:n `Observable`-rajapintoja ja kokoelmia niin, että
->   käyttöliittymä päivittyy automaattisesti datan mukana.
+> - Osaat käyttää JavaFX:n `Observable`-rajapintaan perustuvia tyyppejä niin,
+>   että käyttöliittymä päivittyy automaattisesti datan mukana.
 > - Osaat esittää tehtävädatan `TableView`-komponentissa ja hyödyntää
 >   databindingia.
 > - Osaat tehdä tehtävien muokkausnäkymän, jossa on validointi ja
 >   priorisointitieto.
-> - Osaat kirjoittaa yksikkötestejä TODO-sovelluksen mallille ja
+> - Osaat kirjoittaa yksikkötestejä Todo-sovelluksen mallille ja
 >   sovelluslogiikalle.
 > - Harjoitustyön vaihe 2 palautus TIMiin (ei tarvitse erikseen näyttää
 >   tuntiopettajalle).
 
-Osassa 7 teimme toimivan TODO-sovelluksen, jossa tehtävät mallinnettiin pitkälti
+Osassa 7 teimme toimivan Todo-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.
 
 Ratkaisu oli sinänsä
@@ -34,13 +34,13 @@ Tämä puolestaan sekoittaa ja monimutkaistaa koodin välisiä vastuita.
 
 Oliopohjaista suunnittelua mukaillen voimme päätellä, että *kohdealueen
 ydintoiminta ja sen esittäminen käyttäjälle ovat kaksi erillistä vastuuta*.
-TODO-sovelluksen tehtävien tiedot ja niiden hallinta olisi parasta mallintaa
+Todo-sovelluksen tehtävien tiedot ja niiden hallinta olisi parasta mallintaa
 omana kokonaisuutena. Puolestaan käyttöliittymän ainoa vastuu tulisi olla
 esittää kohdealueen data. Toisin sanoen, valintaruudut ovat tapa esittää
 tehtäviä, ja valintaruutu ei ole tehtävä itsessään.
 
 
-Tässä osassa jatkamme osan 7 TODO-sovelluksen työstämistä.
+Tässä osassa jatkamme osan 7 Todo-sovelluksen työstämistä.
 Keskitymme nyt sovelluksen käyttöliittymän ja ydintoiminnan
 erottamiseen. Lopuksi katsomme, miten tämä erottaminen mahdollistaa
 ydintoiminnan oikeellisuuden varmistamista automaattisilla testeilla.
