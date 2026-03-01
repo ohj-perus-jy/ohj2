@@ -467,7 +467,8 @@ rakenne perustuu sisäisesti kekoon (engl. *heap*). Alkion lisäämisen ja
 poistamisen aikavaativuus on *O(log n)*. Pienimmän alkion pyytäminen on 
 kuitenkin erittäin nopeaa ja tapahtuu vakioajassa *O(1)*.
 
----
+
+## Tehtävät {#tehtavat}
 
 <task>
   <task-title>Tehtävä 5.8: Joukot<points>1 p.</points> </task-title>
