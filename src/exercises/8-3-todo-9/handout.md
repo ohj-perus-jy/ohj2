@@ -1,11 +1,12 @@
-Palauta tässä osan 8.3 perusteella edistetty projekti.
+Palauta tässä osan 8.2 perusteella edistetty projekti.
 
 Kertaus tämän osan vaiheista:
 
-- Korvaa tehtävien `VBox + CheckBox`-listaus `TableView`-komponentilla.
-- Lisää taulukkoon vähintään sarakkeet: tehtävä (otsikko), tehty-tila.
-- Kytke taulukon data `ObservableList<Tehtava>`-listaan.
-- Mahdollista tehtävän valinta ja poisto valitulta riviltä.
+- Jäsennä projekti kerroksiin (vähintään malli + käyttöliittymälogiikka).
+- Siirrä tiedoston luku- ja kirjoituslogiikka pois kontrollerista omaan luokkaan
+  (esim. repository/persistence-luokka).
+- Pidä `MainController` kevyenä: kontrolleri välittää käyttäjän tapahtumat
+  sovelluslogiikalle.
 
 Kun vaihe on valmis, tee `git add` muuttuneille tiedostoille ja `git commit`.
 Palauta projektisi tiedostot.
