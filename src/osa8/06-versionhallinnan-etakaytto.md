@@ -1,81 +1,227 @@
-# Versionhallinnan etäkäyttö (Git)
+# Versionhallinnan etäkäyttö 
 
-Tähän asti olet käyttänyt Gittiä todennäköisesti vain paikallisesti omalla
-koneellasi: olet tehnyt _commit_-komentoja ja luonut tallennuspisteitä. Jotta
-koodisi on turvassa kiintolevyn rikkoutumiselta ja jotta voisit jakaa sitä
-muille (esimerkiksi harjoitustyön ohjaajalle), koodi pitää viedä
-**etävarastoon** (remote repository).
+Tähän asti olemme käyttäneet versihallintaa vain omalla koneella. Jotta koodi 
+on turvassa kiintolevyn rikkoutumiselta ja jotta sen voi jakaa muille, 
+koodi yleensä viedä **etävarastoon** (engl. *remote repository*).
+Etävarasto voi olla vaikkapa toinen verkossa tietokone, mutta nykyään on
+yleisempää käyttää jotakin julkista etävarastopalvelua, kuten GitHub tai
+GitLab-palveluita. Kummatkin palvelut toimivat etävarastona sekä tarjoavat
+projektihallintaan hyöydyllisiä lisäominaisuuksia, kuten
+tehtävähallintatyökaluja, keskustelupalstoja ja muita yhteistyötä helpottavia
+työkaluja. 
 
-Tässä osassa siirrämme paikallisen projektin GitHubiin, GitLabiin tai muuhun
-valitsemaasi palveluun.
 
-## 1. Etävaraston luominen palvelussa
+Tässä osassa siirrämme paikallisen projektin GitLab- tai GitHub-palveluun.
+Jos olet Jyväskylän yliopiston opiskelija, käytössässi on Jyväskylän yliopiston
+GitLab-palvelin. Muussa tapauksessa voit ladata koodisi GitHub-palveluun.
 
-1. Kirjaudu sisään valitsemaasi palveluun (esim. GitHub).
-2. Etsi painike **New repository** (Uusi varasto).
-3. Anna varastolle nimi (esim. `todo-sovellus`).
-4. Valitse näkyvyydeksi tyypillisesti **Private** (yksityinen), jos kyseessä on
-   keskeneräinen harjoitustyö, jota ei haluta jakaa julkisesti nettiin.
-5. **Älä** täppää valintoja "Add a README file" tai "Add .gitignore", sillä
+## Etävaraston luominen
+
+Jotta git-varasto voi ladata etävarastopalveluun, palvelussa tulee ensin luoda
+etävarasto. Etävarastopalvelut kutsuvat etävarastoja usein myös projekteiksi
+tarjottujen lisäpalvelujen takia.
+
+### [GitLab (JYU)](#tab/gitlab)
+
+1. Kirjaudu sisään [JYU:n GitLabiin](https://gitlab.jyu.fi/) yliopiston
+   tunnuksilla. Kirjoita tunnus muodossa `tunnus` **ilman** `@jyu.fi`-päätettä.
+2. Paina oikeassa yläpalkissa olevaa `+`-painiketta ja valitse **New project/repository**:
+
+    <img src="images/gitlab-new-repo.png">
+
+3. Valitse annetuista vaihtoehdoista **Create blank project**.
+
+4. Täytä projektin tiedot seuraavasti:
+
+    - **Project name**: Anna projektille nimi, esimerkiksi `TodoFX`.
+    - **Project URL**: Varmista, että `https://gitlab.jyu.fi/`-kentän perässä
+      olevassa alasvetovalikossa lukee käyttäjätunnuksesi. Jos ei, klikkaa
+      alasvetovalikosta ja kirjoita tunnuksesi.
+    - **Project slug**: Sen pitäisi olla automaattisesti projektisi nimi ilman
+      erikoiskirjaimia, esimerkiksi `todofx`.
+    - **Visibility level**: Valitse tässä projektissa Internal tai Public, jotta
+      muut ihmiset pääsevät näkemään projektisi koodin.
+      Omissa projekteissa voit valita mielestäsi sopivan.
+    - **Project configuration**: Ota kaikki ruksit pois päältä. **Poista**
+      valinta erityisesti kohdasta *Initialize repository with a README*, sillä
    meillä on jo lokaalisti olemassa oleva projekti.
 
-Kun olet painanut "Create repository", palvelu näyttää sinulle varaston
-verkko-osoitteen, joka näyttää esimerkiksi tältä:
-`https://github.com/kayttajatunnus/todo-sovellus.git`
+    Lomakkeen pitäisi lopuksi näyttää täältä:
 
-## 2. Etävaraston yhdistäminen lokaaliin projektiin
+    <img src="images/gitlab-project-form.png">
 
-Avaa Git Bash (tai Mac/Linuxin terminaali) projektisi juuressa (siellä missä on
-`.git`-kansio ja `pom.xml`).
+5.  Paina lopuksi **Create project**.
 
-Kerro paikalliselle Gitillesi, että tällä projektilla on nyt olemassa "koti"
-internetissä:
+***
 
-```bash
-git remote add origin https://github.com/kayttajatunnus/todo-sovellus.git
-```
+### [GitHub](#tab/github)
 
-(Korvaa URL tietysti oman varastosi osoitteella!) Sana `origin` on
-Git-maailmassa vakiintunut nimitys projektin pääasialliselle etävarastolle.
+1. Kirjaudu sisään [GitHubiin](https://github.com/). Jos tunnusta ei ole, luo
+   sellainen.
 
-## 3. Koodin lähettäminen (Push)
+2. Paina oikeassa yläpalkissa olevaa `+`-painiketta ja valitse **New repository**.
 
-Nyt voimme "työntää" koodin verkkoon:
+3. Täytä etävaraston tiedot seuraavasti:
 
-```bash
-git push -u origin main
-```
+    - **Repository name**: Anna projektille nimi, esimerkiksi `TodoFX`.
+    - **Description**: Voit jättää tyhjäksi tai keksiä lyhyen kuvauksen
+    - **Choose visibility**: Valits tässä tapauksessa Public. Omissa projekteissa voit valita mielestäsi sopivan.
+    -  **Start with template**: No template
+    -  **Add README**: Pois päältä (Off)
+    -  **Add .gitignore**: No .gitignore
+    -  **Add license**: No license
+  
+    Lopuksi lomakkeen pitäisi näyttää täältä:
+
+    <img src="images/github-project-form.png">
+
+4. Paina lopuksi **Create repository**.
+
+***
+
+### [Valitse](#tab/default)
+
+Valitse käytettävä etävarastopalvelu:
+
+- **Jos olet Jyväskylän yliopiston opiskelija**, valitse GitLab (JYU). Voit
+  halutessasi vaihtoehtoisesti käyttää GitHubia.
+- **Muussa tapauksessa**, valitse GitHub.
+
+***
+
+## Etävaraston yhdistäminen lokaaliin projektiin
+
+Avaa komentorivi
+ja siirry projektisi juurikansioon. Juurikansio on se kansio, jossa on
+`src`-kansio ja `pom.xml`-tiedosto.
+Voit varmistaa, että olet oikeassa kansiossa suorittamalla `git
+status`-komennon, jolloin pitäisi näkyä git-varaston tila samalla tavalla kuin
+[osassa 7.3](../osa7/03-versionhallinta.md).
+
+Lisäämme seuraavaksi etävaraston osoitteen paikalliseen varastoon. Tätä varten
+meidän ensin pitäisi tietää git-etävarston osoite.
+
+### [GitLab (JYU)](#tab/gitlab)
+
+1. Mene tekmääsi projektin sibulle. Sivun osoitteen pitäisi oll muotoa
+   `https://gitlab.jyu.fi/tunnus/projektin-nimi`. Löydät kaikki projektisi
+   helposti myös osoitteesta
+   <https://gitlab.jyu.fi/dashboard/projects/personal>.
+   
+2. Kopioi git-etävaraston osoite. Klikkaa sinisestä **Code**-painikkeesta ja
+   kopioi *Clone with HTTPS* -kentässä olevan osoitteen:
+
+   <img src="images/gitlab-clone.png">
+
+***
+
+### [GitHub](#tab/github)
+
+1. Mene tekemääsi etävaraston sivulle. Sivun osoitteen pitäisi olla muotoa
+   `https://github.com/tunnus/varaston-nimi`. Löydät kaikki etävarastosi
+   helposti myös osoitteesta <https://github.com/repos>.
+
+2. Kopioi git-etävaraston osoite.
+
+    Jos etävarstosi on tyhjä, osoite näkyy suoraan etävarstosivulla:
+
+    <img src="images/github-clone-new.png">
+
+    Jos taas etävarastossa on jo koodia, näet osoitteen klikkaamalla vihreästä
+    **Code**-painikkeesta ja valitsemalla HTTPS-osoite:
+
+    <img src="images/github-clone-old.png">
+
+***
+
+### [Valitse](#tab/default)
+
+Valitse käytettävä etävarastopalvelu:
+
+- **Jos olet Jyväskylän yliopiston opiskelija**, valitse GitLab (JYU). Voit
+  halutessasi vaihtoehtoisesti käyttää GitHubia.
+- **Muussa tapauksessa**, valitse GitHub.
+
+***
+
+Kopioi etävaraston osoite ja lisää se paikallisen varastoon `git remote add` -komennolla:
+
+<asciinema src="images/git-remote-add.cast" rows="4" poster="npt:10"></asciinema>
+
+`git remote add`-komento ottaa kaksi parametria: etävaraston nimen ja etävarston osoitteen.
+Sana `origin` on Git-maailmassa vakiintunut nimitys projektin pääasialliselle etävarastolle.
+
+## Koodin lähettäminen etävarastoon ensimmäistä kertaa
+
+Voimme nyt lähettää koodin etävarastoon.
+Ennen koodin lähettämistä meidän tulee vielä selvittää etävaraston käyttäjätunnus ja
+salasana. Nämä riippuvat palvelusta.
+
+### [GitLab (JYU)](#tab/gitlab)
+
+Etävarastoon lähettämisen yhteydessä käyttäjätunnus on aina yliopistosi tunnus
+ilman `@jyu.fi`-päätetä. Salasanana toimii yliopiston salasana.
+
+***
+
+### [GitHub](#tab/github)
+
+Etävarastoon lähettämisen yhteydessä käyttäjätunnus on
+GitHub-käyttäjätunnuksesi.
+Salasanaksi **ei kelpaa** GitHub-salasanasi, vaan sen sijaan sinun on luotava
+erillinen pääsyavain (engl. Personal Access Token, PAT):
+
+1. Mene osoitteeseen <https://github.com/settings/tokens>
+2. Klikkaa **Generate new token** ja valitse *Generate new token (classic)*.
+3. Täytä lomake seuraavasti:
+
+    - **Note**: Anna jokin kuvaava nimi, vaikkapa `git-komentorivi`
+    - **Expiration**: Valitse jokin pitkä aika tai `No expiration`. Huomaa, että
+      aikarajan asettaminen tarkoittaa, että pääsyavain lakkaa toimimasta
+      aikarajan jälkeen, jolloin sinun on luotava uusi avain.
+    - **Select scopes**: Valitse `repo` ja varmista, että kaikki sen kohdalla
+      olevat alavalinnat on valittu.
+
+4. Paina lopuksi **Generate token** sivun alapuolella.
+5. Näet pääsyavaimesi vihreässä kentässä. Tämä avain toimii jatkossa salasanana
+   aina, kun lähetät koodia GitHubiin. Laita tämä koodi talteen.
+
+***
+
+### [Valitse](#tab/default)
+
+Valitse käytettävä etävarastopalvelu:
+
+- **Jos olet Jyväskylän yliopiston opiskelija**, valitse GitLab (JYU). Voit
+  halutessasi vaihtoehtoisesti käyttää GitHubia.
+- **Muussa tapauksessa**, valitse GitHub.
+
+***
+
+Kun tiedät tunnuksesi ja salasanasi, voit lähettää projektin ensimmäistä kertaa
+etävarastoon käyttäen `git push`-komentoa:
+
+<asciinema src="images/git-push-first.cast" rows="15" poster="npt:15"></asciinema>
 
 Tämä komento tekee kaksi asiaa:
 
-1. `push` lähettää lokaalit commitit etävarastoon.
-2. `-u origin main` (upstream) linkittää paikallisen `main`-haarasi varaston
-   `main`-haaraan. Jatkossa riittää, että kirjoitat vain `git push`.
+1. `push` lähettää paikalliset commitit etävarastoon.
+2. `-u origin main` linkittää paikallisen `main`-haaran varaston
+   `main`-haaraan. Tämän avulla git-työkalu jatkossa tietää, että `git
+   push`-komento ilman parametreja lähettää koodia aina `origin`-etävarastoon.
 
-_Huom:_ Jos lokaali haarasi on vielä myöhemmin nimetty vanhanaikaisesti
-`master`, komento on `git push -u origin master`. Voit tarkistaa nykyisen
-haarasi nimen komennolla `git branch`.
-
-### Tunnistautuminen
-
-Kun teet pusheja ensimmäistä kertaa, palvelu kysyy tunnuksiasi. Nykyään pelkkä
-salasanan syöttäminen terminaaliin ei yleensä toimi turvallisuussyistä. Sinun
-pitää joko:
-
-1. Käyttää selaimen kautta aukeavaa tunnistautumisikkunaa (GitHub tekee tämän
-   usein automaattisesti moderneissa Git-asennuksissa).
-2. Luoda palvelun asetuksista **Personal Access Token** (PAT) ja laittaa se
-   salasanan tilalle terminaaliin.
-3. Ottaa käyttöön **SSH-avaimet** (suositeltu edistyneemmille).
+Huomaa, että ensimmäisen koodin lähettämisen, eli ns. puskun yhteydessä,
+git-työkalu voi kysyä tunnusta ja salasanaa. Tunnus- ja salasanadialogi eroaa
+käyttöjärjestelmästä toiseen, mutta periaate on sama: anna tunnuksesi yllä
+olevien ohjeiden mukainen tunnus ja salasana.
 
 ## Jatkossa
 
-Kun etävarasto on kerran määritelty ja ensimmäinen push on tehty, jatkossa
+Kun etävarasto on kerran määritelty ja ensimmäinen pusku on tehty, jatkossa
 työnkulku on yksinkertainen:
 
 1. Tee muutoksia koodiin.
-2. `git add .`
-3. `git commit -m "Lisätty muokkausikkuna"`
-4. `git push`
-
-Koodisi on nyt turvassa ja valmiina eteenpäin jaettavaksi!
+2. `git add .`, joka lisää muutokset git-työkalun "käsittelyjonoon"
+3. `git commit -m "Lisätty muokkausikkuna"`, joka tekee jonossa olevista
+   muutoksista commitin
+4. `git push`, joka lähettää kaikki tähän mennessä tehdyn commitit etävarastoon talteen
