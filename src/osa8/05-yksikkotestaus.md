@@ -19,7 +19,7 @@ tarkistaa, ettei tehtävää lisätä lainkaan. Kolmas testi voisi poistaa valit
 tehtävän ja varmistaa, että listan koko pienenee oikein. Jokaisessa näistä
 testeistä tarkistetaan yksi selkeä käyttäytyminen.
 
-## JUnit 5
+## JUnit
 
 Java-maailmassa yksikkötestejä tehdään usein **JUnit**-kirjastolla. JUnit antaa
 valmiit työkalut testimetodien kirjoittamiseen sekä odotettujen tulosten
@@ -151,6 +151,86 @@ Nyt kaikki testit menevät läpi!
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava5">Tee tehtävä TIMissä</a></task-link>
 </task>
 
+## Todo-ohjelman testaaminen
+
+Kun haluamme testata todo-sovellusta, kaikkea ei tarvitse lähestyä
+käyttöliittymän kautta. Olennaista on testata sovelluksen bisneslogiikkaa eli
+sitä, miten `Tehtavakokoelma` käyttäytyy eri tilanteissa. Tällöin emme klikkaile
+nappeja tai avaa ikkunoita, vaan kutsumme suoraan malliluokan metodeja ja
+tarkistamme, että lopputulos vastaa odotuksia.
+
+Tällaisia testattavia asioita ovat esimerkiksi seuraavat:
+
+- `lisaaTehtava("Käy kaupassa")` lisää tehtävän listaan
+- `poistaTehtava(tehtava)` poistaa annetun tehtävän listasta
+- `lisaaTehtava("   ")` ei lisää tyhjää tehtävää lainkaan
+
+Tämän vuoksi voisimme kirjoittaa `src/test/java`-hakemistoon esimerkiksi
+seuraavan JUnit-testiluokan:
+
+```java,ignore
+import fi.jyu.ohj2.nimi.todo.model.Tehtava;
+import fi.jyu.ohj2.nimi.todo.model.Tehtavakokoelma;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class TehtavakokoelmaTest {
+
+    @Test
+    void lisaaTehtava_lisaaTehtavanListaan() {
+        Tehtavakokoelma kokoelma = new Tehtavakokoelma("testitehtavat.json");
+        kokoelma.lisaaTehtava("Käy kaupassa");
+        assertEquals(1, kokoelma.getTehtavat().size());
+        assertEquals("Käy kaupassa", kokoelma.getTehtavat().get(0).getTeksti());
+    }
+
+    @Test
+    void poistaTehtava_poistaaTehtavanListasta() {
+        Tehtavakokoelma kokoelma = new Tehtavakokoelma("testitehtavat.json");
+        kokoelma.lisaaTehtava("Käy kaupassa");
+        Tehtava tehtava = kokoelma.getTehtavat().get(0);
+        kokoelma.poistaTehtava(tehtava);
+        assertEquals(0, kokoelma.getTehtavat().size());
+    }
+
+    @Test
+    void lisaaTehtava_eiLisaaTyhjaaTehtavaa() {
+        Tehtavakokoelma kokoelma = new Tehtavakokoelma("testitehtavat.json");
+        kokoelma.lisaaTehtava("   ");
+        assertEquals(0, kokoelma.getTehtavat().size());
+    }
+}
+```
+
+Lisäsimme tässä `Tehtavakokoelma`-luokalle myös uuden konstruktorin, joka ottaa
+parametrina tallennustiedoston nimen. Näin testit voivat käyttää erillistä
+testitiedostoa, eikä oikea data sekoitu testien kanssa. Lisää tämä konstruktori `Tehtavakokoelma`-luokkaan:
+
+```java,ignore
+public Tehtavakokoelma(String polku)
+{
+    tiedostoPolku = Path.of(polku);
+    tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
+        tallenna();
+    });
+}
+```
+
+Ajatus testeissä on hyvin suoraviivainen: ensin valmistellaan testin
+lähtötilanne, sitten kutsutaan testattavaa metodia ja lopuksi tarkistetaan, että
+kokoelman tila muuttui oikein. Tämä on juuri sellaista bisneslogiikan testausta,
+jota MVC:n mukainen rakenne meille mahdollistaa.
+
+<task>
+  <task-title>Tehtävä 8.6: bisneslogiikan testaaminen.<points>1 p.</points></task-title> 
+  <handout>
+
+{{#include ../exercises/8-6-testaus/handout.md}}
+
+  </handout>
+    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava6">Tee tehtävä TIMissä</a></task-link>
+</task>
 
 ## Yksikkötestaus ja MVC-arkkitehtuuri
 
@@ -165,8 +245,9 @@ kokoelmalla on nyt selkeä ohjelmointirajapinta (metodit `lisaaTehtava`,
 kokoelmaa ja tarkistavat asioiden toimiutuvuuden millisekunneissa ilman ruudulle
 aukeavia ikkunoita.
 
-Seuraavaksi opimme myös, miten pääsemme eroon ärsyttävästä ongelmasta:
-tiedosto-operaatioista testeissä.
+Valitettavasti tähän liittyy vielä yksi käytännön ongelma: nykyinen
+`Tehtavakokoelma` tekee myös tiedosto-operaatioita. Siksi aivan näin
+suoraviivainen testaus ei vielä ole täysin ongelmatonta.
 
 ## IO on ongelmallista testauksessa
 
@@ -371,12 +452,12 @@ on hidas, vaikeasti hallittava tai aiheuttaa sivuvaikutuksia. Seuraavaksi
 hyödynnämme samaa ajatusta todo-sovelluksessa tekemällä vale-säilön, joka
 teeskentelee tallentavansa dataa, mutta pitääkin sen vain muistissa testin ajan.
 
-## Testaaminen vale-säilöllä JUnit 5:ssä
+## Testaaminen mock-säilöllä
 
-Testiympäristössä (eli `src/test/java...`-kansiossa) voimme nyt luoda luokan
-(ns. _Mock_- tai _Fake_-luokan), joka **teeskentelee** tallentavansa tietoja
-tiedostoon, mutta todellisuudessa tallentaakin ne vain normaaliin Java-listaan
-laitteen välimuistiin.
+Testiympäristössä (eli `src/test/java...`-kansiossa) voimme nyt luoda
+mock-luokan, joka teeskentelee tallentavansa tietoja tiedostoon, mutta
+todellisuudessa tallentaakin ne vain normaaliin Java-listaan laitteen
+välimuistiin.
 
 ```java
 public class MockTehtavaRepository implements TehtavaRepository {
@@ -438,11 +519,12 @@ class TehtavakokoelmaTest {
 }
 ```
 
-Kuvitteleppa vaihtoehtoehtoisesti: ilman puhdasta MVC-arkkitehturaamme olisimme
-yrittäneet kutsua suoraan controllerin logiikkaa `Main.java` luokasta ja
-taistelisimme saadaksemme "VBox" elementtiboksien Checkboxien lukumäärän
-tarkistettua, samalla varoitellen sitä sekoittamasta aitoa
-`tehtavat.json`-originaalitietokantaamme!
+Ilman MVC-arkkitehtuuriamme olisimme yrittäneet kutsua suoraan kontrollerin
+logiikkaa `Main.java`-luokasta ja taistelisimme saadaksemme VBoxissa olevien
+Checkboxien lukumäärän tarkistettua, samalla varoitellen sitä sekoittamasta
+aitoa `tehtavat.json`-originaalitietokantaamme! Nyt voimme keskittyä vain
+malliluokan testaamiseen, joka on tämän pienen vaivannäön jälkeen nopeaa,
+luotettavaa ja helppoa.
 
 ## Yhteenveto I/O-abstraktioista
 
@@ -452,18 +534,18 @@ testauksen sujuvuudessa. Kuvion voi ajatella menevän näin: `UI (Controller)` -
 
 UI:n testaus automatisoidusti on vaikeaa. Data providerin (oikean tallentamisen
 levylle) automaattinen testaus on tyypillisesti melko hidasta ja haurasta. Mutta
-eristetty _business logic_ eli sovelluksen hermokeskus voidaan suorittaa
-puhtaana logiikkakoodina sekunnin murto-osiin käyttämällä rajapintojen
-(interfaces) mahdollistamia vale-luokkia ympärillä olevien vaikeiden
-järjestelmien korvaamisessa testiajonaikaisesti.
+eristetty bisneslogiikka eli sovelluksen hermokeskus voidaan suorittaa puhtaana
+logiikkakoodina sekunnin murto-osiin käyttämällä rajapintojen mahdollistamia
+mock-luokkia ympärillä olevien vaikeiden järjestelmien korvaamisessa
+testiajonaikaisesti.
 
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 8.5: Todo-sovellus, vaihe 11. <points>1 p.</points> </task-title>
+  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 8.7: Todo-sovellus, vaihe 11. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/8-5-todo-11/handout.md}}
+{{#include ../exercises/8-7-todo-11/handout.md}}
 
 </handout>
 </task>
