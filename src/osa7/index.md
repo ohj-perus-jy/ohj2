@@ -22,7 +22,7 @@ Käytämme **SceneBuilder**-työkalua käyttöliittymän visuaaliseen suunnittel
 Samalla otamme käyttöön **versionhallinnan (Git)**, joka auttaa meitä hallitsemaan
 projektin koodia ja valmistautumaan harjoitustyön ensimmäiseen vaiheeseen.
 
-Osien 7 ja 8 aikana rakennamme yksinkertaisen TODO-sovelluksen. Tähän osioon
+Osien 7 ja 8 aikana rakennamme yksinkertaisen Todo-sovelluksen. Tähän osioon
 kuuluu tehtäviä, joissa opit tekemään saman sovelluksen omatoimisesti. Nämä osat
 antavat sinulle tarvittavan ymmärryksen JavaFX:stä, jotta voit luoda oman
 harjoitustyön osien 9-11 aikana. 

@@ -229,7 +229,7 @@ helppolukuista!
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 8.2: TODO-ohjelma, vaihe 8. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 8.2: Todo-sovellus, vaihe 8. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/8-2-todo-8/handout.md}}

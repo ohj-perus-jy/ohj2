@@ -31,9 +31,9 @@ tapauksessa VBox/HBox. Myös kehittäjäyhteisö tuottaa jatkuvasti avoimen
 lähdekoodin kirjastoja, jotka tuovat joitain CSS:stä tuttuja ominaisuuksia
 JavaFX:ään.
 
-## Tutoriaali: TODO-sovellus
+## Tutoriaali: Todo-sovellus
 
-Osien 7 ja 8 aikana rakennamme yksinkertaisen TODO-sovelluksen. Tähän osioon
+Osien 7 ja 8 aikana rakennamme yksinkertaisen Todo-sovelluksen. Tähän osioon
 kuuluu tehtäviä, joissa opit tekemään saman sovelluksen omatoimisesti. Nämä osat
 antavat sinulle tarvittavan ymmärryksen JavaFX:stä, jotta voit luoda oman
 harjoitustyön osien 9-11 aikana. 
@@ -273,7 +273,7 @@ flowchart TD
 
 
 <task>
-  <task-title>Tehtävä 7.1: TODO-ohjelma, vaihe 1 <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 7.1: Todo-sovellus, vaihe 1 <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/7-1-todo-1/handout.md}}

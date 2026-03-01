@@ -370,7 +370,7 @@ Saatoit huomata, että toisen rivin lisääminen ei näy ellei ikkunan kokoa
 suurenna. Korjaamme ikkunankokoon liittyvät ongelmat tämän tutoriaalin osan lopussa.
 
 <task>
-  <task-title>Tehtävä 7.2: TODO-ohjelma, vaihe 2 <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 7.2: Todo-sovellus, vaihe 2 <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/7-2-todo-2/handout.md}}

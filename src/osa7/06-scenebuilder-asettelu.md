@@ -82,7 +82,7 @@ public void start(Stage stage) throws IOException {
     stage.setMinWidth(400);
     // HIGHLIGHT_GREEN_END
     // HIGHLIGHT_YELLOW_BEGIN
-    stage.setTitle("TODO-sovellus");
+    stage.setTitle("Todo-sovellus");
     // HIGHLIGHT_YELLOW_END
     stage.show();
 }
@@ -192,7 +192,7 @@ mukautuvat hyvin ikkunan kokoon.
 
 
 <task>
-  <task-title>Tehtävä 7.6: TODO-ohjelma, vaihe 6. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 7.6: Todo-sovellus, vaihe 6. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/7-6-todo-6/handout.md}}

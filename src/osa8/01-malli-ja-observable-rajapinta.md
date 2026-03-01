@@ -766,7 +766,7 @@ kokonaan, joka rakensi `CheckBox`-komponentteja `VBox`-laatikoiden sisään –
 otetaan seuraavassa osassa avuksi `TableView`! -->
 
 <task>
-  <task-title>Tehtävä 8.1: Todo-ohjelma, vaihe 7. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 8.1: Todo-sovellus, vaihe 7. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/8-1-todo-7/handout.md}}

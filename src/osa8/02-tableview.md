@@ -700,7 +700,7 @@ TODO: Bindings-luokka ja bind-metodi
 
 
 <task>
-  <task-title>Tehtävä 8.3: TODO-ohjelma, vaihe 9. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 8.3: Todo-sovellus, vaihe 9. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/8-3-todo-9/handout.md}}

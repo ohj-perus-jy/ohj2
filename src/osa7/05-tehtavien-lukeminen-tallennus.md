@@ -605,7 +605,7 @@ tehtyjen tehtävien valintaruudut merkataan "tehty"-tilaan oikein:
 <img src="images/todo-app-save-load-works.png">
 
 <task>
-  <task-title>Tehtävä 7.5: TODO-ohjelma, vaihe 5. <points>1 p.</points> </task-title>
+  <task-title>Tehtävä 7.5: Todo-sovellus, vaihe 5. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/7-5-todo-5/handout.md}}
