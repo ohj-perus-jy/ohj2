@@ -467,8 +467,8 @@ public void setTehtava(Tehtava tehtava) {
 > Jos tekisimme näin, jokainen näppäimen painallus muuttaisi tehtävän
 > otsikon välittömästi taustalla.
 > Sen sijaan haluamme tässä antaa käyttäjälle mahdollisuuden peruuttaa muutokset
-> Peruuta-painikkeen painalluksella. Tämän takia tiedon sitomisen sijaan
-> kopioimme arvot tehtävästä kenttiin ja kentistä tehtäviin käsin.
+Peruuta-painikkeen painalluksella. Siksi datan sidonnan sijaan
+kopioimme arvot tehtävästä kenttiin ja kentistä tehtäviin käsin.
 
 Palataan `MainController`-luokan `avaaTehtavanMuokkaus()`-metodiin. 
 Nyt ennen ikkunan luomista voimme hakea `TehtavaEditController`-luokasta luotu
@@ -573,7 +573,7 @@ private void sulje() {
 
 Muistetaan, että tehtävää ei saa tallentaa, jos otsikkokenttä on tyhjä.
 Toteutetaan tämä tarkistus käyttäjäystävällisenä *validointina*: jos
-otsikkokenttä on tyhjä, muutamme kentän väriä ja lisäämme kenttään selkeän
+otsikkokenttä on tyhjä, muutamme kentän reunuksen väriä ja lisäämme kenttään selkeän
 varoitustekstin.
 Tehdään tätä varten apumetodi `validoi()`, joka tarkistaa otsikkokentän
 oikeellisuuden ja palauttaa `boolean`-arvona, onko kaikki kentät oikein (`true`)
@@ -628,7 +628,7 @@ public void initialize(URL location, ResourceBundle resources) {
 ```
 
 Kokeile nyt sovellusta taas. Nyt Tallenna- ja Peruuta-painikkeet toimivat.
-Lisäksi otsikkokentän jättäminen turhaksi näyttää virheen käyttäjälle.
+Lisäksi otsikkokentän jättäminen tyhjäksi näyttää virheen käyttäjälle.
 
 <video src="images/todo-app-dialog-works.mp4" controls></video>
 
@@ -684,7 +684,7 @@ public Tehtavakokoelma() {
     
     tehtavat.addListener((ListChangeListener<Tehtava>) change -> {
         // Suoritetaan aikarajoitettu koodi 500 millisekunnin päästä
-        // Jos 500 millisekunnin sisällä tätä koodia kutsutaan uudestaan, aloitetaan uusi aikalaskenta
+        // Jos koodia kutsutaan uudestaan 500 millisekunnin sisällä, aloitetaan uusi aikalaskenta
         tallennaDebounce.playFromStart();
     });
 }
