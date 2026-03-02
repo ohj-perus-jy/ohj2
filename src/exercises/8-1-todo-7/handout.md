@@ -1,6 +1,4 @@
-Palauta tässä osan 8.1 perusteella refaktoroitu projekti.
-
-Kertaus tämän osan vaiheista:
+Palauta tässä osan 8.1 perusteella refaktoroitu projekti. Kertaus tämän osan vaiheista:
 
 - Luo tehtävälle oma malliolio (`Tehtava`) käyttöliittymäkomponenttien sijaan.
 - Lisää malliin vähintään tehtävän otsikko ja tehty/ei-tehty -tila.

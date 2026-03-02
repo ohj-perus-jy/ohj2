@@ -634,7 +634,7 @@ private CheckBox luoCheckBox(Tehtava t) {
 Nyt valintaruudun toiminta on suoraviivaisempi:
 
 1. Käyttäjä klikkaa valintaruutua.
-2. `luoCheckBox`-metodin `setOnAction`-tapahtumakäsittelijä muuttaa mallilistaa (`remove` ja `add`).
+2. `luoCheckBox`-metodin `setOnAction`-tapahtumakäsittelijä muuttaa `tehtavat`-listaa (`remove` ja `add`).
    Tässä vaiheessa VBox-komponentteihin ei vielä kosketa.
 3. `tehtavat`-listan kuuntelija (`addListener`) huomaa, että listan sisältö
    muuttui.
@@ -642,12 +642,10 @@ Nyt valintaruudun toiminta on suoraviivaisempi:
 5. Vasta nyt `paivitaNakyma()` tyhjentää VBoxit ja rakentaa ne uudestaan mallin
    uuden tilan mukaiseksi.
 
-Erityiesti valintaruudun vastuu on nyt yksikäsitteinen: mallin muuttaminen.
-
 Mainittakoon, että tämä ratkaisu on hieman tehoton. Nyt koko käyttöliittymä
 rakennetaan uudestaan yhden klikkauksen takia. Toisaalta checkbox-olion tilan
-muuttaminen aiheuttaa kaksi erillistiä muutosta `tehtavat`-listaan: vanhan
-`Tehtava`-olion poiston ja uuden `Tehtava`-olion lisäyksen. Toisin sanoen,
+muuttaminen aiheuttaa kaksi erillistä muutosta `tehtavat`-listaan: vanhan
+`Tehtava`-olion poiston ja uuden olion lisäyksen. Toisin sanoen,
 `paivitaNakyma()` tulee kutsutuksi kahdesti aina, kun valintaruutua klikataan.
 Tämä on tietysti vähän turhaa, mutta toimii, koska `ObservableList` huomaa
 molemmat muutokset ja päivittää näkymän automaattisesti.
