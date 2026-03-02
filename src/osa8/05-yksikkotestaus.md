@@ -287,13 +287,26 @@ Tehdään mekin niin.
 package fi.jyu.ohj2.nimi.todo.persistence;
 
 import fi.jyu.ohj2.nimi.todo.model.Tehtava;
-import java.io.IOException;
 import java.util.List;
 
 public interface TehtavaRepository {
-    List<Tehtava> lataa() throws IOException;
-    void tallenna(List<Tehtava> tehtavat) throws IOException;
+    List<Tehtava> lataa() throws RepositoryException;
+    void tallenna(List<Tehtava> tehtavat) throws RepositoryException;
 }
+```
+
+Tehdään samalla erillinen luokka latausvirhettä kuvaavalle `RepositoryException`,
+sillä nyt tehtäviä voidaan ladata muullakin tavalla kuin tiedostosta.
+
+```java,ignore
+package fi.jyu.ohj2.dezhidki.nimi.persistence;
+
+public class RepositoryException extends Exception {
+    public RepositoryException(String message) {
+        super(message);
+    }
+}
+
 ```
 
 **2. Irroitetaan JSON-tallennuskoodi mallista omaan toteutukseensa
