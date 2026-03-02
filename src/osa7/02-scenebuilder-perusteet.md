@@ -165,7 +165,7 @@ oleva Code-paneeli:
 Aseta tunnisteen eli *fx:id*-kentän arvoksi jokin uniikki komponenttia kuvaava
 nimi käyttäen `camelCase`-kirjoitustyyliä, esimerkiksi `uusiTehtavaNimi`.
 Vahvista muutos painamalla <kbd>Enter</kbd>.
-Toista sama painikkeelle ja anna sen tunnisteeksi `listaaUusiTehtavaPainike`.
+Toista sama painikkeelle ja anna sen tunnisteeksi `lisaaUusiTehtavaPainike`.
 
 Tallenna lopuksi FXML-tiedosto.
 

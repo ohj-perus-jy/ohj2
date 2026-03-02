@@ -1,9 +1,1 @@
-[ {
-  "nimi" : "Aino",
-  "ika" : 22,
-  "kaupunki" : "Turku"
-}, {
-  "nimi" : "Pekka",
-  "ika" : 41,
-  "kaupunki" : "Oulu"
-} ]
+[{"nimi":"Aino","ika":22,"kaupunki":"Turku"},{"nimi":"Pekka","ika":41,"kaupunki":"Oulu"}]

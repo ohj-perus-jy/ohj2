@@ -14,4 +14,7 @@ Kertaus tämän osan vaiheista:
   <kbd>Enter</kbd>-painiketta, kun fokus on syöttökentässä.
 
 Kun vaihe on valmis,  muista tehdä `git add` muuttuneille tiedostoille ja `git
-commit`. Palauta projektisi tiedostot.
+commit`. Palauta projektisi tiedostot. Ei haittaa jos TIMissä tulee jokin
+varoitus tai jopa käännösvirhe. TIMissä ei välttämättä ole kaikkia tehtävissä
+vaadittavia riippuvuuksia, eikä siten JavaFX-projekti välttämättä edes käänny.
+Pääasia on, että olet saanut projektin toimimaan paikallisessa ympäristössäsi. 

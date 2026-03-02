@@ -1,16 +1,16 @@
-package fi.jyu.anlakane;
+package fi.jyu.ohj2;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
 public class KirjoitaJson {
-    public static void main(String[] args) {
-        ObjectMapper mapper = new ObjectMapper()
-                .enable(SerializationFeature.INDENT_OUTPUT); // kauniimpi sisennys
+    static void main() {
+        ObjectMapper mapper = new ObjectMapper();
 
         List<Henkilo> henkilot = List.of(
                 new Henkilo("Aino", 22, "Turku"),
@@ -24,7 +24,9 @@ public class KirjoitaJson {
             mapper.writeValue(polku.toFile(), henkilot);
             IO.println("Kirjoitettiin JSON: " + polku.toAbsolutePath());
         } catch (IOException e) {
-            IO.println("JSONin kirjoittaminen epäonnistui: " + e.getMessage());
+            IO.println("Kansion luominen epäonnistui: " + e.getMessage());
+        } catch (JacksonException je) {
+            IO.println("JSON-prosessointi epäonnistui: " + je.getMessage());
         }
     }
 }

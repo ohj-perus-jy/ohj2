@@ -18,7 +18,7 @@ ainakin yksi toimintaesimerkki `main()`-pääohjelmaan.
 <summary>Vinkki 1</summary>
 
 Käytä
-[`StringBuilder`-merkkijonoa](02-muuttujat-ja-tietotyypit.md#stringbuilder)
+[`StringBuilder`-merkkijonoa](https://ohjelmointi2.it.jyu.fi/osa1/02-muuttujat-ja-tietotyypit.html#stringbuilder)
 ja sen metodeja merkkijonon rakentamiseen.
 
 </details>

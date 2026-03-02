@@ -146,9 +146,9 @@ Sihteeri sihteeri = new Sihteeri();
 Henkilo[] henkilot = {opiskelija, opettaja, sihteeri};
 ```
 
-metodit `kirjaudu()` ja `kirjauduUlos()`. Nyt siis kaikki henkilöt perivät nämä
-Jotta esimerkkimme olisi vähän mielekkäämpi, lisätään vielä `Henkilo`-luokkaan
-metodit.
+Jotta esimerkkimme olisi hieman mielekkäämpi, lisätään `Henkilo`-luokkaan vielä
+metodit `kirjaudu()` ja `kirjauduUlos()`. Kaikki `Henkilo`-luokan perivät luokat 
+perivät myös nämä metodit.
 
 ```java,noplayground
 class Henkilo {
