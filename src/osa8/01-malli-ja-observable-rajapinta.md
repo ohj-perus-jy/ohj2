@@ -32,7 +32,7 @@ kirjoitetaan erikseen päivityskoodia kaikkiin käyttöliittymäkomponentteihin.
 Tässä kohtaan meitä auttavat JavaFX:n `Observable`-rakenteet, joiden avulla data
 ja käyttöliittymä voidaan kytkeä toisiinsa hallitusti.
 
-## `Observable`-rakenteet
+## Observable-rakenteet
 
 Sana **observable** (havaittava) tarkoittaa, että olio osaa ilmoittaa
 muutoksistaan muille sovelluksen olioille. Oliot, jotka kuuntelevat havaittavan
@@ -65,10 +65,10 @@ JavaFX:ssä käytämme pääosin seuraavia `Observable`-rakenteita:
   `Label`-komponenttiin, jolloin `Label`-teksti päivittyy automaattisesti, kun
   tehtävän otsikko muuttuu. -->
 
-### Johdatteleva esimerkki
+## Johdatteleva esimerkki
 
 Unohdetaan ihan hetkeksi Todo-sovellus ja yritetään saada kiinni
-`Observable`-tyyppien toiminnasta johdattelevan esimerkin avulla.
+Observable-tyyppien toiminnasta johdattelevan esimerkin avulla.
 
 Tehdään uusi JavaFX projekti seuraamalla [osan
 7.1](../osa7/01-javafx-perusteet.md#ensimmäinen-javafx-sovellus) ohjeita.
@@ -270,30 +270,20 @@ listamuutoksia (lisäys, poisto, korvaus, jne.) voidaan käsitellä samalla
 
 </details>
 
-### Kytkentä käyttöliittymään
+## Kytkentä käyttöliittymään
 
 JavaFX:ssä havaittavia olioita käytetään siten, että muutosten havaitsija on
 jokin käyttöliittymässä oleva komponentti. Katsotaan vielä, miten tämä toimii
 käytännössä.
 
-Palauta `Main`-luokka alkuperäiseen tilaan, jossa `main()`-metodissa on
-vain `Application.launch()`-kutsu. Ota sen jälkeen pohjaksi alla oleva valmis kontrolleriluokka
-ja FXML-näkymä:
+Palauta `Main`-luokka alkuperäiseen tilaan, jossa `main()`-metodissa on vain
+`Application.launch()`-kutsu. Ota sen jälkeen pohjaksi alla oleva valmis
+kontrolleriluokka ja FXML-näkymä. Import-lauseita on poistettu tilan
+säästämiseksi. 
 
 ```java,ignore
 // FILE: MainController.java
 package fi.jyu.ohj2.esimerkit.observable;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
     @FXML
@@ -309,18 +299,11 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 }
 // FILE_END
 // FILE: main.fxml
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.geometry.Insets?>
 
 <VBox prefWidth="400" prefHeight="400" alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.ohj2.esimerkit.observable.MainController">
     <padding>
@@ -397,18 +380,16 @@ Kokeile nyt ajaa sovellus ja lisätä nimiä käyttöliittymän kautta.
 
 <video src="images/list-app-works.mp4" controls></video>
 
-TODO: Tämä kappale pois -- toistoa?
-Huomaa: JavaFX havaitsee listan lisäyksiä ja huolehtii siitä, että näkymä vastaa
-dataa. Näin malli ja näkymä ovat erillään toisistaan ja hoitavat omia
-vastuitaan: malli vastaa datan tilasta ja käyttöliittymä vain datan
-esittämisestä.
+<!-- TODO: Tämä kappale pois -- toistoa? Huomaa: JavaFX havaitsee listan lisäyksiä ja
+huolehtii siitä, että näkymä vastaa dataa. Näin malli ja näkymä ovat erillään
+toisistaan ja hoitavat omia vastuitaan: malli vastaa datan tilasta ja
+käyttöliittymä vain datan esittämisestä.-->
 
 ## Tehtävä malliluokaksi
 
-Palataan nyt takaisin Todo-sovellukseemme. Tavoitteenamme olisi nyt mallintaa
-kaikki tehtävän tila `Tehtava`-luokalla, jolloin tehtävästä tulisi todellinen
-malliluokka. Puolestaan `VBox`- ja `CheckBox`-komponentit hoitaisivat vain datan
-esittämisen. 
+Palataan nyt takaisin Todo-sovellukseemme. Tavoitteenamme olisi mallintaa kaikki
+tehtävän tila `Tehtava`-luokalla. `VBox`- ja `CheckBox`-komponenttien tehtäväksi
+jäisi datan esittäminen. 
 
 Aloitetaan lisäämällä `MainController`-luokkaan `ObservableList`-attribuutti, joka
 toimii kaikkien tehtävien säiliönä.
@@ -442,8 +423,8 @@ private void lisaaTehtava() {
 ```
 
 Vastaavasti voimme nyt muuttaa `tallenna()`-metodin toimintaa niin, että 
-tallennamme suoraan `tehtavat`-listan, koska se on jatkossa ns. "totuuden
-lähde".
+tallennamme suoraan `tehtavat`-listan, koska se on jatkossa "totuuden
+lähde" kaikkien tehtävien tilasta. 
 
 ```java,ignore
 private void tallenna() {
@@ -459,7 +440,7 @@ private void tallenna() {
 }
 ```
 
-Lisäksi `lataa()`-metodi yksinkertaistuu, kun voimme käyttää `addAll()`-metodia,
+Myös `lataa()`-metodi yksinkertaistuu, kun voimme käyttää `addAll()`-metodia,
 joka lisää kaikki alkiot kerralla:
 
 ```java,ignore
@@ -494,16 +475,14 @@ Nyt tehtävien luominen, tallentaminen ja lataaminen on toiminnallisesti erotett
 käyttöliittymän komponenteista. Toisin sanoen, `Tehtava`-luokka ja
 `tehtavat`-lista muodostavat yhdessä sovelluksen mallin.
 
-Luonnollisesti muutoksen seurauksena nyt sovelluksen avaaminen ja tehtävien
+Luonnollisesti muutoksen seurauksena nyt tehtävien lataaminen ja niiden
 lisääminen ei näy käyttöliittymässä, koska mallin ja käyttöliittymän välillä ei
 ole mitään kytkentää. Toteutetaan nyt käyttöliittymän päivittäminen tehtävien
 perusteella.
 
 Tässä kohtaa on myös luontevaa muuttaa myös `luoCheckBox`-metodin esittelyrivi.
-Aiemmin annoimme sille parametrina tekstin ja valintatiedon erikseen
-(`String, boolean`), mutta nyt kun meillä on koko `Tehtava`-olio käytettävissä,
-annetaan se suoraan parametrina. Näin metodi saa kaiken tarvitsemansa tiedon
-yhdellä kertaa.
+Aiemmin annoimme sille parametreina tekstin ja tehty/ei-tehty-tiedon erikseen,
+mutta nyt kun meillä on `Tehtava`-olio käytettävissä, annetaan se parametrina.
 
 ```java,ignore
 // HIGHLIGHT_YELLOW_BEGIN
@@ -595,7 +574,7 @@ private void lisaaTehtava() {
 Jos kokeilet sovellusta nyt, tiedostosta ladatut tiedostot näkyvät
 käyttöliittymässä, ja uusien tehtävien lisääminen toimii.
 
-## CheckBox-tapahtuma muuttaa mallia
+## CheckBox-tapahtuma muuttamaan mallia
 
 Tällä hetkellä `luoCheckBox`-metodi sisältää edelleen logiikkaa, joka siirtelee
 checkboxia käsin VBox-säiliöiden välillä. Tässä on nyt hieman turhaa toistoa

@@ -69,7 +69,7 @@ tallentamiseen. Emme kuitenkaan merkitse attribuutteja `final`-määreellä, jot
 Jackson-kirjasto osaa asettaa arvoja attribuutteihin. Lisäämme vielä
 oletusmuodostajan, jota Jackson käyttää olioiden alustamiseen.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Tehtävä on tietue </summary>
+<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: Tehtävä on tietue </summary>
 
 Jos luokan attribuutteja ei ole tarkoitettu muokattavaksi (eli
 kaikki attribuutit ovat `final`), luokka voidaan kirjoittaa tiiviimmässä muodossa
