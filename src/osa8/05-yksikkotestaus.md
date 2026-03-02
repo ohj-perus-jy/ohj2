@@ -33,7 +33,7 @@ projektin `pom.xml`-tiedostoon `junit-jupiter`-riippuvuus.
 <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter</artifactId>
-    <version>5.10.2</version>
+    <version>6.0.3</version>
     <scope>test</scope>
 </dependency>
 ```
