@@ -1,6 +1,4 @@
-Palauta tässä osan 8.4 perusteella edistetty projekti.
-
-Kertaus tämän osan vaiheista:
+Palauta osan 8.4 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
 
 - Avaa tehtävän muokkausnäkymä, kun käyttäjä tuplaklikkaa tehtävää.
 - Lisää tehtävälle vähintään kuvaus ja prioriteetti.

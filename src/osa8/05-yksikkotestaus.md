@@ -466,7 +466,7 @@ palauttaa aina saman arvon.
 
 Tällaiset korvikeoliot ovat hyödyllisiä erityisesti silloin, kun oikea riippuvuus
 on hidas, vaikeasti hallittava tai aiheuttaa sivuvaikutuksia. Seuraavaksi
-hyödynnämme samaa ajatusta todo-sovelluksessa tekemällä vale-säilön, joka
+hyödynnämme samaa ajatusta todo-sovelluksessa tekemällä vale-säiliön, joka
 teeskentelee tallentavansa dataa, mutta pitääkin sen vain muistissa testin ajan.
 
 ## Testaaminen mock-säilöllä
@@ -518,7 +518,7 @@ class TehtavakokoelmaTest {
 
     @Test
     void lisaaTehtava_lisaaTehtavanJaTallentaaSen() {
-        // 1. Arrange: Valmistellaan testidata. SYÖTETÄÄN VALE-SÄILÖ!
+        // 1. Arrange: Valmistellaan testidata. SYÖTETÄÄN VALE-säiliö!
         MockTehtavaRepository mockRepo = new MockTehtavaRepository();
         Tehtavakokoelma malli = new Tehtavakokoelma(mockRepo);
         

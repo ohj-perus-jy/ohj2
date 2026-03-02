@@ -17,7 +17,7 @@ hyödyllisiä, todellisen maailman ongelmat vaativat usein tarkempia sääntöj�
 sille, miten tietoa lisätään, poistetaan tai haetaan.
 
 Javassa termi **kokoelma** (engl. *collection*) viittaa olioon, jonka tehtävänä on
-hallita joukkoa muita arvoja tai olioita. Kokoelma ei ole vain säilö; se on
+hallita joukkoa muita arvoja tai olioita. Kokoelma ei ole vain säiliö; se on
 tietorakenne, joka määrittelee pelisäännöt tiedon käsittelylle. Oikean
 tietorakenteen valinta on ohjelmoijalle tärkeä taito, sillä se vaikuttaa sekä
 ohjelman tehokkuuteen että koodin luettavuuteen.

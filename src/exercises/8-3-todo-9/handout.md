@@ -1,4 +1,4 @@
-Palauta tässä osan 8.3 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
+Palauta osan 8.3 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
 
 - Jäsennä projekti kerroksiin (vähintään malli + käyttöliittymälogiikka).
 - Siirrä tiedoston luku- ja kirjoituslogiikka pois kontrollerista

@@ -1,4 +1,4 @@
-Palauta tässä osan 8.5 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
+Palauta osan 8.7 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
 
 - Lisää projektiin yksikkötestit.
 - Eriytä tehtävien tallennus ja lataus erilliseen luokkaan, joka toteuttaa `TehtavaRepository`-rajapinnan.
