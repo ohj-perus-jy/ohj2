@@ -1,4 +1,4 @@
-Palauta tässä osan 8.3 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
+Palauta osan 8.2 perusteella edistetty projekti. Kertaus tämän osan vaiheista:
 
 - Korvaa tehtävien `VBox` + `CheckBox`-listaus `TableView`-komponentilla.
 - Lisää taulukkoon vähintään sarakkeet: tehtävä (otsikko), tehty-tila.
