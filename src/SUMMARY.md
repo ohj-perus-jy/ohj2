@@ -68,6 +68,8 @@
   - [Koodin julkaiseminen etävarastopalvelussa](./osa8/06-versionhallinnan-etakaytto.md)
   - [Osan kaikki tehtävät](./osa8/07-tehtavat.md)
 - [Harjoitustyön vaihe 1, Git](./osa9/index.md)
+  - [Harjoitustyön vaihe 1: osa 1](./osa9/01-harjoitustyo-1.md)
+  - [Harjoitustyön vaihe 1: osa 2](./osa9/02-harjoitustyo-1-osa2.md)
 - [Harjoitustyön vaihe 2](./osa10/index.md)
 - [Harjoitustyön vaihe 3](./osa11/index.md)
 - [Osa 12](./osa12/index.md)
