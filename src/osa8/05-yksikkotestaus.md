@@ -375,18 +375,19 @@ public class Tehtavakokoelma {
         });
     }
 
-    public void lataa() throws IOException {
-        // Nyt olemme vain delegointia aiemman monimutkaisen logiikan sijaan!
-        List<Tehtava> ladatut = repository.lataa();
-        tehtavat.setAll(ladatut);
+    public void lataa() {
+        try {
+            List<Tehtava> kaikkiTehtavat = repository.lataa();
+        } catch (RepositoryException e) {
+            IO.println(e.getMessage());
+        }
     }
 
-    private void tallenna() {
+    public void tallenna() {
         try {
-            // Nyt olemme vain delegointia aiemman monimutkaisen logiikan sijaan!
             repository.tallenna(tehtavat);
-        } catch (IOException e) {
-            System.err.println("Tallennus epäonnistui: " + e.getMessage());
+        } catch (RepositoryException e) {
+            IO.println(e.getMessage());
         }
     }
     
@@ -394,8 +395,11 @@ public class Tehtavakokoelma {
 }
 ```
 
-Vaihda myös `MainController`issa rivi (TODO: Mikä rivi??) muotoon
-`new Tehtavakokoelma(new JsonTehtavaRepository(Path.of("tehtavat.json")));`.
+Vaihda myös `MainController`-luokassa tehtäväkokoelman alustus muotoon
+
+```java,ignore
+private Tehtavakokoelma tehtavakokoelma = new Tehtavakokoelma(new JsonTehtavaRepository(Path.of("tehtavat.json")));
+```
 
 Repository tukee Todo-sovelluksemme tapauksessa MVC-mallin mukaista toteutusta,
 koska sen avulla mallikerroksen sisällä vastuut pidetään erillään.
@@ -427,7 +431,7 @@ mitä arvoa `Pakkasvahti` saa ja mitä sen pitäisi tehdä sillä.
 
 Esimerkiksi:
 
-```java
+```java,ignore
 public interface Lampoanturi {
     double mittaaLampotila();
 }
@@ -448,7 +452,7 @@ public class Pakkasvahti {
 Oikeassa ohjelmassa `Lampoanturi` voisi lukea arvon fyysiseltä laitteelta, mutta
 testissä voimme käyttää yksinkertaista valeoliota:
 
-```java
+```java,ignore
 public class ValeLampoanturi implements Lampoanturi {
     @Override
     public double mittaaLampotila() {
@@ -472,7 +476,7 @@ mock-luokan, joka teeskentelee tallentavansa tietoja tiedostoon, mutta
 todellisuudessa tallentaakin ne vain normaaliin Java-listaan laitteen
 välimuistiin.
 
-```java
+```java,ignore
 public class MockTehtavaRepository implements TehtavaRepository {
 
     // Keskusmuistissa oleva data "tiedoston" sijaan testejä varten
@@ -485,8 +489,17 @@ public class MockTehtavaRepository implements TehtavaRepository {
 
     @Override
     public void tallenna(List<Tehtava> tehtavat) {
-        // Kun kokoelma yrittää "tallentaa" levylle, kopioidaankin data vain tähän temp-listaan!
-        this.tallennetutData = new ArrayList<>(tehtavat);
+        tallennetutTehtavat.clear();
+        // Teemme jokaisesta tehtävästä kopion
+        // Näin voimme testata, että tallennettu data täsmää myös kokoelmassa olevan datan kanssa
+        for (Tehtava tehtava : tehtavat) {
+            Tehtava kopio = new Tehtava();
+            kopio.setOtsikko(tehtava.getOtsikko());
+            kopio.setPrioriteetti(tehtava.getPrioriteetti());
+            kopio.setKuvaus(tehtava.getKuvaus());
+            kopio.setTehty(tehtava.getTehty());
+            tallennetutTehtavat.add(kopio);
+        }
     }
     
     public List<Tehtava> haeTallennetut() {
@@ -497,7 +510,7 @@ public class MockTehtavaRepository implements TehtavaRepository {
 
 Nyt voimme turvallisin mielin testata mallia JUnit-testeillä:
 
-```java
+```java,ignore
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
