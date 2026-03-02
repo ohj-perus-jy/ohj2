@@ -539,8 +539,6 @@ logiikkakoodina sekunnin murto-osiin käyttämällä rajapintojen mahdollistamia
 mock-luokkia ympärillä olevien vaikeiden järjestelmien korvaamisessa
 testiajonaikaisesti.
 
-## Tehtävät
-
 <task>
   <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 8.7: Todo-sovellus, vaihe 11. <points>1 p.</points> </task-title>
   <handout>
@@ -548,4 +546,6 @@ testiajonaikaisesti.
 {{#include ../exercises/8-7-todo-11/handout.md}}
 
 </handout>
+    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava7">Tee tehtävä TIMissä</a></task-link>
+
 </task>

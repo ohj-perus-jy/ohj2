@@ -683,4 +683,7 @@ mallintaminen on siirtynyt `tehtavat`-listan ja `Tehtava`-olioiden vastuulle.
 {{#include ../exercises/8-1-todo-7/handout.md}}
 
 </handout>
+    <task-link><a
+    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava1">Tee
+    tehtävä TIMissä</a></task-link>
 </task>

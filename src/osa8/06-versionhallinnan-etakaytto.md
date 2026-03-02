@@ -221,3 +221,15 @@ työnkulku on yksinkertainen:
 3. `git commit -m "Lisätty muokkausikkuna"`, joka tekee jonossa olevista
    muutoksista commitin.
 4. `git push`, joka lähettää kaikki tähän mennessä tehdyt commitit etävarastoon talteen.
+
+
+<task>
+  <task-title>Tehtävä 8.8: Git-etävarasto. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/8-8-git-eta-varasto/handout.md}}
+
+</handout>
+    <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava8">Tee tehtävä TIMissä</a></task-link>
+
+</task>

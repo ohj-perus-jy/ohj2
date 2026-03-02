@@ -701,4 +701,5 @@ yhden `tallenna()`-metodin kutsua.
 {{#include ../exercises/8-4-todo-10/handout.md}}
 
 </handout>
+      <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava4">Tee tehtävä TIMissä</a></task-link>
 </task>

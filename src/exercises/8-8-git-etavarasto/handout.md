@@ -1,0 +1,1 @@
+Tee työllesi Git-etävarasto ja tallenna koodisi sinne.

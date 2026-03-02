@@ -705,4 +705,5 @@ ohjata `setVisible()`-metodilla, joka on myös havaittava ominaisuus
 {{#include ../exercises/8-2-todo-8/handout.md}}
 
 </handout>
+      <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava2">Tee tehtävä TIMissä</a></task-link>
 </task>
