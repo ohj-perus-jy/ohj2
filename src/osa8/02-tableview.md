@@ -5,7 +5,7 @@ oikein hyvä tapa opetella käyttöliittymän perusidea: luodaan komponentteja j
 lisätään ne näkymään. Huomasimme edellisessä osassa, että mallin ja
 käyttöliittymän erottaminen toisistaan vaatii `paivitaNakyma()`-metodia, joka
 kutsutaan aina, kun malli muuttuu. Näkymän päivittäminen mallin muuttuessa voi
-kuitenkin osoittautua pullonkaulaksi sovelluksen koon kasvaessa, ja näkymän
+kuitenkin osoittautua pullonkaulaksi sovelluksen koon kasvaessa, kun näkymän
 päivittämisen optimointi on itsessään hankala ongelma, johon ei tämän kurssin
 puitteissa pureuduta.
 
@@ -20,11 +20,11 @@ näyttää, kuten otsikko, prioriteetti ja se, onko tehtävä tehty vai ei.
 ## Esivalmistelu: Tehtävä-luokka havaittavaksi
 
 JavaFX:n `TableView` osaa reagoida olioiden määrän muutosten lisäksi olioiden
-attribuuttien muutoksiin. Esimerkiksi, jos jonkun tehtävän otsikkoa muutetaan
+attribuuttien muutoksiin. Esimerkiksi jos jonkun tehtävän otsikkoa muutetaan
 käyttöliittymässä, `TableView` osaa havaita muutoksen automaattisesti. Tätä
 varten kuitenkaan pelkästään `ObservableList`-listan käyttö ei riitä, koska se
 osaa ilmoittaa kuuntelijoille vain tehtävien lisäämistä ja poistamista. Sen
-sijaan meidän tulee tehdä itse *tehtävät ja niiden ominasuudet havaittaviksi*.
+sijaan meidän tulee tehdä itse tehtävä-olio ja myös sen ominaisuudet havaittaviksi.
 
 Olion yksittäisiä ominaisuuksia voidaan muuttaa havaittaviksi käyttäen JavaFX:n
 niin kutsuttuja property-tyyppejä. Property-tyypit "käärivät" tavalliset arvot,
@@ -91,38 +91,38 @@ propertyyn. Palaamme tähän ajatukseen seuraavaksi tarkemmin.
 ## TableView-komponentin lisääminen ja käyttöliittymän siistiminen
 
 Aloitetaan näkymästä: avaa `main.fxml` SceneBuilderissa.
-Poista käyttöliittymästä `tehdyt` ja `tekemattomat` `VBox`-komponentit sekä
+Poista käyttöliittymästä `tehdyt` ja `tekemattomat` VBox-komponentit sekä
 niihin liittyvät nimiöt. Poistamisen jälkeen hierarkiaan jää vain
-`HBox`-komponentti, jossa on syötekenttä ja painike:
+HBox-komponentti, jossa on syötekenttä ja painike:
 
 <img src="images/scenebuilder-cleanup.png">
 
-Sen jälkeen etsi Library-näkymästä `TableView`-komponentti ja lisää se
-syötekentän yläpuolelle. Ole tarkkana: valitse nimenomaan `TableView`, <u>ei</u>
-`TreeTableView`.
-Valitse lisätty `TableView` ja aseta sen Vgrow-asetukseksi `ALWAYS`, jotta se
-täyttää kaiken vapaan tilan. Anna vielä `TableView`-komponentille fx:id-arvoksi
+Sen jälkeen etsi Library-näkymästä TableView-komponentti ja lisää se
+syötekentän yläpuolelle. Ole tarkkana: valitse nimenomaan TableView, <u>ei</u>
+TreeTableView.
+Valitse lisätty TableView ja aseta sen Vgrow-asetukseksi `ALWAYS`, jotta se
+täyttää kaiken vapaan tilan. Anna vielä TableView-komponentille fx:id-arvoksi
 `tehtavaTaulu`.
 
 <img src="images/scenebuilder-tableview-add.png">
 
 Lopuksi, valitse ja poista Hierarchy-paneelista kummatkin
-`TableColumn`-komponentit. Lopullinen hierarkia näyttää siis täältä:
+TableColumn-komponentit. Lopullinen hierarkia näyttää siis täältä:
 
 <img src="images/scenebuilder-tableview-hierarchy.png">
 
 Tallenna FXML-tiedosto.
 
-Vielä muutama sana ennen kuin jatketaan. `TableView` on itse taulukko. Se
+Vielä muutama sana ennen kuin jatketaan. TableView on itse taulukko. Se
 näyttää rivejä, mutta ei vielä tiedä, millaisia olioita rivit ovat. Se tieto
 annetaan kontrollerin puolella Java-koodissa &ndash; teemme tämän kohta.
-`TableView` sisältää useita `TableColumn`-komponentteja, jotka esittävät olion
+TableView sisältää useita TableColumn-komponentteja, jotka esittävät olion
 ominaisuuksia sarakkeina. Tieto siitä, mitä sarakkeessa näytetään, annetaan myös
 Java-koodissa. Tämänkin teemme ihan pian. 
 
 Siistitään nyt `MainController`-luokka. Ensiksi, poista vanhat `VBox
-tekemattomat` ja `VBox tehdyt` -attribuutit ja lisää niiden tilalle
-`tehtavaTaulu`-attribuutti:
+tekemattomat`- ja `VBox tehdyt`-attribuutit ja lisää niiden tilalle
+`TableView<Tehtava> tehtavaTaulu`-attribuutti:
 
 ```java,ignore
 // HIGHLIGHT_RED_BEGIN
@@ -224,9 +224,9 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
     tehtavaTaulu.setItems(tehtavat);
 
     // HIGHLIGHT_GREEN_BEGIN
-    TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty"); /* 1. */
-    tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());   /* 2. */
-    tehtavaTaulu.getColumns().add(tehtySarake);                             /* 3. */
+    /* 1 */ TableColumn<Tehtava, Boolean> tehtySarake = new TableColumn<>("Tehty"); 
+    /* 2 */ tehtySarake.setCellValueFactory(cd -> cd.getValue().tehtyProperty());   
+    /* 3 */ tehtavaTaulu.getColumns().add(tehtySarake);                             
     // HIGHLIGHT_GREEN_END
 
     // metodin loppuosa piilotettu...
@@ -240,13 +240,13 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 
-Sarakkeen luominen tapahtuu siis seuraavasti:
+Tämä näyttää hieman hurjalta, joten palastellaan vihreällä merkitty koodi rivi riviltä. 
 
 1. Luodaan uusi sarake alustamalla `TableColumn<Tehtava, Boolean>`-olio.
    Ensimmäinen tyyppiparametri `Tehtava` kertoo, minkä typpisiä olioita taulukon
    riveillä on. Toinen tyyppiparametri `Boolean` kertoo, minkä tyyppisiä
-   arvoja sarakkeessa näytetään.
-2. Sidotaan `tehtySarake`-sarake `tehtyProperty`-ominaisuuden arvoon.   
+   arvoja sarakkeessa näytetään. Merkkijono "Tehty" on sarakkeen otsikko, joka näkyy taulukossa.
+2. Sidotaan `tehtySarake`-sarake `tehtyProperty`-ominaisuuden arvoon. 
    `setCellValueFactory()` määrittää, mistä oliosta tai ominaisuudesta sarakkeen
    näytettävä arvo otetaan. JavaFX kutsuu tässä annettua lambdalauseketta aina,
    kun se tarvitsee juuri tässä sarakkeessa näytettävän arvon. Lambdan parametri

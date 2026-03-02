@@ -158,9 +158,9 @@ tulostuu tieto siitä, että nimi on lisätty. Teksti tulostuu aina kun
 havaitsemaan, kun listaan tehdään muutoksia. Jos lisäät alkioita tavalliseen
 `ArrayList`-listaan, mikään toinen olio ei automaattisesti tiedä siitä, ellei se
 erikseen käy tarkistamassa listan kokoa. `ObservableList` taas on aktiivinen.
-Kun kutsumme `nimet.add()`, lista lähettää ilmoituksen kaikille muutoksista
-kiinnostuneille, jotka ovat rekisteröityneet havaitsijoiksi
-`addListener()`-metodin avulla. 
+Kun listalle vaikkapa lisätään tai sieltä poistetaan alkio, lista lähettää
+ilmoituksen kaikille muutoksista kiinnostuneille, jotka ovat rekisteröityneet
+havaitsijoiksi `addListener()`-metodin avulla. 
 
 Yllä olevassa esimerkissä havaitsija on lambdalauseke, joka tulostaa konsoliin
 listan koon muutoksen jälkeen. 
@@ -254,6 +254,13 @@ Kuuntelijoita voi olla useita. Jokainen `addListener(...)` rekisteröi uuden
 kuuntelijan. Kun listassa tapahtuu muutos, JavaFX ilmoittaa siitä kaikille
 kuuntelijoille yksi kerrallaan. Yksi havaitsija voi esimerkiksi päivittää
 käyttöliittymää, toinen voi kirjoittaa lokia ja kolmas voi tehdä validointia.
+
+Huomionarvoista on, että `ObservableList`-olion kuuntelija reagoi vain listan
+rakenteen muutoksiin (lisäys, poisto, jne.), ei alkioiden sisällön muutoksiin.
+Niinpä `ObservableList`-olion kuuntelijaa *ei* kutsuta silloin, kun listan
+yksittäinen alkio muuttuu, esimerkiksi jos `nimet`-listan ensimmäinen alkio
+muuttuu "Denis" -> "Antti-Jussi". Palaamme tähän seikkaan [osassa
+8.2](./02-tableview.md), kun käsittelemme property-tyyppejä.
 
 <details><summary> Valinnaista lisätietoa: Miksi lambdalausekkeessa tarvitaan tyyppimuunnos? </summary>
 
