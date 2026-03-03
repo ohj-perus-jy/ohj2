@@ -1,0 +1,1 @@
+# Näkymän vaihtaminen samassa ikkunassa
