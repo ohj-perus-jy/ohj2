@@ -51,6 +51,7 @@ class Tapahtuma {
 }
 
 class Kategoria {
+  - Boolean valttamaton
   - String nimi
   - String kuvaus
 }
@@ -68,14 +69,25 @@ Seuranta --> Kategoria
 
 ### Tuotteiden varastohallinta
  
-Tässä sovelluksessa käyttäjä voi hallita tuotteiden varastotietoja.
+Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia. 
 
 <details><summary>Vaatimukset</summary>
 
- * Käyttäjä voi syöttää tuotteita ja niiden varastotietoja. 
+ * Käyttäjä voi syöttää tuotteita ja niiden määriä varastossa. 
  * Käyttäjä näkee kaikki tuotteet taulukossa, jossa on ainakin tuotteen nimi, määrä ja hinta. 
+ * Käyttäjä voi tehdä ostotapahtumia, joissa hän syöttää ostettavan tuotteen,
+   ostettavan määrän. Ei voi ostaa, jos tuotetta ei ole varastossa tarpeeksi 
+ * Näytetään rivin yksikköhinta ja rivin loppuhinta (yksikköhinta * määrä)
+   ostotapahtuman yhteydessä. Tarvitset sarakkeen, joka laskee
+   kertolaskun tuotteiden hinnasta ja ostettavasta määrästä. 
+ * Näytetään ostosten loppuhinnan. 
  * Seuraava vaatimus...
- * Seuraava vaatimus...
+
+Bonus
+
+ * Maksutapa voi olla kortti tai käteinen
+ * Käteismaksujen jälkeen käteiskassa päivittyy
+ * Rivialennus tai ostotapahtumakohtainen alennus
 
 </details>
 
