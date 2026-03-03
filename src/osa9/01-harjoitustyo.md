@@ -104,7 +104,6 @@ kirjojen lainahistoriaa.
  * Käyttäjä voi lainata ja palauttaa kirjoja. 
  * Seuraava vaatimus...
  * Seuraava vaatimus...
-  
 
 Esimerkki siitä, miltä JSON voisi näyttää. 
 
