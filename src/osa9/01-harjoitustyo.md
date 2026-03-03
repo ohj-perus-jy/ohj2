@@ -39,7 +39,6 @@ Bonus
 
  * Käyttäjä näkee kategorioittain aikasarjan kuluista
 
-</details>
 
 ```plantuml
 @startuml
@@ -66,6 +65,8 @@ Seuranta --> Tapahtuma
 Seuranta --> Kategoria
 @enduml
 ```
+
+</details>
 
 ### Tuotteiden varastohallinta
  
