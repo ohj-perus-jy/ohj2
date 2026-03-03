@@ -294,9 +294,7 @@ class Yhtio {
   - mitä käyttäjä voi tehdä päänäkymässä
   - millä komponenteilla tärkeimmät toiminnot on tarkoitus toteuttaa
 
-## Versiohallinta
 
-- Työstä on Git-varasto, jossa näkyy committeja
 
 
 ## Tavoitetaso
@@ -308,7 +306,6 @@ toinen puolikas, joka vastaa osan 8 tasoa.
 ## Checklist
 
 --
-
 
 # Harjoitustyö, vaihe 1: osa 2
 
@@ -375,3 +372,33 @@ Jos oma sovelluksesi on tässä vaiheessa suunnilleen samalla tasolla kuin osien
 7 ja 8 Todo-sovellus ilman bonuksia, olet oikealla tasolla. Vaiheen 1 lopussa
 työssäsi pitäisi näkyä sekä toimiva perussovellus että uskottava rakenne sen
 jatkokehitykselle.
+
+
+## Tehtävät
+
+1. Suunnitelma
+
+Kerro minkä aiheen valitset. Jos valitset oman aiheen, se tulee hyväksyttää
+tuntiopettajalla. Teet samanlaisen vaatimusmäärittelyn kuin yllä, mutta
+sovelluksesi tarpeisiin sopivaksi.
+
+Kaikki tekevät: 
+ - Käyttöliittymän suunnitelma wireframe.cc:llä, paintilla tai käsin piirrettynä.
+
+Jos teet oman aiheen: 
+
+ - Mitä varten sovellus on
+ - Toiminnot, mitä käyttäjä voi tehdä
+ - Sovelluksen tietomalli
+
+2. Tee JavaFX-projekti. 
+
+3. Tee Git-varasto. Lisää projektiin .gitignore ja README.md. README voi
+   toistaiseksi olla tyhjä tai sisältää vain projektisi nimen. Lähetä
+   Git-varasto GitLabiin tai GitHubiin. Palauta TIMiin
+   etävaraston URL-osoite. 
+
+4. Toteuta tietomalli sovellukseen. Olennaisimmat attribuutit ja metodit tulee
+   olla toteutettuina, mutta ei tarvitse vielä olla täydellisiä. Toimintoja ei
+   tarvitse vielä toteuttaa; ei esim. tarvitse vielä tallentaa tiedostoon eikä
+   lukea sovelluksessa.
