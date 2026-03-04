@@ -181,7 +181,7 @@ class TehtavakokoelmaTest {
         Tehtavakokoelma kokoelma = new Tehtavakokoelma("testitehtavat.json");
         kokoelma.lisaaTehtava("Käy kaupassa");
         assertEquals(1, kokoelma.getTehtavat().size());
-        assertEquals("Käy kaupassa", kokoelma.getTehtavat().get(0).getTeksti());
+        assertEquals("Käy kaupassa", kokoelma.getTehtavat().get(0).getOtsikko());
     }
 
     @Test
