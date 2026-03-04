@@ -491,7 +491,7 @@ public class MockTehtavaRepository implements TehtavaRepository {
 
     @Override
     public void tallenna(List<Tehtava> tehtavat) {
-        tallennetutTehtavat.clear();
+        tallennetutData.clear();
         // Teemme jokaisesta tehtävästä kopion
         // Näin voimme testata, että tallennettu data täsmää myös kokoelmassa olevan datan kanssa
         for (Tehtava tehtava : tehtavat) {
@@ -500,7 +500,7 @@ public class MockTehtavaRepository implements TehtavaRepository {
             kopio.setPrioriteetti(tehtava.getPrioriteetti());
             kopio.setKuvaus(tehtava.getKuvaus());
             kopio.setTehty(tehtava.getTehty());
-            tallennetutTehtavat.add(kopio);
+            tallennetutData.add(kopio);
         }
     }
     
