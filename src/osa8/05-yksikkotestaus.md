@@ -560,13 +560,13 @@ void tehtavakokoelmaTallennusToimiiLisayksestaJaPoistosta() {
     // Act 1: Lisätään tehtävä
     kokoelma.lisaaTehtava("Käy kaupassa");
     // Assert 1: Tallennus onnistui
-    assertEquals(1, repo.getTallennetutTehtavat().size(), "Tehtävät tallentuvat, kun uusi tehtävä lisätään");
+    assertEquals(1, repo.haeTallennetut().size(), "Tehtävät tallentuvat, kun uusi tehtävä lisätään");
 
     // Act 2: Poistetaan tehtävä
     Tehtava tehtava = kokoelma.getTehtavat().getFirst();
     kokoelma.poistaTehtava(tehtava);
     // Assert 2: Tallennus onnistui
-    assertEquals(0, repo.getTallennetutTehtavat().size(), "Tehtävät tallentuvat, kun tehtävä poistetaan");
+    assertEquals(0, repo.haeTallennetut().size(), "Tehtävät tallentuvat, kun tehtävä poistetaan");
 }
 
 @Test
@@ -578,19 +578,19 @@ void tehtavakokoelmaTallennusToimiiAttribuuttienMuutoksesta() {
     Tehtava tehtava = kokoelma.getTehtavat().getFirst();
     tehtava.setTehty(true);
 
-    Tehtava tallennettuTehtava = repo.getTallennetutTehtavat().getFirst();
+    Tehtava tallennettuTehtava = repo.haeTallennetut().getFirst();
     assertEquals(tehtava.getTehty(), tallennettuTehtava.getTehty(), "Tehtävän tehty-tila tallentuu, kun se muutetaan");
 
     tehtava.setOtsikko("Mene nukkumaan");
-    tallennettuTehtava = repo.getTallennetutTehtavat().getFirst();
+    tallennettuTehtava = repo.haeTallennetut().getFirst();
     assertEquals(tehtava.getOtsikko(), tallennettuTehtava.getOtsikko(), "Tehtävän otsikko tallentuu, kun se muutetaan");
 
     tehtava.setPrioriteetti(Prioriteetti.KORKEA);
-    tallennettuTehtava = repo.getTallennetutTehtavat().getFirst();
+    tallennettuTehtava = repo.haeTallennetut().getFirst();
     assertEquals(tehtava.getPrioriteetti(), tallennettuTehtava.getPrioriteetti(), "Tehtävän prioriteetti tallentuu, kun se muutetaan");
 
     tehtava.setKuvaus("Nukkuminen on kivaa");
-    tallennettuTehtava = repo.getTallennetutTehtavat().getFirst();
+    tallennettuTehtava = repo.haeTallennetut().getFirst();
     assertEquals(tehtava.getKuvaus(), tallennettuTehtava.getKuvaus(), "Tehtävän kuvaus tallentuu, kun se muutetaan");
 }
 ```
