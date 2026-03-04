@@ -235,8 +235,6 @@ class Yhtio {
   - List<Asunto> asunnot
 }
 ```
-
-
 </details>
 
 
@@ -431,3 +429,9 @@ Jos teet oman aiheen:
    olla toteutettuina, mutta ei tarvitse vielä olla täydellisiä. Toimintoja ei
    tarvitse vielä toteuttaa; ei esim. tarvitse vielä tallentaa tiedostoon eikä
    lukea sovelluksessa.
+
+5. Kokeile `Main`-luokassa, että malliluokkasi toimivat odotetulla tavalla.
+   Olioita täytyy pystyä luomaan, poistamaan, muokkaamaan ja hakemaan --
+   riippuen siitä, mitä sovelluksessasi on tarkoitus tehdä. Voit tehdä tästä
+   aliohjelman, jota kutsut pääohjelmassa. Bonus: Kirjoita yksikkötestejä
+   malliluokillesi.
