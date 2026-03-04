@@ -321,11 +321,11 @@ uuteen luokkaan, joka toteuttaa `TehtavaRepository`-rajapinnan.
 ```java
 package fi.jyu.ohj2.nimi.todo.persistence;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
 import fi.jyu.ohj2.nimi.todo.model.Tehtava;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -339,7 +339,7 @@ public class JsonTehtavaRepository implements TehtavaRepository {
     }
 
     @Override
-    public List<Tehtava> lataa() throws IOException {
+    public List<Tehtava> lataa() throws JacksonException {
         if (Files.notExists(tallennustiedosto)) {
             return List.of();
         }
@@ -347,7 +347,7 @@ public class JsonTehtavaRepository implements TehtavaRepository {
     }
 
     @Override
-    public void tallenna(List<Tehtava> tehtavat) throws IOException {
+    public void tallenna(List<Tehtava> tehtavat) throws JacksonException {
         mapper.writeValue(tallennustiedosto.toFile(), tehtavat);
     }
 }
