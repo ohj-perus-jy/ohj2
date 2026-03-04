@@ -380,6 +380,7 @@ public class Tehtavakokoelma {
     public void lataa() {
         try {
             List<Tehtava> kaikkiTehtavat = repository.lataa();
+            tehtavat.addAll(kaikkiTehtavat);
         } catch (RepositoryException e) {
             IO.println(e.getMessage());
         }
