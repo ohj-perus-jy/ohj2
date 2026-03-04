@@ -304,7 +304,7 @@ sillä nyt tehtäviä voidaan ladata muullakin tavalla kuin tiedostosta.
 Sijoitetaan tämäkin `persistence`-pakkaukseen.
 
 ```java,ignore
-package fi.jyu.ohj2.nimi.persistence;
+package fi.jyu.ohj2.nimi.todo.persistence;
 
 public class RepositoryException extends Exception {
     public RepositoryException(String message) {
