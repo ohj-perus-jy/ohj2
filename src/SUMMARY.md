@@ -67,11 +67,16 @@
   - [Yksikkötestaus](./osa8/05-yksikkotestaus.md)
   - [Koodin julkaiseminen etävarastopalvelussa](./osa8/06-versionhallinnan-etakaytto.md)
   - [Osan kaikki tehtävät](./osa8/07-tehtavat.md)
-- [Harjoitustyö, näkymät, kirjastot, Git](./osa9/index.md)
+- [Harjoitustyö, vaihe 1](./osa9/index.md)
   - [Harjoitustyön aloittaminen](./osa9/01-harjoitustyo.md)
-  - [Näkymän vaihtaminen ikkunassa](./osa9/02-nakyman-vaihtaminen.md)
-  - [UI-kirjaston käyttö](./osa9/03-ui-kirjastojen-kaytto.md)
-  - [Gitin käyttö ohjelmistokehityksessä](./osa9/04-git.md)
-- [Harjoitustyön vaihe 2](./osa10/index.md)
-- [Harjoitustyön vaihe 3](./osa11/index.md)
+  - [UI-kirjaston käyttö](./osa9/02-ui-kirjastojen-kaytto.md)
+  - [Gitin käyttö ohjelmistokehityksessä](./osa9/03-git.md)
+- [Harjoitustyö, vaihe 2](./osa10/index.md)
+- [Harjoitustyö, vaihe 3](./osa11/index.md)
 - [Osa 12](./osa12/index.md)
+
+--- 
+
+- [JavaFX-ohjeita](./javafx/index.md)
+  - [Näkymät](./javafx/01-nakymat.md)
+  - [TableView](./javafx/02-tableview.md)

@@ -1,4 +1,6 @@
-# Näkymän vaihtaminen samassa ikkunassa
+# Näkymät
+
+## Näkymän vaihtaminen samassa ikkunassa
 
 Näkymän vaihtaminen samassa ikkunassa on tärkeä osa monen JavaFX-sovelluksen
 toimintaa. Tämä mahdollistaa käyttäjälle sujuvan kokemuksen, kun hän voi siirtyä

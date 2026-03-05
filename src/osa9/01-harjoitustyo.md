@@ -1,6 +1,22 @@
 # Harjoitustyö
 
+Tällä viikolla aloitetaan oman harjoitustyön toteutus. Harjoitustyö toteutetaan
+vaiheittain osissa 9-12, ja viimeistään osan 12 loppuun mennessä harjoitustyö
+tulee palauttaa ja hyväksyttää tuntiopettajalla etä- tai lähiohjauksessa. 
+
+Harjoitustyösi tulee täyttää kaikki [harjoitustyölle asetetut
+vaatimukset](../harjoitustyo.md). Lue huolellisesti harjoitustyön vaatimukset
+ennen aloittamista. 
+
+Osissa 9-12 on annettu ohjeita, joiden tarkoituksena on auttaa sinua etenemään
+harjoitustyössä, mutta harjoitustyötä ei ole pakko toteuttaa näissä osissa
+kuvattua vaiheustusta hyödyntäen. 
+
 ## Projektin aihe
+
+Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
+joka täyttää harjoitustyölle asetetut vaatimukset. Jos valitset oman aiheen, se
+tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
 ### Kulujen seuranta
 
@@ -266,18 +282,13 @@ avainsanan perusteella.
 
 Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 
-<details><summary>Vaatimusket</summary>
+<details><summary>Ominaisuudet</summary>
 
   * Käyttäjä voi merkitä tehtävän tärkeäksi, jolloin se näkyy listassa erottuvalla tavalla.
 
 </details>
 
 ## Jokin muu oma sovellusidea, joka täyttää vaatimukset
-
-
-## Projektin perusvaatimukset
-
-- Työ on JavaFX-projekti.
 
 ## Tehtävät
 

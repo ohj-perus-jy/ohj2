@@ -1,10 +1,10 @@
 # Harjoitustyö
 
-[Opintojaksoon kuuluu harjoitustyö](./suorittaminen.md), jossa toteutetaan graafinen Java-sovellus.
-Alla on kuvattu harjoitustyön vaatimukset. Harjoitustyö toteutetaan vaiheittain
-osissa 9-12. Kussakin osassa on annettu ohjeita, joiden tarkoituksena on auttaa
-sinua etenemään harjoitustyössä, mutta voit toteuttaa vaatimukset myös muulla
-tavalla, kunhan ne täyttyvät.
+[Opintojaksoon kuuluu harjoitustyö](./suorittaminen.md), jossa toteutetaan
+graafinen Java-sovellus. Alla on kuvattu harjoitustyön vaatimukset.
+Harjoitustyö toteutetaan vaiheittain osissa 9-12. Kussakin osassa on annettu
+ohjeita, joiden tarkoituksena on auttaa sinua etenemään harjoitustyössä, mutta
+voit toteuttaa vaatimukset myös muulla tavalla, kunhan ne täyttyvät.
 
 Kannatta tehdä osissa 7-8 toteutettu mallisovellus ensin valmiiksi. Saat siitä
 apua harjoitustyön toteutukseen. 
