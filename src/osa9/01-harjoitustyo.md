@@ -6,7 +6,7 @@
 
 Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan. 
 
-<details><summary>Vaatimukset</summary>
+<details><summary>Ominaisuudet</summary>
 
  * Käyttäjä voi syöttää kuluja ja menoja. 
  * Käyttäjä näkee kaikki kulut ja menot
@@ -72,7 +72,7 @@ Seuranta --> Kategoria
  
 Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia. 
 
-<details><summary>Vaatimukset</summary>
+<details><summary>Ominaisuudet</summary>
 
  * Käyttäjä voi syöttää tuotteita ja niiden määriä varastossa. 
  * Käyttäjä näkee kaikki tuotteet taulukossa, jossa on ainakin tuotteen nimi, määrä ja hinta. 
@@ -98,7 +98,7 @@ Kirjastossa on kirjoja ja lainaajia. Lainaaja voi lainata ja palauttaa kirjoja.
 Kirjaston hoitaja voi hallita kirjojen tietoja ja lainatilannetta, sekä tutkia
 kirjojen lainahistoriaa.
 
-<details><summary>Vaatimukset</summary>
+<details><summary>Ominaisuudet</summary>
 
  * Käyttäjä voi syöttää kirjoja ja niiden tietoja. 
  * Käyttäjä näkee kaikki kirjat taulukossa, jossa on ainakin kirjan nimi, tekijä ja lainatilanne. 
@@ -173,7 +173,7 @@ lainannut kunkin kirjan.
 Taloyhtiön hallintasovelluksessa taloyhtiön isännöitsijä voi hallita taloyhtiön
 tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia. 
 
-<details><summary>Vaatimukset</summary>
+<details><summary>Ominaisuudet</summary>
 
  * Käyttäjä voi syöttää asuntoja ja niiden tietoja. 
  * Käyttäjä näkee kaikki asunnot taulukossa, jossa on asunnon
@@ -245,7 +245,7 @@ siihen liittyvän vastauksen/määritelmän/tms. Käyttäjä voi selata muistiko
 merkitä kortteja opituiksi tai opettelemattomiksi, ja hakea kortteja esimerkiksi
 avainsanan perusteella.
 
-<details><summary>Vaatimukset</summary>
+<details><summary>Ominaisuudet</summary>
 
  * Käyttäjä voi luoda muistikortteja, jotka sisältävät kysymyksen/termin/tms., ja siihen liittyvän vastauksen/määritelmän/tms. 
  * Käyttäjä näkee kaikki muistikortit taulukossa, jossa on ainakin kortin kysymys/termi ja opittu/opettelematon -tila. 
@@ -279,128 +279,6 @@ Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 
 - Työ on JavaFX-projekti.
 
-## Käyttöliittymä 
-
- - Sovelluksessa on vähintään kaksi näkymää
-
----------------
-
-## Perustoiminnallisuus
-
-- Sovelluksessa on vähintään yksi selkeä päätietotyyppi, joka vastaa
-  Todo-sovelluksen `Tehtava`-oliota. Se voi olla esimerkiksi tapahtuma, kirja,
-  asiakas, treeni, peli, resepti tai jokin muu oman sovelluksen keskeinen
-  tieto-olio.
-- Käyttäjä voi lisätä uusia olioita käyttöliittymästä.
-- Käyttäjä näkee kaikki oliot käyttöliittymässä.
-- Käyttäjä voi muuttaa olion jotakin keskeistä tilaa tai ominaisuutta suoraan
-  päänäkymästä. Todo-sovelluksessa tämä oli tehty/ei-tehty -tila.
-- Käyttäjä ei saa voida lisätä ilmeisen virheellistä tietoa, kuten tyhjää nimeä
-  tai muuta pakollisen kentän puuttumista.
-
-## Tallennus
-
-- Sovelluksen tiedot tallennetaan tiedostoon, jotta ne säilyvät ohjelman
-  sulkemisen jälkeen.
-- Tallennetut tiedot ladataan takaisin ohjelman käynnistyessä.
-
-## Käyttöliittymä
-
-- Sovelluksessa on graafinen käyttöliittymä, jossa on vähintään yksi selkeä
-  päänäkymä.
-- Käyttöliittymä on jäsennelty ja käyttökelpoinen: syöttökentät, painikkeet,
-  nimiöt ja listaus eivät saa olla sattumanvaraisesti aseteltuja.
-- Käyttäjän kannalta keskeiset toiminnot löytyvät päänäkymästä ilman, että
-  ohjelmaa pitää käyttää komentorivin kautta.
-
-## Käyttöliittymäsuunnitelma
-
-- Palautuksessa on mukana lyhyt suunnitelma käyttöliittymästä.
-- Suunnitelmassa kuvataan ainakin:
-  - mitä käyttäjä näkee päänäkymässä
-  - mitä käyttäjä voi tehdä päänäkymässä
-  - millä komponenteilla tärkeimmät toiminnot on tarkoitus toteuttaa
-
-
-
-
-## Tavoitetaso
-
-Jos oma sovelluksesi on tässä vaiheessa suunnilleen samalla tasolla kuin osan 7
-Todo-sovellus, olet oikealla tasolla. Seuraavalla sivulla kuvataan vaiheen 1
-toinen puolikas, joka vastaa osan 8 tasoa.
-
-## Checklist
-
---
-
-# Harjoitustyö, vaihe 1: osa 2
-
-Tavoitteena on, että työ ei ole vain toimiva käyttöliittymä,
-vaan myös rakenteeltaan järkevästi suunniteltu sovellus, jossa malli,
-käyttöliittymä ja tallennus on erotettu toisistaan.
-
-## Tietomalli ja käyttöliittymän kytkentä
-
-- Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla
-  malliluokilla.
-- Sovelluksessa käytetään JavaFX:n havaittavia rakenteita silloin, kun ne
-  liittyvät käyttöliittymän ja datan kytkemiseen. Käytännössä tämä tarkoittaa
-  vähintään sitä, että keskeinen tietokokoelma on `ObservableList` tai vastaava
-  havaittava rakenne.
-- Datan esittämiseen käytetään tarkoituksenmukaista komponenttia. Jos työssä on
-  useita samantyyppisiä olioita, `TableView` on yleensä luonteva ratkaisu.
-- Käyttäjä voi valita yksittäisen olion käyttöliittymästä ja poistaa sen.
-
-## Arkkitehtuuri ja vastuunjako
-
-- Sovelluksen rakenteen tulee noudattaa vähintään karkeasti samaa ajatusta kuin
-  malliharjoitustyössä: data, käyttöliittymä ja niitä yhteen kytkevä logiikka on
-  erotettu toisistaan.
-- Käyttöliittymäluokka tai kontrolleri ei saa sisältää kaikkea sovelluksen dataa
-  ja tallennuslogiikkaa itsessään.
-- Tiedon lataus ja tallennus on erotettu omaksi vastuukseen pois
-  käyttöliittymälogiikasta.
-
-## Muokkausnäkymä tai sen suunnitelma
-
-- Sovelluksessa on oltava ajatus siitä, miten yksittäisen olion tarkempia tietoja
-  voidaan muokata.
-- Tämä voi olla erillinen näkymä, dialogi tai muu perusteltu ratkaisu.
-- Osiin 7 ja 8 perustuvan malliharjoitustyön hengessä oliolla on hyvä olla
-  vähintään yksi tai kaksi lisätietoa pelkän nimen tai otsikon lisäksi.
-- Jos et vielä toteuta varsinaista muokkausnäkymää valmiiksi, suunnitelman tulee
-  olla mukana palautuksessa.
-
-## Komponenttien ja luokkien vastuut
-
-- Palautuksessa on mukana lyhyt kuvaus komponenttien ja luokkien vastuista.
-- Kuvauksesta tulee käydä ilmi ainakin:
-  - mikä luokka tai luokat muodostavat sovelluksen mallin
-  - mikä luokka vastaa käyttöliittymän ohjaamisesta
-  - missä tiedon tallennus ja lataus hoidetaan
-  - miten käyttöliittymä ja malli keskustelevat keskenään
-
-## Testaus 
-
-- Sovelluksen keskeiselle mallille tai bisneslogiikalle on kirjoitettu ainakin
-  joitakin yksikkötestejä.
-
-## Versiohallinta
-
-- Työlle on tehty julkinen Git-etävarasto GitLabiin tai GitHubiin.
-- Projektissa on vähintään `.gitignore` ja lyhyt `README.md`, jossa kerrotaan,
-  mikä sovellus on kyseessä ja miten se käynnistetään.
-
-
-## Tavoitetaso
-
-Jos oma sovelluksesi on tässä vaiheessa suunnilleen samalla tasolla kuin osien
-7 ja 8 Todo-sovellus ilman bonuksia, olet oikealla tasolla. Vaiheen 1 lopussa
-työssäsi pitäisi näkyä sekä toimiva perussovellus että uskottava rakenne sen
-jatkokehitykselle.
-
-
 ## Tehtävät
 
 1. Suunnitelma
@@ -410,7 +288,12 @@ tuntiopettajalla. Teet samanlaisen vaatimusmäärittelyn kuin yllä, mutta
 sovelluksesi tarpeisiin sopivaksi.
 
 Kaikki tekevät: 
+
  - Käyttöliittymän suunnitelma wireframe.cc:llä, paintilla tai käsin piirrettynä.
+ - Suunnitelmassa tulee kuvata:
+   - mitä käyttäjä näkee näkymissä (päänäkymä, muokkausnäkymä, tms.)
+   - mitä käyttäjä voi tehdä näkymissä
+   - millä komponenteilla tärkeimmät toiminnot on tarkoitus toteuttaa
 
 Jos teet oman aiheen: 
 
@@ -418,17 +301,46 @@ Jos teet oman aiheen:
  - Toiminnot, mitä käyttäjä voi tehdä
  - Sovelluksen tietomalli
 
-2. Tee JavaFX-projekti. 
+1. Tee JavaFX-projekti. 
 
-3. Tee Git-varasto. Lisää projektiin .gitignore ja README.md. README voi
+2. Tee Git-varasto. Lisää projektiin .gitignore ja README.md. README voi
    toistaiseksi olla tyhjä tai sisältää vain projektisi nimen. Lähetä
    Git-varasto GitLabiin tai GitHubiin. Palauta TIMiin
    etävaraston URL-osoite. 
 
-4. Toteuta tietomalli sovellukseen. Olennaisimmat attribuutit ja metodit tulee
+3. Toteuta tietomalli sovellukseen. Olennaisimmat attribuutit ja metodit tulee
    olla toteutettuina, mutta ei tarvitse vielä olla täydellisiä. Toimintoja ei
    tarvitse vielä toteuttaa; ei esim. tarvitse vielä tallentaa tiedostoon eikä
    lukea sovelluksessa.
+   
+<details><summary>Jos ehdit, aloita jo validointia ja aloita yksikkötestaus</summary>
+
+Seuraavat asiat tehdään joka tapauksessa osassa 10, mutta tee ne nyt jos ehdit. 
+
+ * toteuta malliluokille yksinkertainen validointi (`String onkoValidi()`),
+   joka estää ilmeisen virheellisen datan, kuten tyhjän nimen tai
+   negatiivisen summan. Esimerkki tästä voisi olla malliolion metodi `String
+   onkoValidi()`, joka palauttaa tyhjän merkkijonon jos olio on validi, ja
+   virheilmoituksen muuten.      
+
+   Esimerkiksi `Tehtava`-olion `onkoValidi()`-metodi voisi olla seuraava: 
+   
+   ```java,ignore
+   public String onkoValidi() {
+       if (this.nimi == null || this.nimi.isBlank()) {
+           return "Nimi ei saa olla tyhjä";
+       }
+       return "";
+   }
+   ```
+   
+   Jos luokassa on useita tarkistettavia kenttiä, `onkoValidi()`-metodi voisi
+   tarkistaa kaikki kentät ja palauttaa kaikki virheilmoitukset yhdessä
+   merkkijonossa.      
+   
+ * toteuta yksikkötestit, joissa hyödynnät `onkoValidi()`-metodia. 
+
+</details>
 
 5. Kokeile `Main`-luokassa, että malliluokkasi toimivat odotetulla tavalla.
    Olioita täytyy pystyä luomaan, poistamaan, muokkaamaan ja hakemaan --
