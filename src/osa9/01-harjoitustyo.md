@@ -195,31 +195,59 @@ tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia.
  * Käyttäjä näkee kaikki asunnot taulukossa, jossa on asunnon
    numero ja asukkaiden lukumäärä
  * Käyttäjä voi lisätä ja poistaa asukkaita asuntoon.
- * Käyttäjä näkee asunnon asukkaat taulukossa, jossa on ainakin asukkaiden nimet, sähköpostiosoitteet ja syntymävuodet.
- * Käyttäjä näkee kaikki asukkaat taulukossa, jossa on ainakin asukkaiden
+ * Käyttäjä näkee asunnon asukkaat taulukossa, jossa on ainakin asukkaiden
    nimet, sähköpostiosoitteet ja syntymävuodet.
- * Käyttäjä voi syöttää asunnolle vesimittarilukemia. Vesimittarilukema sisältää lukeman, päivämäärän ja sen, onko lukema otettu kylmästä vai lämpimästä vedestä.
+
+Sovelluksen tietomalli voisi olla esimerkiksi seuraavanlainen:
+
+```plantuml
+@startuml
+class Asukas {
+  - String nimi
+  - String email
+  - int syntymavuosi
+}
+
+class Asunto {
+  - String tunniste
+  - List<Asukas> asukkaat
+}
+
+class Yhtio {
+  - String nimi
+  - List<Asunto> asunnot
+}
+
+Yhtio --> Asunto
+Asunto --> Asukas
+@enduml
+``` 
+</details>
+
+
+<details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
+
+ * Sovelluksesa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.
+ * Sovelluksen aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää
+   isännöitsijän vai asukkaan näkymää.
+ * Isännöitsijä voi hallita asuntojen tietoja, asukkaita ja taloyhtiön
+   tapahtumia (kuten perusversiossakin)
+ * Asukas voi syöttää asunnolle vesimittarilukemia. Vesimittarilukema sisältää
+   lukeman, päivämäärän ja sen, onko lukema otettu kylmästä vai lämpimästä
+   vedestä.
  * Käyttäjä näkee asunnon vesimittarilukemat taulukossa
  * Käyttäjä (asukas) voi antaa palautetta. 
  * Käyttäjä (isännöitsijä) näkee palautteet taulukossa, jossa on ainakin palautteen tekijän nimi, päivämäärä ja palautteen sisältö.
  * Ei voi olla asukkaita, jotka eivät kuulu mihinkään asuntoon. 
 
-Vesimittarilukeman syöttö ja palautteen antaminen tulee olla oma näkymänsä, joka
-simuloi asukkaan käytöliittymää. Asuntojen tietojen hallinta, palautteiden
-tarkastelu ja muut hallintatoimet ovat oma näkymänsä, joka simuloi isännöitsijän
-käyttöliittymää. Tämä voidaan toteuttaa esimerkiksi niin, että sovelluksen
-aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää isännöitsijän vai
-asukkaan näkymää.
+Lisää bonuksia...
 
-<i class="bi bi-stars jyu-gold"></i> Bonus
-
- * Käyttäjä voi syöttää taloyhtiölle lämpimän ja kylmän veden hinnat ja niiden
+ * Isännöitsijä voi syöttää taloyhtiölle lämpimän ja kylmän veden hinnat ja niiden
    alkamispäivät.
  * Käyttäjä voi luoda asunnolle vesilaskun. Vesilasku sisältää kahden
    viimeisimmän kylmän ja lämpimän veden lukeman erotuksen. Riittää, että
    vesilasku näyttää laskukauden (alku- ja loppupvm), kulutetun kylmän ja
    lämpimän veden määrän, sekä vesilaskun loppusumman (kylmä ja lämmin vesi eroteltuina).
-
 
 ```plantuml
 @startuml
@@ -252,6 +280,12 @@ class Yhtio {
 }
 ```
 </details>
+
+Voit halutessasi tutkia valmista sovellusta
+[täällä](https://github.com/ohj-perus-jy/malliharkat/blob/main/Taloyhtio-1.0.jar).
+Lataa tiedosto. Selain varoittaa, että sovellus ei ole turvallinen, mutta voit
+hyväksyä sen silti. Käynnistä sovellus komennolla `java -jar Taloyhtio-1.0.jar`. 
+
 
 
 ### Muistikorttisovellus
