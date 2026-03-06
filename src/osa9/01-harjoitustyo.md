@@ -319,27 +319,56 @@ hyväksyä sen silti. Käynnistä sovellus komennolla `java -jar Taloyhtio-1.0.j
 
 ### Muistikorttisovellus
 
-Käyttäjä voi luoda muistikortteja, jotka sisältävät kysymyksen/termin/tms., ja
-siihen liittyvän vastauksen/määritelmän/tms. Käyttäjä voi selata muistikortteja,
-merkitä kortteja opituiksi tai opettelemattomiksi, ja hakea kortteja esimerkiksi
-avainsanan perusteella.
+Sovellus, jolla voi luoda ja hallita muistikortteja (vrt. [Anki](https://fi.wikipedia.org/wiki/Anki_(ohjelma))).
+Käyttäjä voi luoda muistikortteja, jotka sisältävät termin ja siihen liittyvän
+selityksen. Samaan aiheeseen kuuluvia muistikortteja kerätään korttipakkoihin,
+joita voi harjoitella sovelluksessa.
 
 <details><summary>Ominaisuudet</summary>
 
- * Käyttäjä voi luoda muistikortteja, jotka sisältävät kysymyksen/termin/tms., ja siihen liittyvän vastauksen/määritelmän/tms. 
- * Käyttäjä näkee kaikki muistikortit taulukossa, jossa on ainakin kortin kysymys/termi ja opittu/opettelematon -tila. 
- * Käyttäjä voi luoda kategorian, johon voi lisätä kortteja
- * Kategorialla on otsikko, kuvaus ja lista korteista, jotka kuuluvat kategoriaan
+**Toiminnalliset vaatimukset**
 
- * Harjoittelumoodi: 
-    * Käyttäjä voi harjoitella kategoriaa siten, että hän näkee jonkin satunnaisen
-   termin. Kun hän painaa korttia, hän näkee siihen liittyvän määritelmän. 
-    * Käyttäjä voi painaa painiketta, jolla hän näkee seuraavan kortin
-  * Bonus: Tenttimoodi:
-    * Käyttäjä näkee satunnaisen kortin/kysymyksen, ja neljä kappaletta saman
-      kategorian vastauksia/määritelmiä, joista yksi on oikea. Käyttäjä valitsee yhden vastauksen, ja saa tietää, oliko se oikea vai väärä. 
+* Käyttäjä voi luoda korttipakkoja, jotka sisältävät kortteja. Korttipakalla on
+  nimi ja valinnainen kuvaus.
+* Käyttäjä voi lisätä kortteja korttipakkaan. Kortilla on termi ja termin selitys.
+* Käyttäjä voi selata ja muokata lisättyjä korttipakkoja.
+* Käyttäjä voi harjoitella korttipakan kortteja ns. harjoitustilassa. Harjoitustilassa 
+* käyttäjälle näytetään yhden kortipakan kortin termi. Käyttäjä voi katsoa kortin
+  selityksen (eli ns. "kääntää kortin").
+  Käyttäjä voi sen jälkeen siirtyä seuraavaan korttiin tai edelliseen korttiin.
+* Harjoitustilassa kortit näytetään aina satunnaisessa järjestyksessä.
+* Käyttäjä voi muokata ja poistaa korttipakkoja tai sen kortteja.
 
- </details>
+**Sovelluksen tietomalli**
+
+Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Kortti` ja
+`Korttipakka`. Lisäksi tietomallissa on kaikkia korttipakkoja hallinnoiva
+`Korttipakkakokoelma`-luokka. Tietomalli näyttää siten seuraavalta:
+
+```plantuml
+@startuml
+left to right direction
+
+class Korttipakkakokoelma {
+  - List<Korttipakka> pakat
+}
+
+class Kortti {
+  - String termi
+  - String selitys
+}
+
+class Korttipakka {
+  - String otsikko
+  - String kuvaus
+  - List<Kortti> kortit
+}
+
+Korttipakka "1" -- "1..*" Kortti : sisältää >
+Korttipakkakokoelma "1" -- "1..*" Korttipakka : sisältää >
+```
+
+</details>
 
 ### Bonus: Todo-sovelluksen laajentaminen
 
