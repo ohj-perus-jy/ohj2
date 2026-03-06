@@ -84,6 +84,35 @@ Seuranta --> Kategoria
 
 </details>
 
+<details><summary>Valmiit kulukategoriat</summary>
+
+Sovelluksessa ei ole pakko pystyä muuttamaan kulukategorioita, vaan voit
+toteuttaa sovelluksen valmiilla kategorioilla. Alla on [Marttojen budjettioppaan](https://www.martat.fi/omat-rahat/taloudenhallinnan-perustaidot/talouden-suunnittelu/)
+mukaiset kulukategoriat. Voit käyttää näitä kategorioita, tai keksiä omat kategoriasi. 
+
+ * Ruoka kotona
+ * Ravintolat
+ * Vuokra ja vastike
+ * Vesi
+ * Sähkö
+ * Muu asuminen
+ * Vaatteet
+ * Terveys
+ * Auto
+ * Julkinen liikenne
+ * Muu matkustus
+ * Suoratoistot
+ * Päivähoito
+ * Vakuutukset
+ * Kodin hankinnat
+ * Vapaa-aika
+ * Lahjat, lahjoitukset
+ * Säästäminen
+ * Lainanhoito ja korot
+ * Muut menot
+
+</details>
+
 ### Tuotteiden varastohallinta
  
 Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia. 
