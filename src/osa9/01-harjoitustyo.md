@@ -58,27 +58,25 @@ Bonus
 
 ```plantuml
 @startuml
-class Tapahtuma {
-  - String nimi
-  - double summa
-  - LocalDate pvm
-  - Kategoria kategoria
-}
-
 class Kategoria {
   - Boolean valttamaton
   - String nimi
   - String kuvaus
+  - List<Tapahtuma> tapahtumat
 }
 
+class Tapahtuma {
+  - String nimi
+  - double summa
+  - LocalDate pvm
+}
+
+
 class Seuranta {
-  - List<Tapahtuma> tapahtumat
   - List<Kategoria> kategoriat
 }
 
-Tapahtuma --> Kategoria
-Seuranta --> Tapahtuma
-Seuranta --> Kategoria
+
 @enduml
 ```
 
