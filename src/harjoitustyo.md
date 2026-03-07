@@ -147,6 +147,14 @@ projektin `.java`-lähdekooditiedostoissa.**
 Kielen tarkistukseen liittyvät varoitukset (virheällä) sallitaan.
 Vastaavasti `.fxml`-tiedostossa olevia virhemerkintöjä sallitaan.
 
+Voit ajaa virheentarkistuksen kaikille tiedostoille kerralla käyttäen [Run all
+inspections
+-toimintoa](https://www.jetbrains.com/help/idea/running-inspections.html#run-all-inspections).
+
+Huomaa, että monille varoituksille ja virheillä IntelliJ IDEA tarjoaa valmiita
+korjauksia, jotka saa näkyviin klikkaamalla varoituksen yhteydessä näkyvästä
+toimintopainikkeesta (<i class="bi bi-lightbulb-fill"></i>).
+
 **8.2 Kaikkien `.java`-lähdekooditiedostojen tulee olla muotoiltu IDEA:n tyylin
 mukaisesti.** Käytä IDEA:n [Reformat code
 -ominaisuutta](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat_module_directory)
