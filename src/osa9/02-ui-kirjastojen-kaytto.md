@@ -1,1 +1,0 @@
-# UI-kirjastojen käyttö SceneBuilderissa

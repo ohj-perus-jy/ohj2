@@ -68,8 +68,7 @@
   - [Koodin julkaiseminen etävarastopalvelussa](./osa8/06-versionhallinnan-etakaytto.md)
   - [Osan kaikki tehtävät](./osa8/07-tehtavat.md)
 - [Harjoitustyö, vaihe 1](./osa9/index.md)
-  - [Harjoitustyön aloittaminen](./osa9/01-harjoitustyo.md)
-  - [UI-kirjaston käyttö](./osa9/02-ui-kirjastojen-kaytto.md)
+  - [Aiheen valinta](./osa9/01-harjoitustyo.md)
   - [Gitin käyttö ohjelmistokehityksessä](./osa9/03-git.md)
 - [Harjoitustyö, vaihe 2](./osa10/index.md)
 - [Harjoitustyö, vaihe 3](./osa11/index.md)
@@ -78,5 +77,5 @@
 --- 
 
 - [JavaFX-ohjeita](./javafx/index.md)
-  - [Näkymät](./javafx/01-nakymat.md)
-  - [TableView](./javafx/02-tableview.md)
+  - [Näkymät](./javafx/nakymat.md)
+  - [TableView](./javafx/tableview.md)

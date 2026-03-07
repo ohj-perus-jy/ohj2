@@ -12,7 +12,7 @@ Osissa 9-12 on annettu ohjeita, joiden tarkoituksena on auttaa sinua etenemään
 harjoitustyössä, mutta harjoitustyötä ei ole pakko toteuttaa näissä osissa
 kuvattua vaiheustusta hyödyntäen. 
 
-## Projektin aihe
+## Harjoitustyön aihe
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
 joka täyttää harjoitustyölle asetetut vaatimukset.
