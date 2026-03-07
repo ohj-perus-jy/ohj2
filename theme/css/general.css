@@ -83,6 +83,18 @@ details {
     margin-block: 1em;
 } 
 
+details {
+    h1, h2, h3, h4, h5, h6 {
+        &:first-child {
+            display: inline;
+
+            a {
+                pointer-events: none;
+            }
+        }
+    }
+}
+
 details summary {
     user-select: none;
 }

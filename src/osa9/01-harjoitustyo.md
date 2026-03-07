@@ -15,18 +15,19 @@ kuvattua vaiheustusta hyödyntäen.
 ## Projektin aihe
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
-joka täyttää harjoitustyölle asetetut vaatimukset. Jos valitset oman aiheen, se
-tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
+joka täyttää harjoitustyölle asetetut vaatimukset.
+
+
+<details><summary>
 
 ### Kulujen seuranta
 
 Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan. 
 
-<details><summary>Ominaisuudet</summary>
+</summary>
 
  * Käyttäjä voi syöttää kuluja ja menoja. 
- * Käyttäjä näkee kaikki kulut ja menot
-taulukossa, jossa on ainakin kulun nimi, summa ja päivämäärä. 
+ * Käyttäjä näkee kaikki kulut ja menot taulukossa, jossa on ainakin kulun nimi, summa ja päivämäärä. 
  * Käyttäjä voi määrittää kulukategorioita
  * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu.
  * Käyttäjä näkee tietyn kategorian kulut
@@ -80,8 +81,6 @@ class Seuranta {
 @enduml
 ```
 
-</details>
-
 <details><summary>Valmiit kulukategoriat</summary>
 
 Sovelluksessa ei ole pakko pystyä muuttamaan kulukategorioita, vaan voit
@@ -111,11 +110,17 @@ mukaiset kulukategoriat. Voit käyttää näitä kategorioita, tai keksiä omat 
 
 </details>
 
+</details>
+
+
+
+<details><summary>
+
 ### Tuotteiden varastohallinta
  
 Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia. 
 
-<details><summary>Ominaisuudet</summary>
+</summary>
 
  * Käyttäjä voi syöttää tuotteita ja niiden määriä varastossa. 
  * Käyttäjä näkee kaikki tuotteet taulukossa, jossa on ainakin tuotteen nimi, määrä ja hinta. 
@@ -135,13 +140,15 @@ Bonus
 
 </details>
 
+<details><summary>
+
 ### Kirjasto
 
 Kirjastossa on kirjoja ja lainaajia. Lainaaja voi lainata ja palauttaa kirjoja.
 Kirjaston hoitaja voi hallita kirjojen tietoja ja lainatilannetta, sekä tutkia
 kirjojen lainahistoriaa.
 
-<details><summary>Ominaisuudet</summary>
+</summary>
 
  * Käyttäjä voi syöttää kirjoja ja niiden tietoja. 
  * Käyttäjä näkee kaikki kirjat taulukossa, jossa on ainakin kirjan nimi, tekijä ja lainatilanne. 
@@ -192,9 +199,6 @@ Esimerkki siitä, miltä JSON voisi näyttää.
 }
 ```
 
-</details>
-
-
 <details><summary>Bonus: Kirjaston lainahistoria</summary>
 
 Bonus 1: Lisää kirja-olioon tieto siitä, kuka on lainannut kirjan, jos se on
@@ -211,12 +215,21 @@ lainannut kunkin kirjan.
 
 </details>
 
+</details>
+
+
+
+
+<details><summary>
+
 ### Taloyhtiön hallinta
 
 Taloyhtiön hallintasovelluksessa taloyhtiön isännöitsijä voi hallita taloyhtiön
 tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia. 
 
-<details><summary>Ominaisuudet</summary>
+</summary>
+
+**Toiminnalliset vaatimukset**
 
  * Käyttäjä voi syöttää asuntoja ja niiden tietoja. 
  * Käyttäjä näkee kaikki asunnot taulukossa, jossa on asunnon
@@ -225,10 +238,17 @@ tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia.
  * Käyttäjä näkee asunnon asukkaat taulukossa, jossa on ainakin asukkaiden
    nimet, sähköpostiosoitteet ja syntymävuodet.
 
-Sovelluksen tietomalli voisi olla esimerkiksi seuraavanlainen:
+**Sovelluksen tietomalli**
+
+Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Asunto` ja
+`Asukas`. Lisäksi tietomallissa on kaikkia korttipakkoja hallinnoiva
+`Yhtio`-luokka. Tietomalli näyttää seuraavalta:
+
 
 ```plantuml
 @startuml
+left to right direction
+
 class Asukas {
   - String nimi
   - String email
@@ -245,36 +265,48 @@ class Yhtio {
   - List<Asunto> asunnot
 }
 
-Yhtio --> Asunto
-Asunto --> Asukas
+Yhtio "1" --> "1..*" Asunto : sisältää
+Asunto "1" --> "1..*" Asukas : asuu
 @enduml
 ``` 
-</details>
-
 
 <details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
 
- * Sovelluksesa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.
- * Sovelluksen aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää
-   isännöitsijän vai asukkaan näkymää.
- * Isännöitsijä voi hallita asuntojen tietoja, asukkaita ja taloyhtiön
-   tapahtumia (kuten perusversiossakin)
- * Asukas voi syöttää asunnolle vesimittarilukemia. Vesimittarilukema sisältää
+Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
+Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
+haluamallasi tavalla. Mikäli kuitenkin
+lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa [harjoitustyön vaatimuksia
+noudattaen](../harjoitustyo.md).
+
+**Isännöitsijän ja asukkaan näkymät**
+
+* Sovelluksesa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.
+* Sovelluksen aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää isännöitsijän vai asukkaan näkymää.
+  Jos valitaan asukkaan näkymä, käyttäjän tulee valita asukas, jona hän
+  "kirjautuu" näkymään.
+* Isännöitsijä voi hallita asuntojen tietoja, asukkaita ja taloyhtiön tapahtumia (kuten perusversiossakin)
+* Asukkaan näkymässä käyttäjä näkee sen asunnon tiedot, johon hän kuuluu. Asukas ei
+  voi muokata asunnon perustietoja.
+* Asukkaan näkymässä käyttäjä voi antaa palautetta isännöitsijälle.
+* Isännöitsijänäkymässä käyttäjä näkee palautteet taulukossa, jossa on ainakin palautteen tekijän nimi, päivämäärä ja palautteen sisältö.
+
+**Vesimittarilukemien kirjaus**
+
+ * Asukasnäkymässä asukas voi syöttää asunnolle vesimittarilukemia. Vesimittarilukema sisältää
    lukeman, päivämäärän ja sen, onko lukema otettu kylmästä vai lämpimästä
    vedestä.
- * Käyttäjä näkee asunnon vesimittarilukemat taulukossa
- * Käyttäjä (asukas) voi antaa palautetta. 
- * Käyttäjä (isännöitsijä) näkee palautteet taulukossa, jossa on ainakin palautteen tekijän nimi, päivämäärä ja palautteen sisältö.
- * Ei voi olla asukkaita, jotka eivät kuulu mihinkään asuntoon. 
+ * Asukas näkee asuntonsa vesimittarilukemat taulukossa
+ 
+**Vesilaskun luominen**
 
-Lisää bonuksia...
+* Isännöitsijä voi syöttää taloyhtiölle lämpimän ja kylmän veden hinnat ja niiden
+  alkamispäivät.
+* Käyttäjä voi luoda asunnolle vesilaskun. Vesilasku sisältää kahden
+  viimeisimmän kylmän ja lämpimän veden lukeman erotuksen. Riittää, että
+  vesilasku näyttää laskukauden (alku- ja loppupvm), kulutetun kylmän ja
+  lämpimän veden määrän, sekä vesilaskun loppusumman (kylmä ja lämmin vesi eroteltuina).
 
- * Isännöitsijä voi syöttää taloyhtiölle lämpimän ja kylmän veden hinnat ja niiden
-   alkamispäivät.
- * Käyttäjä voi luoda asunnolle vesilaskun. Vesilasku sisältää kahden
-   viimeisimmän kylmän ja lämpimän veden lukeman erotuksen. Riittää, että
-   vesilasku näyttää laskukauden (alku- ja loppupvm), kulutetun kylmän ja
-   lämpimän veden määrän, sekä vesilaskun loppusumman (kylmä ja lämmin vesi eroteltuina).
+Voit hyötyä seuraavista tietomalleista.
 
 ```plantuml
 @startuml
@@ -308,12 +340,18 @@ class Yhtio {
 ```
 </details>
 
-Voit halutessasi tutkia valmista sovellusta
+</details>
+
+
+
+
+<!-- DZ: Tuo ei toimi vielä, sillä vaatii JRE:n asennusta tai osassa 1 olevan PATH-kikan käyttäminen  -->
+<!-- Voit halutessasi tutkia valmista sovellusta
 [täällä](https://github.com/ohj-perus-jy/malliharkat/blob/main/Taloyhtio-1.0.jar).
 Lataa tiedosto. Selain varoittaa, että sovellus ei ole turvallinen, mutta voit
-hyväksyä sen silti. Käynnistä sovellus komennolla `java -jar Taloyhtio-1.0.jar`. 
+hyväksyä sen silti. Käynnistä sovellus komennolla `java -jar Taloyhtio-1.0.jar`.  -->
 
-
+<details><summary>
 
 ### Muistikorttisovellus
 
@@ -322,7 +360,7 @@ Käyttäjä voi luoda muistikortteja, jotka sisältävät termin ja siihen liitt
 selityksen. Samaan aiheeseen kuuluvia muistikortteja kerätään korttipakkoihin,
 joita voi harjoitella sovelluksessa.
 
-<details><summary>Ominaisuudet</summary>
+</summary>
 
 **Toiminnalliset vaatimukset**
 
@@ -362,23 +400,82 @@ class Korttipakka {
   - List<Kortti> kortit
 }
 
-Korttipakka "1" -- "1..*" Kortti : sisältää >
-Korttipakkakokoelma "1" -- "1..*" Korttipakka : sisältää >
+Korttipakka "1" -- "1..*" Kortti : sisältää
+Korttipakkakokoelma "1" -- "1..*" Korttipakka : sisältää
 ```
+
+<details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
+
+Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
+Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
+haluamallasi tavalla. Mikäli kuitenkin
+lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa [harjoitustyön vaatimuksia
+noudattaen](../harjoitustyo.md).
+
+**Pelitilastot**
+
+* Lisää kortteille katselukertojen lukumäärän. Aina, kun käyttäjä paljastaa
+  kortin selityksen harjoitustilassa, kortin katselukerta kasvaa yhdellä.
+* Korttien katselukerrat näytetään korttipakan muokkausnäkymässä korttitaulukossa.
+* Lisää korttipakalle harjoituskertojen lukumäärän. Aina, kun käyttäjä avaa
+  harjoitustilan ja harjoittelee jokaisen kortin kerran, kasvatetaan
+  harjoituskertojen lukumäärää.
+* Korttipakan harjoituskerrat näytetään päänäkymässä omana sarakkeena.
+
+**Tenttitila**
+
+* Lisää korttipakoille tenttitila. Tenttitilassa käyttäjälle näytetään yhden
+  kortin termi ja kolme mahdollista selitystä monivalintakysymyksenä. Käyttäjän
+  tulee valita oikea termiä vastaava selitys. Käyttäjä saa palautteena oikean
+  vastauksen, minkä jälkeen näytetään seuraava monivalintakysymys.
+* Tenttitilan tulee olla toimia yhtä hyvin niin kolmen kortin että usean sadan
+  kortin pakalla. 
+* Tenttitilaan pääsee vain, jos pakassa on vähintään kolme korttia.
+* Voit hyötyä mm.
+  [RadioButton ja
+  ToggleGroup](https://jenkov.com/tutorials/javafx/radiobutton.html)
+  -komponenteista.
 
 </details>
 
-### Bonus: Todo-sovelluksen laajentaminen
+</details>
+
+<!-- DZ: Keväällä 2026 tämä voisi kuulua "Jokin muu oma idea" -aiheeseen.  -->
+<!-- ### Bonus: Todo-sovelluksen laajentaminen
 
 Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 
 <details><summary>Ominaisuudet</summary>
-
   * Käyttäjä voi merkitä tehtävän tärkeäksi, jolloin se näkyy listassa erottuvalla tavalla.
+</details> -->
+
+<details><summary>
+
+### Oma idea
+
+Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttä opintojakson 
+[harjoitustyön vaatimukset](../harjoitustyo.md).
+
+</summary>
+
+Voit keksiä oman JavaFX-käyttöliittymäsovellusaihe. 
+Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
+
+Jos valitset oman aiheen, sinun on kirjoitettava alustava
+harjoitustyösuunnitelma, jossa ilmenevät sovelluksen oleelliset toiminnalliset
+vaatimukset sekä sovelluksessa käytettävä tietomalli.
+Voit ottaa mallia suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
+
+Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
+
+
+
 
 </details>
 
-## Jokin muu oma sovellusidea, joka täyttää vaatimukset
+
+
+
 
 ## Tehtävät
 
