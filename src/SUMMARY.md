@@ -79,3 +79,4 @@
 - [JavaFX-ohjeita](./javafx/index.md)
   - [Näkymät](./javafx/nakymat.md)
   - [TableView](./javafx/tableview.md)
+  - [Ulkoiset UI-kirjastot](./javafx/ui-kirjastot.md)
