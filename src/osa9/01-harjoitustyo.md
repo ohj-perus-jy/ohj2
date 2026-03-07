@@ -455,11 +455,10 @@ Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 
 Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttä opintojakson 
 [harjoitustyön vaatimukset](../harjoitustyo.md).
+Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
+
 
 </summary>
-
-Voit keksiä oman JavaFX-käyttöliittymäsovellusaihe. 
-Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
 
 Jos valitset oman aiheen, sinun on kirjoitettava alustava
 harjoitustyösuunnitelma, jossa ilmenevät sovelluksen oleelliset toiminnalliset
@@ -468,12 +467,20 @@ Voit ottaa mallia suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
 
 Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
+Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täytä [harjoitustyön yleiset
+vaatimukset](../harjoitustyo.md). 
+Tuntiopettajalla on oikeus pyytää täydennyksiä suunnitelmaan, jos työn laajuus
+ei vastaa harjoitustyön vaatimuksia.
 
-
+Jos päätät laajentaa osan 7 ja 8 Todo-sovellusta, harjoitustyön vaatimukset
+koskevat sinun tekemää laajennosta. Esimerkiksi vaatimus 1.1 (Sovelluksessa on
+vähintään kaksi kohdealueen mallinnettavaa asiaa) tarkoittaisi, että sinun tulee
+määrittää kaksi uutta mallinnettavaa asiaa nykyisen `Tehtava`-mallin lisäksi.
+Puolestaan vaatimus 4.1 tarkoittaa, että käyttöliittymään on lisättävää kaksi
+uutta lisänäkymää tai laajentaa nykyiset näkymät merkittävästi siten, että
+laajennos voisi tulkita omaksi näkymäksi. 
 
 </details>
-
-
 
 
 
