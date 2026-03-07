@@ -5,30 +5,30 @@ graafisen Java-käyttöliittymäsovelluksen käyttäen JavaFX-kirjastoa.
 Löydät alta harjoitustyön tarkat arvioitavat vaatimukset.
 
 Voit tehdä harjoitustyön joko valmiin vaatimusmäärittelyn perusteella tai
-keksiä omaan aiheen. Löydät kaikki aiheiden kuvaukset ja vaatimukset
+keksiä oman aiheen. Löydät kaikki aiheiden kuvaukset ja vaatimukset
 [osassa 9](osa9/01-harjoitustyo.md).
 
-Harjoitustyö toteutetaan vaiheittain osissa 9-12. 
+Harjoitustyö toteutetaan vaiheittain osissa 9–12. 
 Jokainen osa sisältää ohjeita, joiden tarkoituksena on auttaa sinua etenemään, mutta voit
-toteuttaa vaatimukset myös muulla tavalla, kunhan ne täyttyvät.
+toteuttaa vaatimukset myös muulla varten, kunhan ne täyttyvät.
 
 Suosittelemme, että ennen harjoitustyön tekemistä tutustut ja teet osien 7 ja 8
 mallisovellukset. Saat siitä merkittävästi apua harjoitustyön toteutukseen.
 
-**Näytä lopullinen, kaikkia vaatimuksia täyttävä, harjoitustyösi kurssin
+**Näytä lopullinen, kaikkia vaatimuksia täyttävä harjoitustyösi kurssin
 tuntiopettajalle
 ennen osan 12 palautusta etä- tai lähiohjauksessa.** Kun tuntiopettaja on
-hyväksynyt työsi, hän tekee siitä merkinnän TIMIssa.
+hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
 
 ## Harjoitustyön tekniset vaatimukset ja arviointi
 
 Alla olevia vaatimuksia käytetään harjoitustyön arvioinnissa.
-Tuntiopettaja arvioi harjoitustyön asteikkolla hylätty/hyväksytty. 
-Hylätty harjoitustyö voi täydentää tuntiopettajan antaman palautteen
+Tuntiopettaja arvioi harjoitustyön asteikolla hylätty/hyväksytty. 
+Hylätyn harjoitustyön voi täydentää tuntiopettajan antaman palautteen
 perusteella.
 
 Lähtökohtaisesti työn on täytettävä kaikki alla olevat vaatimukset.
-Yksittäistren vaatimusten kohdalla voidaan joustaa, mikäli työ on muilta osin
+Yksittäisten vaatimusten kohdalla voidaan joustaa, mikäli työ on muilta osin
 tavanomaista laajempi tai ansiokkaampi, tai jos työn aihe sitä vaatii.
 Tuntiopettaja tekee lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
 
@@ -38,25 +38,25 @@ Tuntiopettaja tekee lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
 Se voi olla esimerkiksi tehtävä, tapahtuma, kirja, asiakas, treeni, peli,
 resepti tai vastaava. Jokaisella mallinnettavalla oliolla on omia kohdealueen
 kannalta merkittäviä attribuutteja tai ominaisuuksia.
-Osien 7-8 mallisovelluksessa oli yksi mallinnettava asia: `Tehtava`.
+Osien 7–8 mallisovelluksessa oli yksi mallinnettava asia: `Tehtava`.
 Puolestaan muistikorttisovelluksessa ne voisivat olla `Kortti` ja `Korttipakka`.
 Kulujen hallintasovelluksessa taas sopivat mallinnettavat asiat olisivat
 `Tapahtuma` ja `Kategoria`.
 
 **1.2 Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi
-kohdealueen kannalta oleellista ja asialle ominaista attribuuttia.**
-Osien 7-8 mallisovelluksessa `Tehtava`-luokka sisälsi attribuutteja `tehty`,
+kohdealueen kannalta oleellinen ja asialle ominainen attribuutti.**
+Osien 7–8 mallisovelluksessa `Tehtava`-luokka sisälsi attribuutit `tehty`,
 `otsikko`, `kuvaus` ja `prioriteetti`.
 
 Huomaa, että *attribuutti, jonka ainoa tarkoitus on viitata toiseen
 malliin tai jonka arvo on johdettavissa jonkun toisen attribuutin arvosta*
 ei lasketa tähän vaatimukseen mukaan.
-Esimerkiksi osan 7-8 mallisovelluksen
-`Tehtavakokoelma`-luokkaa sisältää ainoana attribuuttina `tehtavat`-kokoelman,
-joka on vain kokoelma viitteitä tehtäviin ja siten sitä ei laskettaisi tämän
-vaatimuksen määrään.
+Esimerkiksi osan 7–8 mallisovelluksen
+`Tehtavakokoelma`-luokka sisältää ainoana attribuuttina `tehtavat`-kokoelman,
+joka on vain kokoelma viitteitä tehtäviin, ja siten sitä ei laskettaisi tähän
+vaatimukseen mukaan.
 Sen sijaan muistikorttisovelluksessa `Korttipakka` sisältää korttikokoelman
-lisäksi kortipakan otsikon ja kuvauksen, jotka lasketaan sovelluksen kannalta
+lisäksi korttipakan otsikon ja kuvauksen, jotka lasketaan sovelluksen kannalta
 oleellisiksi ja korttipakalle ominaisiksi.
 
 **1.3 Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla
@@ -66,13 +66,13 @@ malliluokilla.**
 Vähintään keskeisen tietokokoelman tulee olla `ObservableList` tai vastaava.
 
 **1.5 Datan esittämiseen käyttöliittymässä käytetään tarkoituksenmukaista komponenttia.**  
-Jos työssä on useita samantyyppisiä olioita, `TableView` on yleensä luonteva ratkaisu.
+Jos työssä on useita samantyyppisiä olioita, `TableView` on yleensä luonteva rataisu.
 
 ### Vaatimus 2: Perustoiminnallisuus
 
 **2.1 Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus käyttöliittymässä.**  
 Käyttäjä voi luoda (*Create*), lukea (*Read*), päivittää (*Update*) ja poistaa
-(*Delete*) olioita käyttöliittymän kautta. Esimerkiksi osan 7-8
+(*Delete*) olioita käyttöliittymän kautta. Esimerkiksi osan 7–8
 mallisovelluksessa käyttäjä voi luoda tehtäviä
 painikkeella, lukea ne `TableView`-komponentista, muokata tehtäviä erillisessä
 näkymässä ja poistaa ne
