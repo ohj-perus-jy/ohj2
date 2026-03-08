@@ -21,7 +21,7 @@ tableView.setRowFactory(tv -> {
 
 ## Rivien suodattaminen {#filteredlist}
 
-Esimerkki on pitkähkö; löydät sen kokonaisuudessaan [GitHubista]().
+Esimerkki on pitkähkö; löydät sen kokonaisuudessaan [GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/javafx/FilteredList).
 
 `TableView`-komponentti ei tarjoa suoraan tukea rivien
 suodattamiseen.JavaFX-kirjastossa on `FilteredList`-luokka, joka mahdollistaa
