@@ -21,9 +21,8 @@ tuntiopettaja on hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
 ## Harjoitustyön aihe
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
-joka täyttää harjoitustyölle asetetut vaatimukset.
-Näet aiheen tarkemmat vaatimukset klikkaamalla.
-
+joka täyttää harjoitustyölle asetetut vaatimukset. Näet aiheen tarkemmat
+vaatimukset klikkaamalla.
 
 <details><summary>
 
@@ -33,55 +32,62 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
 
 </summary>
 
- * Käyttäjä voi syöttää kuluja ja menoja. 
- * Käyttäjä näkee kaikki kulut ja menot taulukossa, jossa on ainakin kulun nimi, summa ja päivämäärä. 
+ * Käyttäjä voi syöttää kuluja ja menoja ("tapahtuma").
+ * Käyttäjä näkee kaikki tapahtumat taulukossa, jossa on ainakin tapahtuman nimi,
+   summa ja päivämäärä. 
  * Käyttäjä voi määrittää kulukategorioita
  * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu
- * Käyttäjä näkee tietyn kategorian kulut
- * Käyttäjä voi katsoa kulut tietyltä aikaväliltä (kaksi päivämäärää)
- * Käyttäjä voi vaihtaa kulun kategoriaa jälkikäteen
+ * Käyttäjä näkee tietyn kategorian tapahtumat
+ * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
+ * Käyttäjä voi muokata tapahtumia ja kategorioita
 
-Käytä ainakin seuraavia komponentteja (pakolliset):
+Käytä ainakin seuraavia komponentteja: 
 
- * DatePicker
- * TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän
-   taulukkomallista, ja joka mahdollistaa taulukon suodattamisen esimerkiksi
-   kategorian tai päivämäärän mukaan. Lue ohjeet [FilteredListin käyttöön](./javafx/tableview.md#filteredlist).
+ * DatePicker päivämäärän valitsemiseen
+ * CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen
+ * TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän. Lue
+   ohjeet [FilteredListin käyttöön](./javafx/tableview.md#filteredlist).
 
 Bonus
 
+ * Käyttäjä voi valita useita kategorioita filtteriin. Käytä ControlsFX:n
+   `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
  * Käyttäjä näkee kuvaajan, jossa esitetään kaiki kulut kuukausittain
  * Käyttäjä näkee kategorioittain aikasarjan kuluista
+
+Tietomalli voi näyttää esimerkiksi seuraavalta.
 
 ```plantuml
 @startuml
 class Kategoria {
   - Boolean valttamaton
   - String nimi
-  - String kuvaus
-  - List<Tapahtuma> tapahtumat
 }
 
 class Tapahtuma {
   - String nimi
   - double summa
   - LocalDate pvm
+  - Kategoria kategoria
 }
 
 
 class Seuranta {
   - List<Kategoria> kategoriat
+  - List<Tapahtuma> tapahtumat
 }
 
+Seuranta "1" --> "1..*" Kategoria : sisältää
+Seuranta "1" --> "1..*" Tapahtuma : sisältää
 
 @enduml
 ```
 
 <details><summary>Valmiit kulukategoriat</summary>
 
-Sovelluksessa ei ole pakko pystyä muuttamaan kulukategorioita, vaan voit
-toteuttaa sovelluksen valmiilla kategorioilla. Alla on [Marttojen budjettioppaan](https://www.martat.fi/omat-rahat/taloudenhallinnan-perustaidot/talouden-suunnittelu/)
-mukaiset kulukategoriat. Voit käyttää näitä kategorioita, tai keksiä omat kategoriasi. 
+Voit antaa sovelluksessa valmiiksi vaikkapa nämä [Marttojen
+budjettioppaan](https://www.martat.fi/omat-rahat/taloudenhallinnan-perustaidot/talouden-suunnittelu/)
+mukaiset kulukategoriat. Toki voit keksiä myös omasi tai antaa käyttäjälle vapauden luoda omat kategoriansa.
 
  * Ruoka kotona
  * Ravintolat
@@ -106,9 +112,11 @@ mukaiset kulukategoriat. Voit käyttää näitä kategorioita, tai keksiä omat 
 
 </details>
 
+Valmis sovellus voisi näyttää vaikkapa tältä:
+
+![alt text](images/menotjatulot.png)
+
 </details>
-
-
 
 <details><summary>
 
@@ -212,9 +220,6 @@ lainannut kunkin kirjan.
 </details>
 
 </details>
-
-
-
 
 <details><summary>
 
