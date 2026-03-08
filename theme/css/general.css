@@ -419,3 +419,19 @@ svg.svgbob text {
   font-feature-settings: "kern" 0, "liga" 0, "calt" 0;
   letter-spacing: 0;
 }
+
+div.ht-reqs {
+    counter-reset: section;
+    .req {
+        counter-increment: section;
+        
+        ol {
+            padding-inline-start: 1.5em;
+        }
+
+        ol > li::marker {
+            content: counter(section) "." counter(list-item) " ";
+            font-weight: bold;
+        }
+    }
+}

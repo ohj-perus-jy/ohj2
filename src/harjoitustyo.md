@@ -499,140 +499,193 @@ vaatimusten kohdalla voidaan joustaa, mikäli työ on muilta osin tavanomaista
 laajempi tai ansiokkaampi, tai jos työn aihe sitä vaatii. Tuntiopettaja tekee
 lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
 
+<div class="ht-reqs">
+
+<div class="req">
+
 ### Vaatimus 1: Tietomalli
 
-**1.1 Sovelluksessa on vähintään kaksi kohdealueen mallinnettavaa asiaa.**  
-Se voi olla esimerkiksi tehtävä, tapahtuma, kirja, asiakas, treeni, peli,
-resepti tai vastaava. Jokaisella mallinnettavalla oliolla on omia kohdealueen
-kannalta merkittäviä attribuutteja tai ominaisuuksia. Osien 7–8
-mallisovelluksessa oli yksi mallinnettava asia: `Tehtava`. Puolestaan
-muistikorttisovelluksessa ne voisivat olla `Kortti` ja `Korttipakka`. Kulujen
-hallintasovelluksessa taas sopivat mallinnettavat asiat olisivat `Tapahtuma` ja
-`Kategoria`.
 
-**1.2 Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi
-kohdealueen kannalta oleellinen ja asialle ominainen attribuutti.** Osien 7–8
-mallisovelluksessa `Tehtava`-luokka sisälsi attribuutit `tehty`, `otsikko`,
-`kuvaus` ja `prioriteetti`.
 
-Huomaa, että *attribuutti, jonka ainoa tarkoitus on viitata toiseen malliin tai
-jonka arvo on johdettavissa jonkun toisen attribuutin arvosta* ei lasketa tähän
-vaatimukseen mukaan. Esimerkiksi osan 7–8 mallisovelluksen
-`Tehtavakokoelma`-luokka sisältää ainoana attribuuttina `tehtavat`-kokoelman,
-joka on vain kokoelma viitteitä tehtäviin, ja siten sitä ei laskettaisi tähän
-vaatimukseen mukaan. Sen sijaan muistikorttisovelluksessa `Korttipakka` sisältää
-korttikokoelman lisäksi korttipakan otsikon ja kuvauksen, jotka lasketaan
-sovelluksen kannalta oleellisiksi ja korttipakalle ominaisiksi.
+1. **Sovelluksessa on vähintään kaksi kohdealueen mallinnettavaa asiaa**
 
-**1.3 Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla
-malliluokilla.**
+    Se voi olla esimerkiksi tehtävä, tapahtuma, kirja, asiakas, treeni, peli,
+    resepti tai vastaava. Jokaisella mallinnettavalla oliolla on omia kohdealueen
+    kannalta merkittäviä attribuutteja tai ominaisuuksia. Osien 7–8
+    mallisovelluksessa oli yksi mallinnettava asia: `Tehtava`. Puolestaan
+    muistikorttisovelluksessa ne voisivat olla `Kortti` ja `Korttipakka`. Kulujen
+    hallintasovelluksessa taas sopivat mallinnettavat asiat olisivat `Tapahtuma` ja
+    `Kategoria`.
 
-**1.4 Sovelluksessa käytetään JavaFX:n havaittavia (observable) rakenteita
-silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**  
-Vähintään keskeisen tietokokoelman tulee olla `ObservableList` tai vastaava.
+2. **Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi kohdealueen kannalta oleellinen ja asialle ominainen attribuutti**
 
-**1.5 Datan esittämiseen käyttöliittymässä käytetään tarkoituksenmukaista
-komponenttia.**  
-Jos työssä on useita samantyyppisiä olioita, `TableView` on yleensä luonteva
-rataisu.
+    Osien 7–8
+    mallisovelluksessa `Tehtava`-luokka sisälsi attribuutit `tehty`, `otsikko`,
+    `kuvaus` ja `prioriteetti`.
+
+    Huomaa, että *attribuutti, jonka ainoa tarkoitus on viitata toiseen malliin tai
+    jonka arvo on johdettavissa jonkun toisen attribuutin arvosta* ei lasketa tähän
+    vaatimukseen mukaan. Esimerkiksi osan 7–8 mallisovelluksen
+    `Tehtavakokoelma`-luokka sisältää ainoana attribuuttina `tehtavat`-kokoelman,
+    joka on vain kokoelma viitteitä tehtäviin, ja siten sitä ei laskettaisi tähän
+    vaatimukseen mukaan. Sen sijaan muistikorttisovelluksessa `Korttipakka` sisältää
+    korttikokoelman lisäksi korttipakan otsikon ja kuvauksen, jotka lasketaan
+    sovelluksen kannalta oleellisiksi ja korttipakalle ominaisiksi.
+
+3. **Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla malliluokilla**
+
+4. **Sovelluksessa käytetään JavaFX:n havaittavia (observable) rakenteita
+silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
+
+    Vähintään keskeisen tietokokoelman tulee olla `ObservableList` tai vastaava.
+
+5. **Datan esittämiseen käyttöliittymässä käytetään tarkoituksenmukaista komponenttia.**
+
+    Jos työssä on useita samantyyppisiä olioita, `TableView` on yleensä luonteva
+    rataisu.
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 2: Perustoiminnallisuus
 
-**2.1 Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus
-käyttöliittymässä.**  
-Käyttäjä voi luoda (*Create*), lukea (*Read*), päivittää (*Update*) ja poistaa
-(*Delete*) olioita käyttöliittymän kautta. Esimerkiksi osan 7–8
-mallisovelluksessa käyttäjä voi luoda tehtäviä painikkeella, lukea ne
-`TableView`-komponentista, muokata tehtäviä erillisessä näkymässä ja poistaa ne
-poistopainikkeella.
+1. **Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus käyttöliittymässä**
 
-**2.2 Käyttäjän ei saa antaa lisätä ilmeisen virheellistä tietoa.**  
-Esimerkiksi tyhjää nimeä tai pakollisen kentän puuttumista ei tule sallia.
-Validointi on toteutettava joko mallissa tai käyttöliittymässä.
+    Käyttäjä voi luoda (*Create*), lukea (*Read*), päivittää (*Update*) ja poistaa
+    (*Delete*) olioita käyttöliittymän kautta. Esimerkiksi osan 7–8
+    mallisovelluksessa käyttäjä voi luoda tehtäviä painikkeella, lukea ne
+    `TableView`-komponentista, muokata tehtäviä erillisessä näkymässä ja poistaa ne
+    poistopainikkeella.
 
-**2.3 Käyttöliittymän tila vastaa aina mallin tilaa ja päinvastoin.**  
-Tietoa päivitettäessä tai poistettaessa malliin tai käyttöliittymään ei saa
-jäädä väärää tietoa. Olion poistaminen mallista poistaa sen välittömästi myös
-näkyvistä.
+2. **Käyttäjän ei saa antaa lisätä ilmeisen virheellistä tietoa**
+
+    Esimerkiksi tyhjää nimeä tai pakollisen kentän puuttumista ei tule sallia.
+    Validointi on toteutettava joko mallissa tai käyttöliittymässä.
+
+3. **Käyttöliittymän tila vastaa aina mallin tilaa ja päinvastoin.**
+
+    Tietoa päivitettäessä tai poistettaessa malliin tai käyttöliittymään ei saa
+    jäädä väärää tietoa. Olion poistaminen mallista poistaa sen välittömästi myös
+    näkyvistä.
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 3: Tallennus
 
-**3.1 Sovelluksen tiedot tallennetaan tiedostoon.**  
-Tiedot säilyvät ohjelman sulkemisen jälkeen. Tallennus voi tapahtua
-automaattisesti tai erillisenä "Tallenna"-toimintona.
+1. **Sovelluksen tiedot tallennetaan tiedostoon**
 
-**3.2 Tallennetut tiedot ladataan takaisin ohjelman käynnistyessä.**
+    Tiedot säilyvät ohjelman sulkemisen jälkeen. Tallennus voi tapahtua
+    automaattisesti tai erillisenä "Tallenna"-toimintona.
+
+2. **Tallennetut tiedot ladataan takaisin ohjelman käynnistyessä**
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 4: Käyttöliittymä
 
-**4.1 Sovelluksessa on graafinen käyttöliittymä, jossa on vähintään kaksi
-näkymää.**  
-Näkymät voivat olla esimerkiksi päänäkymä (listaus) ja muokkausnäkymä (dialogi).
+1. **Sovelluksessa on graafinen käyttöliittymä, jossa on vähintään kaksi näkymää.**
 
-**4.2 Käyttöliittymä on jäsennelty ja käyttökelpoinen.**  
-Syöttökentät, painikkeet, nimiöt ja listaukset on aseteltu loogisesti, eivätkä
-ne ole sattumanvaraisia.
+    Näkymät voivat olla esimerkiksi päänäkymä (listaus) ja muokkausnäkymä (dialogi).
+
+2. **Käyttöliittymä on jäsennelty ja käyttökelpoinen**
+
+    Syöttökentät, painikkeet, nimiöt ja listaukset on aseteltu loogisesti, eivätkä
+    ne ole sattumanvaraisia.
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 5: Arkkitehtuuri ja vastuunjako
 
-**5.1 Sovelluksen rakenne noudattaa MVC-mallia (Model-View-Controller).**  
-Tietomalli, käyttöliittymä ja niitä yhteen kytkevä ohjainlogiikka on erotettu
-toisistaan.
+1. **Sovelluksen rakenne noudattaa MVC-mallia (Model-View-Controller).**
 
-**5.2 Sovelluksen data ja tallennuslogiikka on erotettu ohjainluokasta.**  
-Käyttöliittymän ohjain ei saa sisältää kaikkea sovelluksen dataa ja
-tallennuslogiikkaa.
+    Pääasia on, että tietomalli, käyttöliittymä ja niitä yhteen kytkevä ohjainlogiikka on erotettu
+    toisistaan.
 
-**5.3 Tiedon lataus ja tallennus on erotettu omaksi vastuualueekseen.**
+2. **Sovelluksen data ja tallennuslogiikka on erotettu ohjainluokasta.**
+
+    Käyttöliittymän ohjain ei saa sisältää kaikkea sovelluksen dataa ja
+    tallennuslogiikkaa.
+
+3. **Tiedon lataus ja tallennus on erotettu omaksi vastuualueekseen.**
+
+    Käytännössä talletukselle ja lataukselle on vähintään oma metodi, joka on sijoitettu
+    ohjainlogiikan ulkopuolelle. 
+
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 6: Testaus
 
-**6.1 Sovelluksen keskeiselle mallille tai sovelluslogiikalle on kirjoitettu
-yksikkötestejä.**  
-Testeissä on varmistettava, että keskeiset metodit (kuten lisääminen ja
-poistaminen) muokkaavat tietomallin tilaa odotetusti.
+1. **Sovelluksen keskeiselle mallille tai sovelluslogiikalle on kirjoitettu yksikkötestejä**
+
+    Testeissä on varmistettava, että keskeiset metodit (kuten lisääminen ja
+    poistaminen) muokkaavat tietomallin tilaa odotetusti.
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 7: Versiohallinta ja projektinhallinta
 
-**7.1 Työlle on luotu julkinen Git-etävarasto (esim. GitLab tai GitHub).**
+1. **Työlle on luotu julkinen Git-etävarasto (esim. GitLab tai GitHub).**
 
-**7.2 Projektissa on `.gitignore`-tiedosto ja `README.md`.**  
-README-tiedostossa kerrotaan lyhyesti, mikä sovellus on kyseessä ja miten se
-toimii.
+2. **Projektissa on `.gitignore`-tiedosto ja `README.md`.**
 
-**7.3 Git-commitit on nimetty kuvaavasti.**  
-Commiteista käy ilmi, mitä muutoksia kukin niistä sisältää.
+    README-tiedostossa kerrotaan lyhyesti, mikä sovellus on kyseessä ja miten se
+    toimii.
 
-**7.4 Työtä on edistetty iteratiivisesti tallentaen iteraatioiden tulokset omina
-committeina.**  
-Etävarastossa ei saa olla vain yhtä "valmis sovellus" -committia, vaan
-kehityshistorian tulee näkyä.
+3. **Git-commitit on nimetty kuvaavasti.**
+
+    Commiteista käy ilmi, mitä muutoksia kukin niistä sisältää.
+
+4. **Työtä on edistetty iteratiivisesti tallentaen iteraatioiden tulokset omina committeina.**
+
+    Etävarastossa ei saa olla vain yhtä "valmis sovellus" -committia, vaan
+    kehityshistorian tulee näkyä.
+
+</div>
+
+<div class="req">
 
 ### Vaatimus 8: Koodin laatu
 
-**8.1 IntelliJ IDEA:n ei tule raportoida mitään virheitä (punaisella) tai
-varoituksia (keltaisella)
-projektin `.java`-lähdekooditiedostoissa.** 
-Kielen tarkistukseen liittyvät varoitukset (virheällä) sallitaan.
-Vastaavasti `.fxml`-tiedostossa olevia virhemerkintöjä sallitaan.
+1. **IntelliJ IDEA:n ei tule raportoida mitään virheitä tai varoituksia Java-lähdekoodissa.**
 
-Voit ajaa virheentarkistuksen kaikille tiedostoille kerralla käyttäen [Run all
-inspections
--toimintoa](https://www.jetbrains.com/help/idea/running-inspections.html#run-all-inspections).
+    IntelliJ IDEA merkitsee varoitukset keltaisella ja virheet punaisella.
+    Kielen tarkistukseen liittyvät varoitukset (virheällä) sallitaan.
+    Vastaavasti `.fxml`-tiedostossa olevia virhemerkintöjä sallitaan.
 
-Huomaa, että monille varoituksille ja virheillä IntelliJ IDEA tarjoaa valmiita
-korjauksia, jotka saa näkyviin klikkaamalla varoituksen yhteydessä näkyvästä
-toimintopainikkeesta (<i class="bi bi-lightbulb-fill"></i>).
+    Voit ajaa virheentarkistuksen kaikille tiedostoille kerralla käyttäen [Run all
+    inspections
+    -toimintoa](https://www.jetbrains.com/help/idea/running-inspections.html#run-all-inspections).
 
-**8.2 Kaikkien `.java`-lähdekooditiedostojen tulee olla muotoiltu IDEA:n tyylin
-mukaisesti.** Käytä IDEA:n [Reformat code
--ominaisuutta](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat_module_directory)
-käyttäen sen kaikki korjauksia (*Optimize imports*, *Rearrange entries*,
-*Cleanup code*).
+    Huomaa, että monille varoituksille ja virheillä IntelliJ IDEA tarjoaa valmiita
+    korjauksia, jotka saa näkyviin klikkaamalla varoituksen yhteydessä näkyvästä
+    toimintopainikkeesta (<i class="bi bi-lightbulb-fill"></i>).
 
-**8.2 Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle,
-attribuuttille ja metodeille hyviä kapselointiperiaatteita noudattaen.**
-Attribuutit ovat lähökohtaisesti merkitty `private`-määreellä. Metodien kohdalla
-julkisuusmääreen tulee sopia metodin tarkoitukseen: muiden olioiden
-käytettäväksi tarkoitetut metodit ovat `public`, kun taas luokan omat apumetodit
-ovat `private`.
+2. **Kaikkien `.java`-lähdekooditiedostojen tulee olla muotoiltu yhtenäisellä tyylillä.**
+
+    Käytä IDEA:n [Reformat code
+    -ominaisuutta](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat_module_directory)
+    käyttäen sen kaikki korjauksia (*Optimize imports*, *Rearrange entries*,
+    *Cleanup code*).
+
+3. **Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuuttille ja metodeille hyviä kapselointiperiaatteita noudattaen**
+
+    Attribuutit ovat lähökohtaisesti merkitty `private`-määreellä. Metodien kohdalla
+    julkisuusmääreen tulee sopia metodin tarkoitukseen: muiden olioiden
+    käytettäväksi tarkoitetut metodit ovat `public`, kun taas luokan omat apumetodit
+    ovat `private`.
+
+</div>
+
+</div>
