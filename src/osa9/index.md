@@ -132,7 +132,7 @@ Vinkkejä:
 - Laita tietomalliin liittyvät luokat valmiiksi `model`-alipakkaukseen erillään
   muista luokista.
 - Mieti jo hieman, mitä julkisia metodeja luokan on hyvää tarjota muille
-  luokille. Vaikka get- ja set- metodeja tarvitaan tietomallin tallentamiseksi
+  luokille. Vaikka get- ja set-metodeja tarvitaan tietomallin tallentamiseksi
   JSON-muotoon, voit jo alustavasti miettiä, mitä metodeja luokka voisi tarjota
   parantakseen
   [kapselointia](../osa2/03-kapselointi.md#kapselointi-ja-koheesio).
@@ -149,7 +149,7 @@ Vinkkejä:
   suoraan pääohjelmassa.
   Varmista, että pystyt tietomallin luokkien ja niiden metodien avulla
   tekemään sovelluksen ja harjoitustyön vaatimusten kannalta olennaisimmat
-  toiminnot, kuten tiedon lisäyksen, hakemisen, lisäyksen ja poiston.
+  toiminnot, kuten tiedon lisäyksen, hakemisen, muokkauksen ja poiston.
   Debuggerin avulla voit varmistaa, että tietomallin tila on oikea.
 
   Halutessasi voit jopa kirjoittaa yksikkötestejä, jossa testaat tietomallin
@@ -232,7 +232,7 @@ Pääasia on, että tässä vaiheessa käyttöliittymän tarkan ulkoasun ei tarv
 olla mietitty loppuun, vaan keskityt ensisijaisesti eri komponenttien väliseen
 karkeaan asetteluun. 
 
-Voit halutessasi tehdä näkymät heti valmiiksi käyttäen SceneBuilderilla. Siinä
+Voit halutessasi tehdä näkymät heti valmiiksi SceneBuilderilla. Siinä
 tapauksessa ota näkymistä kuvakaappaus. 
 Älä kuitenkaan käytä liikaa aikaa näkymien tekemiseen tässä vaiheessa;
 suunnitelman tarkoituksena on saada karkea idea käyttöliittymän näkymistä.
@@ -245,7 +245,7 @@ Markdown-tiedostoihin
 Kuvaa suunnitelmassa, mitä näkymässä näytetään ja millä eri tavoin käyttäjä voi
 vuorovaikuttaa käyttöliittymän kanssa. 
 Näin voit varmistaa jo tässä vaiheessa, että muistat ottaa huomioon kaikki 
-vaaditut tietomallin lisäys-, luku-, muokkaus-, ja poistotoiminnot.
+vaaditut tietomallin lisäys-, luku-, muokkaus- ja poistotoiminnot.
 
 Kun käyttöliittymän näkymien suunnitelma on valmis, tee muutoksista commit ja
 puske muutokset etävarastoon.
