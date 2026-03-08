@@ -201,7 +201,7 @@ etävarastoon käyttäen `git push` -komentoa:
 Tämä komento tekee kaksi asiaa:
 
 1. `push` lähettää paikalliset commitit etävarastoon.
-2. `-u origin main` linkittää paikallisen `main`-haaran varaston `main`-haaraan.
+2. `-u origin master` linkittää paikallisen `master`-haaran varaston `master`-haaraan.
    Tämän avulla Git-työkalu jatkossa tietää, että `git push` -komento ilman
    parametreja lähettää koodia aina `origin`-etävarastoon.
 
