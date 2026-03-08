@@ -41,7 +41,8 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu
  * Käyttäjä näkee tietyn kategorian tapahtumat
  * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
- * Käyttäjä voi muokata tapahtumia ja kategorioita
+ * Käyttäjä voi muokata tapahtumia ja kategorioita.
+ * Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan
 
 Voit hyötyä ainakin seuraavista komponenteista: 
 
