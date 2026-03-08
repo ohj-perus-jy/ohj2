@@ -262,6 +262,10 @@ Asunto "1" --> "1..*" Asukas : asuu
 @enduml
 ``` 
 
+Valmis sovellus voisi näyttää vaikkapa tältä. 
+
+![taloyhtiö](images/taloyhtio.png)
+
 <details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
 
 Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
