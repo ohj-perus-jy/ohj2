@@ -176,7 +176,7 @@ kirjojen lainahistoriaa.
 **Sovelluksen tietomalli**
 
 Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Kirja` ja
-`Lainas`. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
+`Lainaus`. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
 `Kirjasto`-luokka. Tietomalli näyttää seuraavalta:
 
 Esimerkki siitä, miltä JSON voisi näyttää. 
