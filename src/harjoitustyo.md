@@ -112,7 +112,8 @@ mukaiset kulukategoriat. Toki voit keksiä myös omasi tai antaa käyttäjälle 
 
 </details>
 
-Valmis sovellus voisi näyttää vaikkapa tältä:
+Valmis sovellus voisi näyttää vaikkapa tältä. Ei haittaa, vaikka oma
+käyttöliittymäsi ei näyttäisi samanlaiselta -- tärkeintä on, että sovelluksesi täyttää vaatimukset, ei se, miltä se näyttää.
 
 ![alt text](images/menotjatulot.png)
 
