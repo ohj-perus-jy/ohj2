@@ -36,7 +36,7 @@ Kun olet valinnut aiheen, ilmoita se alla olevan tehtävän kautta.
 
 </handout>
     <task-link><a
-    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava1">Tee
+    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa9/tehtava1">Tee
     tehtävä TIMissä</a></task-link>
 </task>
 
@@ -100,8 +100,22 @@ ainakin projektin nimi ja lyhyt kuvaus parilla virkkeellä.
 Jos käytät valmista aihetta, voit kopioida projektin aiheen kuvauksen [harjoitustyön
 ohjeesta](../harjoitustyo.md#harjoitustyön-aihe).
 
-Kun olet saanut projektin luotua
-  
+Kun saat `README` ja `.gitignore` -tiedostoja tehtyä, tee ensimmäinen commit.
+Luo lopuksi uusi etävarasto ja lataa nykyinen varastosi sinne [osan
+8.6](../osa8/06-versionhallinnan-etakaytto.md) ohjeiden perusteella.
+
+
+<task>
+  <task-title>Tehtävä 9.2: Harjoitustyö, Git-etävarasto. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/9-2-ht-2/handout.md}}
+
+</handout>
+    <task-link><a
+    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa9/tehtava2">Tee
+    tehtävä TIMissä</a></task-link>
+</task>
 
 
 

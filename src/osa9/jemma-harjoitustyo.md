@@ -84,16 +84,3 @@ Seuraavat asiat tehdään joka tapauksessa osassa 10, mutta tee ne nyt jos ehdit
    riippuen siitä, mitä sovelluksessasi on tarkoitus tehdä. Voit tehdä tästä
    aliohjelman, jota kutsut pääohjelmassa. Bonus: Kirjoita yksikkötestejä
    malliluokillesi.
-
-
-<task>
-  <task-title>Tehtävä 9.1: Harjoitustyö, vaihe 1. <points>1 p.</points> </task-title>
-  <handout>
-
-{{#include ../exercises/9-1-ht-1/handout.md}}
-
-</handout>
-    <task-link><a
-    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa8/tehtava1">Tee
-    tehtävä TIMissä</a></task-link>
-</task>
