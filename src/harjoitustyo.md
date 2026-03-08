@@ -52,7 +52,7 @@ Bonus
 
  * Käyttäjä voi valita useita kategorioita filtteriin. Käytä ControlsFX:n
    `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
- * Käyttäjä näkee kuvaajan, jossa esitetään kaiki kulut kuukausittain
+ * Käyttäjä näkee kuvaajan, jossa esitetään kaikki kulut kuukausittain
  * Käyttäjä näkee kategorioittain aikasarjan kuluista
 
 Tietomalli voi näyttää esimerkiksi seuraavalta.
@@ -134,7 +134,7 @@ Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia
  * Näytetään rivin yksikköhinta ja rivin loppuhinta (yksikköhinta * määrä)
    ostotapahtuman yhteydessä. Tarvitset sarakkeen, joka laskee
    kertolaskun tuotteiden hinnasta ja ostettavasta määrästä. 
- * Näytetään ostosten loppuhinnan. 
+ * Näytetään ostosten loppuhinta. 
  * Seuraava vaatimus...
 
 Bonus
@@ -243,7 +243,7 @@ tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia.
 **Sovelluksen tietomalli**
 
 Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Asunto` ja
-`Asukas`. Lisäksi tietomallissa on kaikkia korttipakkoja hallinnoiva
+`Asukas`. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
 `Yhtio`-luokka. Tietomalli näyttää seuraavalta:
 
 
@@ -282,7 +282,7 @@ noudattaen](../harjoitustyo.md).
 
 **Isännöitsijän ja asukkaan näkymät**
 
-* Sovelluksesa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.
+* Sovelluksessa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.
 * Sovelluksen aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää isännöitsijän vai asukkaan näkymää.
   Jos valitaan asukkaan näkymä, käyttäjän tulee valita asukas, jona hän
   "kirjautuu" näkymään.
@@ -370,8 +370,7 @@ joita voi harjoitella sovelluksessa.
   nimi ja valinnainen kuvaus.
 * Käyttäjä voi lisätä kortteja korttipakkaan. Kortilla on termi ja termin selitys.
 * Käyttäjä voi selata ja muokata lisättyjä korttipakkoja.
-* Käyttäjä voi harjoitella korttipakan kortteja ns. harjoitustilassa. Harjoitustilassa 
-* käyttäjälle näytetään yhden kortipakan kortin termi. Käyttäjä voi katsoa kortin
+* Käyttäjä voi harjoitella korttipakan kortteja ns. harjoitustilassa. Harjoitustilassa käyttäjälle näytetään yhden korttipakan kortin termi. Käyttäjä voi katsoa kortin
   selityksen (eli ns. "kääntää kortin").
   Käyttäjä voi sen jälkeen siirtyä seuraavaan korttiin tai edelliseen korttiin.
 * Harjoitustilassa kortit näytetään aina satunnaisessa järjestyksessä.
@@ -430,7 +429,7 @@ noudattaen](../harjoitustyo.md).
   kortin termi ja kolme mahdollista selitystä monivalintakysymyksenä. Käyttäjän
   tulee valita oikea termiä vastaava selitys. Käyttäjä saa palautteena oikean
   vastauksen, minkä jälkeen näytetään seuraava monivalintakysymys.
-* Tenttitilan tulee olla toimia yhtä hyvin niin kolmen kortin että usean sadan
+* Tenttitilan tulee toimia yhtä hyvin niin kolmen kortin kuin usean sadan
   kortin pakalla. 
 * Tenttitilaan pääsee vain, jos pakassa on vähintään kolme korttia.
 * Voit hyötyä mm.
@@ -455,7 +454,7 @@ Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 
 ### Oma idea
 
-Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttä opintojakson 
+Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttää opintojakson 
 [harjoitustyön vaatimukset](../harjoitustyo.md).
 Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
 
@@ -469,7 +468,7 @@ Voit ottaa mallia suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
 
 Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
-Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täytä [harjoitustyön yleiset
+Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää [harjoitustyön yleiset
 vaatimukset](../harjoitustyo.md). 
 Tuntiopettajalla on oikeus pyytää täydennyksiä suunnitelmaan, jos työn laajuus
 ei vastaa harjoitustyön vaatimuksia.
@@ -478,7 +477,7 @@ Jos päätät laajentaa osan 7 ja 8 Todo-sovellusta, harjoitustyön vaatimukset
 koskevat sinun tekemää laajennosta. Esimerkiksi vaatimus 1.1 (Sovelluksessa on
 vähintään kaksi kohdealueen mallinnettavaa asiaa) tarkoittaisi, että sinun tulee
 määrittää kaksi uutta mallinnettavaa asiaa nykyisen `Tehtava`-mallin lisäksi.
-Puolestaan vaatimus 4.1 tarkoittaa, että käyttöliittymään on lisättävää kaksi
+Puolestaan vaatimus 4.1 tarkoittaa, että käyttöliittymään on lisättävä kaksi
 uutta lisänäkymää tai laajentaa nykyiset näkymät merkittävästi siten, että
 laajennos voisi tulkita omaksi näkymäksi. 
 
@@ -538,7 +537,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 5. **Datan esittämiseen käyttöliittymässä käytetään tarkoituksenmukaista komponenttia.**
 
     Jos työssä on useita samantyyppisiä olioita, `TableView` on yleensä luonteva
-    rataisu.
+    ratkaisu.
 
 </div>
 
@@ -657,14 +656,14 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 1. **IntelliJ IDEA:n ei tule raportoida mitään virheitä tai varoituksia Java-lähdekoodissa.**
 
     IntelliJ IDEA merkitsee varoitukset keltaisella ja virheet punaisella.
-    Kielen tarkistukseen liittyvät varoitukset (virheällä) sallitaan.
+    Kielen tarkistukseen liittyvät varoitukset (vihreällä) sallitaan.
     Vastaavasti `.fxml`-tiedostossa olevia virhemerkintöjä sallitaan.
 
     Voit ajaa virheentarkistuksen kaikille tiedostoille kerralla käyttäen [Run all
     inspections
     -toimintoa](https://www.jetbrains.com/help/idea/running-inspections.html#run-all-inspections).
 
-    Huomaa, että monille varoituksille ja virheillä IntelliJ IDEA tarjoaa valmiita
+    Huomaa, että monille varoituksille ja virheille IntelliJ IDEA tarjoaa valmiita
     korjauksia, jotka saa näkyviin klikkaamalla varoituksen yhteydessä näkyvästä
     toimintopainikkeesta (<i class="bi bi-lightbulb-fill"></i>).
 
@@ -672,12 +671,12 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 
     Käytä IDEA:n [Reformat code
     -ominaisuutta](https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat_module_directory)
-    käyttäen sen kaikki korjauksia (*Optimize imports*, *Rearrange entries*,
+    käyttäen sen kaikkia korjauksia (*Optimize imports*, *Rearrange entries*,
     *Cleanup code*).
 
-3. **Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuuttille ja metodeille hyviä kapselointiperiaatteita noudattaen**
+3. **Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuutille ja metodeille hyviä kapselointiperiaatteita noudattaen**
 
-    Attribuutit ovat lähökohtaisesti merkitty `private`-määreellä. Metodien kohdalla
+    Attribuutit ovat lähtökohtaisesti merkitty `private`-määreellä. Metodien kohdalla
     julkisuusmääreen tulee sopia metodin tarkoitukseen: muiden olioiden
     käytettäväksi tarkoitetut metodit ovat `public`, kun taas luokan omat apumetodit
     ovat `private`.
