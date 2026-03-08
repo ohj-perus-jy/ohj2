@@ -18,7 +18,7 @@ auttaa projektin edistämistä vaiheittain.
 Kuten aiemminkin, tehtävistä on palautettava vähintään 50 %.
 
 Harjoitustyötä ei kuitenkaan ole pakko toteuttaa näissä osissa
-kuvattua vaiheustusta hyödyntäen.
+kuvattua vaiheistusta hyödyntäen.
 
 ## Harjoitustyön aihe
 
@@ -43,7 +43,7 @@ Kun olet valinnut aiheen, ilmoita se alla olevan tehtävän kautta.
 ## Projektin alustaminen
 
 Kun olet valinnut aiheen, voit luoda valmiiksi uuden JavaFX-projektin.
-Suosittelemme, että käytetät kurssin valmista JavaFX-pohjaa, jonka käyttöä on
+Suosittelemme, että käytät kurssin valmista JavaFX-pohjaa, jonka käyttöä on
 esitelty [osassa
 7.1](../osa7/01-javafx-perusteet.md#ensimmäinen-javafx-sovellus).
 
@@ -87,7 +87,7 @@ etusivulla, joten tiedosto on myös hyvä paikka kertoa projektista yleisesti
 ei-tekniselle peruskäyttäjälle.
 Voit luoda `README.md`-tiedoston suoraan IDEAssa klikkaamalla projektiselaimessa
 projektista hiiren toissijaisella painikkeella, valitsemalla **New** <i
-class="bi bi-chevron-right"></i> **File** ja antamalla tiedostn nimeksi
+class="bi bi-chevron-right"></i> **File** ja antamalla tiedoston nimeksi
 `README.md`:
 
 <video src="images/intellij-readme-md.mp4" controls></video>
@@ -100,7 +100,7 @@ ainakin projektin nimi ja lyhyt kuvaus parilla virkkeellä.
 Jos käytät valmista aihetta, voit kopioida projektin aiheen kuvauksen [harjoitustyön
 ohjeesta](../harjoitustyo.md#harjoitustyön-aihe).
 
-Kun saat `README` ja `.gitignore` -tiedostoja tehtyä, tee ensimmäinen commit.
+Kun saat `README` ja `.gitignore` -tiedostot tehtyä, tee ensimmäinen commit.
 Luo lopuksi uusi etävarasto ja lataa nykyinen varastosi sinne [osan
 8.6](../osa8/06-versionhallinnan-etakaytto.md) ohjeiden perusteella.
 
@@ -123,11 +123,11 @@ Ennen kuin menet syvemmin käyttöliittymään, on syytä ensin pohtia sovelluks
 tietomallia ja sen toimintaa. 
 Aloita kehitystyö toteuttamalla tietomallin kannalta
 oleelliset luokat projektiin. Valmiissa aiheessa luokat, niiden attribuutit ja
-luokkien väliset suhteet ovat esitetty UML-kaaviona.
+luokkien väliset suhteet on esitetty UML-kaaviona.
 
 Vinkkejä:
 
-- Tee tietomallin attribuutit käyttäjen JavaFX `Property`-tyyppejä valmiiksi.
+- Tee tietomallin attribuutit käyttäen JavaFX `Property`-tyyppejä valmiiksi.
   Tämä helpottaa näkymän ja tietomallin kytkemistä yhteen myöhemmin.
 - Laita tietomalliin liittyvät luokat valmiiksi `model`-alipakkaukseen erillään
   muista luokista.
@@ -138,7 +138,7 @@ Vinkkejä:
   [kapselointia](../osa2/03-kapselointi.md#kapselointi-ja-koheesio).
   Esimerkiksi osan 7-8 mallisovelluksessa ohjainluokka ei ikinä lisää
   `Tehtava`-oliota tehtäväkokoelman `tehtavat`-listaan itse, vaan tehtävän
-  lisäys oli tehtäväkokoelman vastuulla `lisaaTehtava`-metodin kautta.
+  lisäys on tehtäväkokoelman vastuulla `lisaaTehtava`-metodin kautta.
 
   Älä kuitenkaan jää miettimään luokkien toimintaa liian kauan; kaikkia
   tapauksia ei voi vaan ennustaa. Voit tehdä apumetodeja lisää myöhemmin, kun
@@ -195,7 +195,7 @@ tarvittavista näkymistä.
 
 **Olennaiset komponentit**
 
-- Mitä JavaFX-komponetteja saatat tarvita käyttöliittymän toteuttamiseen
+- Mitä JavaFX-komponentteja saatat tarvita käyttöliittymän toteuttamiseen
 - Tämä on pääosin paikka, johon voit kirjata linkkejä JavaFX-luokkiin 
   ja kirjastoihin, jotta niitä on helpompaa löytää käyttösuunnitelmaa tehtäessä
 - Tämä osa ei ole pakollinen, vaan tarkoitettu helpottamaan dokumentaation hakemista myöhemmin
@@ -214,7 +214,7 @@ tarvittavista näkymistä.
 
 **Olennaiset komponentit**
 
-- Mitä JavaFX-komponetteja saatat tarvita käyttöliittymän toteuttamiseen
+- Mitä JavaFX-komponentteja saatat tarvita käyttöliittymän toteuttamiseen
 - Tämä on pääosin paikka, johon voit kirjata linkkejä JavaFX-luokkiin 
   ja kirjastoihin, jotta niitä on helpompaa löytää käyttösuunnitelmaa tehtäessä
 - Tämä osa ei ole pakollinen, vaan tarkoitettu helpottamaan dokumentaation hakemista myöhemmin
@@ -226,7 +226,7 @@ Piirrä alustavat karkeat kuvat jokaisesta näkymästä. Voit piirtää näkymä
 käyttäen esimerkiksi verkossa olevia kaaviosovelluksia, kuten
 [wireframe.cc](https://wireframe.cc/), [DrawIO](https://app.diagrams.net)
 tai [Figma](https://www.figma.com/).
-Voit myös piirtää karkeat kuvat myös piirtosovelluksella tai vaikkapa
+Voit piirtää karkeat kuvat myös piirtosovelluksella tai vaikkapa
 piirtämällä kuvat paperille ja skannaamalla ne.
 Pääasia on, että tässä vaiheessa käyttöliittymän tarkan ulkoasun ei tarvitse
 olla mietitty loppuun, vaan keskityt ensisijaisesti eri komponenttien väliseen
@@ -248,7 +248,7 @@ Näin voit varmistaa jo tässä vaiheessa, että muistat ottaa huomioon kaikki
 vaaditut tietomallin lisäys-, luku-, muokkaus-, ja poistotoiminnot.
 
 Kun käyttöliittymän näkymien suunnitelma on valmis, tee muutoksista commit ja
-puska muutokset etävarastoon.
+puske muutokset etävarastoon.
 
 
 <task>
