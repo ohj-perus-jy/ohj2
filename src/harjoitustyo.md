@@ -36,33 +36,22 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi syöttää kuluja ja menoja. 
  * Käyttäjä näkee kaikki kulut ja menot taulukossa, jossa on ainakin kulun nimi, summa ja päivämäärä. 
  * Käyttäjä voi määrittää kulukategorioita
- * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu.
+ * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu
  * Käyttäjä näkee tietyn kategorian kulut
  * Käyttäjä voi katsoa kulut tietyltä aikaväliltä (kaksi päivämäärää)
  * Käyttäjä voi vaihtaa kulun kategoriaa jälkikäteen
- * Käyttäjä näkee kuvaajan, jossa esitetään kaiki kulut kuukausittain
 
 Käytä ainakin seuraavia komponentteja (pakolliset):
 
  * DatePicker
  * TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän
    taulukkomallista, ja joka mahdollistaa taulukon suodattamisen esimerkiksi
-   kategorian tai päivämäärän mukaan. TODO: Tarvitaan esimerkki filtteröidyn
-   listan tuottamisesta sortedlist-oliolle.
- * ControlsFX: CheckComboBox
- * Pakollinen 1
- * Pakollinen 2
-
-Saatat tarvita / hyötyä seuraavista JavaFX-komponentteja:  (valinnaiset)
-
- * Valinnainen 1
- * Valinnainen 2
- * Valinnainen 3
+   kategorian tai päivämäärän mukaan. Lue ohjeet [FilteredListin käyttöön](./javafx/tableview.md#filteredlist).
 
 Bonus
 
+ * Käyttäjä näkee kuvaajan, jossa esitetään kaiki kulut kuukausittain
  * Käyttäjä näkee kategorioittain aikasarjan kuluista
-
 
 ```plantuml
 @startuml
