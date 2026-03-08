@@ -22,6 +22,7 @@ tuntiopettaja on hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
 joka täyttää harjoitustyölle asetetut vaatimukset.
+Näet aiheen tarkemmat vaatimukset klikkaamalla.
 
 
 <details><summary>
