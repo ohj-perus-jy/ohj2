@@ -32,6 +32,8 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
 
 </summary>
 
+**Toiminnalliset vaatimukset**
+
  * Käyttäjä voi syöttää kuluja ja menoja ("tapahtuma").
  * Käyttäjä näkee kaikki tapahtumat taulukossa, jossa on ainakin tapahtuman nimi,
    summa ja päivämäärä. 
@@ -41,7 +43,7 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
  * Käyttäjä voi muokata tapahtumia ja kategorioita
 
-Käytä ainakin seuraavia komponentteja: 
+Voit hyötyä ainakin seuraavista komponenteista: 
 
  * DatePicker päivämäärän valitsemiseen
  * CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen
@@ -54,6 +56,8 @@ Bonus
    `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
  * Käyttäjä näkee kuvaajan, jossa esitetään kaikki kulut kuukausittain
  * Käyttäjä näkee kategorioittain aikasarjan kuluista
+
+**Sovelluksen tietomalli**
 
 Tietomalli voi näyttää esimerkiksi seuraavalta.
 
@@ -149,76 +153,60 @@ Bonus
 
 ### Kirjasto
 
-Kirjastossa on kirjoja ja lainaajia. Lainaaja voi lainata ja palauttaa kirjoja.
+Sovellus kirjaston kirjojen ja lainojen hallintaan.
 Kirjaston hoitaja voi hallita kirjojen tietoja ja lainatilannetta, sekä tutkia
 kirjojen lainahistoriaa.
 
 </summary>
 
- * Käyttäjä voi syöttää kirjoja ja niiden tietoja. 
- * Käyttäjä näkee kaikki kirjat taulukossa, jossa on ainakin kirjan nimi, tekijä ja lainatilanne. 
- * Käyttäjä voi lainata ja palauttaa kirjoja. 
- * Seuraava vaatimus...
- * Seuraava vaatimus...
+**Toiminnalliset vaatimukset**
+
+* Käyttäjä voi syöttää kirjoja ja niiden tietoja. 
+* Käyttäjä näkee kaikki kirjat taulukossa, jossa on ainakin kirjan nimi, tekijä,
+ ISBN-tunniste ja lainatilanne. Käyttäjä voi myös helposti nähdä, kuinka monta
+ kertaa jokaista kirjaa on lainattu.
+* Käyttäjä voi lainata kirjoja henkilölle ja merkata lainaukset palautetuksi.
+* Käyttäjä voi katsoa kirjojen lainaushistoriaa. 
+* Jokainen kirja voi olla samaan aikaan lainassa vain yhdellä lainaajalla.
+  Samaa kirjaa voi lainata, jos se on parhaillaan lainassa.
+* Käyttäjä voi helposti nähdä, mitkä kirjat ovat lainassa. Käyttäjä voi lisäksi
+  helposti nähdä, minkä kirjojen lainausten palautuspäivämäärä on mennyt jo ohi
+  (eli ns. myöhästyneet palautukset).
+
+**Sovelluksen tietomalli**
+
+Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Kirja` ja
+`Lainas`. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
+`Kirjasto`-luokka. Tietomalli näyttää seuraavalta:
 
 Esimerkki siitä, miltä JSON voisi näyttää. 
 
-```json
-{
-  "kirjat": [
-    {
-      "id": 1,
-      "nimi": "Sota ja rauha",
-      "tekijä": "Leo Tolstoi",
-      "lainassa": { "lainaajaId": 1, "lainauspaivamaara": "2024-01-01", "palautuspäivämäärä": "2024-01-15" }
-    },
-    {
-      "id": 2,
-      "nimi": "Anna Karenina",
-      "tekijä": "Leo Tolstoi",
-      "lainassa": null
-    },
-    {
-      "id": 3,
-      "nimi": "Rautatie",
-      "tekijä": "Juhani Aho",
-    }
-  ],
-  "lainaajat": [
-    {
-      "id": 1,
-      "nimi": "Matti Meikäläinen",
-      "lainatutKirjat": [1]
-    },
-    {
-      "id": 2,
-      "nimi": "Maija Meikäläinen",
-      "lainatutKirjat": []
-    },
-    {
-      "id": 3,
-      "nimi": "Mikko Meikäläinen",
-      "lainatutKirjat": [2,3]
-    }
-  ]
+```plantuml
+@startuml
+left to right direction
+
+class Lainaus {
+  - String lainaajaNimi
+  - LocalDateTime lainattuPvm
+  - LocalDateTime palautusPvm
+  - LocalDateTime palautettuPvm
 }
-```
 
-<details><summary>Bonus: Kirjaston lainahistoria</summary>
+class Kirja {
+  - String nimi
+  - String tekija
+  - String isbn
+  - List<Lainaus> lainaukset
+}
 
-Bonus 1: Lisää kirja-olioon tieto siitä, kuka on lainannut kirjan, jos se on
-lainassa, milloin se on lainattu ja milloin se palautuu. 
+class Kirjasto {
+  - List<Kirja> kirjat
+}
 
-Bonus 2: Tieto siitä, milloin kirja on lainattu ja milloin se palautuu kirjastoon.
-Tarvitset lainaushistoria-luokan, joka kuvaa yhtä lainatapahtumaa, ja joka
-sisältää ainakin lainattavan kirjan id:n, lainaajan nimen, lainauspäivämäärän ja
-palautuspäivämäärän. Lainaushistoria-luokkien lista kuuluu kirjastoon, ja joka
-kerta, kun kirja lainataan tai palautetaan, luodaan uusi lainaushistoria-olio ja
-lisätään se kirjaston lainaushistoria-listaan. Näin kirjastolla on täydellinen
-historia siitä, milloin kukin kirja on lainattu ja palautettu, ja kuka on
-lainannut kunkin kirjan.
-
-</details>
+Kirjasto "1" --> "1..*" Kirja : sisältää
+Kirja "1" --> "1..*" Lainaus : tehdään
+@enduml
+``` 
 
 </details>
 
@@ -455,7 +443,7 @@ Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
 ### Oma idea
 
 Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttää opintojakson 
-[harjoitustyön vaatimukset](../harjoitustyo.md).
+harjoitustyön vaatimukset.
 Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
 
 
@@ -468,8 +456,8 @@ Voit ottaa mallia suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
 
 Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
-Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää [harjoitustyön yleiset
-vaatimukset](../harjoitustyo.md). 
+Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää [harjoitustyön
+yleiset vaatimukset](#harjoitustyön-tekniset-vaatimukset-ja-arviointi). 
 Tuntiopettajalla on oikeus pyytää täydennyksiä suunnitelmaan, jos työn laajuus
 ei vastaa harjoitustyön vaatimuksia.
 
