@@ -38,7 +38,8 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä näkee kaikki tapahtumat taulukossa, jossa on ainakin tapahtuman nimi,
    summa ja päivämäärä. 
  * Käyttäjä voi määrittää kulukategorioita
- * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu
+ * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu. Tuloilla ei tarvitse
+   välttämättä olla kategoriaa.
  * Käyttäjä näkee tietyn kategorian tapahtumat
  * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
  * Käyttäjä voi muokata tapahtumia ja kategorioita.
