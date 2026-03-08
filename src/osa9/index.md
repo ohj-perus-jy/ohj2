@@ -117,5 +117,148 @@ Luo lopuksi uusi etävarasto ja lataa nykyinen varastosi sinne [osan
     tehtävä TIMissä</a></task-link>
 </task>
 
+## Tietomallin toteuttaminen
+
+Ennen kuin menet syvemmin käyttöliittymään, on syytä ensin pohtia sovelluksen
+tietomallia ja sen toimintaa. 
+Aloita kehitystyö toteuttamalla tietomallin kannalta
+oleelliset luokat projektiin. Valmiissa aiheessa luokat, niiden attribuutit ja
+luokkien väliset suhteet ovat esitetty UML-kaaviona.
+
+Vinkkejä:
+
+- Tee tietomallin attribuutit käyttäjen JavaFX `Property`-tyyppejä valmiiksi.
+  Tämä helpottaa näkymän ja tietomallin kytkemistä yhteen myöhemmin.
+- Laita tietomalliin liittyvät luokat valmiiksi `model`-alipakkaukseen erillään
+  muista luokista.
+- Mieti jo hieman, mitä julkisia metodeja luokan on hyvää tarjota muille
+  luokille. Vaikka get- ja set- metodeja tarvitaan tietomallin tallentamiseksi
+  JSON-muotoon, voit jo alustavasti miettiä, mitä metodeja luokka voisi tarjota
+  parantakseen
+  [kapselointia](../osa2/03-kapselointi.md#kapselointi-ja-koheesio).
+  Esimerkiksi osan 7-8 mallisovelluksessa ohjainluokka ei ikinä lisää
+  `Tehtava`-oliota tehtäväkokoelman `tehtavat`-listaan itse, vaan tehtävän
+  lisäys oli tehtäväkokoelman vastuulla `lisaaTehtava`-metodin kautta.
+
+  Älä kuitenkaan jää miettimään luokkien toimintaa liian kauan; kaikkia
+  tapauksia ei voi vaan ennustaa. Voit tehdä apumetodeja lisää myöhemmin, kun
+  toteutat ohjainluokkia.
+- Voit testata tietomallin luokkien välistä yhteistoimintaa kokeilemalla käyttää
+  tietomallin luokkia vaikkapa ohjelman `main`-pääohjelmassa.
+  Et tarvitse tähän vielä käyttöliittymää, vaan voit luoda ja käyttää olioita
+  suoraan pääohjelmassa.
+  Varmista, että pystyt tietomallin luokkien ja niiden metodien avulla
+  tekemään sovelluksen ja harjoitustyön vaatimusten kannalta olennaisimmat
+  toiminnot, kuten tiedon lisäyksen, hakemisen, lisäyksen ja poiston.
+  Debuggerin avulla voit varmistaa, että tietomallin tila on oikea.
+
+  Halutessasi voit jopa kirjoittaa yksikkötestejä, jossa testaat tietomallin
+  perustoiminnallisuuksia. Voit ottaa mallia [osan
+  8.5](../osa8/05-yksikkotestaus.md#todo-ohjelman-testaaminen) ohjeesta, jossa
+  Todo-sovelluksen tietomallin metodeja ja niiden toimivuutta testattiin.
+- Sinun ei tarvitse vielä miettiä tallentamista tai lataamista tässä
+  vaiheessa.
+
+Kun sinulla on alustava versio tietomallista toteutettuna Javassa eikä koodi
+sisällä virheitä, on hyvä hetki tallentaa muutokset Gitiin. Tee muutoksista uusi
+commit (`git add` + `git commit`) ja puske ne etävarastoon talteen (`git push`).
+
+## Käyttöliittymän alustava suunnitelma
+
+Kun sinulla on käsitys sovelluksen tietomallista ja vaatimuksista, on hyvä hetki
+alkaa pohtia käyttöliittymän alustavaa asettelua ja toimintaa.
+
+Tee omaan projektiin uusi kansio `suunnitelma` (IDEA: klikkaa projektiselaimessa
+projektin nimestä hiiren toissijaisella painikkeella ja valitse **New** <i
+class="bi bi-chevron-right"></i> **Directory**). Tee uuteen kansioon samalla
+Markdown-tiedosto nimeltään `kayttoliittyma.md`.
+Kirjaa tiedostoon ylös alustavia tietoja sovelluksen käyttöliittymän
+tarvittavista näkymistä.
+
+<details>
+<summary>Voit käyttää seuraavaa mallirunkoa käyttöliittymän suunnitelmatiedostolle</summary>
+
+```md
+# Käyttöliittymän suunnitelma
+
+## Näkymä 1
+
+![Näkymän karkea ulkoasu kuvana (wireframe.cc, DrawIO, Paint tai paperilla piirretty)](nakyma1.jpg)
+
+**Olennaiset toiminnot**
+
+- Mitä käyttäjä näkee käyttöliittymässä
+- Miten tähän näkymään pääsee 
+  (sovelluksen avaus, painikkeen klikkaus, jne.)
+- Mitä käyttäjä voi tehdä käyttöliittymässä: 
+  mitä voi klikata, mitä jokainen painike tekee
+
+**Olennaiset komponentit**
+
+- Mitä JavaFX-komponetteja saatat tarvita käyttöliittymän toteuttamiseen
+- Tämä on pääosin paikka, johon voit kirjata linkkejä JavaFX-luokkiin 
+  ja kirjastoihin, jotta niitä on helpompaa löytää käyttösuunnitelmaa tehtäessä
+- Tämä osa ei ole pakollinen, vaan tarkoitettu helpottamaan dokumentaation hakemista myöhemmin
+
+## Näkymä 2
+
+![Näkymän karkea ulkoasu kuvana (wireframe.cc, DrawIO, Paint tai paperilla piirretty)](nakyma2.jpg)
+
+**Olennaiset toiminnot**
+
+- Mitä käyttäjä näkee käyttöliittymässä
+- Miten tähän näkymään pääsee 
+  (sovelluksen avaus, painikkeen klikkaus, jne.)
+- Mitä käyttäjä voi tehdä käyttöliittymässä: 
+  mitä voi klikata, mitä jokainen painike tekee
+
+**Olennaiset komponentit**
+
+- Mitä JavaFX-komponetteja saatat tarvita käyttöliittymän toteuttamiseen
+- Tämä on pääosin paikka, johon voit kirjata linkkejä JavaFX-luokkiin 
+  ja kirjastoihin, jotta niitä on helpompaa löytää käyttösuunnitelmaa tehtäessä
+- Tämä osa ei ole pakollinen, vaan tarkoitettu helpottamaan dokumentaation hakemista myöhemmin
+```
+
+</details>
+
+Piirrä alustavat karkeat kuvat jokaisesta näkymästä. Voit piirtää näkymät
+käyttäen esimerkiksi verkossa olevia kaaviosovelluksia, kuten
+[wireframe.cc](https://wireframe.cc/), [DrawIO](https://app.diagrams.net)
+tai [Figma](https://www.figma.com/).
+Voit myös piirtää karkeat kuvat myös piirtosovelluksella tai vaikkapa
+piirtämällä kuvat paperille ja skannaamalla ne.
+Pääasia on, että tässä vaiheessa käyttöliittymän tarkan ulkoasun ei tarvitse
+olla mietitty loppuun, vaan keskityt ensisijaisesti eri komponenttien väliseen
+karkeaan asetteluun. 
+
+Voit halutessasi tehdä näkymät heti valmiiksi käyttäen SceneBuilderilla. Siinä
+tapauksessa ota näkymistä kuvakaappaus. 
+Älä kuitenkaan käytä liikaa aikaa näkymien tekemiseen tässä vaiheessa;
+suunnitelman tarkoituksena on saada karkea idea käyttöliittymän näkymistä.
+
+Tallenna kuvat `suunnitelma`-kansioon ja mainitse ne
+`kayttoliittyma.md`-tiedostoon. Löydät ohjeita kuvien upottamiseen
+Markdown-tiedostoihin
+[verkosta](https://www.markdownguide.org/basic-syntax/#images-1).
+
+Kuvaa suunnitelmassa, mitä näkymässä näytetään ja millä eri tavoin käyttäjä voi
+vuorovaikuttaa käyttöliittymän kanssa. 
+Näin voit varmistaa jo tässä vaiheessa, että muistat ottaa huomioon kaikki 
+vaaditut tietomallin lisäys-, luku-, muokkaus-, ja poistotoiminnot.
+
+Kun käyttöliittymän näkymien suunnitelma on valmis, tee muutoksista commit ja
+puska muutokset etävarastoon.
 
 
+<task>
+  <task-title>Tehtävä 9.3: Käyttöliittymäsuunnitelma. <points>1 p.</points> </task-title>
+  <handout>
+
+{{#include ../exercises/9-3-ht-3/handout.md}}
+
+</handout>
+    <task-link><a
+    href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa9/tehtava3">Tee
+    tehtävä TIMissä</a></task-link>
+</task>

@@ -2,6 +2,9 @@ Tee projektillesi Git-varasto ja tee ensimmäinen commit.
 Ensimmäisessä commitissa on hyvä olla ainakin IDEA-projekti, `.gitignore` ja
 `README.md`.
 
+`README.md` voi tässä vaiheessa sisältää vain projektin nimen sekä 1-2
+virkkeen kuvauksen projektin aiheesta.
+
 Luo projektillesi julkinen etävarasto GitLab- tai GitHub-palvelussa ja puske
 paikallisen varaston commitit sinne.
 
