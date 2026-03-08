@@ -190,3 +190,7 @@ Tämä rivi vaatinee hieman selitystä. Tässä `comboBox`-komponentti sidotaan
 tarkoittaa, että `comboBox` on käytössä vain silloin, kun `checkBox` on
 valittuna. Tämä `selectedProperty` on olemassa `CheckBox`-komponentissa
 valmiina, joten sitä ei tarvitse erikseen määritellä.
+
+Lopputulos näyttää vaikkapa tältä:
+
+<img src="images/filtered2.gif" alt="Suodatettu näkymä" width="300"/>
