@@ -135,23 +135,68 @@ käyttöliittymäsi ei näyttäisi samanlaiselta -- tärkeintä on, että sovell
 
 <details><summary>
 
-### Tuotteiden varastohallinta
+### Kassa
  
-Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia. 
+Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostostapahtumia.
 
 </summary>
 
- * Käyttäjä voi syöttää tuotteita ja niiden määriä varastossa. 
- * Käyttäjä näkee kaikki tuotteet taulukossa, jossa on ainakin tuotteen nimi, määrä ja hinta. 
- * Käyttäjä voi tehdä ostotapahtumia, joissa hän syöttää ostettavan tuotteen,
-   ostettavan määrän. Ei voi ostaa, jos tuotetta ei ole varastossa tarpeeksi 
- * Näytetään rivin yksikköhinta ja rivin loppuhinta (yksikköhinta * määrä)
-   ostotapahtuman yhteydessä. Tarvitset sarakkeen, joka laskee
-   kertolaskun tuotteiden hinnasta ja ostettavasta määrästä. 
+ * Käyttäjä voi syöttää tuotteita. Tuotteella on tunniste, nimi, hinta. 
+ * Käyttäjä näkee kaikki tuotteet taulukossa
+ * Käyttäjä voi tehdä ostostapahtumia, joissa hän syöttää ostettavan tuotteen ja
+   ostettavan määrän. 
+ * Ostostapahtuman yhteydessä kunkin rivin kohdalla näytetään yksikköhinta ja
+   rivin loppuhinta (yksikköhinta * määrä) ostostapahtuman yhteydessä. Tarvitset
+   sarakkeen, joka laskee kertolaskun tuotteiden hinnasta ja ostettavasta
+   määrästä. 
  * Näytetään ostosten loppuhinta. 
- * <i class="bi bi-stars jyu-gold"></i> Maksutapa voi olla kortti tai käteinen
- * <i class="bi bi-stars jyu-gold"></i> Käteismaksujen jälkeen käteiskassa päivittyy
- * <i class="bi bi-stars jyu-gold"></i> Rivialennus tai ostotapahtumakohtainen alennus
+ * Sovelluksessa voi olla eri näkymät tuotteille (yksi TableView) tai sekä
+   tuotelista että ostostapahtumalista samassa näkymässä (kaksi TableViewia
+   samassa Scenessä). 
+ * <i class="bi bi-stars jyu-gold"></i> Rivialennus tai ostostapahtumakohtainen alennus
+
+```plantuml
+@startuml
+
+class Tuote {
+    - String tunniste
+    - String nimi
+    - double hinta
+}
+
+class Ostosrivi {
+    - String tuotteenTunniste
+    - int maara
+}
+
+class Ostostapahtuma {
+    - LocalDateTime aika
+    - List<Ostosrivi> ostosrivit
+}
+
+class OstostapahtumaHallinta {
+    - List<Tuote> tuotteet
+    - List<Ostostapahtuma> ostostapahtumat
+}
+
+OstostapahtumaHallinta "1" --> "1..*" Tuote : sisältää
+OstostapahtumaHallinta "1" --> "1..*" Ostostapahtuma : sisältää
+Ostostapahtuma "1" --> "1..*" Ostosrivi : sisältää
+
+@enduml
+```
+
+Kun käyttöliittymässä tehdään ostotapahtuma
+
+ * Käyttäjä valitsee ostettavan tuotteen alasvetovalikosta, ja syöttää ostettavan määrän.
+ * <i class="bi bi-stars jyu-gold"></i> käyttäjä voi hakupalkin avulla hakea tuotteita nimellä. Tarvitset
+   mahdollisesti ControlFX:ää tähän.
+ * Tarvitset taulukon, joka näyttää ostotapahtuman tämän hetkisen tilanteen.
+   Taulukossa pitää näkyä tuotteen tunniste, nimi, tuotteen hinta, määrä ja
+   rivihinta.
+ * Koska Ostorivi-luokassa ei ole viittausta Tuote-olioon, pitää Tuotteen tiedot
+   hakea tuotteen tunnisteen avulla apumetodia käyttäen. Tämä onnistuu
+   Bindings-luokan avulla. 
 
 </details>
 
@@ -213,6 +258,8 @@ Kirjasto "1" --> "1..*" Kirja : sisältää
 Kirja "1" --> "1..*" Lainaus : tehdään
 @enduml
 ``` 
+
+
 
 </details>
 
