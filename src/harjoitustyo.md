@@ -149,13 +149,9 @@ Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostotapahtumia
    ostotapahtuman yhteydessä. Tarvitset sarakkeen, joka laskee
    kertolaskun tuotteiden hinnasta ja ostettavasta määrästä. 
  * Näytetään ostosten loppuhinta. 
- * Seuraava vaatimus...
-
-Bonus
-
- * Maksutapa voi olla kortti tai käteinen
- * Käteismaksujen jälkeen käteiskassa päivittyy
- * Rivialennus tai ostotapahtumakohtainen alennus
+ * <i class="bi bi-stars jyu-gold"></i> Maksutapa voi olla kortti tai käteinen
+ * <i class="bi bi-stars jyu-gold"></i> Käteismaksujen jälkeen käteiskassa päivittyy
+ * <i class="bi bi-stars jyu-gold"></i> Rivialennus tai ostotapahtumakohtainen alennus
 
 </details>
 
