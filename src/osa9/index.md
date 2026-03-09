@@ -49,27 +49,22 @@ esitelty [osassa
 
 Vinkkejä:
 
-- Valitse projektin poluksi (*Location*-asetus) sellainen, jonka pystyt helposti
-  löytämään sinun tietokoneelta. Harjoitustyölle on hyvä tehdä myös oma
-  erillinen tyhjä kansio, jotta harjoitustyön tiedostot eivät mene sekaisin
-  muiden tiedostojen kanssa.
-- Aseta projektillesi yksilöllinen tunniste (GroupId). Esimerkiksi voit käyttää
-  muotoa `fi.jyu.ohj2.nimesi.aihe`, jossa `nimesi` on yliopiston tunnuksesi ja
-  `aihe` on harjoitustyön aihe. 
-- Voit halutessasi alustaa Git-varaston jo projektin luomisen yhteydessä
-  valitsemalla *Create Git repository* -valintaruutu päälle.
-  Tämä asetus käytännössä tarkoittaa, että IDEA suorittaa automaattisesti `git
-  init` projektikansion luomisen jälkeen. Voit myös luoda varaston aina
-  itse [osan 7.3](../osa7/03-versionhallinta.md) ohjeiden mukaan.
+- Tee aluksi harjoitustyölle oma erillinen tyhjä kansio paikasta, jonka pystyt
+  helposti löytämään tietokoneeltasi. 
+- Kun luot projektia IDEAssa, valitse projektin poluksi (*Location*-asetus)
+  juuri tuo äsken tekemäsi kansio. tietokoneelta. 
+- Aseta projektillesi yksilöllinen tunniste (GroupId). Voit käyttää muotoa
+  `fi.jyu.ohj2.nimesi.aihe`, jossa `nimesi` on yliopiston tunnuksesi ja `aihe`
+  on harjoitustyön aihe. 
 
-Kun saat projektin luotua, kokeile ajaa se vielä kerran ja varmistaa, että saat
-edes yksinkertaisen käyttöliittymän käynnistettyä.
+Kun saat projektin luotua, kokeile ajaa se ja varmista, että saat sovelluksen
+käynnistettyä.
 
 ## Git-varaston alustaminen
 
-Kun projekti on luotu, luo saman tien projektikansioon Git-varasto [osan
-7.3](../osa7/03-versionhallinta.md) ohjeiden mukaan.
-Älä kuitenkaan tee vielä heti ensimmäistä committia, vaan valmistele kansion sisältö.
+Kun projekti on luotu, luo saman tien projektikansioon Git-varasto
+komentoriviltä komennolla `git init`. Älä kuitenkaan tee vielä heti ensimmäistä
+commitia, vaan valmistellaan ensin hieman kansion sisältöä.
 
 Git-versiohallintaa käytettäiviin projekteihin on tapana sisällyttää
 `.gitignore`- ja `README.md`-tiedostoja.
