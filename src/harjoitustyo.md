@@ -89,6 +89,12 @@ Seuranta "1" --> "1..*" Tapahtuma : sisältää
 @enduml
 ```
 
+Tällaisessa mallissa tieto siitä onko tapahtuma kulu vai meno voidaan ilmaista
+summan positiivisuudella tai negatiivisuudella. Toinen vaihtoehto olisi tehdä
+`TuloVaiMeno`-enum, ja lisätä `Tapahtuma`-luokkaan `TuloVaiMeno tuloVaiMeno`
+-attribuutti. Kannattaa ehkä aloittaa ilman enumia, ja lisätä se myöhemmin, jos
+tuntuu, että siitä on hyötyä.
+
 <details><summary>Valmiit kulukategoriat</summary>
 
 Voit antaa sovelluksessa valmiiksi vaikkapa nämä [Marttojen
