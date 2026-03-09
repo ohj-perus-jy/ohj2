@@ -11,18 +11,17 @@ Harjoitustyö toteutetaan vaiheittain osissa 9–12. Jokainen osa sisältää oh
 joiden tarkoituksena on auttaa sinua etenemään, mutta voit toteuttaa vaatimukset
 myös muulla tavoin, kunhan ne täyttyvät.
 
-Suosittelemme, että ennen harjoitustyön tekemistä tutustut ja teet osien 7 ja 8
-mallisovellukset. Saat siitä merkittävästi apua harjoitustyön toteutukseen.
+Suosittelemme, että ennen harjoitustyön tekemistä tutustut ja teet osissa 7-8
+tehdyn Todo-sovelluksen. Saat siitä merkittävästi apua harjoitustyön toteutukseen.
 
 **Näytä lopullinen, kaikkia vaatimuksia täyttävä harjoitustyösi kurssin
 tuntiopettajalle ennen osan 12 palautusta etä- tai lähiohjauksessa.** Kun
 tuntiopettaja on hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
 
-## Harjoitustyön aihe
+## Aihe
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
-joka täyttää harjoitustyölle asetetut vaatimukset. Näet aiheen tarkemmat
-vaatimukset klikkaamalla.
+joka täyttää vaatimukset. Näet kunkin aiheen tarkemmat vaatimukset klikkaamalla.
 
 <details><summary>
 
@@ -37,13 +36,19 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi syöttää kuluja ja menoja ("tapahtuma").
  * Käyttäjä näkee kaikki tapahtumat taulukossa, jossa on ainakin tapahtuman nimi,
    summa ja päivämäärä. 
- * Käyttäjä voi määrittää kulukategorioita
+ * Käyttäjä voi määrittää kulukategorioita. 
  * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu. Tuloilla ei tarvitse
    välttämättä olla kategoriaa.
  * Käyttäjä näkee tietyn kategorian tapahtumat
  * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
  * Käyttäjä voi muokata tapahtumia ja kategorioita.
  * Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan
+ * <i class="bi bi-stars jyu-gold"></i> Kulukategoria voi olla *pakollinen*, mikä tarkoittaa välttämätöntä
+   menoa, kuten vuokra tai sähkölasku. 
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä voi valita useita kategorioita filtteriin. Käytä ControlsFX:n
+   `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kuvaajan, jossa esitetään kaikki kulut kuukausittain
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kategorioittain aikasarjan kuluista
 
 Voit hyötyä ainakin seuraavista komponenteista: 
 
@@ -51,13 +56,6 @@ Voit hyötyä ainakin seuraavista komponenteista:
  * CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen
  * TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän. Lue
    ohjeet [FilteredListin käyttöön](./javafx/tableview.md#filteredlist).
-
-Bonus
-
- * Käyttäjä voi valita useita kategorioita filtteriin. Käytä ControlsFX:n
-   `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
- * Käyttäjä näkee kuvaajan, jossa esitetään kaikki kulut kuukausittain
- * Käyttäjä näkee kategorioittain aikasarjan kuluista
 
 **Sovelluksen tietomalli**
 
