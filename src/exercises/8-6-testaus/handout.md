@@ -10,5 +10,4 @@ seuraavat asiat:
 - Kun kokoelmaan lisätään kaksi eri tehtävää peräkkäin, molemmat päätyvät
   listaan oikeassa järjestyksessä.
 
-Palauta JsonTehtavaRepository, MockTehtavaRepository ja
-TehtavaKokoelmaTest-luokat. Muita luokkia tai FXML:ää ei tarvitse palauttaa.
+Palauta `TehtavakokoelmaTest`-luokka.

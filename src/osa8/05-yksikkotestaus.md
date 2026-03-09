@@ -108,15 +108,12 @@ että tämä tapahtuu:
 ```java,ignore
 @Test
 void keskiarvoHeittaaPoikkeuksenTyhjallaListalla() {
-    @Test
-    void eiYhtaanLukuaMukaanKeskiarvoon() {
-        List<Integer> luvut = List.of(10, 20, 30, 40, 50, 60);
-        IllegalArgumentException exception =
-                assertThrows(IllegalArgumentException.class, () -> {
-                    Main.keskiarvo(luvut, 10);
-                });
-        assertEquals("Yhtään lukua ei tullut mukaan keskiarvoon", exception.getMessage());
-    }
+    List<Integer> luvut = List.of(10, 20, 30, 40, 50, 60);
+    IllegalArgumentException exception =
+            assertThrows(IllegalArgumentException.class, () -> {
+                Main.keskiarvo(luvut, 10);
+            });
+    assertEquals("Yhtään lukua ei tullut mukaan keskiarvoon", exception.getMessage());
 }
 ```
 
