@@ -43,20 +43,21 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu. Tuloilla ei tarvitse
    välttämättä olla kategoriaa.
  * Käyttäjä näkee tietyn kategorian tapahtumat
- * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää)
+ * Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää).
  * Käyttäjä voi muokata tapahtumia ja kategorioita.
- * Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan
+ * Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan.
  * <i class="bi bi-stars jyu-gold"></i> Kulukategoria voi olla *pakollinen*, mikä tarkoittaa välttämätöntä
    menoa, kuten vuokra tai sähkölasku. 
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä voi valita useita kategorioita filtteriin. Käytä ControlsFX:n
-   `CheckComboBox`-komponenttia tähän (<https://controlsfx.github.io/features/checkcombobox/>)
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kuvaajan, jossa esitetään kaikki kulut kuukausittain
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kategorioittain aikasarjan kuluista
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä voi valita useita kategorioita
+   filtteriin. Käytä esimerkiksi ControlsFX:n `CheckComboBox`-komponenttia
+   (<https://controlsfx.github.io/features/checkcombobox/>).
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kuvaajan, jossa esitetään kaikki tapahtumat kuukausittain.
+ * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kategorioittain aikasarjan kuluista.
 
 Voit hyötyä ainakin seuraavista komponenteista: 
 
- * DatePicker päivämäärän valitsemiseen
- * CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen
+ * DatePicker päivämäärän valitsemiseen.
+ * CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen.
  * TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän. Lue
    ohjeet [FilteredListin käyttöön](./javafx/tableview.md#filteredlist).
 
