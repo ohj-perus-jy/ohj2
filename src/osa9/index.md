@@ -135,29 +135,28 @@ Vinkkejä:
   luokille. Vaikka get- ja set-metodeja tarvitaan tietomallin tallentamiseksi
   JSON-muotoon, voit jo alustavasti miettiä, mitä metodeja luokka voisi tarjota
   parantakseen
-  [kapselointia](../osa2/03-kapselointi.md#kapselointi-ja-koheesio).
-  Esimerkiksi osan 7-8 mallisovelluksessa ohjainluokka ei ikinä lisää
-  `Tehtava`-oliota tehtäväkokoelman `tehtavat`-listaan itse, vaan tehtävän
-  lisäys on tehtäväkokoelman vastuulla `lisaaTehtava`-metodin kautta.
+  [kapselointia](../osa2/03-kapselointi.md#kapselointi-ja-koheesio). Esimerkiksi
+  Todo-mallisovelluksessa ohjainluokka ei ikinä lisää `Tehtava`-oliota
+  tehtäväkokoelman `tehtavat`-listaan itse, vaan tehtävän lisäys on
+  tehtäväkokoelman vastuulla `lisaaTehtava`-metodin kautta.
 
   Älä kuitenkaan jää miettimään luokkien toimintaa liian kauan; kaikkia
-  tapauksia ei voi vaan ennustaa. Voit tehdä apumetodeja lisää myöhemmin, kun
-  toteutat ohjainluokkia.
-- Voit testata tietomallin luokkien välistä yhteistoimintaa kokeilemalla käyttää
-  tietomallin luokkia vaikkapa ohjelman `main`-pääohjelmassa.
-  Et tarvitse tähän vielä käyttöliittymää, vaan voit luoda ja käyttää olioita
-  suoraan pääohjelmassa.
-  Varmista, että pystyt tietomallin luokkien ja niiden metodien avulla
-  tekemään sovelluksen ja harjoitustyön vaatimusten kannalta olennaisimmat
-  toiminnot, kuten tiedon lisäyksen, hakemisen, muokkauksen ja poiston.
-  Debuggerin avulla voit varmistaa, että tietomallin tila on oikea.
+  tapauksia ei kannata eikä voi vielä ennustaa. Voit tehdä apumetodeja lisää
+  myöhemmin, kun toteutat ohjainluokkia.
+- Suosittelemme vahvasti, että testaat tietomallin luokkien välistä
+  yhteistoimintaa kokeilemalla käyttää niitä `main`-pääohjelmassa (tai tee
+  aliohjelma jota kutsut `main`ista). Et tarvitse tähän vielä käyttöliittymää,
+  vaan voit luoda ja käyttää olioita suoraan pääohjelmassa. Varmista, että
+  pystyt tietomallisi avulla tekemään sovelluksen ja
+  harjoitustyön vaatimusten kannalta olennaisimmat toiminnot, kuten tiedon
+  lisäyksen, hakemisen, muokkauksen ja poiston. Debuggerin avulla voit
+  varmistaa, että tietomallin tila on oikea.
 
   Halutessasi voit jopa kirjoittaa yksikkötestejä, jossa testaat tietomallin
   perustoiminnallisuuksia. Voit ottaa mallia [osan
   8.5](../osa8/05-yksikkotestaus.md#todo-ohjelman-testaaminen) ohjeesta, jossa
   Todo-sovelluksen tietomallin metodeja ja niiden toimivuutta testattiin.
-- Sinun ei tarvitse vielä miettiä tallentamista tai lataamista tässä
-  vaiheessa.
+- Tallentamista tai lataamista ei tarvitse vielä tässä vaiheessa miettiä.
 
 Kun sinulla on alustava versio tietomallista toteutettuna Javassa eikä koodi
 sisällä virheitä, on hyvä hetki tallentaa muutokset Gitiin. Tee muutoksista uusi
@@ -168,12 +167,12 @@ commit (`git add` + `git commit`) ja puske ne etävarastoon talteen (`git push`)
 Kun sinulla on käsitys sovelluksen tietomallista ja vaatimuksista, on hyvä hetki
 alkaa pohtia käyttöliittymän alustavaa asettelua ja toimintaa.
 
-Tee omaan projektiin uusi kansio `suunnitelma` (IDEA: klikkaa projektiselaimessa
-projektin nimestä hiiren toissijaisella painikkeella ja valitse **New** <i
-class="bi bi-chevron-right"></i> **Directory**). Tee uuteen kansioon samalla
-Markdown-tiedosto nimeltään `kayttoliittyma.md`.
-Kirjaa tiedostoon ylös alustavia tietoja sovelluksen käyttöliittymän
-tarvittavista näkymistä.
+Tee omaan projektiin uusi kansio `suunnitelma`. IDEAssa tämä tapahtuu
+klikkaamalla projektiselaimessa projektin nimestä hiiren toissijaisella
+painikkeella ja valitse **New** <i class="bi bi-chevron-right"></i>
+**Directory**. Tee uuteen kansioon tiedosto nimeltä `kayttoliittyma.md`. Kirjoita
+tiedostoon ylös alustavia tietoja sovelluksen käyttöliittymän tarvittavista
+näkymistä.
 
 <details>
 <summary>Voit käyttää seuraavaa mallirunkoa käyttöliittymän suunnitelmatiedostolle</summary>
@@ -222,30 +221,30 @@ tarvittavista näkymistä.
 
 </details>
 
-Piirrä alustavat karkeat kuvat jokaisesta näkymästä. Voit piirtää näkymät
-käyttäen esimerkiksi verkossa olevia kaaviosovelluksia, kuten
-[wireframe.cc](https://wireframe.cc/), [DrawIO](https://app.diagrams.net)
-tai [Figma](https://www.figma.com/).
-Voit piirtää karkeat kuvat myös piirtosovelluksella tai vaikkapa
-piirtämällä kuvat paperille ja skannaamalla ne.
-Pääasia on, että tässä vaiheessa käyttöliittymän tarkan ulkoasun ei tarvitse
-olla mietitty loppuun, vaan keskityt ensisijaisesti eri komponenttien väliseen
-karkeaan asetteluun. 
+Piirrä alustavat kuvat jokaisesta näkymästä. Tässä vaiheessa käyttöliittymän
+tarkan ulkoasun ei tarvitse olla mietitty loppuun, vaan tarkoitus on keskittyä
+siihen mitä käyttäjä näkee ja mitä hän voi tehdä. Voit piirtää näkymät käyttäen
+esimerkiksi verkossa olevia kaaviosovelluksia, kuten
+[wireframe.cc](https://wireframe.cc/), [DrawIO](https://app.diagrams.net) tai
+[Figma](https://www.figma.com/), tai mitä tahansa muuta piirtosovellusta. Voit
+myös piirtää paperille ja ottaa kuvan / skannata sen. 
 
-Voit halutessasi tehdä näkymät heti valmiiksi SceneBuilderilla. Siinä
-tapauksessa ota näkymistä kuvakaappaus. 
-Älä kuitenkaan käytä liikaa aikaa näkymien tekemiseen tässä vaiheessa;
-suunnitelman tarkoituksena on saada karkea idea käyttöliittymän näkymistä.
+Käyttöliittymä tarkempaa ulkoasua tehdään osassa 10. 
+
+Toki voit halutessasi tehdä näkymät heti valmiiksi SceneBuilderilla. Siinä
+tapauksessa ota näkymistä kuvakaappaus. Älä kuitenkaan käytä liikaa aikaa
+näkymien tekemiseen tässä vaiheessa; suunnitelman tarkoituksena on saada karkea
+idea käyttöliittymän näkymistä.
 
 Tallenna kuvat `suunnitelma`-kansioon ja mainitse ne
-`kayttoliittyma.md`-tiedostoon. Löydät ohjeita kuvien upottamiseen
+`kayttoliittyma.md`-tiedostossa. Löydät ohjeita kuvien upottamiseen
 Markdown-tiedostoihin
 [verkosta](https://www.markdownguide.org/basic-syntax/#images-1).
 
-Kuvaa suunnitelmassa, mitä näkymässä näytetään ja millä eri tavoin käyttäjä voi
-vuorovaikuttaa käyttöliittymän kanssa. 
-Näin voit varmistaa jo tässä vaiheessa, että muistat ottaa huomioon kaikki 
-vaaditut tietomallin lisäys-, luku-, muokkaus- ja poistotoiminnot.
+Ota suunnitelmassa kantaa, mitä näkymässä näytetään ja millä eri tavoin käyttäjä
+voi vuorovaikuttaa käyttöliittymän kanssa. Näin voit varmistaa jo tässä
+vaiheessa, että muistat ottaa huomioon kaikki vaaditut tietomallin lisäys-,
+luku-, muokkaus- ja poistotoiminnot.
 
 Kun käyttöliittymän näkymien suunnitelma on valmis, tee muutoksista commit ja
 puske muutokset etävarastoon.
