@@ -23,6 +23,9 @@ tuntiopettaja on hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
 joka täyttää vaatimukset. Näet kunkin aiheen tarkemmat vaatimukset klikkaamalla.
 
+Bonus-merkinnällä (<i class="bi bi-stars jyu-gold"></i>) olevia vaatimuksia ei
+ole pakko toteuttaa. 
+
 <details><summary>
 
 ### Kulujen seuranta
