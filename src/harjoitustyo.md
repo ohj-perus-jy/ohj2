@@ -342,9 +342,6 @@ class Yhtio {
 
 </details>
 
-
-
-
 <!-- DZ: Tuo ei toimi vielä, sillä vaatii JRE:n asennusta tai osassa 1 olevan PATH-kikan käyttäminen  -->
 <!-- Voit halutessasi tutkia valmista sovellusta
 [täällä](https://github.com/ohj-perus-jy/malliharkat/blob/main/Taloyhtio-1.0.jar).
@@ -456,19 +453,18 @@ Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttää opintojak
 harjoitustyön vaatimukset.
 Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.
 
-
 </summary>
 
 Jos valitset oman aiheen, sinun on kirjoitettava alustava
 harjoitustyösuunnitelma, jossa ilmenevät sovelluksen oleelliset toiminnalliset
-vaatimukset sekä sovelluksessa käytettävä tietomalli.
-Voit ottaa mallia suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
+vaatimukset sekä sovelluksessa käytettävä tietomalli. Voit ottaa mallia
+suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
 
 Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
 Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää [harjoitustyön
 yleiset vaatimukset](#harjoitustyön-tekniset-vaatimukset-ja-arviointi). 
-Tuntiopettajalla on oikeus pyytää täydennyksiä suunnitelmaan, jos työn laajuus
+Tuntiopettaja voi pyytää täydennyksiä suunnitelmaan, jos työn laajuus
 ei vastaa harjoitustyön vaatimuksia.
 
 Jos päätät laajentaa osan 7 ja 8 Todo-sovellusta, harjoitustyön vaatimukset
@@ -481,11 +477,11 @@ laajennos voisi tulkita omaksi näkymäksi.
 
 </details>
 
-## Harjoitustyön tekniset vaatimukset ja arviointi
+## Tekniset vaatimukset ja arviointi
 
-Alla olevia vaatimuksia käytetään harjoitustyön arvioinnissa. Tuntiopettaja
-arvioi harjoitustyön asteikolla hylätty/hyväksytty. Hylätyn harjoitustyön voi
-täydentää tuntiopettajan antaman palautteen perusteella.
+Alla olevia vaatimuksia käytetään harjoitustyön arvioinnissa. Harjoitustyö
+arvioidaan asteikolla hylätty/hyväksytty. Hylätyn harjoitustyön voi täydentää
+tuntiopettajan antaman palautteen perusteella.
 
 Lähtökohtaisesti työn on täytettävä kaikki alla olevat vaatimukset. Yksittäisten
 vaatimusten kohdalla voidaan joustaa, mikäli työ on muilta osin tavanomaista
@@ -498,9 +494,7 @@ lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
 
 ### Vaatimus 1: Tietomalli
 
-
-
-1. **Sovelluksessa on vähintään kaksi kohdealueen mallinnettavaa asiaa**
+1. **Sovelluksessa on vähintään kaksi kohdealueen mallinnettavaa asiaa.**
 
     Se voi olla esimerkiksi tehtävä, tapahtuma, kirja, asiakas, treeni, peli,
     resepti tai vastaava. Jokaisella mallinnettavalla oliolla on omia kohdealueen
@@ -510,7 +504,7 @@ lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
     hallintasovelluksessa taas sopivat mallinnettavat asiat olisivat `Tapahtuma` ja
     `Kategoria`.
 
-2. **Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi kohdealueen kannalta oleellinen ja asialle ominainen attribuutti**
+2. **Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi kohdealueen kannalta oleellinen ja asialle ominainen attribuutti.**
 
     Osien 7–8
     mallisovelluksessa `Tehtava`-luokka sisälsi attribuutit `tehty`, `otsikko`,
@@ -525,7 +519,7 @@ lopullisen arvion työn hyväksymisestä tapauskohtaisesti.
     korttikokoelman lisäksi korttipakan otsikon ja kuvauksen, jotka lasketaan
     sovelluksen kannalta oleellisiksi ja korttipakalle ominaisiksi.
 
-3. **Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla malliluokilla**
+3. **Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla malliluokilla.**
 
 4. **Sovelluksessa käytetään JavaFX:n havaittavia (observable) rakenteita
 silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
@@ -543,7 +537,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 
 ### Vaatimus 2: Perustoiminnallisuus
 
-1. **Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus käyttöliittymässä**
+1. **Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus käyttöliittymässä.**
 
     Käyttäjä voi luoda (*Create*), lukea (*Read*), päivittää (*Update*) ja poistaa
     (*Delete*) olioita käyttöliittymän kautta. Esimerkiksi osan 7–8
@@ -551,7 +545,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
     `TableView`-komponentista, muokata tehtäviä erillisessä näkymässä ja poistaa ne
     poistopainikkeella.
 
-2. **Käyttäjän ei saa antaa lisätä ilmeisen virheellistä tietoa**
+2. **Käyttäjän ei saa antaa lisätä ilmeisen virheellistä tietoa.**
 
     Esimerkiksi tyhjää nimeä tai pakollisen kentän puuttumista ei tule sallia.
     Validointi on toteutettava joko mallissa tai käyttöliittymässä.
@@ -568,7 +562,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 
 ### Vaatimus 3: Tallennus
 
-1. **Sovelluksen tiedot tallennetaan tiedostoon**
+1. **Sovelluksen tiedot tallennetaan tiedostoon.**
 
     Tiedot säilyvät ohjelman sulkemisen jälkeen. Tallennus voi tapahtua
     automaattisesti tai erillisenä "Tallenna"-toimintona.
@@ -585,7 +579,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 
     Näkymät voivat olla esimerkiksi päänäkymä (listaus) ja muokkausnäkymä (dialogi).
 
-2. **Käyttöliittymä on jäsennelty ja käyttökelpoinen**
+2. **Käyttöliittymä on jäsennelty ja käyttökelpoinen.**
 
     Syöttökentät, painikkeet, nimiöt ja listaukset on aseteltu loogisesti, eivätkä
     ne ole sattumanvaraisia.
@@ -618,7 +612,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
 
 ### Vaatimus 6: Testaus
 
-1. **Sovelluksen keskeiselle mallille tai sovelluslogiikalle on kirjoitettu yksikkötestejä**
+1. **Sovelluksen keskeiselle mallille tai sovelluslogiikalle on kirjoitettu yksikkötestejä.**
 
     Testeissä on varmistettava, että keskeiset metodit (kuten lisääminen ja
     poistaminen) muokkaavat tietomallin tilaa odotetusti.
@@ -672,7 +666,7 @@ silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.**
     käyttäen sen kaikkia korjauksia (*Optimize imports*, *Rearrange entries*,
     *Cleanup code*).
 
-3. **Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuutille ja metodeille hyviä kapselointiperiaatteita noudattaen**
+3. **Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuutille ja metodeille hyviä kapselointiperiaatteita noudattaen.**
 
     Attribuutit ovat lähtökohtaisesti merkitty `private`-määreellä. Metodien kohdalla
     julkisuusmääreen tulee sopia metodin tarkoitukseen: muiden olioiden
