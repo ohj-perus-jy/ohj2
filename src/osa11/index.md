@@ -5,4 +5,4 @@
 > {{#include ../ei-julkaistu.md}}
 
 > [!Osaamistavoitteet]
-> - Valmiin harjoitustyön palauttaminen
+> - Harjoitustyön vaihe 3

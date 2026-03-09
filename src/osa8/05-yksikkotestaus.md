@@ -25,9 +25,8 @@ Java-maailmassa yksikkötestejä tehdään usein **JUnit**-kirjastolla. JUnit an
 valmiit työkalut testimetodien kirjoittamiseen sekä odotettujen tulosten
 tarkistamiseen. 
 
-Kirjoitushetkellä ajantasainen JUnit-version on 6.0.3, joka tunnetaan myös
-nimellä JUnit Jupiter. JUnit otetaan käyttöön lisäämällä sen riippuvuus
-projektin `pom.xml`-tiedostoon `junit-jupiter`-riippuvuus.
+Kirjoitushetkellä ajantasainen JUnit-versio on 6.0.3, joka tunnetaan myös
+nimellä JUnit Jupiter. Lisätään `junit-jupiter`-riippuvuus `pom.xml`-tiedostoon. 
 
 ```xml
 <dependency>
@@ -37,8 +36,6 @@ projektin `pom.xml`-tiedostoon `junit-jupiter`-riippuvuus.
     <scope>test</scope>
 </dependency>
 ```
-
-Testit kirjoitetaan tavallisesti hakemistoon `src/test/java`.
 
 Kokeillaan tehdä yksinkertainen testi käyttäen JUnitia. Tehdään uusi
 Maven-projekti. Lisätään pääluokkaamme aliohjelma `Keskiarvo`, joka laskee
@@ -63,10 +60,13 @@ public static double keskiarvo(List<Integer> luvut, int lopetusluku) {
 }
 ```
 
-Tehdään sitten tälle metodille yksikkötesti. Tee `test/java`-kansioon uusi
-luokka `KeskiarvoTest` ja kirjoita siihen seuraavat kaksi testimetodia. Jos
-kopioit alla olevan koodin, muuta jälleen ensimmäinen `import`-lause vastaamaan
-oman pääluokkasi nimeä.
+Tehdään sitten tälle metodille yksikkötesti. Testit kirjoitetaan tavallisesti
+hakemistoon `src/test/java`. Kun IDEAssa klikkaa `src`-kansion päältä New
+directory, Maven-projektihallinta osaa automaattisesti tarjota
+`src/test/java`-hakemiston luomista. Tee `test/java`-kansio ja sinne uusi luokka
+`KeskiarvoTest`. Kirjoita seuraavat kaksi testimetodia. Jos kopioit alla olevan
+koodin, muuta jälleen ensimmäinen `import`-lause vastaamaan oman pääluokkasi
+nimeä.
 
 ```java,ignore
 import fi.jyu.ohj2.Main;
@@ -103,7 +103,10 @@ mikä meni pieleen.
 Meiltä puuttuu yksi tärkeä testi: mitä tapahtuu, jos yhtään validia lukua ei
 ole? Sovitaan tässä, että aliohjelmamme tulisi heittää
 `IllegalArgumentException`- poikkeus. Kirjoitetaan vielä testi, joka varmistaa,
-että tämä tapahtuu:
+että tämä tapahtuu.
+
+Poikkeuksen odottaminen JUnitissa onnistuu `assertThrows`-metodilla. Se ottaa
+parametrina odotetun poikkeusluokan ja lambda-lausekkeen, joka sisältää testattavan koodin.
 
 ```java,ignore
 @Test
@@ -181,7 +184,7 @@ class TehtavakokoelmaTest {
         Tehtavakokoelma kokoelma = new Tehtavakokoelma("testitehtavat.json");
         kokoelma.lisaaTehtava("Käy kaupassa");
         assertEquals(1, kokoelma.getTehtavat().size());
-        assertEquals("Käy kaupassa", kokoelma.getTehtavat().get(0).getTeksti());
+        assertEquals("Käy kaupassa", kokoelma.getTehtavat().get(0).getOtsikko());
     }
 
     @Test
@@ -220,6 +223,10 @@ Ajatus testeissä on hyvin suoraviivainen: ensin valmistellaan testin
 lähtötilanne, sitten kutsutaan testattavaa metodia ja lopuksi tarkistetaan, että
 kokoelman tila muuttui oikein. Tämä on juuri sellaista bisneslogiikan testausta,
 jota MVC:n mukainen rakenne meille mahdollistaa.
+
+Lisää `.gitignore`-tiedostoon rivi `testitehtavat.json`, jotta testitiedosto ei päädy
+versiohallintaan. Jos ehdit jo lisäämään sen versiohallintaan, poista se sieltä
+komennolla `git rm --cached testitehtavat.json` ja tee uusi commit.
 
 <task>
   <task-title>Tehtävä 8.6: bisneslogiikan testaaminen.<points>1 p.</points></task-title> 
@@ -300,7 +307,7 @@ sillä nyt tehtäviä voidaan ladata muullakin tavalla kuin tiedostosta.
 Sijoitetaan tämäkin `persistence`-pakkaukseen.
 
 ```java,ignore
-package fi.jyu.ohj2.nimi.persistence;
+package fi.jyu.ohj2.nimi.todo.persistence;
 
 public class RepositoryException extends Exception {
     public RepositoryException(String message) {
@@ -317,11 +324,11 @@ uuteen luokkaan, joka toteuttaa `TehtavaRepository`-rajapinnan.
 ```java
 package fi.jyu.ohj2.nimi.todo.persistence;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.core.JacksonException;
 import fi.jyu.ohj2.nimi.todo.model.Tehtava;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -335,7 +342,7 @@ public class JsonTehtavaRepository implements TehtavaRepository {
     }
 
     @Override
-    public List<Tehtava> lataa() throws IOException {
+    public List<Tehtava> lataa() throws JacksonException {
         if (Files.notExists(tallennustiedosto)) {
             return List.of();
         }
@@ -343,7 +350,7 @@ public class JsonTehtavaRepository implements TehtavaRepository {
     }
 
     @Override
-    public void tallenna(List<Tehtava> tehtavat) throws IOException {
+    public void tallenna(List<Tehtava> tehtavat) throws JacksonException {
         mapper.writeValue(tallennustiedosto.toFile(), tehtavat);
     }
 }
@@ -376,6 +383,7 @@ public class Tehtavakokoelma {
     public void lataa() {
         try {
             List<Tehtava> kaikkiTehtavat = repository.lataa();
+            tehtavat.addAll(kaikkiTehtavat);
         } catch (RepositoryException e) {
             IO.println(e.getMessage());
         }
@@ -478,11 +486,11 @@ välimuistiin.
 public class MockTehtavaRepository implements TehtavaRepository {
 
     // Keskusmuistissa oleva data "tiedoston" sijaan testejä varten
-    private List<Tehtava> tallennetutData = new ArrayList<>();
+    private List<Tehtava> tallennetutTehtavat = new ArrayList<>();
 
     @Override
     public List<Tehtava> lataa() {
-        return tallennetutData; 
+        return tallennetutTehtavat; 
     }
 
     @Override
@@ -500,8 +508,8 @@ public class MockTehtavaRepository implements TehtavaRepository {
         }
     }
     
-    public List<Tehtava> haeTallennetut() {
-        return this.tallennetutData;
+    public List<Tehtava> getTallennetutTehtavat() {
+        return this.tallennetutTehtavat;
     }
 }
 ```
@@ -528,7 +536,7 @@ class TehtavakokoelmaTest {
         assertEquals("Käy kaupassa", malli.getTehtavat().get(0).getOtsikko(), "Otsikon pitäisi täsmätä");
         
         // 4. Assert 2: Varmistetaan mock-luokan avulla, että kokoelma laukaisi tallennuksen tapahtuman yhteydessä
-        assertEquals(1, mockRepo.haeTallennetut().size(), "Data olisi pitänyt tallentaa rajapinnan läpi!");
+        assertEquals(1, mockRepo.getTallennetutTehtavat().size(), "Data olisi pitänyt tallentaa rajapinnan läpi!");
     }
 
     @Test

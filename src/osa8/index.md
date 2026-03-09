@@ -12,8 +12,7 @@
 >   priorisointitieto.
 > - Osaat kirjoittaa yksikkötestejä Todo-sovelluksen mallille ja
 >   sovelluslogiikalle.
-> - Tutoriaalin toisen vaiheen palautus TIMiin (ei tarvitse näyttää
->   tuntiopettajalle).
+> - Tutoriaalin toisen vaiheen palautus TIMiin.
 
 Osassa 7 teimme toimivan Todo-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.
