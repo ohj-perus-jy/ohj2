@@ -15,11 +15,18 @@ Lukuvuonna 2025-2026 tenttejä järjestetään seuraavasti
 
 Voit osallistua tenttiin joko Agoran luentosalissa tai etänä Zoomin kautta. 
 
-Tenttiin tulee ilmoittautua <u>viimeistään 72 tuntia</u> ennen tentin alkuhetkeä. Ilmoittautumisen yhteydessä opiskelijan tulee hyväksyä sekä tentin säännöt (kuvattu alla). Ilmoittautumisen yhteydessä opiskelija valitsee myös tentin suoritustavan (salitentti tai etätentti).
+Tenttiin tulee ilmoittautua <u>viimeistään 72 tuntia</u> ennen tentin
+alkuhetkeä. Ilmoittautumisen yhteydessä opiskelijan tulee hyväksyä sekä tentin
+säännöt (kuvattu alla). Ilmoittautumisen yhteydessä opiskelija valitsee myös
+tentin suoritustavan (salitentti tai etätentti).
 
-Opiskelijan on todistettava henkilöllisyytensä ennen tentistä poistumista. Henkilöllisyyden todistamiseksi hyväksytään passi, henkilökortti tai ajokortti. Vain tunnistettujen opiskelijoiden suorituksen arvostellaan.
+Opiskelijan on todistettava henkilöllisyytensä ennen tentistä poistumista.
+Henkilöllisyyden todistamiseksi hyväksytään passi, henkilökortti tai ajokortti.
+Vain tunnistettujen opiskelijoiden suorituksen arvostellaan.
 
-Tenttiaika on **4 tuntia**. Ilmoita ilmoittautumisen yhteydessä, mikäli sinulle on myönnetty lisäaikaa tentteihin [yksilöllisenä järjestelynä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintojen-suunnittelu-ja-ohjaus/yksilolliset-jarjestelyt-opinnoissa-esteettomyys-ja-saavutettavuus).
+Tenttiaika on **4 tuntia**. Ilmoita ilmoittautumisen yhteydessä, mikäli sinulle
+on myönnetty lisäaikaa tentteihin [yksilöllisenä
+järjestelynä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintojen-suunnittelu-ja-ohjaus/yksilolliset-jarjestelyt-opinnoissa-esteettomyys-ja-saavutettavuus).
 
 Ennen kuin ilmoittaudut tenttiin, lue huolellisesti (i) [Jyväskylän yliopiston
 ohjeet verkkotenttien suorittamiseen](./tenttiohjeet.md) ja (ii) [Tarkentavat
@@ -27,7 +34,7 @@ ohjeet opintojakson Ohjelmointi 1 (ITKP102) -tenttiin](./tenttiohjeet.md) ennen
 tenttiin ilmoittautumista. Jos yliopiston ohjeiden ja opintojakson tarkentavien
 ohjeiden välillä on ristiriita, opintojakson ohjeet pätevät.
 
-## Tentin aikana ilmenevät tekniset ongelmat
+## Tekniset ongelmat tentin aikana
 
 Teknisissä ongelmissa käytä jotakin seuraavista yhteydenottotavoista:
 
