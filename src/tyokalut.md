@@ -446,11 +446,10 @@ Valmis!
 1. Avaa jakelusi pääteohjelma.
 2. Asenna IntelliJ IDEA Community Edition. Asennustapa vaihtelee jakelun mukaan:
 
-    - Arch: Asenna [`intellij-idea-community-edition`](https://aur.archlinux.org/packages/intellij-idea-community-edition)-pakkaus AUR:sta.
-      Voit asentaa sen käsin tai käyttämällä [yay](https://github.com/Jguer/yay)-työkalua:
+    - Arch: Asenna [`intellij-idea-community-edition`](https://archlinux.org/packages/extra/x86_64/intellij-idea-community-edition/)-pakkaus. 
       
       ```bash
-      yay -S intellij-idea-community-edition
+      pacman -S intellij-idea-community-edition
       ```
       
     - Muut jakelut: Suosittelemme asentamaan [IDEA-snapin](https://snapcraft.io/intellij-idea-community) käyttäen `snap`-pakkaustenhallintaa:
