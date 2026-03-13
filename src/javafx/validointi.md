@@ -92,9 +92,8 @@ Sovelluksessa on lista, johon voi lisätä lemmikkejä, joita mallinnetaan `Lemm
 
 <img src="images/validation-1.png" width="300">
 
-Nyt listaan voi lisätä lemmikkejä ilman nimeä tai lajia, mikä on kohdealueen
-kannalta turhaa. Haluaisimme estää käyttäjää lisäämästä nimettömiä tai
-lajittomia lemmikkejä listaan.
+Nyt listaan voi lisätä lemmikkejä ilman nimeä tai lajia, mikä ei ole hyvä idea.
+On syytä estää käyttäjää lisäämästä nimettömiä tai lajittomia lemmikkejä.
 
 ## Yksinkertainen validointi
 
@@ -105,8 +104,8 @@ ennen tietomallin kohteen luomista. Voisimme siis tarkistaa
 ```java,ignore
 private void lisaaLemmikki() {
     
-
-    // Suoritetaan lisäys vain, jos validointi menee läpi eli tieto on oikein
+    // TODO: Suorita tässä kohdassa tarkistus, jonka perusteella 
+    // lisätään lemmikki vain, jos tieto on oikein, ts. validia.
 
     Lemmikki lemmikki = new Lemmikki();
     lemmikki.setNimi(nimi);
@@ -120,9 +119,15 @@ private void lisaaLemmikki() {
 
 ## Validointimetodi
 
-Validointi on usein helppoa siirtää erilliseen metodiin:
+Validointi on usein helppo tehdä kontrollerissa erillisessä metodissa:
 
 ```java,ignore
+/**
+ * Tarkista, onko lemmikki-kenttien sisältö validi. 
+ * Jos ei, korosta virheelliset kentät.
+ * 
+ * @return true, jos validointi onnistuu, muuten false
+ */
 private boolean validoiLemmikki() {
     // Tyhjennetään kenttien tyylit
     nimiField.setStyle("");
@@ -132,7 +137,6 @@ private boolean validoiLemmikki() {
     String nimi = nimiField.getText();
     String laji = lajiField.getText();
 
-    // Tarkistetaan eli validoitaan sisältö.
     // Validointi: Nimi ei saa olla tyhjä
     if (nimi.isBlank()) {
         // Jos validointi epäonnistuu, korostetaan virheellinen kenttä
@@ -140,7 +144,6 @@ private boolean validoiLemmikki() {
         return false;
     }
 
-    // Tarkistetaan eli validoitaan sisältö.
     // Validointi: Laji ei saa olla tyhjä
     if (laji.isBlank()) {
         lajiField.setStyle("-fx-border-color: red; -fx-background-color: #ffcccc;");
@@ -169,32 +172,35 @@ private void lisaaLemmikki() {
 
 ## Validoinnin siirto tietomalliin
 
-Testaamisen ja vastuunjaon kannalta voi olla selkeämpää, että validointi on
-osana tietomallia. 
-Tällöin validointi voidaan siirtää esimerkiksi suoraan tietomalliluokkaan.
-Erilaisia virhetilanteita varten voi käyttää esimerkiksi luetelmatyyppejä:
+Testaamisen ja vastuunjaon kannalta voi olla selkeämpää, että validointi on osa
+tietomallia. Tällöin validointi voidaan toteuttaa esimerkiksi suoraan osana
+tietomalliluokkaa. Tässä esimerkissä `tarkistaVirheet` on osa
+`Lemmikki`-luokkaa. Toteutetaan samalla myös luetelmatyyppi `Tarkistusvirhe`,
+joka kuvaa mahdollisia virhetilanteita.
 
 ```java,ignore
-public class Lemmikki {
-    // Jo lisättyjä rakenteita piilotettu
+public enum Tarkistusvirhe  {
+    NIMI_TYHJA, LAJI_TYHJA
+}
+
+public class Lemmikki {    
+    // ...
 
     // Varsinainen tarkistinmetodi
-    public Optional<Tarkistusvirhe> tarkistaVirheet() {
+    public Tarkistusvirhe tarkistaVirheet() {
         if (getNimi().isBlank()) {
-            return Optional.of(Tarkistusvirhe.NIMI_TYHJA);
+            return Tarkistusvirhe.NIMI_TYHJA;
         }
         if (getLaji().isBlank()) {
-            return Optional.of(Tarkistusvirhe.LAJI_TYHJA);
+            return Tarkistusvirhe.LAJI_TYHJA;
         }
-        return Optional.empty();
-    }
-
-    // Mahdolliset virhetyypit
-    public enum Tarkistusvirhe  {
-        NIMI_TYHJA, LAJI_TYHJA
+        return null;
     }
 }
 ```
+
+Lemmikin lisääminen tapahtuu edelleen `lisaaLemmikki()`-metodissa, mutta nyt
+tarkistetaan tietomallin kohteen validointi suoraan tietomalliluokasta:
 
 ```java,ignore
 private void lisaaLemmikki() {
@@ -207,6 +213,50 @@ private void lisaaLemmikki() {
     lemmikki.setLaji(lajiField.getText());
 
     // Tarkistetaan, onko tietomallin kohde kohdealueen kannalta oikeellinen
+    Tarkistusvirhe virheTulos = lemmikki.tarkistaVirheet();
+    // Jos virhe löytyy, näytetään käyttäjälle virheilmoitus virheen perusteella
+    if (virheTulos != null) {
+        if (virheTulos == Tarkistusvirhe.NIMI_TYHJA) {
+            nimiField.setStyle("-fx-border-color: red; -fx-background-color: #ffcccc;");
+        }
+        if (virheTulos == Tarkistusvirhe.LAJI_TYHJA) {
+            lajiField.setStyle("-fx-border-color: red; -fx-background-color: #ffcccc;");   
+        }
+        return;
+    }
+
+    // Lisätään lemmikki vain, jos lemmikki on kohdealueen kannalta oikeellinen
+    lemmikit.add(lemmikki);
+
+    nimiField.clear();
+    lajiField.clear();
+}
+```
+
+Null-tarkistusten sijaan on usein huomattavasti mielekkäämpää käyttää
+Optional-tyyppiä, joka kuvaa paremmin tilannetta, jossa virhe voi joko olla
+olemassa tai ei. 
+
+```java,ignore
+public Optional<Tarkistusvirhe> tarkistaVirheet() {
+    if (getNimi().isBlank()) {
+        return Optional.of(Tarkistusvirhe.NIMI_TYHJA);
+    }
+    if (getLaji().isBlank()) {
+        return Optional.of(Tarkistusvirhe.LAJI_TYHJA);
+    }
+    return Optional.empty();
+}
+```
+
+Siinä missä null on näkymätön sopimus ja vaatii erillisen dokumentoinnin (joka
+käytännössä jää valitettavasti usein tekemättä), Optional-tyyppi kertoo
+täsmälleen mistä on kysymys. Näin virheen tarkastaminen muuttuu siistimmäksi. 
+
+```java,ignore
+private void lisaaLemmikki() {
+    // ...
+
     Optional<Tarkistusvirhe> virheTulos = lemmikki.tarkistaVirheet();
     // Jos virhe löytyy, näytetään käyttäjälle virheilmoitus virheen perusteella
     if (virheTulos.isPresent()) {
@@ -220,10 +270,6 @@ private void lisaaLemmikki() {
         return;
     }
 
-    // Lisätään lemmikki vain, jos lemmikki on kohdealueen kannalta oikeellinen
-    lemmikit.add(lemmikki);
-
-    nimiField.clear();
-    lajiField.clear();
+    // ...
 }
 ```
