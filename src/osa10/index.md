@@ -55,7 +55,7 @@ oikeaa komponenttia.
   <task-title>Tehtävä 10.1: Näkymät SceneBuilderissa. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/10-1-ht-4/handout.md}}
+{{#include ../exercises/10-1-ht-5/handout.md}}
 
 </handout>
     <task-link><a
@@ -74,7 +74,7 @@ johon voit myöhemmin lisätä toiminnallisuutta.
   <task-title>Tehtävä 10.2: Siirtyminen näkymästä toiseen. <points>1 p.</points> </task-title>
   <handout>
 
-{{#include ../exercises/10-2-ht-5/handout.md}}
+{{#include ../exercises/10-2-ht-7/handout.md}}
 
 </handout>
     <task-link><a
