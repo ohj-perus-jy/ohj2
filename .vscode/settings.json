@@ -1,5 +1,18 @@
 {
     "dev.containers.reopenOnFolderWithDevcontainer": "always", 
     "rewrap.autoWrap.enabled": true,
-    "editor.rulers": [80]
+    "editor.rulers": [80],
+    "[markdown]": {
+        "editor.formatOnType": false
+    },
+    "files.watcherExclude": {
+        "**/.git/objects/**": true,
+        "**/.git/subtree-cache/**": true,
+        "**/node_modules/*/**": true,
+        "**/tmp/**": true
+    },
+    "remote.extensionKind": {
+        "yzhang.markdown-all-in-one": ["ui"],
+        "davidanson.vscode-markdownlint": ["ui"]
+    }
 }
