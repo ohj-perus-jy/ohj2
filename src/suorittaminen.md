@@ -95,21 +95,16 @@ palautettuun työhön, esimerkiksi koodin kommenttien avulla.
 Noudatamme [Jyväskylän yliopiston ohjeita ja linjauksia tekoälypohjaisten
 sovellusten käytössä
 opiskelussa](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/tekoalypohjaisten-sovellusten-kaytto-opiskelussa-jyu-ohjeet-ja-linjaukset).
-Alla olevat ohjeet täydentävät näitä linjauksia. 
+Lue nämä ohjeet ja linjaukset huolellisesti, jos aiot käyttää tekoälytyökaluja
+opiskelussasi.
 
-Generatiivisten tekoälytyökalujen käyttö koodin luomisessa on kiellettyä.
-Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun
-ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä
-osaamistavoitteita. Kiellettyjä generatiivisia työkaluja ovat esimerkiksi GitHub
-Copilot, ChatGPT, Bard ja vastaavat chat- ja agenttisovellukset. Myös
-IDE-työkalujen sisäänrakennetut tekoälyavusteiset koodinluontiominaisuudet
-kuuluvat kiellettyjen työkalujen piiriin.
+Täydennämme näitä ohjeita ja linjauksia toteamalla, että tekoälytyökalulle
+annettavassa kehotteessa tulee erityisesti huomioida, että työkalut ovat hyvin
+herkkiä tuottamaan valmiita vastauksia ohjelmointitehtäviin. 
 
-Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
-selittämiseen, tehtävänantojen ymmärtämiseen tai materiaalissa annettujen
-esimerkkien selittämiseen. Tekoälytyökalulle annettavassa kehotteessa tulee
-huomioida, että tekoäly ei saa tuottaa suoria vastauksia tai koodia
-opintojakson tehtäviin.
+Tentissä, näyttökokeessa, suullisessa kuulustelussa ja vastaavissa
+näyttötilanteissa kaikenlaisten tekoälytyökalujen käyttö on ehdottomasti
+kiellettyä. 
 
 Menettely vilppiepäilytilanteessa on kuvattu [Jyväskylän yliopiston opintoja
 ohjaavissa säädöksissä ja
