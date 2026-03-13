@@ -12,10 +12,6 @@ Osissa 9-12 on annettu ohjeita, joiden tarkoituksena on auttaa sinua etenemään
 harjoitustyössä, mutta harjoitustyötä ei ole pakko toteuttaa näissä osissa
 kuvattua vaiheustusta hyödyntäen. 
 
-
-
-
-
 ## Tehtävät
 
 1. Suunnitelma
