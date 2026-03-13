@@ -1,9 +1,9 @@
 # Tietojen validointi
 
 Tietojen validoinnilla tarkoitetaan käyttäjän antamien tietojen oikeellisuuden
-tarkistusta. 
+tarkistusta.
 Validoinnilla varmistetaan, että käyttäjän muutokset eivät tuota
-kohdealueen kannalta järjetöntä tietomallia.
+kohdealueen kannalta epäkelpoa tietomallia.
 
 ## Esimerkki
 
@@ -99,8 +99,8 @@ lajittomia lemmikkejä listaan.
 ## Yksinkertainen validointi
 
 Yksinkertaisin validointi voidaan tehdä tarkistamalla kohdealueen vaatimukset
-ennen tietomallin kohteen luomista. Voisimme siis tarkkistaa
-`lisaaLemmikki()`-metodissa, onko nimi ja laji -kentissä tekstiä:
+ennen tietomallin kohteen luomista. Voisimme siis tarkistaa
+`lisaaLemmikki()`-metodissa, onko nimi- ja laji-kentissä tekstiä:
 
 ```java,ignore
 private void lisaaLemmikki() {
@@ -120,7 +120,7 @@ private void lisaaLemmikki() {
 
 ## Validointimetodi
 
-Validointi monesti voi olla helppoa siirtää erilliseen metodiin:
+Validointi on usein helppoa siirtää erilliseen metodiin:
 
 ```java,ignore
 private boolean validoiLemmikki() {
@@ -171,7 +171,7 @@ private void lisaaLemmikki() {
 
 Testaamisen ja vastuunjaon kannalta voi olla selkeämpää, että validointi on
 osana tietomallia. 
-Tällöin validointi voi siirtää esimerkiksi suoraan tietomalliluokkaan.
+Tällöin validointi voidaan siirtää esimerkiksi suoraan tietomalliluokkaan.
 Erilaisia virhetilanteita varten voi käyttää esimerkiksi luetelmatyyppejä:
 
 ```java,ignore
@@ -208,7 +208,7 @@ private void lisaaLemmikki() {
 
     // Tarkistetaan, onko tietomallin kohde kohdealueen kannalta oikeellinen
     Optional<Tarkistusvirhe> virheTulos = lemmikki.tarkistaVirheet();
-    // Jos virheitä on olemassa, näytetään virhe käyttäjälle virheen perusteella
+    // Jos virhe löytyy, näytetään käyttäjälle virheilmoitus virheen perusteella
     if (virheTulos.isPresent()) {
         Tarkistusvirhe virhe = virheTulos.get();
         if (virhe == Tarkistusvirhe.NIMI_TYHJA) {
