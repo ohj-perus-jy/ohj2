@@ -1,20 +1,19 @@
 # Johdetut Observable-arvot
 
-Käyttöliittymässä monesti halutaan näyttää varsinaisen tiedon lisäksi tiedoista
+Käyttöliittymässä haluamme usein näyttää varsinaisen tiedon lisäksi tiedoista
 laskettuja arvoja, kuten arvojen summaa, keskiarvoa, yhdistelmää tai vastaavaa.
-Johdettuja arvoja voidaan laskea suoraan, kuten:
+Voimme laskea johdettuja arvoja suoraan, kuten:
 
 ```java,ignore
 String henkilonNimiSukunimi = ihminen.getNimi() + ihminen.getSukunimi();
 ```
 
-Kuitenkin johdettu arvo ei havaitse alkuperäisten arvojen muutoksia: jos ihmisen
-nimi tai sukunimi muuttuu, ihmisen yhdistetty nimi-sukunimi ei päivity
-automaattisesti.
+Kuitenkin näin laskettu arvo ei päivity automaattisesti, jos ihmisen nimi tai
+sukunimi muuttuu.
 
 ## Esimerkki
 
-Olkoon meillä seuraava sovellus henkilön tietojen syöttämiseksi:
+Katsotaan seuraavaa sovellusta henkilön tietojen syöttämiseksi:
 
 ```java,ignore
 // FILE: MainController.java
@@ -118,7 +117,7 @@ public class Pelaaja {
 // FILE_END
 ```
 
-Tässä esimerkissä on pari ongelmaa:
+Tässä esimerkissä näemme kaksi ongelmaa:
 
 - Uuden pelaajan lisääminen ei päivitä pelaajien lukumäärää
 - Pelaajan syntymävuoden muokkaaminen ei päivitä pelaajan ikää
@@ -140,7 +139,7 @@ ObservableValue<Number> ika = pelaaja.syntymavuosiProperty().map(vuosi -> LocalD
 Tällöin `ika`-muuttujan sisältämä arvo lasketaan syntymävuodesta kaavalla
 `LocalDate.now().getYear() - vuosi.intValue()` aina, kun pelaajan syntymävuosi
 muuttuu.
-Koska `ObservableValue` on havaittava arvo, sen voi käyttää
+Koska `ObservableValue` on havaittava arvo, voimme käyttää sitä
 `setCellValueFactory`-metodissa:
 
 ```java,ignore
@@ -170,8 +169,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 
 ## Funktion muuttaminen `Observable`-arvoksi
 
-Pelaajan lukumäärää saadaan selville aina kutsumalla `pelaajat.size()`.
-`size()`-metodi ei kuitenkaan ole havaittava. Lisäksi `pelaajat`-lista ei
+Pelaajien lukumäärä saadaan kutsumalla `pelaajat.size()`.
+`size()`-metodi ei kuitenkaan palauta havaittavaa arvoa, eikä `pelaajat`-lista
 sisällä yllä mainittua `map()`-metodia.
 Voimme kuitenkin muuntaa minkä tahansa funktion havaittavaksi käyttämällä
 `Bindings`-luokan (ks.
@@ -224,8 +223,8 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 }
 ```
 
-`Property`-tyypin `bind()`-metodi sitoo arvon johonkin toiseen havaittavaan
-arvoon. Tässä tapauksessa `pelaajiaLkmLabel`-nimiön teksti sidotaan
+`Property`-tyypin `bind()`-metodilla voimme sitoa arvon toiseen havaittavaan
+arvoon. Tässä tapauksessa `pelaajiaLkmLabel`-kentän teksti sidotaan
 pelaajien lukumäärään. Tällöin, jos `pelaajat`-lista muuttuu, niin
 
 - `pelaajienLkm`-arvo havaitsee muutoksen ja laskee arvonsa uudestaan lausekkeella `pelaajat.size()`
