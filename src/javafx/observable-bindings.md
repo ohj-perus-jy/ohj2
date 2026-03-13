@@ -2,7 +2,7 @@
 
 Käyttöliittymässä monesti halutaan näyttää varsinaisen tiedon lisäksi tiedoista
 laskettuja arvoja, kuten arvojen summaa, keskiarvoa, yhdistelmää tai vastaavaa.
-Johdettua arvoja voidaan laskea suoraan, kuten:
+Johdettuja arvoja voidaan laskea suoraan, kuten:
 
 ```java,ignore
 String henkilonNimiSukunimi = ihminen.getNimi() + ihminen.getSukunimi();
@@ -140,7 +140,7 @@ ObservableValue<Number> ika = pelaaja.syntymavuosiProperty().map(vuosi -> LocalD
 Tällöin `ika`-muuttujan sisältämä arvo lasketaan syntymävuodesta kaavalla
 `LocalDate.now().getYear() - vuosi.intValue()` aina, kun pelaajan syntymävuosi
 muuttuu.
-Koska `ObservableValue` on havaittava arvo, voi sen voi käyttää
+Koska `ObservableValue` on havaittava arvo, sen voi käyttää
 `setCellValueFactory`-metodissa:
 
 ```java,ignore
@@ -188,8 +188,8 @@ IntegerBinding pelaajienLkm = Bindings.createIntegerBinding(() -> pelaajat.size(
 
 `Bindings.createIntegerBinding()` ottaa vähintään kaksi parametria:
 lambdalausekkeen, josta havaittava arvo lasketaan ja yhden tai useamman
-`Observalbe`-arvon, jonka muuttuessa havaittava arvo lasketaan uudestaan.
-Tässä tapauksessa ensimmäinen paremetri kertoo, että `pelaajienLkm`-arvo lasketaan aina
+`Observable`-arvon, jonka muuttuessa havaittava arvo lasketaan uudestaan.
+Tässä tapauksessa ensimmäinen parametri kertoo, että `pelaajienLkm`-arvo lasketaan aina
 lausekkeella `pelaajat.size()`. Toinen parametri `pelaajat` kertoo, että arvo on
 päivitettävä aina, kun `pelaajat`-listan sisältö muuttuu.
 
@@ -225,7 +225,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 ```
 
 `Property`-tyypin `bind()`-metodi sitoo arvon johonkin toiseen havaittavaan
-arvoon. Tässä tapauksessa pelaajien lukumäärän nimiön teksti sidotaan
+arvoon. Tässä tapauksessa `pelaajiaLkmLabel`-nimiön teksti sidotaan
 pelaajien lukumäärään. Tällöin, jos `pelaajat`-lista muuttuu, niin
 
 - `pelaajienLkm`-arvo havaitsee muutoksen ja laskee arvonsa uudestaan lausekkeella `pelaajat.size()`
