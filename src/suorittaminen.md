@@ -96,11 +96,16 @@ Noudatamme [Jyväskylän yliopiston ohjeita ja linjauksia tekoälypohjaisten
 sovellusten käytössä
 opiskelussa](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-ohjeet/opintoja-ohjaavat-saadokset-ja-maaraykset/tekoalypohjaisten-sovellusten-kaytto-opiskelussa-jyu-ohjeet-ja-linjaukset).
 Lue nämä ohjeet ja linjaukset huolellisesti, jos aiot käyttää tekoälytyökaluja
-opiskelussasi.
+opiskelussasi. Alla olevat ohjeet täydentävät näitä linjauksia.
 
-Täydennämme näitä ohjeita ja linjauksia toteamalla, että tekoälytyökalulle
-annettavassa kehotteessa tulee erityisesti huomioida, että työkalut ovat hyvin
-herkkiä tuottamaan valmiita vastauksia ohjelmointitehtäviin. 
+Generatiivisten tekoälytyökalujen käyttö valmiiden vastausten luomiseksi on kiellettyä. Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä osaamistavoitteita. 
+
+Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
+selittämiseen, tehtävänantojen ymmärtämiseen, virheilmoitusten tulkintaan, 
+materiaalissa annettujen
+esimerkkien selittämiseen tai uusi esimerkkien luomiseen. Tekoälytyökalulle annettavassa kehotteessa tulee
+huomioida, että työkalut ovat hyvin herkkiä tuottamaan suoria vastauksia tai koodia opintojakson
+tehtäviin.
 
 Tentissä, näyttökokeessa, suullisessa kuulustelussa ja vastaavissa
 näyttötilanteissa kaikenlaisten tekoälytyökalujen käyttö on ehdottomasti
