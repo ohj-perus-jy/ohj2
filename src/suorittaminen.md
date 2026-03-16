@@ -98,14 +98,66 @@ opiskelussa](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan-oh
 Lue nämä ohjeet ja linjaukset huolellisesti, jos aiot käyttää tekoälytyökaluja
 opiskelussasi. Alla olevat ohjeet täydentävät näitä linjauksia.
 
-Generatiivisten tekoälytyökalujen käyttö valmiiden vastausten luomiseksi on kiellettyä. Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on ongelmanratkaisun ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää näitä osaamistavoitteita. 
+Generatiivisten tekoälytyökalujen käyttö valmiiden vastausten luomiseksi on
+kiellettyä. Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on
+ongelmanratkaisun ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää
+näitä osaamistavoitteita. 
 
 Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
-selittämiseen, tehtävänantojen ymmärtämiseen, virheilmoitusten tulkintaan, 
-materiaalissa annettujen
-esimerkkien selittämiseen tai uusi esimerkkien luomiseen. Tekoälytyökalulle annettavassa kehotteessa tulee
-huomioida, että työkalut ovat hyvin herkkiä tuottamaan suoria vastauksia tai koodia opintojakson
-tehtäviin.
+selittämiseen, tehtävänantojen ymmärtämiseen, virheilmoitusten tulkintaan,
+materiaalissa annettujen esimerkkien selittämiseen tai uusi esimerkkien
+luomiseen. Tekoälytyökalulle annettavassa kehotteessa tulee huomioida, että
+työkalut ovat hyvin herkkiä tuottamaan suoria vastauksia tai koodia opintojakson
+tehtäviin. Tästä syystä kehotteessa tulee tyypillisesti ilmaista selkeästi, että
+*et* halua suoraa ratkaisua.
+
+Jos käytät tekoälyä, Microsoft 365 Copilot lienee tässä suositeltavin työkalu,
+koska [JY:llä on sopimus sen
+käyttämiseksi](https://help.jyu.fi/jp?id=kb_article&sysparm_article=KB0014392).
+M365 Copilotissa on mahdollista luoda "agentteja", joka tarkoittaa sitä että
+kehotteisiin liitetään automaattisesti kontekstia, rajoituksia ja tarkentavia
+ohjeistuksia. Esimerkiksi "Oppimisvalmentaja"-agentin luominen tapahtuisi
+seuraavasti: Työkalut -> Tutustu muihin agentteihin -> Hanki agentteja -> Luo
+agentti -> Valitse malli: Oppimisvalmentaja -> Luo. Nyt voit valita agentin
+vasemmalta. 
+
+<details> <summary>Esimerkkejä sopivista kehotteista</summary>
+
+ * "Mitä tarkoitetaan kapseloinnilla ja miten se liittyy olio-ohjelmointiin?"
+ * "Saan koodissani virheilmoituksen 'X'. Mitä se tarkoittaa? Älä anna suoraa
+   ratkaisua. Selitä mitä virheilmoitus tarkoittaa ja mistä se voisi
+   johtua."
+ * "Kurssillani on tällainen tehtävänanto: 'Kirjoita funktio, joka laskee
+   Fibonacci-lukujonon n:nteen termiin asti.' Voitko selittää, mitä tehtävänanto
+   tarkoittaa ja miten voisin lähestyä sen ratkaisemista? Älä anna suoraa
+   ratkaisua."
+
+</details>
+
+<details> <summary>Esimerkkejä kielletyistä kehotteista</summary>
+
+ * "Kirjoita funktio, joka laskee Fibonacci-lukujonon n:nteen termiin asti."
+ * "Mikä on oikea koodi tähän tehtävään?"
+ * "Tee minulle FXML-sovellus, jonka avulla voin laskea menoja ja tuloja."
+
+</details>
+
+<details><summary> Esimerkki M365 Copilotin käyttämisestä harjoitustyön tekemisessä</summary>
+
+Alla on kuvattu ongelma, joka liittyy harjoitustyön tekemiseen, ja esimerkki
+siitä, miten M365 Copilotia voisi käyttää apuna ongelman ratkaisemisessa.
+
+<video controls src="images/ostostapahtumat.mp4" title="Ostostapahtumat-sovellus"></video>
+
+Annan oheisen kehotteen M365 Copilotille. 
+
+> Haluaisin, että ostostapahtumien tableview täyttäisi tilan alas saakka, kun
+> ostostapahtuman yksityiskohtaisen tarkastelun näkymä ei ole auki. Anna vinkki,
+> miten voisin jatkaa tästä eteenpäin.
+
+Liitän oheen myös kontrollerin koodin, joka ei näy tässä. 
+
+</details>
 
 Tentissä, näyttökokeessa, suullisessa kuulustelussa ja vastaavissa
 näyttötilanteissa kaikenlaisten tekoälytyökalujen käyttö on ehdottomasti
