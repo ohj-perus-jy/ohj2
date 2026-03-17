@@ -99,27 +99,29 @@ Lue nämä ohjeet ja linjaukset huolellisesti, jos aiot käyttää tekoälytyök
 opiskelussasi. Alla olevat ohjeet täydentävät näitä linjauksia.
 
 Generatiivisten tekoälytyökalujen käyttö valmiiden vastausten luomiseksi on
-kiellettyä. Ohjelmoinnin opiskelun eräinä keskeisinä osaamistavoitteina on
-ongelmanratkaisun ja päättelyn oppiminen, ja tekoälytyökalujen käyttö vääristää
-näitä osaamistavoitteita. 
+kiellettyä. 
 
 Generatiivista tekoälyä voi käyttää apuvälineenä esimerkiksi käsitteiden
 selittämiseen, tehtävänantojen ymmärtämiseen, virheilmoitusten tulkintaan,
 materiaalissa annettujen esimerkkien selittämiseen tai uusi esimerkkien
 luomiseen. Tekoälytyökalulle annettavassa kehotteessa tulee huomioida, että
-työkalut ovat hyvin herkkiä tuottamaan suoria vastauksia tai koodia opintojakson
-tehtäviin. Tästä syystä kehotteessa tulee tyypillisesti ilmaista selkeästi, että
-*et* halua suoraa ratkaisua.
+työkalut ovat hyvin herkkiä tuottamaan suoria vastauksia tehtäviin. Tästä syystä
+kehotteessa tulee tyypillisesti ilmaista selkeästi, että *et* halua suoraa
+ratkaisua.
 
 Jos käytät tekoälyä, Microsoft 365 Copilot lienee tässä suositeltavin työkalu,
 koska [JY:llä on sopimus sen
 käyttämiseksi](https://help.jyu.fi/jp?id=kb_article&sysparm_article=KB0014392).
-M365 Copilotissa on mahdollista luoda "agentteja", joka tarkoittaa sitä että
+Toinen mahdollinen työkalu on GitHub Copilot, joka kuuluu [GitHub
+Education](https://github.com/education) -pakettiin, jota opiskelijat voivat
+anoa ilmaiseksi. 
+
+<!-- M365 Copilotissa on mahdollista luoda "agentteja", joka tarkoittaa sitä että
 kehotteisiin liitetään automaattisesti kontekstia, rajoituksia ja tarkentavia
 ohjeistuksia. Esimerkiksi "Oppimisvalmentaja"-agentin luominen tapahtuisi
 seuraavasti: Työkalut -> Tutustu muihin agentteihin -> Hanki agentteja -> Luo
 agentti -> Valitse malli: Oppimisvalmentaja -> Luo. Nyt voit valita agentin
-vasemmalta. 
+vasemmalta.  -->
 
 <details> <summary>Esimerkkejä sopivista kehotteista</summary>
 
