@@ -126,15 +126,17 @@ vasemmalta.  -->
 <details> <summary>Esimerkkejä sopivista kehotteista</summary>
 
  * *Mitä tarkoitetaan kapseloinnilla ja miten se liittyy olio-ohjelmointiin?*
- * *Saan koodissani virheilmoituksen 'X'. Mitä se tarkoittaa? Älä anna suoraa
-   ratkaisua. Selitä mitä virheilmoitus tarkoittaa ja mistä se voisi
-   johtua.*
+ * *Saan koodissani virheilmoituksen 'X'. Mitä se tarkoittaa? Selitä mitä
+   virheilmoitus tarkoittaa ja mistä se voisi johtua.*
  * *Kurssillani on tällainen tehtävänanto: 'Kirjoita funktio, joka laskee
-   Fibonacci-lukujonon n:nteen termiin asti.' Voitko selittää, mitä tehtävänanto
-   tarkoittaa ja miten voisin lähestyä sen ratkaisemista? Älä anna suoraa
-   ratkaisua.*
+   Fibonacci-lukujonon n:nteen termiin asti.' Miten voisin lähestyä sen
+   ratkaisemista?*
 
 </details>
+
+Kehotteen perään voi olla hyvä liittää tarkentavia ohjeistuksia, kuten "haluan
+ymmärtää asian juurta jaksain" tai "älä anna suoraa ratkaisua, vaan selitä miten
+voisin lähestyä ongelmaa". 
 
 <details> <summary>Esimerkkejä kielletyistä kehotteista</summary>
 
