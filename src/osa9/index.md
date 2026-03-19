@@ -261,7 +261,7 @@ puske muutokset etävarastoon.
 
 <task>
   <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 9.4:
-  Käyttöliittymäsuunnitelman näyttäminen ohjaajalle. <points>1 p.</points> </task-title>
+  Näyttäminen ohjaajalle. <points>1 p.</points> </task-title>
   <handout>
 
 {{#include ../exercises/9-4-ht-4/handout.md}}

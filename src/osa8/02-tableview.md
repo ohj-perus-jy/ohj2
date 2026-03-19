@@ -407,7 +407,7 @@ kanssa vähentää tätä käsityötä merkittävästi. Koodi kertoo enemmän si
 halutaan näyttää ja JavaFX:n harteille jätetään itse käyttöliittymän
 näyttäminen.
 
-## Tehty-sarake valintaruuduksi
+## Tehty-sarake valintaruuduksi {#tehty-sarake-valintaruuduksi}
 
 Oletuksena taulukossa näytetään arvojen merkkijonoesityksiä, minkä takia
 tehty-tila näytetään `false` ja `true` -teksteinä. On kuitenkin aika oleellista,
