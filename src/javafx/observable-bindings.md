@@ -233,3 +233,7 @@ pelaajien lukumäärään. Tällöin, jos `pelaajat`-lista muuttuu, niin
 - `pelaajiaLkmLabel.textProperty()` havaitsee muutoksen `pelaajienLkm.asString()`-arvossa
   ja päivittää oman sisältönsä vastaamaan uutta arvoa
 
+Muutosten jälkeen pelaajien lukumäärä ja yksittäisen pelaajan ikä päivittyy
+automaattisesti:
+
+<video src="images/bindings-2.mp4" controls></video>
