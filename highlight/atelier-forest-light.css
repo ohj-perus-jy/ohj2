@@ -45,14 +45,14 @@ code.hljs {
 }
 
 .hljs {
-  color: #68615e;
-  background: #f1efee;
+  color: #57524f;
+  background: #eceae8;
 }
 
 .hljs::selection,
 .hljs ::selection {
   background-color: #a8a19f;
-  color: #68615e;
+  color: #4a4542;
 }
 
 
@@ -64,7 +64,7 @@ code.hljs {
 
 /* base03 - #9c9491 -  Comments, Invisibles, Line Highlighting */
 .hljs-comment {
-  color: #9c9491;
+  color: #807975;
 }
 
 /* base04 - #766e6b -  Dark Foreground (Used for status bars) */
@@ -76,7 +76,7 @@ code.hljs {
 .hljs-subst,
 .hljs-punctuation,
 .hljs-operator {
-  color: #68615e;
+  color: #4a4542;
 }
 
 .hljs-operator {
@@ -90,7 +90,7 @@ code.hljs {
 .hljs-selector-tag,
 .hljs-name,
 .hljs-deletion {
-  color: #f22c40;
+  color: #cc1426;
 }
 
 /* base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url */
@@ -100,28 +100,28 @@ code.hljs {
 .hljs-attr,
 .hljs-variable.constant_,
 .hljs-literal {
-  color: #df5320;
+  color: #ba390a;
 }
 
 /* base0A - Classes, Markup Bold, Search Text Background */
 .hljs-title,
-.hljs-class .hljs-title,
+.hljs-class .hljs-title, 
 .hljs-title.class_
 {
-  color: #c38418;
+  color: #af7002;
 }
 
 .hljs-strong {
   font-weight:bold;
-  color: #c38418;
-}
+  color: #8e5c05;
+} 
 
 /* base0B - Strings, Inherited Class, Markup Code, Diff Inserted */
 .hljs-code,
 .hljs-addition,
 .hljs-title.class_.inherited__,
 .hljs-string {
-  color: #7b9726;
+  color: #576d13;
 }
 
 /* base0C - Support, Regular Expressions, Escape Characters, Markup Quotes */
@@ -130,7 +130,7 @@ code.hljs {
 .hljs-quote,
 .hljs-keyword.hljs-atrule,
 .hljs-regexp {
-  color: #3d97b8;
+  color: #246e89;
 }
 
 /* base0D - Functions, Methods, Attribute IDs, Headings */
@@ -139,7 +139,7 @@ code.hljs {
 .ruby .hljs-property,
 .hljs-title.function_,
 .hljs-section {
-  color: #407ee7;
+  color: #2863c6;
 }
 
 /* base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed */
@@ -151,10 +151,10 @@ code.hljs {
 .hljs-template-tag,
 .diff .hljs-meta,
 .hljs-keyword {
-  color: #6666ea;
+  color: #4848db;
 }
 .hljs-emphasis {
-  color: #6666ea;
+  color: #5454dd;
   font-style: italic;
 }
 

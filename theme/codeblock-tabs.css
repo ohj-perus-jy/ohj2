@@ -27,6 +27,7 @@
 .codeblock-tabs-titles a:link[aria-selected="true"] {
     background: var(--code-bg);
     color: var(--fg-bright);
+    border-top: 2px solid var(--icons);
 }
 
 .codeblock-tabs-titles li {

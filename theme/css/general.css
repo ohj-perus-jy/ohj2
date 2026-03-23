@@ -74,14 +74,14 @@ h6:target::before {
 }
 
 details {
-    background: var(--code-bg);
+    background: var(--quote-bg);
     /* add drop shadow to details to make it stand out */
     /* box-shadow: 0 2px 2px var(--details-border); */    
     border: 1px solid var(--details-border);
     padding: 1em;
     overflow: hidden;
     margin-block: 1em;
-} 
+}
 
 details {
     h1, h2, h3, h4, h5, h6 {
