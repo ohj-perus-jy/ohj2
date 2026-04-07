@@ -15,18 +15,18 @@ Yläpalkista löydät seuraavat toiminnot:
 *   <i class="bi bi-circle-half"></i> **Teema**: Vaihda ulkoasua (vaalea, tumma, automaattinen).
 *   <i class="bi bi-printer"></i> **Tulosta**: Tulosta koko materiaali.
 
-### Koodiesimerkit
+### Koodiesimerkit 
 
 Ajettavissa koodiesimerkeissä on käytössä seuraavat painikkeet:
 
-* <i class="fa fa-play"></i> **Aja koodi**: Suorittaa koodiesimerkin ja näyttää tulosteen.
-* <i class="fa fa-eye"></i> **Näytä koko koodi**: Paljastaa piilotetut rivit,
+* <i class="bi bi-play-fill"></i> **Aja koodi**: Suorittaa koodiesimerkin ja näyttää tulosteen.
+* <i class="bi bi-eye-fill"></i> **Näytä koko koodi**: Paljastaa piilotetut rivit,
   jotka eivät ole esimerkin ymmärtämisen kannalta keskeisiä, mutta vaaditaan
   koodin suorittamiseen.
 
 Jotkin koodiesimerkit saattavat olla muokattavia. Voit tarvittaessa palauttaa
-esimerkin alkuperäiseen tilaan **Peruuta muutokset**-painikkeella (<i class="fa
-fa-history"></i>).
+esimerkin alkuperäiseen tilaan **Peruuta muutokset**-painikkeella (<i class="bi
+bi-arrow-counterclockwise"></i>).  
 
 ### Tehtävät
 

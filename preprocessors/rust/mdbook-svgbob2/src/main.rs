@@ -1,0 +1,61 @@
+use clap::{Arg, ArgMatches, Command};
+
+use mdbook_preprocessor::errors::Error;
+use mdbook_preprocessor::{parse_input, Preprocessor};
+use mdbook_svgbob2::Bob;
+use std::io;
+use std::process;
+
+const NAME: &str = env!("CARGO_PKG_NAME");
+const AUTHORS: &str = env!("CARGO_PKG_AUTHORS");
+const DESCRIPTION: &str = env!("CARGO_PKG_DESCRIPTION");
+const VERSION: &str = env!("CARGO_PKG_VERSION");
+
+fn make_app() -> Command {
+    Command::new(NAME)
+        .version(VERSION)
+        .author(AUTHORS)
+        .about(DESCRIPTION)
+        .subcommand(
+            Command::new("supports")
+                .arg(Arg::new("renderer").required(true))
+                .about("Check whether a renderer is supported by this preprocessor"),
+        )
+}
+
+fn main() {
+    let matches = make_app().get_matches();
+
+    let preprocessor = Bob::new();
+
+    if let Some(sub_args) = matches.subcommand_matches("supports") {
+        handle_supports(&preprocessor, sub_args);
+    } else if let Err(e) = handle_preprocessing(&preprocessor) {
+        eprintln!("{}", e);
+        process::exit(1);
+    }
+}
+
+fn handle_preprocessing(pre: &dyn Preprocessor) -> Result<(), Error> {
+    let (ctx, book) = parse_input(io::stdin())?;
+
+    let processed_book = pre.run(&ctx, book)?;
+    serde_json::to_writer(io::stdout(), &processed_book)?;
+
+    Ok(())
+}
+
+fn handle_supports(pre: &dyn Preprocessor, sub_args: &ArgMatches) -> ! {
+    let renderer = sub_args
+        .get_one::<String>("renderer")
+        .map(ToString::to_string)
+        .expect("Required argument");
+    let supported = pre.supports_renderer(&renderer).unwrap_or(false);
+
+    // Signal whether the renderer is supported by exiting with 1 or 0.
+    if supported {
+        process::exit(0);
+    } else {
+        process::exit(1);
+    }
+}

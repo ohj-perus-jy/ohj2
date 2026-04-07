@@ -37,7 +37,7 @@ Kokeile ratkaista ongelma ensin paperilla käsin lyhyelle jonolle
 Voi olla helpompaa aloittaa toisesta merkistä ja verrata
 se aina edeltävään:
 
-```bob
+```svgbob
   0   1   2   3 = jono.length
 +---+---+---+---+
 | a | a | b | b |

@@ -6,10 +6,12 @@ class MDBookSidebarScrollbox extends HTMLElement {
         this.innerHTML = `{{#toc}}{{/toc}}`;
 
         // 0. Custom External Link Resolution
-        this.querySelectorAll("li.chapter-item > div").forEach(div => {
-            if (div.querySelector("a")) return;
-            const text = div.textContent;
-            // Match pattern like "Titlehttps://..."
+        // mdBook 0.5: external links are <span class="chapter-link-wrapper"><span>Titlehttps://...</span></span>
+        this.querySelectorAll("li.chapter-item > span.chapter-link-wrapper").forEach(wrapper => {
+            if (wrapper.querySelector("a")) return;
+            const innerSpan = wrapper.querySelector("span");
+            if (!innerSpan) return;
+            const text = innerSpan.textContent;
             const match = text.match(/^(.*)(https?:\/\/.*)$/);
             if (match) {
                 const title = match[1];
@@ -17,7 +19,7 @@ class MDBookSidebarScrollbox extends HTMLElement {
                 const a = document.createElement("a");
                 a.href = url;
                 a.textContent = title;
-                div.replaceWith(a);
+                innerSpan.replaceWith(a);
             }
         });
 
@@ -37,8 +39,8 @@ class MDBookSidebarScrollbox extends HTMLElement {
                 activeLink = link;
             }
         }
-        // 2. Initial Setup: Collapse all, Add Toggles 
-        // Default mdBook toc output has 'expanded' on many items. We want to start fresh.
+        // 2. Initial Setup: Collapse all, Add Toggles
+        // mdBook 0.5: ol.section is a direct child of li.chapter-item (not in next sibling)
         const allChapters = Array.from(this.querySelectorAll('li.chapter-item'));
         allChapters.forEach(el => {
             el.classList.remove('expanded');
@@ -49,19 +51,23 @@ class MDBookSidebarScrollbox extends HTMLElement {
         if (activeLink) {
             activeLink.classList.add("active");
 
-            // Expand the item containing the link
-            var parent = activeLink.parentElement;
-            if (parent && parent.classList.contains("chapter-item")) {
+            // Expand the closest chapter-item ancestor
+            var parent = activeLink.closest("li.chapter-item");
+            if (parent) {
                 parent.classList.add("expanded");
             }
 
-            // Walk up to expand all ancestors
+            // Walk up to expand all ancestor chapter-items
             while (parent) {
-                if (parent.tagName === 'LI' && parent.previousElementSibling &&
-                    parent.previousElementSibling.classList.contains("chapter-item")) {
-                    parent.previousElementSibling.classList.add("expanded");
+                var section = parent.parentElement; // ol.section
+                if (section && section.tagName === 'OL') {
+                    parent = section.closest("li.chapter-item");
+                    if (parent) {
+                        parent.classList.add("expanded");
+                    }
+                } else {
+                    break;
                 }
-                parent = parent.parentElement;
             }
         }
 
@@ -88,15 +94,12 @@ class MDBookSidebarScrollbox extends HTMLElement {
     }
 
     // Helper: Add toggle button if subsection exists
+    // mdBook 0.5: ol.section is a direct child of li.chapter-item
     ensureToggle(chapterItem) {
-        const nextLi = chapterItem.nextElementSibling;
-        if (!nextLi || !nextLi.querySelector("ol.section")) {
-            return;
-        }
+        const section = chapterItem.querySelector(":scope > ol.section");
+        if (!section) return;
 
-        if (chapterItem.querySelector(".toc-toggle")) {
-            return;
-        }
+        if (chapterItem.querySelector(":scope > .toc-toggle")) return;
 
         const toggle = document.createElement("button");
         toggle.type = "button";
@@ -108,13 +111,12 @@ class MDBookSidebarScrollbox extends HTMLElement {
             chapterItem.classList.toggle("expanded");
             this.updateSectionHeight(chapterItem);
         });
-        chapterItem.appendChild(toggle);
+        chapterItem.insertBefore(toggle, section);
     }
 
     // Helper: Update max-height for animation
     updateSectionHeight(chapterItem) {
-        const nextLi = chapterItem.nextElementSibling;
-        const section = (nextLi && nextLi.querySelector("ol.section")) ? nextLi.querySelector("ol.section") : null;
+        const section = chapterItem.querySelector(":scope > ol.section");
         if (!section) return;
 
         if (chapterItem.classList.contains("expanded")) {

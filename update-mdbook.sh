@@ -9,13 +9,13 @@ fi
 
 export CARGO_TARGET_DIR="$HOME/.cargo-target-cache"
 
-cargo install mdbook@0.4.52 \
-              mdbook-mermaid@0.16.2 \
-              mdbook-alerts@0.8.0 \
-              mdbook-katex@0.9.4 \
-              mdbook-plantuml@0.8.0 \
-              mdbook-inline-highlighting@1.0.0
+cargo install mdbook@0.5.2 \
+              mdbook-mermaid@0.17.0 \
+              mdbook-katex@0.10.0-alpha \
+              mdbook-plantuml@2.0.0 \
+              mdbook-inline-highlighting@2.0.0
 
-cargo install --git https://github.com/boozook/mdbook-svgbob.git#3431f100c08eeca8b132241d0c372ec0f4aed85b
+# mdbook-alerts is replaced by a Python preprocessor (preprocessors/python/alerts.py)
 
 cargo install --path ./preprocessors/rust/mdbook-codeblock-tabs
+cargo install --path ./preprocessors/rust/mdbook-svgbob2

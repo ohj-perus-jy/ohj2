@@ -4,7 +4,7 @@ import re
 import io
 import secrets
 
-from util import preprocessor_start, process_chapters
+from util import preprocessor_start, process_chapters, get_book_items
 
 """
 Format:
@@ -102,6 +102,6 @@ if __name__ == '__main__':
 
     context, book = json.load(sys.stdin)
 
-    process_chapters(book['sections'], process_chapter)
+    process_chapters(get_book_items(book), process_chapter)
 
-    print(json.dumps(book))
+    json.dump(book, sys.stdout)

@@ -148,7 +148,7 @@ Pienen miettimisen jälkeen sinulle pitäisi syntyä projekti, jossa on läjä
 tiedostoja ja kansioita. Katsotaan näitä nyt lähemmin. Projektisi kansiorakenne
 näyttää suunnilleen tältä:
 
-```bob
+```svgbob
 src
  ├─ main --> java
  └─ test --> java

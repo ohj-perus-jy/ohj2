@@ -771,7 +771,7 @@ html:not(.sidebar-resizing) .sidebar {
     transition: transform 0.5s;
 }
 
-.chapter li.chapter-item>a {
+.chapter li.chapter-item a {
     flex: 1 1 auto;
 }
 
@@ -788,17 +788,21 @@ html:not(.sidebar-resizing) .sidebar {
 }
 
 .chapter li.chapter-item .toc-toggle::before {
-    font-family: "FontAwesome";
-    content: "\f078";
+    content: "";
     display: inline-block;
-    /* transition: transform 0.2s ease; */
-    transition: none;
-    font-weight: normal;
+    border: solid currentColor;
+    border-width: 0 2px 2px 0;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
     opacity: 0.6;
+    position: relative;
+    top: -2px;
 }
 
 .chapter li.chapter-item.expanded .toc-toggle::before {
-    content: "\f077";
+    transform: rotate(-135deg);
+    top: 1px;
 }
 
 .chapter li.chapter-item .toc-toggle:hover {
@@ -807,7 +811,7 @@ html:not(.sidebar-resizing) .sidebar {
 }
 
 /* collapse the section */
-.chapter li+li>ol.section {
+.chapter li.chapter-item > ol.section {
     overflow: hidden;
     transition: max-height 0.6s cubic-bezier(0.18, 0.8, 0.2, 1), opacity 0.4s ease, transform 0.4s ease;
     will-change: max-height, opacity, transform;
@@ -816,6 +820,11 @@ html:not(.sidebar-resizing) .sidebar {
 .chapter li.chapter-item {
     line-height: 1.5em;
     margin-block-start: 0.6em;
+    flex-wrap: wrap;
+}
+
+.chapter li.chapter-item > ol.section {
+    flex-basis: 100%;
 }
 
 .chapter li.expanded>a.toggle div {
@@ -831,18 +840,18 @@ html.toc-ready .sidebar .sidebar-scrollbox {
     animation: none;
 }
 
-.toc-ready .chapter li.expanded+li>ol.section {
+.toc-ready .chapter li.chapter-item.expanded > ol.section {
     opacity: 1;
     transform: translateY(0);
     transition-delay: 0s, 0.1s, 0.1s;
 }
 
-html.toc-initial .chapter li+li>ol.section {
+html.toc-initial .chapter li.chapter-item > ol.section {
     transition-duration: 0.9s, 0.5s, 0.5s;
     transition-delay: 0s, 0.12s, 0.12s;
 }
 
-html:not(.js) .chapter li+li>ol.section {
+html:not(.js) .chapter li.chapter-item > ol.section {
     max-height: none;
     opacity: 1;
 }

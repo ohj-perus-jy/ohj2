@@ -15,6 +15,11 @@
         <!-- Custom HTML head -->
         {{> head}}
 
+        <style>
+            .mdbook-spin { animation: mdbook-spin 1s linear infinite; display: inline-block; }
+            @keyframes mdbook-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        </style>
+
         <meta name="description" content="{{ description }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff">
@@ -33,15 +38,10 @@
         {{/if}}
 
         <!-- Fonts -->
-        <link rel="stylesheet" href="{{ resource "FontAwesome/css/font-awesome.css" }}">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Aleo:wght@300;400;500;600;700">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;1,400">
         <!-- Bootstrap Icons -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-
-        {{#if copy_fonts}}
-        <link rel="stylesheet" href="{{ resource "fonts/fonts.css" }}">
-        {{/if}}
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" id="highlight-css" href="{{ resource "highlight.css" }}">
@@ -209,7 +209,7 @@
                         <div class="search-wrapper">
                             <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
                             <div class="spinner-wrapper">
-                                <i class="fa fa-spinner fa-spin"></i>
+                                <i class="bi bi-arrow-repeat mdbook-spin"></i>
                             </div>
                         </div>
                     </form>
@@ -238,25 +238,25 @@
 
 
             <nav class="chapter-navigation" aria-label="Page navigation">
-                {{#previous}}
-                    <a rel="prev" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters previous" title="Edellinen: {{ title }}" aria-label="Previous chapter" aria-keyshortcuts="Left">
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                {{#if previous}}
+                    <a rel="prev" href="{{ path_to_root }}{{previous.link}}" class="chapter-link nav-chapters previous" title="Edellinen: {{previous.title}}" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="bi bi-chevron-left" aria-hidden="true"></i>
                         <span class="chapter-link-text">
                             <span class="chapter-link-label">Edellinen</span>
-                            <span class="chapter-link-title">{{ title }}</span>
+                            <span class="chapter-link-title">{{previous.title}}</span>
                         </span>
                     </a>
-                {{/previous}}
+                {{/if}}
 
-                {{#next}}
-                    <a rel="next prefetch" href="{{ path_to_root }}{{link}}" class="chapter-link nav-chapters next" title="Seuraava: {{ title }}" aria-label="Next chapter" aria-keyshortcuts="Right">
+                {{#if next}}
+                    <a rel="next prefetch" href="{{ path_to_root }}{{next.link}}" class="chapter-link nav-chapters next" title="Seuraava: {{next.title}}" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class="chapter-link-text">
                             <span class="chapter-link-label">Seuraava</span>
-                            <span class="chapter-link-title">{{ title }}</span>
+                            <span class="chapter-link-title">{{next.title}}</span>
                         </span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                        <i class="bi bi-chevron-right" aria-hidden="true"></i>
                     </a>
-                {{/next}}
+                {{/if}}
             </nav>
             </div>
 
@@ -289,25 +289,6 @@
 
             window.onbeforeunload = function() {
                 socket.close();
-            }
-        </script>
-        {{/if}}
-
-        {{#if google_analytics}}
-        <!-- Google Analytics Tag -->
-        <script>
-            const localAddrs = ["localhost", "127.0.0.1", ""];
-
-            // make sure we don't activate google analytics if the developer is
-            // inspecting the book locally...
-            if (localAddrs.indexOf(document.location.hostname) === -1) {
-                (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-                ga('create', '{{google_analytics}}', 'auto');
-                ga('send', 'pageview');
             }
         </script>
         {{/if}}

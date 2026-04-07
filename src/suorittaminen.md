@@ -160,7 +160,7 @@ Liitän oheen myös kontrollerin koodin, joka ei näy tässä. Erittäin oleelli
 kuitenkin on, että olen määritellyt TableView-komponentit, niihin liittyvät
 tapahtumankäsittelijät, ja ymmärrän lähtökohtaisesti, miten sovellukseni toimii.
 Kysymykseni koskee siis yksityiskohtaa, joka liittyy siihen, miten
-TableView-komponentin piilotus kannattaa tehdä JavaFX:ssä. 
+TableView-komponentin piilotus kannattaa tehdä JavaFX:ssä.  
 
 Vastaus on varsin pitkä, ja etenee seuraavasti. Copilot...
 

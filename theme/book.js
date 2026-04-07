@@ -207,7 +207,7 @@ function playground_text(playground, hidden = true) {
 
         const buttons = document.createElement('div');
         buttons.className = 'buttons';
-        buttons.innerHTML = '<button class="fa fa-eye" title="Show hidden lines" \
+        buttons.innerHTML = '<button class="bi bi-eye" title="Show hidden lines" \
 aria-label="Show hidden lines"></button>';
 
         // add expand button
@@ -215,16 +215,16 @@ aria-label="Show hidden lines"></button>';
         pre_block.insertBefore(buttons, pre_block.firstChild);
 
         pre_block.querySelector('.buttons').addEventListener('click', function(e) {
-            if (e.target.classList.contains('fa-eye')) {
-                e.target.classList.remove('fa-eye');
-                e.target.classList.add('fa-eye-slash');
+            if (e.target.classList.contains('bi-eye')) {
+                e.target.classList.remove('bi-eye');
+                e.target.classList.add('bi-eye-slash');
                 e.target.title = 'Hide lines';
                 e.target.setAttribute('aria-label', e.target.title);
 
                 block.classList.remove('hide-boring');
-            } else if (e.target.classList.contains('fa-eye-slash')) {
-                e.target.classList.remove('fa-eye-slash');
-                e.target.classList.add('fa-eye');
+            } else if (e.target.classList.contains('bi-eye-slash')) {
+                e.target.classList.remove('bi-eye-slash');
+                e.target.classList.add('bi-eye');
                 e.target.title = 'Show hidden lines';
                 e.target.setAttribute('aria-label', e.target.title);
 
@@ -266,8 +266,7 @@ aria-label="Show hidden lines"></button>';
         }
 
         const runCodeButton = document.createElement('button');
-        runCodeButton.className = 'fa fa-play play-button';
-        runCodeButton.hidden = true;
+        runCodeButton.className = 'bi bi-play-fill play-button';
         runCodeButton.title = 'Run this code';
         runCodeButton.setAttribute('aria-label', runCodeButton.title);
 
@@ -289,7 +288,7 @@ aria-label="Show hidden lines"></button>';
         const code_block = pre_block.querySelector('code');
         if (window.ace && code_block.classList.contains('editable')) {
             const undoChangesButton = document.createElement('button');
-            undoChangesButton.className = 'fa fa-history reset-button';
+            undoChangesButton.className = 'bi bi-arrow-counterclockwise reset-button';
             undoChangesButton.title = 'Undo changes';
             undoChangesButton.setAttribute('aria-label', undoChangesButton.title);
 
@@ -314,12 +313,12 @@ aria-label="Show hidden lines"></button>';
         themeIds.push(el.id);
     });
     const stylesheets = {
-        ayuHighlight: document.querySelector('#ayu-highlight-css'),
-        tomorrowNight: document.querySelector('#tomorrow-night-css'),
-        highlight: document.querySelector('#highlight-css'),
-        twilight: document.querySelector('link[href*="twilight.css"]'),
-        apprentice: document.querySelector('link[href*="apprentice.css"]'),
-        atelierForestLight: document.querySelector('link[href*="atelier-forest-light.css"]'),
+        ayuHighlight: document.querySelector('#ayu-highlight-css') || document.querySelector('link[href*="ayu-highlight"]'),
+        tomorrowNight: document.querySelector('#tomorrow-night-css') || document.querySelector('link[href*="tomorrow-night"]'),
+        highlight: document.querySelector('#highlight-css') || document.querySelector('link[href*="/highlight-"]'),
+        twilight: document.querySelector('link[href*="twilight"]'),
+        apprentice: document.querySelector('link[href*="apprentice"]'),
+        atelierForestLight: document.querySelector('link[href*="atelier-forest-light"]'),
     };
 
     function showThemes() {

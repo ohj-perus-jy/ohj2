@@ -211,7 +211,7 @@ Komponetin kokoon vaikuttavat neljä pääominaisuutta: leveys (*width*), korkeu
 ja välistys eli komponentin sisäreunan ympärillä oleva tila (*padding*).
 Visuaalisesti nämä ominaisuudet voidaan esittää seuraavasti:
 
-```bob
+```svgbob
 +-------------------------------+
 |            width              |
 |     |<----------------- |     |

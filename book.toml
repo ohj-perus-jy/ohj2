@@ -23,6 +23,8 @@ additional-css = [
 ]
 default-theme = "jyu-light"
 preferred-dark-theme = "jyu-dark"
+smart-punctuation = false
+admonitions = false
 additional-js = [
   "mermaid/mermaid.min.js", 
   "mermaid/mermaid-init.js",
@@ -43,6 +45,7 @@ java = "//-"
 javascript = "//-"
 
 [preprocessor.alerts]
+command = "python3 ./preprocessors/python/alerts.py"
 
 [preprocessor.mermaid]
 
@@ -58,7 +61,7 @@ plantuml-cmd="https://www.plantuml.com/plantuml"
 
 [preprocessor.inline-highlighting]
 
-[preprocessor.svgbob]
+[preprocessor.svgbob2]
 font_size = 14
 font_family = "var(--mono-font)"
 fill_color = "black"

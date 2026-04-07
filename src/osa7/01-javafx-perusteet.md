@@ -135,7 +135,7 @@ yläpalkin ajopainikkeella.
 Projektia ajaessa saatoit jo huomata, että JavaFX-projekti sisältää valmiiksi
 muutaman tiedoston:
 
-```bob
+```svgbob
 🗎 pom.xml
 🖿 src
   └──🖿 main

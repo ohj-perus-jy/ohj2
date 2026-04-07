@@ -119,7 +119,7 @@ JavaFX-sovelluksessa MVC-arkkitehtuurin mukainen jako on helpointa nähdä
 projektin pakkauksista ja kansiorakenteesta.
 Tällä hetkellä sovelluksemme luokat jakautuvat seuraaviin pakkauksiin:
 
-```bob
+```svgbob
 fi.jyu.ohj2.nimi.todo
 ├── data
 │   └── Tehtava

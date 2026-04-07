@@ -1,7 +1,6 @@
-use mdbook::BookItem;
-use mdbook::book::{Book, Chapter};
-use mdbook::errors::Result;
-use mdbook::preprocess::{CmdPreprocessor, Preprocessor, PreprocessorContext};
+use mdbook_preprocessor::book::{Book, BookItem, Chapter};
+use mdbook_preprocessor::errors::Result;
+use mdbook_preprocessor::{parse_input, Preprocessor, PreprocessorContext};
 use nanoid::nanoid;
 use pulldown_cmark::{CodeBlockKind, Event, Options, Parser, Tag, TagEnd};
 use regex::Regex;
@@ -30,7 +29,7 @@ fn main() {
 
 pub fn handle_preprocessing() -> Result<()> {
     let pre = CodeBlockTabsPreprocessor;
-    let (ctx, book) = CmdPreprocessor::parse_input(io::stdin())?;
+    let (ctx, book) = parse_input(io::stdin())?;
 
     let processed_book = pre.run(&ctx, book)?;
     serde_json::to_writer(io::stdout(), &processed_book)?;

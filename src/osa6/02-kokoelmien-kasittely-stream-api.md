@@ -71,7 +71,7 @@ Kaikilla Javan kokoelmilla on `stream()`-metodi, joka palauttaa
 Striimiä voi ajatella liukuhihnana tai koneena, joka ottaa kokoelman ja tuottaa
 siitä yhden alkion kerrallaan *tietovirtana*:
 
-```bob
+```svgbob
 \   42   /
  \  67  /
   \-148/
@@ -93,7 +93,7 @@ poistetaan tietovirrasta.
 Toisin sanoen, `filter()` on eräänlainen *suodatin*, joka lambdalausekkeen
 perusteella joko antaa alkion mennä läpi tai suodattaa sen pois:
 
-```bob
+```svgbob
 \   42   /
  \  67  /
   \-148/                tietovirta -->
@@ -122,7 +122,7 @@ Esimerkiksi `mapToInt()` on muunnos, joka ottaa alkion ja muuttaa sen
 `Integer::intValue` -funktioviitettä, joka muuttaa `Integer`-olion tavalliseksi
 kokonaisluvuksi.
 
-```bob
+```svgbob
 \   42   /
  \  67  /
   \-148/                tietovirta -->
@@ -150,7 +150,7 @@ tietovirran lopussa olevat alkiot ja palauttaa ne ohjelmalle halutussa muodossa
 Tässä esimerkissä käytimme `sum()`-metodia, joka laskee luvut yhteen ja
 palauttaa lopputuloksen yhtenä lukuna:
 
-```bob
+```svgbob
 \   42   /
  \  67  /
   \-148/                tietovirta -->

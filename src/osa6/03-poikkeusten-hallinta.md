@@ -70,7 +70,7 @@ Alla oleva kaavio havainnollistaa karkeasti poikkeuksen heittämisen ja
 käsittelyn prosessia. Oletetaan, että `main()`-metodi kutsuu metodia `a()`, joka
 puolestaan kutsuu metodia `b()`, ja `b()` edelleen `c()`-metodia. 
 
-```bob
+```svgbob
                          +-----.------------------------+
 "Heittää poikkeuksen" ---|"c()"| "Metodi, jossa virhe"  |
                          |-----' "tapahtui"             |----.

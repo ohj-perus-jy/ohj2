@@ -634,7 +634,7 @@ ensimmäisen taulukon (`taulukko2D[0]`) ensimmäiseen alkioon
 `(taulukko2D[0])[0]`. Yllä oleva taulukko ja siinä olevat alkiot voisi kuvata
 siis seuraavasti:
 
-```bob
+```svgbob
                       [0]                [1]                [2]
               +------------------+------------------+------------------+
               | taulukko2D[0][0] | taulukko2D[0][1] | taulukko2D[0][2] |

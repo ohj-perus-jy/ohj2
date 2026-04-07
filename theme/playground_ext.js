@@ -178,8 +178,7 @@
         }
 
         const runCodeButton = document.createElement('button');
-        runCodeButton.className = 'fa fa-play play-button';
-        runCodeButton.hidden = true;
+        runCodeButton.className = 'bi bi-play-fill play-button';
         runCodeButton.title = 'Run this code';
         runCodeButton.setAttribute('aria-label', runCodeButton.title);
 
@@ -216,7 +215,7 @@
             
 
             const undoChangesButton = document.createElement('button');
-            undoChangesButton.className = 'fa fa-history reset-button';
+            undoChangesButton.className = 'bi bi-arrow-counterclockwise reset-button';
             undoChangesButton.title = 'Undo changes';
             undoChangesButton.setAttribute('aria-label', undoChangesButton.title);
 
