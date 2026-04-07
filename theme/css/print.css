@@ -12,7 +12,7 @@
     overflow-y: initial;
 }
 
-#content {
+#mdbook-content {
     max-width: none;
     margin: 0;
     padding: 0;

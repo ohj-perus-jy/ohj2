@@ -4,7 +4,7 @@ html {
     scrollbar-color: var(--scrollbar) var(--bg);
 }
 
-#searchresults a,
+#mdbook-searchresults a,
 .content a:link,
 a:visited,
 a>.hljs {
@@ -450,7 +450,7 @@ pre>.result {
 
 /* Search */
 
-#searchresults a {
+#mdbook-searchresults a {
     text-decoration: none;
 }
 
@@ -480,15 +480,15 @@ mark.fade-out {
     max-width: var(--content-max-width);
 }
 
-#searchbar-outer.searching #searchbar {
+#mdbook-searchbar-outer.searching #mdbook-searchbar {
     padding-right: 30px;
 }
 
-#searchbar-outer .spinner-wrapper {
+#mdbook-searchbar-outer .spinner-wrapper {
     display: none;
 }
 
-#searchbar-outer.searching .spinner-wrapper {
+#mdbook-searchbar-outer.searching .spinner-wrapper {
     display: block;
 }
 
@@ -507,7 +507,7 @@ mark.fade-out {
     background-color: var(--bg);
 }
 
-#searchbar {
+#mdbook-searchbar {
     width: 100%;
     margin-block-start: var(--searchbar-margin-block-start);
     margin-block-end: 0;
@@ -521,8 +521,8 @@ mark.fade-out {
     color: var(--searchbar-fg);
 }
 
-#searchbar:focus,
-#searchbar.active {
+#mdbook-searchbar:focus,
+#mdbook-searchbar.active {
     box-shadow: 0 0 3px var(--searchbar-shadow-color);
 }
 
@@ -543,22 +543,22 @@ mark.fade-out {
     border-block-end: 1px dashed var(--searchresults-border-color);
 }
 
-ul#searchresults {
+ul#mdbook-searchresults {
     list-style: none;
     padding-inline-start: 20px;
 }
 
-ul#searchresults li {
+ul#mdbook-searchresults li {
     margin: 10px 0px;
     padding: 2px;
     border-radius: 2px;
 }
 
-ul#searchresults li.focus {
+ul#mdbook-searchresults li.focus {
     background-color: var(--searchresults-li-bg);
 }
 
-ul#searchresults span.teaser {
+ul#mdbook-searchresults span.teaser {
     display: block;
     clear: both;
     margin-block-start: 5px;
@@ -568,7 +568,7 @@ ul#searchresults span.teaser {
     font-size: 0.8em;
 }
 
-ul#searchresults span.teaser em {
+ul#mdbook-searchresults span.teaser em {
     font-weight: bold;
     font-style: normal;
 }
