@@ -14,6 +14,7 @@ additional-css = [
   "highlight/atelier-forest-light.css",
   "highlight/twilight.css", 
   "highlight/apprentice.css",
+  "theme/bootstrap-icons.css",
   "theme/alerts-style.css",
   "theme/accordion.css",
   "theme/codeblock-tabs.css",
