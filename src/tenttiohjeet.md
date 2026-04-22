@@ -57,7 +57,6 @@ Tämä sivu sisältää [Jyväskylän yliopiston ohjeet verkkotenttien suorittam
   avaamaan tehtävienhallintaa.
 - Valvojalla on oikeus pyytää opiskelijaa todistamaan henkilöllisyytensä tentin
   aikana.
-- Zoom-puhelusta saa poistua vain valvojan luvalla.
 
 ### Tentissä sallitut aineistot ja materiaalit
 
