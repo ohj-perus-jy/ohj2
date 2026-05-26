@@ -1,11 +1,12 @@
 {
 	"name": "Ohj2 mdBook",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/rust:1-1-bullseye",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".."
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
-		"ghcr.io/eitsupi/devcontainer-features/mdbook:1": {},
-		"ghcr.io/devcontainers/features/python:1": {}
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {}
 	},
 
 	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
@@ -23,9 +24,6 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [36742],
 	"appPort": [36742],
-
-	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bash ./update-mdbook.sh",
 
 	// Configure tool-specific properties.
 	"customizations": {

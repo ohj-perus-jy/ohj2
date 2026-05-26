@@ -10,14 +10,15 @@ Tehtävien palauttaminen vaatii opintojaksolle
 
 ## Materiaalin kehittäminen omalla koneella
 
-- Asenna Rust ja Cargo (esim. rustup) TAI käytä mukana olevaa DevContaineria
-- Aja ´update-mdbook.sh´ asentaakseen tarvittavat laajennokset
+- Käytä mukana olevaa DevContaineria. Se rakentaa mdBookin ja tarvittavat
+  laajennokset valmiiksi container-imageen.
+- Käynnistä esikatselu DevContainerin sisällä:
 
 ```bash
 bash ./start.sh
 ```
 
-tai
+Jos et käytä DevContaineria, voit asentaa työkalut käsin fallback-skriptillä:
 
 ```bash
 bash ./update-mdbook.sh

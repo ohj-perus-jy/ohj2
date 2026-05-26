@@ -51,7 +51,7 @@ javascript = "//-"
 [preprocessor.codeblock-tabs]
 
 [preprocessor.accordion]
-command = "python3 ./preprocessors/python/accordion.py"
+command = "mdbook-accordion"
 
 [preprocessor.plantuml]
 plantuml-cmd="https://www.plantuml.com/plantuml"

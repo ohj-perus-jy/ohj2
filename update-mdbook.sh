@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Check if cargo is installed
 if ! command -v cargo &> /dev/null
 then
@@ -18,4 +20,13 @@ cargo install mdbook@0.4.52 \
 
 cargo install --git https://github.com/boozook/mdbook-svgbob.git#3431f100c08eeca8b132241d0c372ec0f4aed85b
 
-cargo install --path ./preprocessors/rust/mdbook-codeblock-tabs
+cargo install --path "$SCRIPT_DIR/preprocessors/rust/mdbook-codeblock-tabs"
+
+mkdir -p "$HOME/.cargo/bin"
+cat > "$HOME/.cargo/bin/mdbook-accordion" <<EOF
+#!/usr/bin/env bash
+set -euo pipefail
+export PYTHONPATH="$SCRIPT_DIR/preprocessors/python\${PYTHONPATH:+:\$PYTHONPATH}"
+exec python3 "$SCRIPT_DIR/preprocessors/python/accordion.py" "\$@"
+EOF
+chmod +x "$HOME/.cargo/bin/mdbook-accordion"

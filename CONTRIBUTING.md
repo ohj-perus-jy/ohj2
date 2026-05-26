@@ -35,15 +35,21 @@ cd ohj2
 ```
 
 ### 2. Työkalujen asennus
-Materiaali on toteutettu **mdBookilla**. Pystytystä varten tarvitset:
-- [Rust & Cargo](https://www.rust-lang.org/tools/install)
-- [mdBook](https://rust-lang.github.io/mdBook/guide/installation.html)
-- [mdbook-mermaid](https://github.com/badboy/mdbook-mermaid) -tuki kaavioita varten.
+Materiaali on toteutettu **mdBookilla**. Suositeltu tapa on käyttää mukana
+olevaa DevContaineria, joka sisältää mdBookin ja tarvittavat laajennokset
+valmiiksi asennettuina.
+
+Jos et käytä DevContaineria, tarvitset [Rust & Cargon](https://www.rust-lang.org/tools/install)
+ja voit asentaa mdBook-työkalut fallback-skriptillä:
+
+```bash
+bash ./update-mdbook.sh
+```
 
 ### 3. Paikallinen esikatselu
 Käynnistä kehityspalvelin projektin juuresta:
 ```bash
-mdbook serve --hostname 0.0.0.0 --port 3000 --open
+bash ./start.sh
 ```
 Tämä avaa materiaalin selaimeesi (oletuksena localhost:3000) ja päivittää näkymän automaattisesti, kun tallennat muutoksia.
 
