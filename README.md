@@ -10,8 +10,8 @@ Tehtävien palauttaminen vaatii opintojaksolle
 
 ## Materiaalin kehittäminen omalla koneella
 
-- Käytä mukana olevaa DevContaineria. Se rakentaa mdBookin ja tarvittavat
-  laajennokset valmiiksi container-imageen.
+- Käytä mukana olevaa DevContaineria. Se käyttää valmista mdBook-työkalukuvaa,
+  joka sisältää tarvittavat laajennokset.
 - Käynnistä esikatselu DevContainerin sisällä:
 
 ```bash
