@@ -25,6 +25,23 @@ bash ./update-mdbook.sh
 mdbook serve --hostname 0.0.0.0 --port 3000 --open
 ```
 
+### mdBook-työkalukuvan päivittäminen
+
+DevContainer käyttää valmista GHCR-kuvaa
+`ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:main`. Jos mdBook-työkaluja tai
+esikäsittelijöitä pitää päivittää, tee muutokset repossa
+`ohj-perus-jy/ohj-mdbook-tooling` ja pushaa ne `main`-haaraan. Tämän seurauksena
+rakentaminen ja julkaisu tapahtuvat automaattisesti.
+
+Huomaa, että `:main` on liikkuva tagi: jo käynnissä oleva DevContainer ei päivity
+automaattisesti. Päivitetty kuva otetaan käyttöön ajamalla esimerkiksi:
+
+```bash
+docker pull ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:main
+```
+
+tai VS Codessa komennolla `Dev Containers: Rebuild and Reopen in Container`.
+
 ## Pikaohje mdBookin syntaksiin
 
 Koodiesimerkit voivat sisältää useita tiedostoja. Käytä `// FILE: filename`- ja 
