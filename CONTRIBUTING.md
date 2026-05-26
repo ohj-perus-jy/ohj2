@@ -36,8 +36,9 @@ cd ohj2
 
 ### 2. Työkalujen asennus
 Materiaali on toteutettu **mdBookilla**. Suositeltu tapa on käyttää mukana
-olevaa DevContaineria, joka sisältää mdBookin ja tarvittavat laajennokset
-valmiiksi asennettuina.
+olevaa DevContaineria. Se käyttää valmista GHCR-kuvaa
+`ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:main`, jossa mdBook ja tarvittavat
+laajennokset ovat valmiiksi asennettuina.
 
 Jos et käytä DevContaineria, tarvitset [Rust & Cargon](https://www.rust-lang.org/tools/install)
 ja voit asentaa mdBook-työkalut fallback-skriptillä:
@@ -46,12 +47,21 @@ ja voit asentaa mdBook-työkalut fallback-skriptillä:
 bash ./update-mdbook.sh
 ```
 
+Fallback-asennus kääntää osan työkaluista lähdekoodista, joten ensimmäinen ajo voi
+kestää jonkin aikaa.
+
 ### 3. Paikallinen esikatselu
 Käynnistä kehityspalvelin projektin juuresta:
 ```bash
 bash ./start.sh
 ```
 Tämä avaa materiaalin selaimeesi (oletuksena localhost:3000) ja päivittää näkymän automaattisesti, kun tallennat muutoksia.
+
+Voit testata pelkän käännöksen ilman kehityspalvelinta ajamalla:
+
+```bash
+mdbook build
+```
 
 ---
 
