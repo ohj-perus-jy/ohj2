@@ -13,9 +13,9 @@ tehtäviä sen määrän, joka oikeuttaa DL-BONUS-pisteisiin.
 
  (2) Voit nollata kaikki pisteesi painamalla ["Nollaa
 pisteeni"-painiketta](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti). Tämä
-siis efektiivisesti nollaa opiskelijan kaikki pisteet ja DL-BONUKSET. Tämän
-seurauksena voit saada uudelta toteutukselta DL-bonukset kyseisen toteutuksen
-aikataulun mukaiseti.
+siis efektiivisesti nollaa opiskelijan kaikki tehtäväpisteet sekä
+DL-BONUS-pisteet. Tämän seurauksena voit saada uudelta toteutukselta
+DL-BONUS-pisteet kyseisen toteutuksen aikataulun mukaiseti.
 
 *Jos olet aloittanut ennen vuotta 2026*: 
 
