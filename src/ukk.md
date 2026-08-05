@@ -40,3 +40,11 @@ harjoitustehtävät ja tentti. Arvosana lasketaan [Suoritustavan
 1](./suorittaminen.md) mukaisesti. Aiemmin (enintään kolme vuotta sitten
 hyväksytty) tehty harjoitustyö merkitään hyväksytyksi kuluvalle toteutukselle,
 eikä sitä tarvitse tehdä uudestaan. 
+
+## Onko mahdollisuutta saada joustoa tehtävien tai harjoitustyön palautusaikatauluun?
+
+Lähtökohtaisesti tehtävillä ja harjoitustyöllä on tietty aikataulu.
+Harjoitustyön, kuten myös muiden tehtävien, aikataulua on kuitenkin mahdollista
+säätää yksilöllisesti, jos elämäntilanne (sairaus, perhesyyt jne.) sitä vaatii.
+Pyrimme olemaan tässä joustavia, samalla kuitenkin varmistaen opiskelijoiden
+yhdenvertaisuuden. 
