@@ -17,6 +17,12 @@ html.jyu-dark {
     width: 100%;
 }
 
+/* Keep empty highlighted lines from collapsing. Must be CSS, not a real
+   character: anything in the DOM ends up in the code sent to the executor. */
+.hl-line::after {
+    content: "\200B";
+}
+
 /* box-shadow bleeds the highlight colour into <pre> padding (edge-to-edge)
    without affecting layout or scroll width. */
 .hl-green  {

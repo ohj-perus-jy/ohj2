@@ -16,8 +16,22 @@
     document.querySelectorAll('pre > code.language-java').forEach(function (code) {
         var rawLines = code.textContent.split('\n');
 
+        /* mdbook wraps hidden ("//-") lines in <span class="boring">; step 2 below
+           nukes those spans, so remember which raw lines they covered. */
+        var boringRaw = [];
+        var rawIdx = 0;
+        code.childNodes.forEach(function (node) {
+            var isBoring = node.nodeType === 1 && node.classList.contains('boring');
+            var parts = node.textContent.split('\n');
+            for (var i = 0; i < parts.length; i++) {
+                if (i > 0) rawIdx++;
+                if (isBoring && parts[i] !== '') boringRaw[rawIdx] = true;
+            }
+        });
+
         /* ---- 1. Parse markers ---- */
         var lineColors = [];   // one entry per non-marker line: null | "GREEN" | …
+        var lineBoring = [];   // same indexing: was this line hidden?
         var hasMarkers = false;
         var active = null;
 
@@ -28,6 +42,7 @@
                 active = m[2] === 'BEGIN' ? m[1].toUpperCase() : null;
             } else {
                 lineColors.push(active);
+                lineBoring.push(!!boringRaw[i]);
             }
         }
 
@@ -58,7 +73,7 @@
 
         /* ---- 4. Wrap highlighted lines ---- */
         var htmlLines = code.innerHTML.split('\n');
-        var result = [];
+        var out = '';
         var openTags = [];  // stack of opening <span …> strings
 
         for (var j = 0; j < htmlLines.length; j++) {
@@ -82,12 +97,13 @@
             var full = prefix + line + suffix;
 
             if (color) {
-                result.push('<span class="hl-line hl-' + color.toLowerCase() + '">' + full + '&#8203;</span>');
-            } else {
-                result.push(full);
+                full = '<span class="hl-line hl-' + color.toLowerCase() + '">' + full + '</span>';
             }
+
+            var nl = j < htmlLines.length - 1 ? '\n' : '';
+            out += lineBoring[j] ? '<span class="boring">' + full + nl + '</span>' : full + nl;
         }
 
-        code.innerHTML = result.join('\n');
+        code.innerHTML = out;
     });
 })();
