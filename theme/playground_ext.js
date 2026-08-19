@@ -43,9 +43,9 @@
     function run_code(code_block) {
         let code_area = code_block.querySelector("code");
         const code_area_classes = [...code_area.classList.values()];
-        
+
         const code_block_id = get_codeblock_id(code_area);
-        
+
 
         let result_block_parent = code_block;
 
@@ -55,15 +55,15 @@
             const pre_block = codeblock_tabs.querySelector('pre.codeblock-result');
             if (pre_block) {
                 result_block_parent = pre_block;
-            } else { 
+            } else {
                 const pre_block = document.createElement('pre');
                 pre_block.className = 'codeblock-result';
                 codeblock_tabs.appendChild(pre_block);
-                result_block_parent = pre_block;    
+                result_block_parent = pre_block;
             }
         }
 
-        
+
         let result_block = result_block_parent.querySelector('.result');
         if (!result_block) {
             result_block = document.createElement('code');
@@ -75,7 +75,7 @@
 
         let text;
         let multifile = false;
-        
+
         if (code_block_id) {
             const file_names = [...document.querySelectorAll(`#${code_block_id}.codeblock-tabs > .codeblock-tabs-titles a`).values()].map(el => el.textContent.trim());
             const code_blocks = [...document.querySelectorAll(`#${code_block_id}.codeblock-tabs > .codeblock-tabs-contents > section > pre`).values()].map(el => playground_text(el));
@@ -87,7 +87,7 @@
         } else {
             text = playground_text(code_block);
         }
-        
+
         let language = get_language(code_area);
 
         for (const cls of code_area_classes) {
@@ -104,7 +104,7 @@
 
         result_block.innerText = 'Running...';
 
-        fetch_with_timeout('https://tim03.it.jyu.fi/executor/execute', {
+        fetch_with_timeout('https://lakane.it.jyu.fi/executor/execute', {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -187,7 +187,7 @@
         runCodeButton.addEventListener('click', () => {
             run_code(pre_block);
         });
-        
+
 
         const code_block = pre_block.querySelector('code');
 
@@ -213,7 +213,7 @@
                     exec: _editor => run_code(pre_block),
                 });
             }
-            
+
 
             const undoChangesButton = document.createElement('button');
             undoChangesButton.className = 'fa fa-history reset-button';
