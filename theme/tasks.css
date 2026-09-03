@@ -1,6 +1,5 @@
 /* Task card. The number box needs `num` on <task-title>, e.g.
-   <task-title num="2.5">Puhelin<points>1 p.</points></task-title>
-   The method list treatment is applied by theme/tasks.js. */
+   <task-title num="2.5">Puhelin<points>1 p.</points></task-title> */
 
 task {
     display: flex;
@@ -106,99 +105,21 @@ task > handout > * + * {
     margin-block-start: 1em;
 }
 
-/* Method list: signature on its own line, description below it.
-   tasks.js adds the classes and strips the leading colon. */
-task handout ul.sig-list > li {
-    color: var(--task-muted);
-    font-size: 1.5rem;
-}
-
-task handout ul.sig-list > li + li {
-    margin-block-start: 12px;
-}
-
-task handout ul.sig-list > li > code:first-child {
-    display: block;
-    width: fit-content;
-    max-width: 100%;
-    margin-block-end: 5px;
-}
-
 /* --------------------------------------------------- optional extra tasks */
 
+/* The summary, icon and hover treatment come from the shared details rules
+   in css/general.css; the card only sets the inset background. */
 task handout details {
-    padding: 0 16px;
-    background-color: var(--task-inset);
-    border: 1px solid var(--line);
+    background-color: var(--task-inset); 
 }
 
-task handout details[open] {
-    padding-block-end: 16px;
-}
-
-task handout details > summary {
-    display: flex;
-    align-items: flex-start;
-    gap: 11px;
-    margin-inline: -16px;
-    padding: 13px 16px;
-    list-style: none;
-    transition: background-color 0.15s ease;
-}
-
-task handout details > summary::-webkit-details-marker {
-    display: none;
-}
-
+/* Even rhythm between the blocks inside the extra task. */
 task handout details > * {
     margin-block: 0;
 }
 
 task handout details > * + * {
     margin-block-start: 1em;
-}
-
-task handout details > summary::before {
-    content: "+";
-    flex: none;
-    display: grid;
-    place-items: center;
-    width: 19px;
-    height: 19px;
-    margin-block-start: 0.2em; /* line up with the first line of the title */
-    border: 1px solid var(--line);
-    background-color: var(--quote-bg);
-
-    color: var(--task-bg);
-    font-family: monospace;
-    font-size: 1.6rem;
-    line-height: 1;
-    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-task handout details[open] > summary {
-    border-block-end: 1px solid var(--line);
-}
-
-task handout details[open] > summary::before {
-    content: "\2013"; /* en dash */
-}
-
-task handout details > summary:hover {
-    background-color: var(--task-pill-bg);
-}
-
-task handout details > summary:hover::before {
-    background-color: var(--task-bg);
-    border-color: var(--task-bg);
-    color: var(--task-bg-text);
-}
-
-@media (prefers-reduced-motion: reduce) {
-    task handout details > summary,
-    task handout details > summary::before {
-        transition: none;
-    }
 }
 
 /* ---------------------------------------------------------------- footer */
