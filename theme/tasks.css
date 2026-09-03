@@ -20,7 +20,7 @@ task > task-title {
     padding: 16px 24px;
     border-block-end: 1px solid var(--task-line);
 
-    font-size: 1.18rem;
+    font-size: 1.9rem;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
     font-weight: 400;
     line-height: 1.25;
@@ -40,7 +40,7 @@ task > task-title[num]::before {
 
     background-color: var(--task-bg);
     color: var(--task-bg-text);
-    font-size: 1.2rem;
+    font-size: 1.9rem;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
 }
@@ -54,7 +54,7 @@ task > task-title > points {
 
     color: var(--task-bg);
     font-family: "Lato", "Open Sans", sans-serif;
-    font-size: 0.72rem;
+    font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-wrap: nowrap;
@@ -74,7 +74,7 @@ task > task-title > i.bi {
     border: 1px solid var(--task-line-strong);
 
     color: var(--task-bg);
-    font-size: 0.8rem;
+    font-size: 1.3rem;
     font-style: normal;
     user-select: none;
 }
@@ -82,7 +82,7 @@ task > task-title > i.bi {
 task > task-title > i.bi::after {
     content: "Bonus";
     font-family: "Lato", "Open Sans", sans-serif;
-    font-size: 0.72rem;
+    font-size: 1.15rem;
     font-weight: 700;
     letter-spacing: 0.04em;
 }
@@ -120,6 +120,7 @@ task handout ul.sig-list > li {
     padding-block: 11px;
     border-block-start: 1px solid var(--task-line);
     color: var(--task-muted);
+    font-size: 1.5rem;
 }
 
 task handout ul.sig-list > li:first-child {
@@ -129,6 +130,7 @@ task handout ul.sig-list > li:first-child {
 
 task handout ul.sig-list > li > code:first-child {
     align-self: start;
+    max-width: 100%; /* a flex item aligned to start would take max-content */
 }
 
 /* --------------------------------------------------- optional extra tasks */
@@ -145,7 +147,7 @@ task handout details[open] {
 
 task handout details > summary {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 11px;
     margin-inline: -16px;
     padding: 13px 16px;
@@ -172,12 +174,13 @@ task handout details > summary::before {
     place-items: center;
     width: 19px;
     height: 19px;
+    margin-block-start: 0.2em; /* line up with the first line of the title */
     border: 1px solid var(--task-line-strong);
     background-color: var(--quote-bg);
 
     color: var(--task-bg);
     font-family: monospace;
-    font-size: 1rem;
+    font-size: 1.6rem;
     line-height: 1;
     transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
@@ -253,13 +256,13 @@ task > task-link > a:hover::after {
     task > task-title {
         gap: 10px;
         padding: 13px 16px;
-        font-size: 1.05rem;
+        font-size: 1.7rem;
     }
 
     task > task-title[num]::before {
         width: 52px;
         margin: -13px 10px -13px -16px;
-        font-size: 1.05rem;
+        font-size: 1.7rem;
     }
 
     task > handout {
