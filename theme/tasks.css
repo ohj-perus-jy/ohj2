@@ -6,7 +6,7 @@ task {
     display: flex;
     flex-direction: column;
     background-color: var(--quote-bg);
-    border: 1px solid var(--task-line);
+    border: 1px solid var(--line);
 
     margin-block: 1.5em;
 }
@@ -18,7 +18,7 @@ task > task-title {
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    border-block-end: 1px solid var(--task-line-strong);
+    border-block-end: 1px solid var(--line);
 
     font-size: 1.9rem;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
@@ -71,7 +71,7 @@ task > task-title > i.bi {
     gap: 6px;
     flex: none;
     padding: 2px 9px;
-    border: 1px solid var(--task-line-strong);
+    border: 1px solid var(--line);
 
     color: var(--task-bg);
     font-size: 1.3rem;
@@ -129,7 +129,7 @@ task handout ul.sig-list > li > code:first-child {
 task handout details {
     padding: 0 16px;
     background-color: var(--task-inset);
-    border: 1px solid var(--task-line-strong);
+    border: 1px solid var(--line);
 }
 
 task handout details[open] {
@@ -166,7 +166,7 @@ task handout details > summary::before {
     width: 19px;
     height: 19px;
     margin-block-start: 0.2em; /* line up with the first line of the title */
-    border: 1px solid var(--task-line-strong);
+    border: 1px solid var(--line);
     background-color: var(--quote-bg);
 
     color: var(--task-bg);
@@ -177,7 +177,7 @@ task handout details > summary::before {
 }
 
 task handout details[open] > summary {
-    border-block-end: 1px solid var(--task-line-strong);
+    border-block-end: 1px solid var(--line);
 }
 
 task handout details[open] > summary::before {
@@ -206,7 +206,7 @@ task handout details > summary:hover::before {
 task > task-link {
     display: flex;
     padding: 16px 24px;
-    border-block-start: 1px solid var(--task-line-strong);
+    border-block-start: 1px solid var(--line);
 }
 
 task > task-link > a {
