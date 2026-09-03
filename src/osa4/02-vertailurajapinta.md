@@ -141,7 +141,7 @@ periä `Collection` ja kirjoittaa toteutus vain osalle metodeista. -->
 </details>
 
 <task>
-  <task-title>Tehtävä 4.5: Miksi Comparable. <points>1 p.</points> </task-title>
+  <task-title num="4.5">Miksi Comparable.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-5-miksi-comparable/handout.md}}
@@ -457,7 +457,7 @@ void main() {
 
 
 <task>
-  <task-title>Tehtävä 4.6: Henkilöt järjestykseen, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="4.6">Henkilöt järjestykseen, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-6-henkilot-jarjestykseen-1/handout.md}}
@@ -467,7 +467,7 @@ void main() {
 </task>
 
 <task>
-  <task-title>Tehtävä 4.7: Henkilöt järjestykseen, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="4.7">Henkilöt järjestykseen, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-7-henkilot-jarjestykseen-2/handout.md}}

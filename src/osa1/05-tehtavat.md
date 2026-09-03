@@ -8,7 +8,7 @@
 Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettisiin ohjeisiin](../suorittaminen.md#eettiset-ohjeet).
 
 <task>
-<task-title>Tehtävä 1.1: Oma ohjelma Javalla <points>1 p.</points> </task-title>
+<task-title num="1.1">Oma ohjelma Javalla<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-1-eka-ohjelma/handout.md}}
@@ -18,7 +18,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title>Tehtävä 1.2: Sanojen määrä <points>1 p.</points> </task-title>
+<task-title num="1.2">Sanojen määrä<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-2-sanojen-maara/handout.md}}
@@ -28,7 +28,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title>Tehtävä 1.3: Kokonaislukujen lukeminen käyttäjältä <points>1 p.</points> </task-title>
+<task-title num="1.3">Kokonaislukujen lukeminen käyttäjältä<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-3-kokonaislukujen-lukeminen/handout.md}}
@@ -38,7 +38,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title>Tehtävä 1.4: Merkkijonon pakkaaminen <points>1 p.</points> </task-title>
+<task-title num="1.4">Merkkijonon pakkaaminen<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-4-merkkijonon-pakkaaminen/handout.md}}
@@ -48,7 +48,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title>Tehtävä 1.5: Salasanan vahvuuden tarkistaminen <points>1 p.</points> </task-title>
+<task-title num="1.5">Salasanan vahvuuden tarkistaminen<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-5-salasanan-tarkistaja/handout.md}}
@@ -58,8 +58,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title> Tehtävä 1.6: Matriisin tulostus
-<points>1 p.</points> </task-title>
+<task-title num="1.6">Matriisin tulostus<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-6-matriisin-tulostus/handout.md}}
@@ -69,8 +68,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 1.7: Numerolaskuri
-<points>1 p.</points> </task-title>
+<task-title num="1.7"><i class="bi bi-stars"></i>Numerolaskuri<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-7-numerolaskuri/handout.md}}
@@ -80,7 +78,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 1.8: Puuttuva luku <points>1 p.</points> </task-title>
+<task-title num="1.8"><i class="bi bi-stars"></i>Puuttuva luku<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-8-puuttuva-luku/handout.md}}
@@ -90,7 +88,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 1.9: Alkuluvut <points>1 p.</points> </task-title>
+<task-title num="1.9"><i class="bi bi-stars"></i>Alkuluvut<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-9-alkuluvut/handout.md}}

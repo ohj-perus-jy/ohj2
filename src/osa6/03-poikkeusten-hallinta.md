@@ -566,7 +566,7 @@ eksplisiittisesti.
 *Osa tämä osan tekstistä pohjautuu [Java-dokumentaatioon poikkeuksista](https://dev.java/learn/exceptions/).*
 
 <task>
-<task-title>Tehtävä 6.5 : Poikkeukset, osa 1. <points>1 p.</points> </task-title>
+<task-title num="6.5">Poikkeukset, osa 1.<points>1 p.</points></task-title>
 <handout>
 {{#include ../exercises/6-5-poikkeukset-1/handout.md}}
 </handout>
@@ -575,7 +575,7 @@ eksplisiittisesti.
 
 
 <task>
-  <task-title>Tehtävä 6.6: Poikkeukset, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="6.6">Poikkeukset, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-6-poikkeukset-2/handout.md}}
@@ -585,7 +585,7 @@ eksplisiittisesti.
 </task>
 
 <task>
-  <task-title>Tehtävä 6.7: Poikkeukset, osa 3. <points>1 p.</points> </task-title>
+  <task-title num="6.7">Poikkeukset, osa 3.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-7-poikkeukset-3/handout.md}}

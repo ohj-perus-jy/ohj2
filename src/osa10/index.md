@@ -58,7 +58,7 @@ kuin näkymän nimi, perään lisättynä "Controller"-sana. Esimerkiksi
 > pelkän luokan nimen, kuten `SyotaTehtavaController`, IDE ei löydä luokkaa.
 
 <task>
-  <task-title>Tehtävä 10.1: Näkymät SceneBuilderissa. <points>1 p.</points> </task-title>
+  <task-title num="10.1">Näkymät SceneBuilderissa.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/10-1-ht-5/handout.md}}
@@ -77,7 +77,7 @@ class="bi bi-arrow-right"></i> Show Sample Controller Skeleton. Täydennä siihe
 tarvittavat tyypit `?`-merkkien kohdalle.
 
 <task>
-  <task-title>Tehtävä 10.2: Kontrollerit. <points>1 p.</points> </task-title>
+  <task-title num="10.2">Kontrollerit.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/10-2-ht-6/handout.md}}
@@ -97,7 +97,7 @@ esimerkiksi tulostaa konsoliin. Näin saat hyvän pohjan, johon voit myöhemmin
 lisätä toiminnallisuutta. 
 
 <task>
-  <task-title>Tehtävä 10.3: Siirtyminen näkymästä toiseen. <points>1 p.</points> </task-title>
+  <task-title num="10.3">Siirtyminen näkymästä toiseen.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/10-3-ht-7/handout.md}}
@@ -115,8 +115,7 @@ Kuten osassa 9, suosittelemme tässäkin vaiheessa näyttämään harjoitustyön
 vaiheen ohjaajalle. 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 10.4: Vaiheen
-  näyttäminen ohjaajalle. <points>1 p.</points> </task-title>
+  <task-title num="10.4"><i class="bi bi-stars"></i>Vaiheen näyttäminen ohjaajalle.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/10-4-ht-8/handout.md}}

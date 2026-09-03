@@ -798,7 +798,7 @@ ohjata `setVisible()`-metodilla, joka on myös havaittava ominaisuus
 </details>
 
 <task>
-  <task-title>Tehtävä 8.2: Todo-sovellus, vaihe 8. <points>1 p.</points> </task-title>
+  <task-title num="8.2">Todo-sovellus, vaihe 8.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-2-todo-8/handout.md}}

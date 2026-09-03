@@ -365,7 +365,7 @@ public class MainController implements Initializable {
 ## Tehtävät 
 
 <task>
-  <task-title>Tehtävä 8.3: Todo-sovellus, vaihe 8. <points>1 p.</points> </task-title>
+  <task-title num="8.3">Todo-sovellus, vaihe 8.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-3-todo-9/handout.md}}

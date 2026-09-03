@@ -558,7 +558,7 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 
 <task>
-  <task-title>Tehtävä 4.3: Seikkailupeli. <points>1 p.</points> </task-title>
+  <task-title num="4.3">Seikkailupeli.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-3-seikkailupeli/handout.md}}
@@ -569,7 +569,7 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.4: Kotityörobotti. <points>1 p.</points> </task-title>
+  <task-title num="4.4"><i class="bi bi-stars"></i>Kotityörobotti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-4-kotityorobotti/handout.md}}

@@ -177,7 +177,7 @@ klikkaamalla `alkiot`-taulukon kohdalla hiiren oikeaa painiketta, valitse
 "Customize data view", ja poista valinta kohdasta "Hide null elements". 
 
 <task>
-  <task-title>Tehtävä 5.1: Listaan lisääminen. <points>1 p.</points> </task-title>
+  <task-title num="5.1">Listaan lisääminen.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-1-lista-1/handout.md}}
@@ -231,7 +231,7 @@ taulukon alkiot uuteen taulukkoon, ja sitten lisätään uusi alkio uuteen
 taulukkoon. Tämä prosessi varmistaa, että lista voi kasvaa tarpeen mukaan.
 
 <task>
-  <task-title>Tehtävä 5.2: Dynaaminen lista, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="5.2">Dynaaminen lista, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-2-dynaaminen-lista-1/handout.md}}
@@ -254,7 +254,7 @@ siirretään yhden askeleen taaksepäin. Näin lista pysyy ehyenä, eikä uutta
 taulukkoa tarvita. 
 
 <task>
-  <task-title>Tehtävä 5.3: Dynaaminen lista, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="5.3">Dynaaminen lista, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-3-dynaaminen-lista-2/handout.md}}
@@ -429,7 +429,7 @@ Jos listassa voi olla useita samanlaisia alkioita, tämä toteutus poistaa vain
 ensimmäisen; muiden poistaminen vaatii uuden läpikäynnin.
 
 <task>
-  <task-title>Tehtävä 5.4: Dynaaminen lista, osa 3. <points>1 p.</points> </task-title>
+  <task-title num="5.4">Dynaaminen lista, osa 3.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-4-dynaaminen-lista-3/handout.md}}

@@ -50,7 +50,7 @@ esitetty, palauta URL-osoite siihen commitiin joka parhaiten edustaa kyseisen
 tehtävän vaatimuksia.
 
 <task>
-  <task-title>Tehtävä 11.1: Tiedon lisääminen. <points>1 p.</points> </task-title>
+  <task-title num="11.1">Tiedon lisääminen.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/11-1-ht-9/handout.md}}
@@ -61,7 +61,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title>Tehtävä 11.2: Poistaminen. <points>1 p.</points></task-title>
+    <task-title num="11.2">Poistaminen.<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/11-2-ht-10/handout.md}}
@@ -73,7 +73,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title>Tehtävä 11.3: Tallentaminen ja lukeminen tiedostosta. <points>1 p.</points></task-title>
+    <task-title num="11.3">Tallentaminen ja lukeminen tiedostosta.<points>1 p.</points></task-title>
 
 <handout>
 
@@ -86,7 +86,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title>Tehtävä 11.4: Tiedon muokkaaminen. <points>1 p.</points></task-title>
+    <task-title num="11.4">Tiedon muokkaaminen.<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/11-4-ht-12/handout.md}}
@@ -98,7 +98,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-<task-title>Tehtävä 11.5: Validointi. <points>1 p.</points></task-title>
+<task-title num="11.5">Validointi.<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/11-5-ht-13/handout.md}}
@@ -110,7 +110,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title>Tehtävä 11.6: Yksikkötestit. <points>1 p.</points></task-title>
+    <task-title num="11.6">Yksikkötestit.<points>1 p.</points></task-title>
     <handout>
 
 {{#include ../exercises/11-6-ht-14/handout.md}}
@@ -122,7 +122,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title>Tehtävä 11.7: README-tiedosto. <points>1 p.</points></task-title>
+    <task-title num="11.7">README-tiedosto.<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/11-7-ht-15/handout.md}}
@@ -134,7 +134,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title><i class="bi bi-stars jyu-gold"></i>Tehtävä 11.8: Bonus: Näytä vaihe ohjaajalle. <points>1 p.</points></task-title>
+    <task-title num="11.8"><i class="bi bi-stars"></i>Bonus: Näytä vaihe ohjaajalle.<points>1 p.</points></task-title>
 
 <handout>
 

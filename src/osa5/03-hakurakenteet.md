@@ -452,7 +452,7 @@ avainten jatkuvaa järjestystä sekä järjestykseen perustuvia hakuja.
 ---
 
 <task>
-  <task-title>Tehtävä 5.5: Sanat<points>1 p.</points> </task-title>
+  <task-title num="5.5">Sanat<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-5-sanat/handout.md}}
@@ -462,7 +462,7 @@ avainten jatkuvaa järjestystä sekä järjestykseen perustuvia hakuja.
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 5.6: Varaukset<points>1 p.</points> </task-title>
+  <task-title num="5.6"><i class="bi bi-stars"></i>Varaukset<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-6-varaukset/handout.md}}
@@ -472,7 +472,7 @@ avainten jatkuvaa järjestystä sekä järjestykseen perustuvia hakuja.
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 5.7: Hajautustaulu<points>1 p.</points> </task-title>
+  <task-title num="5.7"><i class="bi bi-stars"></i>Hajautustaulu<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-7-hajautustaulu/handout.md}}

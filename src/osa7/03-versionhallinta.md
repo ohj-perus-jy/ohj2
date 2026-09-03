@@ -82,7 +82,7 @@ tehtävän aikana tekemiäsi muutoksia. Voit halutessasi tehdä useammankin
 commitin, jos haluat. 
 
 <task>
-  <task-title>Tehtävä 7.3: Todo-sovellus, vaihe 3. <points>1 p.</points> </task-title>
+  <task-title num="7.3">Todo-sovellus, vaihe 3.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/7-3-todo-3/handout.md}}

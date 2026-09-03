@@ -6,7 +6,7 @@
 > [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
 
 <task>
-  <task-title>Tehtävä 4.1: Muunnin. <points>1 p.</points> </task-title>
+  <task-title num="4.1">Muunnin.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-1-muunnin/handout.md}}
@@ -17,7 +17,7 @@
 
 
 <task>
-  <task-title>Tehtävä 4.2: Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
+  <task-title num="4.2">Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-2-salakirjoitus/handout.md}}
@@ -28,7 +28,7 @@
 
 
 <task>
-  <task-title>Tehtävä 4.3: Seikkailupeli. <points>1 p.</points> </task-title>
+  <task-title num="4.3">Seikkailupeli.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-3-seikkailupeli/handout.md}}
@@ -39,7 +39,7 @@
 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.4: Kotityörobotti. <points>1 p.</points> </task-title>
+  <task-title num="4.4"><i class="bi bi-stars"></i>Kotityörobotti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-4-kotityorobotti/handout.md}}
@@ -50,7 +50,7 @@
 
 
 <task>
-  <task-title>Tehtävä 4.5: Miksi Comparable. <points>1 p.</points> </task-title>
+  <task-title num="4.5">Miksi Comparable.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-5-miksi-comparable/handout.md}}
@@ -60,7 +60,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 4.6: Henkilöt järjestykseen, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="4.6">Henkilöt järjestykseen, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-6-henkilot-jarjestykseen-1/handout.md}}
@@ -70,7 +70,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 4.7: Henkilöt järjestykseen, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="4.7">Henkilöt järjestykseen, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-7-henkilot-jarjestykseen-2/handout.md}}
@@ -81,7 +81,7 @@
 
 
 <task>
-  <task-title>Tehtävä 4.8: Etsi suurin. <points>1 p.</points> </task-title>
+  <task-title num="4.8">Etsi suurin.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-8-etsi-suurin/handout.md}}
@@ -91,7 +91,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 4.9: Kontti. <points>1 p.</points> </task-title>
+  <task-title num="4.9">Kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-9-kontti/handout.md}}
@@ -101,7 +101,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.10: Iso kontti. <points>1 p.</points> </task-title>
+  <task-title num="4.10"><i class="bi bi-stars"></i>Iso kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-10-iso-kontti/handout.md}}
@@ -111,8 +111,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.11:
-  Tyyppirajoitukset, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="4.11"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-11-tyyppirajoitukset-1/handout.md}}
@@ -122,7 +121,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.12: Tyyppirajoitukset, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="4.12"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-12-tyyppirajoitukset-2/handout.md}}

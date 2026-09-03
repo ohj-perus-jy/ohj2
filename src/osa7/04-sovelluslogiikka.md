@@ -422,7 +422,7 @@ Tallenna FXML-tiedosto ja kokeile vielä ajaa sovellus IDEA:sta varmistaksesi,
 että kaikki vieläkin toimii.
 
 <task>
-  <task-title>Tehtävä 7.4: Todo-sovellus, vaihe 4. <points>1 p.</points> </task-title>
+  <task-title num="7.4">Todo-sovellus, vaihe 4.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/7-4-todo-4/handout.md}}

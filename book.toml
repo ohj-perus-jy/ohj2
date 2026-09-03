@@ -31,6 +31,7 @@ additional-js = [
   "theme/accordion.js",
   "theme/codeblock-tabs.js",
   "theme/code-highlights.js",
+  "theme/tasks.js",
   "theme/asciinema-player.min.js",
   "theme/asciinema-component.js",
 ]

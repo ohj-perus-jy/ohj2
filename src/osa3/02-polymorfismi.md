@@ -572,7 +572,7 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 ## Tehtävät {#tehtavat}
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.4: Luokkahierarkia, osa 4. <points>1 p.</points> </task-title>
+  <task-title num="3.4"><i class="bi bi-stars"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-4-verkkokauppa-4/handout.md}}
@@ -582,7 +582,7 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 </task>
 
 <task>
-  <task-title>Tehtävä 3.5: Korvaaminen, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="3.5">Korvaaminen, osa 1.<points>1 p.</points></task-title>
   <handout>
 
   {{#include ../exercises/3-5-korvaaminen-1/handout.md}}
@@ -592,7 +592,7 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 </task>
 
 <task>
-  <task-title>Tehtävä 3.6: Korvaaminen, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="3.6">Korvaaminen, osa 2.<points>1 p.</points></task-title>
   <handout>
 
   {{#include ../exercises/3-6-korvaaminen-2/handout.md}}

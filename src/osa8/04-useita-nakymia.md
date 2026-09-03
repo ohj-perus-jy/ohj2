@@ -701,7 +701,7 @@ yhden `tallenna()`-metodin kutsua.
 </details>
 
 <task>
-  <task-title>Tehtävä 8.4: Todo-sovellus, vaihe 10. <points>1 p.</points> </task-title>
+  <task-title num="8.4">Todo-sovellus, vaihe 10.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-4-todo-10/handout.md}}

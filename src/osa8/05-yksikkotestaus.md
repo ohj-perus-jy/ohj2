@@ -144,7 +144,7 @@ public static double keskiarvo(List<Integer> luvut, int lopetusluku) {
 Nyt kaikki testit menevät läpi!
 
 <task>
-  <task-title>Tehtävä 8.5: Testaus. <points>1 p.</points> </task-title>
+  <task-title num="8.5">Testaus.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-5-testaus/handout.md}}
@@ -229,7 +229,7 @@ versiohallintaan. Jos ehdit jo lisäämään sen versiohallintaan, poista se sie
 komennolla `git rm --cached testitehtavat.json` ja tee uusi commit.
 
 <task>
-  <task-title>Tehtävä 8.6: bisneslogiikan testaaminen.<points>1 p.</points></task-title> 
+  <task-title num="8.6">bisneslogiikan testaaminen.<points>1 p.</points></task-title> 
   <handout>
 
 {{#include ../exercises/8-6-testaus/handout.md}}
@@ -620,7 +620,7 @@ mock-luokkia ympärillä olevien vaikeiden järjestelmien korvaamisessa
 testiajonaikaisesti.
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 8.7: Todo-sovellus, vaihe 11. <points>1 p.</points> </task-title>
+  <task-title num="8.7"><i class="bi bi-stars"></i>Todo-sovellus, vaihe 11.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-7-todo-11/handout.md}}

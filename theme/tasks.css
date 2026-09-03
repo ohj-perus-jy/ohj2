@@ -1,60 +1,224 @@
-task {
-    --main-color: var(--icons);
+/* Task card. The number box needs `num` on <task-title>, e.g.
+   <task-title num="2.5">Puhelin<points>1 p.</points></task-title>
+   The method list treatment is applied by theme/tasks.js. */
 
+task {
     display: flex;
     flex-direction: column;
     background-color: var(--quote-bg);
-    border-top: 0.4em solid var(--task-bg);
+    border: 1px solid var(--task-line);
 
-    margin-block: 1em;
+    margin-block: 1.5em;
 }
+
+/* ---------------------------------------------------------------- header */
 
 task > task-title {
     display: flex;
     align-items: center;
-    font-size: 1.25em;
+    gap: 12px;
+    padding: 16px 24px;
+    border-block-end: 1px solid var(--task-line);
+
+    font-size: 1.18rem;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
     font-weight: 400;
-    padding: 0.75em 1.5em 0 1.5em;
+    line-height: 1.25;
 }
 
-task-title > i.bi {
-    margin-inline-end: 0.25em;
-}
-
-task-link a {
+/* Task number as a filled box flush with the header edges. The negative
+   margins cancel the header padding so the box spans its full height. */
+task > task-title[num]::before {
+    content: attr(num);
+    align-self: stretch;
     display: flex;
     align-items: center;
-    width: fit-content;
+    justify-content: center;
+    flex: none;
+    width: 66px;
+    margin: -16px 12px -16px -24px;
+
+    background-color: var(--task-bg);
+    color: var(--task-bg-text);
+    font-size: 1.2rem;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
 }
 
-task-link a::after {
-  content: "\f285"; /* The unicode for bi-chevron-right */
-  font-family: "bootstrap-icons" !important; /* Specify the icon font */
- 
-  display: inline-block;
-  margin-left: 8px; 
-  margin-bottom: 1px;
-  transition: transform 0.3s ease;
-}
-
-task-link a:hover::after {
-  transform: translateX(4px);
-}
-
-task-title > points {
+task > task-title > points {
+    order: 3;
     margin-inline-start: auto;
+    padding: 2px 9px;
+    border: 1px solid var(--task-bg);
+    background-color: var(--task-pill-bg);
+
+    color: var(--task-bg);
+    font-family: "Lato", "Open Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-wrap: nowrap;
     user-select: none;
 }
 
-task > task-link {
+/* Bonus badge: the star glyph comes from the <i class="bi bi-stars"> element,
+   the label from ::after, so the two read as one chip. */
+task > task-title > i.bi {
+    order: 2;
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    padding: 2px 9px;
+    border: 1px solid var(--task-line-strong);
+
+    color: var(--task-bg);
+    font-size: 0.8rem;
+    font-style: normal;
+    user-select: none;
+}
+
+task > task-title > i.bi::after {
+    content: "Bonus";
+    font-family: "Lato", "Open Sans", sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+task > task-title:has(> i.bi) > points {
+    margin-inline-start: 0;
+}
+
+/* ---------------------------------------------------------------- handout */
+
+task > handout {
+    padding: 20px 24px 22px;
+}
+
+/* Even rhythm between the blocks of the handout, whatever they are. */
+task > handout > * {
+    margin-block: 0;
+}
+
+task > handout > * + * {
+    margin-block-start: 1em;
+}
+
+/* Method list: signature on its own line, description below it.
+   tasks.js adds the classes and strips the leading colon. */
+task handout ul.sig-list {
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+task handout ul.sig-list > li {
     display: flex;
-    padding-inline: 16px;
+    flex-direction: column;
+    gap: 5px;
+    padding-block: 11px;
+    border-block-start: 1px solid var(--task-line);
+    color: var(--task-muted);
+}
+
+task handout ul.sig-list > li:first-child {
+    padding-block-start: 2px;
+    border-block-start: 0;
+}
+
+task handout ul.sig-list > li > code:first-child {
+    align-self: start;
+}
+
+/* --------------------------------------------------- optional extra tasks */
+
+task handout details {
+    padding: 0 16px;
+    background-color: var(--task-inset);
+    border: 1px solid var(--task-line-strong);
+}
+
+task handout details[open] {
     padding-block-end: 16px;
 }
 
+task handout details > summary {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-inline: -16px;
+    padding: 13px 16px;
+    list-style: none;
+    transition: background-color 0.15s ease;
+}
+
+task handout details > summary::-webkit-details-marker {
+    display: none;
+}
+
+task handout details > * {
+    margin-block: 0;
+}
+
+task handout details > * + * {
+    margin-block-start: 1em;
+}
+
+task handout details > summary::before {
+    content: "+";
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 19px;
+    height: 19px;
+    border: 1px solid var(--task-line-strong);
+    background-color: var(--quote-bg);
+
+    color: var(--task-bg);
+    font-family: monospace;
+    font-size: 1rem;
+    line-height: 1;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+task handout details[open] > summary {
+    border-block-end: 1px solid var(--task-line-strong);
+}
+
+task handout details[open] > summary::before {
+    content: "\2013"; /* en dash */
+}
+
+task handout details > summary:hover {
+    background-color: var(--task-pill-bg);
+}
+
+task handout details > summary:hover::before {
+    background-color: var(--task-bg);
+    border-color: var(--task-bg);
+    color: var(--task-bg-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    task handout details > summary,
+    task handout details > summary::before {
+        transition: none;
+    }
+}
+
+/* ---------------------------------------------------------------- footer */
+
+task > task-link {
+    display: flex;
+    padding: 16px 24px;
+    border-block-start: 1px solid var(--task-line);
+}
+
 task > task-link > a {
+    display: flex;
+    align-items: center;
+    width: fit-content;
     padding: 12px 24px;
     background-color: var(--task-bg);
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
@@ -69,20 +233,45 @@ task > task-link > a:hover {
     color: var(--task-bg-hover-text) !important;
 }
 
-task > task-title::before {
-    content: "";
+task > task-link > a::after {
+    content: "\f285"; /* The unicode for bi-chevron-right */
+    font-family: "bootstrap-icons" !important; /* Specify the icon font */
+
     display: inline-block;
-    width: 42px;
-    height: 42px;
-    margin-inline-end: 1em;
-    background-repeat: no-repeat;
-    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3C!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--%3E%3Cpath d='M100.4 417.2C104.5 402.6 112.2 389.3 123 378.5L304.2 197.3L338.1 163.4C354.7 180 389.4 214.7 442.1 267.4L476 301.3L442.1 335.2L260.9 516.4C250.2 527.1 236.8 534.9 222.2 539L94.4 574.6C86.1 576.9 77.1 574.6 71 568.4C64.9 562.2 62.6 553.3 64.9 545L100.4 417.2zM156 413.5C151.6 418.2 148.4 423.9 146.7 430.1L122.6 517L209.5 492.9C215.9 491.1 221.7 487.8 226.5 483.2L155.9 413.5zM510 267.4C493.4 250.8 458.7 216.1 406 163.4L372 129.5C398.5 103 413.4 88.1 416.9 84.6C430.4 71 448.8 63.4 468 63.4C487.2 63.4 505.6 71 519.1 84.6L554.8 120.3C568.4 133.9 576 152.3 576 171.4C576 190.5 568.4 209 554.8 222.5C551.3 226 536.4 240.9 509.9 267.4z'/%3E%3C/svg%3E");
-    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 640'%3E%3C!--!Font Awesome Free v7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--%3E%3Cpath d='M100.4 417.2C104.5 402.6 112.2 389.3 123 378.5L304.2 197.3L338.1 163.4C354.7 180 389.4 214.7 442.1 267.4L476 301.3L442.1 335.2L260.9 516.4C250.2 527.1 236.8 534.9 222.2 539L94.4 574.6C86.1 576.9 77.1 574.6 71 568.4C64.9 562.2 62.6 553.3 64.9 545L100.4 417.2zM156 413.5C151.6 418.2 148.4 423.9 146.7 430.1L122.6 517L209.5 492.9C215.9 491.1 221.7 487.8 226.5 483.2L155.9 413.5zM510 267.4C493.4 250.8 458.7 216.1 406 163.4L372 129.5C398.5 103 413.4 88.1 416.9 84.6C430.4 71 448.8 63.4 468 63.4C487.2 63.4 505.6 71 519.1 84.6L554.8 120.3C568.4 133.9 576 152.3 576 171.4C576 190.5 568.4 209 554.8 222.5C551.3 226 536.4 240.9 509.9 267.4z'/%3E%3C/svg%3E");    /* Color the svg icon based on  --task-bg color */
-    background-color: var(--task-bg);
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
+    margin-left: 8px;
+    margin-bottom: 1px;
+    transition: transform 0.3s ease;
 }
 
-task > handout {
-    padding: 16px;
+task > task-link > a:hover::after {
+    transform: translateX(4px);
+}
+
+/* ---------------------------------------------------------------- narrow */
+
+@media (max-width: 620px) {
+    task > task-title {
+        gap: 10px;
+        padding: 13px 16px;
+        font-size: 1.05rem;
+    }
+
+    task > task-title[num]::before {
+        width: 52px;
+        margin: -13px 10px -13px -16px;
+        font-size: 1.05rem;
+    }
+
+    task > handout {
+        padding: 16px 16px 18px;
+    }
+
+    task > task-link {
+        padding: 14px 16px;
+    }
+
+    task > task-link > a {
+        width: 100%;
+        justify-content: center;
+    }
 }

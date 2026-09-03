@@ -192,7 +192,7 @@ mukautuvat hyvin ikkunan kokoon.
 
 
 <task>
-  <task-title>Tehtävä 7.6: Todo-sovellus, vaihe 6. <points>1 p.</points> </task-title>
+  <task-title num="7.6">Todo-sovellus, vaihe 6.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/7-6-todo-6/handout.md}}
