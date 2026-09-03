@@ -18,7 +18,7 @@ task > task-title {
     align-items: center;
     gap: 12px;
     padding: 16px 24px;
-    border-block-end: 1px solid var(--task-line);
+    border-block-end: 1px solid var(--task-line-strong);
 
     font-size: 1.9rem;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
@@ -108,29 +108,20 @@ task > handout > * + * {
 
 /* Method list: signature on its own line, description below it.
    tasks.js adds the classes and strips the leading colon. */
-task handout ul.sig-list {
-    list-style: none;
-    padding-inline-start: 0;
-}
-
 task handout ul.sig-list > li {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-    padding-block: 11px;
-    border-block-start: 1px solid var(--task-line);
     color: var(--task-muted);
     font-size: 1.5rem;
 }
 
-task handout ul.sig-list > li:first-child {
-    padding-block-start: 2px;
-    border-block-start: 0;
+task handout ul.sig-list > li + li {
+    margin-block-start: 12px;
 }
 
 task handout ul.sig-list > li > code:first-child {
-    align-self: start;
-    max-width: 100%; /* a flex item aligned to start would take max-content */
+    display: block;
+    width: fit-content;
+    max-width: 100%;
+    margin-block-end: 5px;
 }
 
 /* --------------------------------------------------- optional extra tasks */
@@ -215,7 +206,7 @@ task handout details > summary:hover::before {
 task > task-link {
     display: flex;
     padding: 16px 24px;
-    border-block-start: 1px solid var(--task-line);
+    border-block-start: 1px solid var(--task-line-strong);
 }
 
 task > task-link > a {
