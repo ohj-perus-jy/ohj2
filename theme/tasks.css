@@ -48,12 +48,9 @@ task > task-title > points {
     order: 3;
     margin-inline-start: auto;
     padding: 2px 9px;
-    border: 1px solid var(--task-bg);
-    background-color: var(--task-pill-bg);
-
     color: var(--task-bg);
     font-family: "Lato", "Open Sans", sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.25rem;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-wrap: nowrap;
