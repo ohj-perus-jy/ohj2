@@ -23,7 +23,7 @@ ohjesivulta](../harjoitustyo.md).
 Kun olet valinnut aiheen, ilmoita se alla olevan tehtävän kautta.
 
 <task>
-  <task-title>Tehtävä 9.1: Harjoitustyö, aiheen valinta. <points>1 p.</points> </task-title>
+  <task-title num="9.1">Harjoitustyö, aiheen valinta.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/9-1-ht-1/handout.md}}
@@ -102,7 +102,7 @@ Luo lopuksi uusi etävarasto ja lataa nykyinen varastosi sinne [osan
 
 
 <task>
-  <task-title>Tehtävä 9.2: Harjoitustyö, Git-etävarasto. <points>1 p.</points> </task-title>
+  <task-title num="9.2">Harjoitustyö, Git-etävarasto.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/9-2-ht-2/handout.md}}
@@ -247,7 +247,7 @@ puske muutokset etävarastoon.
 
 
 <task>
-  <task-title>Tehtävä 9.3: Käyttöliittymäsuunnitelma. <points>1 p.</points> </task-title>
+  <task-title num="9.3">Käyttöliittymäsuunnitelma.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/9-3-ht-3/handout.md}}
@@ -260,8 +260,7 @@ puske muutokset etävarastoon.
 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 9.4:
-  Näyttäminen ohjaajalle. <points>1 p.</points> </task-title>
+  <task-title num="9.4"><i class="bi bi-stars"></i>Näyttäminen ohjaajalle.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/9-4-ht-4/handout.md}}

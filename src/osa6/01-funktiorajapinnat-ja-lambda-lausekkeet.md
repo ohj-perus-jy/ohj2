@@ -470,7 +470,7 @@ arvosanat.forEach((nimi, arvosana) -> IO.println(nimi + " => " + arvosana));
 ```
 
 <task>
-  <task-title>Tehtävä 6.1: Laskukone <points>1 p.</points> </task-title>
+  <task-title num="6.1">Laskukone<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-1-laskukone/handout.md}}
@@ -833,7 +833,7 @@ IO.println(nimet);
 ```
 
 <task>
-  <task-title>Tehtävä 6.2: Vertailu harvinaisuuden mukaan <points>1 p.</points> </task-title>
+  <task-title num="6.2">Vertailu harvinaisuuden mukaan<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-2-vertailu-harvinaisuus/handout.md}}

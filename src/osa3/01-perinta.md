@@ -504,7 +504,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="3.1">Luokkahierarkia, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-1-verkkokauppa-1/handout.md}}
@@ -514,7 +514,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
 </task>
 
 <task>
-  <task-title>Tehtävä 3.2: Luokkahierarkia, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="3.2">Luokkahierarkia, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-2-verkkokauppa-2/handout.md}}
@@ -524,7 +524,7 @@ Usein kirjallisuudessa mainitaan, että Javassa moniperintää muistuttaa hieman
 </task>
 
 <task>
-  <task-title>Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <task-title num="3.3">Luokkahierarkia, osa 3.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-3-verkkokauppa-3/handout.md}}

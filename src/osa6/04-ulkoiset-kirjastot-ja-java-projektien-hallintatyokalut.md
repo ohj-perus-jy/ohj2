@@ -471,7 +471,7 @@ pakkaukseen.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 6.8: Riippuvuudet. <points>1 p.</points> </task-title>
+  <task-title num="6.8">Riippuvuudet.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-8-riippuvuudet/handout.md}}

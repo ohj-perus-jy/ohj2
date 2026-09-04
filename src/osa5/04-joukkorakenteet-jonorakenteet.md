@@ -471,7 +471,7 @@ kuitenkin erittäin nopeaa ja tapahtuu vakioajassa *O(1)*.
 ## Tehtävät {#tehtavat}
 
 <task>
-  <task-title>Tehtävä 5.8: Joukot<points>1 p.</points> </task-title>
+  <task-title num="5.8">Joukot<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-8-joukot/handout.md}} 
@@ -481,7 +481,7 @@ kuitenkin erittäin nopeaa ja tapahtuu vakioajassa *O(1)*.
 </task>
 
 <task>
-  <task-title>Tehtävä 5.9: Tehtävälista<points>1 p.</points> </task-title>
+  <task-title num="5.9">Tehtävälista<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-9-tehtavalista/handout.md}}
@@ -491,7 +491,7 @@ kuitenkin erittäin nopeaa ja tapahtuu vakioajassa *O(1)*.
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 5.10: Sulut<points>1 p.</points> </task-title>
+  <task-title num="5.10"><i class="bi bi-stars"></i>Sulut<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-10-sulut/handout.md}}

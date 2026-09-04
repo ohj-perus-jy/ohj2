@@ -626,7 +626,7 @@ aiemmin määritetty perinteinen luokka.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 6.9: Sanat. <points>1 p.</points> </task-title>
+  <task-title num="6.9">Sanat.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-9-sanat/handout.md}}
@@ -636,7 +636,7 @@ aiemmin määritetty perinteinen luokka.
 </task>
 
 <task>
-  <task-title>Tehtävä 6.10: Lue henkilöt JSON-tiedostosta. <points>1 p.</points> </task-title>
+  <task-title num="6.10">Lue henkilöt JSON-tiedostosta.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-10-json-1/handout.md}}
@@ -646,7 +646,7 @@ aiemmin määritetty perinteinen luokka.
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 6.11: CSV -> JSON. <points>1 p.</points> </task-title>
+  <task-title num="6.11"><i class="bi bi-stars"></i>CSV -> JSON.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-11-csv-json/handout.md}}
@@ -656,7 +656,7 @@ aiemmin määritetty perinteinen luokka.
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 6.12: Parempi laskukone <points>1 p.</points> </task-title>
+  <task-title num="6.12"><i class="bi bi-stars"></i>Parempi laskukone<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-12-laskin/handout.md}}

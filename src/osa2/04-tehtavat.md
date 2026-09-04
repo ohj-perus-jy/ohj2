@@ -6,7 +6,7 @@
 > [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
 
 <task>
-  <task-title>Tehtävä 2.1: Kello<points>1 p.</points></task-title>
+  <task-title num="2.1">Kello<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-1-kello/handout.md}}
@@ -17,7 +17,7 @@
 
 
 <task>
-  <task-title>Tehtävä 2.2: Ajastin<points>1 p.</points></task-title>
+  <task-title num="2.2">Ajastin<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-2-ajastin/handout.md}}
@@ -27,7 +27,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.3: Oma luokka<points>1 p.</points></task-title>
+  <task-title num="2.3">Oma luokka<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-3-oma-luokka/handout.md}}
@@ -37,7 +37,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.4: Static<points>1 p.</points></task-title>
+  <task-title num="2.4">Static<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-4-static/handout.md}}
@@ -47,7 +47,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.5: Puhelin<points>1 p.</points></task-title>
+  <task-title num="2.5">Puhelin<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-5-puhelin/handout.md}}
@@ -57,7 +57,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.6: Kirjasto<points>1 p.</points></task-title>
+  <task-title num="2.6">Kirjasto<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-6-kirjasto/handout.md}}
@@ -67,7 +67,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.7: Ovi<points>1 p.</points></task-title>
+  <task-title num="2.7">Ovi<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-7-ovi/handout.md}}
@@ -77,7 +77,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 2.8: Säästölipas<points>1 p.</points></task-title>
+  <task-title num="2.8">Säästölipas<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-8-saastolipas/handout.md}}
@@ -87,7 +87,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i>Tehtävä 2.9: Sähköverkko<points>1 p.</points></task-title>
+  <task-title num="2.9"><i class="bi bi-stars"></i>Sähköverkko<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-9-sahkoverkko/handout.md}}
@@ -97,7 +97,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i>Bonus: Tehtävä 2.10: Varaukset<points>1 p.</points></task-title>
+  <task-title num="2.10"><i class="bi bi-stars"></i>Varaukset<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-10-varaukset/handout.md}}

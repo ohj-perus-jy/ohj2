@@ -680,7 +680,7 @@ IO.println(lukuja.summaryStatistics());
 ```
 
 <task>
-  <task-title>Tehtävä 6.3: Musiikkilista <points>1 p.</points> </task-title>
+  <task-title num="6.3">Musiikkilista<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-3-musiikkilista/handout.md}}
@@ -690,7 +690,7 @@ IO.println(lukuja.summaryStatistics());
 </task>
 
 <task>
-  <task-title>Tehtävä 6.4: Keskiarvo raja-arvoilla <points>1 p.</points> </task-title>
+  <task-title num="6.4">Keskiarvo raja-arvoilla<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-4-sademaara/handout.md}}

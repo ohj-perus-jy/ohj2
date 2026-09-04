@@ -623,7 +623,7 @@ dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmeth
 
 
 <task>
-  <task-title>Tehtävä 4.1: Muunnin. <points>1 p.</points> </task-title>
+  <task-title num="4.1">Muunnin.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-1-muunnin/handout.md}}
@@ -634,7 +634,7 @@ dokumentaatiosta](https://docs.oracle.com/javase/tutorial/java/IandI/defaultmeth
 
 
 <task>
-  <task-title>Tehtävä 4.2: Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
+  <task-title num="4.2">Vakoojien viestijärjestelmä.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-2-salakirjoitus/handout.md}}

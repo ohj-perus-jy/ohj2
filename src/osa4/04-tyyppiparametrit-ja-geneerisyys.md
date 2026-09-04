@@ -622,7 +622,7 @@ for (Number n : luvut) {
 ```
 
 <task>
-  <task-title>Tehtävä 4.8: Etsi suurin. <points>1 p.</points> </task-title>
+  <task-title num="4.8">Etsi suurin.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-8-etsi-suurin/handout.md}}
@@ -632,7 +632,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title>Tehtävä 4.9: Kontti. <points>1 p.</points> </task-title>
+  <task-title num="4.9">Kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-9-kontti/handout.md}}
@@ -642,7 +642,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.10: Iso kontti. <points>1 p.</points> </task-title>
+  <task-title num="4.10"><i class="bi bi-stars"></i>Iso kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-10-iso-kontti/handout.md}}
@@ -652,8 +652,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.11:
-  Tyyppirajoitukset, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="4.11"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-11-tyyppirajoitukset-1/handout.md}}
@@ -663,7 +662,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 4.12: Tyyppirajoitukset, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="4.12"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-12-tyyppirajoitukset-2/handout.md}}

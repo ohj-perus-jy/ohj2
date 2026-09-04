@@ -630,7 +630,7 @@ public class Main {
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 3.7: Viestit. <points>1 p.</points> </task-title>
+  <task-title num="3.7">Viestit.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-7-viestit/handout.md}}
@@ -640,7 +640,7 @@ public class Main {
 </task>
 
 <task>
-  <task-title>Tehtävä 3.8: Abstrakti ajoneuvo. <points>1 p.</points> </task-title>
+  <task-title num="3.8">Abstrakti ajoneuvo.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-8-abstrakti-ajoneuvo/handout.md}}
@@ -651,7 +651,7 @@ public class Main {
 
 
 <task>
-  <task-title>Tehtävä 3.9: Viestikanavat. <points>1 p.</points> </task-title>
+  <task-title num="3.9">Viestikanavat.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-9-viestikanavat/handout.md}}
@@ -662,7 +662,7 @@ public class Main {
 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Tehtävä 3.10: Viestipalvelu. <points>1 p.</points> </task-title>
+  <task-title num="3.10"><i class="bi bi-stars"></i>Viestipalvelu.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-10-viestipalvelu/handout.md}}

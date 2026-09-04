@@ -6,7 +6,7 @@
 > [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
  
 <task>
-  <task-title>Tehtävä 3.1: Luokkahierarkia, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="3.1">Luokkahierarkia, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-1-verkkokauppa-1/handout.md}}
@@ -16,7 +16,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.2: Luokkahierarkia, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="3.2">Luokkahierarkia, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-2-verkkokauppa-2/handout.md}}
@@ -26,7 +26,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.3: Luokkahierarkia, osa 3. <points>1 p.</points> </task-title>
+  <task-title num="3.3">Luokkahierarkia, osa 3.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-3-verkkokauppa-3/handout.md}}
@@ -36,7 +36,7 @@
 </task>
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 3.4: Luokkahierarkia, osa 4. <points>1 p.</points> </task-title>
+  <task-title num="3.4"><i class="bi bi-stars"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-4-verkkokauppa-4/handout.md}}
@@ -46,7 +46,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.5: Korvaaminen, osa 1. <points>1 p.</points> </task-title>
+  <task-title num="3.5">Korvaaminen, osa 1.<points>1 p.</points></task-title>
   <handout>
 
   {{#include ../exercises/3-5-korvaaminen-1/handout.md}}
@@ -56,7 +56,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.6: Korvaaminen, osa 2. <points>1 p.</points> </task-title>
+  <task-title num="3.6">Korvaaminen, osa 2.<points>1 p.</points></task-title>
   <handout>
 
   {{#include ../exercises/3-6-korvaaminen-2/handout.md}}
@@ -66,7 +66,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.7: Viestit. <points>1 p.</points> </task-title>
+  <task-title num="3.7">Viestit.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-7-viestit/handout.md}}
@@ -76,7 +76,7 @@
 </task>
 
 <task>
-  <task-title>Tehtävä 3.8: Abstrakti ajoneuvo. <points>1 p.</points> </task-title>
+  <task-title num="3.8">Abstrakti ajoneuvo.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-8-abstrakti-ajoneuvo/handout.md}}
@@ -87,7 +87,7 @@
 
 
 <task>
-  <task-title>Tehtävä 3.9: Viestikanavat. <points>1 p.</points> </task-title>
+  <task-title num="3.9">Viestikanavat.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-9-viestikanavat/handout.md}}
@@ -98,7 +98,7 @@
 
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Tehtävä 3.10: Viestipalvelu. <points>1 p.</points> </task-title>
+  <task-title num="3.10"><i class="bi bi-stars"></i>Viestipalvelu.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-10-viestipalvelu/handout.md}}

@@ -303,7 +303,7 @@
     --sidebar-non-existant: #aaaaaa;
     --sidebar-active: #002957;
     /* --sidebar-active: #004997; */
-    --sidebar-spacer: #d0d0d0;
+    --sidebar-spacer: var(--line);
 
     --scrollbar: #8F8F8F;
 
@@ -311,7 +311,7 @@
     --footer-border: rgba(0, 0, 0, 0.06);
 
     --header-bg: rgba(250, 250, 250);
-    --header-border: rgba(0, 0, 0, 0.1);
+    --header-border: var(--line);
 
     --icons: #002957;
     --icons-hover: #00295777;
@@ -330,7 +330,6 @@
     --quote-bg: #ffffff;
     --quote-border: #eeeeee;
 
-    --details-border: #cccccc;
 
     --warning-border: #ff8e00;
 
@@ -364,6 +363,12 @@
     --task-bg-text: white;
     --task-bg-hover: #b3bfcd;
     --task-bg-hover-text: #002957;
+    /* One line colour for every border on the page: the menu bar, the
+       sidebar dividers and the task cards. */
+    --line: #c9d1da;
+    --task-inset: #f1f4f7;
+    --task-muted: #55606b;
+    --task-pill-bg: rgba(0, 41, 87, 0.09);
 }
 
 .jyu-gold {
@@ -380,7 +385,7 @@
     --sidebar-fg: #c8c9db;
     --sidebar-non-existant: #5c6773;
     --sidebar-active: #C29A5B;
-    --sidebar-spacer: #2d334f;
+    --sidebar-spacer: var(--line);
     
     --icons: #737480;
     --scrollbar: var(--icons);
@@ -394,7 +399,7 @@
     --footer-border: hsl(225, 27%, 20%);
 
     --header-bg: hsl(213, 27%, 8%);
-    --header-border: hsl(225, 27%, 20%);
+    --header-border: var(--line);
 
     --theme-popup-bg: #14191f;
     --theme-popup-border: #5c6773;
@@ -404,7 +409,6 @@
     --quote-bg: hsl(226, 15%, 17%);
     --quote-border: hsl(226, 15%, 22%);
 
-    --details-border: #55565d;
 
     --warning-border: #ff8e00;
 
@@ -438,6 +442,10 @@
     --task-bg-text: black;
     --task-bg-hover: #987a4a;
     --task-bg-hover-text: #e9e9e9;
+    --line: #454b5e;
+    --task-inset: #1b1f29;
+    --task-muted: #8b909b;
+    --task-pill-bg: rgba(194, 154, 91, 0.14);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -449,7 +457,8 @@
         --sidebar-fg: #a1adb8;
         --sidebar-non-existant: #505254;
         --sidebar-active: #3473ad;
-        --sidebar-spacer: #393939;
+        --sidebar-spacer: var(--line);
+        --line: #454b5e;
 
         --scrollbar: var(--sidebar-fg);
 

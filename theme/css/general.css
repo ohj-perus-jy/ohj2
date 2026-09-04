@@ -75,10 +75,8 @@ h6:target::before {
 
 details {
     background: var(--quote-bg);
-    /* add drop shadow to details to make it stand out */
-    /* box-shadow: 0 2px 2px var(--details-border); */    
-    border: 1px solid var(--details-border);
-    padding: 1em;
+    border: 1px solid var(--line);
+    padding: 0 16px;
     overflow: hidden;
     margin-block: 1em;
 }
@@ -95,12 +93,77 @@ details {
     }
 }
 
-details summary {
-    user-select: none;
+/* Vertical spacing of the content lives on the children rather than on
+   details[open] so it is part of the animated height instead of appearing and
+   disappearing in one step when the open attribute toggles. */
+details > summary + * {
+    margin-block-start: 1em;
 }
 
-details summary:hover {
+details > :not(summary):last-child {
+    margin-block-end: 1em;
+}
+
+/* Summary spans the full width of the box, with a +/– icon in front of the
+   title. The icon is an inline box pulled into the start padding so a title
+   that wraps stays aligned with its first line and the summary's own inline
+   content (icons, bold text) flows as usual. */
+details > summary {
+    display: block;
+    margin-inline: -16px;
+    padding: 13px 16px 13px calc(16px + 19px + 11px);
+    list-style: none;
     cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s ease;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary::before {
+    content: "+";
+    display: inline-grid;
+    place-items: center;
+    box-sizing: border-box;
+    width: 19px;
+    height: 19px;
+    margin-inline-start: calc(-19px - 11px);
+    margin-inline-end: 11px;
+    border: 1px solid var(--line);
+    background-color: var(--bg);
+
+    color: var(--task-bg);
+    font-family: monospace;
+    font-size: 1.6rem;
+    line-height: 1;
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+details[open] > summary {
+    border-block-end: 1px solid var(--line);
+}
+
+details[open] > summary::before {
+    content: "\2013"; /* en dash */
+}
+
+details > summary:hover {
+    background-color: var(--task-pill-bg);
+}
+
+details > summary:hover::before {
+    background-color: var(--task-bg);
+    border-color: var(--task-bg);
+    color: var(--task-bg-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    details > summary,
+    details > summary::before {
+        transition: none;
+    }
 }
 
 /* Not all browsers support this animation yet; see https://caniuse.com/?search=calc-size() */
@@ -110,6 +173,11 @@ details summary:hover {
     }
 
     ::details-content {
+        /* A block formatting context keeps the children's margins inside the
+           animated height. Otherwise they collapse through the pseudo-element
+           and vanish in one step when content-visibility flips to hidden at
+           the end of the closing transition, which reads as a jump. */
+        display: flow-root;
         transition: height 0.25s ease, content-visibility 0.25s ease allow-discrete;
         height: 0;
         overflow: clip;

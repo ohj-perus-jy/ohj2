@@ -362,7 +362,7 @@ void main() {
 ```
 
 <task>
-  <task-title>Tehtävä 5.11: Summa pinolla. <points>1 p.</points> </task-title>
+  <task-title num="5.11">Summa pinolla.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-11-summa-pinolla/handout.md}}
@@ -443,7 +443,7 @@ liittyvä käsittely. Koodi seuraa suoraan jälkijärjestyksen määritelmää, 
 ilman rekursiivisia metodikutsuja.
 
 <task>
-  <task-title><i class="bi bi-stars jyu-gold"></i> Bonus: Tehtävä 5.12: Puun summa pinolla. <points>1 p.</points> </task-title>
+  <task-title num="5.12"><i class="bi bi-stars"></i>Puun summa pinolla.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-12-puun-summa-pinolla/handout.md}}

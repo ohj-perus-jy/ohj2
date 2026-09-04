@@ -496,7 +496,7 @@ public class Rakennus {
 ```
 
 <task>
-  <task-title>Tehtävä 2.1: Kello<points>1 p.</points></task-title>
+  <task-title num="2.1">Kello<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-1-kello/handout.md}}
@@ -506,7 +506,7 @@ public class Rakennus {
 </task>
 
 <task>
-  <task-title>Tehtävä 2.2: Ajastin<points>1 p.</points></task-title>
+  <task-title num="2.2">Ajastin<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-2-ajastin/handout.md}}
@@ -516,7 +516,7 @@ public class Rakennus {
 </task>
 
 <task>
-  <task-title>Tehtävä 2.3: Oma luokka<points>1 p.</points></task-title>
+  <task-title num="2.3">Oma luokka<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-3-oma-luokka/handout.md}}
@@ -666,7 +666,7 @@ staattinen metodi. Sen käyttäminen on helpompaa, kun meidän ei tarvitse joka
 kerta luoda IO-oliota ja kutsua sen `println`-metodia.
 
 <task>
-  <task-title>Tehtävä 2.4: Static<points>1 p.</points></task-title>
+  <task-title num="2.4">Static<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-4-static/handout.md}}
@@ -848,7 +848,7 @@ roskienkeräyksestä suhteellisen helposti lähestyttävässä muodossa.
 ## Tehtävät
 
 <task>
-  <task-title>Tehtävä 2.5: Puhelin<points>1 p.</points></task-title>
+  <task-title num="2.5">Puhelin<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-5-puhelin/handout.md}}
@@ -858,7 +858,7 @@ roskienkeräyksestä suhteellisen helposti lähestyttävässä muodossa.
 </task>
 
 <task>
-  <task-title>Tehtävä 2.6: Kirjasto<points>1 p.</points></task-title>
+  <task-title num="2.6">Kirjasto<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-6-kirjasto/handout.md}}

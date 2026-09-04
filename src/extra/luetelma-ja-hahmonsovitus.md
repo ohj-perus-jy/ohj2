@@ -212,7 +212,7 @@ Kun katsomme vielä ylläolevan esimerkin `main.java`-tiedostoa, huomaamme miten
 > - Lyhyt maininta luetelmasta ja compareTo-metodista johonkin väliin
 
 <task>
-  <task-title>Tehtävä 4.5: Oma luetelma. <points>0.25 p.</points> </task-title>
+  <task-title num="4.5">Oma luetelma.<points>0.25 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-5-luetelma/handout.md}}
@@ -317,7 +317,7 @@ enum Suunta {
 ```
 
 <task>
-  <task-title>Tehtävä 4.6: Luetelma arvoilla. <points>0.25 p.</points> </task-title>
+  <task-title num="4.6">Luetelma arvoilla.<points>0.25 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-6-luetelma-2/handout.md}}
@@ -580,7 +580,7 @@ Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:
 > Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
 
 <task>
-  <task-title>Tehtävä 4.8: Hahmonsovitus 2<points>0.25 p.</points> </task-title>
+  <task-title num="4.8">Hahmonsovitus 2<points>0.25 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}
@@ -706,7 +706,7 @@ void main() {
 ```
 
 <task>
-  <task-title>Tehtävä 4.8: Hahmonsovitus 2<points>0.25 p.</points> </task-title>
+  <task-title num="4.8">Hahmonsovitus 2<points>0.25 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}

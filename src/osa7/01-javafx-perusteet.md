@@ -273,7 +273,7 @@ flowchart TD
 
 
 <task>
-  <task-title>Tehtävä 7.1: Todo-sovellus, vaihe 1 <points>1 p.</points> </task-title>
+  <task-title num="7.1">Todo-sovellus, vaihe 1<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/7-1-todo-1/handout.md}}
