@@ -11,7 +11,9 @@
 
 - **[IntelliJ IDEA](#idea)** - *integroitu kehitysympäristö* (engl. Integrated
   Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
-  Java-ohjelmia. Käytämme IntelliJ IDEAn ilmaista Community Edition -versiota.
+  Java-ohjelmia. IntelliJ IDEA on maksuton: JetBrains lopetti erillisen
+  Community Edition -version vuoden 2025 lopussa, ja nykyinen yhtenäinen
+  IntelliJ IDEA on ilmainen ilman erillistä aktivointia tai kirjautumista.
 
 - **[SceneBuilder](#scenebuilder)** - aputyökalu JavaFX-käyttöliittymien luomiseksi.
 
@@ -45,6 +47,11 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 - Windows 11
 - Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809)
 
+> [!HUOMAUTUS]
+>
+> Microsoftin tuki Windows 10:lle päättyi 14.10.2025, eikä käyttöjärjestelmä saa
+> enää tietoturvapäivityksiä. Suosittelemme päivittämään Windows 11:een.
+
 Näet käyttöjärjestelmän version suorittamalla seuraava komento PowerShell-komentorivillä:
 
 ```bash
@@ -58,6 +65,8 @@ winver
 Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - macOS 15 Sequoia
+
+Ohjeiden pitäisi toimia myös uudemmissa macOS-versioissa (macOS 26 Tahoe).
 
 ***
 
@@ -98,7 +107,7 @@ Varmista sen jälkeen, että tietokoneellasi on `winget`-pakkaushallintaohjelma 
     Jos käyttöjärjestelmän päivitys ei auta, kokeile seuraavia ratkaisuja:
     
     - Tarkista, että käyttöjärjestelmäsi on ajan tasalla (katso yhteensopivat käyttöjärjestelmäversiot ylempänä).
-    - Kokeile ladata ja asentaa `winget`-käsin: [Lataa asennusohjelma](https://github.com/microsoft/winget-cli/releases/download/v1.11.430/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle)
+    - Kokeile ladata ja asentaa `winget`-käsin: [Lataa asennusohjelma](https://github.com/microsoft/winget-cli/releases/latest/download/Microsoft.DesktopAppInstaller_8wekyb3d8bbwe.msixbundle)
       Asennuksen jälkeen sulje ja käynnistä PowerShell uudelleen.
 
 ***
@@ -109,7 +118,7 @@ Varmista ensin, että tietokoneesi on ajan tasalla.
 
 Varmista sen jälkeen, että tietokoneellasi on Homebrew-pakkaushallintaohjelma asennettuna:
 
-1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
+1. Avaa Pääte tai Terminal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Anna seuraava komento:
 
     ```bash
@@ -122,7 +131,7 @@ sinun tulee asentaa Homebrew alla olevilla ohjeilla:
 <details>
 <summary>Homebrew-työkalun asennusohjeet (Avaa klikkaamalla)</summary>
 
-1. Avaa Pääte tai Termimal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
+1. Avaa Pääte tai Terminal (*Launchpad* <i class="bi bi-chevron-right"></i> *Pääte/Terminal*)
 2. Asenna ensin macOS:n kehitystyökalut suorittamalla alla oleva komento:
 
     ```bash
@@ -159,12 +168,12 @@ sinun tulee asentaa Homebrew alla olevilla ohjeilla:
     ```
     
     Paina siinä tapauksessa Enter-näppäintä ja odota ohjelman asentumista.
-4. Kopioi ja suorita seuraava komento (huom: tämä on yksi iso komento)
+4. Kopioi ja suorita seuraavat komennot (huom: kopioi kaikki neljä riviä kerralla)
 
     ```bash
-    BREW_PREFIX=$( [[ $(uname -m) == arm64 ]] && echo /opt/homebrew || echo /usr/local ) \
-    echo >> ~/.zprofile \
-    echo "eval \"\$(${BREW_PREFIX}/bin/brew shellenv)\"" >> ~/.zprofile \
+    BREW_PREFIX=$( [[ $(uname -m) == arm64 ]] && echo /opt/homebrew || echo /usr/local )
+    echo >> ~/.zprofile
+    echo "eval \"\$(${BREW_PREFIX}/bin/brew shellenv)\"" >> ~/.zprofile
     eval "$(${BREW_PREFIX}/bin/brew shellenv)"
     ```
 5. Testaa, että Homebrew toimii suorittamalla komento:
@@ -192,8 +201,9 @@ Linux-ohjeet toimivat täten ohjenuorana; käytä tarvittaessa omaa harkintaa.
 
 Ota huomioon seuraavat asiat seuratessa ohjeita:
 
-- Vaikka osa työkaluista löytyy jakelujen omasta pakkaustehallinnasta, jotkin graafiset ohjelmat (erityisesti Rider ja VS Code)
-   eivät ole yleensä julkaistu jakelukohtaisissa repoissa.
+- Vaikka osa työkaluista löytyy jakelujen omasta pakkaustenhallinnasta, kaikkia
+   graafisia ohjelmia (erityisesti IntelliJ IDEA ja SceneBuilder) ei ole yleensä
+   julkaistu jakelukohtaisissa repoissa.
    *Suosittelemme* käyttämään jakelusta riippumatonta pakkaustenhallintaa, 
    kuten [Snap](https://snapcraft.io/docs/installing-snapd) tai [Flatpak](https://flatpak.org/).
    
@@ -365,10 +375,10 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 ### [Windows](#tab/win)
 
 1. Avaa PowerShell-komentorivi.
-2. Asenna IntelliJ IDEA Community Edition suorittamalla alla oleva komento:
+2. Asenna IntelliJ IDEA suorittamalla alla oleva komento:
 
     ```bash
-    winget install --interactive -e --id=JetBrains.IntelliJIDEA.Community
+    winget install --interactive -e --id=JetBrains.IntelliJIDEA
     ```
 
     Ohjelman lataamisen jälkeen avautuu asennusohjelma.
@@ -391,12 +401,8 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
-     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
-     <i class="bi bi-chevron-right"></i> *Editor* 
-     <i class="bi bi-chevron-right"></i> *General*
-     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
-     kohdasta *Enable local Full Line completion suggestions*.
+6. Kytke lopuksi IDEAn tekoälyavustukset pois päältä kohdan [IDEAn
+   tekoälyavustusten kytkeminen pois päältä](#idea-ai) ohjeiden mukaisesti.
 
 Valmis!
 
@@ -408,34 +414,30 @@ Valmis!
 2. Asenna IntelliJ IDEA suorittamalla alla oleva komento:
 
     ```bash
-    brew install --cask intellij-idea-ce
+    brew install --cask intellij-idea
     ```
 
     Anna asennuksen suoriutua loppuun asti. Sinulta saatetaan pyytää
     macOS-käyttäjän salasanaa `Password:`-kentässä. Kirjoita silloin
     salasana paikalle ja paina <kbd>Enter</kbd>.
 
-3. Tarkista, että IntelliJ IDEA toimii. Avaa Launchpad ja käynnistä sieltä *IntelliJ IDEA CE*.
+3. Tarkista, että IntelliJ IDEA toimii. Avaa Launchpad ja käynnistä sieltä *IntelliJ IDEA*.
 
     Ensimmäisellä kerralla käynnistys saattaa kestää, sillä järjestelmä tarkistaa sovelluksen.
-    Järjestelmä saattaa myös kysyä, *IntelliJ IDEA CE on internetsitä ladattu appi. Avataanko se?*.
+    Järjestelmä saattaa myös kysyä, *IntelliJ IDEA on internetistä ladattu appi. Avataanko se?*.
     Siinä tapauksessa voi valita *Avaa*.
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+4. Jos sinulla on muu kehitysympäristö asennettuna (JetBrains Rider tai Visual
    Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
    asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
    myöhemmin.
 
 5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
-     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
-     <i class="bi bi-chevron-right"></i> *Editor* 
-     <i class="bi bi-chevron-right"></i> *General*
-     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
-     kohdasta *Enable local Full Line completion suggestions*.
+6. Kytke lopuksi IDEAn tekoälyavustukset pois päältä kohdan [IDEAn
+   tekoälyavustusten kytkeminen pois päältä](#idea-ai) ohjeiden mukaisesti.
 
 Valmis!
 
@@ -444,18 +446,20 @@ Valmis!
 ### [Linux](#tab/linux)
 
 1. Avaa jakelusi pääteohjelma.
-2. Asenna IntelliJ IDEA Community Edition. Asennustapa vaihtelee jakelun mukaan:
+2. Asenna IntelliJ IDEA. Asennustapa vaihtelee jakelun mukaan:
 
-    - Arch: Asenna [`intellij-idea-community-edition`](https://archlinux.org/packages/extra/x86_64/intellij-idea-community-edition/)-pakkaus. 
-      
+    - Arch: Asenna [`intellij-idea-community-edition`](https://archlinux.org/packages/extra/x86_64/intellij-idea-community-edition/)-pakkaus.
+      Pakkauksen nimessä on yhä vanha *Community Edition* -nimi, mutta se sisältää
+      nykyisen yhtenäisen IntelliJ IDEAn.
+
       ```bash
-      pacman -S intellij-idea-community-edition
+      sudo pacman -S intellij-idea-community-edition
       ```
-      
-    - Muut jakelut: Suosittelemme asentamaan [IDEA-snapin](https://snapcraft.io/intellij-idea-community) käyttäen `snap`-pakkaustenhallintaa:
-    
+
+    - Muut jakelut: Suosittelemme asentamaan [IDEA-snapin](https://snapcraft.io/intellij-idea) käyttäen `snap`-pakkaustenhallintaa:
+
         ```bash
-        snap install intellij-idea-community --classic
+        sudo snap install intellij-idea --classic
         ```
         
         Vaihtoehtoisesti voit asentaa IntelliJ:n käsin seuraamalla [virallisia asennusohjeita](https://www.jetbrains.com/help/idea/installation-guide.html#standalone_linux)
@@ -464,19 +468,15 @@ Valmis!
     
     Hyväksy mahdolliset IDEAn käyttöehdot.
 
-4. Jos sinulla on muu kehitysympäristö asennettuja (JetBrains Rider tai Visual
+4. Jos sinulla on muu kehitysympäristö asennettuna (JetBrains Rider tai Visual
    Studio Code), IntelliJ IDEA saattaa kysyä, haluatko tuoda (engl. *import*)
    asetuksia niistä. Paina *Skip Import*. IDEAan asetetaan erilliset asetukset
    myöhemmin.
 
 5. Kun asennus on valmis, sinulla pitäisi näkyä *Welcome to IntelliJ IDEA* -ikkuna.
 
-6. Poista tekoälypohjainen kooditäydennys seuraavasti: Klikkaa vasemman
-     alareunan rattaan kuva <i class="bi bi-chevron-right"></i> *Settings* 
-     <i class="bi bi-chevron-right"></i> *Editor* 
-     <i class="bi bi-chevron-right"></i> *General*
-     <i class="bi bi-chevron-right"></i> Inline Completion. Poista valinta
-     kohdasta *Enable local Full Line completion suggestions*.
+6. Kytke lopuksi IDEAn tekoälyavustukset pois päältä kohdan [IDEAn
+   tekoälyavustusten kytkeminen pois päältä](#idea-ai) ohjeiden mukaisesti.
 
 Valmis!
 
@@ -490,23 +490,25 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ## IDEAn tekoälyavustusten kytkeminen pois päältä {#idea-ai}
 
-IDEAssa on parikin erilaista tekoälypohjainen täydennysominaisuutta: *AI
-Asisstant* ja *Inline Completion*. Näiden avulla ympäristö yrittää täydentää
-kirjoitettua koodia. 
+IDEAssa on parikin erilaista tekoälypohjaista täydennysominaisuutta: *AI
+Assistant* ja *Inline Completion*. Näiden avulla ympäristö yrittää täydentää
+kirjoitettua koodia.
 
 Voit kytkeä nämä ominaisuudet pois päältä seuraavasti.
 
 1. AI Assistantin kytkeminen pois
    - Settings <i class="bi bi-chevron-right"></i> Plugins
    - Valitse Installed-välilehti
-   - Etsi *JetBrainsAI Assistant* ja poista plugin käytöstä (Disable) tai poista se kokonaan (Uninstall)
+   - Etsi *JetBrains AI Assistant* ja poista plugin käytöstä (Disable) tai poista se kokonaan (Uninstall)
 2. Inline Completion -täydennyksen kytkeminen pois
    - Avaa IntelliJ IDEA *Welcome to IntelliJ IDEA* -näkymään
-   - Valitse vasemmasta alalalaidasta Configure <i class="bi bi-chevron-right"></i> Settings
+   - Klikkaa vasemmassa alalaidassa olevaa rattaan kuvaketta <i class="bi bi-chevron-right"></i> Settings
    - Mene asetuksissa kohtaan Editor <i class="bi bi-chevron-right"></i> General
-     <i class="bi bi-chevron-right"></i> Code Completion <i class="bi bi-chevron-right"></i> Inline 
+     <i class="bi bi-chevron-right"></i> Code Completion <i class="bi bi-chevron-right"></i> Inline
    - Ota ruksi **pois** kohdasta *Enable inline completion using language models*
-   - Tallenna asetukset *Save*-painikkeella
+   - Tallenna asetukset *OK*-painikkeella
+   - Voit halutessasi poistaa myös *Full Line Code Completion* -pluginin
+     käytöstä kohdassa Settings <i class="bi bi-chevron-right"></i> Plugins
 
 ## Java Development Kit (JDK) {#jdk}
 
@@ -514,7 +516,7 @@ Voit kytkeä nämä ominaisuudet pois päältä seuraavasti.
 > 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
 >
 > 
-> 2. Klikkaa ikkunan keskellä tai ylädassa olevaa *New Project* -painiketta:
+> 2. Klikkaa ikkunan keskellä tai ylälaidassa olevaa *New Project* -painiketta:
 > 
 >     ![](images/intellij-welcome.jpg)
 > 
@@ -595,7 +597,7 @@ Valmis!
 ### [macOS](#tab/macos)
 
 1. Avaa Pääte.
-2. Asenna IntelliJ IDEA suorittamalla alla oleva komento:
+2. Asenna SceneBuilder suorittamalla alla oleva komento:
 
     ```bash
     brew install --cask scenebuilder
@@ -607,7 +609,7 @@ Valmis!
 
 3. Tarkista, että SceneBuilder toimii. Avaa Launchpad ja käynnistä sieltä *SceneBuilder*.
 
-    Tämän pitäisi käynnistää SceneBuilder-ohjelman.
+    Tämän pitäisi käynnistää SceneBuilder-ohjelma.
 
 4. Sulje SceneBuilder.
 
@@ -670,7 +672,7 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 >
 >    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
 >
-> 2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
+> 2. Klikkaa ikkunan vasemmassa alalaidassa olevaa rattaan kuvaketta <i class="bi bi-chevron-right"></i> *Settings*.
 >
 > 3. Valitse vasemmalla puolella olevista asetusnäkymistä *Plugins*
 >
@@ -680,7 +682,9 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 >
 >       ![](images/rider-install-comtest.gif)
 >
-> 6. Paina *Save*
+>       *Kuvakaappaus on JetBrains Riderista, mutta vaiheet ovat IntelliJ IDEAssa samat.*
+>
+> 6. Paina *OK*
 >
 > 7. Sulje IntelliJ IDEA
 
@@ -704,16 +708,16 @@ Tee seuraavasti:
   
    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
 
-2. Klikkaa ikkunan vasemmassa alalaidassa oleva *Configure* (Ratas-ikoni) <i class="bi bi-chevron-right"></i> *Settings*.
+2. Klikkaa ikkunan vasemmassa alalaidassa olevaa rattaan kuvaketta <i class="bi bi-chevron-right"></i> *Settings*.
 
 3. Valitse vasemmalla puolella olevista asetusnäkymistä *Editor* <i class="bi
    bi-chevron-right"></i> *File Encodings*
 
 4. Aseta *Create UTF-8 files* -asetuksen arvoksi **with no BOM**.
 
-6. Paina *Save*.
+5. Paina *OK*.
 
-7. Tee *uusi* projekti ja kokeile ajaa yksinkertainen ohjelma.
+6. Tee *uusi* projekti ja kokeile ajaa yksinkertainen ohjelma.
 
 </details>
 
