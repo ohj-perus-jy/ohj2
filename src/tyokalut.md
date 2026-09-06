@@ -11,14 +11,9 @@
 
 - **[IntelliJ IDEA](#idea)** - *integroitu kehitysympäristö* (engl. Integrated
   Development Environment, IDE), jolla voi kehittää ja debugata muun muassa
-  Java-ohjelmia. IntelliJ IDEA on maksuton: JetBrains lopetti erillisen
-  Community Edition -version vuoden 2025 lopussa, ja nykyinen yhtenäinen
-  IntelliJ IDEA on ilmainen ilman erillistä aktivointia tai kirjautumista.
+  Java-ohjelmia. 
 
 - **[SceneBuilder](#scenebuilder)** - aputyökalu JavaFX-käyttöliittymien luomiseksi.
-
-- **[ComTest](#comtest)** - työkalu *dokumentaatiotestien* kirjoittamiselle ja ajamiselle.
-
 
 Yllä olevat ohjelmat löytyvät valmiiksi asennettuna [Agoran
 mikroluokissa](https://navi.jyu.fi/space/m118987) (Alban puoleinen pääty,
@@ -45,12 +40,7 @@ Valitse käyttöjärjestelmäsi alta:
 Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 - Windows 11
-- Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809)
-
-> [!HUOMAUTUS]
->
-> Microsoftin tuki Windows 10:lle päättyi 14.10.2025, eikä käyttöjärjestelmä saa
-> enää tietoturvapäivityksiä. Suosittelemme päivittämään Windows 11:een.
+- Windows 10 (käyttöjärjestelmän version on oltava vähintään 1809; emme suosittele Windows 10:n käyttöä)
 
 Näet käyttöjärjestelmän version suorittamalla seuraava komento PowerShell-komentorivillä:
 
@@ -665,28 +655,6 @@ Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
-
-## ComTest {#comtest}
-
-> 1. Avaa IntelliJ IDEA ja odota, kunnes pääset *Welcome to IntelliJ IDEA* -näkymään.
->
->    **Jos sinulle avautui jokin vanha projekti**, klikkaa yläpalkista tai hampurilaisvalikosta *File* <i class="bi bi-chevron-right"></i> *Close project*. Tämä vie sinut takaisin *Welcome to IntelliJ IDEA* -näkymään.
->
-> 2. Klikkaa ikkunan vasemmassa alalaidassa olevaa rattaan kuvaketta <i class="bi bi-chevron-right"></i> *Settings*.
->
-> 3. Valitse vasemmalla puolella olevista asetusnäkymistä *Plugins*
->
-> 4. Valitse *Marketplace*-välilehti ja hae hakusanalla `ComTest`
->
-> 5. Valitse Comtest Runner -pluginin kohdalta *Install*
->
->       ![](images/rider-install-comtest.gif)
->
->       *Kuvakaappaus on JetBrains Riderista, mutta vaiheet ovat IntelliJ IDEAssa samat.*
->
-> 6. Paina *OK*
->
-> 7. Sulje IntelliJ IDEA
 
 
 ## Mitä seuraavaksi?
