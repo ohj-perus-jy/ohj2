@@ -353,7 +353,7 @@ http-client.private.env.json
 
 **/.idea/**/copilot.data.migration.*.xml
 # MkDocs-koeputki (mkdocs-spike/): generoitua, ei versioida
-mkdocs-spike/.venv/
+mkdocs-spike/.venv*/
 mkdocs-spike/docs/
 mkdocs-spike/site/
 mkdocs-spike/nav.yml
