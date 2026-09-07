@@ -1,38 +1,93 @@
 /* JYU-paletti Materialin muuttujilla.
- * Värit poimittu tiedostosta theme/css/variables.css (.jyu-light / .jyu-dark). */
+ *
+ * Arvot on poimittu tiedostosta theme/css/variables.css (.jyu-light ja
+ * .jyu-dark). Tumman teeman korostusväri on yliopiston kulta #C29A5B: se
+ * värittää aktiivisen valikkokohdan, ikonit, inline-koodin, hakuosumat ja
+ * tehtäväkorttien numerolaatikon.
+ *
+ * Ainoa tietoinen poikkeama alkuperäiseen: koodilohkojen tausta on hieman
+ * tummempi kuin mdBookissa (1.25:1 vs 1.15:1 vaalealla, 1.26:1 vs 1.11:1
+ * tummalla), koska alkuperäinen ero oli lähes näkymätön. */
 
 @import url("https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&display=swap");
 
 :root {
-    --jyu-blue: #002957;
+    --jyu-navy: #002957;
+    --jyu-gold: #C29A5B;
     --jyu-link: #20609f;
 }
 
-/* Pinnat: sivu, koodilohko ja kortti erottuvat toisistaan.
- * mdBookin oma ero sivun ja koodilohkon välillä on vain 1.13:1; tässä se on
- * 1.23:1 ja lisäksi lohkoilla on reunaviiva (1.54:1 sivua vasten), jolloin
- * raja on selvä myös heikossa valaistuksessa ja huonoilla näytöillä. */
+/* ------------------------------------------------------------ vaalea teema */
 [data-md-color-scheme="default"] {
-    --md-primary-fg-color: var(--jyu-blue);
+    --md-primary-fg-color: var(--jyu-navy);
     --md-primary-fg-color--dark: #001c3b;
     --md-accent-fg-color: var(--jyu-link);
-    --md-default-bg-color: #ffffff;
+    --md-default-bg-color: hsl(0, 0%, 98%);
     --md-typeset-a-color: var(--jyu-link);
-    --md-code-bg-color: #e3e8ef;
+    --md-code-bg-color: #e5e1dd;
+    --md-code-fg-color: #301900;
     --md-footer-bg-color: hsl(0, 0%, 93%);
     --md-footer-fg-color: hsl(0, 0%, 20%);
+
+    /* theme/tasks.css käyttää näitä */
+    --quote-bg: #ffffff;
+    --line: #c9d1da;
+    --task-bg: var(--jyu-navy);
+    --task-bg-text: #ffffff;
+    --task-bg-hover: #b3bfcd;
+    --task-bg-hover-text: var(--jyu-navy);
+    --task-inset: #f1f4f7;
+    --task-muted: #55606b;
+    --task-pill-bg: rgba(0, 41, 87, 0.09);
 }
 
+/* ------------------------------------------------------------- tumma teema */
 [data-md-color-scheme="slate"] {
-    --md-primary-fg-color: #001c3b;
-    --md-accent-fg-color: #6da8e6;
-    --md-typeset-a-color: #6da8e6;
-    --md-hue: 220;
-    --md-default-bg-color: #1f2129;
-    --md-code-bg-color: #121419;
+    --md-hue: 213;
+    --md-primary-fg-color: hsl(213, 27%, 8%);
+    --md-primary-fg-color--dark: hsl(213, 27%, 5%);
+    --md-accent-fg-color: var(--jyu-gold);
+    --md-default-bg-color: hsl(210, 25%, 8%);
+    --md-default-fg-color: #c5c5c5;
+    --md-default-fg-color--light: #a8a9ad;
+    --md-default-fg-color--lighter: #737480;
+    --md-default-fg-color--lightest: #4a4c56;
+    --md-typeset-color: #c5c5c5;
+    --md-typeset-a-color: #0096cf;
+    --md-code-bg-color: #212934;
+    --md-code-fg-color: var(--jyu-gold);
+    --md-footer-bg-color: hsl(210, 25%, 7%);
+    --md-footer-fg-color: #c5c5c5;
+
+    --quote-bg: hsl(226, 15%, 17%);
+    --line: #454b5e;
+    --task-bg: var(--jyu-gold);
+    --task-bg-text: #000000;
+    --task-bg-hover: #987a4a;
+    --task-bg-hover-text: #e9e9e9;
+    --task-inset: #1b1f29;
+    --task-muted: #8b909b;
+    --task-pill-bg: rgba(194, 154, 91, 0.14);
 }
 
-/* Otsikkofontti kuten nykyisessä teemassa. */
+/* Aktiivinen luku sivupalkissa on kullalla, kuten --sidebar-active tummassa. */
+[data-md-color-scheme="slate"] .md-nav__link--active,
+[data-md-color-scheme="slate"] .md-nav__link--active code,
+[data-md-color-scheme="slate"] .md-nav__item--active > .md-nav__link {
+    color: var(--jyu-gold);
+}
+
+/* Hakuosuma korostetaan kullalla (--search-mark-bg). */
+[data-md-color-scheme="slate"] .md-search-result mark {
+    color: var(--jyu-gold);
+}
+
+/* Sisällössä käytetty apuluokka (30 esiintymää src/:ssä). */
+.jyu-gold {
+    color: var(--jyu-gold);
+}
+
+/* ------------------------------------------------------------------ fontit */
 .md-typeset h1,
 .md-typeset h2,
 .md-typeset h3,
@@ -45,39 +100,15 @@
     color: var(--md-default-fg-color);
 }
 
-/* mdBook-teeman muuttujat, joita portatut tyylit (tasks.css) käyttävät.
- * Arvot theme/css/variables.css:n .jyu-light / .jyu-dark -lohkoista. */
-[data-md-color-scheme="default"] {
-    --quote-bg: #f4f6f9;
-    --line: #c9d1da;
-    --task-bg: #002957;
-    --task-bg-text: white;
-    --task-bg-hover: #20609f;
-    --task-bg-hover-text: white;
-    --task-inset: #f2f6f9;
-}
-
-/* mdBookin tummat task-värit olettavat vaaleamman taustan; tummalla pohjalla
- * numerolaatikko ja TIM-nappi jäivät lukukelvottomiksi. Nostetaan sininen ja
- * käytetään vaaleaa tekstiä. */
-[data-md-color-scheme="slate"] {
-    --quote-bg: #272a34;
-    --line: #454b5e;
-    --task-bg: #2f5f9e;
-    --task-bg-text: #ffffff;
-    --task-bg-hover: #6da8e6;
-    --task-bg-hover-text: #12141a;
-    --task-inset: #2d3140;
-}
-
 /* Lukunumerot sivupalkissa, kuten mdBookissa. */
 .md-nav__link .nav-number {
     font-weight: 700;
 }
 
-/* Sivun alaosa: CC-lisenssi ja palautelinkit (overrides/partials/copyright.html).
- * Alaosa saa muuten jäädä Materialin omaan tyyliin — edellinen/seuraava-linkit
- * tulevat navigation.footer-ominaisuudesta. */
+/* ------------------------------------------------------------- sivun alaosa
+ * CC-lisenssi ja palautelinkit (overrides/partials/copyright.html). Alaosa saa
+ * muuten jäädä Materialin omaan tyyliin; edellinen/seuraava tulee
+ * navigation.footer-ominaisuudesta. */
 .jyu-footer {
     display: flex;
     align-items: center;
@@ -99,8 +130,8 @@
     color: var(--md-accent-fg-color);
 }
 
-/* Koodilohkot ja tuloslohko saavat reunaviivan, jotta raja taustaan on terävä
- * eikä pelkän täytön varassa. */
+/* --------------------------------------------------------------- koodilohkot
+ * Reunaviiva tekee rajan taustaan teräväksi eikä pelkän täytön varaiseksi. */
 .md-typeset .highlight,
 .md-typeset pre,
 .playground-result,
@@ -109,7 +140,6 @@
     border-radius: 0.1rem;
 }
 
-/* Välilehtien koodilohkot ovat jo sisällön reunuksen sisällä. */
 .md-typeset .tabbed-content .highlight {
     border: none;
 }
