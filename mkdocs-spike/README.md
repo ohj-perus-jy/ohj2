@@ -67,8 +67,25 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 21 | KaTeX | 0 | voi jättää pois |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
-haun, vaalean/tumman teemanvaihdon, edellinen/seuraava-linkit, kopioi
-koodi -napin ja responsiivisen navigaation.
+haun, edellinen/seuraava-linkit, kopioi koodi -napin ja responsiivisen
+navigaation.
+
+## Tehdyt kohdat
+
+### Teemanvaihto (14 riviä `mkdocs.yml`:ään)
+
+`book.toml`:ssa on `default-theme = "jyu-light"` ja
+`preferred-dark-theme = "jyu-dark"` — kaksi teemaa, ei viittä. Sama tehdään
+Materialin `palette`-lohkolla `media`-ehdolla, jolloin teema seuraa
+käyttöjärjestelmää ja vaihdin ohittaa sen. Todennettu selaimella: kun
+järjestelmä on vaalea, sivu avautuu `default`-teemalla ja vaihdin vie
+`slate`en; kun järjestelmä on tumma, päinvastoin.
+
+Havainto samalla: Materialin oletusväreillä koodilohkon ja sivun taustan
+kontrasti on **1,09:1 molemmissa teemoissa** (vaalea 255,255,255 vs
+245,245,245; tumma 11,12,15 vs 20,23,31). Sama ongelma josta aiemmin
+huomautit — se on siis Materialin oletus, ei koeputken tekemä. Kuuluu
+kohtaan 18.
 
 ## Mitattu ensimmäisestä ajosta
 

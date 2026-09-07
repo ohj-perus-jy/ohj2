@@ -13,3 +13,18 @@ site_dir: site
 theme:
   name: material
   language: fi
+
+  # book.toml: default-theme = "jyu-light", preferred-dark-theme = "jyu-dark".
+  # media-ehto tekee saman: teema seuraa käyttöjärjestelmää, ja vaihdin
+  # ohittaa sen. Värit ovat toistaiseksi Materialin omat, ei JYU-palettia.
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Vaihda tummaan teemaan
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Vaihda vaaleaan teemaan
