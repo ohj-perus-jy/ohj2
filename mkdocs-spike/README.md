@@ -28,6 +28,7 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 | `extensions/custom_blocks.py` | Rekisteröi `<task>`/`<handout>` lohkoelementeiksi |
 | `assets/js/hidelines.js` | `//-` piilorivien silmäikoni |
 | `assets/js/playground.js` | Java-ajonappi, portattu `../theme/playground_ext.js`:stä |
+| `assets/js/nav-numbers.js` | Lihavoi lukunumerot sivupalkissa |
 | `assets/css/admonitions.css` | Generoitu `../theme/alerts-style.css`:stä |
 
 ## Mitä koeputki osoitti
@@ -54,6 +55,15 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
   esimerkit (192 markkeria) muunnetaan Materialin välilehdiksi ja ajonappi kerää
   niistä tiedostot — sama toiminnallisuus kuin `mdbook-codeblock-tabs`illa, ilman
   omaa preprocessoria
+
+**Lukujen numerointi**
+
+`convert.py` numeroi navigaation samoin kuin mdBook: vain SUMMARYn listakohdat
+(`- [Luku](...)`) saavat numeron, juoksevasti ja `---`-erottimien yli, jolloin
+etu- ja jälkisivut (Työkalut, Luennot, Eteneminen) jäävät numeroimatta.
+Ylätaso `1.`–`13.`, alataso `6.1.`–`6.6.`. `mkdocs-section-index` tekee osan
+etusivusta osan oman linkin, joten se ei toistu lapsena. `nav-numbers.js`
+lihavoi numeron, koska se on osa nav-otsikkoa eikä sitä voi valita CSS:llä.
 
 **Löydös: `<task>` vaatii pienen laajennuksen**
 

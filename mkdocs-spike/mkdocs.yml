@@ -34,6 +34,8 @@ theme:
         name: Vaihda vaaleaan teemaan
 
 plugins:
+  # Osan etusivu on osan oma linkki, ei erillinen lapsi (kuten mdBookissa).
+  - section-index
   - search:
       lang: fi
   - callouts
@@ -76,5 +78,6 @@ extra_javascript:
   # ACE tulee mdBookin buildista (convert.py kopioi), jos sellainen on olemassa.
   - assets/js/vendor/ace.js
   - assets/js/vendor/mode-java.js
+  - assets/js/nav-numbers.js
   - assets/js/hidelines.js
   - assets/js/playground.js

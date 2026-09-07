@@ -192,12 +192,18 @@ def convert_markdown(text: str, md_path: Path) -> str:
     return "\n".join(out)
 
 
-SUMMARY_LINK_RE = re.compile(r"^(?P<indent>\s*)(?:-\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
+SUMMARY_LINK_RE = re.compile(
+    r"^(?P<indent>\s*)(?P<bullet>-\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
 
 
 def build_nav() -> str:
-    """Turn src/SUMMARY.md into a mkdocs nav: block."""
-    entries: list[tuple[int, str, str]] = []
+    """Turn src/SUMMARY.md into a mkdocs nav: block.
+
+    mdBook numbers only the list items ("- [Luku](...)"), continuously and
+    across the `---` separators; the prefix/suffix links (Työkalut, Luennot,
+    Eteneminen) stay unnumbered. Reproduced here so the sidebar reads the same.
+    """
+    entries: list[tuple[int, str, str, bool]] = []
     for raw in (SRC / "SUMMARY.md").read_text(encoding="utf-8").split("\n"):
         if not raw.strip() or raw.strip().startswith("#") or set(raw.strip()) == {"-"}:
             continue
@@ -215,23 +221,34 @@ def build_nav() -> str:
         else:
             href = href.lstrip("./")
         depth = len(match.group("indent")) // 2
-        entries.append((depth, title.replace('"', "'"), href))
+        numbered = bool(match.group("bullet"))
+        entries.append((depth, title.replace('"', "'"), href, numbered))
 
-    # Build a tree: an entry with deeper-indented followers becomes a section
-    # whose own page is listed first.
+    counters: list[int] = []
+
+    def number_for(depth: int) -> str:
+        del counters[depth + 1:]
+        while len(counters) <= depth:
+            counters.append(0)
+        counters[depth] += 1
+        return ".".join(str(n) for n in counters) + "."
+
     def emit(index: int, depth: int, out: list[str]) -> int:
         pad = "  " * (depth + 1)
         while index < len(entries):
-            level, title, href = entries[index]
+            level, title, href, numbered = entries[index]
             if level < depth:
                 return index
-            children = index + 1 < len(entries) and entries[index + 1][0] > level
-            if children:
-                out.append(f'{pad}- "{title}":')
-                out.append(f'{pad}  - "{title}": {href}')
+            label = f"{number_for(level)} {title}" if numbered else title
+            has_children = index + 1 < len(entries) and entries[index + 1][0] > level
+            if has_children:
+                out.append(f'{pad}- "{label}":')
+                # mkdocs-section-index tekee osan etusivusta itse otsikon linkin,
+                # kuten mdBookissa — ilman sitä sivu toistuisi lapsena.
+                out.append(f"{pad}  - {href}")
                 index = emit(index + 1, depth + 1, out)
             else:
-                out.append(f'{pad}- "{title}": {href}')
+                out.append(f'{pad}- "{label}": {href}')
                 index += 1
         return index
 

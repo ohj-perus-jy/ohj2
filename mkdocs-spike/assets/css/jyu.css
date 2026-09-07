@@ -60,3 +60,8 @@
     --task-bg-hover-text: black;
     --task-inset: hsl(226, 15%, 21%);
 }
+
+/* Lukunumerot sivupalkissa, kuten mdBookissa. */
+.md-nav__link .nav-number {
+    font-weight: 700;
+}
