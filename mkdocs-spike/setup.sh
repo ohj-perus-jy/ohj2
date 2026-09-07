@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Kertaluontoinen asennus koeputkea varten. Ajettavissa uudelleen turvallisesti.
+# Kertaluontoinen asennus. Ajettavissa uudelleen turvallisesti.
 #
-# Devcontainer-imagessa on python3 mutta ei pip:iä eikä venv:iä, joten ne
-# asennetaan tässä. Oikeassa migraatiossa nämä menisivät tooling-imageen.
+# Devcontainer-imagessa on python3 mutta ei venv:iä eikä pip:iä, joten ne
+# asennetaan tässä. Riippuvuuksia on täsmälleen yksi: zensical.
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -17,5 +17,4 @@ fi
 .venv/bin/pip install --quiet -r requirements.txt
 
 echo
-echo "Valmis. Käynnistä koeputki:  ./mkdocs-spike/run.sh"
-echo "Se muuntaa ../src -> docs/ ja tarjoilee sivuston porttiin 8001."
+echo "Valmis. Käynnistä:  ./mkdocs-spike/run.sh"

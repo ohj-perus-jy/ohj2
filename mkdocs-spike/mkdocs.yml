@@ -1,91 +1,15 @@
+# Barebones-lähtötilanne: Zensicalin oletusteema sellaisenaan.
+#
+# Tässä tiedostossa on tarkoituksella VAIN se, mitä ilman sivustoa ei ole
+# olemassa: nimi, teema ja navigaatio. Jokainen rivi, joka tänne myöhemmin
+# lisätään, pitää pystyä perustelemaan jollakin mdBookin ominaisuudella,
+# jota oikeasti tarvitaan. Ks. README.md:n tarkistuslista.
 INHERIT: nav.yml
 
 site_name: Ohjelmointi 2
-site_url: http://localhost:8001/
 docs_dir: docs
 site_dir: site
 
-# mdBook tuottaa .html-päätteiset osoitteet. TIMistä ja kirjanmerkeistä tulevat
-# linkit hajoaisivat MkDocsin oletuksella (hakemistopolut), joten pidetään .html.
-use_directory_urls: false
-
 theme:
   name: material
-  custom_dir: overrides
   language: fi
-  font:
-    text: Lato
-    code: Roboto Mono
-  features:
-    - navigation.instant
-    - navigation.tracking
-    - navigation.top
-    - toc.follow
-    # Osan etusivu on osan oma linkki, ei erillinen lapsi (kuten mdBookissa).
-    # Materialin oma toteutus; mkdocs-section-index-plugin vaati riippuvuutena
-    # properdocs-forkin ja mainosti sitä jokaisessa buildissa.
-    - navigation.indexes
-    - navigation.footer
-    - content.code.copy
-    - content.tabs.link
-    - search.suggest
-  palette:
-    - scheme: default
-      toggle:
-        icon: material/weather-night
-        name: Vaihda tummaan teemaan
-    - scheme: slate
-      toggle:
-        icon: material/weather-sunny
-        name: Vaihda vaaleaan teemaan
-
-plugins:
-  - search:
-      lang: fi
-
-markdown_extensions:
-  # Rekisteröi <task>/<handout> lohkoelementeiksi (extensions/custom_blocks.py).
-  - custom_blocks
-  - admonition
-  - attr_list
-  - md_in_html
-  - toc:
-      permalink: true
-      # Materialin oletus riisuu ääkköset ankkureista (kaytto, tehtavat);
-      # mdBook säilyttää ne. Tämä pitää ankkurit ennallaan.
-      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
-  - pymdownx.details
-  - pymdownx.highlight:
-      use_pygments: true
-      # Kääri jokainen koodirivi omaan spaniin, jotta //- piilorivit voidaan
-      # piilottaa yksitellen (mdBookin .boring-vastine).
-      line_spans: __codeline
-  - pymdownx.snippets:
-      base_path: [docs]
-      check_paths: false
-  - pymdownx.superfences:
-      custom_fences:
-        - name: mermaid
-          class: mermaid
-          format: !!python/name:pymdownx.superfences.fence_code_format
-  - pymdownx.tabbed:
-      alternate_style: true
-
-extra_css:
-  # Sisällössä on <i class="bi bi-*"> -ikoneita, kuten mdBook-teemassakin.
-  - https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css
-  - assets/css/jyu.css
-  - assets/css/nav.css
-  - assets/css/admonitions.css
-  - assets/css/hidelines.css
-  - assets/css/playground.css
-  - assets/css/tasks.css
-
-extra_javascript:
-  # ACE tulee mdBookin buildista (convert.py kopioi), jos sellainen on olemassa.
-  - assets/js/vendor/ace.js
-  - assets/js/vendor/mode-java.js
-  - assets/js/nav.js
-  - assets/js/nav-numbers.js
-  - assets/js/hidelines.js
-  - assets/js/playground.js

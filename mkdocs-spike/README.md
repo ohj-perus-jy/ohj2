@@ -1,122 +1,83 @@
-# MkDocs-koeputki
+# Zensical-koeputki
 
-Selvittää, kannattaisiko Ohj2 siirtää mdBookista Material for MkDocsiin. Tämä
-hakemisto on itsenäinen: se **lukee** `../src`:ää mutta ei muuta sitä, eikä
-koske `../book.toml`:iin tai `../theme/`:een. Nykyinen `bash ../start.sh` toimii
-koko ajan.
+Kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista **Zensicaliin**
+(Material for MkDocsin tekijöiden uusi generaattori). Ei koske `../src`:ään
+eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan.
 
-## Ajaminen
-
-```bash
-bash mkdocs-spike/setup.sh    # kertaluontoinen asennus (~2 min)
-./mkdocs-spike/run.sh         # muunna ja tarjoile http://localhost:8001
-./mkdocs-spike/run.sh build   # muunna ja rakenna site/
-```
-
-### Toisella koneella (Windows + VS Code + Docker)
-
-1. Hae branch: `git fetch && git switch spike/mkdocs`
-2. Avaa kansio VS Codessa ja valitse **Reopen in Container**. Ensimmäisellä
-   kerralla image latautuu, mikä vie hetken.
-3. Kontin terminaalissa: `bash mkdocs-spike/setup.sh`
-4. `./mkdocs-spike/run.sh` — VS Code välittää portin 8001 automaattisesti,
-   ja terminaaliin tulee klikattava linkki.
-
-Nykyinen mdBook pyörii rinnalla omassa portissaan (`bash start.sh`), joten
-molempia voi katsoa yhtä aikaa.
-
-Skriptit ovat LF-päätteisiä (`.gitattributes: *.sh text eol=lf`), joten ne
-toimivat Windowsiltakin haettuna. Jos haluat myös ACE-editorin niihin kahteen
-`editable`-lohkoon, aja ensin `mdbook build` — `convert.py` kopioi ACE:n
-`book/`-hakemistosta jos sellainen on olemassa.
-
-## Rakenne
-
-| Tiedosto | Tehtävä |
-|---|---|
-| `convert.py` | Muuntaa `../src` → `docs/`. Ainoa totuus; `docs/` on kertakäyttöinen |
-| `mkdocs.yml` | Material-konfiguraatio. `nav` tulee generoidusta `nav.yml`:stä |
-| `extensions/custom_blocks.py` | Rekisteröi `<task>`/`<handout>` lohkoelementeiksi |
-| `overrides/partials/copyright.html` | CC-lisenssi ja palautelinkit alaosaan |
-| `assets/js/hidelines.js` | `//-` piilorivien silmäikoni |
-| `assets/js/playground.js` | Java-ajonappi, portattu `../theme/playground_ext.js`:stä |
-| `assets/js/nav-numbers.js` | Lihavoi lukunumerot sivupalkissa |
-| `assets/css/admonitions.css` | Generoitu `../theme/alerts-style.css`:stä |
-
-## Zensical
-
-Sama koeputki kääntyy myös [Zensicalilla](https://zensical.org) — Material for
-MkDocsin tekijöiden uudella generaattorilla, joka lukee saman `mkdocs.yml`:n:
+## Käynnistys
 
 ```bash
-./run-zensical.sh     # asentaa tarvittaessa, rakentaa ja tarjoilee portissa 8003
+./mkdocs-spike/run.sh
 ```
 
-Tausta: Material for MkDocs siirtyi **ylläpitotilaan marraskuussa 2025** ja saa
-enää kriittiset korjaukset vähintään 12 kuukauden ajan. Zensical on sen seuraaja,
-mutta yhä alfassa (0.0.59, MIT, julkaisuja muutaman viikon välein).
+Ensimmäisellä kerralla se asentaa itse tarvitsemansa (`python3-venv`, `pip`,
+`zensical`) ja kysyy sudo-salasanaa apt:ta varten. Sen jälkeen sivusto on
+osoitteessa <http://localhost:8001>. Portti 8001 on välitetty
+devcontainerista; jos se ei aukea, avaa VS Coden **PORTS**-välilehti.
 
-Mikä toimi sellaisenaan: koko `mkdocs.yml`, kaikki pymdownx-laajennukset,
-`extensions/custom_blocks.py`, oma CSS ja JS, `docs/`-puu ja navigaation
-numerointi. Build **15 s** vastaan MkDocsin 31 s.
+```bash
+./mkdocs-spike/run.sh 8003     # eri portti
+./mkdocs-spike/run.sh build    # pelkkä rakennus site/-hakemistoon
+```
 
-Mikä ei: `overrides/partials/copyright.html` piti korjata, koska Zensicalin
-templatemoottori ei ole Jinja2 — siinä ei ole `page.file`-attribuuttia eikä
-merkkijonojen metodeja (`replace` toimii vain suodattimena). Korjattu versio
-toimii molemmissa. Lisäksi `zensical serve` tarjoaa vain hakemistomuotoisia
-osoitteita, joten esikatselu on tehtävä staattisella palvelimella.
+`zensical serve` seuraa muutoksia `docs/`:ssä. Kun muokkaat `../src`:ää,
+aja `python3 convert.py` uudelleen.
 
-## Mitä koeputki osoitti
+## Periaate
 
-**Toimii suoraan, ilman omaa koodia**
+Lähtötilanne on **Zensicalin oletusteema sellaisenaan**. Ei omaa CSS:ää, ei
+omaa JavaScriptiä, ei template-ylikirjoituksia, ei Markdown-laajennuksia,
+ei sisältömuunnoksia.
 
-- Oikean reunan "Tällä sivulla" -sisällysluettelo (`toc.follow`) — alkuperäinen kysymys
-- Omat suomenkieliset alert-tyypit. `convert.py` muuntaa sisällön
-  `> [!Osaamistavoitteet]` -syntaksin admonitioiksi, joten **`src/`:ään ei kosketa
-  lainkaan**. Kaikki 13 tyyppiä (myös `tärkeää` ääkkösineen) värit ja SVG-ikonit
-  siirtyivät suoraan
-- Sisältövälilehdet, `<details>`, mermaid, koodin kopiointinappi, suomenkielinen haku
-- Buildi 190 sivusta noin 28 s
+`convert.py` tekee tasan kaksi asiaa: kopioi `../src` → `docs/` ja kääntää
+`SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jää siis sivuille
+raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia vaan
+havaintoja.
 
-**Rakennettiin itse, toimii**
+Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`:
+sieltä saa jokaisen palasen takaisin, kun se on ensin todettu tarpeelliseksi.
 
-- **Piilorivit (1094 kpl).** `convert.py` riisuu `//-` etuliitteen ja tallentaa
-  rivinumerot `data-boring`-attribuuttiin; `pymdownx.highlight`in `line_spans`
-  antaa jokaiselle riville oman spanin, jolloin JS piilottaa juuri oikeat rivit.
-  Vaati ~45 riviä JS:ää ja ~45 riviä CSS:ää — selvästi vähemmän kuin pelättiin,
-  eikä Python-hookia tarvittu lainkaan
-- **Java-ajonappi (231 lohkoa).** Ajopalvelin ja pyyntömuoto säilyivät
-  muuttumattomina; vain DOM-osa kirjoitettiin uusiksi. `// FILE:`-monitiedosto-
-  esimerkit (192 markkeria) muunnetaan Materialin välilehdiksi ja ajonappi kerää
-  niistä tiedostot — sama toiminnallisuus kuin `mdbook-codeblock-tabs`illa, ilman
-  omaa preprocessoria
+## Tarkistuslista
 
-**Lukujen numerointi**
+Käydään läpi yksi kerrallaan. Jokaiselle kolme kysymystä: mitä mdBook teki,
+näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 
-`convert.py` numeroi navigaation samoin kuin mdBook: vain SUMMARYn listakohdat
-(`- [Luku](...)`) saavat numeron, juoksevasti ja `---`-erottimien yli, jolloin
-etu- ja jälkisivut (Työkalut, Luennot, Eteneminen) jäävät numeroimatta.
-Ylätaso `1.`–`13.`, alataso `6.1.`–`6.6.`. `mkdocs-section-index` tekee osan
-etusivusta osan oman linkin, joten se ei toistu lapsena. `nav-numbers.js`
-lihavoi numeron, koska se on osa nav-otsikkoa eikä sitä voi valita CSS:llä.
+| # | mdBookin ominaisuus | Esiintymiä | Tila nyt |
+|---|---|---|---|
+| 1 | `{{#include tiedosto}}` | 194 | rikki — teksti näkyy raakana |
+| 2 | `//-` piilorivit | 1094 | rikki — rivit näkyvät |
+| 3 | ` ```java ` ajonappi (playground) | 231 | puuttuu |
+| 4 | ` ```java,ignore` / `,noplayground` | 285 | puolittain — 253 lohkoa jää `language-text`iksi, ei Java-korostusta |
+| 5 | `// FILE:` monitiedostolohkot | 192 | rikki — merkinnät näkyvät |
+| 6 | `<task>` / `<points>` / `<handout>` | 507 | rikki — 501 tagia menee HTML:ään tyylittöminä |
+| 7 | `> [!VINKKI]`-tyyliset alertit | 75 | rikki — näkyy lainauksena |
+| 8 | `<details>`-lohkot | 88 | toimii (78 kpl HTML:ssä), mutta ilman animaatiota |
+| 9 | `HIGHLIGHT_*_BEGIN/END` | 120 | rikki — merkinnät näkyvät |
+| 10 | Lukujen numerointi navigaatiossa | koko nav | puuttuu |
+| 11 | Osan etusivu = osan oma linkki navissa | 10 osaa | rikki — sivu toistuu ensimmäisenä lapsena |
+| 12 | Otsikoiden numerointi sivun sisällä | — | ei ollut mdBookissakaan |
+| 13 | Ääkköset ankkureissa (`#käyttö`) | — | riisutaan (`#kaytto`) |
+| 14 | `.html`-päätteiset osoitteet (TIM) | — | puuttuu — nyt hakemistopolut |
+| 15 | plantuml / bob / mermaid | 17 / 8 / 2 | rikki / rikki / puuttuu |
+| 16 | `<asciinema>`-upotukset | 13 | rikki |
+| 17 | Bootstrap-ikonit `<i class="bi ...">` | 136 | puuttuu — ei fonttia |
+| 18 | JYU-paletti, kultainen korostus | 30 | puuttuu |
+| 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | — | puuttuu |
+| 20 | ACE-editori (`editable`-lohkot) | 2 | puuttuu |
+| 21 | KaTeX | 0 | voi jättää pois |
 
-**Löydös: `<task>` vaatii pienen laajennuksen**
+Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
+haun, vaalean/tumman teemanvaihdon, edellinen/seuraava-linkit, kopioi
+koodi -napin ja responsiivisen navigaation.
 
-Python-Markdown käärii tuntemattomat tagit `<p>`:n sisään, jolloin
-`<task>`-korttien rakenne rikkoutuu. `markdown="1"` ei yksin auta. Ratkaisu on
-`extensions/custom_blocks.py` (14 riviä), joka lisää tagit
-`md.block_level_elements`-listaan. Sen jälkeen `../theme/tasks.css` toimii
-lähes sellaisenaan — tarvittiin yksi lisäsääntö (`task > task-title > p
-{ display: contents }`), koska Python-Markdown käärii otsikon sisällön `<p>`:hen.
+## Mitattu ensimmäisestä ajosta
 
-## Vielä auki
+Rakennus kestää **16 s** (MkDocs + Material samasta sisällöstä: 31 s) ja
+tuottaa **53 varoitusta**: 49 × "anchor does not exist", 4 × "page does not
+exist". Kertyminen: `tyokalut.md` 20, `osa8/06-versionhallinnan-etakaytto.md`
+9, `osa1/01-hei-java.md` 7. Suurin osa on mdBookin `#tab/...`-ankkureita ja
+ääkkösellisiä ankkureita — nämä liittyvät listan kohtiin 13 ja 14.
 
-- Silmäikonin ja ajonapin **vuorovaikutus** on testattu vain HTML-tasolla;
-  selaimessa katsominen on seuraava askel
-- Kopiointinappi: kopioiko Material `display: none` -rivit mukaan? mdBook kopioi
-- `bob` (11) ja `plantuml` (17) jätettiin koskematta — renderöityvät nyt
-  tavallisina koodilohkoina
-- `HIGHLIGHT_*_BEGIN/END` -rivikorostukset (120) portaamatta
-- `<asciinema>` (13) portaamatta
-- Buildin varoitukset: muutama rikkinäinen sisäinen linkki, jotka ovat olemassa
-  jo nyt (esim. `osa3/03-abstraktit-luokat.md` puuttuu)
+Ilman mitään konfiguraatiota toimivat jo: Pygments-syntaksiväritys
+(`language-java highlight`), oikean reunan sisällysluettelo, haku suomeksi,
+kokoontaittuva navigaatio ja edellinen/seuraava-linkit.
