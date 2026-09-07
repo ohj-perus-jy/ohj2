@@ -25,7 +25,8 @@
 	// "features": {},
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [36742],
+	// 36742 = mdbook serve (.vscode/tasks.json), 8001 = mkdocs-spike/run.sh
+	"forwardPorts": [36742, 8001],
 
 	// Configure tool-specific properties.
 	"customizations": {
