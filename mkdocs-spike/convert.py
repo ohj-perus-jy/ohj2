@@ -29,11 +29,12 @@ SUMMARY_LINK_RE = re.compile(
 def build_nav() -> str:
     """src/SUMMARY.md -> mkdocs nav: -lohko.
 
-    Otsikot ja järjestys tulevat sellaisenaan SUMMARY.md:stä. mdBookin
-    automaattinen lukujen numerointi EI ole mukana — se on yksi
-    tarkistuslistan kohta, ei oletus.
+    Numerointi vastaa mdBookia: numeron saavat vain listakohdat
+    ("- [Luku](...)"), juoksevasti myös ---erottimien yli. Etu- ja
+    jälkilinkit (Aloitus, Työkalut, Luennot) jäävät numeroimatta, jolloin
+    ne erottuvat osista ilman erillisiä erottimia.
     """
-    entries: list[tuple[int, str, str]] = []
+    entries: list[tuple[int, str, str, bool]] = []
     for raw in (SRC / "SUMMARY.md").read_text(encoding="utf-8").split("\n"):
         if not raw.strip() or raw.strip().startswith("#") or set(raw.strip()) == {"-"}:
             continue
@@ -50,14 +51,27 @@ def build_nav() -> str:
             title, href = embedded.group("t").strip(), embedded.group("u")
         else:
             href = href.lstrip("./")
-        entries.append((len(match.group("indent")) // 2, title.replace('"', "'"), href))
+        entries.append((len(match.group("indent")) // 2, title.replace('"', "'"), href,
+                        bool(match.group("bullet"))))
+
+    counters: list[int] = []
+
+    def number_for(depth: int) -> str:
+        """Juokseva numero syvyydelle: 1., 1.1., 1.2., 2., ..."""
+        del counters[depth + 1:]
+        while len(counters) <= depth:
+            counters.append(0)
+        counters[depth] += 1
+        return ".".join(str(n) for n in counters) + "."
 
     def emit(index: int, depth: int, out: list[str]) -> int:
         pad = "  " * (depth + 1)
         while index < len(entries):
-            level, title, href = entries[index]
+            level, title, href, numbered = entries[index]
             if level < depth:
                 return index
+            if numbered:
+                title = f"{number_for(level)} {title}"
             has_children = index + 1 < len(entries) and entries[index + 1][0] > level
             if has_children:
                 out.append(f'{pad}- "{title}":')

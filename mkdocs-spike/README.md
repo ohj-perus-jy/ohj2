@@ -53,7 +53,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 7 | `> [!VINKKI]`-tyyliset alertit | 75 | rikki — näkyy lainauksena |
 | 8 | `<details>`-lohkot | 88 | toimii (78 kpl HTML:ssä), mutta ilman animaatiota |
 | 9 | `HIGHLIGHT_*_BEGIN/END` | 120 | rikki — merkinnät näkyvät |
-| 10 | Lukujen numerointi navigaatiossa | koko nav | puuttuu |
+| 10 | Lukujen numerointi navigaatiossa | koko nav | **tehty** — `convert.py`, 12 riviä |
 | 11 | Osan etusivu = osan oma linkki navissa | 13 osaa | **tehty** — `navigation.indexes` |
 | 12 | Otsikoiden numerointi sivun sisällä | — | ei ollut mdBookissakaan |
 | 13 | Ääkköset ankkureissa (`#käyttö`) | — | riisutaan (`#kaytto`) |
@@ -97,6 +97,20 @@ etusivun paljaana polkuna listan ensimmäiseksi.
 
 Todennettu selaimella: otsikko linkittää `osa3/`:een, nuoli avaa neljä
 alikohtaa, aktiivinen sivu saa pillerikorostuksen.
+
+### Lukujen numerointi (12 riviä `convert.py`:hyn)
+
+mdBook numeroi vain `SUMMARY.md`:n listakohdat (`- [Luku](...)`), juoksevasti
+myös `---`-erottimien yli. Etu- ja jälkilinkit (Aloitus, Työkalut, Luennot)
+jäävät numeroimatta, jolloin ne erottuvat osista ilman erillisiä erottimia —
+tämä korvaa `---`-viivat, joille Materialissa ei ole vastinetta.
+
+Todennettu vertaamalla generoitu `nav.yml` mdBookin omaan `book/toc.html`:ään
+ohjelmallisesti: **72 riviä, ei yhtään eroa** otsikoissa, numeroissa eikä
+poluissa.
+
+Ero mdBookiin: siellä numero on omassa `<strong>`-elementissään ja himmennetty.
+Tässä se on osa linkkitekstiä. Vaatisi oman CSS/JS-palan, joten jätetty pois.
 
 ## Mitattu ensimmäisestä ajosta
 
