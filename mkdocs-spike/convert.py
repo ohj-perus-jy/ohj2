@@ -122,6 +122,10 @@ def build_attrs(lang: str, flags: set[str], boring: list[int], filename: str | N
     if lang in PLAYGROUND_LANGS and not flags & {"ignore", "noplayground"}:
         classes.append(".playground")
     attrs = " ".join(classes)
+    if lang:
+        # superfences kuluttaa .java-luokan kielimäärittelyksi eikä se päädy
+        # HTML:ään, joten ajonappi tarvitsee kielen omana attribuuttinaan.
+        attrs += f' data-lang="{lang}"'
     if boring:
         attrs += f' data-boring="{" ".join(str(n) for n in boring)}"'
     if filename:

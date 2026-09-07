@@ -17,6 +17,9 @@
         + '12.5 10.5c3.54 0 6.55 2.31 7.6 5.5l2.37-.78A10.02 10.02 0 0 0 12.5 8Z"/></svg>';
 
     function language_of(block) {
+        if (block.dataset.lang) {
+            return block.dataset.lang;
+        }
         for (var i = 0; i < PLAYGROUND_LANGS.length; i += 1) {
             if (block.classList.contains(PLAYGROUND_LANGS[i])) {
                 return PLAYGROUND_LANGS[i];

@@ -1,5 +1,11 @@
 /* <task>-korttien tyylit, portattu tiedostosta theme/tasks.css.
- * Materialissa markdown HTML-lohkon sisällä vaatii markdown="1" (md_in_html). */
+ *
+ * Kaksi eroa mdBookiin:
+ *   1. rem-arvot on muunnettu pikseleiksi. mdBook asettaa juurifontiksi 62.5 %
+ *      (1rem = 10px); Materialilla juuri on eri, jolloin kortti kasvaisi.
+ *   2. Python-Markdown käärii <task-title>:n ja <task-link>:n sisällön <p>:hen,
+ *      joten lapsiselektorit on löysätty jälkeläisselektoreiksi.
+ */
 
 /* Task card. The number box needs `num` on <task-title>, e.g.
    <task-title num="2.5">Puhelin<points>1 p.</points></task-title> */
@@ -22,7 +28,7 @@ task > task-title {
     padding: 16px 24px;
     border-block-end: 1px solid var(--line);
 
-    font-size: 1.9rem;
+    font-size: 19px;
     font-family: "Aleo", "Lato", "Open Sans", sans-serif;
     font-weight: 400;
     line-height: 1.25;
@@ -42,18 +48,18 @@ task > task-title[num]::before {
 
     background-color: var(--task-bg);
     color: var(--task-bg-text);
-    font-size: 1.9rem;
+    font-size: 19px;
     font-variant-numeric: tabular-nums;
     letter-spacing: -0.01em;
 }
 
-task > task-title > points {
+task task-title points {
     order: 3;
     margin-inline-start: auto;
     padding: 2px 9px;
     color: var(--task-bg);
     font-family: "Lato", "Open Sans", sans-serif;
-    font-size: 1.25rem;
+    font-size: 12.5px;
     font-weight: 700;
     letter-spacing: 0.04em;
     text-wrap: nowrap;
@@ -62,7 +68,7 @@ task > task-title > points {
 
 /* Bonus badge: the star glyph comes from the <i class="bi bi-stars"> element,
    the label from ::after, so the two read as one chip. */
-task > task-title > i.bi {
+task task-title i.bi {
     order: 2;
     margin-inline-start: auto;
     display: inline-flex;
@@ -73,20 +79,20 @@ task > task-title > i.bi {
     border: 1px solid var(--line);
 
     color: var(--task-bg);
-    font-size: 1.3rem;
+    font-size: 13px;
     font-style: normal;
     user-select: none;
 }
 
-task > task-title > i.bi::after {
+task task-title i.bi::after {
     content: "Bonus";
     font-family: "Lato", "Open Sans", sans-serif;
-    font-size: 1.15rem;
+    font-size: 11.5px;
     font-weight: 700;
     letter-spacing: 0.04em;
 }
 
-task > task-title:has(> i.bi) > points {
+task task-title:has(i.bi) points {
     margin-inline-start: 0;
 }
 
@@ -124,13 +130,13 @@ task handout details > * + * {
 
 /* ---------------------------------------------------------------- footer */
 
-task > task-link {
+task task-link {
     display: flex;
     padding: 16px 24px;
     border-block-start: 1px solid var(--line);
 }
 
-task > task-link > a {
+task task-link > a {
     display: flex;
     align-items: center;
     width: fit-content;
@@ -143,12 +149,12 @@ task > task-link > a {
     user-select: none;
 }
 
-task > task-link > a:hover {
+task task-link > a:hover {
     background-color: var(--task-bg-hover) !important;
     color: var(--task-bg-hover-text) !important;
 }
 
-task > task-link > a::after {
+task task-link > a::after {
     content: "\f285"; /* The unicode for bi-chevron-right */
     font-family: "bootstrap-icons" !important; /* Specify the icon font */
 
@@ -158,7 +164,7 @@ task > task-link > a::after {
     transition: transform 0.3s ease;
 }
 
-task > task-link > a:hover::after {
+task task-link > a:hover::after {
     transform: translateX(4px);
 }
 
@@ -168,33 +174,34 @@ task > task-link > a:hover::after {
     task > task-title {
         gap: 10px;
         padding: 13px 16px;
-        font-size: 1.7rem;
+        font-size: 17px;
     }
 
     task > task-title[num]::before {
         width: 52px;
         margin: -13px 10px -13px -16px;
-        font-size: 1.7rem;
+        font-size: 17px;
     }
 
     task > handout {
         padding: 16px 16px 18px;
     }
 
-    task > task-link {
+    task task-link {
         padding: 14px 16px;
     }
 
-    task > task-link > a {
+    task task-link > a {
         width: 100%;
         justify-content: center;
     }
 }
 
 /* --------------------------------------------------------------- MkDocs-portti
- * Python-Markdown käärii <task-title>:n sisällön <p>:hen. display: contents
- * nostaa lapset takaisin task-titlen flex-kontekstiin, jolloin yllä olevat
- * säännöt (points order: 3, num-laatikko) toimivat muuttumattomina. */
+ * <task-title> on rekisteröity lohkoelementiksi, joten sen sisältö kääriytyy
+ * <p>:hen; <task-link> taas jää kokonaan <p>:n sisään. Molemmissa p tehdään
+ * läpinäkyväksi, jolloin taskin flex-sarake näkee oikeat lapset. */
+task > p,
 task > task-title > p {
     display: contents;
 }
