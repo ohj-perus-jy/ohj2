@@ -21,7 +21,9 @@ devcontainerista; jos se ei aukea, avaa VS Coden **PORTS**-välilehti.
 ```
 
 `zensical serve` seuraa muutoksia `docs/`:ssä. Kun muokkaat `../src`:ää,
-aja `python3 convert.py` uudelleen.
+aja `python3 convert.py` uudelleen. **Huom:** se ei huomaa muutoksia
+`assets/`-tiedostoihin, joten CSS:ää muokatessa palvelin on käynnistettävä
+uudelleen.
 
 ## Periaate
 
@@ -112,48 +114,47 @@ poluissa.
 Ero mdBookiin: siellä numero on omassa `<strong>`-elementissään ja himmennetty.
 Tässä se on osa linkkitekstiä. Vaatisi oman CSS/JS-palan, joten jätetty pois.
 
-### Sivupalkkien asemointi (`assets/css/layout.css`, 2 sääntöä)
+### Työpöytäasettelu: valikko kiinteänä kiskona (`assets/css/layout.css`)
 
-**Tämä on branchin ensimmäinen oma CSS.** Kaksi Zensicalin oletusta näkyivät
-käytössä häiritsevinä, eikä kumpaankaan ole konfiguraatiovalitsinta
-(tarkistin Zensicalin tuntemat `theme.features`-nimet asennetusta paketista):
+**Tämä on branchin ensimmäinen oma CSS.** Zensicalin oletuksessa valikko on
+osa keskitettyä ruudukkoa ja `position: sticky`, jolloin kaksi asiaa häiritsi:
 
-1. Sivupalkit ovat `position: sticky` (`top: 48px`), mutta lähtevät 30 px sen
-   alapuolelta, koska yhteinen säiliö on
-   `.md-main__inner { display: flex; height: 100%; margin-top: 1.5rem }`
-   (juurikoko 20 px, siis 30 px). Väljyys on hyvä idea, mutta se koskee myös
-   sivupalkkeja, jotka siksi liikkuivat ylöspäin ensimmäiset 30 px vieritystä
-   ja pysähtyivät nytkähtäen. Sama on Zensicalin omalla sivustolla, jossa
-   matka on 127 px — kyse on siis heidän suunnittelustaan, ei meidän
-   asetuksistamme.
-2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + `blur(8px)`), joten
-   pääsisältö näkyy sen läpi. Sivupalkit sen sijaan katkeavat terävästi
-   palkin alareunaan, koska ne on kiinnitetty `top: 48px`. Sisältö liukui
-   palkin alle mutta valikko ei.
+1. Valikko liikkui sisällön mukana ensimmäiset 30 px vieritystä ja pysähtyi
+   sitten nytkähtäen, koska yhteinen säiliö on
+   `.md-main__inner { display: flex; height: 100%; margin-top: 1.5rem }`.
+   Sama on Zensicalin omalla sivustolla, jossa matka on 127 px.
+2. Yläpalkki on läpikuultava ja sumennettu, joten sisältö liukui sen alle
+   mutta valikko katkesi siihen terävästi (`top: 48px`).
 
-mdBookissa sivupalkki on `top: 0` eikä liiku lainkaan, ja yläpalkki on
-läpinäkymätön (`rgb(15,20,26)`). Korjaus tekee saman:
+Ratkaisu on sama kuin mdBookissa: **valikko ei ole yläpalkin alla lainkaan**
+vaan omana kiskonaan ruudun vasemmassa reunassa, koko korkeudeltaan ja
+kiinteänä, ja kurssin nimi on kiskon yläosassa. Silloin ei ole mitään mikä
+liikkuisi tai katkeaisi — ja Zensicalin sumennettu yläpalkki voi jäädä, koska
+se sumentaa vain kiskon oikealla puolella olevan sisällön.
 
-```css
-.md-main__inner { margin-top: 0; }      /* pois yhteiseltä säiliöltä */
-.md-content     { margin-top: 1.5rem; } /* sama arvo, vain sisällölle */
-.md-header      { background-color: var(--md-default-bg-color);
-                  backdrop-filter: none; }
-```
+Kiskon leveys on 15rem (300 px, sama kuin mdBookissa; Zensicalin oletus on
+12,1rem). Vain työpöydällä (`min-width: 76.25em`); kapeilla näytöillä
+Zensicalin oma laatikkovalikko jää koskematta.
 
-Väljyys siirretään siis sinne mihin se kuuluu sen sijaan että se kumottaisiin
-sivupalkeilta negatiivisella marginaalilla. Jälkimmäinen toimisi myös, mutta
-toistaisi arvon 30 px taikanumerona: jos Zensical joskus muuttaa `1.5rem`:n,
-nytkähdys palaisi hiljaisesti.
+Kolme asiaa jotka kaivautuivat esiin matkalla:
 
-Mitattu jälkikäteen: sivupalkin ja sisällysluettelon `top` on 48 px kaikilla
-vieritysarvoilla 0–200, eli liikettä ei ole lainkaan. Kun `layout.css`
-kytketään selaimessa pois, `h1` pysyy samassa kohdassa (100 px) ja vain
-sivupalkki siirtyy 78 → 48 — sisällön väljyys säilyy siis pikselilleen.
-Sama pätee mobiilileveydellä (390 px).
+* Zensicalin JavaScript kirjoittaa sivupalkille inline-tyylit (`top: 48px`,
+  vieritysalueen `height`) olettaen sen olevan yläpalkin alla. Kiskona ne
+  ovat väärin, joten ne on kumottava `!important`illa. **Jos Zensical muuttaa
+  kirjoittamiaan tyylejä, tämä on ensimmäinen paikka jota katsoa.**
+* Yläpalkissa on repo-linkin paikka, joka on tyhjä (`repo_url`:ää ei ole)
+  mutta varaa silti 11,7rem oikeasta reunasta. Kapeassa palkissa se ei
+  haitannut; reunasta reunaan ulottuvassa se jätti haun roikkumaan keskelle.
+  Piilotetaan `:not(:has(*))`-ehdolla, jotta `repo_url`:n lisääminen
+  myöhemmin toimii itsestään.
+* Zensical vaihtaa yläpalkin otsikon kurssin nimestä sivun otsikoksi
+  vieritettäessä. Kiskon päällä se olisi hämmentävää, joten nimi jätetään
+  paikalleen.
 
-Jos Zensicalin sumennettu yläpalkki halutaan takaisin, poista `.md-header`
--sääntö. Säännöt ovat toisistaan riippumattomat.
+Mitattu leveyksillä 1280, 1440 ja 1920: kisko on `0/0/300/900` (1920:llä
+330 px, koska teeman juurikoko kasvaa), vieritysalue on vakiokorkuinen
+kaikilla vieritysarvoilla, ja mobiilissa (390 px) valikko on yhä
+laatikkona ruudun ulkopuolella `-242`:ssa.
 
 ## Mitattu ensimmäisestä ajosta
 

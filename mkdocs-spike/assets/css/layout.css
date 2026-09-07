@@ -1,37 +1,106 @@
-/* Sivupalkkien asemointi.
+/* Työpöytäasettelu: valikko kiinteänä kiskona vasemmassa reunassa.
  *
- * Zensicalin oletuksessa on kaksi asiaa, jotka mdBookissa eivät näy:
+ * Zensicalin oletuksessa valikko on osa keskitettyä ruudukkoa ja
+ * position: sticky, jolloin se liikkuu sisällön mukana ensimmäiset 30 px
+ * vieritystä (yhteinen säiliö on .md-main__inner { margin-top: 1.5rem })
+ * ja pysähtyy sitten nytkähtäen yläpalkin alareunaan. Lisäksi yläpalkki on
+ * läpikuultava ja sumennettu, joten sisältö liukuu sen alle mutta valikko
+ * katkeaa siihen terävästi.
  *
- * 1. Sivupalkit ovat position: sticky (top: 48px), mutta niiden lähtökohta on
- *    30 px sen alapuolella, koska yhteinen säiliö on
- *        .md-main__inner { display: flex; height: 100%; margin-top: 1.5rem }
- *    Väljyys on hyvä idea, mutta se koskee myös sivupalkkeja, jotka siksi
- *    liikkuvat ylöspäin ensimmäiset 30 px vieritystä ja pysähtyvät sitten
- *    nytkähtäen. Sama on Zensicalin omalla sivustolla, jossa matka on 127 px.
+ * Ratkaisu on sama kuin mdBookissa: valikko ei ole yläpalkin alla lainkaan
+ * vaan omana kiskonaan ruudun vasemmassa reunassa, koko korkeudeltaan, ja
+ * kurssin nimi on kiskon yläosassa. Silloin ei ole mitään mikä liikkuisi tai
+ * katkeaisi, ja sumennettu yläpalkki voi jäädä sisällön päälle.
  *
- * 2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + blur 8px), joten
- *    pääsisältö näkyy sen läpi vierittäessä. Sivupalkit sen sijaan katkeavat
- *    yläpalkin alareunaan terävästi, koska ne on kiinnitetty top: 48px.
- *    Sisältö siis liukuu palkin alle mutta valikko ei.
- *
- * mdBookissa sivupalkki on top: 0 eikä liiku lainkaan, ja yläpalkki on
- * läpinäkymätön (rgb(15,20,26)). Tehdään sama.
+ * Vain työpöydällä. Kapeilla näytöillä valikko on Zensicalin oma laatikko
+ * (drawer), johon ei kosketa.
  */
 
-/* 1. Väljyys pois yhteiseltä säiliöltä ja pelkälle sisällölle.
- *    Sama arvo, oikeassa paikassa: sivupalkit lähtevät nyt suoraan
- *    kiinnittymiskohdastaan eivätkä liiku lainkaan. */
-.md-main__inner {
-  margin-top: 0;
+:root {
+  /* mdBookin sivupalkin leveys. Zensicalin oletus on 12,1rem. */
+  --jyu-rail: 15rem;
 }
 
-.md-content {
-  margin-top: 1.5rem;
-}
+@media screen and (min-width: 76.25em) {
 
-/* 2. Läpinäkymätön yläpalkki: sisältö ei enää vuoda sen läpi. */
-.md-header {
-  background-color: var(--md-default-bg-color);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  /* 1. Kisko: kiinteä, koko korkeus, oma tausta ja erotinviiva.
+   *    Yläosaan jää tilaa yläpalkin korkeuden verran nimeä varten. */
+  /* !important siksi, että Zensicalin JavaScript kirjoittaa sivupalkille
+   * inline-tyylit (top ja vieritysalueen korkeus) olettaen sen olevan
+   * yläpalkin alla. Kiskona se laskee ne väärin. Jos Zensical muuttaa
+   * kirjoittamiaan tyylejä, tämä on ensimmäinen paikka jota katsoa. */
+  .md-sidebar--primary {
+    position: fixed;
+    top: 0 !important;
+    bottom: 0;
+    left: 0;
+    width: var(--jyu-rail);
+    height: 100vh;
+    padding: 2.4rem 0 0;
+    background-color: var(--md-default-bg-color);
+    border-right: 1px solid var(--md-default-fg-color--lightest);
+    z-index: 3;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    height: calc(100vh - 2.4rem) !important;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  /* 2. Muu sisältö alkaa kiskon oikealta puolelta ja keskittyy jäljelle
+   *    jäävään tilaan (siksi padding .md-mainille eikä marginaali
+   *    ruudukolle, jonka automaattinen keskitys halutaan säilyttää). */
+  .md-main {
+    padding-left: var(--jyu-rail);
+  }
+
+  /* 3. Yläpalkin rivi reunasta reunaan, jotta logo ja kurssin nimi
+   *    asettuvat kiskon päälle. */
+  .md-header__inner {
+    max-width: none;
+    margin: 0;
+    padding-right: 1.2rem;
+  }
+
+  /* Yläpalkissa on repo-linkin paikka, joka on tyhjä koska repo_url:ää ei ole
+   * määritelty — mutta se varaa silti 11,7rem oikeasta reunasta. Kapeassa
+   * palkissa se ei haitannut; reunasta reunaan ulottuvassa se jättäisi haun
+   * roikkumaan keskelle. Piilotetaan vain jos se on oikeasti tyhjä, jotta
+   * repo_url:n lisääminen myöhemmin toimii itsestään. */
+  .md-header__source:not(:has(*)) {
+    display: none;
+  }
+
+  /* Kiskon otsikko on kurssin nimi, ei sivun otsikko. Zensical vaihtaa ne
+   * keskenään vieritettäessä; kiskon päällä se olisi hämmentävää. */
+  .md-header__topic + .md-header__topic {
+    display: none;
+  }
+
+  .md-header__title--active .md-header__topic {
+    z-index: 0;
+    pointer-events: auto;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 4. Sumennettu tausta vain kiskon oikealle puolelle. Kiskon kohdalla
+   *    yläpalkki on läpinäkyvä, jolloin kiskon oma tausta näkyy sen läpi
+   *    eikä sisältö vuoda valikon nimen taakse. */
+  .md-header {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .md-header::before {
+    position: absolute;
+    inset: 0 0 0 var(--jyu-rail);
+    z-index: -1;
+    background-color: var(--md-default-bg-color--light);
+    backdrop-filter: blur(0.4rem);
+    -webkit-backdrop-filter: blur(0.4rem);
+    content: "";
+  }
 }
