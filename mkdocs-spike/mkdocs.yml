@@ -1,0 +1,78 @@
+INHERIT: nav.yml
+
+site_name: Ohjelmointi 2
+site_url: http://localhost:8001/
+docs_dir: docs
+site_dir: site
+
+# mdBook tuottaa .html-päätteiset osoitteet. TIMistä ja kirjanmerkeistä tulevat
+# linkit hajoaisivat MkDocsin oletuksella (hakemistopolut), joten pidetään .html.
+use_directory_urls: false
+
+theme:
+  name: material
+  language: fi
+  font:
+    text: Lato
+    code: Roboto Mono
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.top
+    - toc.follow
+    - content.code.copy
+    - content.tabs.link
+    - search.suggest
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Vaihda tummaan teemaan
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Vaihda vaaleaan teemaan
+
+plugins:
+  - search:
+      lang: fi
+  - callouts
+
+markdown_extensions:
+  # Rekisteröi <task>/<handout> lohkoelementeiksi (extensions/custom_blocks.py).
+  - custom_blocks
+  - admonition
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.highlight:
+      use_pygments: true
+      # Kääri jokainen koodirivi omaan spaniin, jotta //- piilorivit voidaan
+      # piilottaa yksitellen (mdBookin .boring-vastine).
+      line_spans: __codeline
+  - pymdownx.snippets:
+      base_path: [docs]
+      check_paths: false
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
+extra_css:
+  - assets/css/jyu.css
+  - assets/css/admonitions.css
+  - assets/css/hidelines.css
+  - assets/css/playground.css
+  - assets/css/tasks.css
+
+extra_javascript:
+  # ACE tulee mdBookin buildista (convert.py kopioi), jos sellainen on olemassa.
+  - assets/js/vendor/ace.js
+  - assets/js/vendor/mode-java.js
+  - assets/js/hidelines.js
+  - assets/js/playground.js

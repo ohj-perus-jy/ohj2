@@ -1,0 +1,62 @@
+/* JYU-paletti Materialin muuttujilla.
+ * Värit poimittu tiedostosta theme/css/variables.css (.jyu-light / .jyu-dark). */
+
+@import url("https://fonts.googleapis.com/css2?family=Aleo:wght@400;700&display=swap");
+
+:root {
+    --jyu-blue: #002957;
+    --jyu-link: #20609f;
+}
+
+[data-md-color-scheme="default"] {
+    --md-primary-fg-color: var(--jyu-blue);
+    --md-primary-fg-color--dark: #001c3b;
+    --md-accent-fg-color: var(--jyu-link);
+    --md-default-bg-color: hsl(0, 0%, 98%);
+    --md-typeset-a-color: var(--jyu-link);
+    --md-code-bg-color: #ffffff;
+    --md-footer-bg-color: hsl(0, 0%, 93%);
+    --md-footer-fg-color: hsl(0, 0%, 20%);
+}
+
+[data-md-color-scheme="slate"] {
+    --md-primary-fg-color: #001c3b;
+    --md-accent-fg-color: #6da8e6;
+    --md-typeset-a-color: #6da8e6;
+    --md-hue: 220;
+}
+
+/* Otsikkofontti kuten nykyisessä teemassa. */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+    font-family: Aleo, Lato, "Open Sans", sans-serif;
+    font-weight: 700;
+}
+
+.md-typeset h1 {
+    color: var(--md-default-fg-color);
+}
+
+/* mdBook-teeman muuttujat, joita portatut tyylit (tasks.css) käyttävät.
+ * Arvot theme/css/variables.css:n .jyu-light / .jyu-dark -lohkoista. */
+[data-md-color-scheme="default"] {
+    --quote-bg: #ffffff;
+    --line: #c9d1da;
+    --task-bg: #002957;
+    --task-bg-text: white;
+    --task-bg-hover: #20609f;
+    --task-bg-hover-text: white;
+    --task-inset: #f2f6f9;
+}
+
+[data-md-color-scheme="slate"] {
+    --quote-bg: hsl(226, 15%, 17%);
+    --line: #454b5e;
+    --task-bg: #00295777;
+    --task-bg-text: black;
+    --task-bg-hover: #6da8e6;
+    --task-bg-hover-text: black;
+    --task-inset: hsl(226, 15%, 21%);
+}
