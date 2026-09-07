@@ -42,7 +42,6 @@ theme:
 plugins:
   - search:
       lang: fi
-  - callouts
 
 markdown_extensions:
   # Rekisteröi <task>/<handout> lohkoelementeiksi (extensions/custom_blocks.py).

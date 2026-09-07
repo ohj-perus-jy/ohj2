@@ -37,6 +37,7 @@ toimivat Windowsiltakin haettuna. Jos haluat myös ACE-editorin niihin kahteen
 | `convert.py` | Muuntaa `../src` → `docs/`. Ainoa totuus; `docs/` on kertakäyttöinen |
 | `mkdocs.yml` | Material-konfiguraatio. `nav` tulee generoidusta `nav.yml`:stä |
 | `extensions/custom_blocks.py` | Rekisteröi `<task>`/`<handout>` lohkoelementeiksi |
+| `overrides/partials/copyright.html` | CC-lisenssi ja palautelinkit alaosaan |
 | `assets/js/hidelines.js` | `//-` piilorivien silmäikoni |
 | `assets/js/playground.js` | Java-ajonappi, portattu `../theme/playground_ext.js`:stä |
 | `assets/js/nav-numbers.js` | Lihavoi lukunumerot sivupalkissa |
@@ -47,7 +48,7 @@ toimivat Windowsiltakin haettuna. Jos haluat myös ACE-editorin niihin kahteen
 **Toimii suoraan, ilman omaa koodia**
 
 - Oikean reunan "Tällä sivulla" -sisällysluettelo (`toc.follow`) — alkuperäinen kysymys
-- Omat suomenkieliset alert-tyypit. `mkdocs-callouts` muuntaa sisällön
+- Omat suomenkieliset alert-tyypit. `convert.py` muuntaa sisällön
   `> [!Osaamistavoitteet]` -syntaksin admonitioiksi, joten **`src/`:ään ei kosketa
   lainkaan**. Kaikki 13 tyyppiä (myös `tärkeää` ääkkösineen) värit ja SVG-ikonit
   siirtyivät suoraan

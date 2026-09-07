@@ -38,6 +38,9 @@ INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<path>[^}]+?)\s*\}\}")
 FILE_START_RE = re.compile(r"^\s*//\s*FILE:\s*(?P<name>.+?)\s*$")
 FILE_END_RE = re.compile(r"^\s*//\s*FILE_END\s*$")
 # md_in_html renderöi HTML-lohkon sisällön markdownina vain markdown="1":llä.
+CALLOUT_RE = re.compile(
+    r"^(?P<indent>\s*)>\s*\[!(?P<type>[^\]]+)\](?P<fold>[-+]?)\s*(?P<title>.*)$")
+QUOTE_RE = re.compile(r"^(?P<indent>\s*)>\s?(?P<rest>.*)$")
 MD_IN_HTML_TAGS = ("task", "handout")
 OPEN_TAG_RE = re.compile(r"<(?P<tag>" + "|".join(MD_IN_HTML_TAGS) + r")(?P<attrs>[^>]*)>")
 
@@ -163,6 +166,39 @@ def render_fence(indent: str, ticks: str, lang: str, flags: set[str],
     return out
 
 
+def convert_callout(lines: list[str], index: int, out: list[str]) -> int:
+    """> [!VINKKI] ... -> !!! vinkki ... (Materialin admonitio)
+
+    Tekee saman kuin mkdocs-callouts-plugin, mutta konversiovaiheessa. Näin
+    pinossa ei ole yhtään plugin-riippuvuutta, mikä pitää sen siirrettävänä
+    muihinkin generaattoreihin.
+    """
+    match = CALLOUT_RE.match(lines[index])
+    indent = match.group("indent")
+    marker = {"-": "???", "+": "???+"}.get(match.group("fold"), "!!!")
+    kind = match.group("type").strip().lower()
+    title = match.group("title").strip()
+    header = f"{indent}{marker} {kind}"
+    if title:
+        header += f' "{title}"'
+    out.append(header)
+
+    index += 1
+    body: list[str] = []
+    while index < len(lines):
+        quoted = QUOTE_RE.match(lines[index])
+        if not quoted or CALLOUT_RE.match(lines[index]):
+            break
+        body.append(quoted.group("rest"))
+        index += 1
+    while body and not body[-1].strip():
+        body.pop()
+    for line in body:
+        out.append(f"{indent}    {line}" if line.strip() else "")
+    out.append("")
+    return index
+
+
 def has_h1(lines: list[str]) -> bool:
     """Onko tiedosto oikea sivu vai pelkkä include (exercises/handout.md)?"""
     for line in lines:
@@ -194,6 +230,9 @@ def convert_markdown(text: str, md_path: Path) -> str:
         line = lines[index]
         fence = FENCE_RE.match(line)
         if not fence:
+            if CALLOUT_RE.match(line):
+                index = convert_callout(lines, index, out)
+                continue
             if numbering and H2_RE.match(line):
                 section += 1
                 line = number_heading(line, section)
