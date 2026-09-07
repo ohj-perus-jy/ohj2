@@ -17,4 +17,4 @@ fi
 .venv/bin/pip install --quiet -r requirements.txt
 
 echo
-echo "Valmis. Käynnistä:  ./mkdocs-spike/run.sh"
+echo "Valmis. Käynnistä:  ./zensical/run.sh"

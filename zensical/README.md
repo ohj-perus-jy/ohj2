@@ -7,7 +7,7 @@ eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan
 ## Käynnistys
 
 ```bash
-./mkdocs-spike/run.sh
+./zensical/run.sh
 ```
 
 Ensimmäisellä kerralla se asentaa itse tarvitsemansa (`python3-venv`, `pip`,
@@ -16,8 +16,8 @@ osoitteessa <http://localhost:8001>. Portti 8001 on välitetty
 devcontainerista; jos se ei aukea, avaa VS Coden **PORTS**-välilehti.
 
 ```bash
-./mkdocs-spike/run.sh 8003     # eri portti
-./mkdocs-spike/run.sh build    # pelkkä rakennus site/-hakemistoon
+./zensical/run.sh 8003     # eri portti
+./zensical/run.sh build    # pelkkä rakennus site/-hakemistoon
 ```
 
 `zensical serve` seuraa muutoksia `docs/`:ssä. Kun muokkaat `../src`:ää,
@@ -36,7 +36,8 @@ ei sisältömuunnoksia.
 raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia vaan
 havaintoja.
 
-Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`:
+Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
+(siellä hakemisto on nimeltään `mkdocs-spike/`):
 sieltä saa jokaisen palasen takaisin, kun se on ensin todettu tarpeelliseksi.
 
 ## Tarkistuslista

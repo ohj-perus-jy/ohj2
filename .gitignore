@@ -352,8 +352,9 @@ http-client.private.env.json
 **/.idea/dataSources.local.xml
 
 **/.idea/**/copilot.data.migration.*.xml
-# MkDocs-koeputki (mkdocs-spike/): generoitua, ei versioida
-mkdocs-spike/.venv*/
-mkdocs-spike/docs/
-mkdocs-spike/site/
-mkdocs-spike/nav.yml
+# Zensical-koeputki (zensical/): generoitua, ei versioida
+zensical/.venv*/
+zensical/docs/
+zensical/site/
+zensical/nav.yml
+zensical/.cache/
