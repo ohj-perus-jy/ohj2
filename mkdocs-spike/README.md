@@ -118,23 +118,42 @@ Tässä se on osa linkkitekstiä. Vaatisi oman CSS/JS-palan, joten jätetty pois
 käytössä häiritsevinä, eikä kumpaankaan ole konfiguraatiovalitsinta
 (tarkistin Zensicalin tuntemat `theme.features`-nimet asennetusta paketista):
 
-1. Sivupalkit ovat `position: sticky` ja lähtevät 30 px kiinnittymiskohtansa
-   alapuolelta, koska `.md-main__inner` on `margin-top: 30px`. Valikko liikkui
-   siis ensimmäiset 30 px vieritystä ja pysähtyi nytkähtäen. Sama on
-   Zensicalin omalla sivustolla, jossa matka on 127 px — kyse on siis heidän
-   suunnittelustaan, ei meidän asetuksistamme.
+1. Sivupalkit ovat `position: sticky` (`top: 48px`), mutta lähtevät 30 px sen
+   alapuolelta, koska yhteinen säiliö on
+   `.md-main__inner { display: flex; height: 100%; margin-top: 1.5rem }`
+   (juurikoko 20 px, siis 30 px). Väljyys on hyvä idea, mutta se koskee myös
+   sivupalkkeja, jotka siksi liikkuivat ylöspäin ensimmäiset 30 px vieritystä
+   ja pysähtyivät nytkähtäen. Sama on Zensicalin omalla sivustolla, jossa
+   matka on 127 px — kyse on siis heidän suunnittelustaan, ei meidän
+   asetuksistamme.
 2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + `blur(8px)`), joten
    pääsisältö näkyy sen läpi. Sivupalkit sen sijaan katkeavat terävästi
    palkin alareunaan, koska ne on kiinnitetty `top: 48px`. Sisältö liukui
    palkin alle mutta valikko ei.
 
 mdBookissa sivupalkki on `top: 0` eikä liiku lainkaan, ja yläpalkki on
-läpinäkymätön (`rgb(15,20,26)`). Korjaus tekee saman: `.md-sidebar` saa
-`margin-top: -30px` ja `.md-header` läpinäkymättömän taustan.
+läpinäkymätön (`rgb(15,20,26)`). Korjaus tekee saman:
 
-Mitattu jälkikäteen: sivupalkin `top` on 48 px kaikilla vieritysarvoilla
-0–200, eli liikettä ei ole lainkaan. Jos Zensicalin sumennettu yläpalkki
-halutaan takaisin, poista `layout.css`:n jälkimmäinen sääntö.
+```css
+.md-main__inner { margin-top: 0; }      /* pois yhteiseltä säiliöltä */
+.md-content     { margin-top: 1.5rem; } /* sama arvo, vain sisällölle */
+.md-header      { background-color: var(--md-default-bg-color);
+                  backdrop-filter: none; }
+```
+
+Väljyys siirretään siis sinne mihin se kuuluu sen sijaan että se kumottaisiin
+sivupalkeilta negatiivisella marginaalilla. Jälkimmäinen toimisi myös, mutta
+toistaisi arvon 30 px taikanumerona: jos Zensical joskus muuttaa `1.5rem`:n,
+nytkähdys palaisi hiljaisesti.
+
+Mitattu jälkikäteen: sivupalkin ja sisällysluettelon `top` on 48 px kaikilla
+vieritysarvoilla 0–200, eli liikettä ei ole lainkaan. Kun `layout.css`
+kytketään selaimessa pois, `h1` pysyy samassa kohdassa (100 px) ja vain
+sivupalkki siirtyy 78 → 48 — sisällön väljyys säilyy siis pikselilleen.
+Sama pätee mobiilileveydellä (390 px).
+
+Jos Zensicalin sumennettu yläpalkki halutaan takaisin, poista `.md-header`
+-sääntö. Säännöt ovat toisistaan riippumattomat.
 
 ## Mitattu ensimmäisestä ajosta
 

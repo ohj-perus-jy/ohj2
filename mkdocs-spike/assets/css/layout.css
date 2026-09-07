@@ -2,23 +2,31 @@
  *
  * Zensicalin oletuksessa on kaksi asiaa, jotka mdBookissa eivät näy:
  *
- * 1. Sivupalkit ovat position: sticky ja niiden lähtökohta on 30 px
- *    kiinnittymiskohdan alapuolella (.md-main__inner { margin-top: 30px }).
- *    Siksi valikko liikkuu ensimmäiset 30 px vieritystä ja pysähtyy sitten
+ * 1. Sivupalkit ovat position: sticky (top: 48px), mutta niiden lähtökohta on
+ *    30 px sen alapuolella, koska yhteinen säiliö on
+ *        .md-main__inner { display: flex; height: 100%; margin-top: 1.5rem }
+ *    Väljyys on hyvä idea, mutta se koskee myös sivupalkkeja, jotka siksi
+ *    liikkuvat ylöspäin ensimmäiset 30 px vieritystä ja pysähtyvät sitten
  *    nytkähtäen. Sama on Zensicalin omalla sivustolla, jossa matka on 127 px.
  *
  * 2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + blur 8px), joten
- *    pääsisältö näkyy sen läpi vierittäessä. Sivupalkit sen sijaan pysähtyvät
+ *    pääsisältö näkyy sen läpi vierittäessä. Sivupalkit sen sijaan katkeavat
  *    yläpalkin alareunaan terävästi, koska ne on kiinnitetty top: 48px.
  *    Sisältö siis liukuu palkin alle mutta valikko ei.
  *
- * mdBookissa sivupalkki on kiinteä eikä liiku lainkaan, ja yläpalkki on
- * läpinäkymätön. Tehdään sama.
+ * mdBookissa sivupalkki on top: 0 eikä liiku lainkaan, ja yläpalkki on
+ * läpinäkymätön (rgb(15,20,26)). Tehdään sama.
  */
 
-/* 1. Sivupalkit lähtevät suoraan kiinnittymiskohdastaan -> ei nytkähdystä. */
-.md-sidebar {
-  margin-top: -30px;
+/* 1. Väljyys pois yhteiseltä säiliöltä ja pelkälle sisällölle.
+ *    Sama arvo, oikeassa paikassa: sivupalkit lähtevät nyt suoraan
+ *    kiinnittymiskohdastaan eivätkä liiku lainkaan. */
+.md-main__inner {
+  margin-top: 0;
+}
+
+.md-content {
+  margin-top: 1.5rem;
 }
 
 /* 2. Läpinäkymätön yläpalkki: sisältö ei enää vuoda sen läpi. */
