@@ -21,6 +21,10 @@ theme:
     - navigation.tracking
     - navigation.top
     - toc.follow
+    # Osan etusivu on osan oma linkki, ei erillinen lapsi (kuten mdBookissa).
+    # Materialin oma toteutus; mkdocs-section-index-plugin vaati riippuvuutena
+    # properdocs-forkin ja mainosti sitä jokaisessa buildissa.
+    - navigation.indexes
     - navigation.footer
     - content.code.copy
     - content.tabs.link
@@ -36,8 +40,6 @@ theme:
         name: Vaihda vaaleaan teemaan
 
 plugins:
-  # Osan etusivu on osan oma linkki, ei erillinen lapsi (kuten mdBookissa).
-  - section-index
   - search:
       lang: fi
   - callouts
@@ -74,6 +76,7 @@ extra_css:
   # Sisällössä on <i class="bi bi-*"> -ikoneita, kuten mdBook-teemassakin.
   - https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css
   - assets/css/jyu.css
+  - assets/css/nav.css
   - assets/css/admonitions.css
   - assets/css/hidelines.css
   - assets/css/playground.css
@@ -83,6 +86,7 @@ extra_javascript:
   # ACE tulee mdBookin buildista (convert.py kopioi), jos sellainen on olemassa.
   - assets/js/vendor/ace.js
   - assets/js/vendor/mode-java.js
+  - assets/js/nav.js
   - assets/js/nav-numbers.js
   - assets/js/hidelines.js
   - assets/js/playground.js

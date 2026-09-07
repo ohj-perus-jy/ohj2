@@ -133,11 +133,16 @@
 /* --------------------------------------------------------------- koodilohkot
  * Reunaviiva tekee rajan taustaan teräväksi eikä pelkän täytön varaiseksi. */
 .md-typeset .highlight,
-.md-typeset pre,
 .playground-result,
 .md-typeset .tabbed-set > .tabbed-content {
     border: 1px solid var(--line);
     border-radius: 0.1rem;
+}
+
+/* Material käärii koodin .highlight-elementtiin; sisempi <pre> ei tarvitse
+ * omaa reunustaan, muuten viivoja tulee kaksi. */
+.md-typeset .highlight pre {
+    border: none;
 }
 
 .md-typeset .tabbed-content .highlight {
