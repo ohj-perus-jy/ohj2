@@ -32,3 +32,6 @@ theme:
       toggle:
         icon: material/weather-sunny
         name: Vaihda vaaleaan teemaan
+
+extra_css:
+  - assets/css/layout.css

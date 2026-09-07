@@ -112,6 +112,30 @@ poluissa.
 Ero mdBookiin: siellä numero on omassa `<strong>`-elementissään ja himmennetty.
 Tässä se on osa linkkitekstiä. Vaatisi oman CSS/JS-palan, joten jätetty pois.
 
+### Sivupalkkien asemointi (`assets/css/layout.css`, 2 sääntöä)
+
+**Tämä on branchin ensimmäinen oma CSS.** Kaksi Zensicalin oletusta näkyivät
+käytössä häiritsevinä, eikä kumpaankaan ole konfiguraatiovalitsinta
+(tarkistin Zensicalin tuntemat `theme.features`-nimet asennetusta paketista):
+
+1. Sivupalkit ovat `position: sticky` ja lähtevät 30 px kiinnittymiskohtansa
+   alapuolelta, koska `.md-main__inner` on `margin-top: 30px`. Valikko liikkui
+   siis ensimmäiset 30 px vieritystä ja pysähtyi nytkähtäen. Sama on
+   Zensicalin omalla sivustolla, jossa matka on 127 px — kyse on siis heidän
+   suunnittelustaan, ei meidän asetuksistamme.
+2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + `blur(8px)`), joten
+   pääsisältö näkyy sen läpi. Sivupalkit sen sijaan katkeavat terävästi
+   palkin alareunaan, koska ne on kiinnitetty `top: 48px`. Sisältö liukui
+   palkin alle mutta valikko ei.
+
+mdBookissa sivupalkki on `top: 0` eikä liiku lainkaan, ja yläpalkki on
+läpinäkymätön (`rgb(15,20,26)`). Korjaus tekee saman: `.md-sidebar` saa
+`margin-top: -30px` ja `.md-header` läpinäkymättömän taustan.
+
+Mitattu jälkikäteen: sivupalkin `top` on 48 px kaikilla vieritysarvoilla
+0–200, eli liikettä ei ole lainkaan. Jos Zensicalin sumennettu yläpalkki
+halutaan takaisin, poista `layout.css`:n jälkimmäinen sääntö.
+
 ## Mitattu ensimmäisestä ajosta
 
 Rakennus kestää **16 s** (MkDocs + Material samasta sisällöstä: 31 s) ja

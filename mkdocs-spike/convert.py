@@ -21,6 +21,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT.parent / "src"
 DOCS = ROOT / "docs"
+ASSETS = ROOT / "assets"
 
 SUMMARY_LINK_RE = re.compile(
     r"^(?P<indent>\s*)(?P<bullet>-\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
@@ -97,6 +98,7 @@ def main() -> int:
         shutil.rmtree(DOCS)
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
+    shutil.copytree(ASSETS, DOCS / "assets", dirs_exist_ok=True)
     (ROOT / "nav.yml").write_text(build_nav(), encoding="utf-8")
     print(f"kopioitu {len(list(DOCS.rglob('*.md')))} markdown-tiedostoa -> {DOCS}")
     return 0

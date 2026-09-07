@@ -1,0 +1,29 @@
+/* Sivupalkkien asemointi.
+ *
+ * Zensicalin oletuksessa on kaksi asiaa, jotka mdBookissa eivät näy:
+ *
+ * 1. Sivupalkit ovat position: sticky ja niiden lähtökohta on 30 px
+ *    kiinnittymiskohdan alapuolella (.md-main__inner { margin-top: 30px }).
+ *    Siksi valikko liikkuu ensimmäiset 30 px vieritystä ja pysähtyy sitten
+ *    nytkähtäen. Sama on Zensicalin omalla sivustolla, jossa matka on 127 px.
+ *
+ * 2. Yläpalkki on läpikuultava ja sumennettu (alpha 0,54 + blur 8px), joten
+ *    pääsisältö näkyy sen läpi vierittäessä. Sivupalkit sen sijaan pysähtyvät
+ *    yläpalkin alareunaan terävästi, koska ne on kiinnitetty top: 48px.
+ *    Sisältö siis liukuu palkin alle mutta valikko ei.
+ *
+ * mdBookissa sivupalkki on kiinteä eikä liiku lainkaan, ja yläpalkki on
+ * läpinäkymätön. Tehdään sama.
+ */
+
+/* 1. Sivupalkit lähtevät suoraan kiinnittymiskohdastaan -> ei nytkähdystä. */
+.md-sidebar {
+  margin-top: -30px;
+}
+
+/* 2. Läpinäkymätön yläpalkki: sisältö ei enää vuoda sen läpi. */
+.md-header {
+  background-color: var(--md-default-bg-color);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
