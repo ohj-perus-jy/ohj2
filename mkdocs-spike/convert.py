@@ -61,7 +61,9 @@ def build_nav() -> str:
             has_children = index + 1 < len(entries) and entries[index + 1][0] > level
             if has_children:
                 out.append(f'{pad}- "{title}":')
-                out.append(f'{pad}  - "{title}": {href}')
+                # Paljas polku ensimmäisenä = Materialin navigation.indexes:
+                # osan etusivusta tulee osan oma otsikkolinkki, kuten mdBookissa.
+                out.append(f"{pad}  - {href}")
                 index = emit(index + 1, depth + 1, out)
             else:
                 out.append(f'{pad}- "{title}": {href}')

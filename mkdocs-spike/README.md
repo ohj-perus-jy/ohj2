@@ -54,7 +54,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 8 | `<details>`-lohkot | 88 | toimii (78 kpl HTML:ssä), mutta ilman animaatiota |
 | 9 | `HIGHLIGHT_*_BEGIN/END` | 120 | rikki — merkinnät näkyvät |
 | 10 | Lukujen numerointi navigaatiossa | koko nav | puuttuu |
-| 11 | Osan etusivu = osan oma linkki navissa | 10 osaa | rikki — sivu toistuu ensimmäisenä lapsena |
+| 11 | Osan etusivu = osan oma linkki navissa | 13 osaa | **tehty** — `navigation.indexes` |
 | 12 | Otsikoiden numerointi sivun sisällä | — | ei ollut mdBookissakaan |
 | 13 | Ääkköset ankkureissa (`#käyttö`) | — | riisutaan (`#kaytto`) |
 | 14 | `.html`-päätteiset osoitteet (TIM) | — | puuttuu — nyt hakemistopolut |
@@ -86,6 +86,17 @@ kontrasti on **1,09:1 molemmissa teemoissa** (vaalea 255,255,255 vs
 245,245,245; tumma 11,12,15 vs 20,23,31). Sama ongelma josta aiemmin
 huomautit — se on siis Materialin oletus, ei koeputken tekemä. Kuuluu
 kohtaan 18.
+
+### Osan etusivu navigaatiossa (1 rivi + 1 rivi)
+
+Barebones-konversio toisti osan otsikon vielä ensimmäisenä lapsena
+("Perintä, polymorfismi" kahdesti). mdBookissa osan otsikko *on* linkki
+`index.md`:hen ja nuoli avaa alikohdat erikseen. Sama saadaan
+`navigation.indexes`-ominaisuudella, kun `convert.py` kirjoittaa osan
+etusivun paljaana polkuna listan ensimmäiseksi.
+
+Todennettu selaimella: otsikko linkittää `osa3/`:een, nuoli avaa neljä
+alikohtaa, aktiivinen sivu saa pillerikorostuksen.
 
 ## Mitattu ensimmäisestä ajosta
 

@@ -13,6 +13,10 @@ site_dir: site
 theme:
   name: material
   language: fi
+  features:
+    # mdBookissa osan otsikko on itse linkki osan etusivulle, ja nuoli avaa
+    # alikohdat. Ilman tätä etusivu toistuisi vielä ensimmäisenä lapsena.
+    - navigation.indexes
 
   # book.toml: default-theme = "jyu-light", preferred-dark-theme = "jyu-dark".
   # media-ehto tekee saman: teema seuraa käyttöjärjestelmää, ja vaihdin
