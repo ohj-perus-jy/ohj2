@@ -1,7 +1,11 @@
 {# Sivun alaosa: CC-lisenssi ja palautelinkit.
-   Materialin 404-sivu renderöidään ilman page-oliota, joten linkit ovat ehdon
-   takana. Muuten alaosa jää Materialin omaan tyyliin; edellinen/seuraava tulee
-   navigation.footer-ominaisuudesta. #}
+
+   Polku johdetaan page.url:sta eikä page.file.src_uri:sta, koska Zensicalin
+   sivuoliossa ei ole file-attribuuttia. replace on suodattimena eikä metodina,
+   koska Zensicalin templatemoottori ei ole Jinja2 eikä tunne merkkijonojen
+   metodeja. 404-sivulla page puuttuu, joten linkit ovat ehdon takana. #}
+{% set page_url = page.url if page and page.url else "" %}
+{% set src_path = page_url | replace(".html", ".md") %}
 <div class="md-copyright">
   <div class="jyu-footer">
     <a class="jyu-footer__license" rel="license"
@@ -10,14 +14,14 @@
       <img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png"
            alt="Creative Commons Nimeä-JaaSamoin 4.0" width="88" height="31">
     </a>
-    {% if page and page.file %}
+    {% if src_path %}
       <div class="jyu-footer__links">
-        <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/{{ page.file.src_uri }}"
+        <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/{{ src_path }}"
            rel="edit"
            title="Löysitkö virheen tai haluatko tehdä parannusehdotuksen? Klikkaa tästä.">
           <i class="bi bi-pencil"></i> Ehdota muutosta
         </a>
-        <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&url={{ page.canonical_url }}"
+        <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&url={{ page_url }}"
            title="Avaa issue GitHubissa">
           <i class="bi bi-flag"></i> Ilmoita ongelmasta
         </a>

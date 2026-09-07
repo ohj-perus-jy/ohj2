@@ -43,6 +43,29 @@ toimivat Windowsiltakin haettuna. Jos haluat myös ACE-editorin niihin kahteen
 | `assets/js/nav-numbers.js` | Lihavoi lukunumerot sivupalkissa |
 | `assets/css/admonitions.css` | Generoitu `../theme/alerts-style.css`:stä |
 
+## Zensical
+
+Sama koeputki kääntyy myös [Zensicalilla](https://zensical.org) — Material for
+MkDocsin tekijöiden uudella generaattorilla, joka lukee saman `mkdocs.yml`:n:
+
+```bash
+./run-zensical.sh     # asentaa tarvittaessa, rakentaa ja tarjoilee portissa 8003
+```
+
+Tausta: Material for MkDocs siirtyi **ylläpitotilaan marraskuussa 2025** ja saa
+enää kriittiset korjaukset vähintään 12 kuukauden ajan. Zensical on sen seuraaja,
+mutta yhä alfassa (0.0.59, MIT, julkaisuja muutaman viikon välein).
+
+Mikä toimi sellaisenaan: koko `mkdocs.yml`, kaikki pymdownx-laajennukset,
+`extensions/custom_blocks.py`, oma CSS ja JS, `docs/`-puu ja navigaation
+numerointi. Build **15 s** vastaan MkDocsin 31 s.
+
+Mikä ei: `overrides/partials/copyright.html` piti korjata, koska Zensicalin
+templatemoottori ei ole Jinja2 — siinä ei ole `page.file`-attribuuttia eikä
+merkkijonojen metodeja (`replace` toimii vain suodattimena). Korjattu versio
+toimii molemmissa. Lisäksi `zensical serve` tarjoaa vain hakemistomuotoisia
+osoitteita, joten esikatselu on tehtävä staattisella palvelimella.
+
 ## Mitä koeputki osoitti
 
 **Toimii suoraan, ilman omaa koodia**
