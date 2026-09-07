@@ -8,13 +8,17 @@
     --jyu-link: #20609f;
 }
 
+/* Pinnat: sivu, koodilohko ja kortti erottuvat toisistaan.
+ * mdBookin oma ero sivun ja koodilohkon välillä on vain 1.13:1; tässä se on
+ * 1.23:1 ja lisäksi lohkoilla on reunaviiva (1.54:1 sivua vasten), jolloin
+ * raja on selvä myös heikossa valaistuksessa ja huonoilla näytöillä. */
 [data-md-color-scheme="default"] {
     --md-primary-fg-color: var(--jyu-blue);
     --md-primary-fg-color--dark: #001c3b;
     --md-accent-fg-color: var(--jyu-link);
-    --md-default-bg-color: hsl(0, 0%, 98%);
+    --md-default-bg-color: #ffffff;
     --md-typeset-a-color: var(--jyu-link);
-    --md-code-bg-color: #ffffff;
+    --md-code-bg-color: #e3e8ef;
     --md-footer-bg-color: hsl(0, 0%, 93%);
     --md-footer-fg-color: hsl(0, 0%, 20%);
 }
@@ -24,6 +28,8 @@
     --md-accent-fg-color: #6da8e6;
     --md-typeset-a-color: #6da8e6;
     --md-hue: 220;
+    --md-default-bg-color: #1f2129;
+    --md-code-bg-color: #121419;
 }
 
 /* Otsikkofontti kuten nykyisessä teemassa. */
@@ -42,7 +48,7 @@
 /* mdBook-teeman muuttujat, joita portatut tyylit (tasks.css) käyttävät.
  * Arvot theme/css/variables.css:n .jyu-light / .jyu-dark -lohkoista. */
 [data-md-color-scheme="default"] {
-    --quote-bg: #ffffff;
+    --quote-bg: #f4f6f9;
     --line: #c9d1da;
     --task-bg: #002957;
     --task-bg-text: white;
@@ -51,17 +57,63 @@
     --task-inset: #f2f6f9;
 }
 
+/* mdBookin tummat task-värit olettavat vaaleamman taustan; tummalla pohjalla
+ * numerolaatikko ja TIM-nappi jäivät lukukelvottomiksi. Nostetaan sininen ja
+ * käytetään vaaleaa tekstiä. */
 [data-md-color-scheme="slate"] {
-    --quote-bg: hsl(226, 15%, 17%);
+    --quote-bg: #272a34;
     --line: #454b5e;
-    --task-bg: #00295777;
-    --task-bg-text: black;
+    --task-bg: #2f5f9e;
+    --task-bg-text: #ffffff;
     --task-bg-hover: #6da8e6;
-    --task-bg-hover-text: black;
-    --task-inset: hsl(226, 15%, 21%);
+    --task-bg-hover-text: #12141a;
+    --task-inset: #2d3140;
 }
 
 /* Lukunumerot sivupalkissa, kuten mdBookissa. */
 .md-nav__link .nav-number {
     font-weight: 700;
+}
+
+/* Sivun alaosa: CC-lisenssi ja palautelinkit (overrides/partials/copyright.html).
+ * Alaosa saa muuten jäädä Materialin omaan tyyliin — edellinen/seuraava-linkit
+ * tulevat navigation.footer-ominaisuudesta. */
+.jyu-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.4rem 0;
+}
+
+.jyu-footer__links {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.jyu-footer__links a {
+    color: var(--md-footer-fg-color, currentColor);
+}
+
+.jyu-footer__links a:hover {
+    color: var(--md-accent-fg-color);
+}
+
+/* Koodilohkot ja tuloslohko saavat reunaviivan, jotta raja taustaan on terävä
+ * eikä pelkän täytön varassa. */
+.md-typeset .highlight,
+.md-typeset pre,
+.playground-result,
+.md-typeset .tabbed-set > .tabbed-content {
+    border: 1px solid var(--line);
+    border-radius: 0.1rem;
+}
+
+/* Välilehtien koodilohkot ovat jo sisällön reunuksen sisällä. */
+.md-typeset .tabbed-content .highlight {
+    border: none;
+}
+
+.playground-result {
+    border-top: none;
 }

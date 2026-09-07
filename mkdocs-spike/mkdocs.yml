@@ -11,6 +11,7 @@ use_directory_urls: false
 
 theme:
   name: material
+  custom_dir: overrides
   language: fi
   font:
     text: Lato
@@ -20,6 +21,7 @@ theme:
     - navigation.tracking
     - navigation.top
     - toc.follow
+    - navigation.footer
     - content.code.copy
     - content.tabs.link
     - search.suggest
@@ -48,6 +50,9 @@ markdown_extensions:
   - md_in_html
   - toc:
       permalink: true
+      # Materialin oletus riisuu ääkköset ankkureista (kaytto, tehtavat);
+      # mdBook säilyttää ne. Tämä pitää ankkurit ennallaan.
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
   - pymdownx.details
   - pymdownx.highlight:
       use_pygments: true

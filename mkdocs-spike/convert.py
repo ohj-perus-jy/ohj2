@@ -16,6 +16,10 @@ import shutil
 import sys
 from pathlib import Path
 
+# Sama slugify jota mkdocs.yml käyttää, jotta kiinnitetyt ankkurit vastaavat
+# niitä joita Python-Markdown muuten tuottaisi.
+from pymdownx.slugs import slugify
+
 ROOT = Path(__file__).resolve().parent
 SRC = ROOT.parent / "src"
 DOCS = ROOT / "docs"
@@ -27,6 +31,9 @@ HIDELINE_LANGS = {"java", "javascript"}
 PLAYGROUND_LANGS = {"java", "javascript"}
 
 FENCE_RE = re.compile(r"^(?P<indent>[ \t]*)(?P<ticks>`{3,})(?P<info>[^`]*)$")
+H1_RE = re.compile(r"^#\s+\S")
+H2_RE = re.compile(r"^##\s+(?P<title>.+?)\s*$")
+PINNED_ID_RE = re.compile(r"\{[^}]*#[^}]*\}\s*$")
 INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<path>[^}]+?)\s*\}\}")
 FILE_START_RE = re.compile(r"^\s*//\s*FILE:\s*(?P<name>.+?)\s*$")
 FILE_END_RE = re.compile(r"^\s*//\s*FILE_END\s*$")
@@ -156,14 +163,40 @@ def render_fence(indent: str, ticks: str, lang: str, flags: set[str],
     return out
 
 
+def has_h1(lines: list[str]) -> bool:
+    """Onko tiedosto oikea sivu vai pelkkä include (exercises/handout.md)?"""
+    for line in lines:
+        if line.strip():
+            return bool(H1_RE.match(line))
+    return False
+
+
+def number_heading(line: str, number: int) -> str:
+    """## Otsikko  ->  ## 1. Otsikko { #alkuperainen-ankkuri }
+
+    Ankkuri kiinnitetään eksplisiittisesti, jotta numeron lisääminen ei muuta
+    sitä — muuten sisäiset linkit ja TIMistä tulevat viittaukset hajoaisivat.
+    """
+    match = H2_RE.match(line)
+    if not match or PINNED_ID_RE.search(line):
+        return line
+    title = match.group("title")
+    return f"## {number}. {title} {{ #{slugify(case='lower')(title, '-')} }}"
+
+
 def convert_markdown(text: str, md_path: Path) -> str:
     out: list[str] = []
     lines = text.split("\n")
+    numbering = has_h1(lines)
+    section = 0
     index = 0
     while index < len(lines):
         line = lines[index]
         fence = FENCE_RE.match(line)
         if not fence:
+            if numbering and H2_RE.match(line):
+                section += 1
+                line = number_heading(line, section)
             out.append(mark_md_in_html(
                 INCLUDE_RE.sub(lambda m: convert_include(m, md_path), line)))
             index += 1

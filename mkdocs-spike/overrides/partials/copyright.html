@@ -1,0 +1,27 @@
+{# Sivun alaosa: CC-lisenssi ja palautelinkit.
+   Materialin 404-sivu renderöidään ilman page-oliota, joten linkit ovat ehdon
+   takana. Muuten alaosa jää Materialin omaan tyyliin; edellinen/seuraava tulee
+   navigation.footer-ominaisuudesta. #}
+<div class="md-copyright">
+  <div class="jyu-footer">
+    <a class="jyu-footer__license" rel="license"
+       href="https://creativecommons.org/licenses/by-sa/4.0/"
+       title="Creative Commons Nimeä-JaaSamoin 4.0">
+      <img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png"
+           alt="Creative Commons Nimeä-JaaSamoin 4.0" width="88" height="31">
+    </a>
+    {% if page and page.file %}
+      <div class="jyu-footer__links">
+        <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/{{ page.file.src_uri }}"
+           rel="edit"
+           title="Löysitkö virheen tai haluatko tehdä parannusehdotuksen? Klikkaa tästä.">
+          <i class="bi bi-pencil"></i> Ehdota muutosta
+        </a>
+        <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&url={{ page.canonical_url }}"
+           title="Avaa issue GitHubissa">
+          <i class="bi bi-flag"></i> Ilmoita ongelmasta
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>

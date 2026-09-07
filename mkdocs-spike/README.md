@@ -8,16 +8,27 @@ koko ajan.
 ## Ajaminen
 
 ```bash
-./run.sh          # muunna ja tarjoile http://localhost:8001
-./run.sh build    # muunna ja rakenna site/
+bash mkdocs-spike/setup.sh    # kertaluontoinen asennus (~2 min)
+./mkdocs-spike/run.sh         # muunna ja tarjoile http://localhost:8001
+./mkdocs-spike/run.sh build   # muunna ja rakenna site/
 ```
 
-Ensiasennus (devcontainerista puuttuu `python3-venv`):
+### Toisella koneella (Windows + VS Code + Docker)
 
-```bash
-sudo apt-get install -y python3-venv python3-pip
-python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
-```
+1. Hae branch: `git fetch && git switch spike/mkdocs`
+2. Avaa kansio VS Codessa ja valitse **Reopen in Container**. Ensimmäisellä
+   kerralla image latautuu, mikä vie hetken.
+3. Kontin terminaalissa: `bash mkdocs-spike/setup.sh`
+4. `./mkdocs-spike/run.sh` — VS Code välittää portin 8001 automaattisesti,
+   ja terminaaliin tulee klikattava linkki.
+
+Nykyinen mdBook pyörii rinnalla omassa portissaan (`bash start.sh`), joten
+molempia voi katsoa yhtä aikaa.
+
+Skriptit ovat LF-päätteisiä (`.gitattributes: *.sh text eol=lf`), joten ne
+toimivat Windowsiltakin haettuna. Jos haluat myös ACE-editorin niihin kahteen
+`editable`-lohkoon, aja ensin `mdbook build` — `convert.py` kopioi ACE:n
+`book/`-hakemistosta jos sellainen on olemassa.
 
 ## Rakenne
 
