@@ -5,7 +5,6 @@
 [Työkalut ja asentaminen](./tyokalut.md)
 [Harjoitustyö](./harjoitustyo.md)
 [Tentti](./tentti.md)
-[Tyyliopas](./tyyliopas.md)
 [Usein kysyttyä](./ukk.md)
 [Tenttiohjeet](./tenttiohjeet.md)
 

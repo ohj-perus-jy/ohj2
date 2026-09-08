@@ -1,0 +1,55 @@
+/* Leipätekstin kirjasin.
+ *
+ * mdBookissa leipäteksti on Source Serif 4 (theme/css/variables.css:
+ * --body-font, käytössä theme/css/general.css: .content main). Sama tänne,
+ * jotta koeputki vastaa kirjaa.
+ *
+ * Miksi tämä ei ole mkdocs.yml:n theme.font.text
+ * ------------------------------------------------
+ * Se asetus päätyy --md-text-font -muuttujaan, ja Zensicalin oma tyylitiedosto
+ * käyttää sitä body-tasolla (sääntö "aside,body,input"). Yhden fontin
+ * vaihtaminen sillä veisi mukanaan myös vasemman valikon, yläpalkin, oikean
+ * sisällysluettelon ja otsikot. Halutaan vain leipäteksti, joten kohteeksi
+ * otetaan .md-content__inner eli itse artikkeli — mdBookin .content main
+ * -vastine.
+ *
+ * .md-typeset olisi väärä kohde: sitä käytetään myös alatunnisteessa
+ * (partials/footer.html), sisällysluettelon riveillä (partials/toc-item.html)
+ * ja bannereissa.
+ *
+ * Fontin lataus
+ * -------------
+ * Zensical hakee Google Fontsista vain theme.font -asetuksen kaksi fonttia
+ * (templates/base.html, lohko "fonts"), joten tämä haetaan tässä erikseen.
+ *
+ * Source Serif on Adoben ja SIL Open Font License 1.1:n alainen, eli vapaasti
+ * käytettävissä myös kaupallisesti ja verkkosivulla. "Source Serif Pro" on
+ * saman fontin vanha nimi; versiosta 4 (2021) alkaen nimi on Source Serif 4 ja
+ * fontti on muuttujafontti, jossa on optisen koon akseli (opsz).
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap");
+
+.md-content__inner {
+  font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+}
+
+/* Otsikot ja otsikkomaiset elementit jäävät teeman omaan kirjasimeen, joka on
+ * Source Sans 3 (mkdocs.yml: theme.font.text). Zensical ei aseta näille
+ * font-familyä lainkaan — ".md-typeset h1..h6" ja ".md-typeset
+ * .admonition-title, .md-typeset summary" määrittelevät vain koon, painon ja
+ * välistyksen — joten ilman tätä ne perisivät yllä olevan säännön.
+ *
+ * .admonition-title on huomautuslaatikon otsikko ("Osaamistavoitteet",
+ * "Varoitus") ja summary avattavan lohkon otsikkorivi. Kumpikin on otsikko
+ * eikä leipätekstiä, joten ne kuuluvat samaan joukkoon h1..h6:n kanssa.
+ * Laatikoiden sisältö sen sijaan on leipätekstiä ja jää serifiksi. */
+.md-content__inner :is(h1, h2, h3, h4, h5, h6, .admonition-title, summary) {
+  font-family: var(--md-text-font-family);
+}
+
+/* Riviväliä ei tarvitse asettaa: Zensicalin .md-typeset on jo line-height 1.8,
+ * eli sama kuin mdBookin puolella (theme/css/general.css: .content p/ol/ul).
+ *
+ * Koodifonttia ei myöskään tarvitse suojata: teeman sääntö "code,kbd,pre"
+ * asettaa --md-code-font-familyn suoraan, eikä se peri tätä. */

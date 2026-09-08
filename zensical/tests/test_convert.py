@@ -186,6 +186,95 @@ def test_convert_files_warns_instead_of_dropping_code(capsys):
     assert "koodia ennen ensimmäistä" in capsys.readouterr().err
 
 
+# --- Alertit (README kohta 7) -----------------------------------------------
+
+@pytest.mark.parametrize("label, expected", [
+    ("Osaamistavoitteet", '!!! abstract "Osaamistavoitteet"'),
+    ("HUOMAUTUS", '!!! note "Huomautus"'),
+    ("VINKKI", '!!! tip "Vinkki"'),
+    ("Vinkki", '!!! tip "Vinkki"'),
+    ("TÄRKEÄÄ", '!!! tip "Tärkeää"'),
+    ("VAROITUS", '!!! warning "Varoitus"'),
+    ("todo", '!!! info "Todo"'),
+    ("WIP", '!!! danger "WIP"'),
+])
+def test_convert_alerts_writes_the_title_out(label, expected):
+    """Tunnus -> tyyppi ja otsikko, kirjainkoosta riippumatta. Otsikko
+    kirjoitetaan aina näkyviin, koska muuten Material näyttäisi tyypin oman
+    englanninkielisen nimen ("Tip")."""
+    converted, alerts, unknown = convert.convert_alerts(f"> [!{label}]\n> teksti\n")
+    assert (alerts, unknown) == (1, set())
+    assert converted.startswith(expected)
+
+
+def test_convert_alerts_keeps_an_unknown_label_as_the_title():
+    """Tuntematon tunnus ei katoa: se jää otsikoksi sellaisenaan ja
+    palautuu kutsujalle, joka kertoo siitä ajon lopuksi."""
+    converted, alerts, unknown = convert.convert_alerts(
+        "> [!Tärkeää — invariantti]\n> teksti\n")
+    assert (alerts, unknown) == (1, {"Tärkeää — invariantti"})
+    assert converted.startswith('!!! note "Tärkeää — invariantti"')
+
+
+def test_convert_alerts_keeps_the_block_indentation():
+    """Lainauksen etuliitteestä syödään yksi välilyönti, jolloin lohkon omat
+    sisennykset säilyvät: koodiaita pysyy aitana ja luetelma luetelmana."""
+    text = ("> [!HUOMAUTUS]\n>\n> kappale\n>\n> ```java\n> int x = 1;\n> ```\n"
+            ">\n> - eka\n>   - toka\n")
+    converted, _, _ = convert.convert_alerts(text)
+    assert converted == ('!!! note "Huomautus"\n\n'
+                         "    kappale\n\n"
+                         "    ```java\n    int x = 1;\n    ```\n\n"
+                         "    - eka\n      - toka\n")
+
+
+def test_convert_alerts_leaves_an_ordinary_quote_alone():
+    """Lainaus ilman tunnusriviä on lainaus, ei alertti."""
+    text = "> Tavallinen sitaatti\n> jatkuu\n"
+    assert convert.convert_alerts(text) == (text, 0, set())
+
+
+def test_convert_alerts_keeps_paragraphs_apart():
+    """Tyhjä rivi eteen jos sitä ei ollut, muttei toista perään: lainauksen
+    päättävä tyhjä rivi tulee mukaan sellaisenaan."""
+    text = "edellinen\n> [!VINKKI]\n> vinkki\n\nseuraava\n"
+    converted, _, _ = convert.convert_alerts(text)
+    assert converted == 'edellinen\n\n!!! tip "Vinkki"\n\n    vinkki\n\nseuraava\n'
+
+
+# --- Avattavat osiot (README kohta 8) ----------------------------------------
+
+def test_convert_details_marks_the_block_for_markdown():
+    """Ilman markdown-attribuuttia Python-Markdown ei käsittele lohkon
+    sisältöä lainkaan, vaan numeroitu lista ja linkit jäävät lähdemuotoonsa."""
+    text = "<details><summary>Vinkki</summary>\n\n1. eka\n2. toka\n\n</details>\n"
+    converted, tags = convert.convert_details(text)
+    assert converted.startswith('<details markdown="1"><summary>Vinkki</summary>')
+    assert tags == 1
+
+
+def test_convert_details_keeps_existing_attributes():
+    """Aineistossa on myös <details closed>. Attribuutti ei ole HTML:ää eikä
+    tee mitään, mutta se jätetään paikalleen — lopputulos on sama."""
+    converted, tags = convert.convert_details("<details closed>\n")
+    assert converted == '<details closed markdown="1">\n'
+    assert tags == 1
+
+
+def test_convert_details_is_repeatable():
+    """convert.py ajetaan uudelleen aina kun lähde muuttuu: jo käännetty tagi
+    ei saa saada toista attribuuttia."""
+    text = '<details markdown="1">\n'
+    assert convert.convert_details(text) == (text, 0)
+
+
+def test_convert_details_ignores_details_inside_code():
+    """Aidat käydään pareittain kuten convert_fencesissä, jottei koodilohkossa
+    näytetty HTML-esimerkki muuttuisi."""
+    text = "```html\n<details>\n```\n"
+    assert convert.convert_details(text) == (text, 0)
+
+
 # --- Käyttöjärjestelmävälilehdet (README kohta 23) ---------------------------
 
 def test_convert_tabs_drops_placeholder():

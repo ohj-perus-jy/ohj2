@@ -4,14 +4,16 @@
 Barebones-lähtötilanne: skripti kopioi tiedostot ja kääntää src/SUMMARY.md:n
 nav-lohkoksi, koska ilman navigaatiota sivustoa ei voi selata lainkaan.
 
-Sisältöä muunnetaan neljässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
+Sisältöä muunnetaan kuudessa kohdassa: sisällytysmakrot tiedostojen sisällöksi
 ({{#include}}, convert_includes), koodilohkojen monitiedostomerkinnät
 välilehdiksi (// FILE:, convert_files), mdBookin aidan attribuuttilista
-(java,ignore) pymdownx:n muotoon (convert_fences) ja työkalusivun
+(java,ignore) pymdownx:n muotoon (convert_fences), alertit admonitioneiksi
+(> [!VINKKI], convert_alerts), avattavien osioiden sisältö Markdowniksi
+(<details markdown="1">, convert_details) ja työkalusivun
 käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
-convert_tabs). Muu mdBookin syntaksi (//- piilorivit, > [!VINKKI],
-<task>-kortit) jää sellaisenaan sivuille näkyviin. Se on tarkoitus: näin näkee
-yhdellä silmäyksellä, mitä oikeasti pitää korjata. Muunnokset lisätään takaisin
+convert_tabs). Muu mdBookin syntaksi
+(//- piilorivit, <task>-kortit) jää sellaisenaan sivuille näkyviin. Se on
+tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti pitää korjata. Muunnokset lisätään takaisin
 yksi kerrallaan, ks. README.md.
 
 Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
@@ -105,6 +107,53 @@ QUOTED_FENCE_RE = re.compile(
 # mdBookin sisällytysmakro (sisäänrakennettu links-esikäsittelijä). Polun
 # perässä voi olla rivivalinta kaksoispisteen jälkeen, ks. take_lines.
 INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<spec>[^}\s][^}]*?)\s*\}\}")
+
+# mdBookin alertit (preprocessor.alerts, mdbook-alerts): lainauslohko, jonka
+# ensimmäinen rivi on pelkkä "[!TUNNUS]". Aineistossa tunnus on kirjoitettu
+# milloin versaalilla milloin ei ("VINKKI", "Vinkki"), ja mdbook-alerts
+# pienentää sen luokaksi ja palauttaa otsikon isolla alkukirjaimella vasta
+# CSS:n capitalize-muunnoksella. Sama tehdään tässä taulukolla.
+ALERT_RE = re.compile(r"^>\s*\[!(?P<label>[^\]]+)\]\s*$")
+
+# Tunnus -> Materialin admonition-tyyppi ja otsikko, ks. README.md kohta 7.
+# Otsikko kirjoitetaan aina näkyviin, joten tyypistä jää jäljelle vain väri ja
+# kuvake — ja tyyppi on valittu sen mukaan, mikä on lähinnä sitä väriä ja
+# kuvaketta, jonka mdBook antoi (theme/alerts-style.css).
+#
+# Vain kanoniset tyypit kelpaavat: Zensicalin mukana tulevassa CSS:ssä ei ole
+# yhtään aliasta, joten esimerkiksi "important" (Materialin oma alias sanalle
+# "tip") jäisi kokonaan tyylittömäksi. Siksi Tärkeää on "tip".
+ALERT_KINDS = {
+    "osaamistavoitteet": ("abstract", "Osaamistavoitteet"),
+    "huomautus": ("note", "Huomautus"),
+    "vinkki": ("tip", "Vinkki"),
+    "tärkeää": ("tip", "Tärkeää"),
+    "varoitus": ("warning", "Varoitus"),
+    "todo": ("info", "Todo"),
+    "wip": ("danger", "WIP"),
+}
+
+# Tuntematon tunnus säilyy otsikkona sellaisenaan; tyypiksi tulee neutraalein.
+ALERT_FALLBACK = "note"
+
+# mdBookin <details>-lohkot, ks. README.md kohta 8. Python-Markdown ei käsittele
+# raa'an HTML-lohkon sisältöä Markdownina vaan päästää sen läpi sellaisenaan:
+# numeroitu lista jää muotoon "1.", linkki muotoon "[teksti](osoite)" ja `koodi`
+# backtickeineen. Automaattilinkki <https://...> katoaa kokonaan, koska selain
+# lukee sen tuntemattomaksi tagiksi. mdBookin pulldown-cmark lopettaa
+# HTML-lohkon tyhjään riviin ja jatkaa Markdownin jäsentämistä; sama saadaan
+# tässä markdown-attribuutilla, jonka md_in_html-laajennus tunnistaa. Laajennus
+# on jo Zensicalin oletuslistalla (DEFAULT_MARKDOWN_EXTENSIONS), joten
+# mkdocs.yml:ään ei tule riviäkään — sama tilanne kuin alerteissa (kohta 7) ja
+# välilehdissä (kohta 23).
+#
+# Aineistossa avaustagi on kahta muotoa: <details> (70) ja <details closed>
+# (18). Jälkimmäinen ei ole HTML:ää — attribuutti on "open", eikä "closed"
+# tarkoita mitään — mutta lopputulos on silti se, mitä kirjoittaja tarkoitti, ja
+# sama kummallakin generaattorilla, joten attribuutti jätetään paikalleen.
+#
+# Lookahead pitää muunnoksen toistokelpoisena: jo käännetty tagi ohitetaan.
+DETAILS_RE = re.compile(r"<details(?![^>]*\bmarkdown=)(?P<attrs>[^>]*)>")
 
 
 def nest_moves() -> dict[str, str]:
@@ -376,10 +425,11 @@ def read_tab_set(lines: list[str],
     return sections, index
 
 
-def tab_body(body: list[str]) -> list[str]:
-    """Osion sisältö välilehden sisällöksi: tyhjät päät pois, muu 4 välilyöntiä
+def indent_block(body: list[str]) -> list[str]:
+    """Rivit sisäkkäisen lohkon sisällöksi: tyhjät päät pois, muu 4 välilyöntiä
     sisemmäs. Suhteelliset sisennykset säilyvät, joten listat, koodiaidat ja
-    raaka HTML pysyvät ennallaan."""
+    raaka HTML pysyvät ennallaan. Sama sisennys kelpaa välilehdelle
+    (convert_tabs, convert_files) ja admonitionille (convert_alerts)."""
     while body and not body[0].strip():
         body = body[1:]
     while body and not body[-1].strip():
@@ -432,6 +482,100 @@ def convert_fences(text: str) -> tuple[str, int]:
             open_fence = None
         out.append(line)
     return "\n".join(out), fences
+
+
+def read_alert(lines: list[str], start: int) -> tuple[list[str], int]:
+    """Lue yhden alertin sisältö riviltä start alkaen (tunnusrivi on start).
+
+    Palauttaa lainauslohkon loput rivit ja ensimmäisen rivin lohkon jälkeen.
+    Lohko loppuu ensimmäiseen riviin, joka ei ala ">"-merkillä — sama raja
+    kuin Markdownilla itsellään, koska tyhjä rivi päättää lainauksen. Kaikki
+    75 alerttia ovat sarakkeessa 0 eikä yhdessäkään ole laiskaa jatkoriviä
+    (rivi ilman ">"-merkkiä), joten muuta rajaa ei tarvita.
+    """
+    index = start + 1
+    while index < len(lines) and lines[index].startswith(">"):
+        index += 1
+    return lines[start + 1:index], index
+
+
+def alert_body(body: list[str]) -> list[str]:
+    """Lainauslohkon rivit admonitionin sisällöksi.
+
+    ">"-etuliite pois ja rivi neljä välilyöntiä sisemmäs. Etuliitteestä
+    syödään yksi välilyönti, jolloin lohkon omat sisennykset säilyvät
+    ennallaan: koodiaidat, luetelmat ja raaka HTML tulevat läpi sellaisenaan.
+    """
+    return indent_block([line[1:].removeprefix(" ") for line in body])
+
+
+def convert_alerts(text: str) -> tuple[str, int, set[str]]:
+    """mdBookin alertit -> Materialin admonitionit. -> (teksti, lohkoja, tuntemattomat).
+
+    "> [!VINKKI]" on GitHubin alert-syntaksia, jonka mdBookissa tekee
+    mdbook-alerts. Zensicalissa se on tavallinen lainauslohko, jonka
+    ensimmäisellä rivillä lukee "[!VINKKI]". Vastine on Markdownin oma
+    admonition-laajennus, joka on jo Zensicalin oletuslistalla
+    (DEFAULT_MARKDOWN_EXTENSIONS) — mkdocs.yml:ään ei siis tule riviäkään.
+
+    Otsikko kirjoitetaan aina näkyviin ("!!! tip \"Vinkki\""), koska ilman
+    sitä Material näyttää tyypin oman englanninkielisen nimen.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    unknown: set[str] = set()
+    alerts = 0
+    index = 0
+    while index < len(lines):
+        match = ALERT_RE.match(lines[index])
+        if not match:
+            out.append(lines[index])
+            index += 1
+            continue
+        label = match["label"].strip()
+        known = ALERT_KINDS.get(label.lower())
+        if known is None:
+            unknown.add(label)
+        kind, title = known or (ALERT_FALLBACK, label)
+        body, index = read_alert(lines, index)
+        alerts += 1
+        if out and out[-1].strip():
+            out.append("")
+        out.append(f'!!! {kind} "{title}"')
+        out.append("")
+        out.extend(alert_body(body))
+        # Tyhjä rivi perään vain jos lähteessä ei jo ollut: lainauksen päättävä
+        # rivi on melkein aina tyhjä ja se tulee mukaan seuraavalla kierroksella.
+        if index < len(lines) and lines[index].strip():
+            out.append("")
+    return "\n".join(out), alerts, unknown
+
+
+def convert_details(text: str) -> tuple[str, int]:
+    """<details> -> <details markdown="1">. -> (teksti, tageja).
+
+    Ilman attribuuttia lohkon sisältö menee sivulle lähdemuodossaan, ks.
+    DETAILS_RE. Koodiaidat ohitetaan, jottei aidan sisällä oleva HTML-esimerkki
+    muuttuisi; aidat käydään pareittain kuten convert_fencesissä. Aineistossa
+    yhtään <details>-tagia ei tällä hetkellä ole aidan sisällä, mutta samaa
+    varovaisuutta noudatetaan kuin muissakin muunnoksissa.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    tags = 0
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            line, found = DETAILS_RE.subn(
+                lambda m: f'<details{m["attrs"]} markdown="1">', line)
+            tags += found
+        out.append(line)
+    return "\n".join(out), tags
 
 
 def split_files(body: list[str]) -> list[tuple[str, list[str]]]:
@@ -516,7 +660,7 @@ def convert_files(text: str) -> tuple[str, int, int]:
             files += 1
             out.append(f'=== "{name}"')
             out.append("")
-            out.extend(tab_body([f"{marker}{info}", *content, marker]))
+            out.extend(indent_block([f"{marker}{info}", *content, marker]))
             out.append("")
         index = end + 1
     return "\n".join(out), blocks, files
@@ -564,7 +708,7 @@ def convert_tabs(text: str) -> tuple[str, int, int, set[str]]:
         for tab_id, label, body in sections:
             out.append(f'=== "{labels.setdefault(tab_id, label)}"')
             out.append("")
-            out.extend(tab_body(body))
+            out.extend(indent_block(body))
             out.append("")
     return "\n".join(out), sets, placeholders, set(labels.values())
 
@@ -577,8 +721,10 @@ def main() -> int:
         shutil.rmtree(DOCS)
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
-    sets = placeholders = blocks = files = fences = includes = 0
+    sets = placeholders = blocks = files = fences = includes = alerts = 0
+    details = 0
     tab_labels: set[str] = set()
+    unknown_alerts: set[str] = set()
     for page in sorted(DOCS.rglob("*.md")):
         source = page.read_text(encoding="utf-8")
         # Sisällytykset ennen kaikkea muuta, kuten mdBookissa: muut muunnokset
@@ -595,6 +741,13 @@ def main() -> int:
         # sisennetty aita jää tunnistamatta. convert_files kirjoittaa omat
         # aitansa jo valmiiksi oikeaan muotoon.
         converted, page_fences = convert_fences(converted)
+        # Alertit ennen välilehtiä: convert_tabs sisentää osion sisällön, ja
+        # sisennetty ">" ei ole enää lainauslohkon alku. Toisin päin alertti
+        # jäisi välilehden sisällä kääntämättä.
+        converted, page_alerts, page_unknown = convert_alerts(converted)
+        # <details>-tagit: paikalla ei ole väliä, sillä mikään muu muunnos ei
+        # koske raakaan HTML:ään eikä tämä muuhun kuin avaustagin attribuutteihin.
+        converted, page_details = convert_details(converted)
         converted, page_sets, page_placeholders, page_labels = convert_tabs(converted)
         if converted != source:
             page.write_text(converted, encoding="utf-8")
@@ -605,6 +758,9 @@ def main() -> int:
         files += page_files
         fences += page_fences
         includes += page_includes
+        alerts += page_alerts
+        details += page_details
+        unknown_alerts |= page_unknown
     for old_path, new_path in nest_moves().items():
         source = DOCS / old_path
         if not source.is_file():
@@ -623,6 +779,10 @@ def main() -> int:
     print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
     print(f"aidan attribuutit: {fences} aitaa")
     print(f"sisällytykset: {includes} makroa")
+    print(f"details-lohkot: {details} tagia")
+    print(f"alertit: {alerts} lohkoa"
+          + (f", tuntematon tunnus: {', '.join(sorted(unknown_alerts))}"
+             if unknown_alerts else ""))
     return 0
 
 

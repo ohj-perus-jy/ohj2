@@ -50,12 +50,30 @@ def chapter_titles() -> list[str]:
             for href in order]
 
 
-# Tarkistuslistan kohta 13: ääkköset ankkureissa. Zensical riisuu otsikoiden
-# tunnisteista ääkköset (#käyttö -> #kaytto), mutta sivujen omissa linkeissä
-# ne ovat yhä tallessa, jolloin linkki ei osu mihinkään. Käännöksen 16
-# varoituksesta tämä on ainoa, joka on myös sivun sisäinen linkki ja näkyy
-# siksi tulostussivulla. Ei tulostuksen vika; poistuu kohdan 13 mukana.
-KNOWN_DEAD_ANCHORS = {"comparable-rajapinta-ja-luonnollinen-järjestys"}
+# Ankkurit, jotka eivät osu mihinkään. Kaksi eri syytä, kumpikaan ei ole
+# tulostuksen vika.
+#
+# Kaksi ensimmäistä ovat tarkistuslistan kohta 13, ääkköset ankkureissa:
+# Zensical riisuu otsikoiden tunnisteista ääkköset (#käyttö -> #kaytto), mutta
+# sivujen omissa linkeissä ne ovat yhä tallessa. mdBookissa nämä linkit
+# toimivat (book/osa1/01-hei-java.html: sekä href että id ovat ääkkösineen),
+# eli ne poistuvat kohdan 13 mukana.
+#
+# Kolmas on aineiston virhe: harjoitustyo.md linkittää ankkuriin
+# "#harjoitustyön-tekniset-vaatimukset-ja-arviointi", mutta otsikko on
+# "## Tekniset vaatimukset ja arviointi" ilman etuliitettä. Linkki on rikki myös
+# mdBookin omassa käännöksessä (book/harjoitustyo.html:
+# href="#harjoitusty%C3%B6n-..." ilman kohdetta), eli se korjataan ../src:ssä
+# eikä täällä — kuten KNOWN_BROKEN_IMAGES.
+#
+# Kaksi jälkimmäistä tulivat näkyviin vasta kohdan 8 mukana: molemmat ovat
+# <details>-lohkon sisällä, eikä niistä ennen markdown-attribuuttia syntynyt
+# linkkiä lainkaan.
+KNOWN_DEAD_ANCHORS = {
+    "comparable-rajapinta-ja-luonnollinen-järjestys",
+    "opas-java-ohjelmien-kääntäminen-ja-ajaminen",
+    "harjoitustyön-tekniset-vaatimukset-ja-arviointi",
+}
 
 # Tarkistuslistan kohta 1: sisällytys tuo tehtävänannon kuvaviittaukset sivulle
 # sellaisenaan, ja suhteellinen polku ratkeaa sen sivun mukaan, jolle anto

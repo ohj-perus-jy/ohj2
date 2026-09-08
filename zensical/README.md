@@ -28,7 +28,7 @@ uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 59 testiä
+./zensical/run.sh test                        # kaikki, 71 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -97,9 +97,9 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi neljässä kohdassa
-(sisällytykset ja välilehdet, ks. kohdat 1, 4, 5 ja 23); jokainen uusi muunnos
-kuuluu perustella samalla tavalla kuin muutkin rivit.
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi viidessä kohdassa
+(sisällytykset, välilehdet ja alertit, ks. kohdat 1, 4, 5, 7 ja 23); jokainen
+uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
 (siellä hakemisto on nimeltään `mkdocs-spike/`):
@@ -118,8 +118,8 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 4  | ` ```java,ignore` / `,noplayground`          | 289                       | **tehty** — attribuutit luokiksi (`{ .java .ignore }`), korostus palasi                                            |
 | 5  | `// FILE:` monitiedostolohkot                | 73 lohkoa / 194 tiedostoa | **tehty** — `pymdownx.tabbed`, tiedosto per välilehti                                                              |
 | 6  | `<task>` / `<points>` / `<handout>`          | 507                       | rikki — 501 tagia menee HTML:ään tyylittöminä                                                                      |
-| 7  | `> [!VINKKI]`-tyyliset alertit               | 75                        | rikki — näkyy lainauksena                                                                                          |
-| 8  | `<details>`-lohkot                           | 88                        | puolittain — lohko aukeaa (72 kpl HTML:ssä), mutta sisältö jää Markdowniksi: 21:ssä raakoja linkkejä, ks. kohta 23 |
+| 7  | `> [!VINKKI]`-tyyliset alertit               | 75                        | **tehty** — `convert_alerts`; `admonition` on jo Zensicalin oletuslistalla, `mkdocs.yml` ennallaan                 |
+| 8  | `<details>`-lohkot                           | 88                        | **tehty** — `convert_details`; `markdown="1"` avaustagiin, `md_in_html` on jo Zensicalin oletuslistalla           |
 | 9  | `HIGHLIGHT_*_BEGIN/END`                      | 120                       | rikki — merkinnät näkyvät                                                                                          |
 | 10 | Lukujen numerointi navigaatiossa             | koko nav                  | **tehty** — `convert.py`, 12 riviä                                                                                 |
 | 11 | Osan etusivu = osan oma linkki navissa       | 13 osaa                   | **tehty** — `navigation.indexes`                                                                                   |
@@ -688,15 +688,14 @@ Mitattu muuten:
   Työkalusivun (Windows/macOS/Linux) ja osan 8 (GitLab/GitHub) valinnat
   muistetaan erikseen. Ei vaakavieritystä kummallakaan leveydellä.
 
-**Yksi joukko yhdeksästä ei piirry**, ja syy on muualla: `01-hei-java.md`:n
-komentorivivälilehdet ovat raa'an `<details>`-lohkon sisällä, eikä
-Python-Markdown jäsennä sellaisen sisältöä lainkaan Markdownina. Samassa
-lohkossa jäävät renderöimättä myös linkit ja listat — sivulla lukee
+**Yksi joukko yhdeksästä ei aluksi piirtynyt**, ja syy oli muualla:
+`01-hei-java.md`:n komentorivivälilehdet ovat raa'an `<details>`-lohkon sisällä,
+eikä Python-Markdown jäsennä sellaisen sisältöä lainkaan Markdownina. Samassa
+lohkossa jäivät renderöimättä myös linkit ja listat — sivulla luki
 sananmukaisesti `[työkaluohjeita](../tyokalut.md#java-development-kit-jdk)`.
-mdBookissa lohko toimii, joten tämä on tarkistuslistan kohta 8, ei
-välilehtien: se korjautuu samalla kun `<details>`-lohkot korjataan
-(`md_in_html` vaatii `<details markdown>`). Muut kahdeksan joukkoa — kaikki
-työkalusivun viisi ja osan 8 kolme — piirtyvät.
+mdBookissa lohko toimii, joten kyse oli tarkistuslistan kohdasta 8, ei
+välilehdistä. Se korjautui kohdan 8 mukana (`convert_details`) eikä
+välilehtiin tarvinnut koskea: kaikki yhdeksän joukkoa piirtyvät nyt.
 
 
 ### Tulostus: koko kirja yhdeksi PDF:ksi (`assets/js/print.js` + `assets/css/print.css` + 53 riviä `convert.py`:hyn + yläpalkin malli)
@@ -929,9 +928,6 @@ Erot mdBookiin, jotka jäävät:
   mdBookissakin.
 * `javafx/nakymat.md`:n `.fxml`-lohkossa ei ole kieltä eikä siis korostusta —
   sama kuin mdBookissa, jossa aidassa ei lue mitään.
-* Yksi välilehtijoukko 82:sta ei piirry: `01-hei-java.md`:n
-  käyttöjärjestelmävälilehdet ovat raa'an `<details>`-lohkon sisällä. Sama
-  havainto kuin kohdassa 23, ja se korjautuu kohdan 8 mukana.
 
 ### Sisällytykset (99 riviä `convert.py`:hyn)
 
@@ -995,6 +991,260 @@ Yksi asia kannattaa katsoa erikseen: tehtävänannot ovat nyt sekä osana lukuja
 että **103 omana sivunaan** `docs/`:ssä, eli sama teksti on hakuindeksissä
 kahdesti. mdBook ei julkaise niitä lainkaan (`book/exercises/` on tyhjiä
 hakemistoja). Kuuluu kohtaan 6 tai omaksi rivikseen.
+
+### Alertit admonitioneiksi (88 riviä `convert.py`:hyn)
+
+`> [!VINKKI]` on GitHubin alert-syntaksia, jonka mdBookissa tekee
+`preprocessor.alerts` (mdbook-alerts). Zensicalissa se on tavallinen
+lainauslohko, jonka ensimmäisellä rivillä lukee `[!VINKKI]` — ja niin se on
+tähän asti sivuilla näkynytkin, 75 kertaa.
+
+**`mkdocs.yml`:ään ei tullut riviäkään.** Vastine on Markdownin oma
+`admonition`-laajennus, joka on jo `DEFAULT_MARKDOWN_EXTENSIONS`-listalla
+(`zensical/config.py`) — sama tilanne kuin välilehdillä kohdassa 23, ja samasta
+syystä sitä ei saa lisätä `markdown_extensions`-lohkoon: annettu lohko korvaisi
+koko oletuslistan.
+
+Tehtävää jäi siis vain syntaksin käännös, `convert_alerts`. Tunnusrivi
+kirjoitetaan admonitionin otsikoksi ja lainauksen loput rivit sen sisällöksi:
+`>`-etuliite pois ja neljä välilyöntiä tilalle, samalla `indent_block`illa jolla
+välilehdet sisennetään. Silloin lohkon omat sisennykset säilyvät ja koodiaidat,
+luetelmat ja raaka HTML tulevat läpi sellaisenaan.
+
+```markdown
+> [!VINKKI]
+>
+> Käytä `List<T>`-tyyppiä.
+```
+
+```markdown
+!!! tip "Vinkki"
+
+    Käytä `List<T>`-tyyppiä.
+```
+
+**Tyyppi valittiin värin ja kuvakkeen mukaan, ei nimen.** Otsikko kirjoitetaan
+joka tapauksessa näkyviin (ilman sitä Material näyttäisi tyypin oman
+englanninkielisen nimen, "Tip"), joten tyypistä jää jäljelle vain väri ja
+kuvake. Materialin 12 tyyppiä ovat värejä siinä missä mdBookin
+`theme/alerts-style.css`:n seitsemän sääntöäkin, joten valinta on vertailu
+kahden paletin välillä:
+
+| Tunnus            | kpl | mdBookin väri      | Materialin tyyppi | Materialin väri |
+| ----------------- | --- | ------------------ | ----------------- | --------------- |
+| Osaamistavoitteet | 35  | `#4675e2` sininen  | `abstract`        | `#00b0ff`       |
+| Huomautus         | 18  | `#448aff` sininen  | `note`            | `#448aff`       |
+| Tärkeää           | 7   | `#a3699f` violetti | `tip`             | `#00bfa5`       |
+| Vinkki            | 4   | `#38b3a3` turkoosi | `tip`             | `#00bfa5`       |
+| WIP               | 4   | `#ff0000` punainen | `danger`          | `#ff1744`       |
+| Varoitus          | 3   | `#ff9100` oranssi  | `warning`         | `#ff9100`       |
+| Todo              | 3   | *(ei sääntöä)*     | `info`            | `#00b8d4`       |
+
+Kaksi riviä osuu kohdalleen tarkalleen (`Huomautus`, `Varoitus`) ja kaksi
+lähelle (`Vinkki`, `WIP`). Loput kolme ansaitsevat perustelun:
+
+* **Tärkeää on `tip`, ja se on ainoa kohta jossa jotain menetetään.**
+  Materialissa `important` on `tip`in alias, joten oikea sana on olemassa —
+  mutta *vain sanana*: Zensicalin mukana tulevassa CSS:ssä ei ole yhtään
+  alias-valitsinta (`.admonition.important` ei esiinny kummassakaan teemassa,
+  `.admonition.tip` esiintyy), joten `!!! important` jäisi kokonaan
+  tyylittömäksi. Vaihtoehto olisi ollut violetti `example`, jolla mdBookin
+  ero Vinkkiin olisi säilynyt, mutta jonka kuvake on koeputki. Valittu ero:
+  Tärkeää ja Vinkki näyttävät nyt samalta ja erottuvat vain otsikosta. Jos ero
+  halutaan takaisin, se on oma sääntönsä ja kuuluu kohtaan 18.
+* **Osaamistavoitteet on `abstract`.** Se on kirjan yleisin alertti ja
+  35 sivusta 33:lla sivun ensimmäinen lohko: luettelo siitä, mitä luvusta
+  pitäisi jäädä käteen. Sekä väri (sininen) että kuvake (mdBookissa
+  muistikirja, Materialissa muistilista) osuvat lähemmäs kuin millään muulla
+  tyypillä.
+* **Todo on `info`**, joka on Materialin oma alias sanalle `todo`. mdBookissa
+  `.mdbook-alerts-todo`-sääntöä ei ole lainkaan, joten `--mdbook-alerts-color`
+  jää määrittelemättä eikä väriä tule: nämä kolme alerttia näyttävät
+  Zensicalissa paremmalta kuin mdBookissa.
+
+Tunnus luetaan pienaakkosina, koska aineistossa se on kirjoitettu miten
+sattuu (`VINKKI` ja `Vinkki`, `TODO` ja `todo`); mdBook teki saman ja palautti
+ison alkukirjaimen vasta CSS:n `text-transform: capitalize`illa. Tässä
+oikeinkirjoitus on taulukossa, joten se on kerralla kunnossa — myös `WIP`, jolle
+mdBookissa oli oma `text-transform: uppercase` -sääntö.
+
+**Yksi tuntematon tunnus.** `extra/luetelma-ja-hahmonsovitus.md`:ssä on
+`[!Tärkeää — invariantti]`, joka ei ole taulukossa. Se ei katoa: otsikoksi tulee
+tunnus sellaisenaan, tyypiksi `note`, ja `convert.py` kertoo siitä ajon lopuksi
+(`alertit: 75 lohkoa, tuntematon tunnus: Tärkeää — invariantti`). Sivu ei ole
+`SUMMARY.md`:ssä, joten mdBook ei käännä sitä lainkaan — mdBookissa tunnus
+olisi jäänyt yhtä lailla värittömäksi.
+
+`convert_alerts` ajetaan ennen `convert_tabs`ia: välilehden sisältö sisennetään,
+ja sisennetty `>` ei ole enää lainauslohkon alku. Aineistossa yhtään alerttia ei
+tällä hetkellä ole välilehden sisällä, mutta järjestys on ilmainen.
+
+Todennettu kolmella tavalla:
+
+- **Jokainen 75 lohkosta muuntui:** `docs/`:ssä on 75 admonitionia ja 0
+  jäljelle jäänyttä `[!`-merkintää. Lainaukset, jotka eivät ole alertteja,
+  ovat tallessa kuudella sivulla.
+- **Käännöksen varoitukset eivät muuttuneet:** 16 ennen ja jälkeen.
+- **Selaimessa molemmilla teemoilla:** kaikki seitsemän tyyppiä renderöityvät
+  otsikkoineen, kuvakkeineen ja yllä olevine väreineen, ja koodiaidat alerttien
+  sisällä (esim. `osa8/04-useita-nakymia`) saavat korostuksensa.
+
+Mitä ei tullut: mdBookin omat kuvakkeet (muistikirja, hehkulamppu, jakoavain)
+ovat nyt Materialin vastaavat, värit ovat Materialin oletuspaletti ja Tärkeää
+on samannäköinen kuin Vinkki — kaikki kolme kuuluvat kohtaan 18.
+
+### Alerttilaatikoiden tyyli (uusi `assets/css/admonitions.css` + 1 rivi `mkdocs.yml`:ään)
+
+Zensicalilla on kaksi teemavarianttia (`zensical/config.py`: `theme.variant`),
+ja ne piirtävät admonitionin eri tavalla. Oletus `modern` tekee siitä yhden
+väripinnan: koko laatikko on tyypin väriä 10 %:n peitolla, reunusta ei ole,
+kulmat ovat `.4rem` ja teksti `.64rem` eli pienempää kuin leipäteksti
+(`.md-typeset`: `.75rem`). `classic` eli Material for MkDocsin tuttu ulkoasu
+tekee saman toisin: ohut reunus koko laatikon ympäri, väriä vain otsikkorivillä,
+sisältö sivun omalla taustalla. Jälkimmäinen valittiin.
+
+**`theme.variant: classic` olisi ollut yksi rivi, mutta se vaihtaisi koko
+sivuston:** kirjasimiksi tulisi Roboto ja Roboto Mono Interin ja JetBrains Monon
+tilalle, kuvakkeiksi Material-ikonit Luciden tilalle, ja välistykset koko
+teemasta. Halutaan vain laatikot, joten kohteeksi otetaan ne.
+
+**Värit ovat teeman omat.** `--adm`-muuttujaan luetaan sama Materialin
+oletuspaletti, joka teemalla oli jo käytössä (ks. kohta 7); vain se, mihin väri
+laitetaan, muuttuu. Reunus, otsikkopalkki ja kuvake ottavat sen samasta
+paikasta.
+
+Kaksi poikkeamaa Materialin classicista:
+
+* **Tekstikoko on ympäröivän leipätekstin** (`font-size: inherit`). Materialilla
+  laatikon teksti on `.64rem` molemmissa varianteissa; mdBookissa alertin teksti
+  on samaa kokoa kuin leipäteksti, koska `theme/alerts-style.css` ei koske
+  `font-size`een. Kirjan tapa säilytettiin. `inherit` seuraa myös `print.css`:n
+  `.md-typeset { font-size: .68rem }` -sääntöä, joten omaa tulostussääntöä ei
+  tarvita.
+* **Väljyys on suurempi kuin classicin `.6rem`:** `1rem` sivuilla ja
+  alalaidassa, `.5rem` otsikkorivin ylä- ja alapuolella. Kun kokoeroa
+  leipätekstiin ei enää ole, erottuminen jää reunuksen, otsikkopalkin ja ilman
+  varaan.
+
+**Tarkkuus vaati kaksi ratkaisua**, molemmat kommentoitu tiedostossa. Teeman
+säännöt ovat tyyppikohtaisia (`.md-typeset .admonition.note`) eli tarkkuudeltaan
+(0,3,0), kun taas `.md-typeset .admonition` on (0,2,0). Tiedosto ladataan
+`extra_css`:nä teeman jälkeen, joten sama tarkkuus riittää voittamaan mutta
+pienempi ei: taustaväri kumotaan siksi `[class]`-valitsimella, joka ei rajaa
+mitään vaan nostaa tarkkuuden. Otsikkorivin sisennykset kirjoitetaan
+`[dir=ltr]`-etuliitteellä samasta syystä, kuten Material itse tekee.
+
+**Avattavat osiot eivät ole alertteja.** Sisällössä on 57 sivullista raakoja
+`<details>`-lohkoja, joilla ei ole admonition-tyyppiä. Teema antaa niille
+silloin oletuksen eli `note`n sinisen ja paperiliitinkuvakkeen, ja avausnuoli
+jää yksin oikeaan laitaan. Reunuksen kanssa lohko alkoi näyttää alertilta — ja
+vieläpä samalta kuin oikea `!!! tip "Vinkki"`, joita samoilla sivuilla on. Kaksi
+eroa tehtiin: väri neutraaliksi (`--md-default-fg-color--lighter`) ja nuoli
+otsikkotekstin viereen kuvakkeen paikalle, mistä se kääntyy auetessa — alas kun
+lohkon voi avata, ylös kun sen voi sulkea. Oikean laidan toinen nuoli on pois,
+ja otsikkorivillä on osoitin ja hover.
+
+Kaksi mittaa piti hoitaa erikseen, ja molemmilla on sama juuri: osassa lohkoista
+sisältö on jäänyt Markdowniksi eli pelkiksi tekstisolmuiksi (kohta 8, joka
+korjattiin vasta tämän jälkeen).
+
+* **Suljetun lohkon alle jäi tyhjä kaistale.** `:last-child` katsoo DOM:ia eikä
+  sitä, mitä piirretään: suljetun lohkon sisältö on paikallaan, se vain jätetään
+  piirtämättä, joten otsikkorivi ei ole viimeinen lapsi. Sivulla
+  `suorittaminen.md` kaksi kolmesta lohkosta oli sattumalta kunnossa, koska
+  niiden sisältö on tekstisolmuja, jotka `:last-child` ohittaa — kolmannessa on
+  `<video>`. Sääntö on siksi `details:not([open]) > summary`.
+* **Avatun lohkon pohjalla ei ollut tilaa.** Väljyys tuli viimeisen lapsen
+  marginaalista, eikä tekstisolmulla ole marginaalia. Nyt se tulee laatikon
+  omasta paddingista (`details[open] { padding-bottom: 1rem }`), ja viimeisen
+  lapsen marginaali nollataan, ettei elementtisisältöisiin lohkoihin tulisi
+  molempia.
+
+Todennettu selaimessa molemmilla teemoilla: seitsemän alerttityyppiä
+otsikkoineen, kuvakkeineen ja väreineen, sekä `<details>` suljettuna ja
+avattuna, kummallakin sisältömuodolla. Käännöksen varoitukset eivät muuttuneet:
+16 ennen ja jälkeen.
+
+**Kaksi kuvaketta vaihdettiin, sarja ei.** Lucide pysyy, koska sama sarja
+piirtää sivun valikon, haun, edellisen ja seuraavan sekä avattavan osion nuolen.
+Teeman oletus `note`-tyypille on kuitenkin paperiliitin, joka ei kerro
+huomautuksesta mitään — mdBookissa Huomautus on info-ympyrä — joten Huomautus
+osoitetaan `--md-admonition-icon--info`-muuttujaan. Silloin Todo (`info`, 3 kpl)
+näyttäisi samalta kuin Huomautus (18 kpl), sillä ne eroaisivat vain sinisen
+sävyssä, joten Todo saa kysymysmerkin (`--md-admonition-icon--question`).
+mdBookissa Todolla ei ollut kuvaketta lainkaan, joten siinä ei menetetä mitään.
+Tiedostossa ei ole yhtään SVG:tä: molemmat ovat teeman omia muuttujia, joten
+riittää osoittaa toiseen niistä.
+
+Mitä ei tullut: muut kuvakkeet ovat Luciden eivätkä mdBookin omat — Vinkin
+liekki ja WIP:n salama ovat eri kuvia kuin kirjan hehkulamppu ja jakoavain — ja
+Tärkeää on
+edelleen samannäköinen kuin Vinkki — molemmat kuuluvat kohtaan 18. Jos ero
+halutaan takaisin, se ei vaadi CSS-kikkailua vaan yhden sanan `convert.py`:hyn:
+python-markdownin admonition-syntaksi ottaa tyypin perään lisäluokkia, eli `!!!
+tip tarkeaa "Tärkeää"` tuottaisi `class="admonition tip tarkeaa"`, jolloin
+`.md-typeset .tarkeaa { --adm: … }` hoitaisi loput.
+
+### Avattavat osiot (49 riviä `convert.py`:hyn)
+
+`<details><summary>Vinkki</summary>` on raakaa HTML:ää, ja Python-Markdown
+päästää raa'an HTML-lohkon sisällön läpi sellaisenaan: numeroitu lista jää
+muotoon `1.`, linkki muotoon `[teksti](osoite)` ja `` `koodi` `` backtickeineen.
+Automaattilinkki `<https://…>` katoaa kokonaan, koska selain lukee sen
+tuntemattomaksi tagiksi — `index.md`:n Teams-ohjeessa luki "osoitteessa ." ilman
+osoitetta. mdBookin pulldown-cmark lopettaa HTML-lohkon tyhjään riviin ja jatkaa
+Markdownin jäsentämistä, joten kirjassa lohkot ovat kunnossa.
+
+**`mkdocs.yml`:ään ei tullut riviäkään.** Vastine on `md_in_html`-laajennus,
+joka on jo `DEFAULT_MARKDOWN_EXTENSIONS`-listalla (`zensical/config.py`) — sama
+tilanne kuin alerteissa kohdassa 7 ja välilehdissä kohdassa 23, ja samasta
+syystä sitä ei saa lisätä `markdown_extensions`-lohkoon: annettu lohko korvaisi
+koko oletuslistan. Puuttui siis vain attribuutti itse avaustagissa.
+
+```markdown
+<details><summary>Vinkki</summary>
+```
+
+```markdown
+<details markdown="1"><summary>Vinkki</summary>
+```
+
+**Avaustagi on aineistossa kahta muotoa:** `<details>` (70) ja `<details
+closed>` (18). Jälkimmäinen ei ole HTML:ää — attribuutti on `open`, eikä
+`closed` tarkoita mitään — mutta lopputulos on silti se, mitä kirjoittaja
+tarkoitti, ja sama kummallakin generaattorilla, joten attribuutti jätettiin
+paikalleen. Regexissä on negatiivinen lookahead, joten uudelleenajo ei lisää
+toista attribuuttia, ja koodiaidat ohitetaan pareittain kuten
+`convert_fences`issä. Aineistossa yhtään `<details>`-tagia ei tällä hetkellä ole
+aidan sisällä, mutta HTML-esimerkki koodilohkossa on juuri sitä, mitä aidan
+sisällä voisi olla.
+
+**Yhdeksäs välilehtijoukko piirtyi samalla.** `01-hei-java.md`:n
+käyttöjärjestelmävälilehdet ovat `<details>`-lohkon sisällä, ja ne jäivät
+piirtymättä kohdissa 5 ja 23 tehdystä työstä huolimatta. Nyt joukko piirtyy,
+eikä välilehtiin tarvinnut koskea.
+
+**Kaksi kuollutta ankkuria tuli näkyviin**, kumpikaan ei tämän muutoksen
+aiheuttama: molemmat linkit ovat `<details>`-lohkon sisällä, eikä niistä ennen
+syntynyt linkkiä lainkaan. Syyt ovat eri, ja molemmat on kirjattu
+`tests/test_book.py`:n `KNOWN_DEAD_ANCHORS`-joukkoon perusteluineen.
+
+| Ankkuri                                            | Syy                                                                                                        |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `#opas-java-ohjelmien-kääntäminen-ja-ajaminen`     | Kohta 13: Zensical riisuu tunnisteesta ääkköset, linkissä ne ovat tallessa. mdBookissa linkki toimii.      |
+| `#harjoitustyön-tekniset-vaatimukset-ja-arviointi` | Aineiston virhe: otsikko on `## Tekniset vaatimukset ja arviointi` ilman etuliitettä. Rikki myös kirjassa. |
+
+Todennettu kolmella tavalla:
+
+- **Jokainen tagi muuntui:** ajossa 143 tagia, enemmän kuin lähdepuun 88, koska
+  `convert_includes` tuo tehtävänannot sivuille ennen tätä. `docs/`:ssä on 107
+  `<details markdown="1">` ja 36 `<details closed markdown="1">`, jokainen tasan
+  yhdellä attribuutilla, eikä yhtään käsittelemätöntä tagia jäänyt.
+- **Käännöksen varoitukset eivät muuttuneet:** 16 ennen ja jälkeen.
+- **Selaimessa:** `index.md`:n Teams-ohje renderöityy `<ol>`:nä, viisi kohtaa,
+  kolme linkkiä ja neljä `<code>`-jaksoa — myös ne kaksi `<https://…>`-linkkiä,
+  jotka olivat kadonneet kokonaan. Sivulla `osa1/01-hei-java.md` ei ole enää
+  yhtään raakaa Markdown-linkkiä.
 
 ## Mitattu ensimmäisestä ajosta
 

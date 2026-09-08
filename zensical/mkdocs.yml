@@ -54,6 +54,27 @@ theme:
   # vaan malli (overrides/partials/copyright.html).
   custom_dir: overrides
   language: fi
+
+  # Otsikoiden, valikon, yläpalkin ja sisällysluettelon kirjasin.
+  #
+  # Leipäteksti on Source Serif 4 (assets/css/typography.css), ja Source Sans on
+  # sen sisarkirjasin samasta Adoben Source-perheestä: Source Serif on piirretty
+  # täydentämään Source Sansia, joten x-korkeus ja mittasuhteet täsmäävät eikä
+  # otsikon ja leipätekstin väliin synny kokohyppyä. Zensicalin oletus on Inter,
+  # joka on selvästi isompi samalla pistekoolla.
+  #
+  # Tämä asetus menee --md-text-font -muuttujaan, jota teema käyttää
+  # body-tasolla, eli se osuu kaikkeen paitsi leipätekstiin: typography.css
+  # ohittaa sen .md-content__innerissä ja palauttaa otsikot takaisin tähän
+  # (var(--md-text-font-family)). Zensical hakee fontin Google Fontsista itse,
+  # joten typography.css:ään ei tarvita mitään lisää.
+  #
+  # font.code jätetään Zensicalin oletukseen (JetBrains Mono). Perheen kolmas
+  # jäsen Source Code Pro olisi sama kuin mdBookin --mono-font, jos yhtenäisyys
+  # kirjan kanssa alkaa painaa.
+  font:
+    text: Source Sans 3
+
   features:
     # mdBookissa osan otsikko on itse linkki osan etusivulle, ja nuoli avaa
     # alikohdat. Ilman tätä etusivu toistuisi vielä ensimmäisenä lapsena.
@@ -86,7 +107,19 @@ theme:
         name: Vaihda vaaleaan teemaan
 
 extra_css:
+  # Leipätekstin kirjasin: mdBookin Source Serif 4. Omana tiedostonaan, koska
+  # layout.css käsittelee asettelua. Tiedoston alussa on perustelu sille, miksi
+  # tämä ei ole theme.font.text -asetus (se veisi mukanaan valikon ja otsikot).
+  - assets/css/typography.css
   - assets/css/layout.css
+
+  # Alerttilaatikot Materialin classic-variantin ilmeeseen: reunus laatikon
+  # ympäri, väri vain otsikkorivillä. Omana tiedostonaan, koska layout.css on
+  # sivun asettelua ja tämä yhden komponentin tyyli. Tiedoston alussa on
+  # perustelu sille, miksi tämä ei ole theme.variant: classic (se veisi
+  # mukanaan kirjasimet, kuvakkeet ja koko teeman välistykset).
+  - assets/css/admonitions.css
+
   - assets/css/print.css
 
 # Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut
