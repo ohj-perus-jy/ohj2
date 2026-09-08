@@ -1,0 +1,98 @@
+/* Tulostus: koko kirja yhdeksi PDF:ksi, ja yksittäinen luku siistinä.
+ *
+ * mdBookissa vastine on theme/css/print.css, joka piilottaa valikon ja
+ * yläpalkin ja estää sivunvaihdot koodilohkojen keskeltä. Sama tehdään
+ * tässä, Materialin luokilla. Zensicalin oma tulostustyyli on yksi rivi
+ * (.md-typeset { font-size: .68rem }), joten ilman tätä paperille tulisivat
+ * mukaan yläpalkki, valikko ja alatunniste.
+ *
+ * Sivun sisällön kokoaa assets/js/print.js; rungon kirjoittaa convert.py.
+ */
+
+/* Lukujen väliin jäävä erotin. Luvut ovat peräkkäin samassa säiliössä
+ * (ilman kääre-elementtiä, ks. print.js), joten raja on oma elementtinsä:
+ * ruudulla viiva, paperilla sivunvaihto. */
+.jyu-print-break {
+  margin: 2.4rem 0;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+@media print {
+
+  /* 1. Paperille vain sisältö. Kisko ja yläpalkki ovat @media screen
+   *    -kyselyn takana, joten ne eivät ole tulostettaessa voimassa
+   *    muutenkaan — mutta Zensical piirtää elementit silti, joten ne on
+   *    piilotettava erikseen. */
+  .md-header,
+  .md-sidebar,
+  .md-footer,
+  .md-top,
+  .md-dialog,
+  .md-skip {
+    display: none;
+  }
+
+  /* Sisältö koko paperin leveydelle: ruudulla ruudukko on keskitetty ja
+   * enintään 61rem, mutta paperilla reunukset tulevat tulostusasetuksista. */
+  .md-grid {
+    max-width: none;
+    margin: 0;
+  }
+
+  .md-content {
+    margin-top: 0;
+  }
+
+  /* Otsikon jälkeen tuleva ohjeteksti ja kokoamisen tilarivi kuuluvat
+   * ruudulle, eivät kirjaan: kirjan oma nimiö on ensimmäinen luku. */
+  #jyu-print-intro {
+    display: none;
+  }
+
+  /* Jokainen luku omalta sivultaan, kuten mdBookin print.html:ssä
+   * (<div style="break-before: page">). Erottimia on lukujen välissä,
+   * ei ennen ensimmäistä, joten alkuun ei tule tyhjää sivua. */
+  .jyu-print-break {
+    margin: 0;
+    border-top: 0;
+    break-before: page;
+  }
+
+  /* 2. Sivunvaihdot pois sellaisten kohtien keskeltä, joissa ne haittaavat
+   *    lukemista. Sama lista kuin mdBookin print.css:ssä, ja koodille myös
+   *    rivitys: paperi on kapeampi kuin näyttö, eikä vaakavieritystä ole,
+   *    joten rivittämätön koodi jäisi yksinkertaisesti pois sivulta. */
+  .md-typeset h1,
+  .md-typeset h2,
+  .md-typeset h3,
+  .md-typeset h4,
+  .md-typeset h5,
+  .md-typeset h6 {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+
+  .md-typeset pre,
+  .md-typeset code {
+    white-space: pre-wrap;
+    break-inside: avoid;
+  }
+
+  .md-typeset table,
+  .md-typeset figure,
+  .md-typeset img {
+    break-inside: avoid;
+  }
+
+  /* Kuva ei koskaan yli sivun korkeuden, jottei se työnnä eteensä tyhjää
+   * sivua ja jää silti puolittain leikatuksi. */
+  .md-typeset img {
+    max-height: 22cm;
+  }
+
+  /* Otsikkolinkin pykälämerkki (¶) on ruudulla näkyvissä vain hiiren alla;
+   * tulostettaessa se olisi joka otsikon perässä turha merkki. */
+  .md-typeset .headerlink {
+    display: none;
+  }
+}

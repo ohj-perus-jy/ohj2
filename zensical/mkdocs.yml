@@ -10,13 +10,65 @@ site_name: Ohjelmointi 2
 docs_dir: docs
 site_dir: site
 
+# Alatunniste. mdBookin footerissa (theme/index.hbs) on CC-lisenssimerkki ja
+# linkit muutosehdotukseen; tekijät ja lisenssi ovat repon README.md:n
+# License-osiossa. Sama tieto tänne, koska sivustolla se on ainoa paikka,
+# josta materiaalin tekijät ja käyttöehdot näkee.
+#
+# Arvo menee malliin sellaisenaan (ei escapetusta), joten HTML on sallittu.
+# Zensical laittaa sen .md-copyright__highlight-lohkoon ja lisää perään oman
+# "Made with Zensical" -rivinsä.
+copyright: >-
+  Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa,
+  Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot;
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi"
+  rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0
+  Kansainvälinen">CC BY-SA 4.0</a>
+
+# Muokkauslinkki. mdBookin alatunnisteessa (theme/index.hbs) on "Ehdota
+# muutosta", jonka osoite tulee book.tomlin edit-url-templatesta. Zensicalilla
+# ei ole valmista mallia, vaan osoite kootaan näistä kahdesta: repo_url +
+# edit_uri + sivun polku docs/:ssä. Linkki avaa GitHubin editorin, ja
+# tallennuksesta syntyy pull request.
+#
+# edit_uri osoittaa mdBookin lähdepuuhun src/, ei tämän koeputken docs/:iin:
+# docs/ on convert.py:n kertakäyttöinen kopio eikä sitä ole versionhallinnassa.
+# Polut ovat muuten samat, mutta convert.py:n siirtämät ja luomat sivut
+# hoidetaan erikseen (nav.yml: extra.edit_source, overrides/partials/
+# copyright.html).
+#
+# repo_url toisi samalla repo-linkin kahteen paikkaan: yläpalkin oikeaan
+# reunaan ja kapean näytön laatikkovalikon ensimmäiseksi kohdaksi ennen
+# navigaatiota. Jälkimmäistä paikkaa mdBookissa ei ole, eikä repo-nappia
+# haluta kummallekaan, joten linkki tyhjennetään mallista:
+# overrides/partials/source.html (ja layout.css piilottaa tyhjät kääreet).
+repo_url: https://github.com/ohj-perus-jy/ohj2
+edit_uri: edit/main/src/
+
 theme:
   name: material
+
+  # Mallien ylikirjoitukset, ks. overrides/. Muokkauslinkki on Materialissa
+  # sivun oikeassa yläkulmassa kynäkuvakkeena (feature content.action.edit),
+  # mdBookissa alatunnisteen lisenssirivillä; alempi paikka ei ole asetus
+  # vaan malli (overrides/partials/copyright.html).
+  custom_dir: overrides
   language: fi
   features:
     # mdBookissa osan otsikko on itse linkki osan etusivulle, ja nuoli avaa
     # alikohdat. Ilman tätä etusivu toistuisi vielä ensimmäisenä lapsena.
     - navigation.indexes
+
+    # mdBookin <nav class="chapter-navigation">: edellinen/seuraava sivun
+    # alareunassa. Zensicalilla se on olemassa mutta oletuksena pois päältä.
+    - navigation.footer
+
+    # Työkalusivun käyttöjärjestelmävälilehdet: yhden valitseminen valitsee
+    # saman otsikon kaikkialta. mdBookin accordion.js teki saman sivun sisällä
+    # tunnuksesta (#tab/win) ja muisti valinnan osoitteen ?tabs=-parametrissa;
+    # Material yhdistää otsikkotekstistä ja muistaa valinnan selaimessa, eli
+    # myös sivulta toiselle. Ks. convert.py: convert_tabs.
+    - content.tabs.link
 
   # book.toml: default-theme = "jyu-light", preferred-dark-theme = "jyu-dark".
   # media-ehto tekee saman: teema seuraa käyttöjärjestelmää, ja vaihdin
@@ -35,3 +87,10 @@ theme:
 
 extra_css:
   - assets/css/layout.css
+  - assets/css/print.css
+
+# Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut
+# jäävät viewportin alapuolelle. Ks. assets/js/nav-scroll.js.
+extra_javascript:
+  - assets/js/nav-scroll.js
+  - assets/js/print.js

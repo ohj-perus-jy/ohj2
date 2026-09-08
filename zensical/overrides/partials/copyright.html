@@ -1,0 +1,48 @@
+{#-
+  Kopio teeman partials/copyright.html:stä (zensical 0.0.59), johon on
+  lisätty muokkauslinkki alatunnisteen oikeaan reunaan. Ks. merkitty kohta
+  alempana; muu on teeman omaa. Jos Zensical muuttaa alatunnistettaan, tämä
+  tiedosto on päivitettävä käsin.
+
+  mdBookissa (theme/index.hbs) lisenssimerkki ja "Ehdota muutosta" ovat
+  samalla rivillä alatunnisteessa. Materialissa muokkauslinkille on vain yksi
+  paikka, sivun oikea yläkulma (content.action.edit), joten mdBookin paikka
+  vaatii mallin. Tämä on lähin mahdollinen: .md-footer-meta__inner on
+  flex-rivi, jonka lapset teema levittää päihin (justify-content:
+  space-between), eli sisareksi lisätty linkki asettuu itsestään oikeaan
+  reunaan — samaan kohtaan mihin yläpuolella oleva Seuraava-linkki päättyy.
+
+  Linkki lainaa teeman .md-copyright-luokkaa, jotta koko, väri ja pystykeskitys
+  tulevat samasta paikasta kuin lisenssiteksti; oma .md-copyright--edit on
+  vain kuvaketta ja tasausta varten (assets/css/layout.css).
+-#}
+<div class="md-copyright">
+  {% if config.copyright %}
+    <div class="md-copyright__highlight">
+      {{ config.copyright }}
+    </div>
+  {% endif %}
+  {% if not config.extra.generator == false %}
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  {% endif %}
+</div>
+{#- LISÄYS: muokkauslinkki. Zensical laskee page.edit_url:n docs/:n polusta,
+    mutta versionhallinnassa on ../src. Polut ovat samat paitsi convert.py:n
+    NEST_UNDER-siirroissa (tentti.md -> tentti/index.md), joten ne käännetään
+    takaisin nav.yml:n extra.edit_source-kartalla — muuten linkki osoittaisi
+    tiedostoon, jota src:ssä ei ole. Kartan kirjoittaa convert.py, ks.
+    build_extra(). -#}
+{% if page.edit_url %}
+  {% set base = config.repo_url ~ "/" ~ config.edit_uri ~ "/" %}
+  {% set path = page.edit_url[base | length:] %}
+  {% set source = config.extra.edit_source[path] | default(path) %}
+  {% if source %}
+    <a href="{{ base ~ source }}" class="md-copyright md-copyright--edit" rel="edit" title="{{ lang.t('action.edit') }} GitHubissa">
+      {% include ".icons/material/github.svg" %}
+      {{ lang.t("action.edit") }}
+    </a>
+  {% endif %}
+{% endif %}

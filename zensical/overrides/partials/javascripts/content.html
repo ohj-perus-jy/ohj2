@@ -1,0 +1,41 @@
+{#-
+  Kopio teeman partials/javascripts/content.html:stä (zensical 0.0.59), johon
+  on rajattu välilehtien linkitys. Ks. merkityt kohdat alempana; muu on teeman
+  omaa. Jos Zensical muuttaa tiedostoa, tämä on päivitettävä käsin.
+
+  Materialin content.tabs.link (kohta 23) tekee kaksi asiaa: valinta tarttuu
+  saman otsikon kaikkiin sivun välilehtijoukkoihin, ja otsikko jää selaimen
+  muistiin (localStorage "/.__tabs"), josta tämä skripti palauttaa sen joka
+  sivulla. Käyttöjärjestelmävalinnassa juuri se on pointti: kerran valittu
+  Windows pysyy Windowsina joukosta ja sivusta toiseen.
+
+  Koodilohkojen tiedostovälilehdissä (kohta 5) sama sääntö on väärä. Sama
+  tiedostonimi toistuu monessa lohkossa 11 sivulla 18:sta, ja mdBookissa
+  jokainen lohko on erillinen: se avautuu aina tekijän valitsemasta
+  ensimmäisestä tiedostosta. Todennettu selaimella ilman näitä rajauksia:
+  Valo.java-välilehden klikkaus osa4/01:ssä avasi osa3/03:n kaikki neljä
+  lohkoa Valo.javasta (kolmessa ensimmäinen tiedosto on main.java), ja yksi
+  klikkaus osa2/02:ssa vaihtoi 12 lohkoa 13:sta.
+
+  Linkitys rajataan siis niihin joukkoihin, jotka ovat mdBookin
+  #tab/-välilehtiä. Ne tunnistaa otsikosta, ja listan otsikoista kerää
+  convert.py samalla kun se muuntaa ne (nav.yml: extra.tab_labels, ks.
+  build_extra) — se ei siis ole arvaus otsikon muodosta vaan tulee samasta
+  paikasta kuin välilehdet itse.
+-#}
+{% if "content.tabs.link" in features %}
+  {#- LISÄYS 1: muistista palautetaan vain #tab/-välilehtien otsikot. -#}
+  <script>var allowed={{ config.extra.tab_labels | tojson }};var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+  {#- LISÄYS 2: tiedostovälilehtien valinta ei tartu muihin joukkoihin eikä
+      jää muistiin. Teeman oma linkitys (bundle.js) ohittaa vaihdon, jos
+      otsikossa on data-md-switching — sillä se erottaa käyttäjän klikkauksen
+      omasta ketjureaktiostaan. Sama lippu asetetaan tässä tiedostojoukkojen
+      otsikoihin, jolloin teema jättää sekä muiden joukkojen vaihtamisen että
+      muistiin kirjoittamisen tekemättä. Lippu asetetaan input-elementin
+      change-tapahtumassa, joten se toimii myös näppäimistöllä, ja tämä
+      skripti on sivulla ennen bundle.js:ää, joten kuuntelija ehtii ensin.
+      Joukon muut toiminnot (korostuspalkki, otsikkorivin vieritysnuolet)
+      jäävät koskematta. -#}
+  <script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+{% endif %}
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
