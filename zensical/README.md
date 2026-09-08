@@ -25,6 +25,62 @@ aja `python3 convert.py` uudelleen. **Huom:** se ei huomaa muutoksia
 `assets/`-tiedostoihin, joten CSS:ää muokatessa palvelin on käynnistettävä
 uudelleen.
 
+## Testit
+
+```bash
+./zensical/run.sh test                        # kaikki, 45 testiä
+./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
+./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
+```
+
+Ensimmäisellä kerralla asentuvat `pytest`, `playwright` ja sen chromium
+(`requirements-dev.txt`); sivuston rakentamiseen riittää yhä pelkkä
+`zensical`.
+
+Kerroksia on kolme, koska rikkoutumisia on kolmea lajia:
+
+| Tiedosto                | Mitä                                                          | Kesto      |
+| ----------------------- | ------------------------------------------------------------- | ---------- |
+| `tests/test_convert.py` | `convert.py`:n muunnokset yksin: ei käännöstä eikä selainta   | 0,2 s      |
+| `tests/test_print.py`   | tulostussivun kokoaminen selaimessa, koekirjalla              | 6 s        |
+| `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
+| `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
+
+Mitään ei jäljitellä: testit ajavat `convert.py`:n ja `zensical build`in
+oikeasti ja avaavat sivun oikeassa selaimessa. Tulostussivu on koeputken
+ainoa kohta, jossa lopputulos syntyy vasta selaimessa — `print.js` hakee
+jokaisen luvun oman sivun ja liittää siitä artikkelin — joten käännöksen
+tuloksesta sitä ei voi lukea.
+
+**Koekirja (`tests/book/src`) on kymmenen tiedostoa.** Se on olemassa kahdesta
+syystä. Ensinnäkin materiaalin muuttamista pitää päästä *kokeilemaan*, eikä
+sitä voi tehdä `../src`:ään; koekirjasta jokainen testi saa oman kopionsa,
+jota se saa rikkoa. Toiseksi se on nopea: koko kirjan kääntäminen kestää
+50 s, koekirjan 3 s. Siinä on yksi esimerkki jokaisesta asiasta, joka
+kokoamisessa voi mennä rikki — sama otsikko kahdessa luvussa, kuva
+alihakemistosta, sivun sisäinen ankkuri, lukujen välinen linkki, kaksi
+välilehtijoukkoa, `NEST_UNDER`-siirto ja ulkoinen linkki.
+
+**`window.print` korvataan laskurilla.** Headless-selaimessa ei ole
+tulostusikkunaa, mutta kutsu on samalla juuri se mitä halutaan mitata.
+Talteen otetaan tilarivin teksti kutsun hetkellä, jolloin testi näkee myös
+sen, ettei tulostusta pyydetä kesken kokoamisen: `"Koottu 72 lukua."`
+
+**Käännös ohitetaan, jos site/ on ajan tasalla.** `convert.py` kopioi
+`../src`:n kokonaan (116 MB, 32 s) ja `zensical build` kestää 16 s, joten
+50 s menisi joka ajolla hukkaan, jos mikään ei ole muuttunut. Ajantasaisuus
+kysytään tiedostoilta eikä käyttäjältä: jos `../src`, `assets/`,
+`overrides/`, `convert.py` tai `mkdocs.yml` on `site/`:ä uudempi, käännetään.
+Testien ajaminen kirjoittaa siis `docs/`:n ja `site/`:n uusiksi, kuten
+`run.sh`kin.
+
+Yksi tunnettu poikkeus on kirjattu testiin: tulostussivulla on **yksi kuollut
+ankkuri** (`#comparable-rajapinta-ja-luonnollinen-järjestys`), koska Zensical
+riisuu otsikoiden tunnisteista ääkköset mutta sivun oma linkki ei tiedä siitä.
+Se on tarkistuslistan kohta 13 eikä tulostuksen vika, ja se on ainoa
+käännöksen 20 varoituksesta joka on myös sivun sisäinen linkki. Testi sallii
+tasan tämän yhden ja kaatuu, jos niitä tulee lisää.
+
 ## Periaate
 
 Lähtötilanne on **Zensicalin oletusteema sellaisenaan**. Ei omaa CSS:ää, ei

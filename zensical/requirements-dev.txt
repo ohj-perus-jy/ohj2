@@ -1,0 +1,8 @@
+# Testien riippuvuudet. Sivuston rakentamiseen riittää requirements.txt:
+# nämä asennetaan vasta kun testejä ensimmäisen kerran ajetaan.
+#
+# playwright tarvitsee lisäksi selaimen (run.sh test asentaa sen):
+#   .venv/bin/playwright install chromium
+-r requirements.txt
+pytest
+playwright
