@@ -4,14 +4,15 @@
 Barebones-lähtötilanne: skripti kopioi tiedostot ja kääntää src/SUMMARY.md:n
 nav-lohkoksi, koska ilman navigaatiota sivustoa ei voi selata lainkaan.
 
-Sisältöä muunnetaan kolmessa kohdassa: koodilohkojen monitiedostomerkinnät
+Sisältöä muunnetaan neljässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
+({{#include}}, convert_includes), koodilohkojen monitiedostomerkinnät
 välilehdiksi (// FILE:, convert_files), mdBookin aidan attribuuttilista
 (java,ignore) pymdownx:n muotoon (convert_fences) ja työkalusivun
 käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
-convert_tabs). Muu mdBookin syntaksi ({{#include}}, //- piilorivit,
-> [!VINKKI], <task>-kortit) jää sellaisenaan sivuille näkyviin. Se on
-tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti pitää korjata.
-Muunnokset lisätään takaisin yksi kerrallaan, ks. README.md.
+convert_tabs). Muu mdBookin syntaksi (//- piilorivit, > [!VINKKI],
+<task>-kortit) jää sellaisenaan sivuille näkyviin. Se on tarkoitus: näin näkee
+yhdellä silmäyksellä, mitä oikeasti pitää korjata. Muunnokset lisätään takaisin
+yksi kerrallaan, ks. README.md.
 
 Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
 """
@@ -100,6 +101,10 @@ CODE_FENCE_RE = re.compile(r"^(?P<indent>\s*)(?P<fence>```+|~~~+)(?P<info>[^\n`]
 # yhtään monitiedostolohkoa ole lainauksen sisällä.
 QUOTED_FENCE_RE = re.compile(
     r"^(?P<indent>[\s>]*)(?P<fence>```+|~~~+)(?P<info>[^\n`]*)$")
+
+# mdBookin sisällytysmakro (sisäänrakennettu links-esikäsittelijä). Polun
+# perässä voi olla rivivalinta kaksoispisteen jälkeen, ks. take_lines.
+INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<spec>[^}\s][^}]*?)\s*\}\}")
 
 
 def nest_moves() -> dict[str, str]:
@@ -263,6 +268,84 @@ def build_nav() -> str:
     lines = ["nav:"]
     emit(0, 0, lines)
     return "\n".join(lines) + "\n"
+
+
+def take_lines(content: str, selector: str) -> str | None:
+    """Sisällytettävän tiedoston rivivalinta. -> teksti, tai None jos ei rivejä.
+
+    mdBookin muodot ovat "" (koko tiedosto), "N" (yksi rivi), "A:B" (väli),
+    "A:" (A:sta loppuun) ja ":B" (alusta B:hen); numerot ovat 1-pohjaisia ja
+    molemmat päät kuuluvat mukaan. Aineistossa niistä esiintyy kaksi, koko
+    tiedosto ja yksi rivi, mutta koko kielioppi on tässä samat rivit koodia
+    eikä jätä muille muodoille hiljaista väärintulkintaa.
+
+    Rivit kootaan yhteen ilman loppurivinvaihtoa, kuten mdBookin take_lines.
+    Siksi "{{#include ./takarajat.md:1}}" mahtuu taulukon soluun eikä
+    koodiaidan sisällä synny tyhjää riviä ennen sulkevaa aitaa (todennettu
+    mdBookin generoimasta book/:sta).
+
+    Ankkurit (":ANCHOR", nimetty ANCHOR-kommenteilla) ovat mdBookin kolmas
+    muoto. Aineistossa ei ole yhtään, joten niitä ei toteuteta; tunnistamaton
+    valinta tulee tänne ja palautuu None:na, jolloin makro jää näkyviin.
+    """
+    lines = content.splitlines()
+    if not selector:
+        return "\n".join(lines)
+    bounds = selector.split(":")
+    if len(bounds) > 2 or not any(bounds) or not all(b.isdigit() or not b
+                                                     for b in bounds):
+        return None
+    first = bounds[0]
+    last = bounds[1] if len(bounds) == 2 else first
+    start = int(first) if first else 1
+    end = int(last) if last else len(lines)
+    return "\n".join(lines[max(start - 1, 0):end])
+
+
+def convert_includes(text: str, page: Path) -> tuple[str, int]:
+    """mdBookin {{#include}} -> tiedoston sisältö paikalleen. -> (teksti, määrä).
+
+    Ensimmäisenä muunnoksena, kuten mdBookissa: sen links-esikäsittelijä ajetaan
+    ennen muita, joten kaikki muut näkevät jo sisällytetyn tekstin. Täällä se on
+    myös pakko: 19 sisällytystä on koodiaidan sisällä // FILE: -merkintöjen
+    välissä, ja convert_files sisentää aidan sisällön välilehdeksi vasta tämän
+    jälkeen.
+
+    Makro korvataan sellaisenaan tekstinä eikä rivin sisennystä toisteta
+    riveille, koska mdBook ei tee niin sekään: neljä sisällytystä on sisennetty
+    kahdella välilyönnillä, ja niissä sisennyksen saa vain ensimmäinen rivi.
+    Molemmissa lopputulos on sama, koska kahden välilyönnin sisennys ei ole
+    Markdownissa merkitsevä.
+
+    Sivu on lähdepuun sivu, ei docs/:n kopio, ja polku on suhteessa siihen.
+    Sisällytettävä tiedosto luetaan siis aina koskemattomana: tehtävänannot ovat
+    itsekin docs/:n sivuja ja muuntuvat samassa silmukassa, jolloin kopiosta
+    lukeva sisällytys saisi eri tekstin sen mukaan, kumpi tiedosto sattuu
+    olemaan aakkosissa ensin.
+
+    Puuttuvasta tiedostosta ja ankkurivalinnasta varoitetaan ja makro jätetään
+    näkyviin: hiljaa katoava sisällytys näyttäisi sivulla samalta kuin tyhjä
+    tehtävänanto.
+    """
+    includes = 0
+
+    def expand(match: re.Match) -> str:
+        nonlocal includes
+        path, _, selector = match["spec"].partition(":")
+        target = page.parent / path.strip()
+        if not target.is_file():
+            print(f"varoitus: {page.name}: sisällytettävä tiedosto puuttuu: "
+                  f"{path.strip()}", file=sys.stderr)
+            return match[0]
+        content = take_lines(target.read_text(encoding="utf-8"), selector.strip())
+        if content is None:
+            print(f"varoitus: {page.name}: tuntematon rivivalinta: "
+                  f"{match['spec']}", file=sys.stderr)
+            return match[0]
+        includes += 1
+        return content
+
+    return INCLUDE_RE.sub(expand, text), includes
 
 
 def read_tab_set(lines: list[str],
@@ -494,14 +577,20 @@ def main() -> int:
         shutil.rmtree(DOCS)
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
-    sets = placeholders = blocks = files = fences = 0
+    sets = placeholders = blocks = files = fences = includes = 0
     tab_labels: set[str] = set()
     for page in sorted(DOCS.rglob("*.md")):
         source = page.read_text(encoding="utf-8")
-        # Monitiedostolohkot ensin: silloin ne toimivat myös #tab/-osion
+        # Sisällytykset ennen kaikkea muuta, kuten mdBookissa: muut muunnokset
+        # käsittelevät myös sisällytetyn tekstin (43 tehtävänannossa on
+        # koodiaita), ja koodiaidan sisällä olevat sisällytykset ovat vasta
+        # tämän jälkeen sitä koodia, jonka convert_files jakaa välilehdiksi.
+        converted, page_includes = convert_includes(
+            source, SRC / page.relative_to(DOCS))
+        # Monitiedostolohkot ennen aitoja: silloin ne toimivat myös #tab/-osion
         # sisällä, koska convert_tabs sisentää valmiin välilehtijoukon
         # sisäkkäiseksi. Toisin päin sisennetty aita jäisi tunnistamatta.
-        converted, page_blocks, page_files = convert_files(source)
+        converted, page_blocks, page_files = convert_files(converted)
         # Aidat ennen välilehtiä: convert_tabs sisentää osion sisällön, ja
         # sisennetty aita jää tunnistamatta. convert_files kirjoittaa omat
         # aitansa jo valmiiksi oikeaan muotoon.
@@ -515,6 +604,7 @@ def main() -> int:
         blocks += page_blocks
         files += page_files
         fences += page_fences
+        includes += page_includes
     for old_path, new_path in nest_moves().items():
         source = DOCS / old_path
         if not source.is_file():
@@ -532,6 +622,7 @@ def main() -> int:
     print(f"välilehdet: {sets} joukkoa, {placeholders} #tab/default-lohkoa pois")
     print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
     print(f"aidan attribuutit: {fences} aitaa")
+    print(f"sisällytykset: {includes} makroa")
     return 0
 
 

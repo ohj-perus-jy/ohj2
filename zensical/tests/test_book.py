@@ -52,10 +52,19 @@ def chapter_titles() -> list[str]:
 
 # Tarkistuslistan kohta 13: ääkköset ankkureissa. Zensical riisuu otsikoiden
 # tunnisteista ääkköset (#käyttö -> #kaytto), mutta sivujen omissa linkeissä
-# ne ovat yhä tallessa, jolloin linkki ei osu mihinkään. Käännöksen 20
+# ne ovat yhä tallessa, jolloin linkki ei osu mihinkään. Käännöksen 16
 # varoituksesta tämä on ainoa, joka on myös sivun sisäinen linkki ja näkyy
 # siksi tulostussivulla. Ei tulostuksen vika; poistuu kohdan 13 mukana.
 KNOWN_DEAD_ANCHORS = {"comparable-rajapinta-ja-luonnollinen-järjestys"}
+
+# Tarkistuslistan kohta 1: sisällytys tuo tehtävänannon kuvaviittaukset sivulle
+# sellaisenaan, ja suhteellinen polku ratkeaa sen sivun mukaan, jolle anto
+# sisällytetään. exercises/4-3-seikkailupeli/handout.md viittaa
+# "images/adventure.png":hen, mutta kuva on osa3/images/:ssä ja anto
+# sisällytetään osa4:n kahdelle sivulle. Sama on mdBookin omassa käännöksessä
+# (book/osa4/03-perinta-ja-rajapinta.html, book/osa4/05-tehtavat.html), eli
+# aineiston virhe, joka korjataan ../src:ssä eikä täällä.
+KNOWN_BROKEN_IMAGES = {"osa4/images/adventure.png"}
 
 
 @pytest.fixture(scope="session")
@@ -108,12 +117,21 @@ def test_internal_anchors_resolve(printed):
     assert {anchor.split("--", 1)[-1] for anchor in dead} <= KNOWN_DEAD_ANCHORS
 
 
+def test_every_include_is_expanded(printed):
+    """Yksikään luku ei jätä {{#include}}-makroa näkyviin. Neljä makroa jää,
+    mutta ne ovat kirjan ulkopuolisella sivulla (extra/), joka ei ole
+    SUMMARY.md:ssä eikä siksi tulosteessa."""
+    assert printed.evaluate(
+        r"() => document.body.textContent.match(/\{\{#include[^}]*\}\}/g)") is None
+
+
 def test_every_image_is_loaded(printed):
-    """Tulostus odottaa kuvia, joten yksikään ei saa jäädä tyhjäksi laatikoksi."""
+    """Tulostus odottaa kuvia, joten yksikään ei saa jäädä tyhjäksi laatikoksi
+    paitsi tunnetun poikkeuksen verran."""
     broken = printed.evaluate("""() => [...document.querySelectorAll('img')]
       .filter(img => !img.complete || img.naturalWidth === 0)
-      .map(img => img.getAttribute('src'))""")
-    assert broken == []
+      .map(img => new URL(img.src, location.href).pathname.slice(1))""")
+    assert set(broken) <= KNOWN_BROKEN_IMAGES
 
 
 def test_tab_sets_stay_independent(printed):
@@ -129,7 +147,11 @@ def test_tab_sets_stay_independent(printed):
 
 
 def test_no_console_errors(printed):
-    assert printed.errors == []
+    """Tunnetun puuttuvan kuvan 404 on ainoa sallittu; se on aineiston virhe,
+    ei tulostuksen. Osoite on virhetekstissä mukana, jotta muut 404:t
+    erottuvat siitä."""
+    assert [error for error in printed.errors
+            if not any(image in error for image in KNOWN_BROKEN_IMAGES)] == []
 
 
 # --- Sivusto ilman selainta --------------------------------------------------

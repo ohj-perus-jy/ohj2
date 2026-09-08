@@ -25,6 +25,71 @@ def book_src(monkeypatch):
     return src
 
 
+# --- Sisällytykset (README kohta 1) -----------------------------------------
+
+@pytest.mark.parametrize("selector, expected", [
+    ("", "a\nb\nc"),
+    ("2", "b"),
+    ("2:3", "b\nc"),
+    ("2:", "b\nc"),
+    (":2", "a\nb"),
+    ("ANCHOR", None),
+    ("1:2:3", None),
+    (":", None),
+])
+def test_take_lines(selector, expected):
+    """mdBookin rivivalinnat 1-pohjaisina ja molemmat päät mukaan lukien;
+    ankkuri ja tunnistamaton muoto palautuvat None:na."""
+    assert convert.take_lines("a\nb\nc\n", selector) == expected
+
+
+def test_convert_includes_keeps_the_code_fence_tight(tmp_path):
+    """Koko tiedosto paikalleen ilman loppurivinvaihtoa: koodiaidan sisään ei
+    jää tyhjää riviä ennen sulkevaa aitaa, kuten ei mdBookissakaan."""
+    (tmp_path / "Main.java").write_text("class Main {\n}\n", encoding="utf-8")
+    page = tmp_path / "luku.md"
+    converted, includes = convert.convert_includes(
+        "```java\n{{#include ./Main.java}}\n```\n", page)
+    assert includes == 1
+    assert converted == "```java\nclass Main {\n}\n```\n"
+
+
+def test_convert_includes_single_line_fits_in_a_table_cell(tmp_path):
+    """Yhden rivin valinta pysyy yhdellä rivillä: takarajataulukon solu."""
+    (tmp_path / "takarajat.md").write_text("eka\ntoka\n", encoding="utf-8")
+    page = tmp_path / "luku.md"
+    converted, includes = convert.convert_includes(
+        "| 2   |{{#include ./takarajat.md:2}}|\n", page)
+    assert (converted, includes) == ("| 2   |toka|\n", 1)
+
+
+def test_convert_includes_reads_the_file_beside_the_page(tmp_path):
+    """Polku on suhteessa sivuun, ei työhakemistoon."""
+    (tmp_path / "exercises").mkdir()
+    (tmp_path / "exercises" / "handout.md").write_text("Tee tämä.", encoding="utf-8")
+    (tmp_path / "osa1").mkdir()
+    page = tmp_path / "osa1" / "05-tehtavat.md"
+    converted, includes = convert.convert_includes(
+        "<handout>\n\n{{#include ../exercises/handout.md}}\n\n</handout>\n", page)
+    assert includes == 1
+    assert "Tee tämä." in converted
+
+
+@pytest.mark.parametrize("spec, warning", [
+    ("./puuttuu.md", "sisällytettävä tiedosto puuttuu"),
+    ("./on.md:ANCHOR", "tuntematon rivivalinta"),
+])
+def test_convert_includes_warns_instead_of_dropping_content(tmp_path, capsys,
+                                                            spec, warning):
+    """Hiljaa katoava sisällytys näyttäisi sivulla samalta kuin tyhjä
+    tehtävänanto, joten makro jää näkyviin ja siitä varoitetaan."""
+    (tmp_path / "on.md").write_text("sisältö\n", encoding="utf-8")
+    text = f"{{{{#include {spec}}}}}\n"
+    converted, includes = convert.convert_includes(text, tmp_path / "luku.md")
+    assert (converted, includes) == (text, 0)
+    assert warning in capsys.readouterr().err
+
+
 # --- Aidan attribuuttilista (README kohta 4) ---------------------------------
 
 @pytest.mark.parametrize("info, expected", [

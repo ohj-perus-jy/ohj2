@@ -186,8 +186,12 @@ def open_print_page(browser, base_url: str, timeout: int = 120_000) -> PrintPage
     page = browser.new_page()
     result = PrintPage(page)
     page.on("pageerror", lambda error: result.errors.append(str(error)))
+    # Resurssin 404 tulee konsoliin ilman osoitetta ("Failed to load
+    # resource: ..."), joten se otetaan location-kentästä mukaan. Muuten
+    # tunnettua puuttuvaa kuvaa ei voisi erottaa mistään muusta 404:stä.
     page.on("console", lambda message: message.type == "error"
-            and result.errors.append(message.text))
+            and result.errors.append(
+                f"{message.text} {message.location['url']}".strip()))
     page.add_init_script(
         "window.__printCalls = [];"
         "window.print = () => window.__printCalls.push("

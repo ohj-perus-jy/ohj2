@@ -28,7 +28,7 @@ uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 45 testiä
+./zensical/run.sh test                        # kaikki, 59 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -78,8 +78,15 @@ Yksi tunnettu poikkeus on kirjattu testiin: tulostussivulla on **yksi kuollut
 ankkuri** (`#comparable-rajapinta-ja-luonnollinen-järjestys`), koska Zensical
 riisuu otsikoiden tunnisteista ääkköset mutta sivun oma linkki ei tiedä siitä.
 Se on tarkistuslistan kohta 13 eikä tulostuksen vika, ja se on ainoa
-käännöksen 20 varoituksesta joka on myös sivun sisäinen linkki. Testi sallii
+käännöksen 16 varoituksesta joka on myös sivun sisäinen linkki. Testi sallii
 tasan tämän yhden ja kaatuu, jos niitä tulee lisää.
+
+Toinen tunnettu poikkeus on **yksi puuttuva kuva**
+(`osa4/images/adventure.png`): `exercises/4-3-seikkailupeli/handout.md`
+viittaa `images/adventure.png`:hen, mutta kuva on `osa3/images/`:ssä ja
+tehtävänanto sisällytetään osa4:n kahdelle sivulle. Sama on mdBookin omassa
+käännöksessä, eli aineiston virhe eikä sisällytyksen. Testi sallii tasan tämän
+yhden kuvan ja sen 404:n konsolissa.
 
 ## Periaate
 
@@ -90,9 +97,9 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi yhdessä kohdassa
-(välilehdet, ks. kohta 23); jokainen uusi muunnos kuuluu perustella samalla
-tavalla kuin muutkin rivit.
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi neljässä kohdassa
+(sisällytykset ja välilehdet, ks. kohdat 1, 4, 5 ja 23); jokainen uusi muunnos
+kuuluu perustella samalla tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
 (siellä hakemisto on nimeltään `mkdocs-spike/`):
@@ -105,7 +112,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 
 | #  | mdBookin ominaisuus                          | Esiintymiä                | Tila nyt                                                                                                           |
 | -- | -------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| 1  | `{{#include tiedosto}}`                      | 194                       | rikki — teksti näkyy raakana                                                                                       |
+| 1  | `{{#include tiedosto}}`                      | 194                       | **tehty** — `convert_includes`; 4 makroa jää näkyviin, kohde puuttuu aineistosta                                   |
 | 2  | `//-` piilorivit                             | 1094                      | rikki — rivit näkyvät                                                                                              |
 | 3  | ` ```java ` ajonappi (playground)            | 231                       | puuttuu — `.ignore`/`.noplayground` säilyy nyt luokkana, ks. kohta 4                                               |
 | 4  | ` ```java,ignore` / `,noplayground`          | 289                       | **tehty** — attribuutit luokiksi (`{ .java .ignore }`), korostus palasi                                            |
@@ -925,6 +932,69 @@ Erot mdBookiin, jotka jäävät:
 * Yksi välilehtijoukko 82:sta ei piirry: `01-hei-java.md`:n
   käyttöjärjestelmävälilehdet ovat raa'an `<details>`-lohkon sisällä. Sama
   havainto kuin kohdassa 23, ja se korjautuu kohdan 8 mukana.
+
+### Sisällytykset (99 riviä `convert.py`:hyn)
+
+mdBookin `{{#include}}` on sen sisäänrakennettu `links`-esikäsittelijä, ja se
+ajetaan ennen kaikkia muita. Sama järjestys tässä (`convert_includes` ennen
+`convert_files`iä), ja se on myös pakko: koodiaidan sisällä oleva makro on
+vasta laajennuksen jälkeen sitä koodia, jonka kohdan 5 muunnos jakaa
+välilehdiksi.
+
+Mitattuna `../src`:stä **194 makroa 44 sivulla, 118 eri kohdetta**. Sijainti
+ratkaisi järjestyksen:
+
+| Missä makro on                                     | kpl | Mitä siitä tulee             |
+| -------------------------------------------------- | --- | ---------------------------- |
+| koodiaidan sisällä, `// FILE:`-merkintöjen välissä | 19  | kohdan 5 välilehtien sisältö |
+| `<handout>`-lohkossa                                | 169 | tehtävänannot                |
+| taulukon solussa                                    | 6   | takarajat                    |
+
+**Kohta 5 oli tehty vain puoliksi.** Ennen tätä jokaisessa niistä 19
+välilehdestä luki yksi rivi makroa java-koodiksi väritettynä
+(`<span class="n">E31_Kisu_vaihe0</span>`), ei riviäkään sitä luokkaa, jonka
+nimi välilehdessä lukee.
+
+Muotoja aineistossa on kaksi: koko tiedosto (188) ja yksi rivi (6). Ankkureita
+(`{{#include tiedosto:ANCHOR}}`) ei ole yhtään, joten niitä ei toteuteta —
+tunnistamaton rivivalinta jättää makron näkyviin ja varoittaa. Kaksi
+yksityiskohtaa on luettu mdBookin generoimasta `book/`:sta eikä arvattu:
+
+- `{{#include ./takarajat.md:1}}` on **yksi rivi**, ei riviltä 1 loppuun.
+  Suorittamissivun taulukossa kuudessa solussa on kuusi eri takarajaa
+  (`book/suorittaminen.html`).
+- Valitut rivit kootaan **ilman loppurivinvaihtoa** (mdBookin `take_lines`),
+  joten solu pysyy solussa eikä koodiaidan sisään jää tyhjää riviä ennen
+  sulkevaa aitaa.
+
+Sisällytettävä tiedosto luetaan `../src`:stä eikä `docs/`:sta: tehtävänannot
+ovat itsekin `docs/`:n sivuja ja muuntuvat samassa silmukassa, joten kopiosta
+lukeva sisällytys saisi eri tekstin sen mukaan, kumpi tiedosto on aakkosissa
+ensin.
+
+Todennettu kolmella tavalla:
+
+- **Koodi vastaa mdBookin omaa tulosta.** Sivuilla `osa3/01-perinta`,
+  `osa4/03-perinta-ja-rajapinta` ja `javafx/viitteiden-hallinta` mdBook
+  renderöi 656 koodiriviä; Zensicalin sivuilta niistä puuttuu 0.
+- **Jokainen sisällytys näkyy sivullaan.** 167 sisällytystä, joista saa
+  yksikäsitteisen tekstirivin, etsittiin käännetyistä sivuista: 0 puuttuu.
+- **Käännöksen varoitukset eivät lisääntyneet:** 16 ennen ja jälkeen.
+
+**Tehtävänantojen Markdown jäsentyy.** `<task>` ja `<handout>` ovat
+tuntemattomia tageja ja niiden ympärillä on tyhjät rivit, joten sisältö on oma
+lohkonsa: linkit, listat ja korostukset renderöityvät. Kortin ulkoasu
+(`<task-title>`, `<points>`, `<task-link>`) on yhä tyylitön — se on kohta 6.
+
+Neljä makroa jää näkyviin ja varoittaa joka ajolla:
+`extra/luetelma-ja-hahmonsovitus.md` sisällyttää kolme tehtävänantoa, joita ei
+ole olemassa. Sivu ei ole `SUMMARY.md`:ssä, joten mdBook ei käännä sitä
+lainkaan; koeputki kääntää, koska `convert.py` kopioi koko puun.
+
+Yksi asia kannattaa katsoa erikseen: tehtävänannot ovat nyt sekä osana lukuja
+että **103 omana sivunaan** `docs/`:ssä, eli sama teksti on hakuindeksissä
+kahdesti. mdBook ei julkaise niitä lainkaan (`book/exercises/` on tyhjiä
+hakemistoja). Kuuluu kohtaan 6 tai omaksi rivikseen.
 
 ## Mitattu ensimmäisestä ajosta
 
