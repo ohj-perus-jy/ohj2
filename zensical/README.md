@@ -1978,6 +1978,83 @@ yhtenäisiä viivoja isoa tyhjää vasten eivätkä olleet valituksen kohteena.
 Vaalean teeman koodilohko jäi myös ennalleen samasta syystä kuin nappula
 korjattiin: iso pinta erottuu pienemmälläkin erolla.
 
+### Nappirivi: ajonappi ja silmä napin näköisiksi (uusi `assets/css/codebuttons.css` + 1 rivi `mkdocs.yml`:ään + 4 riviä `playground.css`:ään)
+
+Kaksi havaintoa peräkkäin: ajonappi ja silmä ovat liian himmeitä eivätkä erotu
+koodilohkosta, ja kun ne saa näkyviin, ne eivät silti näytä napeilta, joita
+tekisi mieli painaa.
+
+**Himmeys on teeman oletus.** Nappirivin kuvakkeet piirretään levossa
+`--md-default-fg-color--lightestillä`, ja teema nostaa ne `--lightiin` vasta kun
+osoitin on lohkon päällä (`:hover > * > .md-code__button`). Lepotila on
+koodilohkon taustaa vasten **1,12:1** (vaalea) ja **1,38:1** (tumma) eli
+käytännössä näkymätön: kuvakkeen muodon näkee vain, jos tietää etsivänsä sitä.
+
+Se on oikea valinta *kopiointinapille*: se on mukavuus, jonka paikan tuntee
+entuudestaan, ja piilossa se pitää koodilohkon rauhallisena. Ajonappi ja silmä
+eivät ole sitä. Ne ovat kirjan omia toimintoja, joita lukija ei osaa etsiä
+hoverin takaa — eikä kosketusnäytöllä ole hoveria lainkaan, joten siellä himmeä
+lepotila on ainoa tila, joka koskaan näkyy.
+
+**Kuvakkeesta laataksi.** Pelkkä värin nosto olisi korjannut näkyvyyden muttei
+painettavuutta: paljas kuvake koodilohkon nurkassa on yhtä hyvin koriste kuin
+nappi. Napille annetaan siksi oma pinta, hiusviivareunus, pyöristys ja varjo.
+
+* **Pinta on molemmissa teemoissa lohkoa vaaleampi**, koska ylöspäin osoittava
+  pinta ottaa valoa — vaaleassa valkoinen lohkon `#f5f5f5`:tä vasten, tummassa
+  26 % lohkon 18 %:aa vasten. Kuvake on omaa pintaansa vasten **5,74:1**
+  (vaalea) ja **4,41:1** (tumma), eli reilusti yli WCAG:n 3:1:n muulle kuin
+  tekstille. Lepoväri on `--md-default-fg-color--light`, sama jonka teema antaa
+  lohkon päällä; uutta sävyä ei keksitä.
+* **Reunus on sama `--jyu-rule`** kuin sivun muissa rajoissa
+  (`assets/css/layout.css`). Laatan oma pinta erottuu lohkosta vaaleassa vain
+  1,09:1 — valkoinen `#f5f5f5`:tä vasten on hiuksenhieno — joten reunus ja varjo
+  tekevät siellä suurimman osan työstä. Tummassa pinta erottuu 1,31:1 ja reunus
+  2,21:1.
+* **Nappirivin oma tausta pois.** Se on olemassa siksi, että paljaat kuvakkeet
+  erottuisivat allaan juoksevasta koodista; nappien omat pinnat tekevät sen nyt
+  paremmin, eikä laatikkoa laatikon sisään tarvita.
+
+**Liike tekee lopun.** Kohdistuksessa laatta nousee 1 px, varjo kasvaa ja
+aksenttiväri tulee kuvakkeeseen, reunukseen ja 8 %:n verran pintaan.
+Painettaessa laatta painuu saman verran alas ja varjo katoaa — ylös, alas, ja
+liikkeestä tulee napsahdus. Nosto ja painallus ovat teeman `.25 s`:ää
+nopeammat (`.1 s` ja `.05 s`), koska hidas liu'utus tuntuu vetelältä.
+`prefers-reduced-motion: reduce` jättää värit ja pudottaa liikkeen pois.
+
+Silmällä on lisäksi **päällä-tila** (`aria-pressed="true"`): kun piilorivit ovat
+näkyvissä, laatta on painettuna pohjaan ja aksenttivärissä. Ilman sitä ainoa
+merkki tilasta olisi kuvakkeen vaihtuminen yliviivatuksi silmäksi.
+
+**Pois käytöstä oleva nappi ei saa näyttää painettavalta.** Ajon ajaksi
+ajonappi himmennetään (`playground.css`), ja nosto ja painallus jäävät pois
+`codebuttons.css`:n `:not(:disabled)`-ehdoista. Väri on silti pakko palauttaa
+erikseen: selain antaa `:hoverin` myös `disabled`-napille, joten teeman oma
+`.md-code__button:hover` värittäisi odottavan napin aksenttivärillä. Neljä
+riviä `playground.css`:ään, samaan kohtaan jossa himmennys jo oli.
+
+Sääntöt ovat omassa tiedostossaan eivätkä `playground.css`:ssä tai
+`hidelines.css`:ssä, koska ne koskevat riviä eivätkä yksittäistä nappia: saman
+`.md-code__navin` napit on piirrettävä samannäköisiksi. Ne kaksi tiedostoa
+antavat kumpikin vain oman kuvakkeensa, `codebuttons.css` antaa napin. Jos
+teeman kopiointinappi joskus kytketään päälle (`content.code.copy`, ks.
+tarkistuslista), se saa saman ulkoasun ilman lisätyötä.
+
+Luvut on mitattu piirretyistä pikseleistä eikä laskettu paletin alfoista, koska
+modern-variantin efektiiviset arvot eivät ole samat kuin teeman perus-CSS:n:
+`--md-default-fg-color--light` on vaaleassa 0,6 mustaa ja tummassa 0,62
+valkoista, ei 0,55/0,56 kuten `main.css` antaa ymmärtää.
+
+Todennettu selaimessa molemmissa teemoissa: lepo, kohdistus, painallus, silmän
+päällä-tila ja ajonapin odotustila. Testit 136 läpi, käännöksen varoitukset 16
+ennen ja jälkeen.
+
+Mitä ei tullut: aksenttiväristä ajonappia levossa. Vihreä tai sininen kolmio
+joka Java-lohkossa olisi vahvin mahdollinen kutsu, ja niitä lohkoja on 231 —
+sivu täyttyisi väristä. Neutraali laatta, joka värittyy vasta kosketuksesta,
+kutsuu riittävästi ja pitää koodin pääosassa.
+
+
 ## Mitattu ensimmäisestä ajosta
 
 Rakennus kestää **16 s** (MkDocs + Material samasta sisällöstä: 31 s) ja

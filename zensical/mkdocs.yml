@@ -148,6 +148,11 @@ extra_css:
   # komponentin tyyli. Kaaviot itse syntyvät convert.py:ssä, ks. tiedoston alku.
   - assets/css/diagrams.css
 
+  # Koodilohkon nappirivin ulkoasu: kohotettu laatta, nosto ja painallus.
+  # Ennen kahta seuraavaa, koska se on niiden yhteinen pohja - playground.css
+  # ja hidelines.css antavat kumpikin vain oman kuvakkeensa tähän nappiin.
+  - assets/css/codebuttons.css
+
   # Ajonapin kuvake ja tuloste. Omana tiedostonaan samasta syystä kuin
   # edelliset: yhden komponentin tyyli. Nappi ja tuloste syntyvät
   # assets/js/playground.js:ssä, ks. tiedoston alku.
