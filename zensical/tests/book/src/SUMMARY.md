@@ -14,5 +14,7 @@
 
 - [Työkalut](./osa2/index.md)
   - [Tehtävät](./osa2/01-tehtavat.md)
+  - [Huomiot](./osa2/02-huomiot.md)
+  - [Sisällytys](./osa2/03-sisallytys.md)
 
 [Eteneminen<https://example.invalid/tim>]()

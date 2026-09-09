@@ -54,12 +54,12 @@ def test_new_chapter_is_printed(mutable_book, serve, browser):
     before = headings(printed)
     assert "Uusi luku" not in before
 
-    (mutable_book.src / "osa2" / "02-uusi.md").write_text(
+    (mutable_book.src / "osa2" / "04-uusi.md").write_text(
         "# Uusi luku\n\nTämän pitää päätyä paperille asti.\n", encoding="utf-8")
     summary = mutable_book.src / "SUMMARY.md"
     summary.write_text(summary.read_text(encoding="utf-8").replace(
-        "  - [Tehtävät](./osa2/01-tehtavat.md)\n",
-        "  - [Tehtävät](./osa2/01-tehtavat.md)\n  - [Uusi luku](./osa2/02-uusi.md)\n"),
+        "  - [Sisällytys](./osa2/03-sisallytys.md)\n",
+        "  - [Sisällytys](./osa2/03-sisallytys.md)\n  - [Uusi luku](./osa2/04-uusi.md)\n"),
         encoding="utf-8")
     mutable_book.rebuild()
 

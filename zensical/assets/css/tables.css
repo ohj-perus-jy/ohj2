@@ -90,7 +90,25 @@
   --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 8%, transparent);
 }
 
+/* Ulkoreunus ja rivien väliviivat tulevat teeman --md-typeset-table-color
+ * -muuttujasta, joka on tummassa teemassa 12 % valkoista
+ * (hsla(hue, 15%, 95%, .12)). Sivun tausta on siinä lähes musta (5 %), joten
+ * viiva jää kontrastisuhteeseen 1,32:1 - se on olemassa hyvällä näytöllä,
+ * mutta katoaa heti kun paneelin kontrasti tai katselukulma on vähänkään
+ * huono. Tilalle .38 tekstin väriä eli 3,01:1, WCAG:n raja muulle kuin
+ * tekstille.
+ *
+ * Arvo on tarkoituksella vahvempi kuin sivun muiden hiusviivojen --jyu-rule
+ * (.20, assets/css/layout.css): se on sivun rakenteen viiva - yläpalkin
+ * alareuna, alatunniste, hr - jota katsotaan sivun mittaista pintaa vasten,
+ * kun taas taulukon ristikko on pieni kohde keskellä leipätekstiä.
+ *
+ * Muuttuja asetetaan tauluun, ja teema käyttää sitä vain taulun omassa
+ * reunuksessa ja solujen border-topissa, joten ylikirjoitus ei vuoda muualle.
+ * Vaaleassa teemassa sama 12 % on mustaa valkoisella eli selvästi jyrkempi
+ * ero, ja se jätetään ennalleen. */
 [data-md-color-scheme="slate"] .md-typeset table:not([class]) {
+  --md-typeset-table-color: hsla(var(--md-hue), 15%, 90%, 0.38);
   --tbl-head-bg: color-mix(in srgb, var(--md-typeset-a-color) 20%, transparent);
   --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
 }

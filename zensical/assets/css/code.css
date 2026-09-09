@@ -1,0 +1,75 @@
+/* Koodin erottuminen taustasta: rivitekstin koodi ja koodilohkon tausta.
+ *
+ * Teema antaa kaikelle koodille saman taustan --md-code-bg-color, joka on
+ * kummassakin teemassa hädin tuskin taustan sävyinen: vaaleassa #f5f5f5
+ * valkoisella (1,09:1, CIE-vaaleudessa 3,5 yksikköä) ja tummassa
+ * hsla(hue, 20%, 10%, 1) lähes mustalla 5 %:n taustalla (1,09:1, 4,5
+ * yksikköä). Hyvällä näytöllä koodi erottuu, halvalla paneelilla tai vinosta
+ * katselukulmasta se sulaa leipätekstin sekaan.
+ *
+ * Luvut ovat modern-variantin paletista, ks. mkdocs.yml theme.name.
+ *
+ * Ero tehdään pelkällä taustalla, ei reunuksella: lohkon rajaava hiusviiva
+ * olisi kontrastina tehokkaampi, mutta se on kokeiltu ja hylätty - laatikko
+ * jokaisen koodinpätkän ympärillä on levottomampi kuin pinta.
+ *
+ * Rivitekstin koodi molemmissa teemoissa, lohko vain tummassa
+ * ----------------------------------------------------------
+ * Pieni kohde tarvitsee suuremman eron kuin iso: koko palstan levyinen lohko
+ * erottuu vaalealla taustalla vielä 3,5 vaaleusyksiköllä, mutta muutaman
+ * merkin nappula keskellä riviä ei. Siksi nappula korjataan kummassakin
+ * teemassa ja lohko vain tummassa, jossa sekin katoaa.
+ *
+ * Nappulan tausta kirjoitetaan teeman oman tekstivärin peittona eikä
+ * valmiina värinä. Se ei kasaudu teeman --md-code-bg-colorin päälle vaan
+ * korvaa sen - background-color on yksi ominaisuus, ei pino - joten
+ * läpinäkyvä sävy sekoittuu siihen, mitä nappulan takana on. Juuri sitä
+ * tarvitaan, koska rivitekstin koodia on myös alerttilaatikoissa,
+ * taulukoissa ja tehtäväkorteissa, joiden tausta on eri. Sama tekniikka kuin
+ * taulukon sävyissä, ks. assets/css/tables.css.
+ *
+ * Peitto on eri teemoissa eri, vaikka mitattu vaalausero olisi samalla
+ * arvolla lähes sama (20 % olisi vaaleassa -16,5 ja tummassa +16,2
+ * yksikköä). Vaalealla pohjalla silmä erottaa saman eron selvästi helpommin,
+ * koska se on sopeutunut kirkkaampaan pintaan, ja 20 % näyttää siellä
+ * raskaalta harmaalta laatikolta. Siksi vaaleassa 10 % (#e8e8e8, -8,2
+ * yksikköä, teeman omaan #f5f5f5:een verrattuna reilu kaksinkertainen ero) ja
+ * tummassa 20 %. Koodin oma teksti on nappulaa vasten 8,0:1 (vaalea) ja
+ * 7,9:1 (tumma).
+ *
+ * Lohkon katon asettavat kommentit, operaattorit ja välimerkit, jotka teema
+ * piirtää --md-default-fg-color--lightillä: se on tummassa teemassa
+ * nykytaustalla 5,16:1 ja putoaa taustan noustessa. 18 % on suurin arvo,
+ * jolla ne ovat vielä yli WCAG AA:n (4,62:1), ja ero sivun taustaan
+ * kolminkertaistuu (4,5 -> 13,6 vaaleusyksikköä).
+ */
+
+/* Koodilohko, ja samalla teeman oletus kaikelle koodille. Kaikki kolme
+ * muuttujaa yhdessä: --light ja --lighter ovat nappirivin tausta
+ * (.md-code__nav), joka kelluu lohkon päällä. Jos vain perusarvo nousisi,
+ * nappirivi jäisi lohkoa tummemmaksi läiskäksi. */
+[data-md-color-scheme="slate"] {
+  --md-code-bg-color: hsla(var(--md-hue), 20%, 18%, 1);
+  --md-code-bg-color--light: hsla(var(--md-hue), 20%, 18%, 0.9);
+  --md-code-bg-color--lighter: hsla(var(--md-hue), 20%, 18%, 0.54);
+}
+
+/* Rivitekstin koodi. Tausta annetaan tässä eikä yllä olevassa muuttujassa,
+ * koska teema käyttää samaa muuttujaa myös lohkon taustana.
+ *
+ * Varjo on kohokuviointia (letterpress): yhden pikselin siirros alaspäin
+ * taustan suuntaisella värillä saa merkit näyttämään pintaan painetuilta ja
+ * terävöittää niiden reunan nappulaa vasten. Suunta on molemmissa teemoissa
+ * sama, väri päinvastainen - vaaleassa valkoinen tumman tekstin alle,
+ * tummassa musta vaalean alle - koska varjon pitää olla kirkkaampi kuin
+ * teksti vaalealla ja tummempi tummalla. Ilman sumennusta, jotta pieni
+ * kirjasin ei mene utuiseksi. */
+.md-typeset :not(pre) > code {
+  background-color: color-mix(in srgb, var(--md-default-fg-color) 10%, transparent);
+  text-shadow: 0 1px #fff;
+}
+
+[data-md-color-scheme="slate"] .md-typeset :not(pre) > code {
+  background-color: color-mix(in srgb, var(--md-default-fg-color) 20%, transparent);
+  text-shadow: 0 1px #000;
+}

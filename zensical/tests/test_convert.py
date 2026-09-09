@@ -691,6 +691,8 @@ def test_build_nav(book_src):
         '  - "2 Työkalut":\n'
         '    - "2 Työkalut": osa2/index.md\n'
         '    - "2.1 Tehtävät": osa2/01-tehtavat.md\n'
+        '    - "2.2 Huomiot": osa2/02-huomiot.md\n'
+        '    - "2.3 Sisällytys": osa2/03-sisallytys.md\n'
         '  - "Eteneminen": https://example.invalid/tim\n'
     )
 
@@ -709,7 +711,7 @@ def test_build_print_page_lists_every_chapter(book_src):
     """Luettelo kaikista luvuista kirjan järjestyksessä. Ulkoinen linkki ei
     ole luku, joten se jää pois."""
     page = convert.build_print_page(convert.build_nav())
-    assert page.count("\n- [") == 8
+    assert page.count("\n- [") == 10
     assert page.index("- [Aloitus](index.md)") < page.index("- [1 Perusteet]")
     assert "example.invalid" not in page
 

@@ -54,14 +54,18 @@ ainoa kohta, jossa lopputulos syntyy vasta selaimessa — `print.js` hakee
 jokaisen luvun oman sivun ja liittää siitä artikkelin — joten käännöksen
 tuloksesta sitä ei voi lukea.
 
-**Koekirja (`tests/book/src`) on kymmenen tiedostoa.** Se on olemassa kahdesta
+**Koekirja (`tests/book/src`) on neljätoista tiedostoa.** Se on olemassa kahdesta
 syystä. Ensinnäkin materiaalin muuttamista pitää päästä *kokeilemaan*, eikä
 sitä voi tehdä `../src`:ään; koekirjasta jokainen testi saa oman kopionsa,
 jota se saa rikkoa. Toiseksi se on nopea: koko kirjan kääntäminen kestää
 50 s, koekirjan 3 s. Siinä on yksi esimerkki jokaisesta asiasta, joka
 kokoamisessa voi mennä rikki — sama otsikko kahdessa luvussa, kuva
-alihakemistosta, sivun sisäinen ankkuri, lukujen välinen linkki, kaksi
-välilehtijoukkoa, `NEST_UNDER`-siirto ja ulkoinen linkki.
+alihakemistosta, sivun sisäinen ankkuri, lukujen välinen linkki, neljä
+välilehtijoukkoa, `NEST_UNDER`-siirto, ulkoinen linkki, huomiolaatikot ja
+sisällytykset kaikissa kolmessa muodossaan (koko tiedosto, yksi rivi
+taulukon soluun ja koodiaidan sisällä `// FILE:` -merkinnän jäljessä).
+Sisällytysten kohteet (`osa2/ohje.md` ja `osa2/Esimerkki.java`) eivät ole
+`SUMMARY.md`:ssä, kuten eivät tehtävänannot oikeassa materiaalissakaan.
 
 **`window.print` korvataan laskurilla.** Headless-selaimessa ei ole
 tulostusikkunaa, mutta kutsu on samalla juuri se mitä halutaan mitata.
@@ -1905,6 +1909,74 @@ kosketa, monitiedostolohkon tiedostokohtaiset numerot), viisi uudessa
 merkittyinä, silmä näyttää ja piilottaa, silmä vain lohkoihin joissa on
 piilorivejä, molemmat napit samassa rivissä) ja yksi `test_print.py`:hyn:
 piilorivit eivät tulostu kirjan mukana.
+
+### Koodin ja taulukoiden erottuminen taustasta (uusi `assets/css/code.css` + 1 rivi `mkdocs.yml`:ään + 1 rivi `tables.css`:ään)
+
+Havainto halvalta paneelilta: taulukon viivoitus ja koodin tausta eivät erotu
+taustasta. Mittaus vahvisti sen. Modern-variantin paleteissa
+
+* taulukon reunus ja rivien väliviivat ovat tummassa teemassa
+  `--md-typeset-table-color` eli 12 % valkoista, ja kun sivun tausta on lähes
+  musta (`hsla(hue, 15%, 5%, 1)`), viiva on **1,32:1**;
+* koodin tausta on molemmissa teemoissa **1,09:1** — vaaleassa `#f5f5f5`
+  valkoisella (3,5 vaaleusyksikköä), tummassa `hsla(hue, 20%, 10%, 1)`
+  (4,5 yksikköä).
+
+Hyvällä näytöllä kaikki näkyvät, mutta jo kohtalainen katselukulma tai halpa
+paneeli syö erot.
+
+**Taulukon viiva .38 tekstin väriä** eli **3,01:1**, WCAG:n raja muulle kuin
+tekstille. Se on tarkoituksella vahvempi kuin sivun muiden hiusviivojen
+`--jyu-rule` (.20): se on sivun *rakenteen* viiva — yläpalkin alareuna,
+alatunniste, `hr` — jota katsotaan sivun mittaista pintaa vasten, kun taas
+taulukon ristikko on pieni kohde keskellä leipätekstiä. Muuttuja asetetaan
+tauluun, ja teema käyttää sitä vain taulun reunuksessa ja solujen
+`border-topissa`, joten ylikirjoitus ei vuoda muualle. Vain tummaan teemaan:
+vaaleassa sama 12 % on mustaa valkoisella eli selvästi jyrkempi ero.
+
+**Koodissa työ tehdään pelkällä taustalla.** Lohkon rajaava hiusviiva olisi
+kontrastina tehokkaampi, ja se kokeiltiin, mutta laatikko jokaisen
+koodinpätkän ympärillä on levottomampi kuin pinta.
+
+**Pieni kohde tarvitsee suuremman eron kuin iso**, ja siitä seuraa kohtien
+jako: koko palstan levyinen lohko erottuu vaalealla taustalla vielä 3,5
+vaaleusyksiköllä, mutta muutaman merkin nappula keskellä riviä ei.
+
+* **Rivitekstin koodi, molemmat teemat: teeman oman tekstivärin peitto,
+  vaaleassa 10 % ja tummassa 20 %.** Peitto ei kasaudu teeman
+  `--md-code-bg-colorin` päälle vaan korvaa sen — `background-color` on yksi
+  ominaisuus, ei pino — joten läpinäkyvä sävy sekoittuu siihen, mitä nappulan
+  takana on. Juuri sitä tarvitaan, koska rivitekstin koodia on myös
+  alerttilaatikoissa, taulukoissa ja tehtäväkorteissa, joiden tausta on eri.
+  Arvot ovat eri, vaikka mitattu vaalausero olisi samalla luvulla lähes sama
+  (20 % olisi vaaleassa -16,5 ja tummassa +16,2 yksikköä): vaalealla pohjalla
+  silmä erottaa saman eron selvästi helpommin, koska se on sopeutunut
+  kirkkaampaan pintaan, ja 20 % näyttää siellä raskaalta harmaalta laatikolta.
+  Vaalean 10 % on `#e8e8e8` eli -8,2 yksikköä, reilu kaksinkertainen ero
+  teeman omaan `#f5f5f5`:een. Koodin oma teksti on nappulaa vasten 8,0:1
+  (vaalea) ja 7,9:1 (tumma). Merkeissä on lisäksi kohokuviointi
+  (`text-shadow: 0 1px`) taustan suuntaisella värillä — vaaleassa valkoinen,
+  tummassa musta — joka terävöittää reunan nappulaa vasten. Ilman sumennusta,
+  jottei pieni kirjasin mene utuiseksi.
+* **Lohkon tausta, vain tumma teema: 10 % -> 18 %.** Kattona ovat kommentit,
+  operaattorit ja välimerkit, jotka teema piirtää
+  `--md-default-fg-color--lightillä`: se on nykytaustalla 5,16:1 ja putoaa
+  taustan noustessa. 18 % on suurin arvo, jolla ne ovat vielä yli WCAG AA:n
+  (4,62:1), ja ero sivun taustaan kolminkertaistuu (4,5 -> 13,6
+  vaaleusyksikköä). Kaikki kolme muuttujaa (`--md-code-bg-color` ja sen
+  `--light`/`--lighter`) nostetaan yhdessä, koska jälkimmäiset ovat nappirivin
+  (`.md-code__nav`) tausta, joka kelluu lohkon päällä — pelkkä perusarvo olisi
+  jättänyt nappirivin lohkoa tummemmaksi läiskäksi.
+
+Todennettu selaimessa molemmissa teemoissa: taulukon viivat, Java-lohko
+syntaksiväreineen, ajon tuloste ja rivitekstin nappulat erottuvat. Testit 136
+läpi, käännöksen varoitukset 16 ennen ja jälkeen.
+
+Mitä ei tullut: `--jyu-rulen` nostoa. Sivun rakenteen viivat ovat tummalla
+taustalla 1,64:1, eli sama havainto koskee niitäkin, mutta ne ovat pitkiä
+yhtenäisiä viivoja isoa tyhjää vasten eivätkä olleet valituksen kohteena.
+Vaalean teeman koodilohko jäi myös ennalleen samasta syystä kuin nappula
+korjattiin: iso pinta erottuu pienemmälläkin erolla.
 
 ## Mitattu ensimmäisestä ajosta
 

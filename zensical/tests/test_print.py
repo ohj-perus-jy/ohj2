@@ -8,8 +8,9 @@ voi testata käännöksen tuloksesta, vaan sivu on avattava oikeasti.
 Koekirja on tarkoituksella pieni, mutta siinä on yksi esimerkki jokaisesta
 asiasta, joka kokoamisessa voi mennä rikki: sama otsikko kahdessa luvussa
 (tunnisteiden törmäys), kuva alihakemistosta (suhteellinen osoite),
-sivun sisäinen ankkuri, lukujen välinen linkki ja kolme välilehtijoukkoa
-(käyttöjärjestelmävalinta ja kaksi monitiedostolohkoa).
+sivun sisäinen ankkuri, lukujen välinen linkki, neljä välilehtijoukkoa
+(käyttöjärjestelmävalinta ja kolme monitiedostolohkoa), huomiolaatikot ja
+sisällytykset.
 Oikealla materiaalilla samat asiat mitataan test_book.py:ssä.
 """
 
@@ -30,6 +31,8 @@ CHAPTERS = [
     "Tehtävät",
     "Työkalut",
     "Tehtävät",
+    "Huomiot",
+    "Sisällytys",
 ]
 
 
@@ -115,7 +118,27 @@ def test_tab_sets_stay_independent(printed):
         .map(input => input.name)).size,
       checked: document.querySelectorAll('.tabbed-set input:checked').length,
     })""")
-    assert tabs == {"sets": 3, "groups": 3, "checked": 3}
+    assert tabs == {"sets": 4, "groups": 4, "checked": 4}
+
+
+def test_admonitions_keep_their_own_titles(printed):
+    """Alertin otsikko kirjoitetaan käännöksessä näkyviin (kohta 7): ilman sitä
+    Material näyttäisi tyypin oman englanninkielisen nimen ("Tip")."""
+    assert printed.evaluate(
+        "() => [...document.querySelectorAll('.admonition-title')]"
+        "        .map(title => title.textContent.trim())") == [
+        "Vinkki", "Huomautus"]
+
+
+def test_includes_are_expanded_before_the_book_is_built(printed):
+    """Sisällytys ratkaistaan lähdepuussa (kohta 1), joten paperille tulee
+    tiedoston sisältö eikä makro: koko tiedosto, yksi rivi taulukon soluun ja
+    koodiaidan sisällä monitiedostolohkon välilehdeksi."""
+    content = printed.evaluate(
+        "() => document.querySelector('.md-content__inner').innerText")
+    assert "{{#include" not in content
+    assert content.count("Ensimmäinen rivi mahtuu taulukon soluun.") == 2
+    assert "Sisällytetty tiedosto." in content
 
 
 def test_hidden_lines_stay_hidden_on_paper(printed):

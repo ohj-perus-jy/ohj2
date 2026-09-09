@@ -132,6 +132,13 @@ extra_css:
   # laitaan; värit haetaan teeman muuttujista, ks. tiedoston alku.
   - assets/css/tables.css
 
+  # Koodin erottuminen taustasta: rivitekstin koodin ja koodilohkon tausta.
+  # Omana tiedostonaan samasta syystä kuin edelliset: yhden komponentin tyyli.
+  # Teeman oma koodin tausta on molemmissa teemoissa vain 1,09:1 sivun
+  # taustaan nähden; miksi nappula korjataan kummassakin teemassa ja lohko
+  # vain tummassa, ks. tiedoston alku.
+  - assets/css/code.css
+
   # Harjoitustyön vaatimusnumerot (1.1, 1.2, ...). Omana tiedostonaan samasta
   # syystä kuin edelliset kolme: yhden komponentin tyyli, ei sivun asettelua.
   # Kirjassa numero tulee samalla tavalla CSS-laskurista, ks. tiedoston alku.
