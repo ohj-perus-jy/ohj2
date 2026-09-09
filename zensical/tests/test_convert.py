@@ -275,6 +275,83 @@ def test_convert_details_ignores_details_inside_code():
     assert convert.convert_details(text) == (text, 0)
 
 
+# --- Tehtäväkortit (README kohta 6) -----------------------------------------
+
+TASK = """\
+<task>
+  <task-title num="2.1">Kello<points>1 p.</points></task-title>
+  <handout>
+
+Tee luokka `Kello`.
+
+  </handout>
+  <task-link><a href="https://tim.jyu.fi/x">Tee tehtävä TIMissä</a></task-link>
+</task>
+"""
+
+
+def test_convert_tasks_names_every_part():
+    """Kortista tulee divit, joilla on luokka: tyyli (assets/css/tasks.css)
+    osoittaa niihin, eikä yhtään tuntematonta tagia jää sivulle."""
+    converted, cards = convert.convert_tasks(TASK)
+    assert cards == 1
+    assert '<div class="task" markdown="1">' in converted
+    assert ('<div class="task-head"><span class="task-num">2.1</span>'
+            '<span class="task-name">Kello</span>'
+            '<span class="task-points">1 p.</span></div>') in converted
+    assert '<div class="task-handout" markdown="1">' in converted
+    assert ('<div class="task-link">'
+            '<a href="https://tim.jyu.fi/x">Tee tehtävä TIMissä</a></div>') in converted
+    assert "<task" not in converted and "<points>" not in converted
+
+
+def test_convert_tasks_marks_only_the_handout_for_markdown():
+    """Tehtävänanto on Markdownia ja tarvitsee attribuutin, tunnusrivi ja
+    TIM-linkki ovat tekstiä ja HTML:ää eivätkä tarvitse."""
+    converted, _ = convert.convert_tasks(TASK)
+    assert converted.count('markdown="1"') == 2
+
+
+def test_convert_tasks_puts_the_bonus_badge_inside_the_name():
+    """<i class="bi bi-stars"> jää nimen sisään, kuten lähteessäkin: liuska
+    seuraa nimen viimeistä sanaa myös silloin kun nimi rivittyy."""
+    text = ('<task-title num="1.7"><i class="bi bi-stars"></i>'
+            "Numerolaskuri<points>1 p.</points></task-title>\n")
+    converted, _ = convert.convert_tasks(text)
+    assert ('<span class="task-name">Numerolaskuri '
+            '<span class="task-bonus">Bonus</span></span>') in converted
+    assert "bi-stars" not in converted
+
+
+def test_convert_tasks_lifts_the_tags_out_of_the_indentation():
+    """Python-Markdown tunnistaa lohkotason HTML:n vain omana kappaleenaan,
+    ja neljällä välilyönnillä sisennetty rivi olisi koodilohko. Sisennys on
+    lähteessä pelkkää muotoilua — aineistossa sitä on neljää eri syvyyttä."""
+    converted, _ = convert.convert_tasks("    <handout>\nteksti\n")
+    assert converted.startswith('<div class="task-handout" markdown="1">\n\n')
+
+
+def test_convert_tasks_does_not_pile_up_blank_lines():
+    """Tagin perässä on lähteessä usein jo tyhjä rivi; sitä ei oteta toiseen
+    kertaan, jotta docs/ pysyy luettavana."""
+    converted, _ = convert.convert_tasks("<task>\n\nteksti\n")
+    assert converted == '<div class="task" markdown="1">\n\nteksti\n'
+
+
+def test_convert_tasks_is_repeatable():
+    """convert.py ajetaan uudelleen aina kun lähde muuttuu: valmiissa
+    tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    converted, _ = convert.convert_tasks(TASK)
+    assert convert.convert_tasks(converted) == (converted, 0)
+
+
+def test_convert_tasks_ignores_tasks_inside_code():
+    """Aidat käydään pareittain kuten convert_fencesissä, jottei koodilohkossa
+    näytetty merkkausesimerkki muuttuisi."""
+    text = "```markdown\n<task>\n```\n"
+    assert convert.convert_tasks(text) == (text, 0)
+
+
 # --- Käyttöjärjestelmävälilehdet (README kohta 23) ---------------------------
 
 def test_convert_tabs_drops_placeholder():

@@ -5,7 +5,7 @@
  * onnistu Markdown-tasolla eli convert.py:ssä, koska luvut eivät ole
  * itsenäisiä: kokeiltuna 73 luvun otsikosta 32 katosi, kun luvut liitettiin
  * yhdeksi Markdown-tiedostoksi. Syy on lukujen raaka HTML (<details>,
- * <task>) ja koodiaidat: sivun loppuessa jäsennin palautuu alkutilaan, mutta
+ * tehtäväkorttien divit) ja koodiaidat: sivun loppuessa jäsennin palautuu alkutilaan, mutta
  * yhdistetyssä tiedostossa kesken jäänyt lohko jatkuu seuraavaan lukuun ja
  * nielaisee sen alun.
  *

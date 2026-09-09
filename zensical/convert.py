@@ -4,15 +4,16 @@
 Barebones-lähtötilanne: skripti kopioi tiedostot ja kääntää src/SUMMARY.md:n
 nav-lohkoksi, koska ilman navigaatiota sivustoa ei voi selata lainkaan.
 
-Sisältöä muunnetaan kuudessa kohdassa: sisällytysmakrot tiedostojen sisällöksi
+Sisältöä muunnetaan seitsemässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
 ({{#include}}, convert_includes), koodilohkojen monitiedostomerkinnät
 välilehdiksi (// FILE:, convert_files), mdBookin aidan attribuuttilista
 (java,ignore) pymdownx:n muotoon (convert_fences), alertit admonitioneiksi
 (> [!VINKKI], convert_alerts), avattavien osioiden sisältö Markdowniksi
-(<details markdown="1">, convert_details) ja työkalusivun
+(<details markdown="1">, convert_details), tehtäväkortit diveiksi
+(<task>, convert_tasks) ja työkalusivun
 käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
 convert_tabs). Muu mdBookin syntaksi
-(//- piilorivit, <task>-kortit) jää sellaisenaan sivuille näkyviin. Se on
+(//- piilorivit) jää sellaisenaan sivuille näkyviin. Se on
 tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti pitää korjata. Muunnokset lisätään takaisin
 yksi kerrallaan, ks. README.md.
 
@@ -154,6 +155,51 @@ ALERT_FALLBACK = "note"
 #
 # Lookahead pitää muunnoksen toistokelpoisena: jo käännetty tagi ohitetaan.
 DETAILS_RE = re.compile(r"<details(?![^>]*\bmarkdown=)(?P<attrs>[^>]*)>")
+
+# Tehtäväkortit. mdBookin merkkaus on omia elementtejä, joita HTML ei tunne:
+#
+#     <task>
+#       <task-title num="2.1">Kello<points>1 p.</points></task-title>
+#       <handout>
+#
+#       tehtävänanto Markdownina
+#
+#       </handout>
+#       <task-link><a href="...">Tee tehtävä TIMissä</a></task-link>
+#     </task>
+#
+# Kirjassa ne tyylitetään sellaisenaan (theme/tasks.css osoittaa suoraan
+# tageihin), mutta täällä ne eivät kelpaa kahdesta syystä. Python-Markdown
+# tunnistaa HTML-lohkon tagin nimestä (markdown.util.BLOCK_LEVEL_ELEMENTS),
+# eikä <task> ole listalla: koko kortti jää kappaleen sisään muotoon
+# "<p><task> ... <handout></p>", ja tehtävänannon Markdown jäsentyy väärään
+# paikkaan. Samasta syystä md_in_html ei myöskään käsittele lohkon sisältöä,
+# vaikka tageihin lisäisi markdown-attribuutin.
+#
+# Kortti käännetään siis diveiksi, joilla on kaksi ominaisuutta: nimi on
+# luokassa (assets/css/tasks.css) ja tehtävänanto on merkitty
+# markdown="1":llä, jolloin md_in_html jäsentää sen sisällön normaalisti.
+# Laajennus on jo Zensicalin oletuslistalla, joten mkdocs.yml:ään ei tule
+# riviäkään — sama tilanne kuin avattavissa osioissa (kohta 8).
+#
+# Tunnusrivistä tulee yksi rivi raakaa HTML:ää: numero, nimi ja pisteet ovat
+# tekstiä eivätkä Markdownia, joten sitä ei merkitä markdown-attribuutilla.
+# Bonustähti <i class="bi bi-stars"> jää nimen *sisälle*, kuten lähteessäkin;
+# tyyli tekee siitä liuskan ja piirtää tähden itse, koska Bootstrap Iconsia
+# ei ladata (kohta 17).
+TASK_TAG_RE = re.compile(r"</?(?:task|task-title|task-link|handout)[ >]")
+TASK_TITLE_RE = re.compile(
+    r'<task-title\s+num="(?P<num>[^"]*)"\s*>(?P<inner>.*?)</task-title>')
+TASK_POINTS_RE = re.compile(r"<points>(?P<points>.*?)</points>")
+TASK_BONUS_RE = re.compile(r'<i\s+class="[^"]*\bbi-stars\b[^"]*"\s*>\s*</i>')
+TASK_TAGS = (
+    ("<task>", '<div class="task" markdown="1">'),
+    ("</task>", "</div>"),
+    ("<handout>", '<div class="task-handout" markdown="1">'),
+    ("</handout>", "</div>"),
+    ("<task-link>", '<div class="task-link">'),
+    ("</task-link>", "</div>"),
+)
 
 
 def nest_moves() -> dict[str, str]:
@@ -578,6 +624,77 @@ def convert_details(text: str) -> tuple[str, int]:
     return "\n".join(out), tags
 
 
+def task_head(match: re.Match[str]) -> str:
+    """<task-title num="2.1">Kello<points>1 p.</points></task-title> -> tunnusrivi.
+
+    Osat erotellaan sisemmistä tageista: numero attribuutista, pisteet
+    <points>-elementistä ja bonusmerkintä <i class="bi bi-stars">-tagista.
+    Bonusliuska jää nimen sisään, jotta se seuraa nimen viimeistä sanaa myös
+    silloin kun nimi rivittyy kapealla palstalla.
+    """
+    inner = match["inner"]
+    points = TASK_POINTS_RE.search(inner)
+    inner = TASK_POINTS_RE.sub("", inner)
+    bonus = TASK_BONUS_RE.search(inner) is not None
+    name = TASK_BONUS_RE.sub("", inner).strip()
+    if bonus:
+        name += ' <span class="task-bonus">Bonus</span>'
+    parts = [f'<span class="task-num">{match["num"]}</span>',
+             f'<span class="task-name">{name}</span>']
+    if points:
+        parts.append(f'<span class="task-points">{points["points"].strip()}</span>')
+    return '<div class="task-head">' + "".join(parts) + "</div>"
+
+
+def convert_tasks(text: str) -> tuple[str, int]:
+    """<task>-kortit diveiksi. -> (teksti, kortteja).
+
+    Ilman muunnosta koko kortti jää kappaleen sisään ja tehtävänannon
+    Markdown jäsentyy väärään paikkaan, ks. TASK_TAG_RE. Koodiaidat
+    ohitetaan pareittain kuten convert_detailsissä, jottei aidan sisällä
+    näytetty esimerkki muuttuisi.
+
+    Tagirivien sisennys poistetaan ja jokainen niistä erotetaan tyhjällä
+    rivillä: Python-Markdown tunnistaa lohkotason HTML:n vain omana
+    kappaleenaan, ja neljällä välilyönnillä sisennetty rivi olisi
+    koodilohko. Sisennys on lähteessä pelkkää muotoilua — aineistossa sitä
+    on neljää eri syvyyttä samoille tageille.
+
+    Muunnos on toistokelpoinen ilman erillistä tarkistusta: valmiissa
+    tekstissä ei ole enää yhtään tagia, johon TASK_TAG_RE osuisi.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    cards = 0
+    skip_blank = False
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None and TASK_TAG_RE.search(line):
+            cards += line.count("<task>")
+            converted = TASK_TITLE_RE.sub(task_head, line.strip())
+            for tag, replacement in TASK_TAGS:
+                converted = converted.replace(tag, replacement)
+            if out and out[-1].strip():
+                out.append("")
+            out.append(converted)
+            out.append("")
+            # Lähteessä on tagin perässä usein jo tyhjä rivi; sitä ei oteta
+            # toiseen kertaan, jotta docs/ pysyy luettavana.
+            skip_blank = True
+            continue
+        if skip_blank and not line.strip():
+            skip_blank = False
+            continue
+        skip_blank = False
+        out.append(line)
+    return "\n".join(out), cards
+
+
 def split_files(body: list[str]) -> list[tuple[str, list[str]]]:
     """Koodiaidan rivit -> [(tiedostonimi, rivit)] FILE-merkintöjen mukaan.
 
@@ -722,7 +839,7 @@ def main() -> int:
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
     sets = placeholders = blocks = files = fences = includes = alerts = 0
-    details = 0
+    details = tasks = 0
     tab_labels: set[str] = set()
     unknown_alerts: set[str] = set()
     for page in sorted(DOCS.rglob("*.md")):
@@ -748,6 +865,11 @@ def main() -> int:
         # <details>-tagit: paikalla ei ole väliä, sillä mikään muu muunnos ei
         # koske raakaan HTML:ään eikä tämä muuhun kuin avaustagin attribuutteihin.
         converted, page_details = convert_details(converted)
+        # Tehtäväkortit ennen välilehtiä: convert_tabs sisentää osion sisällön
+        # neljällä välilyönnillä, ja sisennetty HTML-lohko olisi koodilohko.
+        # Muihin muunnoksiin nähden järjestyksellä ei ole väliä: tämä koskee
+        # vain <task>-tageja eikä mikään muu muunnos koske niihin.
+        converted, page_tasks = convert_tasks(converted)
         converted, page_sets, page_placeholders, page_labels = convert_tabs(converted)
         if converted != source:
             page.write_text(converted, encoding="utf-8")
@@ -760,6 +882,7 @@ def main() -> int:
         includes += page_includes
         alerts += page_alerts
         details += page_details
+        tasks += page_tasks
         unknown_alerts |= page_unknown
     for old_path, new_path in nest_moves().items():
         source = DOCS / old_path
@@ -780,6 +903,7 @@ def main() -> int:
     print(f"aidan attribuutit: {fences} aitaa")
     print(f"sisällytykset: {includes} makroa")
     print(f"details-lohkot: {details} tagia")
+    print(f"tehtäväkortit: {tasks} korttia")
     print(f"alertit: {alerts} lohkoa"
           + (f", tuntematon tunnus: {', '.join(sorted(unknown_alerts))}"
              if unknown_alerts else ""))

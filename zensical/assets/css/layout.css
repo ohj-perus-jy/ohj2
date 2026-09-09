@@ -138,6 +138,49 @@
   fill: currentcolor;
 }
 
+/* Erotin yleisten sivujen ja kirjan lukujen väliin. Kaikilla leveyksillä.
+ *
+ * mdBookissa raja on olemassa: SUMMARY.md:n ---erottimet piirtyvät valikkoon
+ * <li class="spacer">-viivoiksi (theme/css/chrome.css: 85 % leveä, 2 px,
+ * --sidebar-spacer). Zensicalin navigaatiossa erottimia ei ole lainkaan,
+ * koska convert.py: build_nav ohittaa ne, joten Aloituksesta TIM-linkkiin
+ * olevat yleiset sivut jäävät samaan pinoon lukujen kanssa: ainoa ero on
+ * numeron puuttuminen. Tämä palauttaa rajan.
+ *
+ * Viiva on tarkalleen sama kuin kiskon oma oikea reunaviiva ja yläpalkin
+ * alareuna: 1 px --md-default-fg-color--lightestiä, ja se ulottuu kiskon
+ * sisällön koko leveydelle. Silloin se ei ole valikon sisäinen koriste vaan
+ * jatkoa sivun omille rajaviivoille, ja yläpään yleiset sivut näyttävät
+ * samalta ruudukkolohkolta kuin muutkin sivun alueet. Leveys on tässä
+ * listan oma leveys; kiskon kouru kumotaan erikseen sen omassa lohkossa
+ * alempana. Pystyvälit 0,7rem ja 0,5rem: listan kohtien
+ * väli on 0,2rem, joka tulee viivan alapuolelle, joten epäsymmetria tekee
+ * viivan ympärille yhtä suuret raot.
+ *
+ * Viiva ripustetaan ryhmän viimeiseen kohtaan (TIM-linkki) eikä ensimmäiseen
+ * lukuun, jolloin lukujen omiin kohtiin ei kosketa lainkaan.
+ *
+ * Ankkuriksi kelpaa vain absoluuttinen osoite, koska sivuston sisäiset
+ * osoitteet muuttuvat sivun syvyyden mukaan: linkki osaan 1 on etusivulla
+ * "./osa1/", osa5/index.html:ssä "../osa1/" mutta osan 1 omilla sivuilla
+ * "./.." tai "../" — [href$="osa1/"] jättäisi viivan pois juuri niiltä
+ * sivuilta. TIM-linkki on sama merkkijono joka sivulla. Sama keino on
+ * käytössä mdBookin puolella (theme/css/general.css:
+ * .sidebar a[href$="tenttiohjeet.html"]). Jos TIM-linkki joskus poistuu,
+ * viiva katoaa kokonaan eikä siirry väärään väliin.
+ *
+ * Ei media-kyselyä: mdBookissa erottimet näkyvät joka leveydellä, ja tämä on
+ * pelkkä pseudoelementti kohdan sisällä, joten se ei kosketa kapean näytön
+ * laatikkovalikon asetteluun. */
+.md-nav--primary > .md-nav__list > .md-nav__item:has(
+    a[href^="https://tim.jyu.fi"])::after {
+  display: block;
+  height: 1px;
+  margin: 0.7rem 0 0.5rem;
+  background-color: var(--md-default-fg-color--lightest);
+  content: "";
+}
+
 @media screen and (min-width: 76.25em) {
 
   /* 1. Kisko: kiinteä, koko korkeus, oma tausta ja erotinviiva.
@@ -291,6 +334,16 @@
   .md-sidebar--primary .md-nav__item--nested > .md-nav > .md-nav__list {
     margin-left: 1rem;
     border-left: 1px solid var(--md-default-fg-color--lighter);
+  }
+
+  /* Erotinviiva (ks. tiedoston alkupuoli) kiskon sisällön koko leveydelle.
+   * .md-sidebar__inner jättää oikeaan reunaan 0,6rem kourun vierityspalkille,
+   * ja ilman tätä viiva päättyisi sen sisäpuolelle — eli eri kohtaan kuin
+   * yläpalkin alareuna, jonka jatkoksi se on tarkoitettu. Laatikkovalikossa
+   * kourua ei ole, joten siellä viiva on listan levyinen. */
+  .md-nav--primary > .md-nav__list > .md-nav__item:has(
+      a[href^="https://tim.jyu.fi"])::after {
+    margin-right: -0.6rem;
   }
 
   /* Avausnuolen suunta. Materialin oletus on oikealle osoittava chevron,

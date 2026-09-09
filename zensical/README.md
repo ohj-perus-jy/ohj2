@@ -97,9 +97,10 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi viidessä kohdassa
-(sisällytykset, välilehdet ja alertit, ks. kohdat 1, 4, 5, 7 ja 23); jokainen
-uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi seitsemässä kohdassa
+(sisällytykset, välilehdet, alertit, avattavat osiot ja tehtäväkortit, ks.
+kohdat 1, 4, 5, 6, 7, 8 ja 23); jokainen uusi muunnos kuuluu perustella samalla
+tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
 (siellä hakemisto on nimeltään `mkdocs-spike/`):
@@ -117,7 +118,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 3  | ` ```java ` ajonappi (playground)            | 231                       | puuttuu — `.ignore`/`.noplayground` säilyy nyt luokkana, ks. kohta 4                                               |
 | 4  | ` ```java,ignore` / `,noplayground`          | 289                       | **tehty** — attribuutit luokiksi (`{ .java .ignore }`), korostus palasi                                            |
 | 5  | `// FILE:` monitiedostolohkot                | 73 lohkoa / 194 tiedostoa | **tehty** — `pymdownx.tabbed`, tiedosto per välilehti                                                              |
-| 6  | `<task>` / `<points>` / `<handout>`          | 507                       | rikki — 501 tagia menee HTML:ään tyylittöminä                                                                      |
+| 6  | `<task>` / `<points>` / `<handout>`          | 507                       | **tehty** — `convert_tasks` + `assets/css/tasks.css`; riippuva numerointi laatikon sijaan                          |
 | 7  | `> [!VINKKI]`-tyyliset alertit               | 75                        | **tehty** — `convert_alerts`; `admonition` on jo Zensicalin oletuslistalla, `mkdocs.yml` ennallaan                 |
 | 8  | `<details>`-lohkot                           | 88                        | **tehty** — `convert_details`; `markdown="1"` avaustagiin, `md_in_html` on jo Zensicalin oletuslistalla           |
 | 9  | `HIGHLIGHT_*_BEGIN/END`                      | 120                       | rikki — merkinnät näkyvät                                                                                          |
@@ -128,7 +129,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | puuttuu — nyt hakemistopolut                                                                                       |
 | 15 | plantuml / bob / mermaid                     | 17 / 8 / 2                | rikki / rikki / puuttuu                                                                                            |
 | 16 | `<asciinema>`-upotukset                      | 13                        | rikki                                                                                                              |
-| 17 | Bootstrap-ikonit `<i class="bi ...">`        | 136                       | puuttuu — ei fonttia                                                                                               |
+| 17 | Bootstrap-ikonit `<i class="bi ...">`        | 136                       | puuttuu — ei fonttia; tehtävien 36 bonustähteä piirtää CSS, ks. kohta 6                                            |
 | 18 | JYU-paletti, kultainen korostus              | 30                        | puuttuu                                                                                                            |
 | 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | —                         | **tehty** — tekijät, lisenssi ja muokkauslinkki; "Ilmoita ongelmasta" puuttuu                                      |
 | 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana, ks. kohta 4                                                             |
@@ -1245,6 +1246,126 @@ Todennettu kolmella tavalla:
   kolme linkkiä ja neljä `<code>`-jaksoa — myös ne kaksi `<https://…>`-linkkiä,
   jotka olivat kadonneet kokonaan. Sivulla `osa1/01-hei-java.md` ei ole enää
   yhtään raakaa Markdown-linkkiä.
+
+### Tehtäväkortit (uusi `assets/css/tasks.css` + 128 riviä `convert.py`:hyn + 1 rivi `mkdocs.yml`:ään)
+
+Tehtävä on kirjassa omia elementtejä, joita HTML ei tunne:
+
+```markdown
+<task>
+  <task-title num="2.1">Kello<points>1 p.</points></task-title>
+  <handout>
+
+  {{#include ../exercises/2-1-kello/handout.md}}
+
+  </handout>
+  <task-link><a href="...">Tee tehtävä TIMissä</a></task-link>
+</task>
+```
+
+Kirjassa ne tyylitetään sellaisenaan — `theme/tasks.css` osoittaa suoraan
+tageihin, ja selain tyylittää tuntemattomankin elementin — mutta täällä ne
+eivät kelvanneet. Python-Markdown tunnistaa HTML-lohkon tagin nimestä
+(`markdown.util.BLOCK_LEVEL_ELEMENTS`), eikä `<task>` ole listalla: koko
+kortti jäi kappaleen sisään muotoon `<p><task> … <handout></p>` ja
+tehtävänannon Markdown jäsentyi väärään paikkaan. Samasta syystä `md_in_html`
+ei olisi käsitellyt lohkon sisältöä, vaikka tageihin olisi lisännyt
+`markdown`-attribuutin. Kortti on siis käännettävä diveiksi.
+
+```html
+<div class="task" markdown="1">
+
+<div class="task-head"><span class="task-num">2.1</span><span class="task-name">Kello</span><span class="task-points">1 p.</span></div>
+
+<div class="task-handout" markdown="1">
+
+Tee luokka `Kello`…
+
+</div>
+
+<div class="task-link"><a href="...">Tee tehtävä TIMissä</a></div>
+
+</div>
+```
+
+**`mkdocs.yml`:ään tuli yksi rivi** (`assets/css/tasks.css`), ei muuta:
+`md_in_html` on jo `DEFAULT_MARKDOWN_EXTENSIONS`-listalla, sama tilanne kuin
+avattavissa osioissa kohdassa 8.
+
+**`markdown="1"` on vain kahdessa paikassa.** Ulommassa divissä siksi, että
+`md_in_html` ei etene sisempiin lohkoihin, jos uloin on käsittelemätöntä
+raakaa HTML:ää; tehtävänannossa siksi, että se on Markdownia. Tunnusrivi ja
+TIM-linkki ovat tekstiä ja valmista HTML:ää, joten ne jäävät ilman. Sisennys
+poistetaan ja jokainen tagirivi erotetaan tyhjällä rivillä: lohkotason HTML
+tunnistetaan vain omana kappaleenaan, ja neljällä välilyönnillä sisennetty
+rivi olisi koodilohko. Aineistossa samoja tageja on neljällä eri
+sisennyssyvyydellä, eli sisennys on lähteessä pelkkää muotoilua.
+
+**Ilme on tarkoituksella eri kuin kirjassa.** mdBookissa kortti on laatikko:
+täytetty numerolaatta otsikkopalkissa, tehtävänanto omalla alueellaan ja
+TIM-nappi alapalkissa. Täällä numero riippuu vasemmassa marginaalissa
+oppikirjan tapaan ja tehtävät erottuvat toisistaan ohuella viivalla. Syitä on
+kaksi: tehtävänanto kulkee samalla palstalla kuin luvun muu teksti, joten
+koodilohkot saavat täyden leveyden (43 tehtävänannossa on koodiaita), ja osan
+tehtäväsivulla tehtäviä on 8–12 peräkkäin, jolloin yhtä monta laatikkoa
+peräkkäin on raskas sivu. Peräkkäiset tehtävät ovat yhtä kaistaa: alempi
+kortti kumoaa ylemmän alamarginaalin negatiivisella ylämarginaalilla ja jättää
+yläviivan pois, joten viivoja on tasan yksi kahden tehtävän välissä.
+
+**Kapean palstan säännöt ovat container- eivätkä media-kyselyitä.** Kortti on
+itse kyselysäiliö (`container-type: inline-size`), joten mitta on
+artikkelipalstan leveys eikä ikkunan: sama sääntö osuu myös silloin kun ikkuna
+on jaettu tai kun sivu tulostetaan. Kapea on perustila ja leveä lisäys, joten
+selain joka ei tunne `@containeria` piirtää kortin kapeana eikä rikkinäisenä.
+Säiliöksi valittiin kortti eikä `.md-content__inner`, koska `container-type`
+tekee elementistä sijoituksen sisältävän lohkon absoluuttisesti sijoitetuille
+jälkeläisille — omalle kortille se on turvallista, koko artikkelille ei.
+
+**Bonustähti ei tarvinnut ikonifonttia.** Lähteessä se on `<i class="bi
+bi-stars">`, ja Bootstrap Iconsia ei ladata (kohta 17). Muunnos poimii tagista
+vain tiedon "tämä on bonus" ja kirjoittaa nimen sisään liuskan
+`<span class="task-bonus">Bonus</span>`; tähden piirtää tyyli `::before`-
+sisältönä, eli se ei päädy ruudunlukijalle eikä sivun hakuun. Liuska jää nimen
+*sisälle* kuten lähteessäkin, jolloin se seuraa nimen viimeistä sanaa myös
+silloin kun nimi rivittyy. `vertical-align: middle` on siinä välttämätön eikä
+kosmeettinen: `inline-flex`-laatikolla, jonka oma `align-items` on `center`,
+ei ole tekstin peruslinjaa, jolloin selain synnyttää sen laatikon alareunasta
+ja tunnusrivin `align-items: baseline` kohdistaisi liuskan *alareunan* otsikon
+peruslinjaan.
+
+**Värit tulevat `--md-typeset-a-color`-muuttujasta**, eli samasta jolla teema
+piirtää linkit. Se on ainoa Materialin muuttuja, joka on molemmissa teemoissa
+oikea: vaaleassa se on indigo `#4051b5`, tummassa teema vaihtaa sen
+vaaleampaan `#5488e8`:aan. `--md-primary-fg-color` olisi molemmissa sama tumma
+indigo eli tummassa teemassa lukukelvoton. Erotinviiva on
+`--md-default-fg-color--lightest` `.05rem`:n paksuisena, tasan se mitä teema
+käyttää `<hr>`:ssä. Bonuskullalle ei ole teeman muuttujaa, koska JYU-paletti on
+kokonaan tekemättä (kohta 18): mdBookin `.jyu-gold` `#C29A5B` on valkoista
+vasten kontrastiltaan 2,4:1, eli liian vähän pienelle tekstille, joten liuska
+käyttää siitä tummennettua (4,7:1) ja tummassa teemassa vaalennettua sävyä.
+
+Todennettu neljällä tavalla:
+
+- **Jokainen kortti muuntui:** ajossa 169 korttia, tasan yhtä monta kuin
+  lähdepuussa on `<task>`-tagia, ja niistä 36 bonuksena. `docs/`:ssä ei ole
+  enää yhtään `<task>`-, `<points>`-, `<handout>`- tai
+  `<task-link>`-tagia.
+- **Käännöksen varoitukset eivät muuttuneet:** 16 ennen ja jälkeen.
+- **Testit:** 82 läpi, joista seitsemän uutta `test_convert.py`:ssä.
+  Koekirjaan (`tests/book`) lisättiin kaksi tehtävää, joista toinen bonus ja
+  avattava lohko tehtävänannossa.
+- **Selaimessa mitattuna** (`osa1/05-tehtavat`, tehtävä 1.7): 835 px:n
+  palstalla numero on kohdassa 324 px ja nimi, tehtävänanto ja TIM-linkki
+  kaikki kohdassa 436 px, eli sisennys on tasan 5,6 rem; 353 px:n palstalla
+  numero on nimen edessä kohdassa 16 px eikä sisennystä ole. Kahden peräkkäisen
+  tehtävän väli on 0 px ja alemman yläviiva 0 px, eli kaista on yhtenäinen.
+  Numeron väri on `rgb(64, 81, 181)` vaaleassa ja `rgb(84, 136, 232)`
+  tummassa.
+
+Kohta 17 kutistui samalla: 136 Bootstrap-ikonista 36 oli tehtävien
+bonustähtiä, eivätkä ne enää tarvitse fonttia. Loput 100 odottavat yhä omaa
+ratkaisuaan: 45 `bi-chevron-right` valikkomaisissa linkeissä, 30
+`bi-stars jyu-gold` avattavien lohkojen `<summary>`-riveillä ja 25 muuta.
 
 ## Mitattu ensimmäisestä ajosta
 

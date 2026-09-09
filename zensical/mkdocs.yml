@@ -120,6 +120,12 @@ extra_css:
   # mukanaan kirjasimet, kuvakkeet ja koko teeman välistykset).
   - assets/css/admonitions.css
 
+  # Tehtäväkortit. Omana tiedostonaan samasta syystä kuin admonitions.css:
+  # yhden komponentin tyyli, ei sivun asettelua. Ilme on tarkoituksella eri
+  # kuin kirjan laatikko (theme/tasks.css); perustelu on tiedoston alussa.
+  # Merkkauksen kääntää convert.py: convert_tasks.
+  - assets/css/tasks.css
+
   - assets/css/print.css
 
 # Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut
