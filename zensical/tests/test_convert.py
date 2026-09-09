@@ -108,14 +108,14 @@ def test_fence_info(info, expected):
 
 def test_convert_fences_rewrites_opening_fence():
     text = "```java,ignore\nkoodi\n```\n"
-    converted, fences = convert.convert_fences(text)
+    converted, fences, hidden = convert.convert_fences(text)
     assert converted == "```{ .java .ignore }\nkoodi\n```\n"
-    assert fences == 1
+    assert (fences, hidden) == (1, 0)
 
 
 def test_convert_fences_keeps_indent_and_quote():
     """Sisennetty ja lainauslohkon sisällä oleva aita: rivin alku ennallaan."""
-    converted, fences = convert.convert_fences("> ```java,ignore\n> x\n> ```\n")
+    converted, fences, _ = convert.convert_fences("> ```java,ignore\n> x\n> ```\n")
     assert converted.startswith("> ```{ .java .ignore }")
     assert fences == 1
 
@@ -124,9 +124,68 @@ def test_convert_fences_ignores_fences_inside_code():
     """Aidat käydään pareittain, jottei koodilohkon sisällä oleva
     aidannäköinen rivi muutu vahingossa."""
     text = "````text\n```java,ignore\n````\n"
-    converted, fences = convert.convert_fences(text)
+    converted, fences, hidden = convert.convert_fences(text)
     assert converted == text
-    assert fences == 0
+    assert (fences, hidden) == (0, 0)
+
+
+# --- Piilorivit (README kohta 2) ---------------------------------------------
+
+def test_hide_lines_strips_the_prefix_and_numbers_the_lines():
+    """Etuliite pois ja rivinumerot talteen: piilottaminen itse tapahtuu vasta
+    selaimessa, koska Markdownissa ei ole tapaa merkitä yksittäistä riviä."""
+    assert convert.hide_lines(["//-void main() {", "koodi;", "//-}"], "java") == (
+        ["void main() {", "koodi;", "}"], [1, 3])
+
+
+def test_hide_lines_keeps_the_rest_of_the_line_as_it_is():
+    """Vain etuliite lähtee: rivin sisennys ja etuliitteen jälkeinen väli
+    jäävät, kuten mdBookissa (todennettu book/:n HTML:stä)."""
+    assert convert.hide_lines(["    //-  IO.println(x);"], "java")[0] == [
+        "      IO.println(x);"]
+
+
+def test_hide_lines_keeps_the_quote_marker():
+    """Kolme piilorivilohkoa on alertin sisällä, jossa jokaisella rivillä on
+    ">"-etuliite: convert_alerts purkaa lainauksen vasta myöhemmin, joten
+    etuliite on kirjoitettava takaisin."""
+    assert convert.hide_lines(["> //-void main() {"], "java") == (
+        ["> void main() {"], [1])
+
+
+def test_hide_lines_numbers_from_the_rendered_body():
+    """Markdown pudottaa aidan alusta ja lopusta tyhjät rivit, joten numerointi
+    alkaa ensimmäisestä rivistä, jossa on jotain. Lainauslohkossa (alertti)
+    tyhjä rivi on "> "."""
+    assert convert.hide_lines(["", "> ", "//-a", "b", ""], "java")[1] == [1]
+
+
+def test_hide_lines_only_touches_languages_with_a_prefix():
+    """Etuliite on book.tomlissa määritelty javalle ja javascriptille. Muissa
+    kielissä sama merkkijono on tavallista tekstiä."""
+    assert convert.hide_lines(["//-x"], "text") == (["//-x"], [])
+    assert convert.hide_lines(["//-x"], "javascript") == (["x"], [1])
+
+
+def test_convert_fences_hides_lines_and_writes_their_numbers():
+    """Aita ilman määreitäkin kirjoitetaan uusiksi, jos siinä on piilorivejä:
+    numerot tarvitaan attribuuttiin."""
+    text = "```java\n//-void main() {\nkoodi;\n//-}\n```\n"
+    converted, fences, hidden = convert.convert_fences(text)
+    assert converted == (
+        '```{ .java data-hidden="1 3" }\n'
+        "void main() {\n"
+        "koodi;\n"
+        "}\n"
+        "```\n")
+    assert (fences, hidden) == (1, 1)
+
+
+def test_convert_fences_leaves_finished_fences_alone():
+    """convert_files kirjoittaa aitansa valmiiksi ja käsittelee omat
+    piilorivinsä itse, joten samaa runkoa ei käsitellä kahdesti."""
+    text = '```{ .java .multifile }\n//-x\n```\n'
+    assert convert.convert_fences(text) == (text, 0, 0)
 
 
 # --- Monitiedostolohkot (README kohta 5) -------------------------------------
@@ -154,37 +213,63 @@ def test_split_files_without_markers():
 
 def test_convert_files_makes_one_tab_per_file():
     text = "```java,ignore\n// FILE: A.java\na\n// FILE: B.java\nb\n```\n"
-    converted, blocks, files = convert.convert_files(text)
-    assert (blocks, files) == (1, 2)
+    converted, blocks, files, hidden = convert.convert_files(text)
+    assert (blocks, files, hidden) == (1, 2, 0)
     # Jokainen tiedosto omaksi välilehdekseen ja omaksi koodiaidakseen,
-    # alkuperäisen aidan määreineen.
+    # alkuperäisen aidan määreineen ja multifile-merkinnällä (ajonappi, kohta 3).
     assert converted == (
         '=== "A.java"\n'
         "\n"
-        "    ```{ .java .ignore }\n"
+        "    ```{ .java .ignore .multifile }\n"
         "    a\n"
         "    ```\n"
         "\n"
         '=== "B.java"\n'
         "\n"
-        "    ```{ .java .ignore }\n"
+        "    ```{ .java .ignore .multifile }\n"
         "    b\n"
         "    ```\n"
         "\n"
     )
 
 
+def test_convert_files_marks_files_for_the_run_button():
+    """Ajonappi lähettää joukon tiedostot yhtenä ohjelmana, joten aidoissa on
+    oltava tieto siitä, että ne ovat saman lohkon tiedostoja."""
+    text = "```java\n// FILE: A.java\na\n```\n"
+    converted, *_ = convert.convert_files(text)
+    assert "```{ .java .multifile }" in converted
+
+
+def test_convert_files_leaves_language_less_block_without_marker():
+    """Kielettömässä lohkossa (aineiston .fxml) määre katoaa kielen mukana:
+    ilman kieltä ei ole ajonappia eikä siis merkinnälle käyttöä."""
+    text = "```\n// FILE: A.fxml\na\n```\n"
+    converted, *_ = convert.convert_files(text)
+    assert "    ```\n" in converted
+    assert "multifile" not in converted
+
+
+def test_convert_files_hides_lines_file_by_file():
+    """Rivinumerot lasketaan sen aidan sisällä, jossa rivi lopulta on: toisen
+    tiedoston piilorivi on sen oma rivi 1 eikä koko lohkon rivi 4."""
+    text = "```java\n// FILE: A.java\na\n// FILE: B.java\n//-b\n```\n"
+    converted, _, _, hidden = convert.convert_files(text)
+    assert "    ```{ .java .multifile }\n    a\n" in converted
+    assert '    ```{ .java .multifile data-hidden="1" }\n    b\n' in converted
+    assert hidden == 1
+
+
 def test_convert_files_leaves_ordinary_block_alone():
     text = "```java\nkoodi\n```\n"
-    assert convert.convert_files(text) == (text, 0, 0)
+    assert convert.convert_files(text) == (text, 0, 0, 0)
 
 
 def test_convert_files_warns_instead_of_dropping_code(capsys):
     """Koodi ennen ensimmäistä merkintää: lohko jätetään ennalleen ja siitä
     varoitetaan, koska muunnos pudottaisi rivit hiljaisesti pois."""
     text = "```java\nirrallinen\n// FILE: A.java\na\n```\n"
-    converted, blocks, files = convert.convert_files(text)
-    assert (converted, blocks, files) == (text, 0, 0)
+    assert convert.convert_files(text) == (text, 0, 0, 0)
     assert "koodia ennen ensimmäistä" in capsys.readouterr().err
 
 

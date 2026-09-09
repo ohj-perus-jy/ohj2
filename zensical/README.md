@@ -28,7 +28,7 @@ uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 101 testiä
+./zensical/run.sh test                        # kaikki, 134 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -43,6 +43,8 @@ Kerroksia on kolme, koska rikkoutumisia on kolmea lajia:
 | ----------------------- | ------------------------------------------------------------- | ---------- |
 | `tests/test_convert.py` | `convert.py`:n muunnokset yksin: ei käännöstä eikä selainta   | 0,2 s      |
 | `tests/test_print.py`   | tulostussivun kokoaminen selaimessa, koekirjalla              | 6 s        |
+| `tests/test_playground.py` | ajonapit koekirjalla, suorituspalvelin korvattuna          | 16 s       |
+| `tests/test_hidelines.py` | piilorivit ja silmänappi koekirjalla                       | 2 s        |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
@@ -97,10 +99,10 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi yhdeksässä kohdassa
-(sisällytykset, välilehdet, alertit, avattavat osiot, tehtäväkortit,
-vaatimuslohkot ja kaaviot, ks. kohdat 1, 4, 5, 6, 7, 8, 15, 23 ja 25); jokainen
-uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi kymmenessä kohdassa
+(sisällytykset, piilorivit, välilehdet, alertit, avattavat osiot, tehtäväkortit,
+vaatimuslohkot ja kaaviot, ks. kohdat 1, 2, 4, 5, 6, 7, 8, 15, 23 ja 25);
+jokainen uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
 (siellä hakemisto on nimeltään `mkdocs-spike/`):
@@ -114,8 +116,8 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | #  | mdBookin ominaisuus                          | Esiintymiä                | Tila nyt                                                                                                           |
 | -- | -------------------------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | 1  | `{{#include tiedosto}}`                      | 194                       | **tehty** — `convert_includes`; 4 makroa jää näkyviin, kohde puuttuu aineistosta                                   |
-| 2  | `//-` piilorivit                             | 1094                      | rikki — rivit näkyvät                                                                                              |
-| 3  | ` ```java ` ajonappi (playground)            | 231                       | puuttuu — `.ignore`/`.noplayground` säilyy nyt luokkana, ks. kohta 4                                               |
+| 2  | `//-` piilorivit                             | 1103                      | **tehty** — `hide_lines` + `assets/js/hidelines.js`; rivit piiloon ja silmänappi, ajoon ne menevät yhä               |
+| 3  | ` ```java ` ajonappi (playground)            | 231                       | **tehty** — `assets/js/playground.js`; sama palvelin ja sama pyyntö kuin mdBookissa, monitiedostolohkot mukaan lukien |
 | 4  | ` ```java,ignore` / `,noplayground`          | 289                       | **tehty** — attribuutit luokiksi (`{ .java .ignore }`), korostus palasi                                            |
 | 5  | `// FILE:` monitiedostolohkot                | 73 lohkoa / 194 tiedostoa | **tehty** — `pymdownx.tabbed`, tiedosto per välilehti                                                              |
 | 6  | `<task>` / `<points>` / `<handout>`          | 507                       | **tehty** — `convert_tasks` + `assets/css/tasks.css`; riippuva numerointi laatikon sijaan                          |
@@ -132,7 +134,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 17 | Bootstrap-ikonit `<i class="bi ...">`        | 136                       | puuttuu — ei fonttia; tehtävien 36 bonustähteä piirtää CSS, ks. kohta 6                                            |
 | 18 | JYU-paletti, kultainen korostus              | 30                        | puuttuu                                                                                                            |
 | 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | —                         | **tehty** — tekijät, lisenssi ja muokkauslinkki; "Ilmoita ongelmasta" puuttuu                                      |
-| 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana, ks. kohta 4                                                             |
+| 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana; ajonappi ajaa lohkon sellaisenaan, ks. kohdat 3 ja 4                     |
 | 21 | KaTeX                                        | 0                         | voi jättää pois                                                                                                    |
 | 22 | Edellinen/seuraava sivun alareunassa         | joka sivu                 | **tehty** — `navigation.footer`                                                                                    |
 | 23 | `### [Windows](#tab/win)`-välilehdet         | 33 lohkoa / 9 joukkoa     | **tehty** — `pymdownx.tabbed` + `content.tabs.link`                                                                |
@@ -140,9 +142,13 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 25 | `<div class="ht-reqs">` vaatimuslohkot       | 9                         | **tehty** — `convert_divs` + `assets/css/requirements.css`; numerointi 1.1, 1.2, ... CSS-laskurista               |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
-haun, kopioi koodi -napin ja responsiivisen navigaation. Edellinen/seuraava
--linkit ja alatunnisteen se osaa myös, mutta ne ovat oletuksena pois päältä;
-ks. kohdat 19 ja 22.
+haun ja responsiivisen navigaation. Edellinen/seuraava -linkit ja alatunnisteen
+se osaa myös, mutta ne ovat oletuksena pois päältä; ks. kohdat 19 ja 22. Samaan
+joukkoon kuuluu **kopioi koodi -nappi**, joka mdBookissa on jokaisessa
+koodilohkossa: teemalla on siihen valmis ominaisuus (`content.code.copy`), mutta
+se on oletuksena pois päältä eikä sitä ole otettu käyttöön, joten sivustolla ei
+tällä hetkellä ole kopiointinappia lainkaan. Yksi rivi `mkdocs.yml`:ään riittää,
+jos se halutaan.
 
 ## Tehdyt kohdat
 
@@ -831,16 +837,20 @@ välilehti, koodi omana aitanaan.
 ````markdown
 === "main.java"
 
-    ```java
+    ```{ .java .multifile }
     public class Main { ... }
     ```
 
 === "Valo.java"
 
-    ```java
+    ```{ .java .multifile }
     public class Valo extends Laite { ... }
     ```
 ````
+
+Aidan `multifile`-määre tuli mukaan vasta kohdan 3 kanssa: ajonappi lähettää
+joukon tiedostot yhtenä ohjelmana, ja siihen tarvitaan tieto siitä, mitkä
+välilehtijoukot ovat tiedostoja ja mitkä käyttöjärjestelmiä (kohta 23).
 
 Omaa CSS:ää tai JavaScriptiä ei tarvittu riviäkään: välilehdet, Pygmentsin
 korostus ja kopiointinappi tulevat teemalta. Myös tulostus tulee valmiina
@@ -1686,6 +1696,215 @@ Mitä ei tullut: **mermaid ei piirry tulostussivulle.** Teema piirtää mermaidi
 sivun latautuessa, ja `print.js` liittää luvut sivulle vasta sen jälkeen, joten
 kirjan kahdesta mermaid-kaaviosta jää PDF:ään lähdeteksti. Luokkakaaviot ja
 ascii-kaaviot tulostuvat oikein, koska ne ovat valmiina HTML:ssä.
+
+### Java-ohjelmien ajonapit (uusi `assets/js/playground.js` + uusi `assets/css/playground.css` + 2 riviä `mkdocs.yml`:ään + 1 rivi `convert.py`:hyn)
+
+Kirjan koodiesimerkit ovat ajettavia. mdBookissa jokainen ` ```java `-lohko,
+jossa ei ole määrettä `ignore` eikä `noplayground`, saa oikeaan yläkulmaan
+nuolinapin: se lähettää lohkon koodin JYU:n suorituspalvelimelle ja näyttää
+tulosteen koodin alle (`theme/playground_ext.js`). Palvelin on sama ja pyyntö
+kenttä kentältä sama, joten kirjan ohjelmat ajetaan täsmälleen kuten ennenkin:
+
+```json
+{ "language": "java", "code": "void main() { ... }", "multifile": false }
+```
+
+Tämä on kohdista se, jota teema ei voi antaa: koodin ajaminen ei ole teeman
+ominaisuus vaan JYU:n oman palvelimen varassa. Kaikki muu kuin ajaminen tulee
+silti teemalta.
+
+* **Nappi** on teeman oma koodilohkon nappi (`nav.md-code__nav` >
+  `button.md-code__button`, samat luokat kuin kopiointi- ja valintanapissa),
+  joten paikka, koko, värit ja hover-käytös tulevat teeman CSS:stä. Nappirivin
+  teema tekee itse vain, jos jompikumpi noista ominaisuuksista on päällä —
+  kumpikaan ei ole — joten `playground.js` tekee rivin samannimisenä ja samaan
+  paikkaan kuin teema sen tekisi (`pre`:n sisään ennen koodia). Jos napit joskus
+  otetaan käyttöön, se käyttää valmista riviä eikä tee omaansa.
+* **Tuloste** on tavallinen koodilohko (`div.highlight`), eli teema piirtää sen
+  samalla taustalla, kirjasimella ja reunoilla kuin koodin, ja pitkä rivi vierii
+  lohkon sisällä. Väli koodin ja tulosteen välillä on mitattuna 15 px,
+  mdBookissa 10 px (`theme/css/chrome.css`: `pre > .result`). Toinen ajo korvaa
+  saman lohkon tulosteen eikä kasvata sivua uudella laatikolla.
+* **Monitiedostolohkon välilehdet** ovat teeman välilehtiä (kohta 5), joista
+  koodit luetaan sellaisinaan.
+
+Omaa CSS:ää on siksi vain kuvake, jota teemalla ei ole, ja kolme yksityiskohtaa:
+odottavan napin himmennys, tyhjän tulosteen kursiivi (mdBookin
+`.result-no-output`) ja nappirivin piilotus paperilta. Kokeiltu myös oma
+marginaali tulosteelle — se ei tee mitään, koska koodilohkon oma alamarginaali
+on suurempi.
+
+**Monitiedostolohko ajetaan yhtenä ohjelmana**, kuten mdBookissa: kaikkien
+välilehtien koodit lähtevät yhdessä hakemistona `{"main.java": "...",
+"Valo.java": "..."}` ja `multifile: true`, ja tuloste tulee koko joukon alle
+eikä yhden välilehden. Tieto siitä, mitkä välilehtijoukot ovat tiedostoja, ei
+ole arvattavissa sivulta: samannäköisiä joukkoja ovat myös käyttöjärjestelmien
+välilehdet (kohta 23), joissa jokainen lohko on oma ohjelmansa. Siksi merkintä
+tehdään siellä, missä asia tiedetään — `convert_files` kirjoittaa jokaisen
+tiedoston aitaan määreen `multifile`, joka päätyy luokaksi lohkon diviin. Se on
+yksi rivi `convert.py`:hyn ja sama tapa kuin kohdassa 4: määre ei katoa vaan
+muuttuu luokaksi.
+
+**Piilorivit lähtevät ajoon siinä missä muutkin.** Aineiston ` ```java `
+-lohkoista 97:ssä 231:stä on `//-`-alkuisia rivejä, joissa on ohjelman runko:
+usein juuri `void main() {` ja sen sulkeva aaltosulje. Ne ovat lohkon HTML:ssä
+tallessa, vaikka CSS piilottaa ne (kohta 2), eikä `textContent` välitä
+näkyvyydestä — sama tapa kuin mdBookissa. Etuliite on riisuttu jo
+käännösaikana, joten napin ei tarvitse tietää piiloriveistä mitään.
+
+Todennettu selaimella koko kirjalla ja rinnakkain mdBookin kanssa:
+
+- **338 nappia 65 sivulla.** Jokaisella ajettavalla lohkolla on tasan yksi
+  nappi eikä yhdelläkään muulla ole nappia. Yksikään sivu ei tuottanut
+  JavaScript-virhettä, ja konsoliin jäi vain kaksi tunnettua 404:ää samasta
+  puuttuvasta kuvasta (`osa4/images/adventure.png`, ks. "Testit").
+  Lähdepuun 231 aitaa (+ 1 javascript) kasvaa tähän kahdesta
+  syystä: sisällytykset tuovat saman tehtävänannon monelle sivulle (kohta 1), ja
+  yksi monitiedostoaita on sivulla monta lohkoa — 149 lohkoa 338:sta on 52
+  monitiedostojoukon välilehtiä.
+- **Sama sivu, sama määrä kuin mdBookissa:** `osa1/02-muuttujat-ja-tietotyypit`
+  25 nappia molemmissa.
+- **Sama tuloste kuin mdBookissa:** `osa1/02`:n piilorivinen lohko antaa
+  molemmissa `korkokerroin = 0.05` ja `paaoma = 0.05`. `osa3/03`:n viiden
+  tiedoston joukko ajettiin täällä ja tulosti `Valon kirkkaus on 50%.`,
+  `Turvakameran tallennus on päällä.`, `Kahvinkeittimen pannu on päällä.`
+- **Kestot palvelimelta mitattuna:** tuore ohjelma kääntyy ja ajetaan 2,5-3,4
+  sekunnissa, sama koodi uudelleen 0,07 sekunnissa (palvelin muistaa tuloksen).
+  Raja on mdBookin 6 s. Se pysyy mdBookin arvona, mutta ero on hyvä tietää:
+  raskaampi ohjelma voi osua rajaan.
+- **Paperilla** nappirivi on `display: none` ja tuloste jää näkyviin.
+
+Kaksi eroa mdBookin koneistoon, molemmat tarkoituksellisia: nappi on ajon ajan
+poissa käytöstä (mdBookissa saman ohjelman voi lähettää monta kertaa
+peräkkäin), ja vastaamatta jäänyt pyyntö katkaistaan `AbortController`illa
+(mdBook lopettaa odottamisen mutta jättää pyynnön käyntiin).
+
+Erot mdBookiin, jotka jäävät:
+
+* **Editoitavat lohkot eivät ole editoitavia** (kohta 20, 2 lohkoa): nappi ajaa
+  sen koodin, joka sivulla lukee.
+* **Kuvia tulosteessa ei tueta.** mdBookin `playground_ext.js` osaa poimia
+  tulosteesta `@@@DATA_URI_BEGIN@@@`-merkinnät ja tehdä niistä kuvia. Ne
+  liittyvät `feature-`-määreisiin lohkoihin, joita aineistossa ei ole yhtään, ja
+  kokeiltuna palvelin ei palauttanut merkintöjä png-tiedoston kirjoittavalle
+  ohjelmallekaan, joten koodia ei kirjoitettu tapaukseen jota ei ole.
+* **Tulostussivulle ei tule ajonappeja.** `print.js` hakee luvut vasta sivun
+  latauduttua, eikä paperille menevässä kirjassa ajonapista olisi hyötyä.
+  (Silmänappi sen sijaan tulee, koska piilorivit on siellä joka tapauksessa
+  piilotettava, ks. kohta 2.)
+* **Napin tekstit ovat suomeksi** ("Suorita ohjelma", "Suoritetaan…", "Ei
+  tulostetta"), koska sivuston kieli on suomi; mdBookissa ne ovat playgroundin
+  englanninkielisiä oletuksia.
+
+**Testit 120, ennen 107** (kohta 2 nosti luvun myöhemmin 134:ään). Uusia
+kolmetoista: yksitoista uudessa `test_playground.py`:ssä ja kaksi
+`test_convert.py`:hyn (monitiedostoaidan merkintä, ja se että kielettömästä
+aidasta merkintä jää pois kielen mukana).
+Uudet testit eivät kutsu suorituspalvelinta vaan vastaavat pyyntöön itse, eli
+ne mittaavat sitä mitä selain lähettää ja mitä se vastauksesta näyttää — myös
+tyhjän tulosteen, kääntäjän virheilmoituksen, katkenneen yhteyden ja
+vastaamatta jäämisen. Koekirjaan tuli kolme lohkoa (ajettava lohko
+piiloriveineen, `noplayground`-lohko ja ajettava monitiedostolohko), minkä takia
+`test_print.py`:n välilehtijoukkojen määrä nousi kahdesta kolmeen.
+
+### Piilorivit ja silmänappi (uusi `assets/js/hidelines.js` + uusi `assets/css/hidelines.css` + ~50 riviä `convert.py`:hyn + 2 riviä `mkdocs.yml`:ään + 4 riviä `print.js`:ään)
+
+Kirjan koodiesimerkeissä on rivejä, jotka kuuluvat ohjelmaan muttei sivulle.
+`//-`-alkuinen rivi on mdBookissa piilossa, ja lohkon silmänapista sen saa
+esiin (`book.toml`: `[output.html.code.hidelines] java = "//-"`). Piilossa on
+useimmiten juuri ohjelman runko — `void main() {` ja sen sulkeva aaltosulje —
+jotta esimerkissä näkyisi vain se, mistä on kyse, mutta ajonappi (kohta 3)
+saisi silti kokonaisen ohjelman. Mitattuna lähdepuussa **1103 riviä 135
+lohkossa**; tarkistuslistan aiempi luku 1094 jätti laskematta yhdeksän riviä,
+jotka ovat kolmessa alertin sisällä olevassa lohkossa.
+
+Työ jakautuu kahtia samalla tavalla kuin mdBookissa:
+
+* **`convert.py` (`hide_lines`)** riisuu etuliitteen ja kirjoittaa piilorivien
+  numerot aidan attribuutiksi: ` ```{ .java data-hidden="1 7 8 9" } `.
+  Etuliite lähtee jo käännöksessä kahdesta syystä. Rivi on ohjelmassa mukana,
+  ja `//-` tekisi siitä kommentin — 97 lohkoa 231:stä ei kääntyisi. Ja korostus
+  menisi väärin: koko rivi olisi Pygmentsille kommenttia, joten esiin otettuna
+  se olisi harmaata kommenttitekstiä eikä koodia. mdBook tekee saman ennen
+  korostusta ja kääri rivin `<span class="boring">`iin.
+* **`assets/js/hidelines.js`** merkitsee numeroita vastaavat rivit, piilottaa ne
+  ja lisää lohkoon silmänapin. Rivit ovat Pygmentsin rivispaneja (Zensicalin
+  oletus `line_spans`), eli merkitseminen on `code`:n suorien span-lasten
+  läpikäynti. Selain on ainoa paikka, jossa tämä voi tapahtua: Markdownissa ei
+  ole tapaa merkitä yksittäistä koodiriviä, eikä CSS osaa valita riviä
+  numerolistan perusteella.
+
+Nappi on sama teeman nappi kuin ajonapissa ja samassa rivissä sen kanssa
+(kirjassa ne ovat samassa `.buttons`-rivissä). Piilotus itse on kaksi
+CSS-sääntöä: rivi on sivun HTML:ssä tallessa myös piilotettuna — ajonappi
+lähettää sen ja kopiointi kopioisi sen — ja vain näkyminen on kiinni luokasta.
+Esiin otettuna rivi jää himmeäksi (`opacity: 0.6`), kuten mdBookissa, jolloin
+näkee mikä oli piilossa.
+
+**Numerointi oli koko tehtävän ainoa mutka, ja se meni kahdesti pieleen ennen
+kuin meni oikein.** Ensimmäinen versio numeroi aidan rungon sellaisenaan ja
+tunnisti etuliitteen vain rivin alusta. Molemmat kaatuivat samaan kolmeen
+lohkoon (`osa1/02`, alertin sisällä):
+
+* Aita alkaa niissä kahdella tyhjällä rivillä, ja **Markdown pudottaa aidan
+  alusta ja lopusta tyhjät rivit**. Numerot olivat siis kaksi liikaa, ja
+  piilotus osui vääriin riveihin. Nyt numerot lasketaan siitä rungosta, joka
+  lopulta piirretään.
+* Lohkot ovat lainauslohkon sisällä, eli jokaisen rivin alussa on vielä ">"
+  (`convert_alerts` purkaa lainauksen vasta myöhemmin). Etuliitteen tunnistus
+  sallii nyt lainausmerkin ja kirjoittaa sen takaisin.
+
+Kumpikin näkyi heti: yhdeksän `//-`-riviä jäi sivulle näkyviin ja kolmessa
+lohkossa piilotus osui väärään riviin. Molemmat ovat nyt myös testeissä.
+
+**Monitiedostolohkot käsittelee `convert_files`** omine aitoineen (kohta 5),
+koska rivinumerot lasketaan sen aidan sisällä, jossa rivi lopulta on:
+yhdeksässä monitiedostolohkossa on piilorivejä, ja niissä jokainen tiedosto saa
+omat numeronsa.
+
+**Tulostussivu tarvitsi oman kytkennän.** `print.js` hakee luvut vasta sivun
+latauduttua, joten `hidelines.js` ei ole nähnyt niitä sivun latautuessa — ilman
+mitään piilorivit tulostuisivat kirjan mukana. Kokoamisen jälkeen `print.js`
+lähettää tapahtuman (`jyu-print-assembled`), jota `hidelines.js` kuuntelee;
+kumpikaan ei tiedä toisestaan sen enempää. mdBookissa vastaavaa ei tarvita,
+koska print.html on tavallinen sivu, jolla book.js ajetaan muiden tapaan.
+
+Todennettu vertaamalla mdBookin omaan käännökseen ja selaimella:
+
+- **Samat rivit piilossa kuin kirjassa.** 22:lla sivulla, joista on sekä
+  mdBookin että Zensicalin versio, piilotettujen rivien joukot ovat 17 sivulla
+  merkki merkiltä samat. Viidellä sivulla ero on yhdessä rivissä ja sekin
+  pelkkää tyhjää: mdBook säilyttää rivin, jolla on vain välilyönti, Pygments
+  siivoaa sen.
+- **1103 riviä 142 lohkossa 24 sivulla**, ja jokaisessa lohkossa on silmänappi.
+  Merkittyjä rivejä on tasan yhtä monta kuin numeroita, eikä yksikään numero
+  osoita lohkon ulkopuolelle. Lähdepuun 135 lohkoa kasvaa 142:een, koska
+  yhdeksän monitiedostolohkoa on sivulla kuutenatoista aitana.
+- **Sivuilla ei näy enää yhtään `//-`-riviä**, ja käännöksen varoitukset
+  pysyivät 16:ssa.
+- **Selaimessa:** silmä näyttää rivit ja toinen painallus piilottaa ne, otsikko
+  vaihtuu ("Näytä piilotetut rivit" / "Piilota rivit"), esiin otetut rivit ovat
+  himmeitä ja korostettuja koodina — ja ajonappi lähettää saman ohjelman kuin
+  ennenkin.
+- **Aidan attribuutit 297 -> 389 aitaa.** Numerot saaneita aitoja on 142: 93
+  ilman muita määreitä, 33 `ignore`-määreellä, 14 monitiedostolohkon
+  tiedostoaitaa ja kaksi, joissa on molemmat. Uusiksi kirjoitettavien määrä
+  kasvaa siis 92:lla eikä 93:lla, koska yhdessä lohkossa
+  (`osa6/01-funktiorajapinnat...`) aidan otsikko on ` ```java, ` — tyhjä
+  määrelista, joka on kirjoitettu uusiksi jo ennestään.
+
+Yksi ero mdBookiin jää, ja se on sama molemmissa: **ilman JavaScriptiä rivit
+näkyvät.** Kirjassa ne ovat silloin himmeinä, täällä tavallisina, koska luokan
+lisää kummassakin skripti.
+
+**Testit 134, ennen 120.** Uusia neljätoista: kahdeksan `test_convert.py`:hyn
+(etuliitteen riisuminen, rivin loppu ennallaan, lainausmerkki, numerointi
+piirretystä rungosta, kielet, aita ilman määreitä, valmiiseen aitaan ei
+kosketa, monitiedostolohkon tiedostokohtaiset numerot), viisi uudessa
+`test_hidelines.py`:ssä (rivit ovat sivulla muttei näkyvissä, oikeat rivit
+merkittyinä, silmä näyttää ja piilottaa, silmä vain lohkoihin joissa on
+piilorivejä, molemmat napit samassa rivissä) ja yksi `test_print.py`:hyn:
+piilorivit eivät tulostu kirjan mukana.
 
 ## Mitattu ensimmäisestä ajosta
 

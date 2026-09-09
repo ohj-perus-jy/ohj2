@@ -1,0 +1,48 @@
+/* Ajonapin kuvake ja tuloste, ks. README.md kohta 3 ja assets/js/playground.js.
+ *
+ * Tiedosto on lyhyt tarkoituksella: nappi on teeman oma koodilohkon nappi
+ * (md-code__button) ja tuloste tavallinen koodilohko (div.highlight), joten
+ * paikka, koko, värit, kirjasin ja reunat tulevat teeman CSS:stä. Omaa on
+ * kuvake, jota teemalla ei ole, ja kolme yksityiskohtaa alempana.
+ */
+
+:root {
+  /* Materialin play-kuvake. Teeman napit piirtävät kuvakkeen mask-imagella
+   * (--md-code-copy-icon, --md-code-select-icon), joten tämä on samassa
+   * muodossa: yksivärinen SVG, jonka värin nappi antaa. */
+  --jyu-run-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7z"/></svg>');
+}
+
+.md-code__button[data-md-type="run"]::after {
+  -webkit-mask-image: var(--jyu-run-icon);
+  mask-image: var(--jyu-run-icon);
+}
+
+/* Ajon ajaksi nappi on poissa käytöstä, jottei samaa ohjelmaa lähetetä
+ * kahteen kertaan ennen kuin edellinen vastaus on tullut. Teemalla ei ole
+ * tälle tilalle tyyliä, koska sen omat napit eivät odota mitään. */
+.md-code__button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* Tulosteen ja koodin väliin ei tarvita omaa sääntöä: teeman oma väli
+ * koodilohkojen välillä on mitattuna 15 px ja mdBookin tulosteen väli 10 px
+ * (theme/css/chrome.css: pre > .result). Kokeiltu myös toisin päin — oma
+ * margin-top ei tee mitään, koska edellisen lohkon oma alamarginaali on
+ * suurempi.
+ *
+ * Sama kuin mdBookin .result-no-output: tyhjä tuloste on ohjelman tulos siinä
+ * missä muutkin, mutta kursiivi erottaa sen ohjelman omasta tekstistä. */
+.jyu-result-no-output {
+  font-style: italic;
+}
+
+/* Paperille jää tuloste muttei nappia. Teema tekee saman kopiointinapille
+ * (main.css: @media print { .md-clipboard { display: none } }), mutta
+ * nappirivistä sillä ei ole sääntöä, koska se syntyy vain ruudulla. */
+@media print {
+  .md-code__nav {
+    display: none;
+  }
+}

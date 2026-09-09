@@ -141,6 +141,17 @@ extra_css:
   # komponentin tyyli. Kaaviot itse syntyvät convert.py:ssä, ks. tiedoston alku.
   - assets/css/diagrams.css
 
+  # Ajonapin kuvake ja tuloste. Omana tiedostonaan samasta syystä kuin
+  # edelliset: yhden komponentin tyyli. Nappi ja tuloste syntyvät
+  # assets/js/playground.js:ssä, ks. tiedoston alku.
+  - assets/css/playground.css
+
+  # Piilorivit ja niiden silmänappi. Omana tiedostonaan samasta syystä kuin
+  # edelliset, ja erillään playground.css:stä siksi, että kyse on eri
+  # ominaisuudesta: piilorivit ovat kohta 2, ajonappi kohta 3. Rivien
+  # merkitseminen tapahtuu assets/js/hidelines.js:ssä.
+  - assets/css/hidelines.css
+
   - assets/css/print.css
 
 # Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut
@@ -148,3 +159,13 @@ extra_css:
 extra_javascript:
   - assets/js/nav-scroll.js
   - assets/js/print.js
+
+  # Java-ohjelmien ajonapit. mdBookissa ne tekee theme/playground_ext.js;
+  # Zensicalilla vastinetta ei ole, koska koodin ajaminen on JYU:n oman
+  # suorituspalvelimen varassa eikä teeman ominaisuus. Ks. kohta 3.
+  - assets/js/playground.js
+
+  # Piilorivien piilottaminen ja silmänappi. mdBookissa saman tekee book.js.
+  # Ajonapin jälkeen, jotta nappirivin järjestys on sama kuin kirjassa:
+  # ensin suoritus, sitten silmä. Ks. kohta 2.
+  - assets/js/hidelines.js

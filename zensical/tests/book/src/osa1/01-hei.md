@@ -19,6 +19,29 @@ public class Valo {
 }
 ```
 
+## Ajettava ohjelma
+
+```java
+//-void main() {
+IO.println("Hei, maailma!");
+//-}
+```
+
+## Ohjelma ilman ajonappia
+
+```java,noplayground
+IO.println("Tätä ei voi ajaa.");
+```
+
+## Monta tiedostoa ajettavana
+
+```java
+// FILE: Main.java
+public class Main { }
+// FILE: Valo.java
+public class Valo { }
+```
+
 ## Käyttöjärjestelmävälilehdet
 
 ### [Windows](#tab/win)

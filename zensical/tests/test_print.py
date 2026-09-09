@@ -8,7 +8,8 @@ voi testata käännöksen tuloksesta, vaan sivu on avattava oikeasti.
 Koekirja on tarkoituksella pieni, mutta siinä on yksi esimerkki jokaisesta
 asiasta, joka kokoamisessa voi mennä rikki: sama otsikko kahdessa luvussa
 (tunnisteiden törmäys), kuva alihakemistosta (suhteellinen osoite),
-sivun sisäinen ankkuri, lukujen välinen linkki ja kaksi välilehtijoukkoa.
+sivun sisäinen ankkuri, lukujen välinen linkki ja kolme välilehtijoukkoa
+(käyttöjärjestelmävalinta ja kaksi monitiedostolohkoa).
 Oikealla materiaalilla samat asiat mitataan test_book.py:ssä.
 """
 
@@ -114,7 +115,20 @@ def test_tab_sets_stay_independent(printed):
         .map(input => input.name)).size,
       checked: document.querySelectorAll('.tabbed-set input:checked').length,
     })""")
-    assert tabs == {"sets": 2, "groups": 2, "checked": 2}
+    assert tabs == {"sets": 3, "groups": 3, "checked": 3}
+
+
+def test_hidden_lines_stay_hidden_on_paper(printed):
+    """Piilorivit (kohta 2) piilotetaan selaimessa, ja tulostussivun luvut ovat
+    olemassa vasta kokoamisen jälkeen. Ilman print.js:n ilmoitusta ne
+    tulostuisivat kirjan mukana; mdBookissa print.html on tavallinen sivu,
+    jolla book.js piilottaa ne muiden sivujen tapaan."""
+    assert printed.evaluate(
+        "() => document.querySelectorAll('.boring').length") == 2
+    assert printed.evaluate(
+        "() => document.querySelector('.hide-boring') !== null")
+    assert "void main() {" not in printed.evaluate(
+        "() => document.querySelector('.md-content__inner').innerText")
 
 
 def test_per_page_actions_are_dropped(printed):

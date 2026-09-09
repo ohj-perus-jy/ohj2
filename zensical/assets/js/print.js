@@ -186,6 +186,12 @@
       assembled.append(...chapter.childNodes);
     }
     book.replaceWith(assembled);
+
+    /* Luvut ovat vasta nyt sivulla, joten niitä käsittelevät skriptit eivät
+     * ole nähneet niitä. Piilorivit (assets/js/hidelines.js) kuuntelevat tätä;
+     * ilman sitä ne tulostuisivat kirjan mukana. */
+    dispatchEvent(new Event("jyu-print-assembled"));
+
     say(
       failed.length
         ? `Koottu ${links.length - failed.length}/${links.length} lukua. Jäi hakematta: ${failed.join(", ")}`
