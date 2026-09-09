@@ -28,7 +28,7 @@ uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 71 testiä
+./zensical/run.sh test                        # kaikki, 101 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -97,10 +97,10 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi seitsemässä kohdassa
-(sisällytykset, välilehdet, alertit, avattavat osiot ja tehtäväkortit, ks.
-kohdat 1, 4, 5, 6, 7, 8 ja 23); jokainen uusi muunnos kuuluu perustella samalla
-tavalla kuin muutkin rivit.
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi yhdeksässä kohdassa
+(sisällytykset, välilehdet, alertit, avattavat osiot, tehtäväkortit,
+vaatimuslohkot ja kaaviot, ks. kohdat 1, 4, 5, 6, 7, 8, 15, 23 ja 25); jokainen
+uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
 (siellä hakemisto on nimeltään `mkdocs-spike/`):
@@ -120,14 +120,14 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 5  | `// FILE:` monitiedostolohkot                | 73 lohkoa / 194 tiedostoa | **tehty** — `pymdownx.tabbed`, tiedosto per välilehti                                                              |
 | 6  | `<task>` / `<points>` / `<handout>`          | 507                       | **tehty** — `convert_tasks` + `assets/css/tasks.css`; riippuva numerointi laatikon sijaan                          |
 | 7  | `> [!VINKKI]`-tyyliset alertit               | 75                        | **tehty** — `convert_alerts`; `admonition` on jo Zensicalin oletuslistalla, `mkdocs.yml` ennallaan                 |
-| 8  | `<details>`-lohkot                           | 88                        | **tehty** — `convert_details`; `markdown="1"` avaustagiin, `md_in_html` on jo Zensicalin oletuslistalla           |
+| 8  | `<details>`-lohkot                           | 88 + 6 `<summary>`        | **tehty** — `convert_details`; `markdown="1"` avaustagiin ja `markdown="block"` monirivisiin yhteenvetoihin       |
 | 9  | `HIGHLIGHT_*_BEGIN/END`                      | 120                       | rikki — merkinnät näkyvät                                                                                          |
 | 10 | Lukujen numerointi navigaatiossa             | koko nav                  | **tehty** — `convert.py`, 12 riviä                                                                                 |
 | 11 | Osan etusivu = osan oma linkki navissa       | 13 osaa                   | **tehty** — `navigation.indexes`                                                                                   |
 | 12 | Otsikoiden numerointi sivun sisällä          | —                         | ei ollut mdBookissakaan                                                                                            |
 | 13 | Ääkköset ankkureissa (`#käyttö`)             | —                         | riisutaan (`#kaytto`)                                                                                              |
 | 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | puuttuu — nyt hakemistopolut                                                                                       |
-| 15 | plantuml / bob / mermaid                     | 17 / 8 / 2                | rikki / rikki / puuttuu                                                                                            |
+| 15 | plantuml / bob / mermaid                     | 17 / 11 / 2               | **tehty** — `convert_plantuml` (kuviksi), `convert_svgbob` (upotetuksi SVG:ksi); mermaid toimi jo itsestään        |
 | 16 | `<asciinema>`-upotukset                      | 13                        | rikki                                                                                                              |
 | 17 | Bootstrap-ikonit `<i class="bi ...">`        | 136                       | puuttuu — ei fonttia; tehtävien 36 bonustähteä piirtää CSS, ks. kohta 6                                            |
 | 18 | JYU-paletti, kultainen korostus              | 30                        | puuttuu                                                                                                            |
@@ -137,6 +137,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 22 | Edellinen/seuraava sivun alareunassa         | joka sivu                 | **tehty** — `navigation.footer`                                                                                    |
 | 23 | `### [Windows](#tab/win)`-välilehdet         | 33 lohkoa / 9 joukkoa     | **tehty** — `pymdownx.tabbed` + `content.tabs.link`                                                                |
 | 24 | Tulostuspainike: koko kirja yhdeksi PDF:ksi  | joka sivu                 | **tehty** — `assets/js/print.js`, `print.css`, runko `convert.py`:stä, yläpalkin malli                             |
+| 25 | `<div class="ht-reqs">` vaatimuslohkot       | 9                         | **tehty** — `convert_divs` + `assets/css/requirements.css`; numerointi 1.1, 1.2, ... CSS-laskurista               |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
 haun, kopioi koodi -napin ja responsiivisen navigaation. Edellinen/seuraava
@@ -1247,6 +1248,32 @@ Todennettu kolmella tavalla:
   jotka olivat kadonneet kokonaan. Sivulla `osa1/01-hei-java.md` ei ole enää
   yhtään raakaa Markdown-linkkiä.
 
+**Väljyydeksi kirjoitetut `<br />`-rivit pois (`drop_breaks`, 58 riviä `convert.py`:hyn).**
+Kahden avattavan osion väli oli kolminkertainen muihin nähden sivulla
+`exercises/3-3-verkkokauppa-3/handout.md`. Syy ei ollut CSS vaan lähde: lohkojen
+välissä on oma rivinsä `<br />`, josta Python-Markdown tekee kappaleen
+(`<p><br /></p>`). Se vie kokonaisen rivin verran tilaa omien marginaaliensa
+lisäksi, ja päälle tulee vielä laatikon oma `margin: 1.5625em 0`, joka ei enää
+pääse limittymään naapurin kanssa: väli oli selaimessa mitattuna 74 px siinä
+missä kaksi peräkkäistä lohkoa ovat muuten 23 px:n päässä toisistaan.
+
+Rivit on kirjoitettu aikanaan väljyydeksi, mutta kummallakin generaattorilla
+laatikolla on nyt oma marginaali (mdBookissa `margin-block: 1em`,
+`theme/css/general.css`), joten ne ovat turhia molemmissa. `src/` on yhteinen
+mdBookin kanssa eikä siihen kosketa, joten rivi pudotetaan käännöksessä:
+neljä riviä kolmessa tiedostossa, ajossa 10 kertaa, koska `convert_includes` tuo
+tehtävänannot myös tehtäväsivuille. Ehtona on tyhjä rivi kummallakin puolella —
+juuri se tekee rivistä oman kappaleen — ja sarake 0: rivin lopussa `<br />` on
+oikea rivinvaihto kappaleen sisällä ja sisennetty rivi voisi olla sisennettyä
+koodia. Toinen ympäröivistä tyhjistä riveistä lähtee tagin mukana, jottei
+tilalle jää kahta peräkkäistä.
+
+Todennettu: `docs/`:ssä ei ole yhtään `<br />`-riviä eikä `site/`:ssä yhtään
+`<p><br /></p>`-kappaletta, käännöksen varoitukset ovat yhä 16, ja selaimessa
+mitattuna sivun kahden lohkon väli on 74 px:n sijaan 23 px. Aineistossa ei ole
+yhtään kappaleen sisäistä `<br />`:ää, joten muunnos ei voinut osua sellaiseen —
+ehto on silti testeissä.
+
 ### Tehtäväkortit (uusi `assets/css/tasks.css` + 128 riviä `convert.py`:hyn + 1 rivi `mkdocs.yml`:ään)
 
 Tehtävä on kirjassa omia elementtejä, joita HTML ei tunne:
@@ -1304,7 +1331,10 @@ sisennyssyvyydellä, eli sisennys on lähteessä pelkkää muotoilua.
 **Ilme on tarkoituksella eri kuin kirjassa.** mdBookissa kortti on laatikko:
 täytetty numerolaatta otsikkopalkissa, tehtävänanto omalla alueellaan ja
 TIM-nappi alapalkissa. Täällä numero riippuu vasemmassa marginaalissa
-oppikirjan tapaan ja tehtävät erottuvat toisistaan ohuella viivalla. Syitä on
+oppikirjan tapaan ja tehtävät erottuvat toisistaan ohuella viivalla. TIM-nappi
+sen sijaan jäi kirjasta: se on kortin ainoa toiminto, ja tehtävänannossa on
+usein omia linkkejä, joista täytetty nappi erottuu heti. Alapalkkia sillä ei
+ole, vaan se on kaistan viimeinen rivi. Syitä kevyempään korttiin on
 kaksi: tehtävänanto kulkee samalla palstalla kuin luvun muu teksti, joten
 koodilohkot saavat täyden leveyden (43 tehtävänannossa on koodiaita), ja osan
 tehtäväsivulla tehtäviä on 8–12 peräkkäin, jolloin yhtä monta laatikkoa
@@ -1337,7 +1367,16 @@ peruslinjaan.
 piirtää linkit. Se on ainoa Materialin muuttuja, joka on molemmissa teemoissa
 oikea: vaaleassa se on indigo `#4051b5`, tummassa teema vaihtaa sen
 vaaleampaan `#5488e8`:aan. `--md-primary-fg-color` olisi molemmissa sama tumma
-indigo eli tummassa teemassa lukukelvoton. Erotinviiva on
+indigo eli tummassa teemassa lukukelvoton. Napin täyttö on sama väri, mutta
+teksti on vaaleassa teemassa valkoinen (6,9:1) ja tummassa lähes musta: tumman
+teeman vaaleammalla sinisellä valkoinen jäisi 3,5:1:een eli alle pienen tekstin
+4,5:1:n rajan. Kirjassa on sama ratkaisu, siellä tumman teeman kultanapissa on
+musta teksti. Osoittimen alla ja näppäimistökohdistuksessa napin ympärille
+syttyy saman sävyn hehku: kaksi siirtämätöntä `box-shadow`ia, tiukka sumu ja
+sen ulkopuolella laajempi kajo, jolloin nappi näyttää syttyvän eikä nousevan
+sivulta. Tummassa teemassa hehku on hieman vahvempi, koska tumma tausta imee
+värin. Paperille nappi palaa tekstilinkiksi, koska selain ei tulosta
+taustavärejä oletuksena ja valkoinen teksti katoaisi paperiin. Erotinviiva on
 `--md-default-fg-color--lightest` `.05rem`:n paksuisena, tasan se mitä teema
 käyttää `<hr>`:ssä. Bonuskullalle ei ole teeman muuttujaa, koska JYU-paletti on
 kokonaan tekemättä (kohta 18): mdBookin `.jyu-gold` `#C29A5B` on valkoista
@@ -1366,6 +1405,287 @@ Kohta 17 kutistui samalla: 136 Bootstrap-ikonista 36 oli tehtävien
 bonustähtiä, eivätkä ne enää tarvitse fonttia. Loput 100 odottavat yhä omaa
 ratkaisuaan: 45 `bi-chevron-right` valikkomaisissa linkeissä, 30
 `bi-stars jyu-gold` avattavien lohkojen `<summary>`-riveillä ja 25 muuta.
+
+### Taulukoiden tyyli (uusi `assets/css/tables.css` + 1 rivi `mkdocs.yml`:ään)
+
+Kirjassa taulukko on keskitetty ja väritetty (`theme/css/general.css`:
+`table { margin: auto auto 1.5em auto }`, otsikkorivillä `--table-header-bg`
+ja joka toisella rivillä `--table-alternate-bg`). Zensical piirtää sen
+harmaana ristikkona sivun vasempaan laitaan: reunus ja rivien väliviivat ovat
+`--md-typeset-table-color`, ja väriä on vain hover-korostuksessa. Aineiston 27
+taulukosta 22 on 2-3-sarakkeisia eli kapeita, ja vasempaan laitaan
+tarrautuneena ne näyttävät tekstin sekaan unohtuneilta.
+
+**Värit tulevat teeman muuttujista.** Sävy on `--md-typeset-a-color` eli sama,
+jolla teema piirtää linkit ja jolla tehtäväkortit on jo väritetty: se on ainoa
+Materialin muuttuja, joka on molemmissa teemoissa oikea (vaaleassa indigo
+`#4051b5`, tummassa vaaleampi `#5488e8`). `--md-primary-fg-color` olisi
+molemmissa sama tumma indigo, eli tummalla taustalla se ei erottuisi. Tästä
+seuraa, että **kohta 18 (JYU-paletti) hoitaa taulukot mukanaan**: kun paletti
+vaihdetaan, otsikkorivi vaihtuu samalla eikä tähän tiedostoon tarvitse koskea.
+Kirjan `#dfe9f0` ei siksi ole kovakoodattuna, vaikka lopputulos vaaleassa
+teemassa on käytännössä sama vaalea sinisävy.
+
+Sävyt kirjoitetaan `color-mix`illä läpinäkyviksi eikä valmiiksi väreiksi, jotta
+sama arvo toimii kummallakin taustalla — teema antaa taululle
+`--md-default-bg-color`-taustan, jonka päälle ne sekoittuvat. Tummassa teemassa
+otsikkorivi ja hover ovat vahvempia (20 % ja 12 % vastaan 12 % ja 8 %), koska
+suuremmalla kontrastilla sama peitto näyttää laimeammalta.
+
+Neljä pintaa: otsikkorivi korostusvärin sävyllä, sen alla `.1rem` korostusviiva,
+joka toinen sisältörivi 3,5 % tekstin väriä, ja hover korostusvärin sävyllä.
+Kaksi yksityiskohtaa piti hoitaa erikseen:
+
+* **Otsikon alla olisi ollut kaksi viivaa.** Teema piirtää rivien väliviivat
+  solujen ylälaitaan, joten ensimmäisen sisältörivin viiva otetaan pois.
+* **Raita voittaisi hoverin**, koska tarkkuus on molemmilla sama (0,3,3), joten
+  hover-sääntö on tiedostossa raidan jälkeen. Sen väri on korostusvärin sävy
+  eikä teeman oma `--md-typeset-table-color--light`, joka on käytännössä sama
+  harmaa kuin raita. Teeman laatikkovarjo otetaan pois: se piirsi rivin
+  ylälaitaan taustanvärisen viivan peittämään väliviivan, mikä raitojen kanssa
+  katkaisee rivin.
+
+**Keskitys ei kohdistu tauluun vaan kääreeseen.** Teema kietoo taulukon
+ajonaikaisesti kahteen diviin (`bundle.js`: `md-typeset__scrollwrap` >
+`md-typeset__table`), jotta leveä taulukko vierii vaakasuunnassa palstan
+levyisessä laatikossa. Sisempi kääre on `inline-block` eli valmiiksi sisältönsä
+levyinen mutta kiinni vasemmassa laidassa; `display: block` + `width:
+fit-content` pitää leveyden ennallaan mutta tekee automarginaaleista tehokkaat.
+Taulukko itse saa jäädä tauluksi, mikä on myös saavutettavuuden kannalta oikein:
+osa ruudunlukijoista menettää taulukkosemantiikan, jos taulun oma `display`
+vaihdetaan.
+
+Sama sääntö kirjoitetaan varalta myös taululle itselleen, koska kääreen tekee
+JavaScript: **tulostussivun luvut kootaan sivulle sen jälkeen**, eivätkä ne saa
+käärettä lainkaan. Ilman tätä koko kirjan PDF:ssä taulukot olisivat vasemmassa
+laidassa. Kääreen sisällä taulukon oma sääntö on kumottava takaisin
+tauluksi; teemalla on siihen oma sääntönsä (`html .md-typeset__table table`),
+mutta sen tarkkuus (0,1,2) on pienempi kuin tämän tiedoston (0,2,1), joten se
+on toistettava.
+
+Todennettu selaimessa 1400 px:n ikkunassa, palstan leveys 779 px:
+`osa1/02-muuttujat-ja-tietotyypit` (3 saraketta, 449 px) on keskitetty — 165 px
+tilaa molemmin puolin — ja `luennot` (5 saraketta) täyttää palstan reunasta
+reunaan kuten ennenkin, eli vierityskäyttäytyminen ei muuttunut.
+Tulostussivulla taulukko on kääreetön ja keskitetty (395 px molemmin puolin).
+Otsikkorivi on `rgb(232, 234, 246)` vaaleassa ja `rgb(26, 37, 58)` tummassa;
+hover erottuu raidasta molemmissa. Testit 82/82 läpi, käännöksen varoitukset
+16 ennen ja jälkeen.
+
+Mitä ei tullut: kirjan pystyviivat. Kirjassa jokaisella solulla on reunus joka
+sivulla, Materialilla vain rivien välissä; jälkimmäinen säilytettiin, koska
+väritys tekee rivit muutenkin luettaviksi. Vuororivi on 3,5 % tekstin väriä
+kirjan `#e6e8ea`:n sijaan, koska Materialin solupehmuste on kirjaa reilumpi
+(`.9375em` vastaan 5 px) ja yhtä tumma raita olisi paljon isompi pinta.
+
+### Harjoitustyösivu: vaatimuslohkot ja aiheiden yhteenvedot (uusi `assets/css/requirements.css` + 1 rivi `mkdocs.yml`:ään + ~60 riviä `convert.py`:hyn)
+
+`harjoitustyo.md` oli aineiston ainoa sivu, jolla raakaa HTML:ää on muutakin
+kuin `<details>`-tageja, ja se näkyi: sivun 751 rivistä yli 200 tuli ulos
+lähdemuodossaan.
+
+**Pahin oli arviointiperuste.** Osio "Tekniset vaatimukset ja arviointi" on 193
+riviä yhden `<div class="ht-reqs">`:n sisällä, ja siellä kahdeksan
+`<div class="req">`-lohkoa otsikkoineen ja numeroituine kohtineen. Ilman
+markdown-attribuuttia koko osio piirtyi yhtenä pötkönä, jossa luki
+"### Vaatimus 1: Tietomalli 1. \*\*Sovelluksessa on vähintään kaksi...\*\*" —
+eli tasan se sivu, jonka perusteella harjoitustyö arvioidaan, oli sivuston
+huonoiten luettava. Sama syy kuin kohdassa 8: Python-Markdown päästää raa'an
+HTML-lohkon sisällön läpi sellaisenaan.
+
+Vastine on sama `md_in_html` kuin kohdissa 6, 7, 8 ja 23, eli laajennuslistaan
+ei tarvinnut koskea; `mkdocs.yml`:n ainoa uusi rivi on alempana kuvatun
+tyylitiedoston lataus. Attribuutti tarvitaan myös uloimpaan diviin —
+laajennus ei etene sisempiin lohkoihin, jos uloin on käsittelemätöntä HTML:ää —
+ja `convert_divs` ajetaan ennen `convert_tasksia`, jotta se näkee vain lähteen
+omat yhdeksän diviä eikä tehtäväkorttien omia, jotka saavat attribuuttinsa (tai
+jäävät tarkoituksella ilman) siellä.
+
+**Numerointi on tyyli, ei tekstiä.** Lähteessä vaatimuskohdat ovat tavallinen
+numeroitu lista, ja jokainen lohko alkaa ykkösestä; kirjassa listanumeroksi tulee
+lohkon ja kohdan numero yhdessä (`theme/css/general.css`: `div.ht-reqs`), eli
+1.1, 1.2, ... 8.3. Numeroon viitataan sekä samalla sivulla ("yksilötöissä kaksi;
+vaatimus 1.1") että osien 9-12 ohjeissa, joten pelkkä juokseva numerointi
+osoittaisi väärään kohtaan. Sama CSS-laskuri siis tänne, omaan tiedostoonsa
+samasta syystä kuin `admonitions.css`, `tasks.css` ja `tables.css`. Kaksi eroa
+kirjan sääntöön: sisäkkäinen kirjoitustapa on purettu erillisiksi valitsimiksi
+kuten muukin koeputken CSS, ja lista on rajattu lohkon suoraksi lapseksi
+(`> ol`), ettei sisennetty alalista saisi samaa numerointia.
+
+**Aiheiden yhteenvedot olivat toinen puoli.** Kuudessa avattavassa lohkossa
+yhteenveto ei ole yksi rivi vaan otsikko ja kappale:
+
+```markdown
+<details><summary>
+
+### Kulujen seuranta
+
+Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
+
+</summary>
+```
+
+Avauspalkissa luki "### Kulujen seuranta Tässä sovelluksessa...". Kohdan 8
+attribuutti ei auta tähän, koska se on `<details>`-tagissa eikä etene
+`<summary>`:yn, ja `<summary>` on `md_in_html`:n `span_tags`-listalla — samassa
+joukossa kuin `<p>` ja `<li>` — eli `markdown="1"` tarkoittaisi sille samaa kuin
+`markdown="span"` ja otsikko jäisi yhä risuaidoiksi. Vain `markdown="block"`
+pakottaa lohkojäsennyksen.
+
+**Ehtona on tyhjä rivi, ei rivien määrä.** Aineistossa on kaksi yhteenvetoa,
+joissa teksti jatkuu seuraavalle riville ilman tyhjää riviä
+(`osa4/04-tyyppiparametrit-ja-geneerisyys.md`, `osa8/02-tableview.md`). Niissä ei
+ole Markdownia, eikä kirjakaan jäsennä niitä: pulldown-cmark lopettaa raa'an
+HTML-lohkon ensimmäiseen tyhjään riviin, ja ilman sitä koko yhteenveto menee läpi
+sellaisenaan. Sama raja siis tänne — muuten `markdown="block"` olisi kääntänyt
+niiden tekstin `<p>`:ksi ja tuonut avauspalkkiin kappaleen marginaalit. Ensimmäinen
+versio muunnoksesta osui niihin, ja ne näkyivät ajossa heti: 8 yhteenvetoa,
+kun sivulla piti olla 6.
+
+Palkin tyyli tuli `admonitions.css`:ään, missä avattavien osioiden ilme jo on:
+otsikon ylä- ja kappaleen alamarginaali pois (teema mitoittaa palkin yhdelle
+riville) ja kuvaus takaisin normaalivahvuiseksi. Lihavointi jää otsikkoon:
+palkin `font-weight: 700` on teeman ja yhden rivin yhteenvedoissa paikallaan,
+mutta kokonainen kappale lihavoituna on raskas eikä erota otsikkoa mitenkään.
+
+Todennettu neljällä tavalla:
+
+- **Muunnokset osuivat siihen mihin pitikin:** ajossa 9 diviä ja 6 monirivistä
+  yhteenvetoa, kaikki `harjoitustyo.md`:ssä. Kaikkiaan `docs/`:ssä on 347
+  `markdown="1"`-diviä, joista 338 on tehtäväkorttien (kohta 6).
+- **Käännöksen varoitukset eivät muuttuneet:** 16 ennen ja jälkeen.
+- **Selaimessa:** kahdeksan vaatimuslohkoa piirtyy otsikoineen, listoineen ja
+  koodijaksoineen, ja ensimmäisen kohdan numero on 1.1 kuten kirjassa. Oikean
+  reunan sisällysluetteloon tuli 14 uutta riviä: kuusi aihetta ja kahdeksan
+  vaatimusta, jotka olivat ennen tekstin sisällä.
+- **Testit 91, ennen 82.** Uusia yhdeksän: seitsemän `test_convert.py`:hyn
+  (yhteenvedon kolme tapausta ja divien neljä) ja kaksi `test_book.py`:hyn.
+  Jälkimmäisistä ensimmäinen käy läpi koko kirjan tekstisolmut koodilohkot
+  ohittaen eikä salli yhtäkään riviä, joka alkaa risuaidalla tai sisältää
+  `**`-lihavoinnin — se on se testi, joka huomaa seuraavan attribuutittoman
+  `<div>`:n tai `<summary>`:n aineistossa. Toinen kysyy laskuria
+  (`counter-reset`, `counter-increment`, `::marker`), koska pelkkä
+  `mkdocs.yml`:n unohtunut rivi numeroisi vaatimukset hiljaisesti uudelleen
+  ykkösestä.
+
+Mitä ei tullut: sivun kuusi `plantuml`-luokkakaaviota ovat yhä tekstilohkoja
+(kohta 15) ja kymmenen bonustähteä näkymättömiä (kohta 17), eli sivulla on
+tämän jälkeenkin kaksi tarkistuslistan avointa kohtaa. Rikki on myös yhä sivun
+oma linkki `#harjoitustyön-tekniset-vaatimukset-ja-arviointi`, mutta se on
+aineiston virhe ja rikki myös kirjassa (ks. `KNOWN_DEAD_ANCHORS`).
+
+### Kaaviot: luokkakaaviot, ascii-kaaviot ja mermaid (uusi `assets/css/diagrams.css` + 1 rivi `mkdocs.yml`:ään + ~180 riviä `convert.py`:hyn)
+
+Kolme eri kaaviolajia, kolme eri tilannetta. Yksi toimi jo, kaksi ei.
+
+**Mermaid toimi ilman mitään.** Tarkistuslistalla luki "puuttuu", mutta se oli
+väärä havainto: Zensicalin `pymdownx.superfences` on oletuksena määritelty niin,
+että ```mermaid-aidasta tulee `<pre class="mermaid">`, ja teeman oma
+JavaScript lataa mermaid 11:n ja piirtää kaavion. Tarkistus näytti tyhjältä
+divistä, koska teema piirtää kaavion **suljettuun shadow rootiin**
+(`attachShadow({mode:"closed"})`): DOM-kysely ei näe SVG:tä, vaikka se on
+ruudulla. Kummatkin kaksi kaaviota piirtyvät, eikä `mkdocs.yml`:ään tarvittu
+riviäkään. Yksi varaus: mermaid tulee unpkg.comista ajonaikaisesti, eli se on
+ainoa kohta sivustolla, joka vaatii lukijalta verkkoa.
+
+**Luokkakaaviot (17 kpl) haetaan PlantUML-palvelimelta käännöksessä.** Kirjassa
+sen tekee `mdbook-plantuml` (`book.toml`: `plantuml-cmd`), joka lähettää
+```plantuml-aidan sisällön palvelimelle ja tallettaa vastauksen tiedostoksi.
+Sama tänne: kaavio pakataan osoitteeseen PlantUMLin omalla koodauksella (raaka
+deflate ja base64 aakkostolla, jossa `+/`:n tilalla on `-_`), ja vastaus
+talletetaan nimellä, joka on lähteen sha1. Nimet osuivat riville `book/`:n
+kanssa — mdbook-plantuml laskee sha1:n samasta asiasta — eli tiedostot ovat
+samat kuin kirjassa.
+
+Ilman muunnosta sivulla oli 20 riviä `@startuml / class Kategoria { ... }`
+siinä missä kirjassa on kaavio. Ero on isoin harjoitustyösivulla, jossa kaavio
+on jokaisen aiheen tietomalli.
+
+**Ascii-kaaviot (11 kpl) piirretään svgbobilla.** Piirtäjää ei ole Pythonille.
+Sama piirtäjä on kuitenkin saatavana omana komentonaan:
+
+```bash
+cargo install svgbob_cli     # svgbob 0.7.6, sama kuin mdbook-svgbobin sisällä
+```
+
+Vaihtoehto olisi ollut ajaa `mdbook-svgbob`ia, joka on koneella jo kirjan takia
+— se toimii, kokeiltiin — mutta se on mdBookin esikäsittelijä: sille pitäisi
+rakentaa mdBookin oma JSON-sanoma, ja koeputken idea on päästä mdBookista eroon,
+ei rakentaa sen protokollaa uudelleen.
+
+**Kummankin riippuvuus on pehmeä.** Valmiit kaaviot ovat versionhallinnassa
+(`assets/plantuml/`, 17 tiedostoa, 180 kt; `cache/svgbob/`, 11 tiedostoa, 76 kt),
+joten käännös ei tarvitse verkkoa eikä svgbobia lainkaan: tavallinen ajo lukee
+ne levyltä. Palvelimelle tai piirtäjälle mennään vain, kun kaavion lähde on
+muuttunut tai uusi kaavio on lisätty, ja jos kumpaakaan ei saada, aita jätetään
+ennalleen ja ajo varoittaa — käännös ei kaadu koneella, jolla ei ole kumpaakaan.
+Käyttämättömät tiedostot siivotaan ajon lopuksi, jottei muokatun kaavion vanha
+versio jäisi hakemistoon.
+
+**Luokkakaavio on kuva, ascii-kaavio upotetaan.** Ero on värissä. PlantUMLin SVG
+tuo omat värinsä palvelimelta (vaaleanvihreät laatikot, musta teksti, valkoinen
+tausta) eikä niistä ole tummaa varianttia, joten se voi olla `<img>` — kuten
+kirjassakin. Svgbobin SVG sen sijaan ottaa viivan ja tekstin värin
+CSS-muuttujasta, ja `<img>`:n sisällä oleva SVG ei näe sivun muuttujia: siksi se
+upotetaan sivulle sellaisenaan, jolloin kaavio seuraa teemanvaihtoa kuten
+kirjassa (siellä muuttujat ovat `--fg` ja `--mono-font`, täällä
+`--md-default-fg-color` ja `--md-code-font-family`). Siksi myös `cache/svgbob/`
+on `assets/`:n ulkopuolella: se on välimuisti, ei julkaistava tiedosto.
+
+Upottaminen vaati kolme asiaa, joista jokainen oli oma virheensä ennen kuin se
+huomattiin:
+
+* **Kääre on `<div>`.** `<svg>` ei ole Python-Markdownin
+  `BLOCK_LEVEL_ELEMENTS`-listalla, joten paljas kaavio päätyi kappaleen sisään
+  ja sen rivinvaihdot `<br />`-tageiksi.
+* **Tyhjät rivit pois.** Svgbobin tyylilohkossa on tyhjiä rivejä, ja tyhjä rivi
+  lopettaa raa'an HTML-lohkon: loppu kaaviosta olisi tullut sivulle tekstinä.
+  Samasta syystä muunnos ajetaan `convert_divs`in **jälkeen** — muuten kääre
+  olisi saanut `markdown="1"`:n ja `md_in_html` olisi jäsentänyt SVG:n
+  Markdownina.
+* **Tunnisteet omaan nimiavaruuteensa.** Svgbob kirjoittaa jokaiseen kaavioon
+  samat viisi nuolenkärkimäärittelyä (`id="arrow"` ja neljä muuta) käytti kaavio
+  niitä tai ei. Sivulla `osa6/02` kaavioita on neljä, eli sivulla oli 15
+  kahteen kertaan esiintyvää tunnistetta ja `url(#arrow)` osoitti aina
+  ensimmäiseen. Tunnisteet saavat siksi sivukohtaisen juoksevan etuliitteen
+  (`bob1-arrow`), jonka päälle tulostussivulla tulee vielä `print.js`:n luvun
+  oma etuliite. Tämän huomasi `test_identifiers_stay_unique`, joka oli
+  paikallaan jo ennen tätä kohtaa.
+
+`mkdocs.yml`:ään tuli yksi rivi: `assets/css/diagrams.css`. Siinä on kaksi
+asiaa. Luokkakaavion valkoisesta pohjasta tehdään tarkoituksellinen — sama
+valkoinen pehmusteeksi kuvan ympärille ja pyöristetyt kulmat — jolloin kaavio on
+tummassa teemassa kortti eikä näytä siltä että sivun tausta vuotaa; vaaleassa
+teemassa sääntö ei näy. Ascii-kaavio taas saa vierityksen: svgbobin SVG:ssä ei
+ole viewBoxia, joten teeman `max-width: 100%` ei pienennä piirrosta vaan rajaa
+sen reunan yli menevän osan pois — 400 px:n ikkunassa 736 px leveästä kaaviosta
+jäi näkyviin 353 px. Rajoitus otetaan pois ja kääre vierittää, kuten teema tekee
+leveille taulukoille.
+
+Todennettu neljällä tavalla:
+
+- **Ajossa 21 luokkakaaviota ja 12 ascii-kaaviota**, eli 17 ja 11 eri kaaviota:
+  loput ovat tehtävänantoja, jotka `convert_includes` tuo useammalle sivulle.
+  Yksi 12:sta on HTML-kommentin sisällä (`osa7/06`, aineistossa pois otettu
+  osuus) — se piirtyy mutta ei näy, kuten muutkin muunnokset tekevät kommentin
+  sisällä.
+- **Käännöksen varoitukset eivät muuttuneet:** 16 ennen ja jälkeen.
+- **Selaimessa:** luokkakaaviot piirtyvät samannäköisinä kuin kirjassa,
+  ascii-kaaviot viivoina eivätkä `+---+`-merkkeinä, ja nuolenkärjet ovat
+  paikallaan tunnisteiden etuliitteen jälkeenkin. Ascii-kaavio vaihtaa väriä
+  teeman mukana; 400 px:n ikkunassa leveä kaavio vierii omassa laatikossaan
+  eikä sivu itse vieri vaakasuunnassa.
+- **Testit 101, ennen 91.** Uusia kymmenen: yhdeksän `test_convert.py`:hyn
+  (koodauksen paluumatka, aita kuvaksi, kuvan osoite sivun syvyyden mukaan,
+  palvelimeton ja piirtäjätön tapaus, sulkematon aita, kääre, tyhjät rivit,
+  tunnisteet) ja yksi `test_book.py`:hyn: koko kirjan tulosteessa ei saa esiintyä sanaa
+  `@startuml` — se esiintyy aineistossa vain aidan ensimmäisellä rivillä, joten
+  näkyvissä se tarkoittaa kääntämättä jäänyttä kaaviota.
+
+Mitä ei tullut: **mermaid ei piirry tulostussivulle.** Teema piirtää mermaidin
+sivun latautuessa, ja `print.js` liittää luvut sivulle vasta sen jälkeen, joten
+kirjan kahdesta mermaid-kaaviosta jää PDF:ään lähdeteksti. Luokkakaaviot ja
+ascii-kaaviot tulostuvat oikein, koska ne ovat valmiina HTML:ssä.
 
 ## Mitattu ensimmäisestä ajosta
 

@@ -4,7 +4,10 @@
  * otsikkopalkin vasemmassa reunassa, tehtävänanto omalla alueellaan ja
  * TIM-nappi alapalkissa. Tänne valittiin kevyempi ilme: ei laatikkoa
  * lainkaan, vaan tehtävänumero riippuu vasemmassa marginaalissa oppikirjan
- * tapaan ja tehtävät erottuvat toisistaan ohuella viivalla.
+ * tapaan ja tehtävät erottuvat toisistaan ohuella viivalla. Kirjasta jäi
+ * TIM-nappi, koska tehtävän ainoan toiminnon pitää erottua tehtävänannon
+ * omista linkeistä; alapalkkia sillä ei ole, vaan se on kaistan viimeinen
+ * rivi.
  *
  * Miksi eri ilme kuin kirjassa
  * ----------------------------
@@ -47,6 +50,34 @@
   --jyu-task-bonus: #d3ab6d;
 }
 
+/* TIM-napin sävyt. Täyttö on --md-typeset-a-color, sama linkkiväri kuin
+ * numerossa ja pisteissä, mutta tekstin väri on teemoissa eri: valkoinen on
+ * vaalean teeman indigolla (#4051b5) 6,9:1 mutta tumman teeman vaaleammalla
+ * sinisellä (#5488e8) vain 3,5:1, eli alle pienen tekstin 4,5:1:n rajan.
+ * Tummassa teemassa teksti on siksi lähes musta (5,4:1). Sama ratkaisu kuin
+ * kirjassa, jonka tumman teeman kultanapissa on musta teksti
+ * (theme/css/variables.css: --task-bg-text).
+ *
+ * Osoittimen alla täyttö tummenee vaaleassa ja vaalenee tummassa, eli kumpaan
+ * suuntaan tahansa poispäin sivun taustasta.
+ *
+ * Hehku on sama sävy läpinäkyvänä. Tummassa teemassa se on vahvempi (45 % /
+ * 28 %) kuin vaaleassa (40 % / 22 %): tumma tausta imee värin, kun taas
+ * valkoisella paperinvalkoinen sivu näyttää saman voimakkuuden sumuna. */
+:root {
+  --jyu-task-btn-fg: #fff;
+  --jyu-task-btn-bg-hover: color-mix(in srgb, var(--md-typeset-a-color) 80%, black);
+  --jyu-task-btn-glow: color-mix(in srgb, var(--md-typeset-a-color) 40%, transparent);
+  --jyu-task-btn-glow-far: color-mix(in srgb, var(--md-typeset-a-color) 22%, transparent);
+}
+
+[data-md-color-scheme="slate"] {
+  --jyu-task-btn-fg: #10131a;
+  --jyu-task-btn-bg-hover: color-mix(in srgb, var(--md-typeset-a-color) 80%, white);
+  --jyu-task-btn-glow: color-mix(in srgb, var(--md-typeset-a-color) 45%, transparent);
+  --jyu-task-btn-glow-far: color-mix(in srgb, var(--md-typeset-a-color) 28%, transparent);
+}
+
 /* ------------------------------------------------------------------ kaista */
 
 /* Yksi tehtävä. container-type tekee kortista kyselysäiliön: kapean tilan
@@ -73,7 +104,8 @@
 .md-typeset .task-head {
   display: flex;
   align-items: baseline;
-  gap: .7rem;
+  --task-head-gap: .7rem;
+  gap: var(--task-head-gap);
   margin-bottom: .8rem;
 }
 
@@ -82,7 +114,8 @@
 .md-typeset .task-num {
   flex: none;
   font-family: var(--md-code-font-family);
-  font-size: 1.05em;
+  font-size: 1rem;
+  font-weight: 600;
   font-variant-numeric: tabular-nums;
   color: var(--md-typeset-a-color);
 }
@@ -104,11 +137,16 @@
   line-height: 1.3;
 }
 
-/* Pisteet oikeaan reunaan. margin-inline-start: auto vie ne sinne myös
- * silloin kun bonusliuskaa ei ole. */
+/* Pisteet seuraavat nimeä eivätkä pakene kortin oikeaan reunaan: ne ovat
+ * osa tunnusta, ja irrallaan reunassa ne lukisivat kuin oma sarakkeensa.
+ *
+ * Väli nimeen on .8rem riippumatta siitä, kummalla leveydellä ollaan.
+ * Tunnusrivin gap on numerosarakkeen mitta (kapealla .7rem, leveällä
+ * 1.4rem, ks. @container alempana), joten se kumotaan tästä välistä
+ * negatiivisella marginaalilla. */
 .md-typeset .task-points {
   flex: none;
-  margin-inline-start: auto;
+  margin-inline-start: calc(.8rem - var(--task-head-gap));
   font-family: var(--md-text-font-family);
   font-size: .8em;
   font-weight: 700;
@@ -171,24 +209,41 @@
   margin-bottom: 0;
 }
 
-/* ---------------------------------------------------------------- TIM-linkki */
+/* ----------------------------------------------------------------- TIM-nappi */
 
 .md-typeset .task-link {
   margin-top: 1.2rem;
 }
 
-/* Tekstilinkki eikä täytetty nappi: kortissa ei ole alapalkkia, johon
- * nappi kuuluisi, ja tehtäviä on peräkkäin monta. Alaviiva vain
- * osoittimen alla, jotta rivi pysyy rauhallisena. */
+/* Täytetty nappi eikä tekstilinkki, kahdesta syystä.
+ *
+ * 1. Teeman modern-tyyli alleviivaa jokaisen leipätekstin linkin
+ *    (.md-typeset a { text-decoration: underline }), joten aiempi hover-tilan
+ *    oma alaviiva piirtyi alleviivauksen alapuolelle: kaksi viivaa
+ *    päällekkäin, ja alempi vielä nuolen yli, koska se kulki koko laatikon
+ *    leveydeltä.
+ * 2. Tehtävän ainoa toiminto erottuu napissa selvästi tehtävänannon omista
+ *    linkeistä, joita on monessa tehtävässä. Sama kuin kirjassa, jossa
+ *    TIM-linkki on täytetty nappi alapalkissa (theme/tasks.css:
+ *    task > task-link > a).
+ *
+ * text-decoration ja väri eivät tarvitse !importantia: kahden luokan sääntö
+ * on tarkempi kuin teeman .md-typeset a ja .md-typeset a:hover. */
 .md-typeset .task-link > a {
   display: inline-flex;
   align-items: center;
   gap: .5em;
   width: fit-content;
+  padding: .7em 1.2em;
+  border-radius: .2rem;
+  background-color: var(--md-typeset-a-color);
+  color: var(--jyu-task-btn-fg);
   font-family: var(--md-text-font-family);
   font-size: .9em;
   font-weight: 600;
-  border-block-end: 1px solid transparent;
+  text-decoration: none;
+  user-select: none;
+  transition: background-color .15s, box-shadow .2s;
 }
 
 .md-typeset .task-link > a::after {
@@ -196,8 +251,29 @@
   transition: transform .15s;
 }
 
-.md-typeset .task-link > a:hover {
-  border-block-end-color: currentcolor;
+/* :focus on mukana, koska teema värjää linkin myös kohdistettaessa
+ * (.md-typeset a:focus { color: var(--md-accent-fg-color) }) — ilman tätä
+ * napin teksti vaihtaisi väriä sarkaimella eikä erottuisi täytöstä.
+ *
+ * Hehku on kaksi varjoa: tiukka .35rem:n sumu napin ääriviivan ympärillä ja
+ * sen ulkopuolella laajempi 1.1rem:n kajo. Kumpikin on levittämätön
+ * (spread 0) ja siirtämätön (0 0), eli hehku on napin muotoinen halo eikä
+ * pudotusvarjo — nappi ei näytä nousevan sivulta vaan syttyvän.
+ *
+ * Sama hehku on :focus-visiblessä, jolloin näppäimistökohdistus näkyy
+ * täsmälleen samalta kuin osoitin. Se ei korvaa selaimen omaa
+ * kohdistusrengasta vaan tulee sen rinnalle, koska outlinea ei kosketa. */
+.md-typeset .task-link > a:hover,
+.md-typeset .task-link > a:focus {
+  background-color: var(--jyu-task-btn-bg-hover);
+  color: var(--jyu-task-btn-fg);
+}
+
+.md-typeset .task-link > a:hover,
+.md-typeset .task-link > a:focus-visible {
+  box-shadow:
+    0 0 .5rem .05rem var(--jyu-task-btn-glow),
+    0 0 1.5rem .2rem var(--jyu-task-btn-glow-far);
 }
 
 .md-typeset .task-link > a:hover::after {
@@ -207,6 +283,16 @@
 @media (prefers-reduced-motion: reduce) {
   .md-typeset .task-link > a::after {
     transition: none;
+  }
+}
+
+/* Paperille tekstilinkkinä: selain ei tulosta taustavärejä oletuksena, ja
+ * vaalean teeman valkoinen napinteksti katoaisi valkoiselle paperille. */
+@media print {
+  .md-typeset .task-link > a {
+    padding: 0;
+    background: none;
+    color: var(--md-typeset-a-color);
   }
 }
 
@@ -236,7 +322,7 @@
   }
 
   .md-typeset .task-head {
-    gap: 1.4rem;
+    --task-head-gap: 1.4rem;
   }
 
   .md-typeset .task-handout,

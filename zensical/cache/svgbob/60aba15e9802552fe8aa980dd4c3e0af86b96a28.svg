@@ -1,0 +1,182 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="352" class="svgbob">
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: var(--md-default-fg-color);
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
+
+.svgbob text {
+  white-space: pre;
+  fill: var(--md-default-fg-color);
+  font-family: var(--md-code-font-family);
+  font-size: 14px;
+}
+
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: transparent;
+}
+
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
+
+.svgbob .filled {
+  fill: var(--md-default-fg-color);
+}
+
+.svgbob .bg_filled {
+  fill: transparent;
+  stroke-width: 1;
+}
+
+.svgbob .nofill {
+  fill: transparent;
+}
+
+.svgbob .end_marked_arrow {
+  marker-end: url(#arrow);
+}
+
+.svgbob .start_marked_arrow {
+  marker-start: url(#arrow);
+}
+
+.svgbob .end_marked_diamond {
+  marker-end: url(#diamond);
+}
+
+.svgbob .start_marked_diamond {
+  marker-start: url(#diamond);
+}
+
+.svgbob .end_marked_circle {
+  marker-end: url(#circle);
+}
+
+.svgbob .start_marked_circle {
+  marker-start: url(#circle);
+}
+
+.svgbob .end_marked_open_circle {
+  marker-end: url(#open_circle);
+}
+
+.svgbob .start_marked_open_circle {
+  marker-start: url(#open_circle);
+}
+
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#big_open_circle);
+}
+
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#big_open_circle);
+}
+
+</style>
+  <defs>
+    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="640" height="352"></rect>
+  <rect x="204" y="296" width="248" height="32" class="solid nofill" rx="0"></rect>
+  <text x="298" y="316" >main()</text>
+  <polygon points="320,76 324,64 328,76" class="filled"></polygon>
+  <line x1="324" y1="76" x2="324" y2="96" class="solid"></line>
+  <text x="338" y="92" >kutsuu</text>
+  <polygon points="464,116 456,120 464,124" class="filled"></polygon>
+  <polygon points="320,172 324,160 328,172" class="filled"></polygon>
+  <line x1="324" y1="172" x2="324" y2="192" class="solid"></line>
+  <text x="338" y="188" >kutsuu</text>
+  <polygon points="464,212 456,216 464,220" class="filled"></polygon>
+  <polygon points="320,268 324,256 328,268" class="filled"></polygon>
+  <line x1="324" y1="268" x2="324" y2="288" class="solid"></line>
+  <text x="338" y="284" >kutsuu</text>
+  <text x="626" y="332" >.</text>
+  <text x="2" y="28" >Heittää poikkeuksen</text>
+  <text x="210" y="28" >c()</text>
+  <text x="266" y="28" >Metodi, jossa virhe</text>
+  <text x="266" y="44" >tapahtui</text>
+  <text x="506" y="60" >Etsitään</text>
+  <text x="506" y="76" >sopivaa</text>
+  <text x="506" y="92" >käsittelijää</text>
+  <text x="2" y="124" >Heittää poikkeuksen</text>
+  <text x="210" y="124" >b()</text>
+  <text x="266" y="124" >Metodi, jossa ei ole</text>
+  <text x="82" y="140" >eteenpäin</text>
+  <text x="266" y="140" >poikkeuskäsittelijää</text>
+  <text x="506" y="156" >Etsitään</text>
+  <text x="506" y="172" >sopivaa</text>
+  <text x="506" y="188" >käsittelijää</text>
+  <text x="18" y="220" >Ottaa poikkeuksen</text>
+  <text x="210" y="220" >a()</text>
+  <text x="266" y="220" >Metodi, jossa on</text>
+  <text x="106" y="236" >kiinni</text>
+  <text x="266" y="236" >poikkeuskäsittelijä</text>
+  <g>
+    <line x1="204" y1="8" x2="248" y2="8" class="solid"></line>
+    <line x1="204" y1="8" x2="204" y2="56" class="solid"></line>
+    <path d="M 248,8 A 4,4 0,0,1 252,12" class="nofill"></path>
+    <path d="M 256,8 A 4,4 0,0,0 252,12" class="nofill"></path>
+    <line x1="252" y1="12" x2="252" y2="36" class="solid"></line>
+    <line x1="256" y1="8" x2="452" y2="8" class="solid"></line>
+    <line x1="452" y1="8" x2="452" y2="56" class="solid"></line>
+    <line x1="176" y1="24" x2="204" y2="24" class="solid"></line>
+    <line x1="204" y1="40" x2="248" y2="40" class="solid"></line>
+    <path d="M 252,36 A 4,4 0,0,1 248,40" class="nofill"></path>
+    <line x1="452" y1="40" x2="488" y2="40" class="solid"></line>
+    <path d="M 488,40 A 4,4 0,0,1 492,44" class="nofill"></path>
+    <line x1="492" y1="44" x2="492" y2="116" class="solid"></line>
+    <line x1="204" y1="56" x2="452" y2="56" class="solid"></line>
+    <line x1="464" y1="120" x2="488" y2="120" class="solid"></line>
+    <path d="M 492,116 A 4,4 0,0,1 488,120" class="nofill"></path>
+  </g>
+  <g>
+    <line x1="204" y1="104" x2="248" y2="104" class="solid"></line>
+    <line x1="204" y1="104" x2="204" y2="152" class="solid"></line>
+    <path d="M 248,104 A 4,4 0,0,1 252,108" class="nofill"></path>
+    <path d="M 256,104 A 4,4 0,0,0 252,108" class="nofill"></path>
+    <line x1="252" y1="108" x2="252" y2="132" class="solid"></line>
+    <line x1="256" y1="104" x2="452" y2="104" class="solid"></line>
+    <line x1="452" y1="104" x2="452" y2="152" class="solid"></line>
+    <line x1="176" y1="120" x2="204" y2="120" class="solid"></line>
+    <line x1="204" y1="136" x2="248" y2="136" class="solid"></line>
+    <path d="M 252,132 A 4,4 0,0,1 248,136" class="nofill"></path>
+    <line x1="452" y1="136" x2="488" y2="136" class="solid"></line>
+    <path d="M 488,136 A 4,4 0,0,1 492,140" class="nofill"></path>
+    <line x1="492" y1="140" x2="492" y2="212" class="solid"></line>
+    <line x1="204" y1="152" x2="452" y2="152" class="solid"></line>
+    <line x1="464" y1="216" x2="488" y2="216" class="solid"></line>
+    <path d="M 492,212 A 4,4 0,0,1 488,216" class="nofill"></path>
+  </g>
+  <g>
+    <line x1="204" y1="200" x2="248" y2="200" class="solid"></line>
+    <line x1="204" y1="200" x2="204" y2="248" class="solid"></line>
+    <path d="M 248,200 A 4,4 0,0,1 252,204" class="nofill"></path>
+    <path d="M 256,200 A 4,4 0,0,0 252,204" class="nofill"></path>
+    <line x1="252" y1="204" x2="252" y2="228" class="solid"></line>
+    <line x1="256" y1="200" x2="452" y2="200" class="solid"></line>
+    <line x1="452" y1="200" x2="452" y2="248" class="solid"></line>
+    <line x1="176" y1="216" x2="204" y2="216" class="solid"></line>
+    <line x1="204" y1="232" x2="248" y2="232" class="solid"></line>
+    <path d="M 252,228 A 4,4 0,0,1 248,232" class="nofill"></path>
+    <line x1="204" y1="248" x2="452" y2="248" class="solid"></line>
+  </g>
+</svg>

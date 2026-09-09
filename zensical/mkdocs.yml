@@ -126,6 +126,21 @@ extra_css:
   # Merkkauksen kääntää convert.py: convert_tasks.
   - assets/css/tasks.css
 
+  # Taulukot: keskitys, otsikkorivin väri ja vuororivit. Omana tiedostonaan
+  # samasta syystä kuin edelliset kaksi. Kirjassa taulukko on keskitetty ja
+  # väritetty (theme/css/general.css), Zensicalilla harmaa ristikko vasempaan
+  # laitaan; värit haetaan teeman muuttujista, ks. tiedoston alku.
+  - assets/css/tables.css
+
+  # Harjoitustyön vaatimusnumerot (1.1, 1.2, ...). Omana tiedostonaan samasta
+  # syystä kuin edelliset kolme: yhden komponentin tyyli, ei sivun asettelua.
+  # Kirjassa numero tulee samalla tavalla CSS-laskurista, ks. tiedoston alku.
+  - assets/css/requirements.css
+
+  # Luokkakaaviot. Omana tiedostonaan samasta syystä kuin edelliset: yhden
+  # komponentin tyyli. Kaaviot itse syntyvät convert.py:ssä, ks. tiedoston alku.
+  - assets/css/diagrams.css
+
   - assets/css/print.css
 
 # Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut

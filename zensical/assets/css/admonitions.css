@@ -209,6 +209,29 @@ html .md-typeset details[open] > :last-child {
   outline-offset: -.1rem;
 }
 
+/* Monirivinen yhteenveto. Harjoitustyön kuudessa aihelohkossa yhteenveto on
+ * otsikko ja kappale eikä yksi rivi (kohta 8), ja teema mitoittaa palkin
+ * yhdelle riville: otsikon oma ylämarginaali (30 px) työntäisi sen irti
+ * palkin ylälaidasta ja kappaleen alamarginaali alalaidasta. Reunimmaiset
+ * marginaalit pois, keskimmäinen jää erottamaan otsikon kuvauksesta.
+ *
+ * Lihavointi jää otsikkoon. Palkin font-weight: 700 on teeman, ja yhden rivin
+ * yhteenvedoissa (63 kpl) se on paikallaan, mutta kokonainen kappale
+ * lihavoituna on raskas eikä erota otsikkoa mitenkään. Kirjassa kumpikaan ei
+ * ole lihavoitu; tässä otsikko on, koska palkki on muuten pelkkää leipätekstiä
+ * eikä otsikko erottuisi kuin koolla. */
+.md-typeset details > summary > :first-child {
+  margin-top: 0;
+}
+
+.md-typeset details > summary > :last-child {
+  margin-bottom: 0;
+}
+
+.md-typeset details > summary > p {
+  font-weight: 400;
+}
+
 
 /* Varjo on ruudun syvyysvihje; paperilla se on harmaa suti reunuksen ympärillä.
  * Materialin classic tekee saman. */

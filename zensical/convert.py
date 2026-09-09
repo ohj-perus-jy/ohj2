@@ -20,9 +20,14 @@ yksi kerrallaan, ks. README.md.
 Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
 """
 
+import hashlib
 import re
 import shutil
+import subprocess
 import sys
+import urllib.error
+import urllib.request
+import zlib
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -156,6 +161,159 @@ ALERT_FALLBACK = "note"
 # Lookahead pitää muunnoksen toistokelpoisena: jo käännetty tagi ohitetaan.
 DETAILS_RE = re.compile(r"<details(?![^>]*\bmarkdown=)(?P<attrs>[^>]*)>")
 
+# Sama <summary>-tagille silloin, kun yhteenveto on omia kappaleitaan.
+# Aineistossa yhteenveto on kolmea muotoa:
+#
+#     <details><summary>Vinkki</summary>              (63, yksi rivi)
+#
+#     <summary><i class="bi ..."></i>Valinnaista       (2, rivitetty teksti)
+#     lisätietoa: Java ei voi päätellä tyyppiä</summary>
+#
+#     <details><summary>                               (6, harjoitustyo.md)
+#
+#     ### Kulujen seuranta
+#
+#     Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
+#
+#     </summary>
+#
+# Vain viimeisessä on Markdownia, ja se jäi avauspalkkiin raakana:
+# "### Kulujen seuranta Tässä sovelluksessa...".
+#
+# Ero kahden jälkimmäisen välillä on tyhjä rivi, ja se on tasan sama raja kuin
+# kirjassa: pulldown-cmark lopettaa raa'an HTML-lohkon ensimmäiseen tyhjään
+# riviin ja jäsentää siitä eteenpäin Markdownia. Ilman tyhjää riviä kirjakin
+# päästää yhteenvedon läpi sellaisenaan, joten kahteen rivitettyyn tekstiin ei
+# kosketa — muuten niiden teksti käärittäisiin <p>:hen, joka toisi avauspalkkiin
+# kappaleen marginaalit.
+#
+# Arvo on "block" eikä "1", koska md_in_html jakaa lohkotason tagit kahtia
+# (md_in_html.py: span_tags): <summary> on niiden joukossa, joiden sisältö saa
+# oletuksena vain rivinsisäisen jäsennyksen — samoin kuin <p> ja <li> — ja
+# markdown="1" tarkoittaisi siis samaa kuin markdown="span", jolloin otsikko
+# jäisi yhä risuaidoiksi. Vain "block" pakottaa lohkojäsennyksen.
+SUMMARY_RE = re.compile(r"<summary(?![^>]*\bmarkdown=)(?P<attrs>[^>]*)>")
+SUMMARY_END = "</summary>"
+
+# Omaksi kappaleekseen jäänyt <br />, ks. README.md kohta 8. Aineistossa niitä
+# on neljä, kaikki <details>-lohkon tai koodiaidan jäljessä: ne on kirjoitettu
+# väljyydeksi lohkojen väliin. Python-Markdown tekee rivistä oman kappaleen
+# (<p><br /></p>), joka vie sivulla kokonaisen rivin verran tilaa omien
+# marginaaliensa lisäksi — kahden peräkkäisen avattavan osion väli
+# kolminkertaistui (25 px -> ~75 px). Väljyys on jo laatikossa itsessään:
+# Materialilla margin: 1.5625em 0, ja mdBookissa margin-block: 1em
+# (theme/css/general.css), joten rivi on nykyisin turha molemmissa.
+#
+# Vain omalla rivillään ja sarakkeessa 0 oleva tagi pudotetaan: rivin lopussa
+# <br /> on oikea rivinvaihto kappaleen sisällä, ja sisennetty rivi voisi olla
+# sisennettyä koodia.
+BREAK_LINE_RE = re.compile(r"^<br\s*/?>\s*$")
+
+# Harjoitustyön vaatimusdivit, ks. README.md kohta 25. Ongelma on sama kuin
+# <details>-lohkoissa, ja aineistossa divejä on tasan yhdeksän, kaikki
+# harjoitustyo.md:ssä: uloin <div class="ht-reqs"> ja sen sisällä kahdeksan
+# <div class="req">, joissa on koko harjoitustyön arviointiperuste. Ilman
+# attribuuttia niiden 190 riviä — kahdeksan otsikkoa, numeroidut listat ja
+# lihavoinnit — jäivät sivulle yhtenä raakana Markdown-pötkönä.
+#
+# Attribuutti tarvitaan myös uloimpaan diviin: md_in_html ei etene sisempiin
+# lohkoihin, jos uloin on käsittelemätöntä HTML:ää (sama syy kuin
+# tehtäväkorttien ulommassa divissä, kohta 6).
+#
+# Divi ei ole span_tagsissa toisin kuin <summary>, joten tähän riittää "1".
+#
+# Lookahead pitää muunnoksen toistokelpoisena, kuten DETAILS_RE:ssä.
+DIV_RE = re.compile(r"<div(?![^>]*\bmarkdown=)(?P<attrs>[^>]*)>")
+
+# Luokkakaaviot, ks. README.md kohta 15. mdBookissa ```plantuml-aidan sisältö
+# ei ole koodia vaan kaavion lähde, jonka mdbook-plantuml lähettää
+# PlantUML-palvelimelle (book.toml: plantuml-cmd) ja korvaa aidan palvelimen
+# palauttamalla SVG:llä. Zensicalille aita on tavallinen koodilohko, joten sivulla
+# näkyi 20 riviä "@startuml / class Kategoria { ... }" siinä missä kirjassa on
+# kaavio. Tämä on aineiston 17 kaaviosta jokaisen kohdalla iso ero: luokkien
+# väliset suhteet ovat juuri se, mitä kaaviolla kerrotaan.
+#
+# Sama palvelin kuin kirjassa, sama tapa: kaavio pakataan URL-osoitteeseen ja
+# vastaus talletetaan tiedostoksi, jonka nimi on lähteen sha1. Aita korvataan
+# kuvaviittauksella.
+#
+# Osoitteen pakkaus on PlantUMLin oma: raaka deflate (zlib-otsikko ja
+# tarkiste pois) ja base64 omalla aakkostolla. Palvelin vaatii User-Agentin;
+# ilman sitä vastaus on 403.
+#
+# Tiedostot ovat versionhallinnassa (assets/plantuml/), eivät kertakäyttöisessä
+# docs/:ssä, ja se on tarkoituksellista: silloin käännös ei tarvitse verkkoa
+# eikä ole PlantUML-palvelimen varassa. Verkkoon mennään vain, kun kaavion
+# lähde on muuttunut tai uusi kaavio on lisätty; muulloin luetaan levyltä.
+# Jos palvelin ei vastaa, aita jätetään ennalleen ja ajo varoittaa — käännös ei
+# siis kaadu koneella, jossa ei ole verkkoa, vaan sivu palaa siihen mitä se oli
+# ennen tätä kohtaa.
+#
+# Käyttämättä jääneet tiedostot siivotaan ajon lopuksi, jottei muokatun kaavion
+# vanha versio jäisi hakemistoon.
+PLANTUML_FENCE_RE = re.compile(r"^(?P<indent>\s*)(?P<fence>```+|~~~+)plantuml\s*$")
+PLANTUML_URL = "https://www.plantuml.com/plantuml/svg/"
+PLANTUML_AGENT = "ohj2-zensical-koeputki"
+PLANTUML_DIR = ASSETS / "plantuml"
+PLANTUML_ALPHABET = (
+    "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-_")
+
+# Aineiston kaikki 17 kaaviota ovat luokkakaavioita (class/interface), joten
+# vaihtoehtoinen teksti voi olla tarkka. mdBook jättää alt-tekstin tyhjäksi.
+PLANTUML_ALT = "UML-luokkakaavio"
+
+# ASCII-kaaviot, ks. README.md kohta 15. ```bob-aidan sisältö on piirros, jonka
+# mdbook-svgbob kääntää SVG:ksi (book.toml: preprocessor.svgbob). Zensicalille
+# aita on koodilohkoa: piirros on luettavissa, koska se on tasavälistä tekstiä,
+# mutta laatikot ovat "+---+" eivätkä viivoja.
+#
+# Piirtäjää ei ole Pythonille. Sama piirtäjä on saatavana omana komentonaan
+# (`cargo install svgbob_cli`, sama svgbob 0.7 kuin mdbook-svgbobin sisällä),
+# ja sitä käytetään tässä. Vaihtoehto olisi ollut ajaa mdbook-svgbobia, joka on
+# koneella jo kirjan takia, mutta se on mdBookin esikäsittelijä: sille pitäisi
+# rakentaa mdBookin oma JSON-sanoma, ja koeputken idea on päästä mdBookista
+# eroon, ei rakentaa sen protokollaa uudelleen.
+#
+# Riippuvuus on pehmeä, samoin kuin luokkakaavioissa: valmiit kaaviot ovat
+# versionhallinnassa (cache/svgbob/), joten käännös ei tarvitse svgbobia
+# lainkaan. Komentoa kutsutaan vain, kun piirros on uusi tai muuttunut, ja jos
+# sitä ei ole asennettu, aita jätetään ennalleen ja ajo varoittaa.
+#
+# Kaaviot upotetaan sivulle sellaisenaan, ei <img>-viittauksena kuten
+# luokkakaaviot: svgbobin SVG saa värinsä CSS-muuttujista, ja <img>:n sisällä
+# oleva SVG ei näe sivun muuttujia. Upotettuna kaavio seuraa teemaa kuten
+# kirjassa (siellä muuttujat ovat --fg ja --mono-font). Siksi cache/svgbob/ on
+# assetsien ulkopuolella: se on välimuisti, ei julkaistava tiedosto.
+#
+# Tyhjät rivit poistetaan: Python-Markdown lopettaisi raa'an HTML-lohkon
+# ensimmäiseen tyhjään riviin. Kääre on <div>, koska <svg> ei ole
+# BLOCK_LEVEL_ELEMENTS-listalla: paljas <svg> päätyisi kappaleen sisään ja
+# rivinvaihdot <br />-tageiksi.
+SVGBOB_FENCE_RE = re.compile(r"^(?P<indent>\s*)(?P<fence>```+|~~~+)bob\s*$")
+SVGBOB_DIR = ROOT / "cache" / "svgbob"
+
+# svgbob kirjoittaa jokaiseen kaavioon samat viisi nuolenkärkimäärittelyä
+# (id="arrow", "circle", ...) riippumatta siitä käyttääkö kaavio niitä. Kahdella
+# kaaviolla samalla sivulla olisi siis samat tunnisteet, ja url(#arrow) osoittaisi
+# aina ensimmäiseen — sivulla osa6/02 kaavioita on neljä. Tunnisteille annetaan
+# siksi sivukohtainen juokseva etuliite. Tulostussivulla print.js lisää vielä
+# luvun oman etuliitteen, joten tunnisteet pysyvät ainutkertaisina myös silloin,
+# kun koko kirja on yhdellä sivulla.
+SVGBOB_ID_RE = re.compile(r'\bid="(?P<name>[^"]+)"')
+SVGBOB_REF_RE = re.compile(r"url\(#(?P<name>[^)]+)\)")
+
+# Piirtoasetukset ovat book.tomlin omat, värit ja kirjasin Zensicalin
+# muuttujiin käännettyinä (kirjassa var(--fg) ja var(--mono-font)).
+SVGBOB_COMMAND = [
+    "svgbob_cli",
+    "--font-size", "14",
+    "--font-family", "var(--md-code-font-family)",
+    "--fill-color", "var(--md-default-fg-color)",
+    "--stroke-color", "var(--md-default-fg-color)",
+    "--stroke-width", "2",
+    "--background", "transparent",
+]
+
 # Tehtäväkortit. mdBookin merkkaus on omia elementtejä, joita HTML ei tunne:
 #
 #     <task>
@@ -217,6 +375,24 @@ def nest_moves() -> dict[str, str]:
         moves[parent] = f"{folder}/index.md"
         moves[child] = f"{folder}/{Path(child).name}"
     return moves
+
+
+def prune_diagrams(folder: Path, used: set[str]) -> int:
+    """Käyttämättömät kaaviotiedostot pois. -> poistettuja.
+
+    Nimi on kaavion lähteen sha1, joten muokattu kaavio jättäisi vanhan
+    tiedoston hakemistoon ikuisiksi ajoiksi. Siivotaan vain, jos ajossa
+    ylipäätään syntyi kaavioita: tyhjä joukko tarkoittaa, ettei piirtäjää
+    saatu, eikä silloin saa poistaa sitä mitä levyllä jo on.
+    """
+    if not used or not folder.is_dir():
+        return 0
+    removed = 0
+    for path in folder.glob("*.svg"):
+        if path.name not in used:
+            path.unlink()
+            removed += 1
+    return removed
 
 
 def build_extra(tab_labels: set[str]) -> str:
@@ -597,14 +773,282 @@ def convert_alerts(text: str) -> tuple[str, int, set[str]]:
     return "\n".join(out), alerts, unknown
 
 
-def convert_details(text: str) -> tuple[str, int]:
-    """<details> -> <details markdown="1">. -> (teksti, tageja).
+def plantuml_encode(source: str) -> str:
+    """Kaavion lähde -> PlantUML-palvelimen osoitepala.
+
+    Raaka deflate (zlib.compress jättää eteen kaksitavuisen otsikon ja perään
+    nelitavuisen tarkisteen, joita PlantUML ei odota) ja sen jälkeen base64
+    PlantUMLin omalla aakkostolla: tavallisen "+/"-parin tilalla on "-_", ja
+    kuusibittiset palat luetaan samassa järjestyksessä kuin tavallisessa
+    base64:ssä. Täytetavut jätetään pois, ei "="-täytettä.
+    """
+    data = zlib.compress(source.encode("utf-8"), 9)[2:-4]
+    encoded: list[str] = []
+    for start in range(0, len(data), 3):
+        chunk = data[start:start + 3]
+        chunk += bytes(3 - len(chunk))
+        bits = chunk[0] << 16 | chunk[1] << 8 | chunk[2]
+        encoded += [PLANTUML_ALPHABET[(bits >> shift) & 63]
+                    for shift in (18, 12, 6, 0)]
+    return "".join(encoded)[:(len(data) * 8 + 5) // 6]
+
+
+def plantuml_svg(source: str) -> str | None:
+    """Kaavion lähde -> tiedostonimi assets/plantuml/:ssä, tai None.
+
+    Nimi on lähteen sha1, joten muuttunut kaavio hakee itsensä uudelleen ja
+    muuttumaton luetaan levyltä. None tarkoittaa, ettei kaaviota saatu: silloin
+    aita jätetään ennalleen eikä käännös kaadu.
+    """
+    name = hashlib.sha1(source.encode("utf-8")).hexdigest() + ".svg"
+    path = PLANTUML_DIR / name
+    if path.is_file():
+        return name
+    request = urllib.request.Request(PLANTUML_URL + plantuml_encode(source),
+                                     headers={"User-Agent": PLANTUML_AGENT})
+    try:
+        with urllib.request.urlopen(request, timeout=30) as response:
+            svg = response.read()
+    except (urllib.error.URLError, OSError) as error:
+        print(f"varoitus: plantuml-palvelin ei vastannut: {error}",
+              file=sys.stderr)
+        return None
+    # Palvelin vastaa 200:lla myös silloin, kun kaaviossa on syntaksivirhe: se
+    # piirtää virheestä oman kuvansa. Se kelpaa tiedostoksi, mutta jokin muu
+    # kuin SVG ei kelpaa.
+    if b"<svg" not in svg[:1000]:
+        print("varoitus: plantuml-palvelin ei palauttanut SVG:tä",
+              file=sys.stderr)
+        return None
+    PLANTUML_DIR.mkdir(parents=True, exist_ok=True)
+    path.write_bytes(svg)
+    return name
+
+
+def convert_plantuml(text: str, page: Path) -> tuple[str, int, set[str]]:
+    """```plantuml-aidat kuviksi. -> (teksti, kaavioita, käytetyt tiedostot).
+
+    Ilman muunnosta aidan sisältö on sivulla koodilohkona, ks.
+    PLANTUML_FENCE_RE. Kuvan osoite on suhteellinen sivun omaan sijaintiin,
+    ja sijainti otetaan siirtojen jälkeisestä polusta (nest_moves): Zensical
+    ratkaisee suhteelliset osoitteet lähdetiedoston mukaan, joten alahakemistoon
+    siirtyvä sivu tarvitsee yhden "../":n enemmän. Aineiston siirrettävillä
+    kahdella sivulla ei ole kaavioita, mutta polku ei saa olla sen varassa.
+    """
+    relative = page.relative_to(DOCS).as_posix()
+    depth = len(Path(nest_moves().get(relative, relative)).parent.parts)
+    prefix = "../" * depth
+    lines = text.split("\n")
+    out: list[str] = []
+    used: set[str] = set()
+    diagrams = 0
+    number = 0
+    while number < len(lines):
+        match = PLANTUML_FENCE_RE.match(lines[number])
+        if not match:
+            out.append(lines[number])
+            number += 1
+            continue
+        end = number + 1
+        while end < len(lines) and lines[end].strip() != match["fence"]:
+            end += 1
+        if end == len(lines):  # sulkematon aita: jätetään rauhaan
+            out.append(lines[number])
+            number += 1
+            continue
+        name = plantuml_svg("\n".join(lines[number + 1:end]).strip() + "\n")
+        if name is None:
+            out.extend(lines[number:end + 1])
+        else:
+            used.add(name)
+            diagrams += 1
+            out.append(f'{match["indent"]}![{PLANTUML_ALT}]'
+                       f"({prefix}assets/plantuml/{name})"
+                       "{ .uml }")
+        number = end + 1
+    return "\n".join(out), diagrams, used
+
+
+def svgbob_svg(art: str) -> str | None:
+    """ASCII-piirros -> SVG:n rivit yhtenä merkkijonona, tai None.
+
+    Nimi on piirroksen sha1, joten muuttunut piirros piirretään uudelleen ja
+    muuttumaton luetaan välimuistista. None tarkoittaa, ettei svgbobia ole
+    asennettu: silloin aita jätetään ennalleen eikä käännös kaadu.
+    """
+    path = SVGBOB_DIR / (hashlib.sha1(art.encode("utf-8")).hexdigest() + ".svg")
+    if path.is_file():
+        return path.read_text(encoding="utf-8")
+    try:
+        result = subprocess.run(SVGBOB_COMMAND, input=art, capture_output=True,
+                                text=True, check=True)
+    except FileNotFoundError:
+        print("varoitus: svgbob_cli puuttuu, ascii-kaaviot jäävät koodilohkoiksi"
+              " (cargo install svgbob_cli)", file=sys.stderr)
+        return None
+    except subprocess.CalledProcessError as error:
+        print(f"varoitus: svgbob epäonnistui: {error.stderr.strip()}",
+              file=sys.stderr)
+        return None
+    SVGBOB_DIR.mkdir(parents=True, exist_ok=True)
+    path.write_text(result.stdout, encoding="utf-8")
+    return result.stdout
+
+
+def svgbob_prefix_ids(svg: str, number: int) -> str:
+    """Kaavion tunnisteet ja niiden viittaukset omaan nimiavaruuteensa.
+
+    Ks. SVGBOB_ID_RE: ilman tätä saman sivun kaavioilla on samat tunnisteet.
+    """
+    svg = SVGBOB_ID_RE.sub(lambda m: f'id="bob{number}-{m["name"]}"', svg)
+    return SVGBOB_REF_RE.sub(lambda m: f'url(#bob{number}-{m["name"]})', svg)
+
+
+def convert_svgbob(text: str) -> tuple[str, int, set[str]]:
+    """```bob-aidat upotetuiksi SVG-kaavioiksi. -> (teksti, kaavioita, nimet).
+
+    Ilman muunnosta piirros on sivulla koodilohkona, ks. SVGBOB_FENCE_RE.
+    Ajetaan convert_divsin jälkeen: muuten kääre saisi markdown="1":n ja
+    md_in_html yrittäisi jäsentää SVG:n sisällön Markdownina.
+
+    Aineistossa yksikään bob-aita ei ole välilehtijoukon sisällä eikä
+    sisennettynä, mutta aidan sisennys kirjoitetaan silti kääreeseen, jotta
+    kaavio pysyisi omalla tasollaan myös sisennetyssä lohkossa.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    used: set[str] = set()
+    diagrams = 0
+    number = 0
+    while number < len(lines):
+        match = SVGBOB_FENCE_RE.match(lines[number])
+        if not match:
+            out.append(lines[number])
+            number += 1
+            continue
+        end = number + 1
+        while end < len(lines) and lines[end].strip() != match["fence"]:
+            end += 1
+        if end == len(lines):  # sulkematon aita: jätetään rauhaan
+            out.append(lines[number])
+            number += 1
+            continue
+        art = "\n".join(lines[number + 1:end]) + "\n"
+        svg = svgbob_svg(art)
+        if svg is None:
+            out.extend(lines[number:end + 1])
+        else:
+            used.add(hashlib.sha1(art.encode("utf-8")).hexdigest() + ".svg")
+            diagrams += 1
+            svg = svgbob_prefix_ids(svg, diagrams)
+            indent = match["indent"]
+            out.append(f'{indent}<div class="svgbob">')
+            out += [indent + line for line in svg.split("\n") if line.strip()]
+            out.append(f"{indent}</div>")
+        number = end + 1
+    return "\n".join(out), diagrams, used
+
+
+def summary_has_blank_line(lines: list[str], number: int) -> bool:
+    """Onko rivillä alkavassa yhteenvedossa tyhjä rivi ennen </summary>:ä?
+
+    Se on raja, jonka takana yhteenveto on Markdownia myös kirjassa, ks.
+    SUMMARY_RE. Yhden rivin yhteenveto ja sulkematta jäänyt tagi vastaavat
+    molemmat ei.
+    """
+    start = lines[number].find("<summary")
+    if start < 0 or SUMMARY_END in lines[number][start:]:
+        return False
+    for line in lines[number + 1:]:
+        if SUMMARY_END in line:
+            return False
+        if not line.strip():
+            return True
+    return False
+
+
+def convert_details(text: str) -> tuple[str, int, int]:
+    """<details> ja monirivinen <summary> markdown-attribuutilla.
+
+    -> (teksti, details-tageja, summary-tageja).
 
     Ilman attribuuttia lohkon sisältö menee sivulle lähdemuodossaan, ks.
-    DETAILS_RE. Koodiaidat ohitetaan, jottei aidan sisällä oleva HTML-esimerkki
-    muuttuisi; aidat käydään pareittain kuten convert_fencesissä. Aineistossa
-    yhtään <details>-tagia ei tällä hetkellä ole aidan sisällä, mutta samaa
-    varovaisuutta noudatetaan kuin muissakin muunnoksissa.
+    DETAILS_RE ja SUMMARY_RE. Koodiaidat ohitetaan, jottei aidan sisällä oleva
+    HTML-esimerkki muuttuisi; aidat käydään pareittain kuten convert_fencesissä.
+    Aineistossa yhtään <details>-tagia ei tällä hetkellä ole aidan sisällä,
+    mutta samaa varovaisuutta noudatetaan kuin muissakin muunnoksissa.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    open_fence: str | None = None
+    tags = summaries = 0
+    for number, line in enumerate(lines):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            line, found = DETAILS_RE.subn(
+                lambda m: f'<details{m["attrs"]} markdown="1">', line)
+            tags += found
+            if summary_has_blank_line(lines, number):
+                line, found = SUMMARY_RE.subn(
+                    lambda m: f'<summary{m["attrs"]} markdown="block">', line)
+                summaries += found
+        out.append(line)
+    return "\n".join(out), tags, summaries
+
+
+def drop_breaks(text: str) -> tuple[str, int]:
+    """Omaksi kappaleekseen jäänyt <br />-rivi pois. -> (teksti, rivejä).
+
+    Ks. BREAK_LINE_RE. Tyhjä rivi kummallakin puolella on ehto, koska juuri se
+    tekee rivistä oman kappaleen; toinen niistä poistetaan tagin mukana, jottei
+    tilalle jäisi kahta peräkkäistä tyhjää riviä. Koodiaidat ohitetaan
+    pareittain kuten convert_detailsissä, jottei koodilohkossa näytetty
+    HTML-esimerkki muuttuisi.
+    """
+    lines = text.split("\n")
+    out: list[str] = []
+    open_fence: str | None = None
+    breaks = 0
+    drop_blank = False
+    for number, line in enumerate(lines):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None and BREAK_LINE_RE.match(line):
+            before = out[-1].strip() if out else ""
+            after = lines[number + 1].strip() if number + 1 < len(lines) else ""
+            if not before and not after:
+                breaks += 1
+                drop_blank = True
+                continue
+        if drop_blank:
+            drop_blank = False
+            if not line.strip():
+                continue
+        out.append(line)
+    return "\n".join(out), breaks
+
+
+def convert_divs(text: str) -> tuple[str, int]:
+    """Rivin aloittava <div> -> <div markdown="1">. -> (teksti, tageja).
+
+    Ilman attribuuttia divin sisältö menee sivulle lähdemuodossaan, ks. DIV_RE.
+    Vain rivin aloittava tagi muunnetaan: Python-Markdown tunnistaa lohkotason
+    HTML:n vain omana kappaleenaan, joten kesken kappaleen olevalle diville
+    attribuutti ei tekisi mitään. Koodiaidat ohitetaan pareittain kuten
+    convert_detailsissä.
+
+    Ajetaan ennen convert_tasksia, joten muunnos näkee vain lähteen omat divit:
+    tehtäväkorttien divit syntyvät vasta sen jälkeen ja saavat attribuuttinsa
+    (tai jäävät tarkoituksella ilman) siellä.
     """
     out: list[str] = []
     open_fence: str | None = None
@@ -616,9 +1060,9 @@ def convert_details(text: str) -> tuple[str, int]:
         elif (match and not match["info"].strip()
                 and len(match["fence"]) >= len(open_fence)):
             open_fence = None
-        elif open_fence is None:
-            line, found = DETAILS_RE.subn(
-                lambda m: f'<details{m["attrs"]} markdown="1">', line)
+        elif open_fence is None and line.lstrip().startswith("<div"):
+            line, found = DIV_RE.subn(
+                lambda m: f'<div{m["attrs"]} markdown="1">', line)
             tags += found
         out.append(line)
     return "\n".join(out), tags
@@ -839,7 +1283,10 @@ def main() -> int:
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
     sets = placeholders = blocks = files = fences = includes = alerts = 0
-    details = tasks = 0
+    details = summaries = divs = tasks = diagrams = drawings = 0
+    breaks = 0
+    used_diagrams: set[str] = set()
+    used_drawings: set[str] = set()
     tab_labels: set[str] = set()
     unknown_alerts: set[str] = set()
     for page in sorted(DOCS.rglob("*.md")):
@@ -858,13 +1305,29 @@ def main() -> int:
         # sisennetty aita jää tunnistamatta. convert_files kirjoittaa omat
         # aitansa jo valmiiksi oikeaan muotoon.
         converted, page_fences = convert_fences(converted)
+        # Luokkakaaviot aitojen jälkeen ja välilehtien edellä: convert_tabs
+        # sisentää osion sisällön, ja sisennetty aita jäisi tunnistamatta.
+        # Sisällytysten jälkeen, koska kaksi kaaviota on tehtävänannoissa.
+        converted, page_diagrams, page_used = convert_plantuml(converted, page)
         # Alertit ennen välilehtiä: convert_tabs sisentää osion sisällön, ja
         # sisennetty ">" ei ole enää lainauslohkon alku. Toisin päin alertti
         # jäisi välilehden sisällä kääntämättä.
         converted, page_alerts, page_unknown = convert_alerts(converted)
-        # <details>-tagit: paikalla ei ole väliä, sillä mikään muu muunnos ei
-        # koske raakaan HTML:ään eikä tämä muuhun kuin avaustagin attribuutteihin.
-        converted, page_details = convert_details(converted)
+        # <details>- ja <summary>-tagit: paikalla ei ole väliä, sillä mikään muu
+        # muunnos ei koske raakaan HTML:ään eikä tämä muuhun kuin avaustagien
+        # attribuutteihin.
+        converted, page_details, page_summaries = convert_details(converted)
+        # <br />-rivit heti details-lohkojen jälkeen: kohde on sama eli lohkojen
+        # väli, ks. drop_breaks. Muihin muunnoksiin nähden järjestyksellä ei ole
+        # väliä; sisällytysten jälkeen kuten kaikki muutkin, koska kolme
+        # neljästä rivistä on tehtävänannoissa.
+        converted, page_breaks = drop_breaks(converted)
+        # Divit ennen tehtäväkortteja: silloin muunnos näkee vain lähteen omat
+        # divit, ei convert_tasksin kirjoittamia. Ks. convert_divs.
+        converted, page_divs = convert_divs(converted)
+        # ASCII-kaaviot divien jälkeen: convert_divs lisäisi kääreeseen
+        # markdown="1":n, ja md_in_html yrittäisi jäsentää SVG:n Markdownina.
+        converted, page_drawings, page_art = convert_svgbob(converted)
         # Tehtäväkortit ennen välilehtiä: convert_tabs sisentää osion sisällön
         # neljällä välilyönnillä, ja sisennetty HTML-lohko olisi koodilohko.
         # Muihin muunnoksiin nähden järjestyksellä ei ole väliä: tämä koskee
@@ -882,7 +1345,14 @@ def main() -> int:
         includes += page_includes
         alerts += page_alerts
         details += page_details
+        summaries += page_summaries
+        breaks += page_breaks
+        divs += page_divs
         tasks += page_tasks
+        diagrams += page_diagrams
+        used_diagrams |= page_used
+        drawings += page_drawings
+        used_drawings |= page_art
         unknown_alerts |= page_unknown
     for old_path, new_path in nest_moves().items():
         source = DOCS / old_path
@@ -902,7 +1372,13 @@ def main() -> int:
     print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
     print(f"aidan attribuutit: {fences} aitaa")
     print(f"sisällytykset: {includes} makroa")
-    print(f"details-lohkot: {details} tagia")
+    print(f"details-lohkot: {details} tagia, {summaries} monirivistä summarya, "
+          f"{breaks} <br />-riviä pois")
+    print(f"divit: {divs} tagia")
+    print(f"luokkakaaviot: {diagrams} kaaviota, "
+          f"{prune_diagrams(PLANTUML_DIR, used_diagrams)} käyttämätöntä poistettu")
+    print(f"ascii-kaaviot: {drawings} kaaviota, "
+          f"{prune_diagrams(SVGBOB_DIR, used_drawings)} käyttämätöntä poistettu")
     print(f"tehtäväkortit: {tasks} korttia")
     print(f"alertit: {alerts} lohkoa"
           + (f", tuntematon tunnus: {', '.join(sorted(unknown_alerts))}"

@@ -17,14 +17,22 @@
  */
 
 :root {
+  /* Rako kiskon ja sisällön väliin, ks. .md-main alempana. 0,8rem on tasan
+   * se, minkä verran sisällysluettelon teksti on omassa sarakkeessaan
+   * sisennettynä (.md-nav__link: 0,2rem marginaali + 0,6rem täyte), eli sen
+   * verran oikea rako on leveämpi kuin vasen ennen tätä. */
+  --jyu-gap: 0.8rem;
+
   /* Kiskon leveys: pohjana mdBookin 15rem, ja sen yli sen verran kuin
    * ruudulla on oikeasti liikaa tilaa. Sisältöruudukon maksimi on 61rem
    * (.md-grid), joten sitä leveämmällä näytöllä kaikki ylimenevä on tyhjää
    * kourua sisällön molemmin puolin — siitä kisko voi ottaa osansa ilman
    * että tekstipalstasta lähtee pikseliäkään. 62rem = ruudukko + varaus
-   * vierityspalkille. Yläraja 16rem, koska sitä leveämpi ei enää estä
-   * yhtään rivitystä valikossa. Zensicalin oletus on 12,1rem. */
-  --jyu-rail: clamp(15rem, 100vw - 62rem, 16rem);
+   * vierityspalkille, ja --jyu-gap sen päälle, koska rako on nyt osa samaa
+   * riviä eikä sekään saa jäädä kiskon syötäväksi. Yläraja 16rem, koska sitä
+   * leveämpi ei enää estä yhtään rivitystä valikossa. Zensicalin oletus on
+   * 12,1rem. */
+  --jyu-rail: clamp(15rem, 100vw - 62rem - var(--jyu-gap), 16rem);
 
   /* Kiskon vierityspalkin väri silloin kun hiiri on valikon päällä mutta ei
    * palkin päällä. Ks. perustelu vierityspalkkisäännöistä alempana. */
@@ -385,10 +393,42 @@
    *    keskittyy koko ruudun leveyteen, jolloin "Edellinen"-linkki ja
    *    tekijätiedot jäävät kiskon alle (mitattu 1440: linkki alkoi x=103,
    *    kisko peittää 0-300). Tausta ja yläreunan viiva saavat jäädä koko
-   *    leveydelle, koska kisko on läpinäkymätön ja piirtyy niiden päälle. */
+   *    leveydelle, koska kisko on läpinäkymätön ja piirtyy niiden päälle.
+   *
+   *    Kiskon päälle --jyu-gap, jotta vasen rako on yhtä leveä kuin oikea.
+   *    Zensical antaa sisällölle saman 1,2rem marginaalin molemmin puolin
+   *    (.md-content__inner), mutta raot eivät silti näytä samoilta: oikealla
+   *    naapuri ei ole sisällysluettelon sarakkeen reuna vaan sen teksti, joka
+   *    on sarakkeen sisällä vielä 0,8rem sisempänä, kun taas vasemmalla
+   *    naapuri on kiskon reunaviiva. Mitattu (Chromium, 1670 x 1080, jolloin
+   *    ruudukko täyttää tilan eikä kouruja ole): vasen rako oli 26,4 px ja
+   *    oikea 44,0 px; tämän jälkeen molemmat 44,0 px.
+   *
+   *    Leveällä näytöllä ruudukko ei täytä tilaa vaan keskittyy, jolloin
+   *    kourut ovat kummallakin puolella satoja pikseleitä ja tämä rako
+   *    katoaa niiden sisään — se on siis mitoitettu juuri siihen tilaan,
+   *    jossa se on ainoa väli kiskon ja tekstin välissä. */
   .md-main,
   .md-footer {
-    padding-left: var(--jyu-rail);
+    padding-left: calc(var(--jyu-rail) + var(--jyu-gap));
+  }
+
+  /* Alatunnisteen sävytetty kaista silti kiinni kiskoon.
+   *
+   * .md-footer-meta on oma taustavärillinen lohkonsa (tekijät, lisenssi,
+   * muokkauslinkki) alatunnisteen sisällä, joten yllä oleva täyte ei siirrä
+   * siinä pelkkää tekstiä vaan koko värillisen kaistan reunan: kiskon ja
+   * kaistan väliin jäisi 0,8rem lovi sivun taustaa. Ylempänä olevaan
+   * .md-footerin omaan taustaan ja yläreunan viivaan tätä ei tule, koska ne
+   * ovat täytteen ulkopuolella eli jatkuvat kiskon alle asti.
+   *
+   * Negatiivinen marginaali vetää kaistan reunan takaisin kiskoon kiinni ja
+   * saman kokoinen täyte palauttaa sen sisällön entiselle paikalleen, eli
+   * .md-footer-meta__inner ja sen tekstit pysyvät pikselilleen samassa
+   * linjassa sisällön kanssa. */
+  .md-footer-meta {
+    margin-left: calc(-1 * var(--jyu-gap));
+    padding-left: var(--jyu-gap);
   }
 
   /* 3. Yläpalkin rivi reunasta reunaan, jotta logo ja kurssin nimi

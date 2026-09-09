@@ -1,0 +1,132 @@
+/* Taulukot: keskitys, otsikkorivin väri ja vuororivit.
+ *
+ * mdBookissa taulukko on keskitetty ja väritetty (theme/css/general.css:
+ * "table { margin: auto auto 1.5em auto }", otsikkorivillä --table-header-bg
+ * ja joka toisella rivillä --table-alternate-bg). Zensical piirtää sen
+ * harmaana ristikkona sivun vasempaan laitaan: reunus ja rivien väliviivat
+ * ovat --md-typeset-table-color, ja väriä on vain hover-korostuksessa.
+ * Aineiston 27 taulukosta 22 on 2-3-sarakkeisia, eli kapeita — vasempaan
+ * laitaan tarrautuneena ne näyttävät tekstin sekaan unohtuneilta.
+ *
+ * Värit teeman muuttujista
+ * ------------------------
+ * Sävy tulee --md-typeset-a-color -muuttujasta eli samasta, jolla teema
+ * piirtää linkit ja jolla tehtäväkortit (assets/css/tasks.css) on jo
+ * väritetty. Se on ainoa Materialin muuttuja, joka on *molemmissa* teemoissa
+ * oikea: vaaleassa indigo #4051b5, tummassa vaaleampi #5488e8.
+ * --md-primary-fg-color olisi molemmissa sama tumma indigo, eli tummalla
+ * taustalla se ei erottuisi.
+ *
+ * Tästä seuraa, että kohta 18 (JYU-paletti) hoitaa taulukot mukanaan: kun
+ * paletti vaihdetaan, otsikkorivi vaihtuu samalla eikä tänne tarvitse
+ * koskea. Kirjan #dfe9f0 ei siksi ole tässä kovakoodattuna, vaikka
+ * lopputulos vaaleassa teemassa on käytännössä sama vaalea sinisävy.
+ *
+ * Sävyt kirjoitetaan color-mixillä läpinäkyviksi eikä valmiiksi väreiksi,
+ * jotta sama arvo toimii kummallakin taustalla: teema antaa taululle
+ * --md-default-bg-color -taustan, jonka päälle nämä sekoittuvat.
+ *
+ * Kaksi eroa kirjaan
+ * ------------------
+ * 1. Pystyviivoja ei ole. Kirjassa jokaisella solulla on reunus joka
+ *    sivulla, Materialilla vain rivien välissä; jälkimmäinen säilytetään,
+ *    koska väritys tekee rivit muutenkin luettaviksi.
+ * 2. Vuororivi on 3,5 % tekstin väriä, kirjan #e6e8ea:n sijaan. Materialin
+ *    solupehmuste on kirjaa reilumpi (.9375em vs. 5px), joten yhtä tumma
+ *    raita olisi paljon isompi pinta.
+ */
+
+/* 1. Keskitys.
+ *
+ * Teema kietoo taulukon ajonaikaisesti kahteen div-elementtiin (bundle.js:
+ * "md-typeset__scrollwrap" > "md-typeset__table"), jotta leveä taulukko
+ * vierii vaakasuunnassa palstan levyisessä laatikossa. Keskitys kuuluu
+ * siksi kääreelle eikä taululle: se on niistä sisempi ja teeman tyyleissä
+ * inline-block, eli valmiiksi sisältönsä levyinen mutta kiinni vasemmassa
+ * laidassa.
+ *
+ * "display: block" + "width: fit-content" pitää leveyden ennallaan -
+ * fit-content antaa saman kutistuvan leveyden kuin inline-block, myös
+ * ylärajan eli palstan leveyden - mutta tekee automarginaaleista tehokkaat.
+ * Ylärajaa ei kirjoiteta tähän: kun taulukko ei mahdu kapeimmillaankaan
+ * palstalle, kääre saa olla sitä leveämpi ja scrollwrap hoitaa vierityksen.
+ */
+.md-typeset__table {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* Sama taululle itselleen siltä varalta, ettei käärettä ole: kääreen tekee
+ * JavaScript, ja tulostussivun (assets/js/print.js) luvut kootaan sivulle
+ * sen jälkeen. Ilman tätä koko kirjan PDF:ssä taulukot olisivat vasemmassa
+ * laidassa. */
+.md-typeset table:not([class]) {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* Kääreen sisällä taulukko saa jäädä tauluksi. Teemalla on tähän oma
+ * sääntönsä ("html .md-typeset__table table"), mutta sen tarkkuus (0,1,2) on
+ * yllä olevaa pienempi, joten se on toistettava tässä. Tarkkuus on sama
+ * (0,2,1) ja sääntö myöhemmin, joten tämä voittaa. */
+.md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+  margin: 0;
+}
+
+/* Paperilla vieritettävää laatikkoa ei ole, joten teema palauttaa siellä
+ * kääreen block-elementiksi. Automarginaali keskittää sen edelleen. */
+
+/* 2. Sävyt. Tummassa teemassa taustan ja tekstin kontrasti on suurempi, ja
+ * sama peitto näyttää siinä laimeammalta, joten otsikkorivi ja hover ovat
+ * siellä vahvempia. */
+.md-typeset table:not([class]) {
+  --tbl-head-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+  --tbl-head-rule: color-mix(in srgb, var(--md-typeset-a-color) 50%, transparent);
+  --tbl-zebra-bg: color-mix(in srgb, var(--md-default-fg-color) 4%, transparent);
+  --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 8%, transparent);
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
+  --tbl-head-bg: color-mix(in srgb, var(--md-typeset-a-color) 20%, transparent);
+  --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+}
+
+/* Otsikkorivi. Väri menee thead-ryhmään eikä soluihin, jotta se jatkuu
+ * yhtenäisenä myös solujen välistä. */
+.md-typeset table:not([class]) thead {
+  background-color: var(--tbl-head-bg);
+}
+
+/* Otsikon ja sisällön raja korostusvärillä. Teema piirtää rivien väliviivat
+ * solujen ylälaitaan, joten ensimmäisen sisältörivin viiva otetaan pois -
+ * muuten tähän tulisi kaksi viivaa päällekkäin. */
+.md-typeset table:not([class]) thead th {
+  border-bottom: .1rem solid var(--tbl-head-rule);
+}
+
+.md-typeset table:not([class]) tbody tr:first-child td {
+  border-top: none;
+}
+
+/* Vuororivit. */
+.md-typeset table:not([class]) tbody tr:nth-child(2n) {
+  background-color: var(--tbl-zebra-bg);
+}
+
+/* Hover on teeman oma ominaisuus ja se säilytetään, mutta kahdella
+ * muutoksella: väri on korostusvärin sävy, jotta se erottuu vuororiviyydestä
+ * (teeman --md-typeset-table-color--light on käytännössä sama harmaa kuin
+ * raita), ja teeman laatikkovarjo pois - se piirsi rivin ylälaitaan
+ * taustanvärisen viivan peittämään väliviivan, mikä raitojen kanssa katkaisee
+ * rivin.
+ *
+ * Sääntö on vuororivin jälkeen, koska tarkkuus on sama (0,3,3): raita
+ * voittaisi hoverin, jos järjestys olisi toisin päin. */
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: var(--tbl-hover-bg);
+  box-shadow: none;
+}

@@ -143,6 +143,78 @@ def test_every_include_is_expanded(printed):
         r"() => document.body.textContent.match(/\{\{#include[^}]*\}\}/g)") is None
 
 
+def test_every_diagram_is_drawn(printed):
+    """Kaaviot ovat kuvia, eivät lähdekoodia (kohta 15).
+
+    "@startuml" ei esiinny aineistossa muualla kuin ```plantuml-aidan
+    ensimmäisellä rivillä, joten jos se näkyy sivulla, jokin aita on jäänyt
+    kääntämättä — esimerkiksi siksi, että kaavio on uusi eikä sitä ole
+    assets/plantuml/:ssä eikä PlantUML-palvelinta saatu kiinni.
+
+    Kaavioiden lukumäärää ei väitetä, koska se muuttuu materiaalin mukana;
+    sen sijaan vaaditaan, ettei yksikään kääre ole tyhjä."""
+    diagrams = printed.evaluate("""() => ({
+      startuml: (document.body.textContent.match(/@startuml/g) || []).length,
+      uml: document.querySelectorAll('img.uml').length,
+      svgbob: document.querySelectorAll('div.svgbob').length,
+      emptyBob: [...document.querySelectorAll('div.svgbob')]
+        .filter(d => !d.querySelector('svg')).length,
+    })""")
+    assert diagrams["startuml"] == 0
+    assert diagrams["uml"] > 0 and diagrams["svgbob"] > 0
+    assert diagrams["emptyBob"] == 0
+
+
+def test_no_raw_markdown_leaks_into_the_page(printed):
+    """Raaka HTML-lohko päästää sisältönsä läpi sellaisenaan, ja silloin
+    otsikko jää risuaidoiksi ja lihavointi tähdiksi keskelle leipätekstiä.
+    Näin kävi harjoitustyön kahdeksalle vaatimuslohkolle (kohta 25) ja kuudelle
+    aihelohkolle (kohta 8), ja sama toistuu heti, jos aineistoon tulee uusi
+    <div> tai <summary> ilman markdown-attribuuttia.
+
+    Koodi rajataan ulos: aidan sisällä risuaita on kommentti ja tähti
+    laskutoimitus."""
+    leaked = printed.evaluate(r"""() => {
+      const walker = document.createTreeWalker(
+        document.querySelector('.md-content__inner'), NodeFilter.SHOW_TEXT);
+      const raw = [];
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        if (node.parentElement.closest('pre, code')) continue;
+        for (const line of node.textContent.split('\n'))
+          if (/^\s*#{1,6}\s\S/.test(line) || /\*\*\S/.test(line))
+            raw.push(line.trim().slice(0, 70));
+      }
+      return raw;
+    }""")
+    assert leaked == []
+
+
+def test_requirement_numbers_come_from_the_counter(printed):
+    """Harjoitustyön vaatimuskohdat numeroidaan lohkon ja kohdan mukaan
+    (1.1, 1.2, ...), koska niihin viitataan numerolla sekä samalla sivulla
+    että osien 9-12 ohjeissa. Numero tulee CSS-laskurista kuten kirjassakin,
+    joten testi kysyy laskuria: jos assets/css/requirements.css jää pois
+    mkdocs.yml:stä, kohdat numeroituisivat hiljaisesti uudelleen 1:stä."""
+    counters = printed.evaluate("""() => {
+      const reqs = [...document.querySelectorAll('.ht-reqs .req')];
+      return {
+        blocks: reqs.length,
+        reset: [...document.querySelectorAll('.ht-reqs')]
+          .map(e => getComputedStyle(e).counterReset),
+        increment: [...new Set(reqs.map(e => getComputedStyle(e).counterIncrement))],
+        marker: [...new Set(reqs.map(e => {
+          const item = e.querySelector(':scope > ol > li');
+          return item && getComputedStyle(item, '::marker').content;
+        }))],
+      };
+    }""")
+    assert counters["blocks"] == 8
+    assert counters["reset"] == ["req 0"]
+    assert counters["increment"] == ["req 1"]
+    assert counters["marker"] == ['counter(req) "." counter(list-item) " "']
+
+
 def test_every_image_is_loaded(printed):
     """Tulostus odottaa kuvia, joten yksikään ei saa jäädä tyhjäksi laatikoksi
     paitsi tunnetun poikkeuksen verran."""

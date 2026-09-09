@@ -8,6 +8,8 @@ Lähdepuuna on tests/book/src, joka on tarkoituksella pieni mutta sisältää
 yhden esimerkin jokaisesta muunnoksesta.
 """
 
+import zlib
+
 import pytest
 
 import convert
@@ -248,31 +250,233 @@ def test_convert_details_marks_the_block_for_markdown():
     """Ilman markdown-attribuuttia Python-Markdown ei käsittele lohkon
     sisältöä lainkaan, vaan numeroitu lista ja linkit jäävät lähdemuotoonsa."""
     text = "<details><summary>Vinkki</summary>\n\n1. eka\n2. toka\n\n</details>\n"
-    converted, tags = convert.convert_details(text)
+    converted, tags, summaries = convert.convert_details(text)
     assert converted.startswith('<details markdown="1"><summary>Vinkki</summary>')
-    assert tags == 1
+    assert (tags, summaries) == (1, 0)
 
 
 def test_convert_details_keeps_existing_attributes():
     """Aineistossa on myös <details closed>. Attribuutti ei ole HTML:ää eikä
     tee mitään, mutta se jätetään paikalleen — lopputulos on sama."""
-    converted, tags = convert.convert_details("<details closed>\n")
+    converted, tags, summaries = convert.convert_details("<details closed>\n")
     assert converted == '<details closed markdown="1">\n'
-    assert tags == 1
+    assert (tags, summaries) == (1, 0)
 
 
 def test_convert_details_is_repeatable():
     """convert.py ajetaan uudelleen aina kun lähde muuttuu: jo käännetty tagi
     ei saa saada toista attribuuttia."""
     text = '<details markdown="1">\n'
-    assert convert.convert_details(text) == (text, 0)
+    assert convert.convert_details(text) == (text, 0, 0)
 
 
 def test_convert_details_ignores_details_inside_code():
     """Aidat käydään pareittain kuten convert_fencesissä, jottei koodilohkossa
     näytetty HTML-esimerkki muuttuisi."""
     text = "```html\n<details>\n```\n"
-    assert convert.convert_details(text) == (text, 0)
+    assert convert.convert_details(text) == (text, 0, 0)
+
+
+def test_convert_details_marks_a_summary_that_is_its_own_block():
+    """Harjoitustyön aihelohkoissa yhteenveto on otsikko ja kappale. Ilman
+    attribuuttia ne jäävät avauspalkkiin muodossa "### Kulujen seuranta ...".
+
+    Arvo on "block" eikä "1": md_in_html jäsentäisi <summary>-tagin sisällön
+    muuten vain rivinsisäisesti, ks. SUMMARY_RE."""
+    text = ("<details><summary>\n\n### Kulujen seuranta\n\nKuvaus.\n\n"
+            "</summary>\n\nSisältö.\n\n</details>\n")
+    converted, tags, summaries = convert.convert_details(text)
+    assert converted.startswith(
+        '<details markdown="1"><summary markdown="block">')
+    assert (tags, summaries) == (1, 1)
+
+
+def test_convert_details_leaves_a_one_line_summary_alone():
+    """Yhden rivin yhteenvedossa ei ole Markdownia, ja markdown="block"
+    käärisi tekstin <p>:hen eli muuttaisi avauspalkin välistyksen."""
+    converted, _, summaries = convert.convert_details(
+        "<details><summary>Vinkki</summary>\n")
+    assert "<summary>" in converted
+    assert summaries == 0
+
+
+def test_convert_details_leaves_a_wrapped_summary_alone():
+    """Kahdessa yhteenvedossa teksti jatkuu seuraavalle riville ilman tyhjää
+    riviä. Sama raja kuin kirjassa: ilman tyhjää riviä pulldown-cmark ei
+    jäsennä yhteenvetoa Markdownina, joten sitä ei tarvitse merkitä."""
+    text = "<details><summary>Valinnaista lisätietoa:\nJava ei voi</summary>\n"
+    converted, _, summaries = convert.convert_details(text)
+    assert "<summary>Valinnaista" in converted
+    assert summaries == 0
+
+
+def test_drop_breaks_removes_the_spacer_between_two_blocks():
+    """Väljyydeksi kirjoitettu <br /> jää omaksi kappaleekseen (<p><br /></p>)
+    ja kolminkertaistaa lohkojen välin, ks. BREAK_LINE_RE. Tyhjiä rivejä jää
+    yksi, ei kahta."""
+    text = "</details>\n\n<br />\n\n<details>\n"
+    assert convert.drop_breaks(text) == ("</details>\n\n<details>\n", 1)
+
+
+def test_drop_breaks_accepts_every_spelling():
+    """Aineistossa muoto on <br />, mutta HTML sallii myös nämä."""
+    for tag in ("<br>", "<br/>", "<br />", "<br />  "):
+        text = f"eka\n\n{tag}\n\ntoka\n"
+        assert convert.drop_breaks(text) == ("eka\n\ntoka\n", 1)
+
+
+def test_drop_breaks_keeps_a_line_break_inside_a_paragraph():
+    """Rivin lopussa <br /> on oikea rivinvaihto eikä väljyyttä."""
+    text = "rivi<br />\nseuraava rivi\n"
+    assert convert.drop_breaks(text) == (text, 0)
+
+
+def test_drop_breaks_keeps_an_indented_tag():
+    """Sisennetty rivi voisi olla sisennettyä koodia, ks. BREAK_LINE_RE."""
+    text = "eka\n\n    <br />\n\ntoka\n"
+    assert convert.drop_breaks(text) == (text, 0)
+
+
+def test_drop_breaks_ignores_breaks_inside_code():
+    """Aidat käydään pareittain kuten convert_detailsissä."""
+    text = "```html\n\n<br />\n\n```\n"
+    assert convert.drop_breaks(text) == (text, 0)
+
+
+def test_drop_breaks_is_repeatable():
+    """convert.py ajetaan uudelleen aina kun lähde muuttuu."""
+    text = "</details>\n\n<details>\n"
+    assert convert.drop_breaks(text) == (text, 0)
+
+
+# --- Luokkakaaviot (README kohta 15) -----------------------------------------
+
+def test_plantuml_encode_round_trips():
+    """Osoitepala on raakaa deflatea PlantUMLin omalla base64-aakkostolla.
+
+    Palvelimen vastauksesta ei voi tehdä testiä (se vaatisi verkon), eikä
+    valmista vertailumerkkijonoa voi kirjoittaa tähän: zlib saa tuottaa saman
+    tekstin monella eri tavalla pakattuna. Sen sijaan puretaan takaisin —
+    silloin testi kattaa juuri sen mikä voi mennä rikki: aakkoston ja
+    kehyksettömän deflaten."""
+    source = "@startuml\nclass Kissa\n@enduml"
+    encoded = convert.plantuml_encode(source)
+    reverse = {ch: i for i, ch in enumerate(convert.PLANTUML_ALPHABET)}
+    bits = "".join(f"{reverse[ch]:06b}" for ch in encoded)
+    data = bytes(int(bits[i:i + 8], 2) for i in range(0, len(bits) // 8 * 8, 8))
+    assert zlib.decompress(data, -15) == source.encode("utf-8")
+
+
+def test_convert_plantuml_replaces_the_fence_with_an_image(monkeypatch):
+    """Ilman muunnosta aidan sisältö on sivulla koodilohkona: kirjassa on
+    kaavio, tässä 20 riviä @startuml-lähdettä."""
+    monkeypatch.setattr(convert, "plantuml_svg", lambda source: "abc.svg")
+    text = "ennen\n\n```plantuml\n@startuml\nclass Kissa\n@enduml\n```\n\njälkeen\n"
+    converted, diagrams, used = convert.convert_plantuml(
+        text, convert.DOCS / "harjoitustyo.md")
+    assert converted == ("ennen\n\n![UML-luokkakaavio]"
+                         "(assets/plantuml/abc.svg){ .uml }\n\njälkeen\n")
+    assert (diagrams, used) == (1, {"abc.svg"})
+
+
+def test_convert_plantuml_path_follows_the_page(monkeypatch):
+    """Zensical ratkaisee suhteellisen osoitteen lähdetiedoston mukaan, joten
+    alahakemistossa oleva sivu tarvitsee yhden "../":n."""
+    monkeypatch.setattr(convert, "plantuml_svg", lambda source: "abc.svg")
+    converted, _, _ = convert.convert_plantuml(
+        "```plantuml\n@startuml\n@enduml\n```\n", convert.DOCS / "osa3/01-perinta.md")
+    assert "(../assets/plantuml/abc.svg)" in converted
+
+
+def test_convert_plantuml_keeps_the_fence_when_the_server_is_silent(monkeypatch):
+    """Kaaviot ovat versionhallinnassa, joten käännös ei tarvitse verkkoa. Jos
+    kaavio on uusi eikä palvelin vastaa, sivu palaa siihen mitä se oli ennen
+    tätä kohtaa — käännös ei kaadu."""
+    monkeypatch.setattr(convert, "plantuml_svg", lambda source: None)
+    text = "```plantuml\n@startuml\n@enduml\n```\n"
+    assert convert.convert_plantuml(text, convert.DOCS / "sivu.md") == (text, 0, set())
+
+
+def test_convert_plantuml_leaves_an_unclosed_fence_alone(monkeypatch):
+    """Sulkematon aita on aineiston virhe, ei syy niellä loppusivua."""
+    monkeypatch.setattr(convert, "plantuml_svg", lambda source: "abc.svg")
+    text = "```plantuml\n@startuml\n"
+    assert convert.convert_plantuml(text, convert.DOCS / "sivu.md") == (text, 0, set())
+
+
+def test_convert_svgbob_wraps_the_drawing_in_a_div(monkeypatch):
+    """Paljas <svg> ei ole Python-Markdownille lohkotason HTML:ää: se päätyisi
+    kappaleen sisään ja rivinvaihdot <br />-tageiksi. Kääre on divi, joka on."""
+    monkeypatch.setattr(convert, "svgbob_svg",
+                        lambda art: '<svg class="svgbob">\n<text>a</text>\n</svg>')
+    converted, drawings, used = convert.convert_svgbob(
+        "ennen\n\n```bob\n+---+\n```\n\njälkeen\n")
+    assert converted == ('ennen\n\n<div class="svgbob">\n<svg class="svgbob">\n'
+                         "<text>a</text>\n</svg>\n</div>\n\njälkeen\n")
+    assert (drawings, len(used)) == (1, 1)
+
+
+def test_convert_svgbob_drops_blank_lines(monkeypatch):
+    """svgbobin tyylilohkossa on tyhjiä rivejä, ja tyhjä rivi lopettaisi raa'an
+    HTML-lohkon: loppu kaaviosta päätyisi sivulle tekstinä."""
+    monkeypatch.setattr(convert, "svgbob_svg",
+                        lambda art: "<svg>\n\n<text>a</text>\n\n</svg>")
+    converted, _, _ = convert.convert_svgbob("```bob\n+---+\n```\n")
+    assert "\n\n" not in converted.strip()
+
+
+def test_convert_svgbob_gives_every_diagram_its_own_ids(monkeypatch):
+    """svgbob kirjoittaa jokaiseen kaavioon samat nuolenkärkimäärittelyt, joten
+    saman sivun kaavioilla olisi samat tunnisteet ja url(#arrow) osoittaisi aina
+    ensimmäiseen. Sivulla osa6/02 kaavioita on neljä."""
+    monkeypatch.setattr(
+        convert, "svgbob_svg",
+        lambda art: '<svg><marker id="arrow"/><line marker-end="url(#arrow)"/></svg>')
+    converted, _, _ = convert.convert_svgbob("```bob\na\n```\n\n```bob\nb\n```\n")
+    assert 'id="bob1-arrow"' in converted and 'url(#bob1-arrow)' in converted
+    assert 'id="bob2-arrow"' in converted and 'url(#bob2-arrow)' in converted
+
+
+def test_convert_svgbob_keeps_the_fence_without_the_tool(monkeypatch):
+    """Kaaviot ovat välimuistissa versionhallinnassa, joten svgbobia tarvitaan
+    vain uuteen tai muuttuneeseen piirrokseen. Jos sitä ei ole, aita jää
+    ennalleen eikä käännös kaadu."""
+    monkeypatch.setattr(convert, "svgbob_svg", lambda art: None)
+    text = "```bob\n+---+\n```\n"
+    assert convert.convert_svgbob(text) == (text, 0, set())
+
+
+# --- Vaatimusdivit (README kohta 25) -----------------------------------------
+
+def test_convert_divs_marks_the_block_for_markdown():
+    """Ilman attribuuttia divin sisältö menee sivulle lähdemuodossaan. Myös
+    uloin divi tarvitsee sen: md_in_html ei etene sisempiin lohkoihin, jos
+    uloin on käsittelemätöntä HTML:ää."""
+    text = '<div class="ht-reqs">\n\n<div class="req">\n\n### Vaatimus 1\n\n'
+    converted, tags = convert.convert_divs(text)
+    assert converted.startswith('<div class="ht-reqs" markdown="1">')
+    assert '<div class="req" markdown="1">' in converted
+    assert tags == 2
+
+
+def test_convert_divs_leaves_a_div_inside_a_paragraph_alone():
+    """Python-Markdown tunnistaa lohkotason HTML:n vain omana kappaleenaan,
+    joten kesken kappaleen olevalle diville attribuutti ei tekisi mitään."""
+    text = "teksti <div>ei lohko</div>\n"
+    assert convert.convert_divs(text) == (text, 0)
+
+
+def test_convert_divs_is_repeatable():
+    """Kuten convert_details: jo käännetty tagi ei saa saada toista
+    attribuuttia."""
+    text = '<div class="req" markdown="1">\n'
+    assert convert.convert_divs(text) == (text, 0)
+
+
+def test_convert_divs_ignores_divs_inside_code():
+    """Aidat käydään pareittain kuten convert_detailsissä."""
+    text = '```html\n<div class="req">\n```\n'
+    assert convert.convert_divs(text) == (text, 0)
 
 
 # --- Tehtäväkortit (README kohta 6) -----------------------------------------
