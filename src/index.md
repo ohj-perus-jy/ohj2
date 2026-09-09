@@ -27,40 +27,11 @@ Tarkemmat tiedot löydät opintojakson
 
 ## Uutiset
 
-<details><summary>Kesän 2026 toteutus, DL-BONUS-takarajat</summary>
-
-Kesätoteutus alkaa 1.6.2026. Ilmoittaudu Sisussa. 
-
-DL-BONUS-pisteiden takarajat ovat seuraavat:
-
- * Osa 1: ma 8.6.2026 klo 11:59 (keskipäivä)
- * Osa 2: ma 15.6.2026 klo 11:59 (keskipäivä)
- * Osa 3: ma 22.6.2026 klo 11:59 (keskipäivä)
- * Osa 4: ma 29.6.2026 klo 11:59 (keskipäivä)
- * Osa 5: ma 6.7.2026 klo 11:59 (keskipäivä)
- * Osa 6: ma 13.7.2026 klo 11:59 (keskipäivä)
-
-Harjoitustyön palautuksen takaraja pe 14.8.2026
-
-Aikataulu on hieman tiukempi kuin kevään 2026 toteutuksessa.
-
-</details>
-
-<details><summary>1. tammikuuta 2026: Kurssimateriaalia uudistetaan keväällä 2026</summary>
-
-Teemme kokonaisvaltaisen uudistuksen oppimateriaaliin sekä tehtäviin kevään 2026
-aikana. Osa materiaalista julkaistaan kurssin edetessä. Uudistamisesta johtuen
-sisällössä voi olla myös keskeneräisyyksiä ja virheitä. Pahoittelemme tästä
-mahdollisesti aiheutuvaa haittaa. Pyydämme, että ilmoitat virheistä tai
-parannusehdotuksista GitHubin kautta (katso tämän sivun alareuna) tai suoraan
-opettajien sähköpostiin <ohj2-opet@jyu.onmicrosoft.com>.
-
-</details>
+Seuraava toteutus alkaa tammikuussa 2027. Syksyn aikana voit kuitenkin käydä korottamassa arvosanaa tentissä. Voit myös viimeistellä kesken olevan harjoitustyön ottamalla yhteyttä ohjaajaan alla olevien linkkien kautta.
 
 ## Ohjaukset ja tuki
 
 Syksyllä 2026 ei ole Ohjelmointi 2 -kurssista toteutusta. Ohjausta annetaan tarvittaessa ajanvarauksella: 
-
 
 | Ohjaaja | Ajanvarauslinkki                                                                                          |
 | ------- | --------------------------------------------------------------------------------------------------------- |
