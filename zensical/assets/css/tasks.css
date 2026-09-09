@@ -32,8 +32,8 @@
  * --md-primary-fg-color olisi molemmissa sama tumma indigo, eli tummassa
  * teemassa lukukelvoton.
  *
- * Erotinviiva on --md-default-fg-color--lightest .05rem:n paksuisena, eli
- * tasan se mitä teema itse käyttää <hr>:ssä.
+ * Erotinviiva on --jyu-rule .05rem:n paksuisena, eli tasan se mitä sivun
+ * muutkin rajaviivat käyttävät (muuttuja ja perustelu: layout.css).
  */
 
 /* Bonusliuskan kulta. mdBookin .jyu-gold on #C29A5B, jonka kontrasti
@@ -87,7 +87,7 @@
   container-type: inline-size;
   margin: 1.6em 0;
   padding: 1.9rem 0;
-  border-block: .05rem solid var(--md-default-fg-color--lightest);
+  border-block: .05rem solid var(--jyu-rule);
 }
 
 /* Peräkkäiset tehtävät ovat yhtä kaistaa: ei väliä eikä kaksinkertaista

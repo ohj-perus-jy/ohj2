@@ -1,4 +1,4 @@
-/* Leipätekstin kirjasin.
+/* Leipätekstin kirjasin ja tekstin väri.
  *
  * mdBookissa leipäteksti on Source Serif 4 (theme/css/variables.css:
  * --body-font, käytössä theme/css/general.css: .content main). Sama tänne,
@@ -53,3 +53,127 @@
  *
  * Koodifonttia ei myöskään tarvitse suojata: teeman sääntö "code,kbd,pre"
  * asettaa --md-code-font-familyn suoraan, eikä se peri tätä. */
+
+/* Tekstin väri.
+ *
+ * Koeputki ei aseta tekstille väriä alun perin lainkaan, vaan koko sivu ottaa
+ * sen teeman perusmuuttujasta --md-default-fg-color:
+ *
+ *   --md-default-fg-color
+ *     -> --md-typeset-color -> "aside,body,input" -> leipäteksti, vasen
+ *        valikko, oikea sisällysluettelo ja alatunnisteen edellinen/seuraava
+ *        (kaikki periytymisen kautta bodylta)
+ *     -> --md-admonition-fg-color -> huomautuslaatikot ja details-lohkot,
+ *        jotka eivät peri väriä vaan saavat sen tästä
+ *     -> suoraan: h1 (vain vaalealla; slatella paletti maalaa h1..h6
+ *        valkoisiksi), kbd, yläpalkki
+ *
+ * Ratkaisevaa on, että teema määrittelee --md-typeset-colorin ja
+ * --md-admonition-fg-colorin uudelleen kummassakin skeemalohkossa
+ * (:root ja [data-md-color-scheme=slate]). Siksi ne seuraavat mukana, kun
+ * perusmuuttuja siirretään — yksi arvo per teema riittää, eikä johdannaisia
+ * tarvitse luetella.
+ *
+ * Vaalealla perusarvo on #000000de eli 87 % mustaa valkoisella =
+ * rgb(33,33,33), slatella hsla(hue,15%,90%,.82) tummalla pohjalla =
+ * rgb(187,189,194). Molempia siirretään aavistuksen kohti taustan
+ * vastakohtaa: tumma vaaleammaksi (.82 -> .88 = rgb(200,202,207)) ja vaalea
+ * tummemmaksi (.87 -> .92 = rgb(20,20,20)). Kirja on tässä jyrkempi —
+ * mdBookin light-teeman --fg on täysi musta ja navyn #bcbdd0 — joten muutos
+ * vie samaan suuntaan mutta ei loppuun asti.
+ *
+ * --md-default-fg-color--light on teemassa oma kiinteä arvonsa eikä johdannu
+ * perusmuuttujasta, joten se siirretään saman verran (.55 -> .60 ja
+ * .56 -> .62). Ilman tätä himmeämpi taso jäisi paikalleen ja ero kasvaisi:
+ * alatunnisteen tekijänoikeusrivi, sitaattilohko, h5/h6 ja koodilohkojen
+ * painikkeet ovat kaikki tällä tasolla.
+ *
+ * --lighter ja --lightest jätetään rauhaan: ne eivät ole tekstiä vaan
+ * reunoja ja taustoja (mm. layout.css:n kiskon erotinviiva).
+ *
+ * Perusmuuttuja on lisäksi parin taustasävyn lähtökohtana
+ * (admonitions.css 7 %/12 %, tables.css 4 %). Alfan muutos .87 -> .92 siirtää
+ * niitä noin .003 verran, mikä ei erotu.
+ *
+ * Vaalean teeman selektoripari on teeman oma: se määrittelee arvot
+ * selektorilla ":root,[data-md-color-scheme=default]", ja jälkimmäinen osuu
+ * bodyyn. Pelkkä :root häviäisi sille, koska bodyn oma määrittely voittaa
+ * html:ltä periytyvän arvon riippumatta siitä kumpi tiedosto on myöhemmin.
+ * Slatella riittää yksi selektori, koska paletti käyttää sitä samaa.
+ */
+:root,
+[data-md-color-scheme="default"] {
+  --md-default-fg-color: #000000eb;
+  --md-default-fg-color--light: #00000099;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.88);
+  --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.62);
+}
+
+/* Päävalikon linkit puoli askelta lihavammiksi.
+ *
+ * Teema jättää valikon linkit samaan painoon kuin leipätekstin (400) ja
+ * nostaa vain valitun kohdan 500:aan (".md-nav__item .md-nav__link--active").
+ * Valikon teksti on kuitenkin .md-navin oma 0,7rem eli 14 px tavallisella
+ * näytöllä (juurikoko kasvaa vasta 1600 pikselistä ylöspäin), ja siinä koossa
+ * Source Sans 3 jää 400:lla haaleaksi. Kirjassa vastaava lista on myös
+ * 400:ssa, mutta se on Latoa 14 pikselissä ja rivivälillä 2.2em
+ * (theme/css/chrome.css: .sidebar, .chapter) — väljemmässä ja tanakammassa
+ * listassa sama paino kantaa paremmin kuin tässä tiiviissä.
+ *
+ * 500 on teeman lataamissa leikkauksissa (Zensical hakee Source Sans 3:sta
+ * painot 300/400/500/700), joten selaimen ei tarvitse tekolihavoida mitään.
+ *
+ * :not rajaa säännön pois sisällysluettelosta. Kapealla näytöllä sivun
+ * sisällysluettelo on osa samaa laatikkovalikkoa, eli .md-nav--secondary on
+ * .md-nav--primaryn sisällä; ilman rajausta senkin rivit lihoisivat.
+ *
+ * Sama :not rajaa pois myös valitun rivin, jonka seuraava sääntö nostaa
+ * 700:aan. Ilman rajausta tämä voittaisi sen tarkkuudella eikä järjestyksellä
+ * olisi väliä: :not saa tarkkuutensa sisällöstään, joten tämä on 0,4,0 ja
+ * seuraava 0,2,0.
+ *
+ * Ei media-kyselyä: sääntö koskee sekä työpöydän kiskoa että kapean näytön
+ * laatikkovalikkoa, jotka ovat sama .md-nav--primary.
+ *
+ * Kurssin nimi valikon yläreunassa on .md-nav__title eikä linkki, joten se
+ * pysyy teeman omassa 700:ssa. */
+.md-nav--primary
+  .md-nav__link:not(.md-nav--secondary .md-nav__link, .md-nav__link--active) {
+  font-weight: 500;
+}
+
+/* Valittu rivi lihavaksi molemmissa valikoissa.
+ *
+ * Teema nostaa valitun rivin 500:aan (".md-nav__item .md-nav__link--active").
+ * Päävalikossa se ei enää erotu mitenkään, koska edellinen sääntö nostaa
+ * kaikki rivit samaan 500:aan, ja sisällysluettelossa ero naapureihin on puoli
+ * askelta 0,7rem eli 14 pikselin tekstissä — sen huomaa vasta vierekkäin
+ * verrattuna.
+ *
+ * Käytännössä valitun rivin tunnisti siis pelkästä väristä. Se ei riitä
+ * yksin: sisällysluettelossa väri on sama sininen kuin leipätekstin linkeillä
+ * (--md-typeset-a-color), eli se lukee ensisijaisesti "linkki", ei "tässä
+ * olet". Päävalikossa väriin tulee vielä vaalea tausta, mutta sekin on väri.
+ * 700 on ainoa vihje, joka näkyy myös silloin kun väriä ei erota.
+ *
+ * Kirjassa vastinetta ei ole kummallekaan: sivun sisällysluetteloa siinä ei
+ * ole lainkaan, ja luettelossa valittu luku erottuu vain värillä
+ * (theme/css/chrome.css: ".chapter li a.active" -> --sidebar-active).
+ *
+ * 700 on teeman lataamissa leikkauksissa (Source Sans 3: 300/400/500/700),
+ * joten selaimen ei tarvitse tekolihavoida mitään.
+ *
+ * Selektori on sama kuin teeman oma, eli tarkkuus on sama 0,2,0 ja tämä
+ * voittaa myöhempänä. Päävalikossa edellinen sääntö väistää :not-rajauksella.
+ *
+ * Sisällysluettelossa lihavoituva rivi voi olla sen verran leveämpi, että se
+ * rivittyy eri kohdasta kuin ennen ja siirtää alempia rivejä. Se tapahtuu
+ * vain valitun rivin vaihtuessa eli vieritettäessä, ja siirtymä on yhden
+ * rivin verran; vaihtoehto olisi varata tila etukäteen (esim. lihava kopio
+ * ::before-pseudolla), mikä ei ole tämän arvoista. */
+.md-nav__item .md-nav__link--active {
+  font-weight: 700;
+}

@@ -37,10 +37,67 @@
   /* Kiskon vierityspalkin väri silloin kun hiiri on valikon päällä mutta ei
    * palkin päällä. Ks. perustelu vierityspalkkisäännöistä alempana. */
   --jyu-rail-scrollbar: color-mix(in srgb, var(--md-accent-fg-color) 80%, white);
+
+  /* Rajaviivojen sävy.
+   *
+   * Teemassa kaikki hiusviivat ottavat värinsä --md-default-fg-color
+   * --lightestistä, joka on vaaleassa teemassa vain 7 % mustaa (#0000000d).
+   * Valkoisella se on rgb(242,242,242): viiva on olemassa mutta ei erotu
+   * taustasta. Tummassa vastaava on .12, eli sekin himmeä joskin selvempi.
+   *
+   * Muuttujaa ei voi vain nostaa, koska teema käyttää samaa arvoa myös
+   * himmeimpiin täyttöihin: alatunnisteen tekijänoikeuspalkin taustaan
+   * (.md-footer-meta) ja valikon rivin hover-taustaan. Ne ovat pintoja eivätkä
+   * viivoja, ja nousisivat mukana selvästi harmaiksi. Siksi viivoille oma
+   * sävy, ja teeman muuttuja jää täytöille ennalleen.
+   *
+   * .20 kummassakin teemassa: vaalealla rgb(204,204,204) valkoisella,
+   * tummalla rgb(54,55,59) omalla pohjallaan — ero taustaan on kutakuinkin
+   * sama molempiin suuntiin (51 ja 43 askelta). Sama arvo käy siksi, että
+   * kumpikin on alfa oman teemansa tekstivärin päällä.
+   *
+   * Käytössä myös tasks.css:ssä (tehtäväkortin ylä- ja alaviiva) ja
+   * print.css:ssä (tulostussivun erotin). */
+  --jyu-rule: #00000033;
 }
 
 [data-md-color-scheme="slate"] {
   --jyu-rail-scrollbar: color-mix(in srgb, var(--md-accent-fg-color) 80%, black);
+  --jyu-rule: hsla(var(--md-hue), 15%, 90%, 0.2);
+}
+
+/* Teeman omat hiusviivat samaan sävyyn. Kaikilla leveyksillä.
+ *
+ * Nämä neljä ovat kaikki 1 px:n rajaviivoja, jotka teema piirtää
+ * --md-default-fg-color--lightestillä. Ne jäisivät muuten sivun muita
+ * viivoja haaleammiksi, ja yläpalkin alareuna on nimenomaan se viiva, jonka
+ * jatkoksi kiskon reuna ja valikon erotin on tehty (ks. alempana).
+ *
+ * Geometria on kopio teeman omasta säännöstä, jotta vain väri muuttuu:
+ * pelkkä värin vaihto ei onnistu ilman koko box-shadow'n tai borderin
+ * toistoa. Jos teema muuttaa mittoja, nämä on päivitettävä käsin.
+ *
+ * Sitä muuttujaa ei voi nostaa suoraan, koska se on myös himmeimpien
+ * täyttöjen väri; ks. --jyu-rulen perustelu tiedoston alussa.
+ *
+ * Loput --lightestin käyttökohteet jätetään rauhaan: ne ovat joko täyttöjä
+ * tai komponentteja, joita tässä kirjassa ei ole (grid cards, koodilohkon
+ * tiedostonimipalkki, rivinumeropalsta, .md-nav__source jonka overrides
+ * tyhjentää). */
+.md-header--shadow {
+  box-shadow: 0 0.05rem 0 var(--jyu-rule);
+}
+
+.md-footer {
+  border-top: 0.05rem solid var(--jyu-rule);
+}
+
+.md-typeset hr {
+  border-bottom: 0.05rem solid var(--jyu-rule);
+}
+
+.md-typeset .tabbed-labels {
+  box-shadow: 0 -0.05rem var(--jyu-rule) inset;
 }
 
 /* Väljyys sisällölle, ei yhteiselle säiliölle. Kaikilla leveyksillä.
@@ -156,7 +213,7 @@
  * numeron puuttuminen. Tämä palauttaa rajan.
  *
  * Viiva on tarkalleen sama kuin kiskon oma oikea reunaviiva ja yläpalkin
- * alareuna: 1 px --md-default-fg-color--lightestiä, ja se ulottuu kiskon
+ * alareuna: 1 px --jyu-ruleä, ja se ulottuu kiskon
  * sisällön koko leveydelle. Silloin se ei ole valikon sisäinen koriste vaan
  * jatkoa sivun omille rajaviivoille, ja yläpään yleiset sivut näyttävät
  * samalta ruudukkolohkolta kuin muutkin sivun alueet. Leveys on tässä
@@ -185,7 +242,7 @@
   display: block;
   height: 1px;
   margin: 0.7rem 0 0.5rem;
-  background-color: var(--md-default-fg-color--lightest);
+  background-color: var(--jyu-rule);
   content: "";
 }
 
@@ -206,7 +263,7 @@
     height: 100vh;
     padding: 2.4rem 0 0;
     background-color: var(--md-default-bg-color);
-    border-right: 1px solid var(--md-default-fg-color--lightest);
+    border-right: 1px solid var(--jyu-rule);
     z-index: 3;
   }
 
@@ -333,15 +390,16 @@
    * se maksaa yhden rivinvaihdon lisää koko navigaatiossa (8 -> 9, kun
    * kaikki 81 linkkiä on avattu).
    *
-   * Väri on --lighter eikä --lightest (jota kiskon oma reunaviiva käyttää):
-   * lightest on tummassa teemassa 0,12 ja vaaleassa 0,07, mikä katosi
-   * käytännössä näkyvistä.
+   * Väri on --jyu-rule eli sama kuin muissakin rajaviivoissa. Aiemmin tässä
+   * oli --md-default-fg-color--lighter, koska teeman --lightest katosi
+   * käytännössä näkyvistä; nyt kun viivoilla on oma sävy, poikkeusta ei
+   * tarvita eikä tämä viiva jää muita tummemmaksi.
    *
    * Sääntö osuu kaikkiin sisäkkäisiin tasoihin, mutta rakenteessa niitä on
    * vain yksi: osa ja sen luvut. */
   .md-sidebar--primary .md-nav__item--nested > .md-nav > .md-nav__list {
     margin-left: 1rem;
-    border-left: 1px solid var(--md-default-fg-color--lighter);
+    border-left: 1px solid var(--jyu-rule);
   }
 
   /* Erotinviiva (ks. tiedoston alkupuoli) kiskon sisällön koko leveydelle.
