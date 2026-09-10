@@ -2312,6 +2312,90 @@ muokattavan koodilohkon "Peruuta muutokset", ja ACE-editori on yhä tekemättä
 enempää kuin väärä kuvake — korjattava on virke, ei glyfi.
 
 
+### Ankkurit: ääkköset pois ja otsikon tunnus irti (~55 riviä `convert.py`:hyn)
+
+Kohta 13. Käännös varoitti kuudestatoista kerrasta "anchor/page does not
+exist". Kahdeksan niistä oli eroja mdBookiin — linkki toimi siellä mutta ei
+täällä — ja ne korjattiin tässä; loput kahdeksan olivat aineiston virheitä,
+jotka olivat rikki mdBookissakin, ja ne korjattiin `../src`:ssä. Käännös on
+nyt varoitukseton.
+
+Eroja mdBookiin on kaksi:
+
+**Ääkköset (6 linkkiä 5 sivulla).** Zensical tekee otsikon tunnuksen
+Python-Markdownin `slugify`lla (`markdown.extensions.toc`), joka normalisoi
+tekstin NFKD:llä ja pudottaa kaiken ascii-alueen ulkopuolisen:
+`## JavaFX-sovelluksen käynnistys ja ydinluokat` ->
+`#javafx-sovelluksen-kaynnistys-ja-ydinluokat`. mdBook jättää ääkköset
+paikoilleen, ja lähde kirjoittaa linkkinsä siinä muodossa. Sama riisuminen
+tehdään siis linkin päähän (`convert_anchors`), jolloin molemmat päät syntyvät
+samasta säännöstä.
+
+Vain ankkuriin, ei polkuun: tiedostonimet ovat jo ascii-muotoisia. Ja vain
+sivuston omiin linkkeihin — skeemallinen osoite (`https://...`) ohitetaan,
+koska sen ankkurin muodosta päättää toinen sivusto. Aineistossa sellaisia ei
+ole yhtään, mutta ehto on rivi ja väärä riisuminen olisi rikki hiljaa.
+
+**Otsikon oma tunnus (1 otsikko).** `## Otsikko {#tunnus}` on mdBookissa ja
+Python-Markdownissa sama merkintä, mutta `attr_list` vaatii välilyönnin
+aaltosulun edellä (`HEADER_RE`: `[ ]+\{`) ja mdBook ei. Lähdepuun
+yhdeksästätoista tunnuksesta yksi on kirjoitettu ilman:
+`osa4/01-rajapinta.md`:n `## Älykoti: säädettävät laitteet{#alykoti-saadettava}`.
+Ilman välilyöntiä sulkulauseke jää otsikkotekstiin, ja tunnukseksi tulee
+`#alykoti-saadettavat-laitteetalykoti-saadettava` — eli kaksi linkkiä
+(`osa4/03-perinta-ja-rajapinta.md`, `osa6/01-funktiorajapinnat-...`) osoittaa
+tyhjään. Välilyönti lisätään tässä eikä `../src`:ssä, koska lähde on
+mdBookin.
+
+Muunnos ajetaan heti sisällytysten jälkeen: silloin se näkee myös sisällytetyn
+tehtävänannon linkit, eikä yksikään myöhempi muunnos ole vielä kirjoittanut
+sivulle omia linkkejään tai SVG-tunnuksiaan. Koodiaidat ohitetaan pareittain
+kuten `convert_details`issä — aidassa näytetty linkki on esimerkki eikä linkki.
+
+Todennettu:
+
+- **Käännöksen varoitukset: 16 -> 8 -> 0.** Muunnos vei kahdeksan; loput
+  kahdeksan olivat aineiston virheitä ja korjattiin `../src`:ssä, ks. alla.
+- **`convert.py`:n oma luku:** "ankkurit: 6 linkkiä riisuttu, 1 otsikon
+  tunnusta irrotettu". Ennen `../src`:n korjauksia luku oli kahdeksan: kaksi
+  riisuttavaa ankkuria oli aineiston virheitä, joita riisuminen ei tehnyt
+  toimiviksi eikä rikkinäisemmiksi.
+- **`test_book.py`: `KNOWN_DEAD_ANCHORS` poistui kokonaan.** Tulostussivun yli
+  9000 sisäisestä linkistä yksikään ei enää osoita tyhjään; ennen kohtaa 13
+  poikkeuksia oli kolme.
+- **Testit:** 191 läpi, joista kahdeksan uutta `test_convert.py`:ssä
+  (riisuminen, riisuminen samalla säännöllä kuin teemalla — testi lukee
+  `slugify`n suoraan `markdown`ista —, ascii-ankkuri rauhaan, ulkopuolinen
+  osoite rauhaan, koodiaitojen ohitus, tunnuksen irrotus, jo oikein kirjoitettu
+  tunnus rauhaan, toistettavuus).
+
+**Loput kahdeksan varoitusta olivat aineiston virheitä ja korjattiin
+`../src`:ssä.** Jokainen niistä oli rikki myös mdBookin omassa käännöksessä,
+eli niitä ei voinut eikä pitänyt korjata `convert.py`:ssä; korjaus kuului
+lähteeseen ja hyödyttää yhtä lailla nykyistä mdBook-sivustoa. Tämä on ainoa
+kohta, jossa koeputki on koskenut `../src`:ään, ja se on omana committinaan:
+
+| Sivu ja rivi `../src`:ssä             | Linkki oli                                    | Linkki on nyt                             |
+| ------------------------------------- | --------------------------------------------- | ----------------------------------------- |
+| `harjoitustyo.md:534`                 | `#harjoitustyön-tekniset-vaatimukset-ja-arviointi` | `#tekniset-vaatimukset-ja-arviointi`  |
+| `osa9/index.md:97`                    | `../harjoitustyo.md#harjoitustyön-aihe`       | `../harjoitustyo.md#aihe`                 |
+| `osa1/01-hei-java.md:174`             | `../tyokalut.md#java-development-kit-jdk`     | `../tyokalut.md#jdk`                      |
+| `osa1/01-hei-java.md:363`             | `../tyokalut.md#java-development-kit-jdk`     | `../tyokalut.md#jdk`                      |
+| `osa3/02-polymorfismi.md:298`         | `03-abstraktit-luokat.md`                     | `03-abstrakti-luokka.md`                  |
+| `osa4/03-perinta-ja-rajapinta.md:301` | `02-polymorfismi.md#is-a-suhde`               | `../osa3/02-polymorfismi.md#is-a-suhde`   |
+| `osa4/03-perinta-ja-rajapinta.md:350` | `./02-polymorfismi.md#tehtavat`               | `../osa3/02-polymorfismi.md#tehtavat`     |
+| `osa4/03-perinta-ja-rajapinta.md:438` | `02-polymorfismi.md`                          | `../osa3/02-polymorfismi.md`              |
+
+Kaksi ensimmäistä oli otsikko, joka on nimetty uudelleen linkkiä
+päivittämättä; kaksi seuraavaa käytti automaattitunnusta, vaikka otsikolla on
+oma (`{#jdk}`, jota `osa7/01-javafx-perusteet.md:92` käyttää oikein); neljä
+viimeistä osoitti osan 4 hakemistoon sivuun, joka on osassa 3.
+
+Yksi asia jäi korjaamatta, koska se on leipätekstiä eikä linkki:
+`osa3/02-polymorfismi.md:298` sanoo linkin tekstissä "3.3 Abstraktit luokat",
+mutta luvun nimi on "Abstrakti luokka".
+
+
 ## Mitattu ensimmäisestä ajosta
 
 Rakennus kestää **16 s** (MkDocs + Material samasta sisällöstä: 31 s) ja

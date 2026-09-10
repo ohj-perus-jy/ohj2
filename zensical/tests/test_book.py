@@ -50,31 +50,6 @@ def chapter_titles() -> list[str]:
             for href in order]
 
 
-# Ankkurit, jotka eivät osu mihinkään. Kaksi eri syytä, kumpikaan ei ole
-# tulostuksen vika.
-#
-# Kaksi ensimmäistä ovat tarkistuslistan kohta 13, ääkköset ankkureissa:
-# Zensical riisuu otsikoiden tunnisteista ääkköset (#käyttö -> #kaytto), mutta
-# sivujen omissa linkeissä ne ovat yhä tallessa. mdBookissa nämä linkit
-# toimivat (book/osa1/01-hei-java.html: sekä href että id ovat ääkkösineen),
-# eli ne poistuvat kohdan 13 mukana.
-#
-# Kolmas on aineiston virhe: harjoitustyo.md linkittää ankkuriin
-# "#harjoitustyön-tekniset-vaatimukset-ja-arviointi", mutta otsikko on
-# "## Tekniset vaatimukset ja arviointi" ilman etuliitettä. Linkki on rikki myös
-# mdBookin omassa käännöksessä (book/harjoitustyo.html:
-# href="#harjoitusty%C3%B6n-..." ilman kohdetta), eli se korjataan ../src:ssä
-# eikä täällä — kuten KNOWN_BROKEN_IMAGES.
-#
-# Kaksi jälkimmäistä tulivat näkyviin vasta kohdan 8 mukana: molemmat ovat
-# <details>-lohkon sisällä, eikä niistä ennen markdown-attribuuttia syntynyt
-# linkkiä lainkaan.
-KNOWN_DEAD_ANCHORS = {
-    "comparable-rajapinta-ja-luonnollinen-järjestys",
-    "opas-java-ohjelmien-kääntäminen-ja-ajaminen",
-    "harjoitustyön-tekniset-vaatimukset-ja-arviointi",
-}
-
 # Tarkistuslistan kohta 1: sisällytys tuo tehtävänannon kuvaviittaukset sivulle
 # sellaisenaan, ja suhteellinen polku ratkeaa sen sivun mukaan, jolle anto
 # sisällytetään. exercises/4-3-seikkailupeli/handout.md viittaa
@@ -122,17 +97,26 @@ def test_identifiers_stay_unique(printed):
 
 
 def test_internal_anchors_resolve(printed):
-    """Sivun sisäisiä linkkejä on yli 9000; yhdenkään ei pitäisi jäädä
-    osoittamaan tyhjään paitsi tunnetun poikkeuksen verran."""
+    """Sivun sisäisiä linkkejä on yli 9000; yksikään ei jää osoittamaan
+    tyhjään.
+
+    Poikkeuksia oli kolme siihen asti, kunnes tarkistuslistan kohta 13
+    tehtiin. Kaksi niistä oli ääkkösiä ankkurissa, jotka toimivat mdBookissa
+    mutta eivät täällä; ne poistuivat convert_anchorsin mukana. Kolmas oli
+    aineiston virhe, joka oli rikki mdBookissakin
+    (harjoitustyo.md linkitti ankkuriin
+    "#harjoitustyön-tekniset-vaatimukset-ja-arviointi", vaikka otsikko on
+    "## Tekniset vaatimukset ja arviointi"), ja se korjattiin ../src:ssä
+    — toisin kuin KNOWN_BROKEN_IMAGES, joka on yhä auki."""
     dead = printed.evaluate("""() => {
       const ids = new Set([...document.querySelectorAll('[id]')].map(e => e.id));
       return [...document.querySelectorAll('a[href^="#"]')]
         .map(a => decodeURIComponent(a.getAttribute('href').slice(1)))
         .filter(target => target && !ids.has(target));
     }""")
-    # Etuliite on luvun oma, joten sama rikkinäinen linkki näkyy tässä
+    # Etuliite on luvun oma, joten sama rikkinäinen linkki näkyisi tässä
     # luvun nimellä varustettuna.
-    assert {anchor.split("--", 1)[-1] for anchor in dead} <= KNOWN_DEAD_ANCHORS
+    assert [anchor.split("--", 1)[-1] for anchor in dead] == []
 
 
 def test_every_include_is_expanded(printed):

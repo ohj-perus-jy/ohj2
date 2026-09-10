@@ -8,31 +8,33 @@ Yksi ajo tekee viisi vaihetta tässä järjestyksessä (main):
    SUMMARY.md jätetään kopioimatta: siitä tulee navigaatio eikä sivu. Samalla
    selviää, mitä docs/:ssa on edellisen ajon jäljiltä — poisto on vaiheessa 5.
 
-2. Jokainen sivu erikseen: sivu luetaan lähdepuusta, ajetaan neljäntoista
+2. Jokainen sivu erikseen: sivu luetaan lähdepuusta, ajetaan viidentoista
    muunnoksen läpi ja kirjoitetaan docs/:iin, jos tulos muuttui. Muunnokset
    ajojärjestyksessä:
 
     1. drop_sections       DROP_SECTIONS-osio pois: mdBookin käyttöliittymää
                            kuvaava neuvo, joka ei täällä pidä paikkaansa
     2. convert_includes    {{#include}} -> tiedoston sisältö
-    3. convert_files       // FILE: -> välilehti per tiedosto
-    4. convert_fences      aidan attribuutit (java,ignore) pymdownx:n muotoon,
+    3. convert_anchors     ääkköset pois linkin ankkurista (#käyttö ->
+                           #kaytto) ja välilyönti otsikon oman tunnuksen eteen
+    4. convert_files       // FILE: -> välilehti per tiedosto
+    5. convert_fences      aidan attribuutit (java,ignore) pymdownx:n muotoon,
                            ja samalla piilorivit (hide_lines) ja korostukset
                            (mark_highlights) aidan attribuutiksi
-    5. convert_plantuml    plantuml-aita kuvaksi (SVG assets/plantuml/:iin)
-    6. convert_alerts      > [!VINKKI] -> !!! tip "Vinkki"
-    7. convert_details     <details> -> <details markdown="1">
-    8. drop_breaks         lohkojen väliset <br />-rivit pois
-    9. convert_divs        rivin aloittava <div> -> <div markdown="1">
-   10. convert_svgbob      bob-aita upotetuksi SVG:ksi (cache/svgbob/)
-   11. convert_tasks       <task>-kortit diveiksi
-   12. convert_bonus_marks <i class="bi bi-stars"> -> bonusmerkki
-   13. convert_icons       loput ikonitagit merkeiksi ja teeman glyfeiksi
-   14. convert_tabs        ### [Windows](#tab/win) -> === "Windows"
+    6. convert_plantuml    plantuml-aita kuvaksi (SVG assets/plantuml/:iin)
+    7. convert_alerts      > [!VINKKI] -> !!! tip "Vinkki"
+    8. convert_details     <details> -> <details markdown="1">
+    9. drop_breaks         lohkojen väliset <br />-rivit pois
+   10. convert_divs        rivin aloittava <div> -> <div markdown="1">
+   11. convert_svgbob      bob-aita upotetuksi SVG:ksi (cache/svgbob/)
+   12. convert_tasks       <task>-kortit diveiksi
+   13. convert_bonus_marks <i class="bi bi-stars"> -> bonusmerkki
+   14. convert_icons       loput ikonitagit merkeiksi ja teeman glyfeiksi
+   15. convert_tabs        ### [Windows](#tab/win) -> === "Windows"
 
    Järjestys ei ole vapaa: kaksi ensimmäistä on tehtävä ennen kaikkea muuta ja
-   convert_tabs viimeisenä, ja väliin jäävistä vain convert_details ja
-   drop_breaks voisivat olla missä tahansa. Perustelu on jokaisen kohdalla
+   convert_tabs viimeisenä, ja väliin jäävistä vain convert_anchors,
+   convert_details ja drop_breaks voisivat olla missä tahansa. Perustelu on jokaisen kohdalla
    erikseen mainissa.
 
 3. Assetit docs/assets/:iin (copy_if_changed). Tyylit, skriptit ja vaiheen 2
@@ -78,6 +80,7 @@ import shutil
 import subprocess
 import sys
 import time
+import unicodedata
 import traceback
 import urllib.error
 import urllib.request
@@ -123,6 +126,17 @@ DROP_SECTIONS = {
     "index.md": "Navigointi tässä materiaalissa",
 }
 HEADING_RE = re.compile(r"(?P<level>#+)\s+(?P<title>.*?)\s*$")
+
+# Ankkurit, ks. convert_anchors (README kohta 13).
+#
+# Linkin ankkuriosa "](../sivu.md#käyttö)". Riisuttavaksi kelpaa vain
+# sivuston oma linkki: ulkopuolisen osoitteen ankkuri kuuluu toisen sivuston
+# tunnuksiin, joten skeemallinen kohde jätetään rauhaan (ks. convert_anchors).
+ANCHOR_LINK_RE = re.compile(r"\]\((?P<target>[^)\s]*)#(?P<fragment>[^)\s]+)\)")
+
+# Otsikon oma tunnus "## Otsikko{#tunnus}" ilman välilyöntiä aaltosulun edellä.
+HEADING_ANCHOR_RE = re.compile(
+    r"^(?P<heading>#+\s+\S.*?\S)(?P<anchor>\{#[^}\s]+\})\s*$")
 
 # Tulostussivu: koko kirja yhdellä sivulla, ks. assets/js/print.js.
 PRINT_PAGE = "tulosta.md"
@@ -933,6 +947,63 @@ def convert_includes(text: str, page: Path) -> tuple[str, int]:
         return content
 
     return INCLUDE_RE.sub(expand, text), includes
+
+
+def convert_anchors(text: str) -> tuple[str, int, int]:
+    """Ankkurit Zensicalin muotoon. -> (teksti, linkkiä, otsikkoa).
+
+    Kaksi eroa mdBookiin. Molemmat ovat sitä lajia, että linkki osoittaa
+    mdBookissa olemassa olevaan otsikkoon mutta täällä ei mihinkään, ja
+    molemmat näkyvät käännöksessä samana rivinä: "anchor does not exist".
+
+    1. Ääkköset pois linkin ankkurista: "#käyttö" -> "#kaytto". Zensical tekee
+       otsikon tunnuksen Python-Markdownin slugifylla
+       (markdown.extensions.toc), joka normalisoi tekstin NFKD:llä ja pudottaa
+       kaiken ascii-alueen ulkopuolisen; mdBook jättää ääkköset paikoilleen.
+       Lähde kirjoittaa ankkurit mdBookin muodossa, joten sama riisuminen
+       tehdään tässä linkin päähän. Vain ankkuriin: polut ovat jo
+       ascii-muotoisia, ja skeemallinen osoite (https://...) ohitetaan
+       kokonaan, koska sen ankkurin muodosta päättää toinen sivusto.
+
+    2. Välilyönti otsikon oman tunnuksen eteen: "## Otsikko{#tunnus}" ->
+       "## Otsikko {#tunnus}". Python-Markdownin attr_list vaatii
+       välilyönnin aaltosulun edellä, mdBook ei; ilman sitä sulkulauseke jää
+       otsikkotekstiin ja tunnukseksi tulee "otsikkotunnus". Lähdepuun 19
+       tunnuksesta yksi on kirjoitettu näin.
+
+    Sisällytysten jälkeen, jotta myös sisällytetyn tehtävänannon linkit
+    tulevat mukaan. Koodiaidat ohitetaan pareittain kuten convert_detailsissä:
+    aidassa näytetty linkki on esimerkki eikä linkki.
+    """
+    links = headings = 0
+
+    def fold(match: re.Match) -> str:
+        nonlocal links
+        if "://" in match["target"]:
+            return match[0]
+        folded = (unicodedata.normalize("NFKD", match["fragment"])
+                  .encode("ascii", "ignore").decode("ascii"))
+        if folded == match["fragment"]:
+            return match[0]
+        links += 1
+        return f']({match["target"]}#{folded})'
+
+    out: list[str] = []
+    open_fence: str | None = None
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            line, spaced = HEADING_ANCHOR_RE.subn(
+                r"\g<heading> \g<anchor>", line)
+            headings += spaced
+            line = ANCHOR_LINK_RE.sub(fold, line)
+        out.append(line)
+    return "\n".join(out), links, headings
 
 
 def read_tab_set(lines: list[str],
@@ -1978,7 +2049,7 @@ def main() -> int:
     sets = placeholders = blocks = files = fences = includes = alerts = 0
     hidden = marked = 0
     details = summaries = divs = tasks = bonus = diagrams = drawings = 0
-    breaks = dropped = arrows = icons = 0
+    breaks = dropped = arrows = icons = links = ids = 0
     used_diagrams: set[str] = set()
     used_drawings: set[str] = set()
     tab_labels: set[str] = set()
@@ -2006,6 +2077,10 @@ def main() -> int:
         # koodiaita), ja koodiaidan sisällä olevat sisällytykset ovat vasta
         # tämän jälkeen sitä koodia, jonka convert_files jakaa välilehdiksi.
         converted, page_includes = convert_includes(converted, origin)
+        # Ankkurit heti sisällytysten jälkeen: silloin muunnos näkee myös
+        # sisällytetyn tehtävänannon linkit, eikä yksikään myöhempi muunnos
+        # ole vielä kirjoittanut sivulle omia linkkejään tai SVG-tunnuksiaan.
+        converted, page_links, page_ids = convert_anchors(converted)
         # Monitiedostolohkot ennen aitoja: silloin ne toimivat myös #tab/-osion
         # sisällä, koska convert_tabs sisentää valmiin välilehtijoukon
         # sisäkkäiseksi. Toisin päin sisennetty aita jäisi tunnistamatta.
@@ -2063,6 +2138,8 @@ def main() -> int:
         hidden += page_hidden + page_hidden_files
         marked += page_marked + page_marked_files
         includes += page_includes
+        links += page_links
+        ids += page_ids
         alerts += page_alerts
         details += page_details
         summaries += page_summaries
@@ -2096,6 +2173,7 @@ def main() -> int:
     print(f"piilorivit: {hidden} lohkoa")
     print(f"korostetut rivit: {marked} lohkoa")
     print(f"sisällytykset: {includes} makroa")
+    print(f"ankkurit: {links} linkkiä riisuttu, {ids} otsikon tunnusta irrotettu")
     print(f"details-lohkot: {details} tagia, {summaries} monirivistä summarya, "
           f"{breaks} <br />-riviä pois")
     print(f"divit: {divs} tagia")

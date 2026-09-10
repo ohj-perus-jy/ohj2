@@ -108,7 +108,7 @@ navigaatio on aidosti huonompi kuin generoitu.
 
 ## 2. Poistuu kertaluontoisella lähteen uudelleenkirjoituksella
 
-Nämä kahdeksan ovat puhdasta syntaksin kääntämistä: yhdestä merkinnästä
+Nämä yhdeksän ovat puhdasta syntaksin kääntämistä: yhdestä merkinnästä
 toiseen, ilman että mitään lasketaan. Ne voi ajaa lähteeseen kerran ja
 committoida — se on **vaihtoehto B** rajattuna vain niihin
 kohtiin, joissa se ei maksa mitään.
@@ -118,18 +118,26 @@ kohtiin, joissa se ei maksa mitään.
 | 4     | `convert_fences`      | 392 aitaa               | `{ .java .ignore }`                   |
 | 7     | `convert_alerts`      | 75 lohkoa               | `!!! tip "Vinkki"`                    |
 | 8     | `convert_details`     | 143 tagia + 6 summarya  | `<details markdown="1">`              |
+| 13    | `convert_anchors`     | 6 linkkiä + 1 otsikko   | `#kaytto` ja `## Otsikko {#tunnus}`   |
 | —     | `drop_breaks`         | 10 riviä                | ei mitään, rivit vain pois            |
 | 25    | `convert_divs`        | 9 tagia                 | `<div class="ht-reqs" markdown="1">`  |
 | 17    | `convert_icons`       | 58 nuolta, 22 kuvaketta | `›` ja `:material-menu:`              |
 | 17    | `convert_bonus_marks` | 30 merkkiä              | ks. alla                              |
 | 23    | `convert_tabs`        | 9 joukkoa               | `=== "Windows"`                       |
 
-Kaksi tarkennusta:
+Kolme tarkennusta:
 
 **`convert_fences` ei poistu kokonaan, vaan halkeaa.** Attribuuttien
 kääntäminen (`java,ignore` → `{ .java .ignore }`) on kertatyötä, mutta saman
 funktion sisällä laskettavat piilorivit (142 lohkoa, `hide_lines`) ja
 korostukset (79 lohkoa, `mark_highlights`) eivät ole — ne kuuluvat kohtaan 3.
+
+**`convert_anchors` on näistä pienin ja lopullisin.** Riisuttavia ankkureita on
+kuusi ja välilyöntiä vailla oleva otsikko yksi, eli kertakorjaus on seitsemän
+riviä `../src`:ssä. Sen jälkeen lähde on siinä muodossa, jonka
+molemmat generaattorit ymmärtävät samalla tavalla — ääkkösetön ankkuri toimii
+myös mdBookissa — joten tämä kannattaa tehdä ensimmäisenä, jo ennen kuin
+kumpaakaan on valittu.
 
 **Ikonilyhenne toimii ilman konfiguraatiota.** Zensicalin emoji-indeksi
 (`zensical/extensions/emoji.py`, `_load_twemoji_index`) indeksoi jokaisen SVG:n

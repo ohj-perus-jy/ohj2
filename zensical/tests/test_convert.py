@@ -97,6 +97,72 @@ def test_convert_includes_warns_instead_of_dropping_content(tmp_path, capsys,
     assert warning in capsys.readouterr().err
 
 
+# --- Ankkurit (README kohta 13) ----------------------------------------------
+
+def test_convert_anchors_strips_the_accents_from_a_link():
+    """Lähde kirjoittaa ankkurit mdBookin muodossa, jossa ääkköset säilyvät;
+    Zensicalin otsikkotunnuksessa niitä ei ole."""
+    text = "Ks. [ohje](../osa7/01-javafx-perusteet.md#ensimmäinen-sovellus).\n"
+    converted, links, headings = convert.convert_anchors(text)
+    assert (links, headings) == (1, 0)
+    assert converted == "Ks. [ohje](../osa7/01-javafx-perusteet.md#ensimmainen-sovellus).\n"
+
+
+def test_convert_anchors_strips_the_same_way_as_the_theme():
+    """Riisuminen on sama NFKD-normalisointi kuin Python-Markdownin
+    slugifyssä, josta Zensicalin otsikkotunnukset syntyvät: jos ne eroaisivat,
+    linkki osoittaisi tunnukseen jota sivulla ei ole."""
+    slugify = pytest.importorskip("markdown.extensions.toc").slugify
+    for title in ("Käyttö", "Ensimmäinen JavaFX-sovellus",
+                  "Comparable-rajapinta ja luonnollinen järjestys"):
+        anchor = slugify(title, "-")
+        text = f"[x](sivu.md#{slugify(title, '-', unicode=True)})"
+        assert convert.convert_anchors(text)[0] == f"[x](sivu.md#{anchor})"
+
+
+def test_convert_anchors_leaves_an_ascii_anchor_alone():
+    """Ilman ääkkösiä ei ole mitään riisuttavaa, eikä muunnos saa laskea
+    osumaa: luku on ainoa tapa huomata, että jokin lakkasi osumasta."""
+    text = "[x](01-rajapinta.md#alykoti-saadettava)\n"
+    assert convert.convert_anchors(text) == (text, 0, 0)
+
+
+def test_convert_anchors_leaves_an_outside_address_alone():
+    """Ulkopuolisen osoitteen ankkurin muodosta päättää toinen sivusto."""
+    text = "[x](https://fi.wikipedia.org/wiki/Java#Käyttö)\n"
+    assert convert.convert_anchors(text) == (text, 0, 0)
+
+
+def test_convert_anchors_skips_code_fences():
+    """Aidassa näytetty linkki on esimerkki eikä linkki."""
+    text = "```markdown\n[x](sivu.md#käyttö)\n```\n"
+    assert convert.convert_anchors(text) == (text, 0, 0)
+
+
+def test_convert_anchors_frees_the_heading_id():
+    """Python-Markdownin attr_list vaatii välilyönnin aaltosulun edellä; ilman
+    sitä sulkulauseke jää otsikkotekstiin ja tunnukseksi tulee
+    "otsikkotunnus"."""
+    text = "## Älykoti: säädettävät laitteet{#alykoti-saadettava}\n"
+    converted, links, headings = convert.convert_anchors(text)
+    assert (links, headings) == (0, 1)
+    assert converted == "## Älykoti: säädettävät laitteet {#alykoti-saadettava}\n"
+
+
+def test_convert_anchors_leaves_a_spaced_heading_id_alone():
+    """Välilyönnillä kirjoitettu tunnus on jo oikein."""
+    text = "## Java Development Kit (JDK) {#jdk}\n"
+    assert convert.convert_anchors(text) == (text, 0, 0)
+
+
+def test_convert_anchors_is_repeatable():
+    """Vahti ajaa muunnoksen joka tallennuksesta, ja jos toinen ajo muuttaisi
+    tulosta, sivu kirjoitettaisiin joka kerta uudelleen."""
+    text = ("## Otsikko{#tunnus}\n\n[x](sivu.md#käyttö)\n")
+    once = convert.convert_anchors(text)[0]
+    assert convert.convert_anchors(once) == (once, 0, 0)
+
+
 # --- Aidan attribuuttilista (README kohta 4) ---------------------------------
 
 @pytest.mark.parametrize("info, expected", [

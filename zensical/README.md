@@ -4,7 +4,7 @@ Kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista **Zensicaliin**
 (Material for MkDocsin tekijöiden uusi generaattori). Ei koske `../src`:ään
 eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan.
 
-**Tila: tarkistuslistan 25 kohdasta 18 on tehty**, kaksi ei tarvita ja viisi on
+**Tila: tarkistuslistan 25 kohdasta 19 on tehty**, kaksi ei tarvita ja neljä on
 auki. Jokaisen ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa
 tiedostossaan: [PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu,
 jos koeputki voittaa ja mdBook puretaan:
@@ -77,7 +77,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 183 testiä
+./zensical/run.sh test                        # kaikki, 191 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -119,7 +119,7 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 10 | Lukujen numerointi navigaatiossa             | koko nav                  | **tehty** — `convert.py`, 12 riviä                                                                                 |
 | 11 | Osan etusivu = osan oma linkki navissa       | 13 osaa                   | **tehty** — `navigation.indexes`                                                                                   |
 | 12 | Otsikoiden numerointi sivun sisällä          | —                         | ei ollut mdBookissakaan                                                                                            |
-| 13 | Ääkköset ankkureissa (`#käyttö`)             | —                         | riisutaan (`#kaytto`)                                                                                              |
+| 13 | Ääkköset ankkureissa (`#käyttö`)             | 6 linkkiä                 | **tehty** — `convert_anchors` riisuu ankkurit samalla tavalla kuin teema otsikoiden tunnukset (`#kaytto`)          |
 | 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | puuttuu — nyt hakemistopolut                                                                                       |
 | 15 | plantuml / bob / mermaid                     | 17 / 11 / 2               | **tehty** — `convert_plantuml` (kuviksi), `convert_svgbob` (upotetuksi SVG:ksi); mermaid toimi jo itsestään        |
 | 16 | `<asciinema>`-upotukset                      | 13                        | rikki                                                                                                              |
@@ -138,7 +138,7 @@ haun ja responsiivisen navigaation.
 
 ## Mitä puuttuu
 
-Tarkistuslistalta viisi kohtaa:
+Tarkistuslistalta neljä kohtaa:
 
 - **16 `<asciinema>`-upotukset** (13 kpl) — rikki, tagi jää sivulle näkyviin.
 - **18 JYU-paletti, kultainen korostus** (30 kohtaa) — puuttuu kokonaan.
@@ -149,8 +149,6 @@ Tarkistuslistalta viisi kohtaa:
   sivustolla ei ole.
 - **14 `.html`-päätteiset osoitteet** — TIM:n linkit osoittavat mdBookin
   muotoon, Zensicalissa sivut ovat hakemistopolkuja.
-- **13 ääkköset ankkureissa** — Zensical riisuu ne (`#käyttö` -> `#kaytto`).
-  Tästä jää yksi kuollut linkki tulostussivulle; se on kirjattu testiin.
 
 Pienempiä:
 
@@ -163,6 +161,18 @@ Pienempiä:
   teemanapin "vaalea, tumma, automaattinen" (Zensicalissa nappi on
   kaksiasentoinen) ja se, kumpi glyfi napissa milloinkin on. Kuvakkeet on
   korjattu, virkkeet eivät.
+
+Käännös on varoitukseton. Kahdeksan viimeistä varoitusta oli aineiston omia
+rikkinäisiä linkkejä — väärä suhteellinen polku tai otsikko, joka on nimetty
+uudelleen linkkiä päivittämättä — ja ne olivat rikki myös mdBookin omassa
+käännöksessä, joten ne korjattiin `../src`:ssä eikä täällä. Se on ainoa kohta,
+jossa koeputki on koskenut lähdepuuhun, ja se on omana committinaan; luettelo
+on [PERUSTELUT.md](PERUSTELUT.md):n kohdassa "Ankkurit".
+
+`convert.py` varoittaa vielä neljästä `{{#include}}`-makrosta, joiden kohde
+puuttuu aineistosta, ja yhdestä tuntemattomasta alerttitunnuksesta
+("Tärkeää — invariantti"). Molemmat ovat samalla kirjan ulkopuolisella sivulla
+(`extra/luetelma-ja-hahmonsovitus.md`), jota mdBook ei käännä lainkaan.
 
 ## Avoimet kysymykset
 
