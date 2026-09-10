@@ -1,0 +1,4 @@
+{"version":3,"term":{"cols":80,"rows":3},"timestamp":1767225600}
+[0.100, "o", "$ javac Ohjelma.java\r\n"]
+[0.200, "o", "$ java Ohjelma\r\n"]
+[0.200, "o", "Hei, maailma!"]

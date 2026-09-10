@@ -169,6 +169,7 @@ class PrintPage:
 
     page: object
     print_calls: list[str] = field(default_factory=list)
+    drawn_lines: list[int] = field(default_factory=list)
     errors: list[str] = field(default_factory=list)
 
     def evaluate(self, script):
@@ -180,8 +181,10 @@ def open_print_page(browser, base_url: str, timeout: int = 120_000) -> PrintPage
 
     window.print korvataan laskurilla: headless-selaimessa oikeaa
     tulostusikkunaa ei ole, ja kutsu on samalla juuri se mitä halutaan mitata.
-    Talteen otetaan tilarivin teksti kutsun hetkellä, jolloin näkyy myös se,
-    ettei tulostusta pyydetä kesken kokoamisen.
+    Talteen otetaan sivun tila kutsun hetkellä, koska juuri se päätyy
+    paperille: tilarivin teksti, josta näkee ettei tulostusta pyydetä kesken
+    kokoamisen, ja piirrettyjen terminaalirivien määrä, koska nauhoitusten
+    soitin (assets/js/asciinema.js) jatkaa työtään vielä kokoamisen jälkeen.
     """
     page = browser.new_page()
     result = PrintPage(page)
@@ -194,9 +197,14 @@ def open_print_page(browser, base_url: str, timeout: int = 120_000) -> PrintPage
                 f"{message.text} {message.location['url']}".strip()))
     page.add_init_script(
         "window.__printCalls = [];"
-        "window.print = () => window.__printCalls.push("
-        "  document.getElementById('jyu-print-status').textContent.trim());")
+        "window.__drawnLines = [];"
+        "window.print = () => {"
+        "  window.__printCalls.push("
+        "    document.getElementById('jyu-print-status').textContent.trim());"
+        "  window.__drawnLines.push(document.querySelectorAll('.ap-line').length);"
+        "};")
     page.goto(f"{base_url}/tulosta/", wait_until="load")
     page.wait_for_function("window.__printCalls.length > 0", timeout=timeout)
     result.print_calls = page.evaluate("window.__printCalls")
+    result.drawn_lines = page.evaluate("window.__drawnLines")
     return result

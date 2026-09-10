@@ -204,3 +204,10 @@ extra_javascript:
   # lisää sivulle nappia eikä kuuntele muita, vaan lisää riveille luokan.
   # Ks. kohta 9.
   - assets/js/highlights.js
+
+  # Terminaalinauhoitusten soitin. mdBookissa tässä olisi kolme riviä
+  # (book.toml: asciinema-player.min.js, asciinema-component.js ja
+  # additional-css:n asciinema-player.css); täällä yksi, koska soitin ja sen
+  # tyyli haetaan vasta sivulla, jolla on nauhoitus — ne ovat 207 kt eivätkä
+  # kuulu 187 sivulle 190:stä. Ks. tiedoston alku ja kohta 16.
+  - assets/js/asciinema.js

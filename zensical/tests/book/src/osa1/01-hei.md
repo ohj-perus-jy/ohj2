@@ -68,6 +68,18 @@ Tämä lohko jää pois: Zensicalissa yksi välilehti on aina valittuna.
 
 ***
 
+## Terminaalinauhoitus
+
+Nauhoitus (README.md kohta 16) on raakaa HTML:ää lähteessä, ja sen osoite on
+suhteellinen luvun omaan hakemistoon.
+
+<asciinema src="images/nauhoitus.cast" rows="3" poster="npt:1"></asciinema>
+
+Sama nauhoitus toistopalkin kanssa: kirjassa `controls` on yhdessä
+kolmestatoista.
+
+<asciinema src="images/nauhoitus.cast" rows="3" poster="npt:1" controls></asciinema>
+
 ## Lopuksi
 
 Luvun viimeinen kappale.

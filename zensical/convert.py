@@ -58,9 +58,9 @@ Kaksi sääntöä pätee koko ajon läpi:
 * Yksi ajo kerrallaan, myös eri prosesseista (only_one_run). Kaksi
   rinnakkaista ajoa sekoittaa docs/:n keskenään, ks. only_one_run.
 
-Mitä ei muunneta: <asciinema>-upotukset jäävät tageina sivuille näkyviin. Se on
-tarkoitus — näin näkee yhdellä silmäyksellä, mitä on vielä tekemättä. Ks.
-README.md:n tarkistuslista, kohta 16.
+Mitä ei muunneta: <asciinema>-upotukset (kohta 16). Tagi menee Markdownin läpi
+sellaisenaan ja Zensical kirjoittaa sen suhteellisen osoitteen sivun uuteen
+sijaintiin, joten muunnettavaa ei ole; soittimen tekee assets/js/asciinema.js.
 
 Ajo ilman argumentteja muuntaa kerran. `--watch` jää seuraamaan lähdepuuta ja
 assetteja ja ajaa muunnoksen jokaisesta muutoksesta; run.sh käynnistää sen

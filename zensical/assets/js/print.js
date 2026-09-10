@@ -132,17 +132,27 @@
     return article;
   }
 
-  /* Kuvat valmiiksi ennen tulostusikkunaa: selain tulostaa sen mitä ruudulla
-   * on sillä hetkellä, ja lataamaton kuva jäisi tyhjäksi laatikoksi.
-   * decode() torjuu myös sen, että kuva on ladattu mutta ei vielä purettu.
-   * Aikaraja siltä varalta, että jokin kuva ei lataudu lainkaan — silloin
-   * tulostetaan ilman sitä eikä jäädä odottamaan loputtomiin. */
-  function imagesReady(root, timeout = 20000) {
+  /* Sivu valmiiksi ennen tulostusikkunaa: selain tulostaa sen mitä ruudulla
+   * on sillä hetkellä. Odotettavaa on kahdenlaista.
+   *
+   * Kuvat: lataamaton kuva jäisi tyhjäksi laatikoksi, ja decode() torjuu myös
+   * sen, että kuva on ladattu mutta ei vielä purettu.
+   *
+   * Kuuntelijoiden oma työ (pending): kokoamisen jälkeen lähetettävä tapahtuma
+   * palaa heti, mutta osa työstä jatkuu sen jälkeen — terminaalinauhoitusten
+   * soitin (assets/js/asciinema.js) haetaan verkosta vasta silloin. Kuuntelija
+   * työntää lupauksensa listaan, joka kulkee tapahtuman mukana.
+   *
+   * Aikaraja siltä varalta, ettei jokin niistä valmistu lainkaan — silloin
+   * tulostetaan ilman sitä eikä jäädä odottamaan loputtomiin. Virheet
+   * niellään samasta syystä: yksi hakematta jäänyt tiedosto ei saa estää
+   * koko kirjan tulostamista. */
+  function contentReady(root, pending, timeout = 20000) {
     const images = [...root.querySelectorAll("img")].map((image) =>
       image.decode().catch(() => {}),
     );
     return Promise.race([
-      Promise.all(images),
+      Promise.all([...images, ...pending.map((task) => task.catch(() => {}))]),
       new Promise((resolve) => setTimeout(resolve, timeout)),
     ]);
   }
@@ -189,8 +199,13 @@
 
     /* Luvut ovat vasta nyt sivulla, joten niitä käsittelevät skriptit eivät
      * ole nähneet niitä. Piilorivit (assets/js/hidelines.js) kuuntelevat tätä;
-     * ilman sitä ne tulostuisivat kirjan mukana. */
-    dispatchEvent(new Event("jyu-print-assembled"));
+     * ilman sitä ne tulostuisivat kirjan mukana.
+     *
+     * Lista kulkee tapahtuman mukana niitä kuuntelijoita varten, joiden työ ei
+     * ole valmis niiden palatessa: ne työntävät sinne lupauksensa, ja
+     * tulostusta odotetaan siihen asti (contentReady). */
+    const pending = [];
+    dispatchEvent(new CustomEvent("jyu-print-assembled", { detail: { pending } }));
 
     say(
       failed.length
@@ -198,7 +213,7 @@
         : `Koottu ${links.length} lukua.`,
     );
 
-    await imagesReady(document);
+    await contentReady(document, pending);
     print();
   }
 

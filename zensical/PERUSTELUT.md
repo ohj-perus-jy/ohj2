@@ -2411,6 +2411,112 @@ Yksi asia jäi korjaamatta, koska se on leipätekstiä eikä linkki:
 mutta luvun nimi on "Abstrakti luokka".
 
 
+### Terminaalinauhoitukset (uusi `assets/js/asciinema.js` + kirjan soitin kopiona + 1 rivi `mkdocs.yml`:ään + 5 riviä `print.js`:ään)
+
+Kirjan komentorivijaksot eivät ole kuvia vaan nauhoituksia: 13 kappaletta
+kolmella sivulla (`osa1/01-hei-java.md` 7, `osa7/03-versionhallinta.md` 4,
+`osa8/06-versionhallinnan-etakaytto.md` 2). Lähteessä ne ovat raakaa HTML:ää —
+`<asciinema src="images/rec_java.cast" rows="3" poster="npt:5"></asciinema>` —
+ja mdBookissa `theme/asciinema-component.js` etsii tagit ja antaa ne
+asciinema-soittimelle.
+
+**Muunnettavaa ei ollut lainkaan, ja se oli kohdan yllätys.** Tarkistuslista
+sanoi kohtaa rikkinäiseksi ja `convert.py`:n alkukommentti "tagit jäävät
+sivuille näkyviin", mutta mitattuna sivulla oli valmiina kaikki muu paitsi
+soitin:
+
+- Tagi menee Markdownin läpi sellaisenaan, koska `<asciinema>` ei ole
+  Python-Markdownin tuntema lohkotason tagi.
+- Zensical kirjoittaa sen `src`:n sivun uuteen sijaintiin
+  (`images/rec_ls_files.cast` -> `../images/rec_ls_files.cast`, kun sivusta
+  tulee hakemisto), eli suhteellinen osoite osuu oikeaan tiedostoon.
+- `.cast`-tiedostot kopioituvat `docs/`:iin vaiheessa 1 muiden liitteiden
+  mukana, ja `zensical build` vie ne sivustolle.
+
+Tagi ei myöskään "jäänyt näkyviin": selaimelle se on tuntematon elementti,
+jonka sisältö on tyhjä, eli sivulla ei näkynyt mitään. Kohta oli siis
+yksinomaan puuttuva soitin.
+
+**Soitin on kirjan oma, kopiona:** `assets/js/asciinema-player.min.js`
+(162 kt) ja `assets/css/asciinema-player.css` (45 kt). Uutta koodia on
+`assets/js/asciinema.js`, joka tekee saman kuin `theme/asciinema-component.js`
+— lukee tagin `src`-, `rows`-, `poster`- ja `controls`-määreet ja antaa ne
+`AsciinemaPlayer.create`lle samoilla lisäasetuksilla (`terminalFontSize:
+"12px"`, `fit: false`) — sekä kaksi asiaa, joita kirjassa ei tarvita.
+
+**1. Soitin haetaan vain sivuille, joilla on nauhoitus.** mdBook lataa sen joka
+sivulle (`book.toml`: `additional-js` ja `additional-css`), mutta 207 kt on
+enemmän kuin Zensicalin oma `bundle.js` (167 kt), ja nauhoituksia on kolmella
+sivulla 190:stä. `mkdocs.yml`:ssä on siksi vain `assets/js/asciinema.js`, joka
+lisää soittimen `<script>`- ja `<link>`-tageina vasta, jos sivulta löytyy
+`asciinema[src]`. Todennettu selaimella: soitinta ei pyydetä sivulla, jolla ei
+ole nauhoitusta, ja pyydetään sivulla, jolla on. Soittimen osoite luetaan
+skriptin omasta osoitteesta (`document.currentScript.src`), koska teema
+kirjoittaa assettien polut suhteellisina eikä sivuston juurta tiedetä.
+
+**2. Tulostussivu odottaa nauhoituksia.** Tämä oli kohdan ainoa oikea mutka, ja
+se meni kahdesti pieleen ennen kuin meni oikein.
+
+`print.js` hakee luvut vasta sivun latauduttua ja pyytää tulostusta heti, kun
+kuvat ovat valmiina. Nauhoitukset eivät ehdi mukaan: soitin haetaan vasta
+kokoamisen jälkeen. **Mitattuna kolmesta ajosta kahdessa tulostushetkellä oli
+0 soitinta ja kolmannessa 13 soitinta, joista yksikään ei ollut piirtänyt
+riviäkään** — paperille olisi jäänyt 13 tyhjää laatikkoa.
+
+Ensimmäinen korjaus oli antaa kuuntelijan lykätä tulostusta: `print.js`
+lähettää kokoamisen jälkeen `jyu-print-assembled`-tapahtuman, ja sen mukana
+kulkee nyt lista, johon kuuntelija voi työntää lupauksensa. Tulostusta
+odotetaan siihen asti (`contentReady`, sama aikaraja ja sama virheiden
+nieleminen kuin kuvilla). Piilorivit ja korostukset eivät tarvitse listaa:
+niiden työ on valmis kuuntelijan palatessa.
+
+Toinen korjaus oli se, *mitä* odotetaan. Soittimen oma rajapinta antaa
+`getDuration()`:n, joka ratkeaa kun nauhoitus on haettu — mutta sen ratketessa
+rivejä oli yhä 0, ja yhden ruudunpäivityksen odottaminen sen perään auttoi
+mittauksessa kerran ja toisessa ei. Syy on soittimen sisällä: se piirtää
+terminaalin omassa `requestAnimationFrame`issaan, jonka se ajastaa vasta
+hakunsa jälkeen, eli kumpi frame on ensin, on kiinni ajoituksesta. Siksi
+odotetaan piirtynyttä riviä (`MutationObserver`, `.ap-line`) eikä
+ruudunpäivitystä. `getDuration()` jäi silti ensimmäiseksi odotukseksi, koska se
+hylkää lupauksen, jos nauhoitusta ei ole: puuttuva tiedosto huomataan siitä
+heti eikä vasta 20 sekunnin aikarajasta.
+
+Yksi ero mdBookiin jää: siellä `print.html` on tavallinen sivu, jolla soitin
+ajetaan muiden skriptien tapaan sivun latautuessa, eikä lukija paina tulostusta
+ennen kuin sivu näyttää valmiilta. Täällä tulostus pyydetään itse, joten
+odottaminen on kirjoitettava näkyviin.
+
+Todennettu vertaamalla mdBookin omaan käännökseen ja selaimella:
+
+- **Sama tulos kuin kirjassa.** `osa1/01-hei-java` molemmista käännöksistä:
+  7 nauhoitusta, 7 soitinta, elementin korkeus 66 px kummassakin ja
+  terminaalin kirjasin 12 px kummassakin. Leveys on eri (659 px vs. 820 px),
+  koska Materialin tekstipalsta on kapeampi kuin mdBookin.
+- **Rivit tulevat nauhoituksesta.** Ensimmäisen soittimen ruudussa on kolme
+  riviä, `rows="3"`; koko sivulla rivejä on yhtä monta kuin tagien
+  `rows`-määreissä yhteensä (44 sivulla `osa1/01-hei-java`, 102 koko kirjassa).
+- **Toisto toimii**: toistonapin painallus muuttaa ensimmäisen rivin.
+- **`controls` menee läpi**: kirjan 13 nauhoituksesta yhdessä on toistopalkki,
+  ja se on juuri se, jolla `.ap-control-bar` on sivulla.
+- **Tulostussivu**: 13 tagia, 13 soitinta ja 102 piirrettyä riviä *sillä
+  hetkellä kun tulostusta pyydetään*, kolme ajoa peräkkäin.
+- **Käännös ja konsoli varoituksettomia**, ja sivun 404-virheet ennallaan.
+
+Yksi tunnettu poikkeus kirjattiin testeihin: soitin antaa toistonapin
+SVG-maskille saman tunnuksen (`small-triangle-mask`) joka soittimessa, joten
+tunnisteiden ainutkertaisuutta vaativat testit rajaavat soittimen sisuksen
+ulos. Maskit ovat identtisiä ja viittaus osuu ensimmäiseen; sama toistuu
+kirjassa, eli kyse on soittimen ominaisuudesta eikä kokoamisesta.
+
+**Testit 198, ennen 191.** Uusia seitsemän: viisi uudessa
+`test_asciinema.py`:ssä (jokainen tagi saa soittimen, ensimmäinen ruutu tulee
+nauhoituksesta, määreet menevät soittimelle, toisto käynnistyy, soitinta ei
+haeta sivulle jolla ei ole nauhoitusta), yksi `test_print.py`:hyn ja yksi
+`test_book.py`:hyn: nauhoitukset ovat piirrettyinä jo tulostushetkellä.
+Koekirjaan tuli kolmen rivin nauhoitus (`tests/book/src/osa1/images/`) ja kaksi
+tagia, joista toisessa on `controls`.
+
+
 ## Mitattu ensimmäisestä ajosta
 
 Rakennus kestää **16 s** (MkDocs + Material samasta sisällöstä: 31 s) ja

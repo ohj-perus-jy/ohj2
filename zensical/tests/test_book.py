@@ -88,9 +88,16 @@ def test_page_break_between_every_chapter(printed):
 def test_identifiers_stay_unique(printed):
     """Sama otsikko toistuu luvusta toiseen ("Tehtävät") ja koodirivien
     ankkurit alkavat joka sivulla alusta: ilman luvun etuliitettä sivulla
-    olisi 1767 kahteen kertaan esiintyvää tunnistetta."""
+    olisi 1767 kahteen kertaan esiintyvää tunnistetta.
+
+    Nauhoitusten soittimet jäävät tarkistuksen ulkopuolelle: soitin antaa
+    toistonapin SVG-maskille saman tunnuksen joka kerta, eli tunnus toistuu
+    yhtä monta kertaa kuin sivulla on soittimia. Maskit ovat keskenään
+    identtisiä ja viittaus osuu ensimmäiseen, ja kirjassa on sama soitin ja
+    sama toisto."""
     duplicates = printed.evaluate("""() => {
-      const ids = [...document.querySelectorAll('[id]')].map(e => e.id);
+      const ids = [...document.querySelectorAll('[id]')]
+        .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
       return ids.filter((id, i) => ids.indexOf(id) !== i);
     }""")
     assert duplicates == []
@@ -245,6 +252,24 @@ def test_every_image_is_loaded(printed):
       .filter(img => !img.complete || img.naturalWidth === 0)
       .map(img => new URL(img.src, location.href).pathname.slice(1))""")
     assert set(broken) <= KNOWN_BROKEN_IMAGES
+
+
+def test_every_recording_is_drawn(printed):
+    """Jokainen nauhoitus (kohta 16) on soittimena ja piirrettynä jo
+    tulostushetkellä, eikä yksikään ole jäänyt paljaaksi tagiksi. Rivejä on
+    yhtä monta kuin tageissa on rows-määreitä yhteensä, eli jokainen soitin on
+    piirtänyt oman ruutunsa kokonaan."""
+    recordings = printed.evaluate("""() => {
+      const tags = [...document.querySelectorAll('asciinema')];
+      return {
+        tags: tags.length,
+        players: tags.filter(tag => tag.querySelector('.ap-wrapper')).length,
+        rows: tags.reduce((sum, tag) => sum + Number(tag.getAttribute('rows')), 0),
+      };
+    }""")
+    assert recordings["tags"] > 0
+    assert recordings["players"] == recordings["tags"]
+    assert printed.drawn_lines == [recordings["rows"]]
 
 
 def test_tab_sets_stay_independent(printed):

@@ -67,7 +67,8 @@ def test_identifiers_stay_unique(printed):
     sivulla olisi kaksi kertaa esiintyviä tunnisteita ja linkki veisi
     ensimmäiseen osumaan."""
     duplicates = printed.evaluate("""() => {
-      const ids = [...document.querySelectorAll('[id]')].map(e => e.id);
+      const ids = [...document.querySelectorAll('[id]')]
+        .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
       return ids.filter((id, i) => ids.indexOf(id) !== i);
     }""")
     assert duplicates == []
@@ -106,6 +107,16 @@ def test_images_are_loaded(printed):
       .map(img => ({src: img.getAttribute('src'), ok: img.complete && img.naturalWidth > 0}))""")
     assert len(images) == 2
     assert [image for image in images if not image["ok"]] == []
+
+
+def test_recordings_are_drawn_before_printing(printed):
+    """Nauhoitusten soitin (kohta 16) haetaan verkosta vasta täällä, ja se
+    piirtää ensimmäisen ruutunsa vasta haun jälkeen — eli työ jatkuu senkin
+    jälkeen, kun luvut ovat sivulla. Ilman odottamista soittimet olisivat
+    paperilla tyhjiä laatikoita: mitattuna oikealla kirjalla kolmestatoista
+    nauhoituksesta oli tulostushetkellä piirrettynä nolla. Koekirjan kaksi
+    nauhoitusta ovat kumpikin kolme riviä."""
+    assert printed.drawn_lines == [6]
 
 
 def test_tab_sets_stay_independent(printed):

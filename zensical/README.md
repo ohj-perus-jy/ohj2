@@ -4,7 +4,7 @@ Kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista **Zensicaliin**
 (Material for MkDocsin tekijöiden uusi generaattori). Ei koske `../src`:ään
 eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan.
 
-**Tila: tarkistuslistan 25 kohdasta 19 on tehty**, kaksi ei tarvita ja neljä on
+**Tila: tarkistuslistan 25 kohdasta 20 on tehty**, kaksi ei tarvita ja kolme on
 auki. Jokaisen ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa
 tiedostossaan: [PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu,
 jos koeputki voittaa ja mdBook puretaan:
@@ -77,7 +77,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 191 testiä
+./zensical/run.sh test                        # kaikki, 198 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -96,6 +96,7 @@ rikkoutumisia on kolmea lajia:
 | `tests/test_print.py`   | tulostussivun kokoaminen selaimessa, koekirjalla              | 6 s        |
 | `tests/test_playground.py` | ajonapit koekirjalla, suorituspalvelin korvattuna          | 16 s       |
 | `tests/test_hidelines.py` | piilorivit ja silmänappi koekirjalla                       | 2 s        |
+| `tests/test_asciinema.py` | terminaalinauhoitukset koekirjalla                        | 4 s        |
 | `tests/test_highlights.py` | korostetut rivit koekirjalla                              | 2 s        |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
@@ -122,9 +123,9 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 13 | Ääkköset ankkureissa (`#käyttö`)             | 6 linkkiä                 | **tehty** — `convert_anchors` riisuu ankkurit samalla tavalla kuin teema otsikoiden tunnukset (`#kaytto`)          |
 | 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | puuttuu — nyt hakemistopolut                                                                                       |
 | 15 | plantuml / bob / mermaid                     | 17 / 11 / 2               | **tehty** — `convert_plantuml` (kuviksi), `convert_svgbob` (upotetuksi SVG:ksi); mermaid toimi jo itsestään        |
-| 16 | `<asciinema>`-upotukset                      | 13                        | rikki                                                                                                              |
+| 16 | `<asciinema>`-upotukset                      | 13                        | **tehty** — `assets/js/asciinema.js` + kirjan soitin; convert.py:ssä ei mitään, soitin haetaan vain sivuille joilla on nauhoitus |
 | 17 | Ikonit `<i class="bi ...">` ja `<i class="fa ...">` | 150                | **tehty** — 66 bonusmerkkiä `convert_bonus_marks`, 58 valikkopolun nuolta merkkinä ja 22 kuvaketta teeman glyfeinä `convert_icons`; 4 poistui navigointiosion mukana |
-| 18 | JYU-paletti, kultainen korostus              | 30                        | puuttuu                                                                                                            |
+| 18 | JYU-paletti, kultainen korostus              | 30                        | siirretty myöhemmäksi — värit ovat toistaiseksi Materialin omat                                                    |
 | 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | —                         | **tehty** — tekijät, lisenssi ja muokkauslinkki; "Ilmoita ongelmasta" puuttuu                                      |
 | 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana; ajonappi ajaa lohkon sellaisenaan, ks. kohdat 3 ja 4                     |
 | 21 | KaTeX                                        | 0                         | voi jättää pois                                                                                                    |
@@ -138,12 +139,12 @@ haun ja responsiivisen navigaation.
 
 ## Mitä puuttuu
 
-Tarkistuslistalta neljä kohtaa:
+Tarkistuslistalta kolme kohtaa:
 
-- **16 `<asciinema>`-upotukset** (13 kpl) — rikki, tagi jää sivulle näkyviin.
-- **18 JYU-paletti, kultainen korostus** (30 kohtaa) — puuttuu kokonaan.
-  Tehtäväkorttien bonusliuska käyttää toistaiseksi omaa tummennettua sävyään,
-  koska kirjan `#C29A5B` on valkoista vasten vain 2,4:1.
+- **18 JYU-paletti, kultainen korostus** (30 kohtaa) — tietoisesti siirretty
+  myöhemmäksi, ei tehdä tässä vaiheessa. Tehtäväkorttien bonusliuska käyttää
+  omaa tummennettua sävyään, koska kirjan `#C29A5B` on valkoista vasten vain
+  2,4:1.
 - **20 ACE-editori** (2 `editable`-lohkoa) — lohko näkyy tavallisena koodina.
   Sen mukana `fa-history`-kuvake osoittaa "Peruuta muutokset" -nappiin, jota
   sivustolla ei ole.

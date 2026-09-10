@@ -67,9 +67,12 @@ def test_new_chapter_is_printed(mutable_book, serve, browser):
     assert headings(printed) == before + ["Uusi luku"]
     assert "Tämän pitää päätyä paperille asti." in text(printed)
     assert printed.print_calls == [f"Koottu {len(before) + 1} lukua."]
-    # Uusi luku ei saa törmätä muiden lukujen tunnisteisiin.
+    # Uusi luku ei saa törmätä muiden lukujen tunnisteisiin. Nauhoitusten
+    # soittimet rajataan ulos samasta syystä kuin test_print.py:ssä: soittimen
+    # oma SVG-maski saa saman tunnuksen joka soittimessa.
     assert printed.evaluate("""() => {
-      const ids = [...document.querySelectorAll('[id]')].map(e => e.id);
+      const ids = [...document.querySelectorAll('[id]')]
+        .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
       return ids.filter((id, i) => ids.indexOf(id) !== i);
     }""") == []
 
