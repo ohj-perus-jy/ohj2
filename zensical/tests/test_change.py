@@ -76,7 +76,8 @@ def test_new_chapter_is_printed(mutable_book, serve, browser):
 
 def test_removed_chapter_leaves_the_print_page(mutable_book, serve, browser):
     """Poistettu luku katoaa myös tulosteesta: sivu ei jää roikkumaan vanhaan
-    docs/-kopioon, jonka convert.py kirjoittaa joka ajolla uusiksi."""
+    docs/-kopioon, josta convert.py poistaa lähteestä kadonneet sivut
+    (sync_docs; docs/:ia ei tyhjennetä kokonaan, ks. sen perustelu)."""
     base_url = serve(mutable_book.site)
     printed = open_print_page(browser, base_url)
     before = headings(printed)

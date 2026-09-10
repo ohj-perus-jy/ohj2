@@ -20,10 +20,23 @@ devcontainerista; jos se ei aukea, avaa VS Coden **PORTS**-välilehti.
 ./zensical/run.sh build    # pelkkä rakennus site/-hakemistoon
 ```
 
-`zensical serve` seuraa muutoksia `docs/`:ssä. Kun muokkaat `../src`:ää,
-aja `python3 convert.py` uudelleen. **Huom:** se ei huomaa muutoksia
-`assets/`-tiedostoihin, joten CSS:ää muokatessa palvelin on käynnistettävä
-uudelleen.
+`zensical serve` seuraa muutoksia `docs/`:ssä. Kun muokkaat `../src`:ää tai
+`assets/`-tiedostoja, aja `python3 convert.py` uudelleen: se päivittää `docs/`:n
+paikalleen, ja palvelin rakentaa muuttuneet sivut ja tyylit itse (mitattuna
+alle 20 s). Palvelinta ei tarvitse käynnistää uudelleen.
+
+`convert.py` ei tyhjennä `docs/`:ia, koska `zensical serve` (0.0.60) kaatuu tai
+unohtaa `docs/assets/`:n staattiset tiedostot, jos sen seuraama hakemisto
+katoaa kesken rakennuksen; perustelu on `convert.py`:n `sync_docs`-funktiossa.
+Jos tyylit silti katoavat — sivu näyttää paljaalta oletusteemalta ilman
+virheilmoitusta — syy näkyy näin:
+
+```bash
+curl -s localhost:8001/assets/css/layout.css | head -1
+```
+
+Palvelin vastaa puuttuvaan tiedostoon etusivun HTML:llä (`<!doctype html>`,
+tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 
 ## Testit
 

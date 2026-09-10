@@ -1468,14 +1468,70 @@ def convert_tabs(text: str) -> tuple[str, int, int, set[str]]:
     return "\n".join(out), sets, placeholders, set(labels.values())
 
 
+def sync_docs() -> set[Path]:
+    """Kopioi ../src docs/:iin paikalleen. Palauttaa edellisen ajon jäänteet.
+
+    docs/:ia ei tyhjennetä rmtree:llä, vaikka se olisi yksinkertaisin tapa,
+    koska `zensical serve` seuraa hakemistoa tiedostovahdilla ja kaatuu
+    (0.0.60: "RuntimeError: No such file or directory"), jos sen kesken
+    rakennuksen lukema tiedosto tai hakemisto ehtii kadota. Sama vaara on
+    jokaisessa tiedostossa, joka syntyy ja katoaa kesken ajon. Jos palvelin ei
+    kaadu, se voi silti unohtaa docs/assets/:n staattiset tiedostot: sivut
+    rakentuvat, mutta CSS:t ja JS:t puuttuvat site/:sta, ja palvelin vastaa
+    niiden osoitteisiin etusivun HTML:llä (200, ei 404) — selaimessa paljas
+    oletusteema ilman virheilmoitusta. Kumpikin pakottaisi käynnistämään
+    palvelimen uudelleen joka convert.py-ajon jälkeen.
+
+    Siksi tehdään vain sitä, minkä vahti kestää: tiedostot kirjoitetaan
+    suoraan lopulliseen paikkaansa (myös NEST_UNDER-siirrot, joten
+    tentti.md ei käy docs/:n juuressa), SUMMARY.md jätetään kopioimatta
+    sen sijaan että se poistettaisiin, eikä hakemistoja poisteta koskaan.
+    Tyhjiksi jäävät hakemistot eivät haittaa rakennusta.
+
+    Jäänteet ovat tiedostoja, jotka olivat docs/:ssa ennen ajoa mutta joita
+    ../src, assets/ tai tämä ajo ei tuota: lähdepuusta poistettuja sivuja.
+    main poistaa ne vasta lopuksi, kun kaikki muu on paikallaan.
+    """
+    moves = nest_moves()
+    before = ({f for f in DOCS.rglob("*") if f.is_file()}
+              if DOCS.exists() else set())
+    fresh: set[Path] = set()
+    for file in SRC.rglob("*"):
+        if not file.is_file():
+            continue
+        relative = file.relative_to(SRC).as_posix()
+        if relative == "SUMMARY.md":
+            continue
+        target = DOCS / moves.get(relative, relative)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(file, target)
+        fresh.add(target)
+    for old_path in moves:
+        if not (SRC / old_path).is_file():
+            print(f"varoitus: NEST_UNDER viittaa puuttuvaan sivuun: {old_path}",
+                  file=sys.stderr)
+    fresh |= {DOCS / "assets" / f.relative_to(ASSETS)
+              for f in ASSETS.rglob("*") if f.is_file()}
+    fresh.add(DOCS / PRINT_PAGE)
+    return before - fresh
+
+
+def write_if_changed(path: Path, text: str) -> None:
+    """Kirjoita vain jos sisältö muuttuu: turha kirjoitus on vahdille tapahtuma.
+
+    nav.yml:n tapauksessa se on lisäksi asetustiedoston muutos, josta
+    `zensical serve` aloittaa koko sivuston rakennuksen alusta.
+    """
+    if path.is_file() and path.read_text(encoding="utf-8") == text:
+        return
+    path.write_text(text, encoding="utf-8")
+
+
 def main() -> int:
     if not SRC.is_dir():
         print(f"lähdepuu puuttuu: {SRC}", file=sys.stderr)
         return 1
-    if DOCS.exists():
-        shutil.rmtree(DOCS)
-    shutil.copytree(SRC, DOCS)
-    (DOCS / "SUMMARY.md").unlink(missing_ok=True)
+    stale = sync_docs()
     sets = placeholders = blocks = files = fences = includes = alerts = 0
     hidden = marked = 0
     details = summaries = divs = tasks = diagrams = drawings = 0
@@ -1484,14 +1540,22 @@ def main() -> int:
     used_drawings: set[str] = set()
     tab_labels: set[str] = set()
     unknown_alerts: set[str] = set()
+    moved_from = {new: old for old, new in nest_moves().items()}
     for page in sorted(DOCS.rglob("*.md")):
+        relative = page.relative_to(DOCS).as_posix()
+        # NEST_UNDER-siirretty sivu on docs/:ssa jo uudessa paikassaan, mutta
+        # sen sisällytykset ratkeavat lähdepuun alkuperäisestä paikasta.
+        origin = SRC / moved_from.get(relative, relative)
+        if not origin.is_file():
+            # Edellisen ajon jäänne (ks. sync_docs) tai sen kirjoittama
+            # tulostussivu: ei lähdettä, ei muunnettavaa.
+            continue
         source = page.read_text(encoding="utf-8")
         # Sisällytykset ennen kaikkea muuta, kuten mdBookissa: muut muunnokset
         # käsittelevät myös sisällytetyn tekstin (43 tehtävänannossa on
         # koodiaita), ja koodiaidan sisällä olevat sisällytykset ovat vasta
         # tämän jälkeen sitä koodia, jonka convert_files jakaa välilehdiksi.
-        converted, page_includes = convert_includes(
-            source, SRC / page.relative_to(DOCS))
+        converted, page_includes = convert_includes(source, origin)
         # Monitiedostolohkot ennen aitoja: silloin ne toimivat myös #tab/-osion
         # sisällä, koska convert_tabs sisentää valmiin välilehtijoukon
         # sisäkkäiseksi. Toisin päin sisennetty aita jäisi tunnistamatta.
@@ -1553,20 +1617,15 @@ def main() -> int:
         drawings += page_drawings
         used_drawings |= page_art
         unknown_alerts |= page_unknown
-    for old_path, new_path in nest_moves().items():
-        source = DOCS / old_path
-        if not source.is_file():
-            print(f"varoitus: NEST_UNDER viittaa puuttuvaan sivuun: {old_path}",
-                  file=sys.stderr)
-            continue
-        target = DOCS / new_path
-        target.parent.mkdir(parents=True, exist_ok=True)
-        source.rename(target)
     shutil.copytree(ASSETS, DOCS / "assets", dirs_exist_ok=True)
     nav = build_nav()
-    (ROOT / "nav.yml").write_text(nav + build_extra(tab_labels), encoding="utf-8")
-    (DOCS / PRINT_PAGE).write_text(build_print_page(nav), encoding="utf-8")
-    print(f"kopioitu {len(list(DOCS.rglob('*.md')))} markdown-tiedostoa -> {DOCS}")
+    write_if_changed(ROOT / "nav.yml", nav + build_extra(tab_labels))
+    write_if_changed(DOCS / PRINT_PAGE, build_print_page(nav))
+    # Jäänteet viimeisenä, kun kaikki muu on jo paikallaan (ks. sync_docs).
+    for file in sorted(stale):
+        file.unlink()
+    print(f"kopioitu {len(list(DOCS.rglob('*.md')))} markdown-tiedostoa -> {DOCS}"
+          + (f", {len(stale)} jäänyttä tiedostoa pois" if stale else ""))
     print(f"välilehdet: {sets} joukkoa, {placeholders} #tab/default-lohkoa pois")
     print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
     print(f"aidan attribuutit: {fences} aitaa")
