@@ -100,6 +100,18 @@
   box-shadow: 0 -0.05rem var(--jyu-rule) inset;
 }
 
+/* Aktiivisen välilehden osoitin hitusen paksummaksi. Zensicalin oletus on
+ * 1.5px, mikä jää yllä olevan 0.05rem:n (0.8px) viivan rinnalla vaisuksi:
+ * kahden ohuen viivan ero ei erotu vilkaisulla. 2px tuplaa eron
+ * viivanleveydessä muuttamatta osoittimen mittasuhteita.
+ *
+ * .js-etuliite on pakollinen: teeman sääntö on .js .md-typeset
+ * .tabbed-labels:before, ja ilman etuliitettä tämä häviää sille
+ * spesifisyydessä. Osoitin on muutenkin olemassa vain JS:n kanssa. */
+.js .md-typeset .tabbed-labels::before {
+  height: 2px;
+}
+
 /* Väljyys sisällölle, ei yhteiselle säiliölle. Kaikilla leveyksillä.
  *
  * Zensicalin oletus on .md-main__inner { margin-top: 1.5rem }, mutta se
