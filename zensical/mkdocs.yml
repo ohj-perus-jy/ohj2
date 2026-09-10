@@ -124,7 +124,17 @@ extra_css:
   # yhden komponentin tyyli, ei sivun asettelua. Ilme on tarkoituksella eri
   # kuin kirjan laatikko (theme/tasks.css); perustelu on tiedoston alussa.
   # Merkkauksen kääntää convert.py: convert_tasks.
+  #
+  # Tiedosto omistaa myös bonusmerkin kullan (.jyu-bonus). Merkki on sama
+  # kortin liuskassa ja leipätekstissä, joten sen väri on määritelty kerran
+  # täällä, missä liuskakin on; merkin itsensä kirjoittaa convert.py:
+  # bonus_mark.
   - assets/css/tasks.css
+
+  # Valikkopolun erotin (**File** › **Settings**), yksi sääntö: pelkkä väri.
+  # Loput kirjan ikoneista ovat teeman omassa .twemoji-kääreessä eivätkä
+  # tarvitse tyyliä lainkaan. Merkkauksen kirjoittaa convert.py: convert_icons.
+  - assets/css/icons.css
 
   # Taulukot: keskitys, otsikkorivin väri ja vuororivit. Omana tiedostonaan
   # samasta syystä kuin edelliset kaksi. Kirjassa taulukko on keskitetty ja

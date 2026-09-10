@@ -1,0 +1,22 @@
+/* Valikkopolun erotin. Lähteessä se on <i class="bi bi-chevron-right">, tässä
+ * merkki › (U+203A); muunnoksen tekee convert.py (PATH_ARROW). Omana
+ * tiedostonaan samasta syystä kuin admonitions.css ja tasks.css: yhden asian
+ * tyyli, ei sivun asettelua.
+ *
+ * Tiedostossa on tasan yksi sääntö, koska erotin on tekstiä eikä kuvaketta:
+ * koon, painon, kohdistuksen ja rivityksen hoitaa leipätekstin oma kirjasin,
+ * joka piirtää merkin itse (ks. convert.py: PATH_ARROW). Muut kuvakkeet eivät
+ * tarvitse täältä mitään, koska ne ovat teeman omassa .twemoji-kääreessä.
+ *
+ * Väri on --md-default-fg-color--light eli sama vaimennus, jota teema käyttää
+ * toissijaiseen tekstiin. Vaimennus on tarpeen, koska polun kohdat ovat
+ * lähteessä usein lihavoituja (**File** › **Settings**): täydellä tekstivärillä
+ * erotin painaisi rivillä yhtä paljon kuin ne kohdat, joita sen on tarkoitus
+ * erottaa. Muuttuja on teeman oma ja riittää molemmissa teemoissa: selaimessa
+ * mitattuna erotin on vaaleassa rgb(102, 102, 102) valkoista vasten (5,7:1) ja
+ * tummassa rgb(144, 146, 150) taustaa rgb(11, 12, 15) vasten (6,3:1), eli
+ * kummassakin yli pienen tekstin 4,5:1:n rajan. Leipäteksti itse on samoissa
+ * kohdissa 92 %:n ja 88 %:n peitolla, joten ero tekstiin jää näkyviin. */
+.md-typeset .jyu-path {
+  color: var(--md-default-fg-color--light);
+}

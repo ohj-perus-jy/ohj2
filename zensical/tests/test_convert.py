@@ -1,14 +1,19 @@
 """convert.py:n muunnokset yksin: ei käännöstä, ei selainta.
 
 Nämä ovat testeistä nopeimmat ja tiheimmät. Ne vastaavat kysymykseen
-"tekeekö skripti sen mitä README.md väittää" ilman että mitään käännetään,
-ja siksi jokainen väite on kirjattu samoin sanoin kuin README:n perustelu.
+"tekeekö skripti sen mitä PERUSTELUT.md väittää" ilman että mitään
+käännetään, ja siksi jokainen väite on kirjattu samoin sanoin kuin sen
+perustelu.
 
 Lähdepuuna on tests/book/src, joka on tarkoituksella pieni mutta sisältää
 yhden esimerkin jokaisesta muunnoksesta.
 """
 
+import fcntl
+import os
+import re
 import zlib
+from pathlib import Path
 
 import pytest
 
@@ -704,9 +709,204 @@ def test_convert_tasks_puts_the_bonus_badge_inside_the_name():
     text = ('<task-title num="1.7"><i class="bi bi-stars"></i>'
             "Numerolaskuri<points>1 p.</points></task-title>\n")
     converted, _ = convert.convert_tasks(text)
-    assert ('<span class="task-name">Numerolaskuri '
-            '<span class="task-bonus">Bonus</span></span>') in converted
+    assert '<span class="task-name">Numerolaskuri <span class="task-bonus">' in converted
+    assert converted.count('<span class="task-bonus">') == 1
     assert "bi-stars" not in converted
+
+
+def test_task_badge_draws_the_bonus_mark_as_decoration():
+    """Liuskassa sana "Bonus" lukee merkin vieressä, joten merkki itse on
+    koriste eikä sitä nimetä ruudunlukijalle."""
+    text = ('<task-title num="1.7"><i class="bi bi-stars"></i>'
+            "Numerolaskuri<points>1 p.</points></task-title>\n")
+    converted, _ = convert.convert_tasks(text)
+    assert '<span class="twemoji jyu-bonus" aria-hidden="true">' in converted
+    assert convert.BONUS_MARK_PATH in converted
+    assert "aria-label" not in converted
+
+
+def test_convert_bonus_marks_names_the_mark_when_the_line_has_no_bonus_word():
+    """Harjoitustyön vaatimuslistassa merkki on rivin ainoa ero pakolliseen
+    vaatimukseen, joten se saa nimen."""
+    text = ' * <i class="bi bi-stars jyu-gold"></i> Kulukategoria voi olla *pakollinen*.\n'
+    converted, marks = convert.convert_bonus_marks(text)
+    assert marks == 1
+    assert 'role="img" aria-label="Bonus"' in converted
+    assert "bi-stars" not in converted
+
+
+def test_convert_bonus_marks_leaves_the_mark_silent_next_to_the_word():
+    """<summary>-rivi alkaa sanalla "Bonus:" tai "Valinnaista lisätietoa:",
+    jolloin nimi vain toistaisi otsikon."""
+    text = ('<details markdown="1"><summary><i class="bi bi-stars jyu-gold"></i>'
+            " Bonus: Lisää ominaisuuksia</summary>\n")
+    converted, marks = convert.convert_bonus_marks(text)
+    assert marks == 1
+    assert 'aria-hidden="true"' in converted
+    assert "aria-label" not in converted
+
+
+def test_convert_bonus_marks_skips_code_fences():
+    """Aidan sisällä näytetty esimerkki on tekstiä eikä merkintää."""
+    text = '```html\n<i class="bi bi-stars"></i>\n```\n'
+    converted, marks = convert.convert_bonus_marks(text)
+    assert marks == 0
+    assert converted == text
+
+
+# --- Loput ikonit (README kohta 17) ------------------------------------------
+
+def test_convert_icons_writes_the_path_arrow_as_a_character():
+    """Valikkopolun nuoli on välimerkki eikä kuvake: bi-chevron-right ja
+    bi-arrow-right tekevät saman työn ja saavat saman merkin."""
+    text = ('**File** <i class="bi bi-chevron-right"></i> **Settings**\n'
+            'Oikea nappi <i class="bi bi-arrow-right"></i> Controller class\n')
+    converted, arrows, icons, unknown = convert.convert_icons(text)
+    assert (arrows, icons, unknown) == (2, 0, set())
+    assert converted == (
+        '**File** <span class="jyu-path">›</span> **Settings**\n'
+        'Oikea nappi <span class="jyu-path">›</span> Controller class\n')
+
+
+def test_convert_icons_reads_a_tag_that_wraps_across_lines():
+    """Lähteessä 19 tagia on rivitetty kesken tagin, ja kahdessa jatkorivi on
+    lainauslohkossa, jolloin väliin tulee myös lainausmerkki."""
+    text = ('> **File** <i class="bi\n> bi-chevron-right"></i> **Settings**\n'
+            'Tallenna <i\n   class="bi bi-chevron-right"></i> Save\n')
+    converted, arrows, _, _ = convert.convert_icons(text)
+    assert arrows == 2
+    assert converted == ('> **File** <span class="jyu-path">›</span> '
+                         '**Settings**\n'
+                         'Tallenna <span class="jyu-path">›</span> Save\n')
+
+
+def test_convert_icons_draws_the_icon_in_the_theme_wrapper():
+    """Kääre on teeman oma .twemoji, joten koon, kohdistuksen ja värin hoitaa
+    teeman CSS; kuvake itse on koriste, koska nappi on nimetty vieressä."""
+    text = "ajopainikkeella (<i class=\"bi bi-play-fill\"></i>)\n"
+    converted, _, icons, _ = convert.convert_icons(text)
+    assert icons == 1
+    assert '<span class="twemoji" aria-hidden="true"><svg' in converted
+    assert 'd="M8 5.14v14l11-7z"' in converted
+    assert "aria-label" not in converted
+
+
+def test_convert_icons_skips_code_fences():
+    """Aidan sisällä näytetty esimerkki on tekstiä eikä merkintää. Pala
+    palalta luettu teksti ei myöskään saa muuttua muualta."""
+    text = ('ennen <i class="bi bi-chevron-right"></i> jälkeen\n'
+            '```html\n<i class="bi bi-chevron-right"></i>\n```\n'
+            'lopuksi <i class="bi bi-bug"></i>\n')
+    converted, arrows, icons, _ = convert.convert_icons(text)
+    assert (arrows, icons) == (1, 1)
+    assert converted.count('<i class="bi bi-chevron-right"></i>') == 1
+    assert converted.splitlines()[1:4] == [
+        "```html", '<i class="bi bi-chevron-right"></i>', "```"]
+
+
+def test_convert_icons_keeps_a_leading_fence_where_it_is():
+    """Aidan raja synnyttää tyhjän palan; se ei saa muuttua riviksi."""
+    text = '```html\n<i class="bi bi-bug"></i>\n```\nteksti\n'
+    assert convert.convert_icons(text)[0] == text
+
+
+def test_convert_icons_names_an_unknown_icon_instead_of_dropping_it():
+    """Lähdepuuhun voi tulla uusi ikoni milloin tahansa: näkyvä tagi ja
+    varoitus ovat parempia kuin hiljaa kadonnut kuvake."""
+    text = '<i class="bi bi-rocket-takeoff"></i>\n'
+    converted, arrows, icons, unknown = convert.convert_icons(text)
+    assert (arrows, icons) == (0, 0)
+    assert unknown == {"bi-rocket-takeoff"}
+    assert converted == text
+
+
+def test_convert_icons_runs_after_the_bonus_marks():
+    """bi-stars ei ole ICON_MAPissa, joten väärässä järjestyksessä ajettuna
+    tämä ilmoittaisi bonusmerkin tuntemattomaksi."""
+    assert "bi-stars" not in convert.ICON_MAP
+    _, _, _, unknown = convert.convert_icons('<i class="bi bi-stars"></i>\n')
+    assert unknown == {"bi-stars"}
+
+
+def test_convert_icons_warns_about_a_missing_glyph(monkeypatch, capsys,
+                                                   tmp_path):
+    """Puuttuva glyfitiedosto ei saa kadottaa merkintää sivulta."""
+    monkeypatch.setattr(convert, "ICONS", tmp_path)
+    text = '<i class="bi bi-bug"></i>\n'
+    converted, _, icons, unknown = convert.convert_icons(text)
+    assert (icons, converted) == (0, text)
+    assert unknown == {"bi-bug"}
+    assert "glyfi puuttuu" in capsys.readouterr().err
+
+
+def test_convert_icons_is_repeatable():
+    """convert.py ajetaan uudelleen aina kun lähde muuttuu: valmiissa
+    tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    text = ('**File** <i class="bi bi-chevron-right"></i> **Save**, '
+            'ajopainike <i class="bi bi-play-fill"></i>\n')
+    converted = convert.convert_icons(text)[0]
+    assert convert.convert_icons(converted) == (converted, 0, 0, set())
+
+
+def test_icon_glyphs_are_the_theme_files():
+    """Glyfit ovat kopioita, koska convert.py ajetaan systeemin python3:lla
+    eikä .venv:stä. Ero teemaan näkyy tässä heti kun teema vaihtaa glyfiä."""
+    zensical = pytest.importorskip("zensical")
+    icons = Path(zensical.__file__).parent / "templates" / ".icons"
+    for icon in sorted(set(convert.ICON_MAP.values())):
+        theme = icons / f"{icon}.svg"
+        assert theme.is_file(), f"teemalla ei ole glyfiä {icon}"
+        assert (convert.ICONS / f"{icon}.svg").read_text(
+            encoding="utf-8") == theme.read_text(encoding="utf-8")
+
+
+@pytest.mark.parametrize("icon, css, variable", [
+    ("material/play", "playground.css", "--jyu-run-icon"),
+    ("material/eye-outline", "hidelines.css", "--jyu-eye-icon"),
+])
+def test_icon_glyph_matches_the_button_it_points_at(icon, css, variable):
+    """Ohjeen kuvake ja nappi, johon ohje osoittaa, ovat sama glyfi: napit
+    piirtyvät CSS:n mask-imagesta, ohje inline-SVG:stä."""
+    rule = (convert.ASSETS / "css" / css).read_text(encoding="utf-8")
+    drawn = (convert.ICONS / f"{icon}.svg").read_text(encoding="utf-8")
+    path = re.search(r'd="(?P<path>[^"]+)"', drawn)["path"]
+    assert f"{variable}:" in rule
+    assert path in rule
+
+
+# --- Poistetut osiot ---------------------------------------------------------
+
+def test_drop_sections_takes_the_heading_and_its_body():
+    """Osio on otsikkorivi ja kaikki sen jälkeen seuraavaan samantasoiseen
+    otsikkoon asti — juuri se, mikä sisällysluettelossa on otsikon alla."""
+    text = ("# Sivu\n\n## Navigointi tässä materiaalissa\n\nvinkki\n\n"
+            "### Alaotsikko\n\nlisää\n\n## Palaute\n\nteksti\n")
+    converted, sections = convert.drop_sections(text, "index.md")
+    assert sections == 1
+    assert converted == "# Sivu\n\n## Palaute\n\nteksti\n"
+
+
+def test_drop_sections_only_touches_the_named_page():
+    """Avain on sivun polku lähdepuussa: sama otsikko muualla jää rauhaan."""
+    text = "## Navigointi tässä materiaalissa\n\nvinkki\n"
+    assert convert.drop_sections(text, "osa1/index.md") == (text, 0)
+
+
+def test_drop_sections_ignores_headings_inside_code():
+    """Aidan sisällä rivin aloittava ristikko on kommentti eikä otsikko."""
+    text = ("## Navigointi tässä materiaalissa\n\n```python\n"
+            "# kommentti\n```\n\n## Palaute\n\nteksti\n")
+    converted, sections = convert.drop_sections(text, "index.md")
+    assert sections == 1
+    assert converted == "## Palaute\n\nteksti\n"
+
+
+def test_drop_sections_warns_when_the_section_is_gone(capsys):
+    """Lähde on kirjan oma eikä muutu tämän mukana: jos osio poistetaan tai
+    nimetään uudelleen siellä, se pitää poistaa myös täältä."""
+    converted, sections = convert.drop_sections("# Sivu\n", "index.md")
+    assert (converted, sections) == ("# Sivu\n", 0)
+    assert "DROP_SECTIONS" in capsys.readouterr().err
 
 
 def test_convert_tasks_lifts_the_tags_out_of_the_indentation():
@@ -826,3 +1026,107 @@ def test_build_extra_maps_moved_pages_back_to_src():
     assert '"tentti/index.md": "tentti.md"' in extra
     assert '"tulosta.md": ""' in extra
     assert '    - "Windows"' in extra
+
+
+# --- Vahti (README: "Muokkaa aina ../src:ää") --------------------------------
+
+@pytest.fixture
+def watched(tmp_path, monkeypatch):
+    """Vahdittavat puut väliaikaishakemistoon."""
+    src, assets = tmp_path / "src", tmp_path / "assets"
+    (src / "osa1").mkdir(parents=True)
+    assets.mkdir()
+    (src / "osa1" / "sivu.md").write_text("a", encoding="utf-8")
+    (assets / "tyyli.css").write_text("b", encoding="utf-8")
+    monkeypatch.setattr(convert, "SRC", src)
+    monkeypatch.setattr(convert, "ASSETS", assets)
+    return src, assets
+
+
+def test_watch_paths_follows_the_source_tree_constant(watched):
+    """SRC:n vaihtaminen näkyy vahdille asti: siksi funktio eikä vakio."""
+    src, assets = watched
+    assert convert.watch_paths() == (src, assets)
+
+
+def test_snapshot_covers_both_trees(watched):
+    """Assetit ovat mukana, koska nekin päätyvät sivustolle vain convert.py:n
+    kautta: ilman niitä CSS:n muutos jäisi näkymättä kuten tekstinkin."""
+    src, assets = watched
+    assert set(convert.snapshot()) == {str(src / "osa1" / "sivu.md"),
+                                       str(assets / "tyyli.css")}
+
+
+def test_changed_files_sees_edit_add_and_delete(watched):
+    """Muutos, lisäys ja poisto ovat kaikki kolme syy ajaa muunnos."""
+    src, assets = watched
+    before = convert.snapshot()
+    page = src / "osa1" / "sivu.md"
+    page.write_text("muutettu", encoding="utf-8")
+    # Aika asetetaan käsin: testi ei saa nojata siihen, kuinka tarkka
+    # tiedostojärjestelmän kello sattuu olemaan.
+    stamp = before[str(page)] + 10 ** 9
+    os.utime(page, ns=(stamp, stamp))
+    (src / "uusi.md").write_text("c", encoding="utf-8")
+    (assets / "tyyli.css").unlink()
+    assert convert.changed_files(before, convert.snapshot()) == sorted(
+        [str(page), str(src / "uusi.md"), str(assets / "tyyli.css")])
+
+
+def test_watch_label_names_one_file_and_counts_the_rest():
+    """Vahdin rivi on yksi rivi, koska se kulkee palvelimen lokin seassa."""
+    page = str(convert.SRC / "osa1" / "sivu.md")
+    style = str(convert.ASSETS / "css" / "tasks.css")
+    assert convert.watch_label([page]) == "src/osa1/sivu.md"
+    assert convert.watch_label(sorted([page, style])) == "src/osa1/sivu.md (+1)"
+
+
+# --- Turhat kirjoitukset ja rinnakkaiset ajot -------------------------------
+
+def test_copy_if_changed_leaves_an_identical_file_alone(tmp_path):
+    """Turha kirjoitus on vahdille tapahtuma: palvelin ilmoittaisi tiedostosta
+    selaimelle, joka lataisi sivun uudelleen kesken käännöksen."""
+    source, target = tmp_path / "lahde", tmp_path / "kohde"
+    source.write_text("sama", encoding="utf-8")
+    convert.copy_if_changed(source, target)
+    stamp = target.stat().st_mtime_ns
+    convert.copy_if_changed(source, target)
+    assert target.stat().st_mtime_ns == stamp
+    source.write_text("eri sisältö", encoding="utf-8")
+    convert.copy_if_changed(source, target)
+    assert target.read_text(encoding="utf-8") == "eri sisältö"
+
+
+def test_write_if_changed_creates_the_folder(tmp_path):
+    """Sivut kirjoitetaan suoraan lopulliseen paikkaansa, myös uuteen
+    alahakemistoon."""
+    target = tmp_path / "osa9" / "sivu.md"
+    convert.write_if_changed(target, "teksti")
+    assert target.read_text(encoding="utf-8") == "teksti"
+
+
+def test_prune_diagrams_removes_only_unused(tmp_path):
+    """Nimi on lähteen sha1, joten muokattu kaavio jättäisi vanhan tiedoston."""
+    (tmp_path / "kaytossa.svg").write_text("a", encoding="utf-8")
+    (tmp_path / "vanha.svg").write_text("b", encoding="utf-8")
+    assert convert.prune_diagrams(tmp_path, {"kaytossa.svg"}) == 1
+    assert [f.name for f in tmp_path.glob("*.svg")] == ["kaytossa.svg"]
+
+
+def test_prune_diagrams_keeps_everything_when_a_diagram_failed(tmp_path):
+    """Piirtämättä jäänyt kaavio puuttuu käytettyjen joukosta, joten joukko ei
+    kerro mikä on käyttämätöntä. Tiedostot ovat versionhallinnassa."""
+    (tmp_path / "kaytossa.svg").write_text("a", encoding="utf-8")
+    (tmp_path / "toinen.svg").write_text("b", encoding="utf-8")
+    assert convert.prune_diagrams(tmp_path, {"kaytossa.svg"}, complete=False) == 0
+    assert len(list(tmp_path.glob("*.svg"))) == 2
+
+
+def test_only_one_run_keeps_a_second_conversion_out(tmp_path, monkeypatch):
+    """Kaksi yhtäaikaista ajoa sekoittaa docs/:n ja poistaa kaaviotiedostoja,
+    ks. only_one_run."""
+    monkeypatch.setattr(convert, "LOCK", tmp_path / ".convert.lock")
+    with convert.only_one_run():
+        with open(convert.LOCK, "w", encoding="utf-8") as second:
+            with pytest.raises(BlockingIOError):
+                fcntl.flock(second, fcntl.LOCK_EX | fcntl.LOCK_NB)

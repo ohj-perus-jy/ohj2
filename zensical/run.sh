@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Zensical-koeputken ajo:
-#   ./run.sh              -> kopioi ../src -> docs/ ja tarjoile portissa 8001
+#   ./run.sh              -> kopioi ../src -> docs/, vahdi muutoksia ja tarjoile
+#                            portissa 8001
 #   ./run.sh 8003         -> sama, eri portissa
 #   ./run.sh build        -> pelkkä rakennus site/-hakemistoon
 #   ./run.sh test         -> testit, ks. README.md:n "Testit"
@@ -44,4 +45,15 @@ python3 convert.py
 if [[ ${1:-} == build ]]; then
     exec .venv/bin/zensical build
 fi
-exec .venv/bin/zensical serve --dev-addr "0.0.0.0:${1:-8001}"
+
+# Vahti palvelimen rinnalle. `zensical serve` seuraa docs/:ia, jonka convert.py
+# kirjoittaa, ei lähdepuuta ../src: ilman vahtia src/:ään tehty muutos ei näy
+# selaimessa lainkaan eikä mikään kerro miksi. Ks. convert.py: watch.
+#
+# Palvelinta ei siksi enää exec:ata: vahti on lopetettava kun tämä skripti
+# loppuu, ja exec korvaisi kuoren, jolloin trap ei ehtisi ajaa ja vahti jäisi
+# taustalle omaan elämäänsä.
+python3 convert.py --watch &
+watcher=$!
+trap 'kill "$watcher" 2>/dev/null' EXIT INT TERM
+.venv/bin/zensical serve --dev-addr "0.0.0.0:${1:-8001}"

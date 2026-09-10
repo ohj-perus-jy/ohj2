@@ -1,6 +1,6 @@
 """Testien yhteiset palikat: käännetty sivusto, palvelin ja selain.
 
-Neljä tiedostoa, ks. README.md:n "Testit":
+Neljä tiedostoa, ks. PERUSTELUT.md:n "Testien rakenne":
 
 * `test_convert.py` — convert.py:n muunnokset yksin. Ei käännöstä eikä
   selainta, joten se on millisekunneissa ohi.

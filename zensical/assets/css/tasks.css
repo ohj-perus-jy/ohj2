@@ -36,8 +36,9 @@
  * muutkin rajaviivat käyttävät (muuttuja ja perustelu: layout.css).
  */
 
-/* Bonusliuskan kulta. mdBookin .jyu-gold on #C29A5B, jonka kontrasti
- * valkoista vasten on 2,4:1 — liian vähän pienelle tekstille. Sama sävy
+/* Bonusmerkin kulta, sama liuskassa ja leipätekstissä. mdBookin .jyu-gold on
+ * #C29A5B, jonka kontrasti valkoista vasten on 2,4:1 — liian vähän pienelle
+ * tekstille eikä paljon enempää merkillekään. Sama sävy
  * tummennettuna yltää 4,7:1:een, ja tummassa teemassa vaalennettuna
  * 9:1:een. Teemalla ei ole omaa muuttujaa tälle, koska JYU-paletti on
  * kokonaan tekemättä (README kohta 18); kun se tehdään, tämä muuttuja
@@ -186,13 +187,16 @@
   white-space: nowrap;
 }
 
-/* Tähti CSS:stä eikä merkkinä: se on koriste, eikä sen kuulu päätyä
- * ruudunlukijalle eikä sivun hakuun. Bootstrap Iconsin bi-stars ei ole
- * käytettävissä, koska fonttia ei ladata (README kohta 17). */
-.md-typeset .task-bonus::before {
-  content: "\2605";
-  font-size: 1.15em;
-  line-height: 1;
+/* Bonusmerkki on inline-SVG teeman omassa .twemoji-kääreessä (convert.py:
+ * bonus_mark), joten koon, kohdistuksen ja fill: currentcolorin hoitaa teeman
+ * oma sääntö. Tänne jää vain väri.
+ *
+ * Sääntö on yhteinen liuskan ja leipätekstin kanssa: sama merkki on myös
+ * avattavien lohkojen <summary>-riveillä ja harjoitustyön vaatimuslistoissa,
+ * eikä siellä ole liuskaa, jolta väri periytyisi. Liuskassa arvo on sama kuin
+ * mitä merkki perisi, joten sääntö ei muuta siellä mitään. */
+.md-typeset .jyu-bonus {
+  color: var(--jyu-task-bonus);
 }
 
 /* ------------------------------------------------------------ tehtävänanto */

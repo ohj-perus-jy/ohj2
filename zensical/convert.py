@@ -4,28 +4,43 @@
 Barebones-lähtötilanne: skripti kopioi tiedostot ja kääntää src/SUMMARY.md:n
 nav-lohkoksi, koska ilman navigaatiota sivustoa ei voi selata lainkaan.
 
-Sisältöä muunnetaan seitsemässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
+Sisältöä muunnetaan yhdeksässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
 ({{#include}}, convert_includes), koodilohkojen monitiedostomerkinnät
 välilehdiksi (// FILE:, convert_files), mdBookin aidan attribuuttilista
 (java,ignore) pymdownx:n muotoon ja piiloriveiltä etuliite pois
 (convert_fences, hide_lines), alertit admonitioneiksi
 (> [!VINKKI], convert_alerts), avattavien osioiden sisältö Markdowniksi
 (<details markdown="1">, convert_details), tehtäväkortit diveiksi
-(<task>, convert_tasks) ja työkalusivun
-käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
-convert_tabs). Loput mdBookin syntaksista (HIGHLIGHT_*-merkinnät,
-<asciinema>-upotukset) jää sellaisenaan sivuille näkyviin. Se on
-tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti pitää korjata. Muunnokset lisätään takaisin
-yksi kerrallaan, ks. README.md.
+(<task>, convert_tasks), bonusmerkit kuvakkeiksi
+(<i class="bi bi-stars">, convert_bonus_marks), loput ikonit merkeiksi ja
+Materialin glyfeiksi (<i class="bi bi-chevron-right">, convert_icons) ja
+työkalusivun käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
+convert_tabs). Yksi osio myös poistetaan (DROP_SECTIONS, drop_sections):
+etusivun navigointiohje kuvaa mdBookin käyttöliittymää.
+
+Loput mdBookin syntaksista (<asciinema>-upotukset) jää sellaisenaan sivuille
+näkyviin. Se on tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti
+pitää korjata. Muunnokset lisätään takaisin yksi kerrallaan, ks. README.md.
+
+Ajo ilman argumentteja muuntaa kerran. `--watch` jää seuraamaan lähdepuuta ja
+ajaa muunnoksen jokaisesta muutoksesta; run.sh käynnistää sen palvelimen
+rinnalle, ks. watch.
 
 Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
 """
 
+import contextlib
+import fcntl
+import filecmp
 import hashlib
+import io
+import os
 import re
 import shutil
 import subprocess
 import sys
+import time
+import traceback
 import urllib.error
 import urllib.request
 import zlib
@@ -35,6 +50,15 @@ ROOT = Path(__file__).resolve().parent
 SRC = ROOT.parent / "src"
 DOCS = ROOT / "docs"
 ASSETS = ROOT / "assets"
+
+# Kuvakkeiden glyfit, ks. ICON_MAP. Kopioita eikä lukua suoraan teemalta,
+# koska run.sh ajaa tämän skriptin systeemin python3:lla eikä .venv:stä:
+# "import zensical" kaatuisi siihen, ja .venv:n polun arvaaminen sitoisi
+# skriptin virtuaaliympäristön sisäiseen rakenteeseen. Tiedostot ovat
+# sellaisenaan Zensical 0.0.60:n templates/.icons/-hakemistosta, ja testi
+# vertaa niitä siihen (test_convert.py), joten ero näkyy heti kun teema
+# vaihtaa glyfiä.
+ICONS = ROOT / "icons"
 
 SUMMARY_LINK_RE = re.compile(
     r"^(?P<indent>\s*)(?P<bullet>-\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
@@ -46,6 +70,21 @@ SUMMARY_LINK_RE = re.compile(
 NEST_UNDER = {
     "tenttiohjeet.md": "tentti.md",
 }
+
+# Osiot, jotka kuvaavat mdBookin käyttöliittymää eivätkä pidä Zensicalissa
+# paikkaansa. Ne eivät ole ikoni- vaan sisältöongelma: etusivun "Navigointi
+# tässä materiaalissa" kertoo, että sivuja selataan nuolikuvakkeista sivun
+# vasemmassa ja oikeassa laidassa, mutta Zensicalissa laitanuolia ei ole
+# lainkaan — navigation.footer laittaa edellisen ja seuraavan linkit aina
+# alalaitaan, myös työpöydällä. Osio jää siis pois kokonaan; sen kaksi muuta
+# neuvoa (sisällysluettelo ja haku) ovat jo osan 1 etusivun listassa.
+#
+# Lähde ei muutu (README: "ei koske ../src:ään"), joten poisto tehdään tässä.
+# Avain = sivun polku lähdepuussa, arvo = osion otsikko sellaisenaan.
+DROP_SECTIONS = {
+    "index.md": "Navigointi tässä materiaalissa",
+}
+HEADING_RE = re.compile(r"(?P<level>#+)\s+(?P<title>.*?)\s*$")
 
 # Tulostussivu: koko kirja yhdellä sivulla, ks. assets/js/print.js.
 PRINT_PAGE = "tulosta.md"
@@ -86,7 +125,7 @@ TAB_END = "***"
 # Välilehti, jolla mdBook täytti tilanteen "ei vielä valintaa": sen otsikko ei
 # ole välilehtirivissä lainkaan, ja se näkyy kunnes joku muu välilehti
 # valitaan. Zensicalin välilehdissä yksi on aina valittuna, joten tälle ei ole
-# paikkaa; ks. README.md.
+# paikkaa; ks. PERUSTELUT.md.
 TAB_PLACEHOLDER = "default"
 
 # mdBookin monitiedostolohkot (preprocessor.codeblock-tabs): yhden koodiaidan
@@ -377,14 +416,46 @@ SVGBOB_COMMAND = [
 #
 # Tunnusrivistä tulee yksi rivi raakaa HTML:ää: numero, nimi ja pisteet ovat
 # tekstiä eivätkä Markdownia, joten sitä ei merkitä markdown-attribuutilla.
-# Bonustähti <i class="bi bi-stars"> jää nimen *sisälle*, kuten lähteessäkin;
-# tyyli tekee siitä liuskan ja piirtää tähden itse, koska Bootstrap Iconsia
-# ei ladata (kohta 17).
+# Bonusmerkki jää nimen *sisälle*, kuten lähteessäkin; tyyli tekee siitä
+# liuskan (ks. BONUS_MARK_PATH).
 TASK_TAG_RE = re.compile(r"</?(?:task|task-title|task-link|handout)[ >]")
 TASK_TITLE_RE = re.compile(
     r'<task-title\s+num="(?P<num>[^"]*)"\s*>(?P<inner>.*?)</task-title>')
 TASK_POINTS_RE = re.compile(r"<points>(?P<points>.*?)</points>")
-TASK_BONUS_RE = re.compile(r'<i\s+class="[^"]*\bbi-stars\b[^"]*"\s*>\s*</i>')
+
+# Bonusmerkki. Lähteessä se on <i class="bi bi-stars"> kolmessa paikassa:
+# tehtävän nimen sisällä (36), avattavien lohkojen <summary>-riveillä (21) ja
+# harjoitustyön vaatimuslistoissa (9). Bootstrap Iconsia ei ladata (kohta 17),
+# joten merkki piirretään Materialin creation-kuvakkeella: kolme kimallusta,
+# sama sommittelu kuin bi-starsissa. Polku on Zensicalin omasta
+# ikonihakemistosta (.icons/material/creation.svg) sellaisenaan.
+#
+# Kuvake kirjoitetaan valmiiksi inline-SVG:ksi eikä lyhytkoodiksi
+# (:material-creation:), vaikka teema osaa lyhytkoodin ilman yhtään riviä
+# mkdocs.yml:ään. Syy on <summary>: Python-Markdown ei jäsennä sen sisältöä,
+# koska markdown="1" on <details>-tagissa ja md_in_html käsittelee sillä vain
+# lohkotason lapset. Mitattuna lyhytkoodi kääntyy listassa ja kappaleessa
+# mutta jää <summary>-rivillä raakana näkyviin — ja siellä on 21 merkkiä
+# kolmestakymmenestä. Sama merkintä kaikkiin kolmeen paikkaan on siis ainoa,
+# joka kääntyy kaikissa.
+#
+# Kääre .twemoji on teeman oma ikonikääre, sama jonka lyhytkoodi tuottaisi,
+# joten koon (--md-icon-size), kohdistuksen (vertical-align: text-top) ja
+# värin periytymisen (fill: currentcolor) hoitaa teeman CSS. Omaa sääntöä
+# tarvitaan vain väriin, ks. assets/css/tasks.css.
+BONUS_TAG_RE = re.compile(r'<i\s+class="[^"]*\bbi-stars\b[^"]*"\s*>\s*</i>')
+BONUS_MARK_PATH = (
+    "m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25"
+    "M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5"
+    "M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26")
+
+# Rivillä jo oleva bonussana. Kirjassa merkki on ikonifontti ilman nimeä, eli
+# ruudunlukija ei saa siitä mitään; tässä se nimetään silloin kun rivillä ei
+# ole samaa tietoa tekstinä. <summary>-rivit alkavat sanalla "Bonus:" tai
+# "Valinnaista lisätietoa:", jolloin nimi vain toistaisi otsikon, mutta
+# harjoitustyön vaatimuslistassa merkki on rivin ainoa ero pakolliseen
+# vaatimukseen.
+BONUS_WORD_RE = re.compile(r"bonus|valinnais", re.IGNORECASE)
 TASK_TAGS = (
     ("<task>", '<div class="task" markdown="1">'),
     ("</task>", "</div>"),
@@ -393,6 +464,131 @@ TASK_TAGS = (
     ("<task-link>", '<div class="task-link">'),
     ("</task-link>", "</div>"),
 )
+
+# Loput ikonit. Lähteessä ne ovat Bootstrap Iconsin tageja
+# (<i class="bi bi-play-fill">) ja kolmessa kohdassa Font Awesomen
+# (<i class="fa fa-eye">). Kumpaakaan fonttia ei ladata, joten sivulla ne ovat
+# tyhjää tilaa. Lähdepuussa tageja on 150: bonusmerkki (bi-stars) on niistä 66
+# ja hoidettu edellä, DROP_SECTIONS vie mennessään neljä, ja loput 80
+# jakautuvat kahtia — 58 valikkopolun nuolta ja 22 oikeaa kuvaketta.
+#
+# Tagia ei etsitä riviltä vaan koko tekstistä, koska lähteessä 19 tagia on
+# rivitetty kesken tagin. Katkos on kahdessa paikassa, <i:n ja class="bi:n
+# jäljessä, ja kahdessa tapauksessa jatkorivi on lainauslohkossa, jolloin
+# väliin tulee myös lainausmerkki:
+#
+#     **File** <i class="bi
+#     > bi-chevron-right"></i> **Settings**
+#
+# Siksi tagin sisäinen väli on [\s>]+ eikä \s+. Se on turvallista juuri
+# tässä: kohta on lainausmerkkien sisällä eli attribuutin arvossa, jossa ">"
+# ei voi olla mitään muuta kuin lainauslohkon merkki. Takaisinviittaus
+# (?P=prefix) pitää parit erillään: bi bi- ja fa fa-, ei ristiin.
+ICON_TAG_RE = re.compile(
+    r'<i[\s>]+class="(?P<prefix>bi|fa)[\s>]+(?P=prefix)-(?P<name>[a-z0-9-]+)'
+    r'[^"]*"\s*>\s*</i>')
+
+# Valikkopolun nuoli on tageista 58 eli kolme neljäsosaa (bi-chevron-right 56,
+# bi-arrow-right 2). Se ei ole kuvake vaan välimerkki: se erottaa valikon
+# kohdat toisistaan (File › New › Project). Siihen riittää merkki, eikä
+# merkki tarvitse fonttia, SVG:tä eikä yhtään tavua verkosta.
+#
+# Merkiksi valittiin › (U+203A), ja ratkaisu on kirjasimessa. Zensical hakee
+# leipätekstin Source Serif 4:n Google Fontsista, ja sen latin-osajoukko
+# kattaa alueet U+0000–00FF ja U+2000–206F: › osuu jälkimmäiseen ja » (U+00BB)
+# edelliseen, eli kirjan oma kirjasin piirtää molemmat. Nuoli → (U+2192) ei
+# osu kumpaankaan — osajoukon nuolista mukana ovat vain ↑ ja ↓ — eikä kolmio
+# ▸ (U+25B8), joten selain hakisi ne varakirjasimesta kesken virkkeen.
+#
+# Merkki jää lisäksi tekstiksi: se menee hakuindeksiin ja ruudunlukija saa
+# siitä välimerkin, kun ikonifontin glyfi oli kummallekin tyhjää.
+#
+# Väri vaimennetaan omalla luokalla (assets/css/icons.css), jotta erotin
+# erottuu polun kohdista silloinkin kun ne on lihavoitu.
+PATH_ARROW_ICONS = ("bi-chevron-right", "bi-arrow-right")
+PATH_ARROW = '<span class="jyu-path">›</span>'
+
+# Loput 22 tagia ovat oikeita kuvakkeita: käyttöliittymän painikkeita, joihin
+# teksti viittaa ("ajopainikkeesta (<i class="bi bi-play-fill">)"). Niissä
+# kuvakkeen tehtävä on näyttää se nappi, jota lukija etsii ruudulta, joten
+# glyfi otetaan sieltä mistä sivusto itse ottaa omansa — silloin ohje ei voi
+# näyttää eri kuvaketta kuin nappi, johon se osoittaa:
+#
+#   - yläpalkin napit ovat overrides/partials/header.html:ssä material/menu ja
+#     material/magnify, tulostusnappi lucide/printer ja teemanappi
+#     mkdocs.yml:n palettivalinnassa material/weather-night
+#   - koodilohkon ajonappi on material/play (assets/css/playground.css) ja
+#     piiloriviennappi material/eye-outline (assets/css/hidelines.css)
+#
+# Loput ovat IntelliJ:n ja SceneBuilderin painikkeita, joille valittiin
+# Materialin lähin vastine. Ääriviivaversio siellä missä valinta on: täytetty
+# lightbulb-on ja folder ovat leipätekstissä ympäristöään selvästi
+# painavampia. Kaksi lähteen eri ikonia (bi-folder, bi-folder2) tarkoittaa
+# samaa IntelliJ:n nappia, joten ne saavat saman glyfin.
+#
+# fa-history on ainoa, joka osoittaa nappiin jota sivustolla ei ole: se on
+# muokattavan koodilohkon "Peruuta muutokset", ja ACE-editori on yhä tekemättä
+# (README kohta 20). Kuvake piirretään silti, koska tyhjä väli ei kerro
+# lukijalle enempää kuin väärä kuvake — korjattava on virke, ei glyfi.
+#
+# Glyfit ovat kopioina icons/-hakemistossa, ks. ICONS.
+ICON_MAP = {
+    "bi-layout-sidebar": "material/menu",
+    "bi-list": "material/menu",
+    "bi-search": "material/magnify",
+    "bi-printer": "lucide/printer",
+    "bi-circle-half": "material/weather-night",
+    "bi-play-fill": "material/play",
+    "fa-play": "material/play",
+    "fa-eye": "material/eye-outline",
+    "fa-history": "material/history",
+    "bi-bug": "material/bug",
+    "bi-folder": "material/folder-outline",
+    "bi-folder2": "material/folder-outline",
+    "bi-terminal": "material/console-line",
+    "bi-gear-fill": "material/cog",
+    "bi-lightbulb-fill": "material/lightbulb-on-outline",
+    "bi-info-circle": "material/information-outline",
+}
+
+
+# Muunnoksen lukko, ks. only_one_run.
+LOCK = ROOT / ".convert.lock"
+
+# Kaaviot, joita ei tässä ajossa saatu piirrettyä (plantuml_svg, svgbob_svg).
+# Moduulitason joukko eikä paluuarvo, koska muunnosfunktioiden kolmen mittaiset
+# paluuarvot ovat testien varassa; main tyhjentää tämän joka ajon aluksi.
+# Merkitystä on vain prune_diagramsille: epäonnistunut kaavio puuttuu käytettyjen
+# joukosta, eikä siivota saa sen perusteella.
+FAILED: set[str] = set()
+
+
+def only_one_run():
+    """Vain yksi muunnos kerrallaan, myös eri prosesseista. -> kontekstivaraaja.
+
+    Kaksi yhtä aikaa ajavaa muunnosta sekoittaa docs/:n keskenään, ja
+    seurauksena on tiedostojen katoaminen: mitattuna kaksi rinnakkaista
+    ajoa (kaksi run.sh:ta) poisti kymmenen versionhallinnassa ollutta
+    cache/svgbob/-tiedostoa. Toinen ajo näki sivun, jonka ensimmäinen oli
+    jo muuntanut, ei löytänyt siitä bob-aitaa eikä siis laskenut kaaviota
+    käytetyksi — ja prune_diagrams poisti sen. Vahti tekee tilanteesta
+    tavallisen: kaksi avointa terminaalia riittää.
+
+    Lukko on tiedostolukko eikä tiedoston olemassaolo, jotta se vapautuu
+    itsestään myös silloin kun ajo tapetaan kesken kaiken.
+    """
+    return _locked()
+
+
+@contextlib.contextmanager
+def _locked():
+    LOCK.parent.mkdir(parents=True, exist_ok=True)
+    with open(LOCK, "w", encoding="utf-8") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            fcntl.flock(handle, fcntl.LOCK_UN)
 
 
 def nest_moves() -> dict[str, str]:
@@ -412,15 +608,21 @@ def nest_moves() -> dict[str, str]:
     return moves
 
 
-def prune_diagrams(folder: Path, used: set[str]) -> int:
+def prune_diagrams(folder: Path, used: set[str], complete: bool = True) -> int:
     """Käyttämättömät kaaviotiedostot pois. -> poistettuja.
 
     Nimi on kaavion lähteen sha1, joten muokattu kaavio jättäisi vanhan
     tiedoston hakemistoon ikuisiksi ajoiksi. Siivotaan vain, jos ajossa
     ylipäätään syntyi kaavioita: tyhjä joukko tarkoittaa, ettei piirtäjää
     saatu, eikä silloin saa poistaa sitä mitä levyllä jo on.
+
+    complete=False tarkoittaa, että ainakin yksi kaavio jäi piirtämättä (ks.
+    FAILED). Silloin käytettyjen joukko on vajaa eikä kerro, mikä on
+    käyttämätöntä: puuttuva piirtäjä poistaisi juuri ne tiedostot, joita
+    ilman piirtäjää eniten tarvitaan. Tiedostot ovat versionhallinnassa,
+    joten poisto on menetettyä työtä eikä välimuistin uudelleentäyttö.
     """
-    if not used or not folder.is_dir():
+    if not complete or not used or not folder.is_dir():
         return 0
     removed = 0
     for path in folder.glob("*.svg"):
@@ -574,6 +776,47 @@ def build_nav() -> str:
     lines = ["nav:"]
     emit(0, 0, lines)
     return "\n".join(lines) + "\n"
+
+
+def drop_sections(text: str, relative: str) -> tuple[str, int]:
+    """DROP_SECTIONS-osio pois sivulta. -> (teksti, osioita).
+
+    Osio on otsikkorivi ja kaikki sen jälkeen aina seuraavaan samantasoiseen
+    tai ylempään otsikkoon asti, eli juuri se mitä sisällysluettelossakin on
+    otsikon alla. Tasoa verrataan ristikkojen määrästä, joten "## Navigointi"
+    vie mukanaan omat ###-alaotsikkonsa mutta jättää seuraavan ##:n rauhaan.
+
+    Ajetaan ensimmäisenä, ennen sisällytyksiä: silloin muut muunnokset eivät
+    tee turhaa työtä poistuvalle tekstille eivätkä varoita siitä. Koodiaidat
+    ohitetaan pareittain kuten convert_detailsissä, koska aidan sisällä rivin
+    aloittava ristikko on kommentti eikä otsikko.
+    """
+    title = DROP_SECTIONS.get(relative)
+    if title is None:
+        return text, 0
+    out: list[str] = []
+    open_fence: str | None = None
+    dropping = 0
+    sections = 0
+    for line in text.split("\n"):
+        fence = CODE_FENCE_RE.match(line)
+        if fence and open_fence is None:
+            open_fence = fence["fence"]
+        elif (fence and not fence["info"].strip()
+                and len(fence["fence"]) >= len(open_fence)):
+            open_fence = None
+        match = HEADING_RE.match(line) if open_fence is None else None
+        if match and dropping and len(match["level"]) <= dropping:
+            dropping = 0
+        if match and not dropping and match["title"] == title:
+            dropping = len(match["level"])
+            sections += 1
+        if not dropping:
+            out.append(line)
+    if not sections:
+        print(f"varoitus: DROP_SECTIONS-osiota ei löytynyt: {relative}: {title}",
+              file=sys.stderr)
+    return "\n".join(out), sections
 
 
 def take_lines(content: str, selector: str) -> str | None:
@@ -989,6 +1232,7 @@ def plantuml_svg(source: str) -> str | None:
     if b"<svg" not in svg[:1000]:
         print("varoitus: plantuml-palvelin ei palauttanut SVG:tä",
               file=sys.stderr)
+        FAILED.add("plantuml")
         return None
     PLANTUML_DIR.mkdir(parents=True, exist_ok=True)
     path.write_bytes(svg)
@@ -1055,10 +1299,12 @@ def svgbob_svg(art: str) -> str | None:
     except FileNotFoundError:
         print("varoitus: svgbob_cli puuttuu, ascii-kaaviot jäävät koodilohkoiksi"
               " (cargo install svgbob_cli)", file=sys.stderr)
+        FAILED.add("svgbob")
         return None
     except subprocess.CalledProcessError as error:
         print(f"varoitus: svgbob epäonnistui: {error.stderr.strip()}",
               file=sys.stderr)
+        FAILED.add("svgbob")
         return None
     SVGBOB_DIR.mkdir(parents=True, exist_ok=True)
     path.write_text(result.stdout, encoding="utf-8")
@@ -1238,6 +1484,135 @@ def convert_divs(text: str) -> tuple[str, int]:
     return "\n".join(out), tags
 
 
+def bonus_mark(labelled: bool) -> str:
+    """Bonusmerkki inline-SVG:nä. -> merkin HTML.
+
+    labelled=True antaa merkille myös nimen ruudunlukijalle; ks.
+    BONUS_WORD_RE. Liuskassa merkki on aina koriste, koska sana "Bonus"
+    lukee siinä vieressä.
+    """
+    attrs = ' role="img" aria-label="Bonus"' if labelled else ' aria-hidden="true"'
+    return (f'<span class="twemoji jyu-bonus"{attrs}>'
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">'
+            f'<path d="{BONUS_MARK_PATH}"/></svg></span>')
+
+
+def convert_bonus_marks(text: str) -> tuple[str, int]:
+    """<i class="bi bi-stars"> -> bonusmerkki. -> (teksti, merkkejä).
+
+    Tehtäväkorttien merkit on tässä vaiheessa jo käsitelty (task_head), joten
+    jäljelle jäävät avattavien lohkojen <summary>-rivit ja harjoitustyön
+    vaatimuslistat. Koodiaidat ohitetaan pareittain kuten convert_detailsissä,
+    jottei aidan sisällä näytetty esimerkki muuttuisi; aineistossa yhtään
+    tagia ei tosin ole aidan sisällä.
+
+    Nimeäminen ratkaistaan riveittäin eikä merkeittäin: rivillä on aina
+    korkeintaan yksi merkki, ja saman rivin muut merkit tarkoittaisivat joka
+    tapauksessa samaa asiaa.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    marks = 0
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None and BONUS_TAG_RE.search(line):
+            rest = BONUS_TAG_RE.sub("", line)
+            mark = bonus_mark(BONUS_WORD_RE.search(rest) is None)
+            line, count = BONUS_TAG_RE.subn(mark, line)
+            marks += count
+        out.append(line)
+    return "\n".join(out), marks
+
+
+def icon_mark(icon: str) -> str | None:
+    """Kuvake inline-SVG:nä. -> merkin HTML, tai None jos glyfiä ei ole.
+
+    Kääre .twemoji on teeman oma ikonikääre, sama kuin bonusmerkissä, joten
+    koon (--md-icon-size), kohdistuksen (vertical-align: text-top) ja värin
+    periytymisen (fill: currentcolor) hoitaa teeman CSS. Omaa sääntöä ei
+    tarvita lainkaan.
+
+    Kuvake on aina koriste: jokaisessa lähteen kohdassa nappi on nimetty
+    samalla rivillä sanoina ("ajopainikkeesta (<kuvake>)"), joten nimi vain
+    toistaisi vieressä olevan tekstin.
+
+    Glyfi luetaan tiedostosta joka kerta erikseen. Se on 22 tagia kohti 22
+    lukua muutaman sadan tavun tiedostosta, eli mitattuna nolla, ja säästää
+    välimuistin, joka pitäisi muistaa tyhjentää testien välissä.
+    """
+    path = ICONS / f"{icon}.svg"
+    if not path.is_file():
+        print(f"varoitus: glyfi puuttuu: {path}", file=sys.stderr)
+        return None
+    svg = path.read_text(encoding="utf-8").strip()
+    return f'<span class="twemoji" aria-hidden="true">{svg}</span>'
+
+
+def convert_icons(text: str) -> tuple[str, int, int, set[str]]:
+    """Ikonitagit merkeiksi ja kuvakkeiksi. -> (teksti, nuolia, kuvakkeita,
+    tuntemattomia).
+
+    Ks. ICON_TAG_RE: valikkopolun nuolesta tulee merkki (PATH_ARROW) ja
+    muista Materialin tai Luciden glyfi (ICON_MAP, icon_mark). Tuntematon
+    nimi jää sivulle sellaisenaan ja palautuu nimeltä kutsujalle, joka
+    varoittaa siitä — sama tapa kuin tuntemattomassa alertin tunnuksessa.
+    Näkyvä tagi on parempi kuin hiljaa kadonnut kuvake: lähdepuuhun voi tulla
+    uusi ikoni milloin tahansa.
+
+    Koodiaidat ohitetaan pareittain kuten convert_detailsissä, mutta teksti
+    käsitellään aitojen välisinä paloina eikä riveittäin, koska tagi voi olla
+    rivitetty kahdelle riville (ICON_TAG_RE).
+
+    Ajetaan convert_bonus_marksin jälkeen: bi-stars ei ole ICON_MAPissa, joten
+    aiemmin ajettuna tämä ilmoittaisi sen tuntemattomaksi.
+    """
+    parts: list[tuple[bool, list[str]]] = [(False, [])]
+    open_fence: str | None = None
+    for line in text.split("\n"):
+        fence = CODE_FENCE_RE.match(line)
+        if fence and open_fence is None:
+            open_fence = fence["fence"]
+            parts.append((True, [line]))
+            continue
+        if (fence and open_fence is not None and not fence["info"].strip()
+                and len(fence["fence"]) >= len(open_fence)):
+            open_fence = None
+            parts[-1][1].append(line)
+            parts.append((False, []))
+            continue
+        parts[-1][1].append(line)
+    # Aidan rajalle syntyy tyhjä pala aina kun aita alkaa tai päättyy; se ei
+    # ole rivi eikä saa muuttua sellaiseksi paloja yhdistettäessä.
+    parts = [part for part in parts if part[1]]
+
+    arrows = icons = 0
+    unknown: set[str] = set()
+
+    def replace(match: re.Match[str]) -> str:
+        nonlocal arrows, icons
+        name = f'{match["prefix"]}-{match["name"]}'
+        if name in PATH_ARROW_ICONS:
+            arrows += 1
+            return PATH_ARROW
+        mark = icon_mark(ICON_MAP[name]) if name in ICON_MAP else None
+        if mark is None:
+            unknown.add(name)
+            return match[0]
+        icons += 1
+        return mark
+
+    out: list[str] = []
+    for fenced, lines in parts:
+        chunk = "\n".join(lines)
+        out.append(chunk if fenced else ICON_TAG_RE.sub(replace, chunk))
+    return "\n".join(out), arrows, icons, unknown
+
+
 def task_head(match: re.Match[str]) -> str:
     """<task-title num="2.1">Kello<points>1 p.</points></task-title> -> tunnusrivi.
 
@@ -1249,10 +1624,10 @@ def task_head(match: re.Match[str]) -> str:
     inner = match["inner"]
     points = TASK_POINTS_RE.search(inner)
     inner = TASK_POINTS_RE.sub("", inner)
-    bonus = TASK_BONUS_RE.search(inner) is not None
-    name = TASK_BONUS_RE.sub("", inner).strip()
+    bonus = BONUS_TAG_RE.search(inner) is not None
+    name = BONUS_TAG_RE.sub("", inner).strip()
     if bonus:
-        name += ' <span class="task-bonus">Bonus</span>'
+        name += f' <span class="task-bonus">{bonus_mark(False)}Bonus</span>'
     parts = [f'<span class="task-num">{match["num"]}</span>',
              f'<span class="task-name">{name}</span>']
     if points:
@@ -1491,6 +1866,15 @@ def sync_docs() -> set[Path]:
     Jäänteet ovat tiedostoja, jotka olivat docs/:ssa ennen ajoa mutta joita
     ../src, assets/ tai tämä ajo ei tuota: lähdepuusta poistettuja sivuja.
     main poistaa ne vasta lopuksi, kun kaikki muu on paikallaan.
+
+    Kirjoitetaan vain se, mikä oikeasti muuttui (copy_if_changed), ja
+    Markdown-sivut jätetään mainille kirjoitettaviksi muunnettuina. Muuten
+    yksi tallennus kirjoittaisi koko puun kahdesti — ensin raa'an kopion,
+    sitten muunnoksen — ja `zensical serve` ilmoittaisi jokaisesta
+    tiedostosta selaimelle erikseen. Mitattuna se oli 500-1300 WebSocket-
+    viestiä tallennusta kohti, ja jokainen .js-viesti lataa sivun heti
+    uudelleen: selain ehti ladata vanhan sivun ennen kuin uusi oli
+    käännetty, ja muutos näkyi vasta seuraavasta tallennuksesta.
     """
     moves = nest_moves()
     before = ({f for f in DOCS.rglob("*") if f.is_file()}
@@ -1503,9 +1887,11 @@ def sync_docs() -> set[Path]:
         if relative == "SUMMARY.md":
             continue
         target = DOCS / moves.get(relative, relative)
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(file, target)
         fresh.add(target)
+        if file.suffix == ".md":
+            # Sivun kirjoittaa main muunnettuna, ks. write_if_changed.
+            continue
+        copy_if_changed(file, target)
     for old_path in moves:
         if not (SRC / old_path).is_file():
             print(f"varoitus: NEST_UNDER viittaa puuttuvaan sivuun: {old_path}",
@@ -1516,14 +1902,32 @@ def sync_docs() -> set[Path]:
     return before - fresh
 
 
+def copy_if_changed(source: Path, target: Path) -> None:
+    """Kopioi vain jos kohde puuttuu tai eroaa lähteestä, ks. write_if_changed.
+
+    Vertailu on tiedostotiedoista (koko ja aika) eikä sisällöstä, koska
+    shutil.copy2 kopioi ajan lähteestä: muuttumaton tiedosto on kohteessa
+    bitilleen sama ja samanikäinen, muuttunut eroaa kummassakin. Sisällön
+    lukeminen maksaisi koko puun joka ajolla.
+    """
+    if target.is_file() and filecmp.cmp(source, target, shallow=True):
+        return
+    target.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, target)
+
+
 def write_if_changed(path: Path, text: str) -> None:
     """Kirjoita vain jos sisältö muuttuu: turha kirjoitus on vahdille tapahtuma.
 
-    nav.yml:n tapauksessa se on lisäksi asetustiedoston muutos, josta
-    `zensical serve` aloittaa koko sivuston rakennuksen alusta.
+    Vahteja on kaksi ja molemmat maksavat. `zensical serve` ilmoittaa jokaisesta
+    docs/:n muuttuneesta tiedostosta selaimelle, joka lataa sivun uudelleen
+    kesken käännöksen, ja nav.yml:n tapauksessa kyse on lisäksi
+    asetustiedoston muutoksesta, josta palvelin aloittaa koko sivuston
+    rakennuksen alusta.
     """
     if path.is_file() and path.read_text(encoding="utf-8") == text:
         return
+    path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(text, encoding="utf-8")
 
 
@@ -1531,31 +1935,39 @@ def main() -> int:
     if not SRC.is_dir():
         print(f"lähdepuu puuttuu: {SRC}", file=sys.stderr)
         return 1
+    FAILED.clear()
     stale = sync_docs()
     sets = placeholders = blocks = files = fences = includes = alerts = 0
     hidden = marked = 0
-    details = summaries = divs = tasks = diagrams = drawings = 0
-    breaks = 0
+    details = summaries = divs = tasks = bonus = diagrams = drawings = 0
+    breaks = dropped = arrows = icons = 0
     used_diagrams: set[str] = set()
     used_drawings: set[str] = set()
     tab_labels: set[str] = set()
     unknown_alerts: set[str] = set()
-    moved_from = {new: old for old, new in nest_moves().items()}
-    for page in sorted(DOCS.rglob("*.md")):
-        relative = page.relative_to(DOCS).as_posix()
-        # NEST_UNDER-siirretty sivu on docs/:ssa jo uudessa paikassaan, mutta
-        # sen sisällytykset ratkeavat lähdepuun alkuperäisestä paikasta.
-        origin = SRC / moved_from.get(relative, relative)
-        if not origin.is_file():
-            # Edellisen ajon jäänne (ks. sync_docs) tai sen kirjoittama
-            # tulostussivu: ei lähdettä, ei muunnettavaa.
+    unknown_icons: set[str] = set()
+    moves = nest_moves()
+    # Silmukka käy lähdepuun eikä docs/:n: sivut luetaan sieltä, mihin ne on
+    # kirjoitettu, ja tulos kirjoitetaan docs/:iin vain jos se muuttui. Docs/:n
+    # yli käytäessä sivu piti ensin kopioida raakana paikalleen, ja se
+    # kirjoitus oli vahdille yhtä suuri tapahtuma kuin oikea muutos.
+    for origin in sorted(SRC.rglob("*.md")):
+        source_path = origin.relative_to(SRC).as_posix()
+        if source_path == "SUMMARY.md":
+            # Navigaatio, ei sivu: ks. build_nav.
             continue
-        source = page.read_text(encoding="utf-8")
+        # NEST_UNDER-siirretty sivu kirjoitetaan uuteen paikkaansa, mutta sen
+        # sisällytykset ja DROP_SECTIONS ratkeavat lähdepuun omasta polusta.
+        page = DOCS / moves.get(source_path, source_path)
+        source = origin.read_text(encoding="utf-8")
+        # Poistuvat osiot ennen kaikkea muuta: mitä ei ole, sitä ei tarvitse
+        # muuntaa eikä siitä tarvitse varoittaa.
+        converted, page_dropped = drop_sections(source, source_path)
         # Sisällytykset ennen kaikkea muuta, kuten mdBookissa: muut muunnokset
         # käsittelevät myös sisällytetyn tekstin (43 tehtävänannossa on
         # koodiaita), ja koodiaidan sisällä olevat sisällytykset ovat vasta
         # tämän jälkeen sitä koodia, jonka convert_files jakaa välilehdiksi.
-        converted, page_includes = convert_includes(source, origin)
+        converted, page_includes = convert_includes(converted, origin)
         # Monitiedostolohkot ennen aitoja: silloin ne toimivat myös #tab/-osion
         # sisällä, koska convert_tabs sisentää valmiin välilehtijoukon
         # sisäkkäiseksi. Toisin päin sisennetty aita jäisi tunnistamatta.
@@ -1594,9 +2006,16 @@ def main() -> int:
         # Muihin muunnoksiin nähden järjestyksellä ei ole väliä: tämä koskee
         # vain <task>-tageja eikä mikään muu muunnos koske niihin.
         converted, page_tasks = convert_tasks(converted)
+        # Bonusmerkit tehtäväkorttien jälkeen: task_head lukee kortin oman
+        # tagin itse, ja aiemmin ajettuna tämä söisi sen ensin, jolloin
+        # kortilta jäisi liuska pois.
+        converted, page_bonus = convert_bonus_marks(converted)
+        # Loput ikonit bonusmerkkien jälkeen: bi-stars ei ole ICON_MAPissa,
+        # joten aiemmin ajettuna convert_icons ilmoittaisi sen tuntemattomaksi.
+        (converted, page_arrows, page_icons,
+         page_unknown_icons) = convert_icons(converted)
         converted, page_sets, page_placeholders, page_labels = convert_tabs(converted)
-        if converted != source:
-            page.write_text(converted, encoding="utf-8")
+        write_if_changed(page, converted)
         sets += page_sets
         placeholders += page_placeholders
         tab_labels |= page_labels
@@ -1612,12 +2031,19 @@ def main() -> int:
         breaks += page_breaks
         divs += page_divs
         tasks += page_tasks
+        bonus += page_bonus
+        dropped += page_dropped
+        arrows += page_arrows
+        icons += page_icons
+        unknown_icons |= page_unknown_icons
         diagrams += page_diagrams
         used_diagrams |= page_used
         drawings += page_drawings
         used_drawings |= page_art
         unknown_alerts |= page_unknown
-    shutil.copytree(ASSETS, DOCS / "assets", dirs_exist_ok=True)
+    for asset in ASSETS.rglob("*"):
+        if asset.is_file():
+            copy_if_changed(asset, DOCS / "assets" / asset.relative_to(ASSETS))
     nav = build_nav()
     write_if_changed(ROOT / "nav.yml", nav + build_extra(tab_labels))
     write_if_changed(DOCS / PRINT_PAGE, build_print_page(nav))
@@ -1636,15 +2062,159 @@ def main() -> int:
           f"{breaks} <br />-riviä pois")
     print(f"divit: {divs} tagia")
     print(f"luokkakaaviot: {diagrams} kaaviota, "
-          f"{prune_diagrams(PLANTUML_DIR, used_diagrams)} käyttämätöntä poistettu")
+          f"{prune_diagrams(PLANTUML_DIR, used_diagrams, 'plantuml' not in FAILED)}"
+          " käyttämätöntä poistettu")
     print(f"ascii-kaaviot: {drawings} kaaviota, "
-          f"{prune_diagrams(SVGBOB_DIR, used_drawings)} käyttämätöntä poistettu")
+          f"{prune_diagrams(SVGBOB_DIR, used_drawings, 'svgbob' not in FAILED)}"
+          " käyttämätöntä poistettu")
     print(f"tehtäväkortit: {tasks} korttia")
+    print(f"bonusmerkit: {bonus} merkkiä korttien ulkopuolella")
+    print(f"ikonit: {arrows} valikkopolun nuolta, {icons} kuvaketta"
+          + (f", tuntematon ikoni: {', '.join(sorted(unknown_icons))}"
+             if unknown_icons else ""))
+    print(f"poistetut osiot: {dropped}")
     print(f"alertit: {alerts} lohkoa"
           + (f", tuntematon tunnus: {', '.join(sorted(unknown_alerts))}"
              if unknown_alerts else ""))
     return 0
 
 
+# --- Vahti ------------------------------------------------------------------
+
+# Kyselyväli. Kysely maksaa mitattuna 6 ms 600 tiedostolle, eli tällä välillä
+# vahti vie prosentin luokkaa yhdestä ytimestä. Tiheämpi väli ei enää näkyisi
+# kierrosajassa, koska muunnos itse on 0,8-1,4 s.
+WATCH_INTERVAL = 0.3
+
+
+def watch_paths() -> tuple[Path, ...]:
+    """Vahdittavat puut: lähdepuu ja assetit.
+
+    Assetit ovat mukana, koska nekin päätyvät sivustolle vain tämän skriptin
+    kautta (docs/assets/): ilman vahtia CSS:n muutos jäisi näkymättä
+    täsmälleen samalla tavalla kuin tekstin muutos.
+
+    Funktio eikä vakio, jotta SRC:n vaihtaminen moduulivakiosta (testit
+    tekevät niin) näkyy myös täällä.
+    """
+    return (SRC, ASSETS)
+
+
+def snapshot() -> dict[str, int]:
+    """Vahdittavien tiedostojen polut ja muokkausajat.
+
+    Kysely eikä inotify, ja syy on ympäristössä: inotify ei saa tapahtumia
+    lainkaan, jos repo on Windowsin levyllä 9p-liitoksen takana
+    (PERUSTELUT.md). Siellä vahti olisi hiljaa rikki, mikä on pahempi vika
+    kuin se, jonka vahti korjaa; kysely toimii kaikkialla samalla tavalla.
+
+    os.scandir eikä Path.rglob: sama työ, mitattuna 6 ms 17 ms:n sijaan, ja
+    ero maksetaan joka kyselyllä.
+
+    Aika on st_mtime_ns eikä sisällön tiiviste, koska tiiviste lukisi koko
+    puun joka kyselyllä.
+    """
+    state: dict[str, int] = {}
+    stack = [str(path) for path in watch_paths() if path.is_dir()]
+    while stack:
+        try:
+            with os.scandir(stack.pop()) as entries:
+                for entry in entries:
+                    if entry.is_dir(follow_symlinks=False):
+                        stack.append(entry.path)
+                    elif entry.is_file(follow_symlinks=False):
+                        state[entry.path] = entry.stat().st_mtime_ns
+        except OSError:
+            # Hakemisto tai tiedosto katosi kesken kyselyn: editorin tallennus
+            # on usein kirjoitus väliaikaistiedostoon ja nimeäminen sen päälle.
+            # Seuraava kysely näkee lopputilan, ja muutos huomataan siitä.
+            continue
+    return state
+
+
+def changed_files(before: dict[str, int], after: dict[str, int]) -> list[str]:
+    """Muuttuneet, lisätyt ja poistetut tiedostot."""
+    names = set(before) ^ set(after)
+    names |= {name for name in before.keys() & after.keys()
+              if before[name] != after[name]}
+    return sorted(names)
+
+
+def watch_label(changed: list[str]) -> str:
+    """Muuttuneet tiedostot yhden rivin nimeksi: polku ja monelleko muulle."""
+    try:
+        name = Path(changed[0]).relative_to(ROOT.parent).as_posix()
+    except ValueError:
+        name = changed[0]
+    return name if len(changed) == 1 else f"{name} (+{len(changed) - 1})"
+
+
+def run_quietly() -> int:
+    """main ilman sen viittätoista tilastoriviä. -> paluuarvo.
+
+    Vahdin tulostus kulkee palvelimen lokin seassa, joten ajosta jää yksi rivi.
+    Varoitukset menevät stderriin (esimerkiksi puuttuva sisällytys), joten
+    vaimennus ei piilota niitä.
+    """
+    with only_one_run(), contextlib.redirect_stdout(io.StringIO()):
+        return main()
+
+
+def watch() -> int:
+    """Aja muunnos aina kun lähdepuu tai assetit muuttuvat. -> paluuarvo.
+
+    Ensimmäistä muunnosta ei tehdä: run.sh ajaa sen ennen vahdin käynnistystä,
+    jotta `zensical serve` näkee valmiin docs/:n heti eikä rakenna sivustoa
+    puolikkaasta hakemistosta.
+
+    Mitattuna kierros on 2-3 s: kysely ja odotus 0,6 s, muunnos 1,2 s ja
+    palvelimen oma käännös 0,2-0,6 s. Ks. README.md.
+    """
+    print(f"vahti: {SRC} ja {ASSETS}, lopeta Ctrl-C", flush=True)
+    state = snapshot()
+    try:
+        while True:
+            time.sleep(WATCH_INTERVAL)
+            fresh = snapshot()
+            if fresh == state:
+                continue
+            # Odota, että tallennus on ohi. Yksi editorin tallennus näkyy usein
+            # monena muutoksena ja `git checkout` satoina, eikä kesken
+            # kirjoitusta luettu tiedosto ole sitä mitä kirjoittaja tarkoitti.
+            while True:
+                time.sleep(WATCH_INTERVAL)
+                settled = snapshot()
+                if settled == fresh:
+                    break
+                fresh = settled
+            changed = changed_files(state, fresh)
+            started = time.monotonic()
+            try:
+                status = run_quietly()
+            except Exception:
+                # Yksi virhe ei saa tappaa vahtia: sen jälkeen tilanne olisi
+                # sama kuin unohtunut ajo — sivu ei päivity eikä mikään kerro
+                # miksi. Virhe näkyy, ja seuraava tallennus yrittää uudelleen.
+                traceback.print_exc()
+                status = 1
+            elapsed = f"{time.monotonic() - started:.1f}".replace(".", ",")
+            print(f"{time.strftime('%H:%M:%S')} {watch_label(changed)} -> "
+                  + (f"muunnettu {elapsed} s" if status == 0
+                     else "muunnos epäonnistui"), flush=True)
+            # Uusi lähtötila vasta ajon jälkeen: muunnos kirjoittaa itse
+            # assets/plantuml/:iin, kun kaavio on uusi tai muuttunut, eikä se
+            # saa laukaista seuraavaa ajoa.
+            state = snapshot()
+    except KeyboardInterrupt:
+        return 0
+
+
 if __name__ == "__main__":
-    raise SystemExit(main())
+    arguments = sys.argv[1:]
+    if arguments and arguments != ["--watch"]:
+        print(f"käyttö: {Path(__file__).name} [--watch]", file=sys.stderr)
+        raise SystemExit(2)
+    if arguments:
+        raise SystemExit(watch())
+    with only_one_run():
+        raise SystemExit(main())

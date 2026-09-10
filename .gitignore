@@ -358,3 +358,4 @@ zensical/docs/
 zensical/site/
 zensical/nav.yml
 zensical/.cache/
+zensical/.convert.lock
