@@ -1,30 +1,68 @@
 #!/usr/bin/env python3
-"""Kopioi mdBookin lähdepuu (../src) Zensicalin docs/-hakemistoksi.
+"""Kääntää mdBookin lähdepuun (../src) Zensicalin docs/-hakemistoksi.
 
-Barebones-lähtötilanne: skripti kopioi tiedostot ja kääntää src/SUMMARY.md:n
-nav-lohkoksi, koska ilman navigaatiota sivustoa ei voi selata lainkaan.
+Yksi ajo tekee viisi vaihetta tässä järjestyksessä (main):
 
-Sisältöä muunnetaan yhdeksässä kohdassa: sisällytysmakrot tiedostojen sisällöksi
-({{#include}}, convert_includes), koodilohkojen monitiedostomerkinnät
-välilehdiksi (// FILE:, convert_files), mdBookin aidan attribuuttilista
-(java,ignore) pymdownx:n muotoon ja piiloriveiltä etuliite pois
-(convert_fences, hide_lines), alertit admonitioneiksi
-(> [!VINKKI], convert_alerts), avattavien osioiden sisältö Markdowniksi
-(<details markdown="1">, convert_details), tehtäväkortit diveiksi
-(<task>, convert_tasks), bonusmerkit kuvakkeiksi
-(<i class="bi bi-stars">, convert_bonus_marks), loput ikonit merkeiksi ja
-Materialin glyfeiksi (<i class="bi bi-chevron-right">, convert_icons) ja
-työkalusivun käyttöjärjestelmävalinnat välilehdiksi (### [Windows](#tab/win),
-convert_tabs). Yksi osio myös poistetaan (DROP_SECTIONS, drop_sections):
-etusivun navigointiohje kuvaa mdBookin käyttöliittymää.
+1. Muut kuin Markdown-tiedostot paikalleen (sync_docs). Kuvat ja liitteet
+   kopioidaan suoraan lopulliseen paikkaansa NEST_UNDER-siirtoineen, ja
+   SUMMARY.md jätetään kopioimatta: siitä tulee navigaatio eikä sivu. Samalla
+   selviää, mitä docs/:ssa on edellisen ajon jäljiltä — poisto on vaiheessa 5.
 
-Loput mdBookin syntaksista (<asciinema>-upotukset) jää sellaisenaan sivuille
-näkyviin. Se on tarkoitus: näin näkee yhdellä silmäyksellä, mitä oikeasti
-pitää korjata. Muunnokset lisätään takaisin yksi kerrallaan, ks. README.md.
+2. Jokainen sivu erikseen: sivu luetaan lähdepuusta, ajetaan neljäntoista
+   muunnoksen läpi ja kirjoitetaan docs/:iin, jos tulos muuttui. Muunnokset
+   ajojärjestyksessä:
+
+    1. drop_sections       DROP_SECTIONS-osio pois: mdBookin käyttöliittymää
+                           kuvaava neuvo, joka ei täällä pidä paikkaansa
+    2. convert_includes    {{#include}} -> tiedoston sisältö
+    3. convert_files       // FILE: -> välilehti per tiedosto
+    4. convert_fences      aidan attribuutit (java,ignore) pymdownx:n muotoon,
+                           ja samalla piilorivit (hide_lines) ja korostukset
+                           (mark_highlights) aidan attribuutiksi
+    5. convert_plantuml    plantuml-aita kuvaksi (SVG assets/plantuml/:iin)
+    6. convert_alerts      > [!VINKKI] -> !!! tip "Vinkki"
+    7. convert_details     <details> -> <details markdown="1">
+    8. drop_breaks         lohkojen väliset <br />-rivit pois
+    9. convert_divs        rivin aloittava <div> -> <div markdown="1">
+   10. convert_svgbob      bob-aita upotetuksi SVG:ksi (cache/svgbob/)
+   11. convert_tasks       <task>-kortit diveiksi
+   12. convert_bonus_marks <i class="bi bi-stars"> -> bonusmerkki
+   13. convert_icons       loput ikonitagit merkeiksi ja teeman glyfeiksi
+   14. convert_tabs        ### [Windows](#tab/win) -> === "Windows"
+
+   Järjestys ei ole vapaa: kaksi ensimmäistä on tehtävä ennen kaikkea muuta ja
+   convert_tabs viimeisenä, ja väliin jäävistä vain convert_details ja
+   drop_breaks voisivat olla missä tahansa. Perustelu on jokaisen kohdalla
+   erikseen mainissa.
+
+3. Assetit docs/assets/:iin (copy_if_changed). Tyylit, skriptit ja vaiheen 2
+   piirtämät PlantUML-kuvat päätyvät sivustolle vain tätä kautta.
+
+4. Navigaatio ja tulostussivu. build_nav kääntää src/SUMMARY.md:n nav.yml:ksi,
+   jonka mkdocs.yml perii (INHERIT); build_extra lisää sen perään
+   muokkauslinkin polkukartan ja välilehtimuistin sallitut otsikot; ja
+   build_print_page tekee samasta nav-lohkosta docs/tulosta.md:n rungon.
+
+5. Siivous ja raportti. Vaiheen 1 jäänteet poistetaan vasta nyt, kun kaikki muu
+   on paikallaan, ja käyttämättömät kaaviotiedostot välimuisteista
+   (prune_diagrams). Lopuksi tulostuu rivi jokaisesta muunnoksesta: luku on
+   ainoa tapa huomata, että jokin lakkasi osumasta mihinkään.
+
+Kaksi sääntöä pätee koko ajon läpi:
+
+* Kirjoitetaan vain se, mikä oikeasti muuttui (write_if_changed,
+  copy_if_changed). Se ei ole nopeusoptimointi vaan ehto sille, että muutos
+  näkyy selaimessa lainkaan, ks. write_if_changed.
+* Yksi ajo kerrallaan, myös eri prosesseista (only_one_run). Kaksi
+  rinnakkaista ajoa sekoittaa docs/:n keskenään, ks. only_one_run.
+
+Mitä ei muunneta: <asciinema>-upotukset jäävät tageina sivuille näkyviin. Se on
+tarkoitus — näin näkee yhdellä silmäyksellä, mitä on vielä tekemättä. Ks.
+README.md:n tarkistuslista, kohta 16.
 
 Ajo ilman argumentteja muuntaa kerran. `--watch` jää seuraamaan lähdepuuta ja
-ajaa muunnoksen jokaisesta muutoksesta; run.sh käynnistää sen palvelimen
-rinnalle, ks. watch.
+assetteja ja ajaa muunnoksen jokaisesta muutoksesta; run.sh käynnistää sen
+palvelimen rinnalle, ks. watch.
 
 Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
 """

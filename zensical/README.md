@@ -6,7 +6,9 @@ eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan
 
 **Tila: tarkistuslistan 25 kohdasta 18 on tehty**, kaksi ei tarvita ja viisi on
 auki. Jokaisen ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa
-tiedostossaan: [PERUSTELUT.md](PERUSTELUT.md).
+tiedostossaan: [PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu,
+jos koeputki voittaa ja mdBook puretaan:
+[PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
 
 ## Käynnistys
 
@@ -168,6 +170,8 @@ Pienempiä:
   linkit, kuvapolut, `edit_uri`:n ja Gitin historian koskemattomina. Se on nyt
   ainoa jäljellä oleva syy siirtää sivukohtaiset muunnokset renderöintiin
   (PERUSTELUT.md: vaihtoehto C), koska nopeussyy raukesi mittauksissa.
+  Mitä siirrettävää jää jäljelle mdBookin poistuttua, ks.
+  [PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
 
 ## Ratkaistut kysymykset
 
