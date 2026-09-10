@@ -2217,3 +2217,76 @@ Ilman mitään konfiguraatiota toimivat jo: Pygments-syntaksiväritys
 kokoontaittuva navigaatio. (Ensimmäisessä ajossa listalla oli myös
 edellinen/seuraava-linkit — ne olivat väärä havainto: Zensicalissa on niitä
 varten `navigation.footer`, mutta se on oletuksena pois päältä.)
+
+
+## Avoin kysymys: muunnosaskel pois työnkulusta
+
+Kun koeputkesta tulee oikea alusta, jäljelle jää yksi ratkaisematon kohta:
+**`convert.py` on erillinen komento, joka on ajettava joka kerta.**
+`zensical serve` seuraa `docs/`-hakemistoa, jonka `convert.py` kirjoittaa, ei
+lähdepuuta `../src`, joten kesken kirjoittamisen tehty muutos ei näy selaimessa
+ennen uutta ajoa. Kolme tapaa päästä siitä eroon, järjestyksessä huonoimmasta
+parhaimpaan:
+
+**A. Lähde pysyy mdBookin syntaksina, `convert.py` jää ja sen ympärille
+tehdään vahti.** Halvin: `run.sh`:hyn silmukka, joka ajaa `convert.py`:n kun
+`../src` muuttuu. Käännösaskel on silloin olemassa muttei näy käsityönä.
+
+**B. Käännetään kerran ja `docs/` committoidaan uudeksi lähdepuuksi.** Ei
+enää muunnoksia lainkaan, mutta hinta on kohtuuton juuri niissä kohdissa,
+jotka on tässä tehty: kirjoittaisit käsin ` ```{ .java data-hidden="1 3"
+data-hl-green="2" } ` ja laskisit rivinumerot itse — ja numeroisit ne
+uudelleen joka kerta kun lisäät rivin lohkon alkuun. Merkintäpari
+`// HIGHLIGHT_GREEN_BEGIN` on olemassa juuri siksi, ettei numeroita tarvitse
+kirjoittaa. Sama koskee piilorivejä (kohta 2) ja monitiedostolohkoja
+(kohta 5).
+
+**C. Sivukohtaiset muunnokset siirretään Python-Markdown-laajennukseksi.**
+Silloin merkinnät käännetään sivua renderöitäessä: ei erillistä komentoa, ei
+`docs/`-kopiota, ja `serve` seuraa suoraan lähdettä. Kirjoittaja kirjoittaa
+edelleen `// HIGHLIGHT_GREEN_BEGIN`, ja rivinumerot lasketaan joka
+renderöinnillä uudelleen.
+
+Tie C:hen on tarkistettu Zensicalin koodista: **yleistä plugin-rajapintaa
+ei ole** (`config.py` osaa vain kovakoodatun listan tunnettuja MkDocs-plugineja,
+eikä MkDocsin `hooks:`-avainta tueta lainkaan), mutta `markdown_extensions`
+menee sellaisenaan Python-Markdownille (`zensical/markdown/render.py`), joten
+oma laajennus latautuu nimellä:
+
+```yaml
+markdown_extensions:
+  - ohj2.highlights
+```
+
+Laajennuksen on oltava .venv:stä importattavissa. Muunnokset ovat
+esikäsittelijöitä (`Preprocessor`), koska ne katsovat raakoja rivejä ennen
+jäsennystä — samaa työtä kuin `mark_highlights` ja `hide_lines` tekevät nyt.
+
+**Kaikkea ei voi siirtää.** Navigaatio (`SUMMARY.md` -> `nav.yml`),
+tulostussivun runko, PlantUML-kuvien haku ja `NEST_UNDER`-siirrot ovat koko
+kirjan tason työtä, eivät yhden sivun Markdownia, joten pieni käännösaskel jää
+sittenkin — mutta se ajetaan vain kun rakenne muuttuu, ei jokaisen
+tekstimuutoksen jälkeen.
+
+**Ratkaisevaa on yksi vielä mittaamaton luku: kauanko tallennuksesta kuluu
+selaimen päivittymiseen**, kun `zensical serve` huomaa muutoksen. Jos se on
+sekunnin luokkaa, A riittää. Jos se on kymmeniä sekunteja, C on perusteltu,
+koska silloin käännettävää on vain muuttunut sivu. Mittaus: käynnistä serveri,
+muuta `docs/`:n sivua ja katso, montako sekuntia kuluu ennen kuin muutos näkyy
+osoitteessa. Vertailuluvut: koko kirjan käännös kylmänä 24 s ja muuttumattomana
+14 s.
+
+**Ympäristö on tämän mittauksen edellytys.** Tiedostovahti (inotify) ei saa
+tapahtumia lainkaan, jos repo on Windowsin levyllä 9p-liitoksen takana
+(`/workspaces/...` bind-mountina): mitattuna sama koe antoi siellä nolla
+tapahtumaa ja ext4:llä tapahtumat normaalisti. Repo kuuluu siis Linuxin
+tiedostojärjestelmään — devcontainerin volumeen tai WSL:n omaan hakemistoon —
+tai `serve` ei reagoi tallennuksiin, olipa muunnokset tehty kummalla tavalla
+tahansa.
+
+**Sivuston hakemistorakenne** ratkeaa samalla. Zensicalin oma konventio on
+`docs/` konfiguraatiotiedoston vieressä, mutta `docs_dir` on pelkkä asetus:
+`docs_dir: src` säilyttää sivujen sisäiset linkit, kuvapolut, `edit_uri`:n ja
+Gitin historian koskemattomina. Assetit (`zensical/assets/`) muuttavat silloin
+`docs_dir`:in sisään, koska `extra_css` ja `extra_javascript` ovat suhteessa
+siihen; polut `mkdocs.yml`:ssä ovat jo valmiiksi siinä muodossa.
