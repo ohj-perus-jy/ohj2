@@ -94,7 +94,7 @@ class="bi bi-chevron-right"></i> **File** ja antamalla tiedoston nimeksi
 Tässä vaiheessa README-tiedosto voi olla aika alkeellinen. Lisää tiedostoon
 ainakin projektin nimi ja lyhyt kuvaus parilla virkkeellä.
 Jos käytät valmista aihetta, voit kopioida projektin aiheen kuvauksen [harjoitustyön
-ohjeesta](../harjoitustyo.md#harjoitustyön-aihe).
+ohjeesta](../harjoitustyo.md#aihe).
 
 Kun saat `README` ja `.gitignore` -tiedostot tehtyä, tee ensimmäinen commit.
 Luo lopuksi uusi etävarasto ja lataa nykyinen varastosi sinne [osan

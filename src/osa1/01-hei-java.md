@@ -171,7 +171,7 @@ Tee seuraavasti:
     * Valitse **Build system**-rivillä **IntelliJ**. 
       Tutustumme muihin projektien rakennusjärjestelmiin myöhemmissä osissa.
 
-    * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#java-development-kit-jdk).
+    * Varmista, että **JDK**-kentässä on sama JDK-versio kuin minkä olet asentanut [Työkaluohjeissa](../tyokalut.md#jdk).
 
     * Laita ruksi **Add sample code** pois päältä. Lisäämme kooditiedoston itse.
 
@@ -360,7 +360,7 @@ komentorivipainikkeesta (<i class="bi bi-terminal"></i>). Tämä avaa
 käyttöjärjestelmän komentorivin (zsh macOS:lla, PowerShell Windowsilla,
 oletuskomentorivi Linuxilla).
 
-Jos latasit Java-kehitysympäristön seuraamalla [työkaluohjeita](../tyokalut.md#java-development-kit-jdk),
+Jos latasit Java-kehitysympäristön seuraamalla [työkaluohjeita](../tyokalut.md#jdk),
 komentorivi ei löydä mitään Javan kääntämiseen tarkoitettuja työkaluja.
 Ota työkalut käyttöön kopioimalla ja liittämällä alla oleva komento:
 

@@ -531,7 +531,7 @@ suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.
 Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.
 
 Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää [harjoitustyön
-yleiset vaatimukset](#harjoitustyön-tekniset-vaatimukset-ja-arviointi). 
+yleiset vaatimukset](#tekniset-vaatimukset-ja-arviointi). 
 Tuntiopettaja voi pyytää täydennyksiä suunnitelmaan, jos työn laajuus
 ei vastaa harjoitustyön vaatimuksia.
 
