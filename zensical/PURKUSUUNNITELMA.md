@@ -132,12 +132,35 @@ kääntäminen (`java,ignore` → `{ .java .ignore }`) on kertatyötä, mutta sa
 funktion sisällä laskettavat piilorivit (142 lohkoa, `hide_lines`) ja
 korostukset (79 lohkoa, `mark_highlights`) eivät ole — ne kuuluvat kohtaan 3.
 
-**`convert_anchors` on näistä pienin ja lopullisin.** Riisuttavia ankkureita on
-kuusi ja välilyöntiä vailla oleva otsikko yksi, eli kertakorjaus on seitsemän
-riviä `../src`:ssä. Sen jälkeen lähde on siinä muodossa, jonka
-molemmat generaattorit ymmärtävät samalla tavalla — ääkkösetön ankkuri toimii
-myös mdBookissa — joten tämä kannattaa tehdä ensimmäisenä, jo ennen kuin
-kumpaakaan on valittu.
+**`convert_anchors` halkeaa kahtia, ja vain toinen puoli on ilmainen.**
+
+Välilyönnin lisääminen otsikon tunnuksen eteen (1 otsikko) käy `../src`:ään
+milloin tahansa: mdBook hyväksyy molemmat muodot. Mitattu sen omasta
+käännöksestä — `osa4/01-rajapinta.md`:n välilyönnitön `{#alykoti-saadettava}`
+antaa `id="alykoti-saadettava"` aivan kuten `tyokalut.md`:n välilyönnillinen
+`{#jdk}` antaa `id="jdk"`.
+
+Ääkkösten riisuminen (6 linkkiä) **ei** käy, eikä se ole seitsemän rivin
+korjaus vaan kymmenen. Riisuttua ankkuria ei voi kirjoittaa lähteeseen, koska
+mdBook säilyttää ääkköset otsikon tunnuksessa
+(`book/osa7/01-javafx-perusteet.html`: `id="ensimmäinen-javafx-sovellus"`):
+`#ensimmainen-javafx-sovellus` osoittaisi siellä tyhjään. Ainoa muoto, jonka
+molemmat generaattorit ymmärtävät samalla tavalla, on **otsikon oma
+ascii-tunnus** — kuuden linkin lisäksi neljä kohdeotsikkoa saisi `{#tunnus}`:n:
+
+| Kohdeotsikko                                                                       | Otsikon tunnukseksi                       |
+| ----------------------------------------------------------------------------------- | ----------------------------------------- |
+| `osa1/01-hei-java.md:73` "Opas: Java-ohjelmien kääntäminen ja ajaminen"              | `{#opas-kaantaminen-ja-ajaminen}`         |
+| `osa4/02-vertailurajapinta.md:1` "Comparable-rajapinta ja luonnollinen järjestys"    | `{#comparable-ja-luonnollinen-jarjestys}` |
+| `osa7/01-javafx-perusteet.md` "Ensimmäinen JavaFX-sovellus"                          | `{#ensimmainen-javafx-sovellus}`          |
+| `osa7/01-javafx-perusteet.md` "JavaFX-sovelluksen käynnistys ja ydinluokat"          | `{#javafx-kaynnistys-ja-ydinluokat}`      |
+
+Sillä on hinta, joka pitää päättää erikseen: tunnus muuttaa myös mdBookin
+nykyisiä osoitteita, eli ulkopuolinen linkki vanhaan ääkköselliseen ankkuriin
+(TIM, kirjanmerkit — vrt. kohta 14) lakkaa toimimasta. Tämä ei siis ole
+"kannattaa tehdä ensimmäisenä" vaan päätös siitä, kumpi on halvempi: kuusi
+riviä `convert.py`:ssä vai kymmenen riviä lähteessä ja rikkoutuvat vanhat
+osoitteet.
 
 **Ikonilyhenne toimii ilman konfiguraatiota.** Zensicalin emoji-indeksi
 (`zensical/extensions/emoji.py`, `_load_twemoji_index`) indeksoi jokaisen SVG:n

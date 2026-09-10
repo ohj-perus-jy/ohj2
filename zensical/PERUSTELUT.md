@@ -2344,8 +2344,23 @@ yhdeksästätoista tunnuksesta yksi on kirjoitettu ilman:
 Ilman välilyöntiä sulkulauseke jää otsikkotekstiin, ja tunnukseksi tulee
 `#alykoti-saadettavat-laitteetalykoti-saadettava` — eli kaksi linkkiä
 (`osa4/03-perinta-ja-rajapinta.md`, `osa6/01-funktiorajapinnat-...`) osoittaa
-tyhjään. Välilyönti lisätään tässä eikä `../src`:ssä, koska lähde on
-mdBookin.
+tyhjään.
+
+Tämä puoli olisi kelvannut myös `../src`:ään: mdBook hyväksyy molemmat muodot,
+mitattuna sen omasta käännöksestä (`book/osa4/01-rajapinta.html`:
+`id="alykoti-saadettava"` välilyönnittä, `book/tyokalut.html`: `id="jdk"`
+välilyönnillä). Se tehdään silti tässä, koska koeputken sääntö on "ei koske
+`../src`:ään" niin kauan kuin `bash ../start.sh` on ainoa julkaistava
+käännös; yhden merkin korjaus lähteeseen olisi ensimmäinen poikkeus siitä
+ilman, että kukaan on vielä päättänyt mitään. Ks. PURKUSUUNNITELMA.md.
+
+Ääkkösten kanssa vastaavaa vaihtoehtoa ei ole: mdBook säilyttää ne otsikon
+tunnuksessa (`book/osa7/01-javafx-perusteet.html`:
+`id="ensimmäinen-javafx-sovellus"`), joten riisuttu ankkuri osoittaisi siellä
+tyhjään. Lähteeseen kirjoitettava muoto olisi otsikon oma ascii-tunnus, ja se
+muuttaisi myös mdBookin nykyisiä osoitteita — kymmenen riviä ja rikkoutuvat
+vanhat linkit kuuden `convert.py`-rivin sijaan. Vertailu on
+PURKUSUUNNITELMA.md:n kohdassa 2.
 
 Muunnos ajetaan heti sisällytysten jälkeen: silloin se näkee myös sisällytetyn
 tehtävänannon linkit, eikä yksikään myöhempi muunnos ole vielä kirjoittanut
