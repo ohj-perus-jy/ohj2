@@ -298,7 +298,7 @@ public class KodinSahkot {
 // FILE_END
 ```
 
-Kuten Osassa [3.2 Polymorfismi](02-polymorfismi.md#is-a-suhde) opimme, meidän
+Kuten Osassa [3.2 Polymorfismi](../osa3/02-polymorfismi.md#is-a-suhde) opimme, meidän
 ei olisi pääohjelmassa pakko määritellä `paahdin`- ja `sirkkeli`-muuttujia
 konkreettisten tyyppien (`Leivanpaahdin` ja `Sirkkeli`) avulla, vaan voisimme
 määritellä molemmat `Verkkovirtalaite`-tyyppisiksi. Tässähän nimittäin meitä
@@ -347,7 +347,7 @@ muuttaa.
 
 Miksi ylätyyppiä vasten ohjelmointi on hyödyllistä? Yksi syy on se, että voimme
 nyt käsitellä hyvin eri tyyppisiä olioita yhtenäisenä joukkona; näinhän tehtiin
-jo [Tehtävässä 3.4](./02-polymorfismi.md#tehtavat). Otetaan vaikkapa
+jo [Tehtävässä 3.4](../osa3/02-polymorfismi.md#tehtavat). Otetaan vaikkapa
 `Verkkovirtalaite`-esimerkkimme: voimme esimerkiksi luoda listan erilaisista
 verkkovirtalaitteista ja kytkeä ne kaikki pistorasiaan silmukassa.
 
@@ -435,7 +435,7 @@ noudattaa yliluokan määrittelemiä sopimuksia ja käyttäytymismalleja, tai
 vastaavasti rajapinnan toteuttavan luokan tulee noudattaa rajapinnan
 määrittelemiä sopimuksia.
 
-Palataan hetkeksi [Osassa 3.2 alustettuun](02-polymorfismi.md)
+Palataan hetkeksi [Osassa 3.2 alustettuun](../osa3/02-polymorfismi.md)
 soitin-esimerkkiin. Oletetaan, että meillä on `Soitin`-rajapinta, joka
 määrittelee yleisölle musiikkia metodin `soita()`. 
 
