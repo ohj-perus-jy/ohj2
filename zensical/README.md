@@ -33,9 +33,20 @@ uudelleen.
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
 
-Ensimmäisellä kerralla asentuvat `pytest`, `playwright` ja sen chromium
-(`requirements-dev.txt`); sivuston rakentamiseen riittää yhä pelkkä
-`zensical`.
+Ensimmäisellä kerralla asentuvat `pytest`, `playwright`, sen chromium ja
+selaimen systeemikirjastot (`playwright install-deps`, vaatii sudon); sivuston
+rakentamiseen riittää yhä pelkkä `zensical`.
+
+Kolme neljästä on `.venv`:ssä, mutta **selain ja sen kirjastot ovat sen
+ulkopuolella** — selain kotihakemistossa (`~/.cache/ms-playwright`) ja
+kirjastot kontissa — joten paketit voivat olla paikallaan vaikka testit eivät
+käynnisty. Niin kävi, kun koeputki kloonattiin ensimmäisen kerran puhtaaseen
+devcontaineriin: `import playwright` toimi, mutta selain kaatui käynnistyessään
+(`libcups.so.2` puuttui) eikä `run.sh` yrittänyt asentaa mitään, koska sen ehto
+katsoi vain paketteja. Vanhassa kontissa sama testijoukko meni läpi, koska
+kirjastot olivat kertyneet sinne ajan mittaan käsin — eikä se tieto ollut
+missään tiedostossa. Nyt `run.sh` tarkistaa selaimen `ldd`:llä ja asentaa
+puuttuvan itse.
 
 Kerroksia on kolme, koska rikkoutumisia on kolmea lajia:
 
