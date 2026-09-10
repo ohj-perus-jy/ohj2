@@ -28,7 +28,7 @@ uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 134 testiä
+./zensical/run.sh test                        # kaikki, 154 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -45,6 +45,7 @@ Kerroksia on kolme, koska rikkoutumisia on kolmea lajia:
 | `tests/test_print.py`   | tulostussivun kokoaminen selaimessa, koekirjalla              | 6 s        |
 | `tests/test_playground.py` | ajonapit koekirjalla, suorituspalvelin korvattuna          | 16 s       |
 | `tests/test_hidelines.py` | piilorivit ja silmänappi koekirjalla                       | 2 s        |
+| `tests/test_highlights.py` | korostetut rivit koekirjalla                              | 2 s        |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
@@ -103,9 +104,10 @@ ei sisältömuunnoksia.
 `convert.py` teki alun perin tasan kaksi asiaa: kopioi `../src` → `docs/` ja
 käänsi `SUMMARY.md`:n navigaatioksi. Kaikki mdBookin oma syntaksi jäi siis
 sivuille raakana näkyviin — se on tarkoitus. Näin listasta ei tule arvauksia
-vaan havaintoja. Sisältöä muunnetaan toistaiseksi kymmenessä kohdassa
-(sisällytykset, piilorivit, välilehdet, alertit, avattavat osiot, tehtäväkortit,
-vaatimuslohkot ja kaaviot, ks. kohdat 1, 2, 4, 5, 6, 7, 8, 15, 23 ja 25);
+vaan havaintoja. Sisältöä muunnetaan toistaiseksi yhdessätoista kohdassa
+(sisällytykset, piilorivit, korostukset, välilehdet, alertit, avattavat osiot,
+tehtäväkortit, vaatimuslohkot ja kaaviot, ks. kohdat 1, 2, 4, 5, 6, 7, 8, 9, 15,
+23 ja 25);
 jokainen uusi muunnos kuuluu perustella samalla tavalla kuin muutkin rivit.
 
 Aiempi, täysin viritetty versio on tallessa branchissa `spike/mkdocs`
@@ -127,7 +129,7 @@ näyttääkö Zensical sen jo itse, ja tarvitaanko sitä oikeasti.
 | 6  | `<task>` / `<points>` / `<handout>`          | 507                       | **tehty** — `convert_tasks` + `assets/css/tasks.css`; riippuva numerointi laatikon sijaan                          |
 | 7  | `> [!VINKKI]`-tyyliset alertit               | 75                        | **tehty** — `convert_alerts`; `admonition` on jo Zensicalin oletuslistalla, `mkdocs.yml` ennallaan                 |
 | 8  | `<details>`-lohkot                           | 88 + 6 `<summary>`        | **tehty** — `convert_details`; `markdown="1"` avaustagiin ja `markdown="block"` monirivisiin yhteenvetoihin       |
-| 9  | `HIGHLIGHT_*_BEGIN/END`                      | 120                       | rikki — merkinnät näkyvät                                                                                          |
+| 9  | `HIGHLIGHT_*_BEGIN/END`                      | 120                       | **tehty** — `mark_highlights` + `assets/js/highlights.js`; värit kirkkautta muuttamatta, ks. kohta 9              |
 | 10 | Lukujen numerointi navigaatiossa             | koko nav                  | **tehty** — `convert.py`, 12 riviä                                                                                 |
 | 11 | Osan etusivu = osan oma linkki navissa       | 13 osaa                   | **tehty** — `navigation.indexes`                                                                                   |
 | 12 | Otsikoiden numerointi sivun sisällä          | —                         | ei ollut mdBookissakaan                                                                                            |
@@ -2053,6 +2055,142 @@ Mitä ei tullut: aksenttiväristä ajonappia levossa. Vihreä tai sininen kolmio
 joka Java-lohkossa olisi vahvin mahdollinen kutsu, ja niitä lohkoja on 231 —
 sivu täyttyisi väristä. Neutraali laatta, joka värittyy vasta kosketuksesta,
 kutsuu riittävästi ja pitää koodin pääosassa.
+
+
+### Korostetut rivit (uusi `assets/js/highlights.js` + uusi `assets/css/highlights.css` + ~90 riviä `convert.py`:hyn + 2 riviä `mkdocs.yml`:ään)
+
+Kirjan koodiesimerkeissä osa riveistä on väritetty: vihreä on se, mikä lisättiin
+tai on oikein, punainen se, mikä on väärin, keltainen se, mihin kannattaa
+katsoa. Merkintä on koodin sisällä kommenttiparina
+(`// HIGHLIGHT_GREEN_BEGIN` ... `// HIGHLIGHT_GREEN_END`), ja mdBookissa
+`theme/code-highlights.js` poistaa merkinnät ja värittää väliin jääneet rivit.
+Mitattuna lähdepuussa **120 aluetta 76 lohkossa 24 sivulla**: vihreä 81,
+punainen 20, keltainen 19. Ennen tätä merkinnät näkyivät sivuilla sellaisinaan,
+eli 240 riviä kirjan koodia oli rivejä, joita kirjassa ei ole.
+
+Työ jakautuu kolmeen osaan, kaksi ensimmäistä samalla tavalla kuin
+piiloriveillä (kohta 2):
+
+* **`convert.py` (`mark_highlights`)** poistaa merkintärivit ja kirjoittaa
+  väliin jääneiden rivien numerot aidan attribuutiksi väreittäin:
+  ` ```{ .java data-hl-green="2 3" } `. Merkinnät lähtevät jo käännöksessä,
+  koska rivi lähtee ajoon sellaisenaan (kohta 3) ja mdBook riisuu ne niin ikään
+  ennen korostusta.
+* **`assets/js/highlights.js`** lisää numeroita vastaaville riveille luokan.
+  Rivit ovat Pygmentsin rivispaneja, eli sama tie kuin piiloriveillä ja samasta
+  syystä: Markdownissa ei ole tapaa merkitä yksittäistä koodiriviä. Selaimen
+  osuus on tässä paljon pienempi kuin kirjassa — mdBookissa rivejä ei ole
+  elementteinä, joten skripti ajaa korostuksen uudestaan, pilkkoo hljs:n
+  tuottaman HTML:n riveiksi ja sulkee ja avaa kesken rivin jäävät spanit itse.
+* **`assets/css/highlights.css`** värittää ne.
+
+**Merkinnät ennen piilorivejä.** Molemmat numeroivat rivit, ja merkintärivit
+lähtevät rungosta pois, joten piilorivien numerot on laskettava vasta sen
+jälkeen — muuten jokainen alueen jälkeinen piilorivi olisi kahden verran
+väärässä paikassa. Monitiedostolohkot käsittelee `convert_files` omine
+aitoineen kuten piiloriveillä: kahdessatoista niistä on korostuksia, ja
+jokainen tiedosto saa omat numeronsa.
+
+**Värit ovat tämän kohdan koko työ, ja ne on tehty toisin kuin kirjassa.**
+Kirjassa korostus on peittoväri koodin päällä (vihreä 42 %, keltainen 40 %,
+punainen 42 %). Sitä ei voi kopioida sellaisenaan, koska teemojen
+syntaksivärit ovat eri paikassa: Zensicalin modern-variantissa koodin
+syntaksivärit ovat heikoimmillaan koodin taustaa vasten **4,5:1** (vaaleassa
+4,52, tummassa 4,49), eli tasan WCAG AA:n rajalla, kun mdBookin omissa
+väriteemoissa on varaa. Kirjan peitto pudottaisi ne täällä vaaleassa teemassa
+3,2-4,1:een ja tummassa 2,1-3,7:ään. Korostettu rivi on
+juuri se rivi, jota luetaan tarkimmin, joten sitä ei haluta lukea sivun
+heikoimmalla kontrastilla.
+
+Väri otetaan siksi toisesta suunnasta: **kirkkaus pidetään, värisävy vaihtuu.**
+Kontrasti riippuu vain kirkkaudesta, joten sävyn ja kylläisyyden muutos on
+ilmainen. Mitattuna koodin taustaa vasten (CIELAB):
+
+| väri      | teema  | ero taustaan | kirkkausero | heikoin syntaksiväri |
+| --------- | ------ | ------------ | ----------- | -------------------- |
+| vihreä    | vaalea | dE 21,5      | -2,1        | 4,29:1               |
+| keltainen | vaalea | dE 25,7      | -1,5        | 4,36:1               |
+| punainen  | vaalea | dE 12,1      | -5,2        | 3,96:1               |
+| vihreä    | tumma  | dE 35,6      | -0,5        | 4,55:1               |
+| keltainen | tumma  | dE 30,4      | -0,2        | 4,52:1               |
+| punainen  | tumma  | dE 36,2      | -1,9        | 4,57:1               |
+
+Kirjan omat palkit ovat vaaleassa teemassa dE 22-26, eli vihreä ja keltainen
+ovat tässä yhtä erottuvia kuin kirjassa mutta ilman kirjan 8-12
+kirkkausyksikön pudotusta. Tummassa teemassa ero on kirjaa suurempi eikä maksa
+mitään: siellä syntaksivärit ovat korostetulla rivillä samat 4,5:1 kuin
+muuallakin.
+
+**Punainen on vaalean teeman ainoa mutka.** Vaalealla pinnalla ei ole kylläistä
+punaista, joten sen on pakko tummua näkyäkseen; 5,2 yksikköä on se, minkä
+jälkeen syntaksivärit ovat vielä 4,0:1. Se on sama luku, jolla teema itse
+korostaa rivin (`hl_lines`: -4,1 yksikköä ja 4,07:1), eli korostettu rivi ei
+ole täällä huonompi kuin teeman omassa korostuksessa.
+
+**Rivin vasempaan reunaan tulee lisäksi 2 pikselin palkki täydessä värissä**,
+kuten teeman omassa korostuksessa. Se on toinen merkki värin rinnalle: sävy
+yksin erottuu huonosti puna-vihersokealle, ja juuri se pari kirjassa merkitsee
+oikean ja väärän tavan. Palkki on taustaansa vasten 3,5-5,6:1. Ero ei silti
+katoa: väri on kirjan tapaan ainoa tapa erottaa vihreä punaisesta, eikä sitä
+korjata kirjaa muuttamatta.
+
+**Väri ulottuu lohkon reunasta reunaan**, myös silloin kun rivi on lohkoa
+pidempi ja lohkoa vieritetään. Kirjassa se vaatii JavaScriptiä: skripti mittaa
+lohkon leveyden ja vaihtaa `<code>`:n inline-blockiksi, jos sisältö ei mahdu.
+Täällä riittää CSS — rivi on enintään oman sisältönsä levyinen (`max-content`)
+ja vähintään lohkon levyinen. Jälkimmäisessä on mukana rivin oma sisennys
+(`calc(100% + 2.5em)`), koska laatikkomalli on border-box: pelkkä 100 % jättäisi
+rivin oikean reunan sisennyksen verran vajaaksi. Se oli tämän kohdan ainoa
+mittaamalla löytynyt virhe, ja se on nyt testissä.
+
+**`highlights.css` on `mkdocs.yml`:ssä ennen `hidelines.css`:ää.** Korostettu
+rivi on lohkotason elementti ja piilotettu rivi `display: none`; valitsimet ovat
+yhtä tarkkoja, joten piilotus voittaa vain myöhempänä. Ilman järjestystä
+piilorivi, joka on korostetulla alueella, jäisi sivulle näkyviin —
+aineistossa niitä on kolmessa lohkossa. Esiin otettuna sellainen rivi on
+himmeä ja värillinen, kuten kirjassakin.
+
+**Tulostussivu ei tarvinnut mitään uutta.** `print.js` lähettää kokoamisen
+jälkeen tapahtuman (`jyu-print-assembled`), jota `hidelines.js` jo kuunteli;
+`highlights.js` kuuntelee samaa. Kumpikaan ei tiedä toisestaan eikä print.js
+kummastakaan.
+
+Todennettu vertaamalla mdBookin omaan käännökseen ja selaimella:
+
+- **Samat rivit korostettuina kuin kirjassa.** 22:lla sivulla, joista on sekä
+  mdBookin että Zensicalin versio, korostettujen rivien joukot ovat merkki
+  merkiltä samat: **348 riviä, ei yhtään eroa kummallakaan puolella**. Kaksi
+  jäljelle jäävää sivua (`extra/luetelma-ja-hahmonsovitus`, `osa4/jemma`) eivät
+  ole `SUMMARY.md`:ssä, joten mdBookin käännöksessä ei ole niitä lainkaan.
+- **374 riviä 79 aidassa 24 sivulla**, ja jokainen numero osuu lohkon riviin.
+  Lähdepuun 76 lohkoa kasvaa 79:ään, koska kaksitoista monitiedostolohkoa on
+  sivulla useampana aitana. Aidan attribuutit 389 -> 392: uusiksi kirjoitettavia
+  aitoja tulee vain kolme lisää, koska korostetuissa lohkoissa on lähes aina jo
+  jokin määre (`ignore`) tai piilorivejä.
+- **Sivuilla ei näy enää yhtään `HIGHLIGHT_`-riviä**, ja käännöksen varoitukset
+  pysyivät 16:ssa.
+- **Selaimessa molemmissa teemoissa:** vihreä, punainen ja keltainen erottuvat,
+  koodi on niiden päällä luettavaa, palkki näkyy rivin reunassa, pitkän rivin
+  väri jatkuu vieritettäessä, ja ajonappi lähettää saman ohjelman kuin ennen
+  (merkinnät eivät koskaan päädy suoritettavaan koodiin).
+
+Mitä ei tullut: **sinistä**, jonka kirjan CSS tuntee neljäntenä värinä. Sitä ei
+ole aineistossa yhtään aluetta. Se on kolme riviä CSS:ää, jos sellainen tulee.
+Ja kuten kirjassa: **ilman JavaScriptiä rivit ovat värittömiä**, koska luokan
+lisää kummassakin skripti.
+
+**Testit 154, ennen 136.** Uusia kahdeksantoista: kymmenen `test_convert.py`:hyn
+(merkintöjen poisto ja numerointi, kirjoitusasujen sietäminen, numerointi
+piirretystä rungosta, useat alueet ja värit, kielirajaus, varoitus
+tuntemattomasta väristä, attribuutit aidassa, aita ilman muita määreitä,
+piilorivien numerointi merkintöjen jälkeen, monitiedostolohkon
+tiedostokohtaiset numerot), kuusi uudessa
+`test_highlights.py`:ssä (merkinnät poissa sivulta, oikeat rivit merkittyinä,
+väri tulee tyylitiedostosta, väri reunasta reunaan, korostettu piilorivi pysyy
+piilossa ja tulee esiin himmeänä, monitiedostolohkon tiedostot omine
+numeroineen), yksi `test_print.py`:hyn (korostukset tulostuvat kirjan mukana) ja
+yksi `test_book.py`:hyn (koko kirjassa ei ole yhtään merkintää jäljellä eikä
+yhtään numeroa lohkon ulkopuolella).
 
 
 ## Mitattu ensimmäisestä ajosta

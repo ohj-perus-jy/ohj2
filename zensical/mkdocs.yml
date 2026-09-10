@@ -158,6 +158,13 @@ extra_css:
   # assets/js/playground.js:ssä, ks. tiedoston alku.
   - assets/css/playground.css
 
+  # Korostetut rivit (kohta 9). Ennen seuraavaa: korostettu rivi on
+  # lohkotason elementti (display: block), ja piilotettu rivi on display:
+  # none. Kummankin valitsin on yhtä tarkka, joten piilotus voittaa vain
+  # myöhempänä - piilorivi, joka sattuu olemaan korostetulla alueella, jäisi
+  # muuten näkyviin. Rivien merkitseminen tapahtuu assets/js/highlights.js:ssä.
+  - assets/css/highlights.css
+
   # Piilorivit ja niiden silmänappi. Omana tiedostonaan samasta syystä kuin
   # edelliset, ja erillään playground.css:stä siksi, että kyse on eri
   # ominaisuudesta: piilorivit ovat kohta 2, ajonappi kohta 3. Rivien
@@ -181,3 +188,9 @@ extra_javascript:
   # Ajonapin jälkeen, jotta nappirivin järjestys on sama kuin kirjassa:
   # ensin suoritus, sitten silmä. Ks. kohta 2.
   - assets/js/hidelines.js
+
+  # Korostettujen rivien merkitseminen. mdBookissa sen tekee
+  # theme/code-highlights.js. Järjestyksellä ei ole tässä väliä: tiedosto ei
+  # lisää sivulle nappia eikä kuuntele muita, vaan lisää riveille luokan.
+  # Ks. kohta 9.
+  - assets/js/highlights.js

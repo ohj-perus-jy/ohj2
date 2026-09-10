@@ -125,6 +125,26 @@ QUOTED_FENCE_RE = re.compile(
 HIDELINE_RE = re.compile(r"^((?:[ \t]*>)*[ \t]*)//-")
 HIDELINE_LANGUAGES = ("java", "javascript")
 
+# mdBookin korostusmerkinnät (theme/code-highlights.js ja code-highlights.css).
+# Koodiaidan sisällä rivi "// HIGHLIGHT_GREEN_BEGIN" aloittaa ja "..._END"
+# lopettaa alueen, jonka riveille tulee värillinen tausta; merkintärivit itse
+# eivät näy sivulla. Aineistossa värejä on kolme (green 81 aluetta, red 20,
+# yellow 19) ja kirjan CSS tuntee neljännen (blue).
+#
+# Väli "//":n ja tunnuksen välissä on milloin on milloin ei
+# ("//HIGHLIGHT_GREEN_BEGIN", extra/luetelma), ja rivi on useimmiten
+# sisennetty. mdBookin oma lauseke sallii molemmat, ja sama sietokyky on
+# tässä; lisäksi rivin alussa sallitaan lainausmerkki samasta syystä kuin
+# piiloriveillä, vaikkei yksikään alue ole aineistossa alertin sisällä.
+HIGHLIGHT_RE = re.compile(
+    r"^[\s>]*//\s*HIGHLIGHT_(?P<color>[A-Z0-9]+)_(?P<edge>BEGIN|END)\s*$")
+HIGHLIGHT_COLORS = ("green", "yellow", "red", "blue")
+
+# mdBookin skripti käy läpi vain "pre > code.language-java", eli missä tahansa
+# muussa kielessä sama rivi on tavallinen kommentti. Sama rajaus tässä;
+# aineistossa jokainen 76 lohkosta on javaa.
+HIGHLIGHT_LANGUAGES = ("java",)
+
 # mdBookin sisällytysmakro (sisäänrakennettu links-esikäsittelijä). Polun
 # perässä voi olla rivivalinta kaksoispisteen jälkeen, ks. take_lines.
 INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<spec>[^}\s][^}]*?)\s*\}\}")
@@ -685,6 +705,23 @@ def fence_language(info: str) -> str:
     return "" if info.startswith("{") else info.split(",")[0].strip()
 
 
+def rendered_body(body: list[str]) -> tuple[int, int]:
+    """Piirtyvän rungon rajat aidan sisällä. -> (ensimmäinen, viimeisen jälkeinen).
+
+    Rivinumerot lasketaan siitä rungosta, joka lopulta piirretään: Markdown
+    pudottaa aidan alusta ja lopusta tyhjät rivit. Mitattuna kolmessa lohkossa
+    (osa1/02, alertin sisällä) aita alkaa kahdella tyhjällä rivillä, jolloin
+    numerointi olisi muuten kaksi liikaa. Tyhjäksi lasketaan myös lainauslohkon
+    oma rivi ("> "), koska lainausmerkki katoaa myöhemmin (convert_alerts).
+    """
+    first, last = 0, len(body)
+    while first < last and not body[first].strip(" \t>"):
+        first += 1
+    while last > first and not body[last - 1].strip(" \t>"):
+        last -= 1
+    return first, last
+
+
 def hide_lines(body: list[str], language: str) -> tuple[list[str], list[int]]:
     """Piiloriveiltä etuliite pois. -> (rivit, piilorivien numerot).
 
@@ -706,17 +743,7 @@ def hide_lines(body: list[str], language: str) -> tuple[list[str], list[int]]:
     """
     if language not in HIDELINE_LANGUAGES:
         return body, []
-    # Numerot lasketaan siitä rungosta, joka lopulta piirretään: Markdown
-    # pudottaa aidan alusta ja lopusta tyhjät rivit. Mitattuna kolmessa
-    # lohkossa (osa1/02, alertin sisällä) aita alkaa kahdella tyhjällä
-    # rivillä, jolloin numerointi olisi muuten kaksi liikaa. Tyhjäksi
-    # lasketaan myös lainauslohkon oma rivi ("> "), koska lainausmerkki
-    # katoaa myöhemmin (convert_alerts).
-    first, last = 0, len(body)
-    while first < last and not body[first].strip(" \t>"):
-        first += 1
-    while last > first and not body[last - 1].strip(" \t>"):
-        last -= 1
+    first, _ = rendered_body(body)
     lines: list[str] = []
     hidden: list[int] = []
     for index, line in enumerate(body):
@@ -727,7 +754,53 @@ def hide_lines(body: list[str], language: str) -> tuple[list[str], list[int]]:
     return lines, hidden
 
 
-def fence_info(info: str, hidden: tuple[int, ...] | list[int] = ()) -> str:
+def mark_highlights(body: list[str],
+                    language: str) -> tuple[list[str], dict[str, list[int]]]:
+    """Korostusmerkinnät pois. -> (rivit, {väri: rivinumerot}).
+
+    Työnjako on sama kuin piiloriveillä (hide_lines) ja samasta syystä:
+    merkintärivit lähtevät jo käännöksessä, ja väliin jääneiden rivien numerot
+    kirjoitetaan aidan attribuutiksi (fence_info), koska Markdownissa ei ole
+    tapaa merkitä yksittäistä koodiriviä. Merkintä on javan kommentti eikä
+    riko käännöstä, mutta se on silti riisuttava täällä: ajonappi (kohta 3)
+    lähettää lohkon koodin sellaisenaan, ja mdBook riisuu merkinnät niin ikään
+    ennen korostusta.
+
+    Väri on merkinnän oma tunnus pienellä ("HIGHLIGHT_GREEN_BEGIN" -> "green").
+    Alue alkaa BEGIN-rivistä ja päättyy ensimmäiseen END-riviin väristä
+    riippumatta — sama sääntö kuin mdBookin skriptissä — ja sulkematon alue
+    jatkuisi lohkon loppuun. Aineistossa jokainen 120 alueesta on suljettu,
+    yksikään ei ole toisen sisällä eikä yhdessäkään ole tuntematonta väriä.
+    """
+    if language not in HIGHLIGHT_LANGUAGES:
+        return body, {}
+    lines: list[str] = []
+    marked: list[str | None] = []
+    active: str | None = None
+    for line in body:
+        match = HIGHLIGHT_RE.match(line)
+        if not match:
+            lines.append(line)
+            marked.append(active)
+            continue
+        color = match["color"].lower()
+        if color not in HIGHLIGHT_COLORS:
+            print(f"varoitus: tuntematon korostusväri, rivi jää värittömäksi: "
+                  f"{line.strip()}", file=sys.stderr)
+        active = color if match["edge"] == "BEGIN" else None
+    # Numerot piirtyvästä rungosta, kuten piiloriveillä: merkintärivit ovat
+    # tässä vaiheessa poissa, joten myös aidan alun tyhjät rivit lasketaan
+    # vasta nyt (BEGIN-rivi ennen ensimmäistä koodiriviä ei ole tyhjä rivi).
+    first, last = rendered_body(lines)
+    colors: dict[str, list[int]] = {}
+    for index in range(first, last):
+        if marked[index]:
+            colors.setdefault(marked[index], []).append(index - first + 1)
+    return lines, colors
+
+
+def fence_info(info: str, hidden: tuple[int, ...] | list[int] = (),
+               colors: dict[str, list[int]] | None = None) -> str:
     """mdBookin aidan attribuuttilista -> pymdownx:n aitaotsikko.
 
     mdBookissa aidan kielen perässä on pilkulla erotettuja lisämääreitä
@@ -743,38 +816,44 @@ def fence_info(info: str, hidden: tuple[int, ...] | list[int] = ()) -> str:
     "java,ignore" -> "{ .java .ignore }" -> <div class="language-java ignore
     highlight">. Kieli säilyy, korostus toimii ja tieto on tallessa luokkana.
 
-    Piilorivien numerot tulevat mukaan attribuuttina, ks. hide_lines. Aidan
-    attribuutit menevät attr_listin kautta lohkon diviin sellaisinaan
-    (<div class="language-java highlight" data-hidden="1 5">), eli sama tie
-    kuin luokillakin.
+    Piilorivien (hide_lines) ja korostettujen rivien (mark_highlights) numerot
+    tulevat mukaan attribuutteina. Aidan attribuutit menevät attr_listin kautta
+    lohkon diviin sellaisinaan (<div class="language-java highlight"
+    data-hidden="1 5" data-hl-green="2 3">), eli sama tie kuin luokillakin.
     """
     parts = [part.strip() for part in info.strip().split(",")]
     language, attributes = parts[0], [part for part in parts[1:] if part]
-    if not language or (not attributes and not hidden):
+    if not language or (not attributes and not hidden and not colors):
         return language
     written = [f".{name}" for name in [language, *attributes]]
     if hidden:
         written.append(f'data-hidden="{" ".join(str(number) for number in hidden)}"')
+    for color, numbers in sorted((colors or {}).items()):
+        written.append(f'data-hl-{color}="{" ".join(str(n) for n in numbers)}"')
     return "{ " + " ".join(written) + " }"
 
 
-def convert_fences(text: str) -> tuple[str, int, int]:
-    """Aitojen attribuuttilistat pymdownx:n muotoon ja piiloriveiltä etuliite
-    pois. -> (teksti, aitoja, piilorivilohkoja).
+def convert_fences(text: str) -> tuple[str, int, int, int]:
+    """Aitojen attribuuttilistat pymdownx:n muotoon, piiloriveiltä etuliite pois
+    ja korostusmerkinnät talteen.
+    -> (teksti, aitoja, piilorivilohkoja, korostuslohkoja).
 
     Käydään aidat läpi pareittain, jottei koodilohkon sisällä oleva
     aidannäköinen rivi muutu vahingossa. Sulkeva aita on vähintään yhtä pitkä
     eikä siinä ole otsikkoa.
 
-    Otsikko kirjoitetaan vasta sulkevalla aidalla, koska piilorivien numerot
-    (kohta 2, ks. hide_lines) selviävät vasta rungosta. Sulkematon aita jää
-    siis ennalleen; niitä ei aineistossa ole yhtään.
+    Otsikko kirjoitetaan vasta sulkevalla aidalla, koska rivinumerot (kohdat 2
+    ja 9, ks. hide_lines ja mark_highlights) selviävät vasta rungosta.
+    Sulkematon aita jää siis ennalleen; niitä ei aineistossa ole yhtään.
+
+    Korostusmerkinnät ennen piilorivejä, koska merkintärivit lähtevät rungosta
+    pois: piilorivien numerot lasketaan siitä rungosta, joka jää jäljelle.
     """
     out: list[str] = []
     open_fence: str | None = None
     opening = 0
     header = indent = ""
-    fences = blocks = 0
+    fences = blocks = marked = 0
     for line in text.split("\n"):
         match = QUOTED_FENCE_RE.match(line)
         info = match["info"].strip() if match else ""
@@ -782,15 +861,19 @@ def convert_fences(text: str) -> tuple[str, int, int]:
             open_fence, opening = match["fence"], len(out)
             header, indent = info, match["indent"]
         elif match and not info and len(match["fence"]) >= len(open_fence):
-            body, hidden = hide_lines(out[opening + 1:], fence_language(header))
+            language = fence_language(header)
+            body, colors = mark_highlights(out[opening + 1:], language)
+            body, hidden = hide_lines(body, language)
             out[opening + 1:] = body
             blocks += bool(hidden)
-            if "," in header or hidden:
+            marked += bool(colors)
+            if "," in header or hidden or colors:
                 fences += 1
-                out[opening] = f"{indent}{open_fence}{fence_info(header, hidden)}"
+                out[opening] = (
+                    f"{indent}{open_fence}{fence_info(header, hidden, colors)}")
             open_fence = None
         out.append(line)
-    return "\n".join(out), fences, blocks
+    return "\n".join(out), fences, blocks, marked
 
 
 def read_alert(lines: list[str], start: int) -> tuple[list[str], int]:
@@ -1253,9 +1336,9 @@ def split_files(body: list[str]) -> list[tuple[str, list[str]]]:
     return files
 
 
-def convert_files(text: str) -> tuple[str, int, int, int]:
+def convert_files(text: str) -> tuple[str, int, int, int, int]:
     """mdBookin monitiedostolohkot -> pymdownx.tabbed.
-    -> (teksti, lohkot, tiedostot, piilorivitiedostot).
+    -> (teksti, lohkot, tiedostot, piilorivitiedostot, korostustiedostot).
 
     Jokainen tiedosto omaksi välilehdekseen ja omaksi koodiaidakseen. Sama
     mekanismi kuin convert_tabsissa, joten tästä ei tule omaa CSS:ää eikä
@@ -1280,11 +1363,12 @@ def convert_files(text: str) -> tuple[str, int, int, int]:
     määre katoaa kielen mukana (fence_info), mikä on oikein: ilman kieltä ei
     ole ajonappia.
 
-    Piilorivit (kohta 2) käsitellään tässä eikä convert_fencesissa, koska
-    rivinumerot lasketaan sen aidan sisällä, jossa rivi lopulta on: yhdeksän
-    monitiedostolohkoa yhdeksästäkymmenestä kuudesta sisältää piilorivejä, ja
-    niissä jokainen tiedosto saa omat numeronsa. Valmiisiin aitoihin
-    convert_fences ei enää koske, ks. fence_language.
+    Piilorivit (kohta 2) ja korostukset (kohta 9) käsitellään tässä eikä
+    convert_fencesissa, koska rivinumerot lasketaan sen aidan sisällä, jossa
+    rivi lopulta on: yhdeksän monitiedostolohkoa yhdeksästäkymmenestä
+    kuudesta sisältää piilorivejä ja kaksitoista korostuksia, ja niissä
+    jokainen tiedosto saa omat numeronsa. Valmiisiin aitoihin convert_fences
+    ei enää koske, ks. fence_language.
 
     Ero mdBookiin: yhden tiedoston lohkot saavat yhden välilehden rivin, ja
     Materialin content.tabs.link yhdistää samannimiset välilehdet, ks. README.md.
@@ -1293,7 +1377,7 @@ def convert_files(text: str) -> tuple[str, int, int, int]:
     out: list[str] = []
     blocks = files = 0
     index = 0
-    hidden_files = 0
+    hidden_files = marked_files = 0
     while index < len(lines):
         fence = CODE_FENCE_RE.match(lines[index])
         if not fence:
@@ -1324,15 +1408,17 @@ def convert_files(text: str) -> tuple[str, int, int, int]:
         blocks += 1
         for name, content in split_files(body):
             files += 1
+            content, colors = mark_highlights(content, language)
             content, hidden = hide_lines(content, language)
             hidden_files += bool(hidden)
-            info = fence_info(fence["info"] + ",multifile", hidden)
+            marked_files += bool(colors)
+            info = fence_info(fence["info"] + ",multifile", hidden, colors)
             out.append(f'=== "{name}"')
             out.append("")
             out.extend(indent_block([f"{marker}{info}", *content, marker]))
             out.append("")
         index = end + 1
-    return "\n".join(out), blocks, files, hidden_files
+    return "\n".join(out), blocks, files, hidden_files, marked_files
 
 
 def convert_tabs(text: str) -> tuple[str, int, int, set[str]]:
@@ -1391,7 +1477,7 @@ def main() -> int:
     shutil.copytree(SRC, DOCS)
     (DOCS / "SUMMARY.md").unlink(missing_ok=True)
     sets = placeholders = blocks = files = fences = includes = alerts = 0
-    hidden = 0
+    hidden = marked = 0
     details = summaries = divs = tasks = diagrams = drawings = 0
     breaks = 0
     used_diagrams: set[str] = set()
@@ -1409,12 +1495,13 @@ def main() -> int:
         # Monitiedostolohkot ennen aitoja: silloin ne toimivat myös #tab/-osion
         # sisällä, koska convert_tabs sisentää valmiin välilehtijoukon
         # sisäkkäiseksi. Toisin päin sisennetty aita jäisi tunnistamatta.
-        converted, page_blocks, page_files, page_hidden_files = convert_files(
-            converted)
+        (converted, page_blocks, page_files, page_hidden_files,
+         page_marked_files) = convert_files(converted)
         # Aidat ennen välilehtiä: convert_tabs sisentää osion sisällön, ja
         # sisennetty aita jää tunnistamatta. convert_files kirjoittaa omat
         # aitansa jo valmiiksi oikeaan muotoon.
-        converted, page_fences, page_hidden = convert_fences(converted)
+        converted, page_fences, page_hidden, page_marked = convert_fences(
+            converted)
         # Luokkakaaviot aitojen jälkeen ja välilehtien edellä: convert_tabs
         # sisentää osion sisällön, ja sisennetty aita jäisi tunnistamatta.
         # Sisällytysten jälkeen, koska kaksi kaaviota on tehtävänannoissa.
@@ -1453,6 +1540,7 @@ def main() -> int:
         files += page_files
         fences += page_fences
         hidden += page_hidden + page_hidden_files
+        marked += page_marked + page_marked_files
         includes += page_includes
         alerts += page_alerts
         details += page_details
@@ -1483,6 +1571,7 @@ def main() -> int:
     print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
     print(f"aidan attribuutit: {fences} aitaa")
     print(f"piilorivit: {hidden} lohkoa")
+    print(f"korostetut rivit: {marked} lohkoa")
     print(f"sisällytykset: {includes} makroa")
     print(f"details-lohkot: {details} tagia, {summaries} monirivistä summarya, "
           f"{breaks} <br />-riviä pois")

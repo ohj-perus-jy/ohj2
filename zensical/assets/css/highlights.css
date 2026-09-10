@@ -1,0 +1,110 @@
+/* Korostetut rivit, ks. README.md kohta 9 ja assets/js/highlights.js.
+ *
+ * Kirjassa rivin korostus on peittoväri koko rivin levyisenä palkkina
+ * (theme/code-highlights.css): vaaleassa teemassa vihreä 42 %, keltainen 40 %
+ * ja punainen 42 % koodin taustan päällä. Sitä ei voi kopioida sellaisenaan,
+ * koska teemojen syntaksivärit ovat eri paikassa. Zensicalin modern-variantissa
+ * syntaksivärit ovat heikoimmillaan koodin taustaa vasten 4,5:1 (vaaleassa
+ * 4,52, tummassa 4,49), eli tasan WCAG AA:n rajalla, kun mdBookin omissa
+ * väriteemoissa on varaa: kirjan peitto pudottaisi ne täällä vaaleassa
+ * teemassa 3,2-4,1:een ja tummassa 2,1-3,7:ään. Korostettu rivi on juuri se
+ * rivi, jota luetaan tarkimmin, joten sitä ei haluta lukea sivun heikoimmalla
+ * kontrastilla.
+ *
+ * Siksi väri otetaan toisesta suunnasta: KIRKKAUS PIDETÄÄN, VÄRISÄVY VAIHTUU.
+ * Kontrasti riippuu vain kirkkaudesta, joten sävyn ja kylläisyyden muutos on
+ * ilmainen. Mitattuna (CIELAB, koodin taustaa vasten):
+ *
+ *   | väri     | teema   | ero taustaan | kirkkausero | syntaksiväri |
+ *   | -------- | ------- | ------------ | ----------- | ------------ |
+ *   | vihreä   | vaalea  | dE 21,5      | -2,1        | 4,29:1       |
+ *   | keltainen| vaalea  | dE 25,7      | -1,5        | 4,36:1       |
+ *   | punainen | vaalea  | dE 12,1      | -5,2        | 3,96:1       |
+ *   | vihreä   | tumma   | dE 35,6      | -0,5        | 4,55:1       |
+ *   | keltainen| tumma   | dE 30,4      | -0,2        | 4,52:1       |
+ *   | punainen | tumma   | dE 36,2      | -1,9        | 4,57:1       |
+ *
+ * Vertailuksi: kirjan omat palkit ovat vaaleassa teemassa dE 22-26, eli
+ * vihreä ja keltainen ovat tässä yhtä erottuvia kuin kirjassa - mutta ilman
+ * kirjan 8-12 kirkkausyksikön pudotusta. Tummassa teemassa ero on selvästi
+ * kirjaa suurempi eikä maksa mitään: siellä koodin värit ovat korostetulla
+ * rivillä samat 4,5:1 kuin muuallakin.
+ *
+ * Punainen on vaalean teeman ainoa mutka. Vaalealla pinnalla (L* 96,5) ei ole
+ * kylläistä punaista, joten sen on pakko tummua näkyäkseen; 5,2 yksikköä on
+ * se, minkä jälkeen koodin värit ovat vielä 4,0:1. Se on sama luku, jolla
+ * teema itse korostaa rivin (hl_lines, -4,1 yksikköä ja 4,07:1), eli
+ * korostettu rivi ei ole täällä huonompi kuin teeman omassa korostuksessa.
+ *
+ * Lisäksi rivin vasempaan reunaan tulee 2 pikselin palkki täydessä värissä,
+ * kuten teeman omassa korostuksessa (main.css: .highlight .hll). Se on toinen
+ * merkki värin rinnalle - sävy yksin erottuu huonosti puna-vihersokealle,
+ * ja tämä on juuri se pari, jota kirjassa käytetään merkitsemään oikea ja
+ * väärä tapa. Palkki on taustaansa vasten 3,5-5,6:1.
+ *
+ * Neljättä kirjan väriä (blue) ei ole tässä, koska aineistossa ei ole yhtään
+ * sinistä aluetta. Se on kolme riviä, jos sellainen tulee.
+ */
+
+:root {
+  --jyu-hl-green: hsl(130, 75%, 90%);
+  --jyu-hl-green-edge: hsl(130, 60%, 32%);
+  --jyu-hl-yellow: hsl(50, 90%, 87%);
+  --jyu-hl-yellow-edge: hsl(45, 90%, 33%);
+  --jyu-hl-red: hsl(5, 90%, 93%);
+  --jyu-hl-red-edge: hsl(5, 70%, 50%);
+}
+
+/* Tummassa teemassa sama sävy tummana: koodin tausta on siellä
+ * hsla(hue, 20%, 18%) (assets/css/code.css), ja nämä ovat sen kirkkuudessa. */
+[data-md-color-scheme="slate"] {
+  --jyu-hl-green: hsl(130, 70%, 11%);
+  --jyu-hl-green-edge: hsl(130, 50%, 45%);
+  --jyu-hl-yellow: hsl(50, 70%, 11%);
+  --jyu-hl-yellow-edge: hsl(45, 70%, 45%);
+  --jyu-hl-red: hsl(5, 70%, 17%);
+  --jyu-hl-red-edge: hsl(5, 70%, 58%);
+}
+
+/* Rivin muoto on teeman oma korostusrecepti (main.css: .highlight .hll):
+ * lohkoksi ja koodin sisennyksen verran ulos molempiin reunoihin, jolloin
+ * väri ulottuu lohkon reunasta reunaan. Luku on modern-variantin koodilohkon
+ * vaakasisennys (.md-typeset pre > code: 1.25em).
+ *
+ * Leveys on lisä teeman omaan: koodilohko on <code>, joka vierittää itse,
+ * joten lohkotason lapsi jää näkyvän leveyden mittaiseksi ja pitkän rivin
+ * korostus katkeaisi ruudun reunaan. mdBook ratkaisee saman mittaamalla
+ * lohkon selaimessa ja vaihtamalla <code>:n inline-blockiksi (JS); täällä
+ * riittää, että rivi on enintään oman sisältönsä levyinen (max-content) ja
+ * vähintään lohkon levyinen. Jälkimmäisessä on mukana rivin oma sisennys,
+ * koska laatikkomalli on border-box: pelkkä 100 % jättäisi rivin oikean
+ * reunan sisennyksen verran vajaaksi. */
+.md-typeset .highlight .hl-line {
+  display: block;
+  width: max-content;
+  min-width: calc(100% + 2.5em);
+  padding: 0 1.25em;
+  margin: 0 -1.25em;
+}
+
+.md-typeset .highlight .hl-green {
+  background-color: var(--jyu-hl-green);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-green-edge);
+}
+
+.md-typeset .highlight .hl-yellow {
+  background-color: var(--jyu-hl-yellow);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-yellow-edge);
+}
+
+.md-typeset .highlight .hl-red {
+  background-color: var(--jyu-hl-red);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-red-edge);
+}
+
+/* Kopioitaessa teema piilottaa rivien rakenteen (data-md-copying), jottei
+ * lohkotason rivi lisäisi leikepöydälle ylimääräisiä rivinvaihtoja. Sama
+ * sääntö korostetulle riville kuin teemalla omalleen. */
+.md-typeset .highlight code[data-md-copying] .hl-line {
+  display: contents;
+}

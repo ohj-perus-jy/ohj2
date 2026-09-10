@@ -154,6 +154,21 @@ def test_hidden_lines_stay_hidden_on_paper(printed):
         "() => document.querySelector('.md-content__inner').innerText")
 
 
+def test_marked_lines_are_coloured_on_paper(printed):
+    """Korostukset (kohta 9) merkitään selaimessa, ja tulostussivun luvut ovat
+    olemassa vasta kokoamisen jälkeen. Ilman print.js:n ilmoitusta korostukset
+    jäisivät kirjasta pois; sama kytkentä kuin piiloriveillä.
+
+    Koekirjassa korostettuja rivejä on neljä: kaksi ajettavassa lohkossa
+    (toinen niistä piilorivi) ja yksi kummassakin monitiedostolohkon
+    tiedostossa."""
+    assert printed.evaluate(
+        "() => document.querySelectorAll('.hl-line').length") == 4
+    assert printed.evaluate("""() => [...document.querySelectorAll('.hl-line')]
+        .every(line => getComputedStyle(line)['background-color']
+                       !== 'rgba(0, 0, 0, 0)')""")
+
+
 def test_per_page_actions_are_dropped(printed):
     """Muokkauslinkki ja palauteruutu ovat artikkelin sisällä, joten ne
     tulisivat muuten jokaisen luvun perään."""

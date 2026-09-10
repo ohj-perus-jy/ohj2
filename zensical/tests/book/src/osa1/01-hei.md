@@ -22,8 +22,10 @@ public class Valo {
 ## Ajettava ohjelma
 
 ```java
+// HIGHLIGHT_GREEN_BEGIN
 //-void main() {
 IO.println("Hei, maailma!");
+// HIGHLIGHT_GREEN_END
 //-}
 ```
 
@@ -37,9 +39,13 @@ IO.println("Tätä ei voi ajaa.");
 
 ```java
 // FILE: Main.java
+// HIGHLIGHT_RED_BEGIN
 public class Main { }
+// HIGHLIGHT_RED_END
 // FILE: Valo.java
+//HIGHLIGHT_YELLOW_BEGIN
 public class Valo { }
+//HIGHLIGHT_YELLOW_END
 ```
 
 ## Käyttöjärjestelmävälilehdet

@@ -190,6 +190,45 @@ def test_no_raw_markdown_leaks_into_the_page(printed):
     assert leaked == []
 
 
+def test_every_marked_line_is_a_real_line(printed):
+    """Korostukset (kohta 9): merkinnät riisutaan käännöksessä ja rivinumerot
+    kirjoitetaan aidan attribuutiksi, joten kaksi asiaa voi mennä pieleen koko
+    kirjan mitassa. Merkintä voi jäädä sivulle, jos aineistossa on kirjoitusasu
+    jota lauseke ei tunne, ja numero voi osoittaa lohkon ulkopuolelle, jos
+    numerointi laskee eri rungosta kuin se, joka lopulta piirretään — juuri
+    niin kävi piiloriveillä (kohta 2) ennen kuin numerointi korjattiin.
+
+    Kysytään siis kirjalta itseltään: yhtään merkintää ei ole jäljellä,
+    jokainen numero osuu lohkon riviin, ja merkittyjä rivejä on tasan yhtä
+    monta kuin numeroita."""
+    marked = printed.evaluate(r"""() => {
+      let numbers = 0, outside = 0, blocks = 0;
+      for (const block of document.querySelectorAll('div.highlight')) {
+        const lines = block.querySelectorAll('code > span');
+        let coloured = false;
+        for (const [name, value] of Object.entries(block.dataset)) {
+          if (!/^hl[A-Z]/.test(name)) continue;
+          coloured = true;
+          for (const number of value.split(' ')) {
+            numbers++;
+            if (!lines[Number(number) - 1]) outside++;
+          }
+        }
+        blocks += coloured ? 1 : 0;
+      }
+      return {
+        numbers, outside, blocks,
+        lines: document.querySelectorAll('.hl-line').length,
+        markers: (document.querySelector('.md-content__inner').textContent
+                  .match(/HIGHLIGHT_/g) || []).length,
+      };
+    }""")
+    assert marked["markers"] == 0
+    assert marked["outside"] == 0
+    assert marked["blocks"] > 0
+    assert marked["numbers"] == marked["lines"] > 0
+
+
 def test_requirement_numbers_come_from_the_counter(printed):
     """Harjoitustyön vaatimuskohdat numeroidaan lohkon ja kohdan mukaan
     (1.1, 1.2, ...), koska niihin viitataan numerolla sekä samalla sivulla

@@ -106,16 +106,24 @@ def test_fence_info(info, expected):
     assert convert.fence_info(info) == expected
 
 
+def test_fence_info_writes_numbers_as_attributes():
+    """Piilorivien ja korostettujen rivien numerot menevät attr_listin kautta
+    lohkon diviin sellaisinaan, eli samaa tietä kuin luokat."""
+    assert convert.fence_info("java,ignore", [1, 5], {"green": [2], "red": [3]}) == (
+        '{ .java .ignore data-hidden="1 5" data-hl-green="2" data-hl-red="3" }')
+
+
 def test_convert_fences_rewrites_opening_fence():
     text = "```java,ignore\nkoodi\n```\n"
-    converted, fences, hidden = convert.convert_fences(text)
+    converted, fences, hidden, marked = convert.convert_fences(text)
     assert converted == "```{ .java .ignore }\nkoodi\n```\n"
-    assert (fences, hidden) == (1, 0)
+    assert (fences, hidden, marked) == (1, 0, 0)
 
 
 def test_convert_fences_keeps_indent_and_quote():
     """Sisennetty ja lainauslohkon sisällä oleva aita: rivin alku ennallaan."""
-    converted, fences, _ = convert.convert_fences("> ```java,ignore\n> x\n> ```\n")
+    converted, fences, *_ = convert.convert_fences(
+        "> ```java,ignore\n> x\n> ```\n")
     assert converted.startswith("> ```{ .java .ignore }")
     assert fences == 1
 
@@ -124,9 +132,9 @@ def test_convert_fences_ignores_fences_inside_code():
     """Aidat käydään pareittain, jottei koodilohkon sisällä oleva
     aidannäköinen rivi muutu vahingossa."""
     text = "````text\n```java,ignore\n````\n"
-    converted, fences, hidden = convert.convert_fences(text)
+    converted, fences, hidden, marked = convert.convert_fences(text)
     assert converted == text
-    assert (fences, hidden) == (0, 0)
+    assert (fences, hidden, marked) == (0, 0, 0)
 
 
 # --- Piilorivit (README kohta 2) ---------------------------------------------
@@ -171,7 +179,7 @@ def test_convert_fences_hides_lines_and_writes_their_numbers():
     """Aita ilman määreitäkin kirjoitetaan uusiksi, jos siinä on piilorivejä:
     numerot tarvitaan attribuuttiin."""
     text = "```java\n//-void main() {\nkoodi;\n//-}\n```\n"
-    converted, fences, hidden = convert.convert_fences(text)
+    converted, fences, hidden, _ = convert.convert_fences(text)
     assert converted == (
         '```{ .java data-hidden="1 3" }\n'
         "void main() {\n"
@@ -185,7 +193,85 @@ def test_convert_fences_leaves_finished_fences_alone():
     """convert_files kirjoittaa aitansa valmiiksi ja käsittelee omat
     piilorivinsä itse, joten samaa runkoa ei käsitellä kahdesti."""
     text = '```{ .java .multifile }\n//-x\n```\n'
-    assert convert.convert_fences(text) == (text, 0, 0)
+    assert convert.convert_fences(text) == (text, 0, 0, 0)
+
+
+# --- Korostetut rivit (README kohta 9) ---------------------------------------
+
+def test_mark_highlights_strips_the_markers_and_numbers_the_lines():
+    """Merkintärivit pois ja väliin jääneet rivit talteen väreittäin:
+    merkitseminen itse tapahtuu vasta selaimessa, kuten piiloriveillä."""
+    assert convert.mark_highlights(
+        ["a;", "// HIGHLIGHT_GREEN_BEGIN", "b;", "c;",
+         "// HIGHLIGHT_GREEN_END", "d;"], "java") == (
+        ["a;", "b;", "c;", "d;"], {"green": [2, 3]})
+
+
+def test_mark_highlights_tolerates_the_spelling():
+    """Merkinnät ovat aineistossa epätarkkoja ja mdBookin oma lauseke sietää
+    sen: sisennys, "//HIGHLIGHT_" ilman väliä ja välit rivin lopussa."""
+    assert convert.mark_highlights(
+        ["    //HIGHLIGHT_RED_BEGIN  ", "        a;", "    // HIGHLIGHT_RED_END"],
+        "java") == (["        a;"], {"red": [1]})
+
+
+def test_mark_highlights_numbers_from_the_rendered_body():
+    """Numerot lasketaan siitä rungosta, joka jää jäljelle: merkintärivi ei ole
+    tyhjä rivi, joten aidan alun tyhjät lasketaan vasta sen poistuttua."""
+    assert convert.mark_highlights(
+        ["", "// HIGHLIGHT_GREEN_BEGIN", "", "a;", "// HIGHLIGHT_GREEN_END"],
+        "java")[1] == {"green": [1]}
+
+
+def test_mark_highlights_keeps_every_colour_apart():
+    """Yhdessä lohkossa voi olla useita alueita ja useita värejä; aineiston
+    kolme väriä ovat green, red ja yellow."""
+    assert convert.mark_highlights(
+        ["// HIGHLIGHT_GREEN_BEGIN", "a;", "// HIGHLIGHT_GREEN_END",
+         "b;", "// HIGHLIGHT_RED_BEGIN", "c;", "// HIGHLIGHT_RED_END",
+         "// HIGHLIGHT_GREEN_BEGIN", "d;", "// HIGHLIGHT_GREEN_END"],
+        "java")[1] == {"green": [1, 4], "red": [3]}
+
+
+def test_mark_highlights_only_touches_java():
+    """mdBookin skripti käy läpi vain java-lohkot, eli muissa kielissä sama
+    rivi on tavallinen kommentti."""
+    body = ["// HIGHLIGHT_GREEN_BEGIN", "a;", "// HIGHLIGHT_GREEN_END"]
+    assert convert.mark_highlights(body, "text") == (body, {})
+
+
+def test_mark_highlights_warns_about_an_unknown_colour(capsys):
+    """Tuntematonta väriä ei ole aineistossa, mutta jos sellainen tulee, rivi
+    jäisi hiljaisesti värittömäksi: CSS tuntee vain kirjan värit."""
+    lines, colors = convert.mark_highlights(
+        ["// HIGHLIGHT_PINK_BEGIN", "a;", "// HIGHLIGHT_PINK_END"], "java")
+    assert (lines, colors) == (["a;"], {"pink": [1]})
+    assert "tuntematon korostusväri" in capsys.readouterr().err
+
+
+def test_convert_fences_writes_the_marked_lines_as_attributes():
+    """Aita ilman määreitäkin kirjoitetaan uusiksi, jos siinä on korostuksia:
+    numerot tarvitaan attribuuttiin."""
+    text = ("```java\n// HIGHLIGHT_GREEN_BEGIN\nkoodi;\n"
+            "// HIGHLIGHT_GREEN_END\n```\n")
+    converted, fences, hidden, marked = convert.convert_fences(text)
+    assert converted == '```{ .java data-hl-green="1" }\nkoodi;\n```\n'
+    assert (fences, hidden, marked) == (1, 0, 1)
+
+
+def test_convert_fences_numbers_hidden_lines_after_the_markers_are_gone():
+    """Merkinnät ennen piilorivejä, koska merkintärivit lähtevät rungosta
+    pois: piilorivi on rivi 3 vasta sen jälkeen, ei rivi 4."""
+    text = ("```java\n//-void main() {\n// HIGHLIGHT_GREEN_BEGIN\nkoodi;\n"
+            "// HIGHLIGHT_GREEN_END\n//-}\n```\n")
+    converted, _, hidden, marked = convert.convert_fences(text)
+    assert converted == (
+        '```{ .java data-hidden="1 3" data-hl-green="2" }\n'
+        "void main() {\n"
+        "koodi;\n"
+        "}\n"
+        "```\n")
+    assert (hidden, marked) == (1, 1)
 
 
 # --- Monitiedostolohkot (README kohta 5) -------------------------------------
@@ -213,8 +299,8 @@ def test_split_files_without_markers():
 
 def test_convert_files_makes_one_tab_per_file():
     text = "```java,ignore\n// FILE: A.java\na\n// FILE: B.java\nb\n```\n"
-    converted, blocks, files, hidden = convert.convert_files(text)
-    assert (blocks, files, hidden) == (1, 2, 0)
+    converted, blocks, files, hidden, marked = convert.convert_files(text)
+    assert (blocks, files, hidden, marked) == (1, 2, 0, 0)
     # Jokainen tiedosto omaksi välilehdekseen ja omaksi koodiaidakseen,
     # alkuperäisen aidan määreineen ja multifile-merkinnällä (ajonappi, kohta 3).
     assert converted == (
@@ -254,22 +340,33 @@ def test_convert_files_hides_lines_file_by_file():
     """Rivinumerot lasketaan sen aidan sisällä, jossa rivi lopulta on: toisen
     tiedoston piilorivi on sen oma rivi 1 eikä koko lohkon rivi 4."""
     text = "```java\n// FILE: A.java\na\n// FILE: B.java\n//-b\n```\n"
-    converted, _, _, hidden = convert.convert_files(text)
+    converted, _, _, hidden, _ = convert.convert_files(text)
     assert "    ```{ .java .multifile }\n    a\n" in converted
     assert '    ```{ .java .multifile data-hidden="1" }\n    b\n' in converted
     assert hidden == 1
 
 
+def test_convert_files_marks_lines_file_by_file():
+    """Kuten piiloriveillä: toisen tiedoston korostettu rivi on sen oma rivi 1
+    eikä koko lohkon rivi 4."""
+    text = ("```java\n// FILE: A.java\na\n// FILE: B.java\n"
+            "// HIGHLIGHT_RED_BEGIN\nb\n// HIGHLIGHT_RED_END\n```\n")
+    converted, _, _, _, marked = convert.convert_files(text)
+    assert "    ```{ .java .multifile }\n    a\n" in converted
+    assert '    ```{ .java .multifile data-hl-red="1" }\n    b\n' in converted
+    assert marked == 1
+
+
 def test_convert_files_leaves_ordinary_block_alone():
     text = "```java\nkoodi\n```\n"
-    assert convert.convert_files(text) == (text, 0, 0, 0)
+    assert convert.convert_files(text) == (text, 0, 0, 0, 0)
 
 
 def test_convert_files_warns_instead_of_dropping_code(capsys):
     """Koodi ennen ensimmäistä merkintää: lohko jätetään ennalleen ja siitä
     varoitetaan, koska muunnos pudottaisi rivit hiljaisesti pois."""
     text = "```java\nirrallinen\n// FILE: A.java\na\n```\n"
-    assert convert.convert_files(text) == (text, 0, 0, 0)
+    assert convert.convert_files(text) == (text, 0, 0, 0, 0)
     assert "koodia ennen ensimmäistä" in capsys.readouterr().err
 
 
