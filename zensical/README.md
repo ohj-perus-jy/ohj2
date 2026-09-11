@@ -4,11 +4,12 @@ Kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista **Zensicaliin**
 (Material for MkDocsin tekijöiden uusi generaattori). Ei koske `../src`:ään
 eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan.
 
-**Tila: tarkistuslistan 25 kohdasta 20 on tehty**, kaksi ei tarvita ja kolme on
-auki. Jokaisen ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa
-tiedostossaan: [PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu,
-jos koeputki voittaa ja mdBook puretaan:
-[PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
+**Tila: tarkistuslistan 25 kohdasta 20 on tehty**, kaksi ei tarvita, kaksi on
+siirretty myöhemmäksi ja yksi jätetään tietoisesti tekemättä. Jokaisen
+ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa tiedostossaan:
+[PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu, jos koeputki
+voittaa ja mdBook puretaan: [PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
+Työjärjestys tuotantoon: [KAYTTOONOTTO.md](KAYTTOONOTTO.md).
 
 ## Käynnistys
 
@@ -121,13 +122,13 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 11 | Osan etusivu = osan oma linkki navissa       | 13 osaa                   | **tehty** — `navigation.indexes`                                                                                   |
 | 12 | Otsikoiden numerointi sivun sisällä          | —                         | ei ollut mdBookissakaan                                                                                            |
 | 13 | Ääkköset ankkureissa (`#käyttö`)             | 6 linkkiä                 | **tehty** — `convert_anchors` riisuu ankkurit samalla tavalla kuin teema otsikoiden tunnukset (`#kaytto`)          |
-| 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | puuttuu — nyt hakemistopolut                                                                                       |
+| 14 | `.html`-päätteiset osoitteet (TIM)           | —                         | hyväksytty — vanhat `.html`-osoitteet menevät vaihdossa rikki, ks. [KAYTTOONOTTO.md](KAYTTOONOTTO.md)              |
 | 15 | plantuml / bob / mermaid                     | 17 / 11 / 2               | **tehty** — `convert_plantuml` (kuviksi), `convert_svgbob` (upotetuksi SVG:ksi); mermaid toimi jo itsestään        |
 | 16 | `<asciinema>`-upotukset                      | 13                        | **tehty** — `assets/js/asciinema.js` + kirjan soitin; convert.py:ssä ei mitään, soitin haetaan vain sivuille joilla on nauhoitus |
 | 17 | Ikonit `<i class="bi ...">` ja `<i class="fa ...">` | 150                | **tehty** — 66 bonusmerkkiä `convert_bonus_marks`, 58 valikkopolun nuolta merkkinä ja 22 kuvaketta teeman glyfeinä `convert_icons`; 4 poistui navigointiosion mukana |
 | 18 | JYU-paletti, kultainen korostus              | 30                        | siirretty myöhemmäksi — värit ovat toistaiseksi Materialin omat                                                    |
 | 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | —                         | **tehty** — tekijät, lisenssi ja muokkauslinkki; "Ilmoita ongelmasta" puuttuu                                      |
-| 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana; ajonappi ajaa lohkon sellaisenaan, ks. kohdat 3 ja 4                     |
+| 20 | ACE-editori (`editable`-lohkot)              | 2                         | siirretty myöhemmäksi — `.editable` säilyy luokkana; ajonappi ajaa lohkon sellaisenaan, ks. kohdat 3 ja 4          |
 | 21 | KaTeX                                        | 0                         | voi jättää pois                                                                                                    |
 | 22 | Edellinen/seuraava sivun alareunassa         | joka sivu                 | **tehty** — `navigation.footer`                                                                                    |
 | 23 | `### [Windows](#tab/win)`-välilehdet         | 33 lohkoa / 9 joukkoa     | **tehty** — `pymdownx.tabbed` + `content.tabs.link`                                                                |
@@ -139,17 +140,17 @@ haun ja responsiivisen navigaation.
 
 ## Mitä puuttuu
 
-Tarkistuslistalta kolme kohtaa:
+Tarkistuslistalta kaksi kohtaa:
 
 - **18 JYU-paletti, kultainen korostus** (30 kohtaa) — tietoisesti siirretty
   myöhemmäksi, ei tehdä tässä vaiheessa. Tehtäväkorttien bonusliuska käyttää
   omaa tummennettua sävyään, koska kirjan `#C29A5B` on valkoista vasten vain
   2,4:1.
-- **20 ACE-editori** (2 `editable`-lohkoa) — lohko näkyy tavallisena koodina.
-  Sen mukana `fa-history`-kuvake osoittaa "Peruuta muutokset" -nappiin, jota
-  sivustolla ei ole.
-- **14 `.html`-päätteiset osoitteet** — TIM:n linkit osoittavat mdBookin
-  muotoon, Zensicalissa sivut ovat hakemistopolkuja.
+- **20 ACE-editori** (2 `editable`-lohkoa) — tietoisesti siirretty
+  myöhemmäksi, ei tehdä tässä vaiheessa. Lohko näkyy tavallisena koodina, ja
+  sen mukana `fa-history`-kuvake osoittaa "Peruuta muutokset" -nappiin, jota
+  sivustolla ei ole. "Hei, Java!" -sivun esimerkki korjataan sellaiseksi,
+  ettei se vaadi syötettä: [KAYTTOONOTTO.md](KAYTTOONOTTO.md).
 
 Pienempiä:
 
@@ -177,11 +178,13 @@ puuttuu aineistosta, ja yhdestä tuntemattomasta alerttitunnuksesta
 
 ## Avoimet kysymykset
 
-- **Sivuston hakemistorakenne.** `docs_dir: src` säilyttäisi sivujen sisäiset
-  linkit, kuvapolut, `edit_uri`:n ja Gitin historian koskemattomina. Se on nyt
-  ainoa jäljellä oleva syy siirtää sivukohtaiset muunnokset renderöintiin
-  (PERUSTELUT.md: vaihtoehto C), koska nopeussyy raukesi mittauksissa.
-  Mitä siirrettävää jää jäljelle mdBookin poistuttua, ks.
+- **Sivuston hakemistorakenne** — siirretty purun jälkeiseksi, ei estä
+  käyttöönottoa. `docs_dir: src` säilyttäisi sivujen sisäiset linkit,
+  kuvapolut, `edit_uri`:n ja Gitin historian koskemattomina. Se on nyt ainoa
+  jäljellä oleva syy siirtää sivukohtaiset muunnokset renderöintiin
+  (PERUSTELUT.md: vaihtoehto C), koska nopeussyy raukesi mittauksissa. Päätös
+  tehdään vasta, kun purku on näyttänyt, kuinka pieni siirrettävä joukko
+  oikeasti on: [KAYTTOONOTTO.md](KAYTTOONOTTO.md) vaihe 5 ja
   [PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
 
 ## Ratkaistut kysymykset
