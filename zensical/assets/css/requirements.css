@@ -1,22 +1,9 @@
-/* Harjoitustyön vaatimusnumerot: 1.1, 1.2, ... eikä 1., 2., ...
- *
- * Sivulla harjoitustyo.md arviointiperuste on kahdeksassa
- * <div class="req">-lohkossa <div class="ht-reqs">:n sisällä, ja jokaisessa on
- * otsikko ("Vaatimus 3: Tallennus") ja numeroitu lista sen vaatimuksen omista
- * kohdista. Kirjassa listanumero on lohkon numero ja kohdan numero yhdessä
- * (theme/css/general.css: div.ht-reqs), eli lohkon 3 ensimmäinen kohta on 3.1.
- *
- * Numeroon viitataan sekä samalla sivulla ("yksilötöissä kaksi; vaatimus 1.1")
- * että osien 9-12 ohjeissa, joten pelkkä juokseva 1., 2., 3. joka lohkossa ei
- * riitä: viittaus osoittaisi väärään kohtaan. Numero on siksi tyyli eikä
- * tekstiä, samoin kuin kirjassa — lähteessä kohdat ovat tavallinen numeroitu
- * lista, ja HTML:ssä ne pysyvät <ol>:nä eli myös ruudunlukijalle listana.
- *
- * Kaksi eroa kirjan sääntöön. Sisäkkäinen kirjoitustapa puretaan
- * erillisiksi valitsimiksi, koska muu koeputken CSS on kirjoitettu niin.
- * Ja lista rajataan lohkon suoraksi lapseksi (> ol): sisennetty alalista
- * saisi muuten saman numeroinnin, jossa lohkon numero toistuisi.
- */
+/* Harjoitustyön vaatimusnumerot 1.1, 1.2, ... eikä 1., 2., ... kuten kirjassa.
+ * harjoitustyo.md:ssä vaatimukset ovat <div class="req">-lohkoissa
+ * <div class="ht-reqs">:n sisällä, ja kohtiin viitataan numerolla muualta,
+ * joten joka lohkossa alusta alkava numerointi osoittaisi väärään kohtaan.
+ * Numero on tyyli eikä tekstiä, jotta lista pysyy <ol>:nä myös
+ * ruudunlukijalle. */
 .md-typeset .ht-reqs {
   counter-reset: req;
 }
@@ -25,8 +12,8 @@
   counter-increment: req;
 }
 
-/* Tilaa numerolle: Materialin listan sisennys on mitoitettu yhdelle merkille
- * ("1."), ja "1.1" on sitä leveämpi. Sama arvo kuin kirjassa. */
+/* Tilaa numerolle: teeman sisennys on mitoitettu yhdelle merkille. Lista
+ * rajataan suoraksi lapseksi (> ol), jottei alalista saisi samaa numerointia. */
 .md-typeset .ht-reqs .req > ol {
   padding-inline-start: 1.5em;
 }

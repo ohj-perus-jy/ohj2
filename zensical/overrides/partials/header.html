@@ -1,15 +1,9 @@
 {#-
   Kopio teeman partials/header.html:stä (zensical 0.0.59), johon on lisätty
-  kaksi asiaa: tulostuspainike ja kotilinkki kurssin nimessä. Ks. merkityt
-  kohdat alempana.
-
-  mdBookissa painike on yläpalkissa teemanvaihtimen vieressä
-  (theme/index.hbs: <i class="bi bi-printer">), ja se vie sivulle print.html,
-  jolla koko kirja on yhtenä sivuna. Materialissa yläpalkkiin ei ole
-  laajennuspistettä — base.html tarjoaa vain koko header-lohkon — joten
-  painike vaatii tämän kopion. Jos Zensical muuttaa yläpalkkiaan, tämä
-  tiedosto on päivitettävä käsin; siksi muutokset on rajattu muutamaan riviin
-  ja merkitty selvästi.
+  kotilinkki kurssin nimeen, tulostuspainike ja leipätekstin kirjasinvalikko
+  (merkityt kohdat alempana). Yläpalkkiin ei ole laajennuspistettä, joten
+  lisäykset vaativat kopion; jos Zensical muuttaa yläpalkkiaan, tämä on
+  päivitettävä käsin.
 -#}
 {% set class = "md-header" %}
 {% if "navigation.tabs.sticky" in features %}
@@ -31,10 +25,8 @@
         <div class="md-header__topic">
           <span class="md-ellipsis">
             {#- Kurssin nimi linkiksi etusivulle, sama osoite kuin logossa.
-                Teemassa nimi on pelkkää tekstiä, ja kotiin pääsee vain
-                logon kuvakkeesta — kapealla näytöllä ei sitäkään kautta,
-                koska teema piilottaa logon alle 76,25em:n. Ulkoasu:
-                assets/css/layout.css. -#}
+                Teemassa kotiin pääsee vain logosta, jonka teema piilottaa
+                kapealla näytöllä. Ulkoasu: assets/css/layout.css. -#}
             <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}">{{ config.site_name }}</a>
           </span>
         </div>
@@ -57,11 +49,45 @@
     {% if not config.theme.palette is mapping %}
       {% include "partials/javascripts/palette.html" %}
     {% endif %}
-    {#- Tulostuspainike: koko kirja yhdelle sivulle, ks. convert.py ja
-        assets/js/print.js. Teemanvaihtimen vieressä kuten mdBookissa. -#}
-    <a href="{{ 'tulosta/' | url }}" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon">
+    {#- Tulostuspainike: koko kirja yhdelle sivulle (convert.py,
+        assets/js/print.js). Teemanvaihtimen vieressä kuten mdBookissa;
+        puhelimessa piilossa (assets/css/print.css). -#}
+    <a href="{{ 'tulosta/' | url }}" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
       {% include ".icons/lucide/printer.svg" %}
     </a>
+    {#- Leipätekstin kirjasinvalikko. Ulkoasu assets/css/fontmenu.css, toiminta
+        assets/js/fontmenu.js, kirjasimet typography.css. data-font on
+        tallennettava tunnus (tyhjä = oletus, ei tallennu), data-short
+        painikkeen vihjeessä näkyvä nimi. -#}
+    <div class="md-header__option jyu-font" data-md-component="jyu-font">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipätekstin kirjasin: Serif" aria-label="Leipätekstin kirjasin: Serif"
+              aria-haspopup="listbox" aria-expanded="false" aria-controls="jyu-font-list">
+        {% include ".icons/lucide/type.svg" %}
+        <span class="jyu-font__chevron">{% include ".icons/lucide/chevron-down.svg" %}</span>
+      </button>
+      <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin" hidden>
+        <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+          {% include ".icons/lucide/check.svg" %}
+          <span class="jyu-font__name">Source Serif 4</span>
+          <span class="jyu-font__kind">serif</span>
+        </li>
+        <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+          {% include ".icons/lucide/check.svg" %}
+          <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+          <span class="jyu-font__kind">sans-serif</span>
+        </li>
+        <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+          {% include ".icons/lucide/check.svg" %}
+          <span class="jyu-font__name">Literata</span>
+          <span class="jyu-font__kind">serif</span>
+        </li>
+      </ul>
+    </div>
+    {#- Tallennettu valinta käyttöön ennen sisällön piirtämistä, kuten teeman
+        palettiskripti yllä; muuten teksti välähtäisi. Vain valikossa oleva
+        tunnus kelpaa. -#}
+    <script>try{var f=localStorage.getItem("jyu-font");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))document.body.setAttribute("data-jyu-font",f)}catch(e){}</script>
     {% if config.extra.alternate %}
       {% include "partials/alternate.html" %}
     {% endif %}

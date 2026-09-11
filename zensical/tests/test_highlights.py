@@ -1,14 +1,8 @@
 """Korostetut rivit koekirjalla (README.md kohta 9).
 
-Korostus on kaksiosainen samalla tavalla kuin piilorivit: convert.py riisuu
-merkinnät ja kirjoittaa rivien numerot aidan attribuutiksi (test_convert.py),
-ja selain merkitsee numeroita vastaavat rivit luokalla, jonka CSS värittää.
-Jälkimmäistä ei näe käännöksen tuloksesta, joten sivu avataan oikeasti —
-samasta syystä kuin piiloriveillä (test_hidelines.py).
-
-Koekirjan ajettavassa lohkossa (tests/book/src/osa1/01-hei.md) on kolme riviä:
-rivit 1 ja 2 ovat korostettuja ja rivit 1 ja 3 piilossa, eli yksi rivi on
-molempia. Monitiedostolohkossa kummallakin tiedostolla on oma korostuksensa.
+convert.py riisuu merkinnät ja kirjoittaa rivinumerot aidan attribuutiksi
+(test_convert.py); selain merkitsee rivit luokalla, jonka CSS värittää.
+Koekirjan lohkossa rivit 1 ja 2 ovat korostettuja ja 1 ja 3 piilossa.
 """
 
 import pytest
@@ -35,8 +29,7 @@ def page(browser, chapter_url):
 
 
 def test_the_markers_are_not_in_the_page(page):
-    """Merkintärivit riisutaan jo käännöksessä, kuten mdBookissakin: ne eivät
-    ole koodia vaan ohje sille, mitkä rivit väritetään."""
+    """Merkintärivit riisutaan käännöksessä: ne ovat ohje, eivät koodia."""
     assert "HIGHLIGHT_" not in page.inner_text(".md-content__inner")
     assert page.eval_on_selector(BLOCK, "block => block.textContent") == (
         'void main() {\nIO.println("Hei, maailma!");\n}\n')
@@ -52,8 +45,7 @@ def test_the_marked_lines_are_the_ones_between_the_markers(page):
 
 
 def test_the_colour_comes_from_the_stylesheet(page):
-    """Luokka on turha ilman assets/css/highlights.css:ää: jos tiedosto jäisi
-    pois mkdocs.yml:stä, rivit merkittäisiin mutta mikään ei näkyisi."""
+    """Ilman highlights.css:ää rivit merkittäisiin mutta mikään ei näkyisi."""
     style = page.eval_on_selector(
         f"{BLOCK} .hl-green:not(.boring)",
         "line => getComputedStyle(line)['background-color']")
@@ -61,9 +53,7 @@ def test_the_colour_comes_from_the_stylesheet(page):
 
 
 def test_the_band_covers_the_line_from_edge_to_edge(page):
-    """Väri ulottuu lohkon reunasta reunaan eikä lopu tekstin loppuun, kuten
-    kirjassa: rivi on lohkotason elementti, joka ulottuu koodin sisennyksen
-    verran yli molempiin reuniin."""
+    """Väri ulottuu lohkon reunasta reunaan eikä lopu tekstin loppuun."""
     assert page.eval_on_selector(f"{BLOCK} .hl-green:not(.boring)", """line => {
       const code = line.parentElement.getBoundingClientRect();
       const band = line.getBoundingClientRect();
@@ -73,9 +63,8 @@ def test_the_band_covers_the_line_from_edge_to_edge(page):
 
 
 def test_a_marked_line_that_is_hidden_stays_hidden(page):
-    """Rivi voi olla sekä piilossa että korostettu (aineistossa kolme lohkoa).
-    Piilotus voittaa, ja silmästä rivi tulee esiin väreineen — himmeänä, kuten
-    muutkin esiin otetut piilorivit."""
+    """Piilotus voittaa korostuksen; silmästä rivi tulee esiin väreineen,
+    himmeänä kuten muutkin piilorivit."""
     marked_and_hidden = f"{BLOCK} code > span.boring.hl-green"
     assert page.eval_on_selector(
         marked_and_hidden, "line => getComputedStyle(line).display") == "none"
@@ -88,8 +77,8 @@ def test_a_marked_line_that_is_hidden_stays_hidden(page):
 
 
 def test_every_file_of_a_multifile_block_is_marked_on_its_own(page):
-    """Rivinumerot lasketaan sen aidan sisällä, jossa rivi lopulta on, joten
-    kummankin tiedoston oma rivi 1 on korostettu — eri värillä."""
+    """Rivinumerot lasketaan tiedoston omassa aidassa: kummankin rivi 1 on
+    korostettu, eri värillä."""
     assert page.eval_on_selector_all(
         "div.highlight[data-hl-red], div.highlight[data-hl-yellow]",
         """blocks => blocks.map(block => [

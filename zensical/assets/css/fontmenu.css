@@ -1,0 +1,135 @@
+/* Leipätekstin kirjasimen alasvetovalikko yläpalkissa.
+ * Merkkaus: overrides/partials/header.html, toiminta: assets/js/fontmenu.js,
+ * kirjasimet: typography.css.
+ *
+ * Painike lainaa hakupalkin ulkoasun (korkeus, pyöristys, tausta), jotta
+ * vierekkäiset hallinnat näyttävät samalta sarjalta. Siinä on vain kuvake ja
+ * nuoli; nykyinen valinta näkyy title-vihjeenä ja listan valintamerkkinä.
+ * Lista on oma elementtinsä eikä <select>, koska kohtien pitää näkyä omalla
+ * kirjasimellaan. */
+
+.jyu-font {
+  position: relative;
+}
+
+.jyu-font__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  height: 1.6rem;
+  margin: 0.2rem 0.4rem 0.2rem 0.2rem; /* oikealla väli hakupalkkiin */
+  padding: 0 0.35rem 0 0.5rem;
+  font: inherit;
+  color: var(--md-default-fg-color);
+  background-color: var(--md-default-fg-color--lightest);
+  border: 0;
+  border-radius: 0.4rem;
+  cursor: pointer;
+  transition: background-color 0.4s;
+}
+
+.jyu-font__button:hover,
+.jyu-font__button:focus-visible,
+.jyu-font__button[aria-expanded="true"] {
+  background-color: var(--md-default-fg-color--lighter);
+}
+
+.jyu-font__button:focus-visible {
+  outline: 0.1rem solid var(--md-accent-fg-color);
+  outline-offset: 0.1rem;
+}
+
+/* Pienempi kuin teeman 1,2 rem: lucide/type-kuvakkeen T täyttää koko
+ * ruutunsa, joten samassa koossa se näyttäisi naapureitaan isommalta. */
+.jyu-font__button svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  flex: none;
+  fill: none;
+  stroke: currentcolor;
+}
+
+.jyu-font__chevron {
+  display: flex;
+  flex: none;
+}
+
+.jyu-font__chevron svg {
+  width: 0.7rem;
+  height: 0.7rem;
+}
+
+.jyu-font__button[aria-expanded="true"] .jyu-font__chevron {
+  transform: rotate(180deg);
+}
+
+/* Lista painikkeen alle, oikeaan reunaan tasattuna. Varjo kuten teeman
+ * hakutuloslaatikossa. */
+.jyu-font__list {
+  position: absolute;
+  top: 100%;
+  right: 0.4rem; /* painikkeen oikea marginaali */
+  z-index: 5;
+  min-width: 13rem;
+  margin: 0.1rem 0 0;
+  padding: 0.3rem;
+  list-style: none;
+  background-color: var(--md-default-bg-color);
+  border-radius: 0.2rem;
+  box-shadow: var(--md-shadow-z3);
+}
+
+.jyu-font__list[hidden] {
+  display: none;
+}
+
+.jyu-font__item {
+  display: grid;
+  grid-template-columns: 1rem 1fr auto;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 0.15rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.jyu-font__item:hover,
+.jyu-font__item:focus-visible {
+  background-color: var(--md-default-fg-color--lightest);
+  outline: none;
+}
+
+/* Valintamerkki varaa paikkansa aina, jotta nimet pysyvät samassa sarakkeessa. */
+.jyu-font__item svg {
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: var(--md-primary-fg-color);
+  visibility: hidden;
+}
+
+.jyu-font__item[aria-selected="true"] svg {
+  visibility: visible;
+}
+
+/* Jokainen nimi omalla kirjasimellaan. Tunnukset samat kuin header.html:n
+ * data-font ja typography.css:n body[data-jyu-font]. */
+.jyu-font__item[data-font=""] .jyu-font__name {
+  font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+}
+
+.jyu-font__item[data-font="atkinson"] .jyu-font__name {
+  font-family: "Atkinson Hyperlegible Next", Helvetica, Arial, sans-serif;
+}
+
+.jyu-font__item[data-font="literata"] .jyu-font__name {
+  font-family: "Literata", Georgia, serif;
+}
+
+.jyu-font__kind {
+  font-size: 0.55rem;
+  letter-spacing: 0.04em;
+  color: var(--md-default-fg-color--light);
+}

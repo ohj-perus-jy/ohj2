@@ -1,14 +1,8 @@
 """Kun materiaalia muutetaan, muuttuuko tuloste mukana?
 
-Tulostussivu on kirjan sisältö toiseen kertaan, ja se kootaan kolmen mutkan
-kautta: convert.py kirjoittaa luettelon luvuista, zensical kääntää sivut ja
-print.js hakee ne selaimessa. Jokainen mutka voi jäädä jälkeen materiaalista
-ilman että mikään näytä rikkoutuvan — sivu näyttää yhä kirjalta, siitä vain
-puuttuu se mitä juuri kirjoitettiin.
-
-Siksi nämä testit eivät katso sivun rakennetta vaan sitä, päätyykö juuri
-kirjoitettu virke paperille. Koekirjaa (tests/book/src) muutetaan oikeasti,
-minkä vuoksi jokainen testi saa siitä oman kopionsa.
+Tulostussivu kootaan kolmen mutkan kautta (convert.py, zensical, print.js), ja
+jokainen voi jäädä jälkeen ilman näkyvää vikaa. Siksi testit katsovat, päätyykö
+juuri kirjoitettu virke paperille; koekirjaa muutetaan oikeasti, omassa kopiossa.
 """
 
 from conftest import open_print_page
@@ -42,13 +36,8 @@ def test_edited_text_is_printed(mutable_book, serve, browser):
 
 
 def test_new_chapter_is_printed(mutable_book, serve, browser):
-    """SUMMARY.md:hen lisätty luku päätyy tulosteeseen oikeaan kohtaan.
-
-    Tämä on ketjun pisin muoto: luku on lisättävä navigaatioon (convert.py),
-    sen sivu on käännettävä (zensical) ja se on haettava tulostussivulle
-    (print.js). Jos mikä tahansa näistä jää tekemättä, kirja näyttää yhä
-    ehjältä mutta luku puuttuu paperilta.
-    """
+    """SUMMARY.md:hen lisätty luku päätyy tulosteeseen oikeaan kohtaan — ketjun
+    pisin muoto: navigaatio, käännös ja haku tulostussivulle."""
     base_url = serve(mutable_book.site)
     printed = open_print_page(browser, base_url)
     before = headings(printed)
@@ -67,9 +56,8 @@ def test_new_chapter_is_printed(mutable_book, serve, browser):
     assert headings(printed) == before + ["Uusi luku"]
     assert "Tämän pitää päätyä paperille asti." in text(printed)
     assert printed.print_calls == [f"Koottu {len(before) + 1} lukua."]
-    # Uusi luku ei saa törmätä muiden lukujen tunnisteisiin. Nauhoitusten
-    # soittimet rajataan ulos samasta syystä kuin test_print.py:ssä: soittimen
-    # oma SVG-maski saa saman tunnuksen joka soittimessa.
+    # Uusi luku ei saa törmätä muiden lukujen tunnisteisiin. Soittimet rajataan
+    # ulos: soittimen SVG-maski saa saman tunnuksen joka soittimessa.
     assert printed.evaluate("""() => {
       const ids = [...document.querySelectorAll('[id]')]
         .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
@@ -78,9 +66,8 @@ def test_new_chapter_is_printed(mutable_book, serve, browser):
 
 
 def test_removed_chapter_leaves_the_print_page(mutable_book, serve, browser):
-    """Poistettu luku katoaa myös tulosteesta: sivu ei jää roikkumaan vanhaan
-    docs/-kopioon, josta convert.py poistaa lähteestä kadonneet sivut
-    (sync_docs; docs/:ia ei tyhjennetä kokonaan, ks. sen perustelu)."""
+    """Poistettu luku katoaa myös tulosteesta: convert.py poistaa docs/:sta
+    lähteestä kadonneet sivut (sync_docs)."""
     base_url = serve(mutable_book.site)
     printed = open_print_page(browser, base_url)
     before = headings(printed)

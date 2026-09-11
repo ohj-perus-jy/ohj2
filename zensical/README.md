@@ -134,6 +134,7 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 23 | `### [Windows](#tab/win)`-välilehdet         | 33 lohkoa / 9 joukkoa     | **tehty** — `pymdownx.tabbed` + `content.tabs.link`                                                                |
 | 24 | Tulostuspainike: koko kirja yhdeksi PDF:ksi  | joka sivu                 | **tehty** — `assets/js/print.js`, `print.css`, runko `convert.py`:stä, yläpalkin malli                             |
 | 25 | `<div class="ht-reqs">` vaatimuslohkot       | 9                         | **tehty** — `convert_divs` + `assets/css/requirements.css`; numerointi 1.1, 1.2, ... CSS-laskurista               |
+| 26 | Leipätekstin kirjasinvalikko yläpalkissa     | joka sivu                 | **tehty** — ei mdBookissa, lisätty pyynnöstä; `header.html`, `typography.css`, `fontmenu.css`, `fontmenu.js`; Source Serif 4 (oletus), Atkinson Hyperlegible Next, Literata; valinta muistetaan selaimessa |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
 haun ja responsiivisen navigaation.

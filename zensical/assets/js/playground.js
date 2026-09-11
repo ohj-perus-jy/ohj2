@@ -1,45 +1,23 @@
-/* Java-ohjelmien ajonapit (README.md kohta 3).
+/* Java-ohjelmien ajonapit: koodilohkon nappi lähettää koodin JYU:n
+ * suorituspalvelimelle ja näyttää tulosteen koodin alle, kuten mdBookin
+ * theme/playground_ext.js. Pyyntö on kenttä kentältä sama kuin mdBookissa.
  *
- * mdBookissa jokainen ```java-lohko, jossa ei ole määrettä ignore eikä
- * noplayground, saa oikeaan yläkulmaan nuolinapin: se lähettää lohkon koodin
- * JYU:n suorituspalvelimelle ja näyttää tulosteen koodin alle
- * (theme/playground_ext.js). Sama tehdään tässä, ja pyyntö on kenttä kentältä
- * sama kuin mdBookissa — sama palvelin, samat kentät — joten kirjan koodit
- * ajetaan täsmälleen kuten ennenkin.
- *
- * Kolme asiaa tulee teemalta eikä tästä tiedostosta:
- *
- *  - Nappi on teeman oma koodilohkon nappi (nav.md-code__nav >
- *    button.md-code__button, samat luokat kuin kopiointi- ja
- *    valintanapissa), joten paikka, koko, värit ja hover-käytös tulevat
- *    teeman CSS:stä. Omaa tyyliä on vain kuvake, ks. assets/css/playground.css.
- *  - Tuloste on tavallinen koodilohko (div.highlight), eli teema piirtää sen
- *    samalla tavalla kuin koodin. Myös mdBookissa tuloste on koodilohkon
- *    näköinen laatikko koodin alla (theme/css/chrome.css: pre > .result).
- *  - Monitiedostolohkon välilehdet ovat teeman välilehtiä (kohta 5).
- *
- * Piilorivit (kohta 2) lähtevät ajoon siinä missä muutkin rivit: ne ovat
- * lohkon HTML:ssä tallessa, vaikka CSS piilottaa ne, eikä textContent välitä
- * näkyvyydestä. Etuliite "//-" on riisuttu jo käännösaikana (convert.py:
- * hide_lines), kuten mdBookissakin.
- *
- * ACE-editori (kohta 20) puuttuu, joten kahdessa editable-lohkossa ajetaan se
- * koodi, joka sivulla lukee — muokata sitä ei voi.
- */
+ * Nappi on teeman oma koodilohkon nappi (nav.md-code__nav > button.md-code__button),
+ * joten ulkoasu tulee teemalta; omaa on vain kuvake (assets/css/playground.css).
+ * Tuloste on tavallinen koodilohko (div.highlight). Editoitavia lohkoja ei ole:
+ * ajetaan se koodi, joka sivulla lukee. */
 
 (() => {
   "use strict";
 
-  /* mdBookin theme/playground_ext.js: PLAYGROUND_LANGS. */
+  /* mdBookin PLAYGROUND_LANGS. */
   const LANGUAGES = ["java", "javascript"];
 
-  /* mdBookin määreet, jotka jättävät napin pois. Ne ovat luokkina
-   * lohkon divissä, ks. convert.py: fence_info (kohta 4). */
+  /* mdBookin määreet, jotka jättävät napin pois; luokkina lohkon divissä
+   * (convert.py: fence_info). */
   const SKIPPED = ["ignore", "noplayground"];
 
-  /* Sama palvelin ja sama 6 sekunnin raja kuin mdBookissa. Mitattuna yhden
-   * ohjelman kääntäminen ja ajaminen kestää 2,5-3,4 s ja saman koodin toisto
-   * 0,07 s (palvelin muistaa tuloksen), eli raja on väljä muttei ylenpalttinen. */
+  /* Sama palvelin ja sama aikaraja kuin mdBookissa. */
   const EXECUTOR = "https://lakane.it.jyu.fi/executor/execute";
   const TIMEOUT = 6000;
 
@@ -49,14 +27,12 @@
   const runnable = (block) =>
     language(block) && !SKIPPED.some((cls) => block.classList.contains(cls));
 
-  /* Lohkon koodi ajettavassa muodossa. Rivinumeroankkurit ovat tyhjiä
-   * <a>-elementtejä ja piilorivit tavallista koodia, joten textContent on
-   * pelkkää koodia — juuri se, jonka mdBookkin lähettää. */
+  /* textContent on pelkkää koodia: rivinumeroankkurit ovat tyhjiä <a>-elementtejä,
+   * ja piilorivit lähtevät mukaan, koska CSS-piilotus ei vaikuta siihen. */
   const source = (block) => block.querySelector("code").textContent;
 
-  /* Monitiedostolohkon tiedostot nimi -> sisältö. Nimet ovat välilehtien
-   * otsikoita ja sisällöt niiden koodilohkoja, samassa järjestyksessä; sama
-   * hakemisto kuin mdBook lähettää (playground_ext.js: run_code). */
+  /* Monitiedostolohkon tiedostot nimi -> sisältö: välilehtien otsikot ja
+   * niiden koodilohkot samassa järjestyksessä, kuten mdBook lähettää. */
   const files = (set) => {
     const names = [...set.querySelectorAll(":scope > .tabbed-labels > label")];
     const blocks = [
@@ -66,9 +42,8 @@
       names.map((name, index) => [name.textContent.trim(), source(blocks[index])]));
   };
 
-  /* Ajettavat lohkot yksiköiksi: tavallinen lohko on yksi ohjelma, ja
-   * monitiedostolohkon välilehdet ovat yhdessä yksi ohjelma. Avain on se
-   * elementti, jonka perään tuloste tulee. */
+  /* Ajettavat yksiköt: tavallinen lohko on yksi ohjelma, monitiedostolohkon
+   * välilehdet yhdessä yksi. Avain on elementti, jonka perään tuloste tulee. */
   const units = new Map();
   for (const block of document.querySelectorAll("div.highlight")) {
     if (!runnable(block)) continue;
@@ -79,12 +54,9 @@
     units.set(set || block, unit);
   }
 
-  /* Nappi lohkon omaan nappiriviin. Teema tekee rivin itse vain, jos
-   * kopiointi- tai valintanappi on käytössä (mkdocs.yml: content.code.copy,
-   * content.code.select) — kumpaakaan ei ole, joten rivi tehdään tässä
-   * samannimisenä ja samaan paikkaan kuin teema sen tekisi (pre:n sisään
-   * ennen koodia). Jos napit joskus otetaan käyttöön, tämä käyttää teeman
-   * riviä eikä tee omaansa. */
+  /* Nappirivi tehdään itse, koska teema tekee sen vain kopiointi- tai
+   * valintanapin kanssa (content.code.copy/select), joita ei ole käytössä.
+   * Jos teeman rivi on olemassa, käytetään sitä. */
   const addButton = (block) => {
     const code = block.querySelector("code");
     const pre = code.parentElement;
@@ -103,10 +75,7 @@
     return button;
   };
 
-  /* Tuloste koodin alle. Se on tavallinen koodilohko, joten teema piirtää sen
-   * samalla tavalla kuin koodin: sama tausta, sama kirjasin, samat reunat ja
-   * sama vieritys pitkillä riveillä. Sama elementti myös uusitaan, eli toinen
-   * ajo korvaa edellisen tulosteen. */
+  /* Tuloste koodin alle tavallisena koodilohkona; toinen ajo korvaa edellisen. */
   const outputFor = (anchor) => {
     let result = anchor.nextElementSibling;
     if (!result || !result.classList.contains("jyu-result")) {
@@ -129,10 +98,7 @@
     buttons.forEach((button) => (button.disabled = true));
     say(output, "Suoritetaan…");
 
-    /* Vastaus voi jäädä tulematta, ja silloin napin pitää palata käyttöön ja
-     * tulosteessa lukea miksi. mdBook kilpailuttaa fetchin ajastinta vastaan
-     * ja jättää pyynnön käyntiin; AbortController tekee saman ja katkaisee
-     * myös pyynnön. */
+    /* Aikaraja katkaisee myös pyynnön; nappi palaa käyttöön ja tuloste kertoo syyn. */
     const abort = new AbortController();
     const timer = setTimeout(() => abort.abort(), TIMEOUT);
     try {
@@ -148,9 +114,8 @@
         signal: abort.signal,
       });
       const body = await response.json();
-      /* Sama järjestys kuin mdBookissa: virheet ensin, muuten tuloste.
-       * Kääntäjän virheilmoitukset tulevat tältä palvelimelta output-kentässä,
-       * eli myös ne näkyvät tässä. Lopun rivinvaihto pois, koska se näkyisi
+      /* Kuten mdBookissa: virheet ensin, muuten tuloste. Kääntäjän virheet
+       * tulevat output-kentässä. Lopun rivinvaihto pois, koska se näkyisi
        * laatikossa tyhjänä rivinä. */
       const text = (body.errors || body.output || "").replace(/\n+$/, "");
       say(output, text || "Ei tulostetta", !text);

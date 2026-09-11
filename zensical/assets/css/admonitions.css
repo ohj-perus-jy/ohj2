@@ -1,48 +1,18 @@
-/* Alerttilaatikot: reunus laatikon ympäri, väri vain otsikkorivillä.
+/* Alerttilaatikot: reunus laatikon ympäri, väri vain otsikkorivillä, kuten
+ * Materialin classic-variantissa. Ei theme.variant: classic, koska se
+ * vaihtaisi koko sivuston kirjasimet, kuvakkeet ja välistykset; halutaan
+ * vain laatikot.
  *
- * Zensicalin modern-teema piirtää admonitionin yhtenä väripintana: koko
- * laatikko on tyypin väriä 10 %:n peitolla, reunusta ei ole, kulmat ovat
- * .4rem ja teksti .64rem. Material for MkDocsin classic-variantti tekee saman
- * asian toisin — ohut reunus koko laatikon ympäri, väriä vain otsikkorivillä,
- * sisältö sivun omalla taustalla. Jälkimmäinen ilme tänne.
+ * Kaksi poikkeamaa classicista: tekstikoko on leipätekstin (font-size:
+ * inherit, kuten mdBookissa; seuraa myös print.css:n kokoa), ja väljyys on
+ * suurempi, koska kokoeroa ei enää ole erottamaan laatikkoa.
  *
- * Miksi tämä eikä theme.variant: classic
- * --------------------------------------
- * Zensicalilla on nämä kaksi varianttia (zensical/config.py), ja classic antaisi
- * laatikot yhdellä rivillä mkdocs.yml:ää. Se vaihtaisi kuitenkin koko sivuston:
- * kirjasimiksi Roboto ja Roboto Mono Interin ja JetBrains Monon tilalle,
- * kuvakkeiksi Material-ikonit Luciden tilalle, ja välistykset koko teemasta.
- * Halutaan vain laatikot, joten kohteeksi otetaan ne.
- *
- * Kaksi poikkeamaa Materialin classicista
- * ---------------------------------------
- * 1. Tekstikoko on ympäröivän leipätekstin (font-size: inherit). Materialilla
- *    laatikon teksti on .64rem molemmissa varianteissa eli pienempää kuin
- *    leipäteksti (.md-typeset: .75rem); mdBookissa alertin teksti on samaa
- *    kokoa kuin leipäteksti, koska theme/alerts-style.css ei koske font-sizeen.
- *    Kirjan tapa säilytetään. inherit myös seuraa print.css:n
- *    ".md-typeset { font-size: .68rem }" -sääntöä ilman omaa tulostussääntöä.
- *
- * 2. Väljyys on suurempi kuin classicin .6rem: 1rem sivuilla ja alalaidassa,
- *    .5rem otsikkorivin ylä- ja alapuolella. Kun kokoeroa leipätekstiin ei
- *    enää ole, erottuminen jää reunuksen, otsikkopalkin ja ilman varaan.
- *
- * Tarkkuudesta
- * ------------
- * Teeman säännöt ovat tyyppikohtaisia (.md-typeset .admonition.note), eli
- * tarkkuudeltaan (0,3,0), kun taas .md-typeset .admonition on (0,2,0). Tämä
- * tiedosto ladataan extra_css:nä teeman jälkeen, joten sama tarkkuus riittää
- * voittamaan, mutta pienempi ei: taustaväri on siksi kumottava erikseen
- * [class]-valitsimella. Se ei rajaa mitään — jokaisella admonitionilla on
- * class-attribuutti — vaan nostaa tarkkuuden. Samasta syystä otsikkorivin
- * sisennykset kirjoitetaan [dir=ltr]-etuliitteellä, kuten Material itse tekee.
- */
+ * Tarkkuus: teeman säännöt ovat tyyppikohtaisia (.md-typeset .admonition.note)
+ * ja tämä tiedosto ladataan teeman jälkeen, joten sama tarkkuus voittaa mutta
+ * pienempi ei. Siksi alempana [class]- ja [dir=ltr]-etuliitteet. */
 
-/* Tyypin väri yhteen muuttujaan, jotta reunus, otsikkopalkki ja kuvake saavat
- * sen samasta paikasta. Värit ovat Materialin oletukset eli täsmälleen ne,
- * jotka teemalla on jo käytössä (ks. README.md kohta 7) — vain se, mihin väri
- * laitetaan, muuttuu. Teema ei aseta --adm:ää, joten näiden tarkkuudella ei
- * ole väliä. */
+/* Tyypin väri yhteen muuttujaan reunukselle, otsikkopalkille ja kuvakkeelle.
+ * Värit ovat Materialin oletukset; vain sijoittelu muuttuu. */
 .md-typeset .note     { --adm: #448aff; }
 .md-typeset .abstract { --adm: #00b0ff; }
 .md-typeset .info     { --adm: #00b8d4; }
@@ -51,7 +21,7 @@
 .md-typeset .danger   { --adm: #ff1744; }
 
 /* Laatikko. Oletusväri on note'n sininen, kuten teemalla: sen saavat
- * tyypittömät <details>-lohkot, joita sisällössä on 72 (kohta 8). */
+ * tyypittömät <details>-lohkot. */
 .md-typeset .admonition,
 .md-typeset details {
   font-size: inherit;
@@ -62,21 +32,21 @@
   box-shadow: var(--md-shadow-z1);
 }
 
-/* Teeman tyyppikohtainen taustaväri pois, ks. tarkkuus yllä. */
+/* Teeman tyyppikohtainen taustaväri pois; [class] vain nostaa tarkkuuden. */
 .md-typeset .admonition[class],
 .md-typeset details[class] {
   background-color: var(--md-default-bg-color);
 }
 
-/* Alalaitaan sama väljyys kuin sivuille; teeman oma sääntö on .6rem ja
- * html-etuliitteinen, joten se on ohitettava samalla tarkkuudella. */
+/* Alalaitaan sama väljyys kuin sivuille; teeman sääntö on html-etuliitteinen. */
 html .md-typeset .admonition > :last-child,
 html .md-typeset details > :last-child {
   margin-bottom: 1rem;
 }
 
-/* Otsikkorivi omaksi palkikseen laatikon yläreunaan. Negatiivinen sivumarginaali
- * vetää palkin laatikon reunoihin asti, koska väljyys on laatikon paddingissa. */
+/* Otsikkorivi omaksi palkikseen laatikon yläreunaan. Negatiivinen
+ * sivumarginaali vetää palkin laatikon reunoihin, koska väljyys on laatikon
+ * paddingissa. */
 [dir=ltr] .md-typeset .admonition-title,
 [dir=ltr] .md-typeset summary {
   margin: 0 -1rem 1em;
@@ -85,9 +55,8 @@ html .md-typeset details > :last-child {
   border-radius: .1rem .1rem 0 0;
 }
 
-/* Kuvake otsikkorivin ensimmäisen tekstirivin keskelle: .5rem ylävälistystä
- * plus puolet rivistä (1.8 em) miinus puolet kuvakkeesta (1rem). Teeman oma
- * sijainti (left: 0; top: .125em) on laskettu ilman palkkia. */
+/* Kuvake otsikkorivin ensimmäisen tekstirivin keskelle; teeman oma sijainti
+ * on laskettu ilman palkkia. */
 [dir=ltr] .md-typeset .admonition-title:before,
 [dir=ltr] .md-typeset summary:before {
   top: .9em;
@@ -95,25 +64,11 @@ html .md-typeset details > :last-child {
 }
 
 
-/* Kuvakkeet
- * =========
- * Sarja pysyy Luciden: se on yhtenäinen koko sivustolla, sillä samat kuvakkeet
- * piirtävät valikon, haun, edellisen ja seuraavan sekä avattavan osion nuolen.
- * Kaksi tyyppiä vaihtaa kuitenkin kuvaketta.
- *
- * Huomautus saa info-ympyrän. Teeman oletus note-tyypille on paperiliitin, joka
- * ei kerro huomautuksesta mitään; mdBookissa Huomautus on info-ympyrä
- * (theme/alerts-style.css: .mdbook-alerts-note, bi-info-circle).
- *
- * Todo saa kysymysmerkin, koska info-ympyrä on nyt varattu. Ilman tätä kaksi
- * tyyppiä näyttäisi samalta: Huomautus (18 kpl, #448aff) ja Todo (3 kpl,
- * #00b8d4) eroaisivat vain sinisen sävyssä. mdBookissa Todolla ei ollut
- * kuvaketta lainkaan, joten vaihdossa ei menetetä mitään.
- *
- * Tässä ei ole yhtään SVG:tä: kuvakkeet ovat teeman omia muuttujia, joten
- * riittää osoittaa toiseen niistä. Tarkkuus on sama kuin teeman säännöllä
- * (0,3,1), ja tämä tiedosto ladataan teeman jälkeen, joten järjestys ratkaisee.
- */
+/* Kuvakkeet: sarja pysyy Luciden. Huomautus (note) saa info-ympyrän kuten
+ * mdBookissa; teeman paperiliitin ei kerro huomautuksesta mitään. Todo (info)
+ * saa kysymysmerkin, koska info-ympyrä on varattu eivätkä tyypit muuten
+ * erottuisi kuin sinisen sävystä. Kuvakkeet ovat teeman omia muuttujia,
+ * joten riittää osoittaa toiseen niistä. */
 .md-typeset .note > .admonition-title:before,
 .md-typeset .note > summary:before {
   -webkit-mask-image: var(--md-admonition-icon--info);
@@ -126,35 +81,24 @@ html .md-typeset details > :last-child {
   mask-image: var(--md-admonition-icon--question);
 }
 
-/* Sisällötön otsikkorivi ei saa jättää alleen tyhjää kaistaletta. Sama sääntö
- * on Materialin omassa CSS:ssä; modern-variantista se puuttuu, koska siellä
- * otsikkorivi ei ole oma palkkinsa. */
+/* Sisällötön otsikkorivi ei saa jättää alleen tyhjää kaistaletta; sama
+ * sääntö on Materialin classicissa. */
 html .md-typeset .admonition-title:last-child,
 html .md-typeset summary:last-child {
   margin-bottom: 0;
 }
 
-/* Suljettu <details> tarvitsee saman erikseen. :last-child ei riitä, koska se
- * katsoo DOM:ia eikä sitä, mitä piirretään: suljetun lohkon sisältö on
- * paikallaan, se vain jätetään piirtämättä. Ero näkyi sivulla suorittaminen.md,
- * jossa kaksi kolmesta lohkosta oli kunnossa ja kolmas ei — kahdessa
- * ensimmäisessä sisältö on jäänyt Markdowniksi (kohta 8) eli pelkiksi
- * tekstisolmuiksi, jotka :last-child ohittaa, kun taas kolmannessa on <video>. */
+/* Suljettu <details> tarvitsee saman erikseen: :last-child katsoo DOM:ia, ja
+ * suljetun lohkon sisältö on paikallaan, vain piirtämättä. */
 html .md-typeset details:not([open]) > summary {
   margin-bottom: 0;
 }
 
 
-/* Avattavat osiot
- * ===============
- * Sisällössä on 57 sivullista raakoja <details>-lohkoja (kohta 8), joilla ei
- * ole admonition-tyyppiä. Teema antaa niille silloin oletuksen eli note'n
- * sinisen ja paperiliittimen, ja avausnuoli jää yksin oikeaan laitaan: lohko
- * näyttää alertilta, ei avattavalta osiolta — ja vieläpä samanlaiselta kuin
- * viereisen sivun "Vinkki", joka on oikea alertti.
- *
- * Kaksi eroa tehdään: väri neutraaliksi (ei alertin väriä) ja nuoli
- * otsikkotekstin viereen kuvakkeen paikalle, mistä se kääntyy auetessa. */
+/* Avattavat osiot: raa'at <details>-lohkot ilman admonition-tyyppiä saavat
+ * teemalta note'n sinisen ja paperiliittimen, jolloin ne näyttävät alertilta
+ * eivätkä avattavalta osiolta. Väri neutraaliksi ja nuoli otsikkotekstin
+ * viereen kuvakkeen paikalle. */
 .md-typeset details:not([class]) {
   border-color: var(--md-default-fg-color--lighter);
 }
@@ -168,12 +112,9 @@ html .md-typeset details:not([open]) > summary {
   background-color: color-mix(in srgb, var(--md-default-fg-color) 12%, transparent);
 }
 
-/* Avatun lohkon pohja. Viimeisen lapsen marginaali ei riitä väljyydeksi, koska
- * osassa lohkoista sisältö on jäänyt Markdowniksi (kohta 8) eli pelkiksi
- * tekstisolmuiksi, joilla ei ole marginaalia lainkaan — teksti painui kiinni
- * alareunaan. Väljyys otetaan siis laatikon omasta paddingista, ja viimeisen
- * lapsen marginaali nollataan, ettei niissä lohkoissa joissa sisältö on
- * elementtejä tulisi molempia. */
+/* Avatun lohkon pohja. Osassa lohkoista sisältö on pelkkiä tekstisolmuja
+ * ilman marginaalia, joten väljyys otetaan laatikon paddingista ja viimeisen
+ * lapsen marginaali nollataan, ettei elementtisisällöllä tulisi molempia. */
 .md-typeset details[open] {
   padding-bottom: 1rem;
 }
@@ -182,10 +123,8 @@ html .md-typeset details[open] > :last-child {
   margin-bottom: 0;
 }
 
-/* Kuvakkeen tilalle sama nuoli, jota teema käyttää oikeassa laidassa — mutta
- * alaspäin, koska suljettu lohko on se, jolle pitää tehdä jotain: nuoli alas
- * = tämän voi avata, nuoli ylös = tämän voi sulkea. Kääntyminen kulkee oikean
- * kautta, ei vasemman. */
+/* Kuvakkeen tilalle teeman oma nuoli, suljettuna alaspäin: nuoli alas =
+ * tämän voi avata, ylös = tämän voi sulkea. */
 [dir=ltr] .md-typeset details:not([class]) > summary:before {
   background-color: var(--md-default-fg-color--light);
   -webkit-mask-image: var(--md-details-icon);
@@ -198,28 +137,21 @@ html .md-typeset details[open] > :last-child {
   transform: rotate(-90deg);
 }
 
-/* Oikean laidan nuoli pois: sama tieto kahdesti on vain hälyä. */
+/* Oikean laidan nuoli pois: sama tieto kahdesti. */
 .md-typeset details:not([class]) > summary:after {
   display: none;
 }
 
-/* Summary on näppäimistöllä tarkennettava, joten tarkennus on näyttävä. */
+/* Summary on näppäimistöllä tarkennettava. */
 .md-typeset details:not([class]) > summary:focus-visible {
   outline: .1rem solid var(--md-accent-fg-color);
   outline-offset: -.1rem;
 }
 
-/* Monirivinen yhteenveto. Harjoitustyön kuudessa aihelohkossa yhteenveto on
- * otsikko ja kappale eikä yksi rivi (kohta 8), ja teema mitoittaa palkin
- * yhdelle riville: otsikon oma ylämarginaali (30 px) työntäisi sen irti
- * palkin ylälaidasta ja kappaleen alamarginaali alalaidasta. Reunimmaiset
- * marginaalit pois, keskimmäinen jää erottamaan otsikon kuvauksesta.
- *
- * Lihavointi jää otsikkoon. Palkin font-weight: 700 on teeman, ja yhden rivin
- * yhteenvedoissa (63 kpl) se on paikallaan, mutta kokonainen kappale
- * lihavoituna on raskas eikä erota otsikkoa mitenkään. Kirjassa kumpikaan ei
- * ole lihavoitu; tässä otsikko on, koska palkki on muuten pelkkää leipätekstiä
- * eikä otsikko erottuisi kuin koolla. */
+/* Monirivinen yhteenveto (otsikko ja kappale): teema mitoittaa palkin
+ * yhdelle riville, joten reunimmaiset marginaalit pois. Lihavointi jää
+ * otsikkoon, koska kokonainen kappale lihavoituna ei erota otsikkoa
+ * mitenkään. */
 .md-typeset details > summary > :first-child {
   margin-top: 0;
 }
@@ -233,8 +165,8 @@ html .md-typeset details[open] > :last-child {
 }
 
 
-/* Varjo on ruudun syvyysvihje; paperilla se on harmaa suti reunuksen ympärillä.
- * Materialin classic tekee saman. */
+/* Varjo on ruudun syvyysvihje; paperilla se on harmaa suti reunuksen
+ * ympärillä. */
 @media print {
   .md-typeset .admonition,
   .md-typeset details {

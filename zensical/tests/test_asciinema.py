@@ -1,14 +1,8 @@
 """Terminaalinauhoitukset koekirjalla (README.md kohta 16).
 
-Nauhoitus on lähteessä raakaa HTML:ää (`<asciinema src="...">`), joten
-convert.py ei tee sille mitään: tagi menee käännöksen läpi sellaisenaan ja
-kaikki muu tapahtuu selaimessa. Siksi sivu on avattava oikeasti, samasta
-syystä kuin piiloriveillä (test_hidelines.py).
-
-Koekirjan luvussa (tests/book/src/osa1/01-hei.md) on kaksi nauhoitusta samasta
-tiedostosta: yksi ilman toistopalkkia ja yksi `controls`-määreellä, kuten
-kirjassa. Nauhoitus (`images/nauhoitus.cast`) on kolme riviä pitkä ja sen
-osoite on suhteellinen luvun omaan hakemistoon.
+Nauhoitus on lähteessä raakaa HTML:ää (`<asciinema src="...">`), joka menee
+käännöksen läpi sellaisenaan; kaikki tapahtuu selaimessa, joten sivu avataan
+oikeasti. Koekirjassa on kaksi nauhoitusta samasta kolmirivisestä tiedostosta.
 """
 
 import pytest
@@ -37,17 +31,15 @@ def page(browser, chapter_url):
 
 
 def test_every_recording_becomes_a_player(page):
-    """Ilman soitinta tagi on selaimelle tuntematon elementti, joka ei näy
-    sivulla mitenkään — juuri niin kohta 16 oli rikki."""
+    """Ilman soitinta tagi on selaimelle tuntematon elementti eikä näy mitenkään."""
     assert page.eval_on_selector_all(
         "asciinema", "elements => elements.map(element =>"
         "  element.querySelectorAll(':scope > .ap-wrapper').length)") == [1, 1]
 
 
 def test_the_first_frame_is_drawn_from_the_recording(page):
-    """Poster näyttää nauhoituksen ensimmäisen ruudun ilman toistoa. Sisältö
-    tulee .cast-tiedostosta, eli tämä on samalla ainoa tapa nähdä, että
-    suhteellinen osoite osui oikeaan tiedostoon."""
+    """Poster näyttää ensimmäisen ruudun .cast-tiedostosta — ainoa tapa nähdä,
+    että suhteellinen osoite osui oikeaan tiedostoon."""
     assert page.eval_on_selector(
         "asciinema", "element => [...element.querySelectorAll('.ap-line')]"
         "                          .map(line => line.textContent.trim())") == [
@@ -55,8 +47,7 @@ def test_the_first_frame_is_drawn_from_the_recording(page):
 
 
 def test_the_attributes_of_the_tag_reach_the_player(page):
-    """rows on nauhoituksen korkeus riveinä ja controls kertoo, näkyykö
-    toistopalkki: kirjassa se on yhdessä nauhoituksessa kolmestatoista."""
+    """rows on korkeus riveinä ja controls kertoo, näkyykö toistopalkki."""
     assert page.eval_on_selector_all(
         "asciinema", "elements => elements.map(element => ["
         "  element.getAttribute('rows'),"
@@ -67,8 +58,7 @@ def test_the_attributes_of_the_tag_reach_the_player(page):
 
 
 def test_the_recording_plays(page):
-    """Toistonappi on nauhoituksen ainoa tarkoitus. Toisto alkaa alusta, joten
-    ensimmäinen rivi on kesken kirjoittamisen eikä enää sama kuin poster."""
+    """Toisto alkaa alusta, joten ensimmäinen rivi ei ole enää sama kuin poster."""
     page.click("asciinema .ap-play-button")
     page.wait_for_function(
         "() => document.querySelector('asciinema .ap-line').textContent.trim()"
@@ -76,9 +66,8 @@ def test_the_recording_plays(page):
 
 
 def test_the_player_is_fetched_only_where_it_is_needed(browser, book, serve):
-    """Soitin ja sen tyyli ovat 207 kt, eivätkä ne kuulu sivulle, jolla ei ole
-    nauhoitusta: kirjassa niitä on kolmella sivulla 190:stä. Siksi mkdocs.yml
-    lataa vain assets/js/asciinema.js:n, joka hakee soittimen tarvittaessa."""
+    """Soitin on raskas eikä kuulu sivulle ilman nauhoitusta: mkdocs.yml lataa
+    vain asciinema.js:n, joka hakee soittimen tarvittaessa."""
     base = serve(book.site)
     for path, wanted in (("/osa1/01-hei/", True), ("/osa2/02-huomiot/", False)):
         opened = browser.new_page()

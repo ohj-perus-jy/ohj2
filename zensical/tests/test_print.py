@@ -1,17 +1,8 @@
 """Tulostussivun koneisto koekirjalla (tests/book/src).
 
-Tulostussivu on koeputken ainoa kohta, jossa lopputulos syntyy vasta
-selaimessa: convert.py kirjoittaa sivulle luettelon luvuista ja print.js
-hakee jokaisen luvun oman sivun ja liittää siitä artikkelin. Siksi näitä ei
-voi testata käännöksen tuloksesta, vaan sivu on avattava oikeasti.
-
-Koekirja on tarkoituksella pieni, mutta siinä on yksi esimerkki jokaisesta
-asiasta, joka kokoamisessa voi mennä rikki: sama otsikko kahdessa luvussa
-(tunnisteiden törmäys), kuva alihakemistosta (suhteellinen osoite),
-sivun sisäinen ankkuri, lukujen välinen linkki, neljä välilehtijoukkoa
-(käyttöjärjestelmävalinta ja kolme monitiedostolohkoa), huomiolaatikot ja
-sisällytykset.
-Oikealla materiaalilla samat asiat mitataan test_book.py:ssä.
+Lopputulos syntyy vasta selaimessa: print.js hakee jokaisen luvun sivun ja
+liittää artikkelin, joten sivu on avattava oikeasti. Koekirjassa on yksi
+esimerkki jokaisesta asiasta, joka kokoamisessa voi mennä rikki.
 """
 
 import re
@@ -20,8 +11,7 @@ import pytest
 
 from conftest import open_print_page
 
-# Koekirjan luvut SUMMARY.md:n järjestyksessä, NEST_UNDER-siirto mukaan
-# luettuna (Tenttiohjeet siirtyy Tentin alle mutta pysyy sen perässä).
+# Koekirjan luvut SUMMARY.md:n järjestyksessä NEST_UNDER-siirron jälkeen.
 CHAPTERS = [
     "Aloitus",
     "Tentti",
@@ -49,9 +39,8 @@ def test_print_is_requested_only_when_the_book_is_ready(printed):
 
 
 def test_every_chapter_is_assembled_in_order(printed):
-    """Jokainen luku on sivulla omana otsikkonaan kirjan järjestyksessä, ja
-    luvut ovat suoraan artikkelin lapsina (ei omissa kääreissään, jotka
-    rikkoisivat Materialin suorat lapsivalitsimet)."""
+    """Luvut ovat otsikoineen kirjan järjestyksessä suoraan artikkelin lapsina:
+    omat kääreet rikkoisivat Materialin suorat lapsivalitsimet."""
     headings = printed.evaluate(
         "() => [...document.querySelectorAll('.md-content__inner > h1')]"
         "        .map(h => h.textContent.replace(/\\u00b6/g, '').trim())")
@@ -62,10 +51,8 @@ def test_every_chapter_is_assembled_in_order(printed):
 
 
 def test_identifiers_stay_unique(printed):
-    """Sama otsikko esiintyy kirjassa monta kertaa ("Tehtävät"), ja Materialin
-    koodirivien ankkurit alkavat joka sivulla alusta. Ilman luvun etuliitettä
-    sivulla olisi kaksi kertaa esiintyviä tunnisteita ja linkki veisi
-    ensimmäiseen osumaan."""
+    """Sama otsikko toistuu ja koodirivien ankkurit alkavat joka sivulla alusta:
+    ilman luvun etuliitettä linkki veisi ensimmäiseen osumaan."""
     duplicates = printed.evaluate("""() => {
       const ids = [...document.querySelectorAll('[id]')]
         .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
@@ -87,11 +74,8 @@ def test_internal_anchors_still_point_inside_the_page(printed):
 
 
 def test_links_between_chapters_become_absolute(printed):
-    """Suhteelliset linkit ratkaistaan luvun oman sivun suhteen: tulostussivu
-    on eri hakemistossa, joten muuten ne osoittaisivat väärään paikkaan.
-
-    Katsotaan vain koottua sisältöä: teeman oma navigaatio ja alatunniste
-    ovat artikkelin ulkopuolella eikä print.js koske niihin."""
+    """Suhteelliset linkit ratkaistaan luvun oman sivun suhteen, koska
+    tulostussivu on eri hakemistossa. Vain koottu sisältö katsotaan."""
     relative = printed.evaluate("""() => [...document.querySelectorAll(
         '.md-content__inner a[href]')]
       .map(a => a.getAttribute('href'))
@@ -100,9 +84,8 @@ def test_links_between_chapters_become_absolute(printed):
 
 
 def test_images_are_loaded(printed):
-    """Kuvat ovat valmiina ennen tulostusikkunaa: selain tulostaa sen mitä
-    ruudulla on, ja lataamaton kuva jäisi tyhjäksi laatikoksi. Koekirjassa
-    kuvia on kaksi, joista toinen viitataan alihakemistosta."""
+    """Kuvat ovat valmiina ennen tulostusikkunaa; lataamaton kuva jäisi tyhjäksi
+    laatikoksi. Koekirjassa kuvia on kaksi."""
     images = printed.evaluate("""() => [...document.querySelectorAll('img')]
       .map(img => ({src: img.getAttribute('src'), ok: img.complete && img.naturalWidth > 0}))""")
     assert len(images) == 2
@@ -110,19 +93,15 @@ def test_images_are_loaded(printed):
 
 
 def test_recordings_are_drawn_before_printing(printed):
-    """Nauhoitusten soitin (kohta 16) haetaan verkosta vasta täällä, ja se
-    piirtää ensimmäisen ruutunsa vasta haun jälkeen — eli työ jatkuu senkin
-    jälkeen, kun luvut ovat sivulla. Ilman odottamista soittimet olisivat
-    paperilla tyhjiä laatikoita: mitattuna oikealla kirjalla kolmestatoista
-    nauhoituksesta oli tulostushetkellä piirrettynä nolla. Koekirjan kaksi
-    nauhoitusta ovat kumpikin kolme riviä."""
+    """Soitin (kohta 16) haetaan ja piirtää ensimmäisen ruutunsa vasta lukujen
+    jälkeen, joten sitä on odotettava. Koekirjan kaksi nauhoitusta ovat
+    kumpikin kolme riviä."""
     assert printed.drawn_lines == [6]
 
 
 def test_tab_sets_stay_independent(printed):
-    """Välilehtien for- ja name-attribuutit eivät ole tunnisteita, joten ne
-    tarvitsevat etuliitteen erikseen: muuten jokaisen luvun __tabbed_1
-    kuuluisi samaan ryhmään ja koko sivulla olisi yksi valinta."""
+    """Välilehtien for ja name tarvitsevat etuliitteen erikseen: muuten jokaisen
+    luvun __tabbed_1 kuuluisi samaan ryhmään."""
     tabs = printed.evaluate("""() => ({
       sets: document.querySelectorAll('.tabbed-set').length,
       groups: new Set([...document.querySelectorAll('.tabbed-set input[name]')]
@@ -133,8 +112,8 @@ def test_tab_sets_stay_independent(printed):
 
 
 def test_admonitions_keep_their_own_titles(printed):
-    """Alertin otsikko kirjoitetaan käännöksessä näkyviin (kohta 7): ilman sitä
-    Material näyttäisi tyypin oman englanninkielisen nimen ("Tip")."""
+    """Alertin otsikko kirjoitetaan näkyviin (kohta 7); muuten Material näyttäisi
+    tyypin englanninkielisen nimen."""
     assert printed.evaluate(
         "() => [...document.querySelectorAll('.admonition-title')]"
         "        .map(title => title.textContent.trim())") == [
@@ -142,9 +121,8 @@ def test_admonitions_keep_their_own_titles(printed):
 
 
 def test_includes_are_expanded_before_the_book_is_built(printed):
-    """Sisällytys ratkaistaan lähdepuussa (kohta 1), joten paperille tulee
-    tiedoston sisältö eikä makro: koko tiedosto, yksi rivi taulukon soluun ja
-    koodiaidan sisällä monitiedostolohkon välilehdeksi."""
+    """Sisällytys ratkaistaan lähdepuussa (kohta 1): paperille tulee tiedoston
+    sisältö eikä makro."""
     content = printed.evaluate(
         "() => document.querySelector('.md-content__inner').innerText")
     assert "{{#include" not in content
@@ -153,10 +131,8 @@ def test_includes_are_expanded_before_the_book_is_built(printed):
 
 
 def test_hidden_lines_stay_hidden_on_paper(printed):
-    """Piilorivit (kohta 2) piilotetaan selaimessa, ja tulostussivun luvut ovat
-    olemassa vasta kokoamisen jälkeen. Ilman print.js:n ilmoitusta ne
-    tulostuisivat kirjan mukana; mdBookissa print.html on tavallinen sivu,
-    jolla book.js piilottaa ne muiden sivujen tapaan."""
+    """Piilorivit (kohta 2) piilotetaan selaimessa ja luvut ovat olemassa vasta
+    kokoamisen jälkeen: ilman print.js:n ilmoitusta ne tulostuisivat."""
     assert printed.evaluate(
         "() => document.querySelectorAll('.boring').length") == 2
     assert printed.evaluate(
@@ -166,13 +142,8 @@ def test_hidden_lines_stay_hidden_on_paper(printed):
 
 
 def test_marked_lines_are_coloured_on_paper(printed):
-    """Korostukset (kohta 9) merkitään selaimessa, ja tulostussivun luvut ovat
-    olemassa vasta kokoamisen jälkeen. Ilman print.js:n ilmoitusta korostukset
-    jäisivät kirjasta pois; sama kytkentä kuin piiloriveillä.
-
-    Koekirjassa korostettuja rivejä on neljä: kaksi ajettavassa lohkossa
-    (toinen niistä piilorivi) ja yksi kummassakin monitiedostolohkon
-    tiedostossa."""
+    """Korostukset (kohta 9) merkitään selaimessa vasta print.js:n ilmoituksesta,
+    kuten piilorivit. Koekirjassa korostettuja rivejä on neljä."""
     assert printed.evaluate(
         "() => document.querySelectorAll('.hl-line').length") == 4
     assert printed.evaluate("""() => [...document.querySelectorAll('.hl-line')]
@@ -190,6 +161,15 @@ def test_per_page_actions_are_dropped(printed):
 
 def test_no_console_errors(printed):
     assert printed.errors == []
+
+
+@pytest.mark.parametrize("width, shown", [(1280, True), (768, True), (390, False)])
+def test_print_button_is_hidden_on_phones(book, serve, browser, width, shown):
+    """Painike näkyy tabletista ylöspäin mutta ei puhelimessa."""
+    page = browser.new_page(viewport={"width": width, "height": 800})
+    page.goto(serve(book.site), wait_until="load")
+    assert page.is_visible(".jyu-print-button") is shown
+    page.close()
 
 
 def test_without_javascript_the_page_is_a_table_of_contents(book):

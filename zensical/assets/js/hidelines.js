@@ -1,28 +1,16 @@
-/* Piilorivit näkyvistä ja silmänappi ne esiin (README.md kohta 2).
+/* Piilorivit ja silmänappi, kuten mdBookin hide-boring. convert.py riisuu
+ * "//-"-etuliitteen ja kirjoittaa piilorivien numerot lohkon diviin
+ * (data-hidden="1 5"); tässä rivit saavat luokan boring ja lohko napin.
  *
- * mdBookissa "//-"-alkuinen rivi kuuluu ohjelmaan muttei näy sivulla:
- * esikäsittely riisuu etuliitteen ja kääri rivin <span class="boring">iin,
- * book.js piilottaa rivit (hide-boring) ja lisää lohkoon silmänapin, josta ne
- * saa esiin. Etuliitteen riisuu täällä convert.py (hide_lines) ja kirjoittaa
- * samalla piilorivien numerot lohkon diviin (data-hidden="1 5"), koska
- * Markdownissa ei ole tapaa merkitä yksittäistä koodiriviä. Loput on tässä.
- *
- * Rivit ovat Pygmentsin rivispaneja (Zensicalin oletus line_spans: "__span"),
- * eli koodilohkon <code>:n suorat span-lapset: yksi per rivi ja samassa
- * järjestyksessä kuin lähteessä. Niiden tunnisteisiin ei nojata, koska
- * tulostussivu kirjoittaa jokaisen tunnisteen uusiksi (print.js).
- *
- * Nappi menee samaan teeman nappiriviin kuin ajonappi (playground.js), kuten
- * mdBookissa (theme/css/chrome.css: pre > .buttons). Kumpi tahansa tiedosto
- * voi olla ensin: kumpikin tekee rivin vain, jos sitä ei vielä ole.
- */
+ * Rivit ovat Pygmentsin rivispaneja (line_spans), <code>:n suorat span-lapset
+ * lähteen järjestyksessä. Tunnisteisiin ei nojata, koska tulostussivu
+ * kirjoittaa ne uusiksi (print.js). Nappi menee samaan teeman nappiriviin kuin
+ * ajonappi (playground.js); kumpi tahansa tiedosto voi olla ensin. */
 
 (() => {
   "use strict";
 
-  /* Napin teksti kertoo, mitä painaminen tekee, ja aria-pressed sen, kummassa
-   * asennossa se on; sama attribuutti valitsee kuvakkeen
-   * (assets/css/hidelines.css). */
+  /* aria-pressed kertoo asennon ja valitsee kuvakkeen (assets/css/hidelines.css). */
   const label = (button, shown) => {
     button.setAttribute("aria-pressed", String(shown));
     button.title = shown ? "Piilota rivit" : "Näytä piilotetut rivit";
@@ -62,9 +50,7 @@
 
   hide(document);
 
-  /* Tulostussivun luvut haetaan vasta sivun latauduttua (print.js), joten ne
-   * eivät olleet olemassa yllä. Ilman tätä piilorivit tulostuisivat kirjan
-   * mukana; mdBookissa print.html on tavallinen sivu, jolla book.js tekee
-   * saman kuin muillakin sivuilla. */
+  /* Tulostussivun luvut tulevat sivulle vasta myöhemmin (print.js); ilman
+   * tätä piilorivit tulostuisivat kirjan mukana. */
   addEventListener("jyu-print-assembled", () => hide(document));
 })();

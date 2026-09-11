@@ -1,12 +1,8 @@
 """Piilorivit koekirjalla (README.md kohta 2).
 
-Piilorivi on kaksiosainen: convert.py riisuu etuliitteen ja kirjoittaa rivien
-numerot aidan attribuutiksi (test_convert.py), ja selain merkitsee ja piilottaa
-rivit sekä lisää silmänapin. Jälkimmäistä ei näe käännöksen tuloksesta, joten
-sivu avataan oikeasti — samasta syystä kuin tulostussivu (test_print.py).
-
-Koekirjan ajettavassa lohkossa (tests/book/src/osa1/01-hei.md) on kaksi
-piiloriviä, rivit 1 ja 3.
+convert.py riisuu etuliitteen ja kirjoittaa rivinumerot aidan attribuutiksi
+(test_convert.py); selain piilottaa rivit ja lisää silmänapin. Jälkimmäinen
+näkyy vasta selaimessa. Koekirjan lohkossa piilorivit ovat 1 ja 3.
 """
 
 import pytest
@@ -33,8 +29,8 @@ def page(browser, chapter_url):
 
 
 def test_hidden_lines_are_in_the_page_but_not_visible(page):
-    """Rivi on sivun HTML:ssä tallessa, koska ajonappi lähettää sen (kohta 3)
-    ja kopiointi kopioisi sen; vain näkyminen on kiinni luokasta."""
+    """Rivi on HTML:ssä tallessa (ajonappi lähettää sen); vain näkyminen on
+    kiinni luokasta."""
     assert page.get_attribute(BLOCK, "data-hidden") == "1 3"
     assert page.inner_text(BLOCK).strip() == 'IO.println("Hei, maailma!");'
     assert page.eval_on_selector(BLOCK, "block => block.textContent") == (
@@ -50,8 +46,7 @@ def test_the_marked_lines_are_the_hidden_ones(page):
 
 
 def test_the_eye_shows_and_hides_them(page):
-    """Silmänappi on mdBookin ainoa tapa nähdä piilorivit, ja se on tässä sama:
-    ensimmäinen painallus näyttää, toinen piilottaa."""
+    """Ensimmäinen painallus näyttää piilorivit, toinen piilottaa."""
     page.click(f"{BLOCK} {EYE}")
     assert page.inner_text(BLOCK).startswith("void main() {")
     assert page.get_attribute(f"{BLOCK} {EYE}", "title") == "Piilota rivit"
@@ -69,8 +64,7 @@ def test_only_blocks_with_hidden_lines_get_an_eye(page):
 
 
 def test_both_buttons_share_one_row(page):
-    """Ajonappi ja silmä ovat samassa nappirivissä ja samassa järjestyksessä
-    kuin kirjassa: ensin suoritus, sitten silmä."""
+    """Ajonappi ja silmä ovat samassa nappirivissä: ensin suoritus, sitten silmä."""
     assert page.eval_on_selector_all(
         f"{BLOCK} nav.md-code__nav button",
         "buttons => buttons.map(button => button.dataset.mdType)") == [

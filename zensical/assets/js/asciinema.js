@@ -1,28 +1,12 @@
-/* Terminaalinauhoitukset (README.md kohta 16).
+/* Terminaalinauhoitusten soitin. Lähteen <asciinema src=... rows=... poster=...>
+ * menee Markdownin läpi sellaisenaan; ilman soitinta tagi ei näy mitenkään.
+ * Soitin on kirjan oma (assets/js/asciinema-player.min.js ja
+ * assets/css/asciinema-player.css) ja asetukset samat kuin mdBookin
+ * theme/asciinema-component.js:ssä.
  *
- * Kirjan 13 nauhoitusta ovat lähteessä raakana HTML:nä:
- * <asciinema src="images/rec_java.cast" rows="3" poster="npt:5"></asciinema>.
- * Tagi menee Markdownin läpi sellaisenaan ja Zensical kirjoittaa suhteellisen
- * polun sivun uuteen sijaintiin, joten convert.py:ssä ei ole tälle kohdalle
- * mitään: puuttui soitin, ei merkkaus. Ilman soitinta tagi on selaimelle
- * tuntematon elementti, joka ei näy sivulla mitenkään.
- *
- * Soitin on sama kuin kirjassa (assets/js/asciinema-player.min.js ja
- * assets/css/asciinema-player.css, kopiot theme/:stä), ja create() antaa sille
- * samat asetukset kuin theme/asciinema-component.js mdBookissa.
- *
- * Ero kirjaan on latauksessa. mdBook lataa soittimen joka sivulle
- * (book.toml: additional-js ja additional-css), mutta se on 162 kt skriptiä ja
- * 45 kt tyyliä: skripti enemmän kuin Zensicalin oma bundle.js (167 kt), tyyli
- * kolmannes teeman omasta. Nauhoituksia on kolmella sivulla 190:stä, joten
- * soitin haetaan vasta kun sivulla on jotain soitettavaa. Siksi mkdocs.yml:ssä
- * on vain tämä tiedosto: soitin on docs/assets/:ssa mutta ei millään sivulla
- * ennen kuin tämä lisää sen.
- *
- * Osoitteet luetaan tämän tiedoston omasta osoitteesta eikä sivuston juuresta,
- * koska teema kirjoittaa assettien polut suhteellisina (../../assets/js/) ja
- * sivusto voi olla palvelimella alihakemistossa.
- */
+ * Toisin kuin mdBookissa, soitin ja sen tyyli haetaan vasta sivulla, jolla on
+ * nauhoitus, koska ne ovat isompia kuin teeman oma skripti. Osoitteet luetaan
+ * tämän tiedoston osoitteesta, koska teema kirjoittaa assettipolut suhteellisina. */
 
 (() => {
   "use strict";
@@ -49,12 +33,8 @@
   }));
 
   const create = (element) => {
-    /* Attribuutit ovat kirjan omat: rows on nauhoituksen korkeus riveinä,
-     * poster ruutu, joka näkyy ennen toistoa ("npt:5" = kohta 5 s), ja
-     * controls kertoo, näkyykö toistopalkki. Kaksi viimeistä eivät tule
-     * tagista vaan ovat samat kaikille, ja kummatkin ovat kirjan omat
-     * (theme/asciinema-component.js): kirjasin on 12 px, ja fit: false jättää
-     * terminaalin skaalaamatta elementin leveyteen. */
+    /* rows, poster ja controls tulevat tagista (kirjan omat attribuutit);
+     * kirjasinkoko ja fit: false ovat samat kuin theme/asciinema-component.js:ssä. */
     return AsciinemaPlayer.create(element.getAttribute("src"), element, {
       rows: +element.getAttribute("rows") || 24,
       poster: element.getAttribute("poster") || undefined,
@@ -64,15 +44,9 @@
     });
   };
 
-  /* Ensimmäinen ruutu sivulle piirrettynä.
-   *
-   * Soitin piirtää terminaalin omassa requestAnimationFrame-kutsussaan, joten
-   * ruutu ei ole valmis silloinkaan, kun nauhoitus on haettu: mitattuna
-   * getDuration():n ratketessa terminaalirivejä on 0. Yksi oma
-   * ruudunpäivityksen odotus ei auta, koska soitin ajastaa omansa vasta
-   * hakunsa jälkeen — kumpi on ensin, on kiinni ajoituksesta (mitattuna 13
-   * nauhoituksesta piirtyi 0). Siksi odotetaan piirtynyttä riviä eikä
-   * ruudunpäivitystä. */
+  /* Soitin piirtää terminaalin omassa requestAnimationFrame-kutsussaan vasta
+   * hakunsa jälkeen, joten ruutu ei ole valmis getDuration():n ratketessa.
+   * Siksi odotetaan piirtynyttä riviä, ei ruudunpäivitystä. */
   const drawn = (element) => new Promise((resolve) => {
     if (element.querySelector(".ap-line")) return resolve();
 
@@ -84,17 +58,10 @@
     observer.observe(element, { childList: true, subtree: true });
   });
 
-  /* Merkintä data-ready kertoo, mitkä on jo soitettu: tulostussivu kutsuu
-   * tätä toiseen kertaan, ja soitin lisäisi silloin toisen soittimen samaan
-   * elementtiin.
-   *
-   * Palautettu lupaus ratkeaa vasta, kun jokainen soitin on hakenut
-   * nauhoituksensa ja piirtänyt siitä ensimmäisen ruudun; sitä odottaa
-   * tulostussivu, ks. alla. Hakemista odotetaan soittimen omalla
-   * rajapinnalla (getDuration() on kääre sen sisäisen init()-lupauksen
-   * ympärillä), koska se myös hylkää lupauksen, jos nauhoitusta ei ole:
-   * puuttuva tiedosto huomataan siitä heti eikä vasta tulostuksen
-   * aikarajasta. */
+  /* data-ready estää toisen soittimen samaan elementtiin, kun tulostussivu
+   * kutsuu uudestaan. Lupaus ratkeaa, kun jokainen soitin on hakenut
+   * nauhoituksensa (getDuration() hylkää, jos tiedosto puuttuu) ja piirtänyt
+   * ensimmäisen ruudun. */
   const play = async (root) => {
     const elements = [...root.querySelectorAll("asciinema[src]:not([data-ready])")];
     if (!elements.length) return;
@@ -110,15 +77,9 @@
 
   play(document);
 
-  /* Tulostussivun luvut haetaan vasta sivun latauduttua (print.js), joten ne
-   * eivät olleet olemassa yllä. Sama kytkentä kuin piiloriveillä ja
-   * korostuksilla; mdBookissa print.html on tavallinen sivu, jolla soitin
-   * ajetaan muiden tapaan.
-   *
-   * Yksi ero niihin: soitin on haettava verkosta, joten työ ei ole valmis
-   * kuuntelijan palatessa. Siksi lupaus jätetään tapahtuman listaan, jota
-   * print.js odottaa ennen tulostusikkunaa — ilman sitä mitattuna 13
-   * nauhoituksesta oli tulostushetkellä piirrettynä 0. */
+  /* Tulostussivun luvut tulevat sivulle vasta myöhemmin (print.js). Soitin
+   * haetaan verkosta, joten lupaus jätetään tapahtuman listaan, jota print.js
+   * odottaa ennen tulostusikkunaa. */
   addEventListener("jyu-print-assembled", (event) => {
     const done = play(document);
     event.detail?.pending?.push(done);

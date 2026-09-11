@@ -1,12 +1,6 @@
 """convert.py:n muunnokset yksin: ei käännöstä, ei selainta.
 
-Nämä ovat testeistä nopeimmat ja tiheimmät. Ne vastaavat kysymykseen
-"tekeekö skripti sen mitä PERUSTELUT.md väittää" ilman että mitään
-käännetään, ja siksi jokainen väite on kirjattu samoin sanoin kuin sen
-perustelu.
-
-Lähdepuuna on tests/book/src, joka on tarkoituksella pieni mutta sisältää
-yhden esimerkin jokaisesta muunnoksesta.
+Lähdepuuna on tests/book/src, jossa on yksi esimerkki jokaisesta muunnoksesta.
 """
 
 import fcntl
@@ -22,11 +16,8 @@ import convert
 
 @pytest.fixture
 def book_src(monkeypatch):
-    """convert.SRC osoittamaan koekirjaan.
-
-    build_nav lukee lähdepuun moduulivakiosta, joten testi vaihtaa sen.
-    Skriptiin itseensä ei tarvita testejä varten riviäkään.
-    """
+    """convert.SRC osoittamaan koekirjaan: build_nav lukee lähdepuun
+    moduulivakiosta."""
     src = convert.ROOT / "tests" / "book" / "src"
     monkeypatch.setattr(convert, "SRC", src)
     return src
@@ -51,8 +42,7 @@ def test_take_lines(selector, expected):
 
 
 def test_convert_includes_keeps_the_code_fence_tight(tmp_path):
-    """Koko tiedosto paikalleen ilman loppurivinvaihtoa: koodiaidan sisään ei
-    jää tyhjää riviä ennen sulkevaa aitaa, kuten ei mdBookissakaan."""
+    """Koko tiedosto ilman loppurivinvaihtoa: aidan sisään ei jää tyhjää riviä."""
     (tmp_path / "Main.java").write_text("class Main {\n}\n", encoding="utf-8")
     page = tmp_path / "luku.md"
     converted, includes = convert.convert_includes(
@@ -109,9 +99,8 @@ def test_convert_anchors_strips_the_accents_from_a_link():
 
 
 def test_convert_anchors_strips_the_same_way_as_the_theme():
-    """Riisuminen on sama NFKD-normalisointi kuin Python-Markdownin
-    slugifyssä, josta Zensicalin otsikkotunnukset syntyvät: jos ne eroaisivat,
-    linkki osoittaisi tunnukseen jota sivulla ei ole."""
+    """Riisuminen on sama NFKD-normalisointi kuin Python-Markdownin slugifyssä;
+    muuten linkki osoittaisi tunnukseen, jota sivulla ei ole."""
     slugify = pytest.importorskip("markdown.extensions.toc").slugify
     for title in ("Käyttö", "Ensimmäinen JavaFX-sovellus",
                   "Comparable-rajapinta ja luonnollinen järjestys"):
@@ -121,8 +110,7 @@ def test_convert_anchors_strips_the_same_way_as_the_theme():
 
 
 def test_convert_anchors_leaves_an_ascii_anchor_alone():
-    """Ilman ääkkösiä ei ole mitään riisuttavaa, eikä muunnos saa laskea
-    osumaa: luku on ainoa tapa huomata, että jokin lakkasi osumasta."""
+    """Ilman ääkkösiä ei riisuta mitään eikä osumaa lasketa."""
     text = "[x](01-rajapinta.md#alykoti-saadettava)\n"
     assert convert.convert_anchors(text) == (text, 0, 0)
 
@@ -140,9 +128,8 @@ def test_convert_anchors_skips_code_fences():
 
 
 def test_convert_anchors_frees_the_heading_id():
-    """Python-Markdownin attr_list vaatii välilyönnin aaltosulun edellä; ilman
-    sitä sulkulauseke jää otsikkotekstiin ja tunnukseksi tulee
-    "otsikkotunnus"."""
+    """attr_list vaatii välilyönnin aaltosulun edellä; muuten sulkulauseke jää
+    otsikkotekstiin."""
     text = "## Älykoti: säädettävät laitteet{#alykoti-saadettava}\n"
     converted, links, headings = convert.convert_anchors(text)
     assert (links, headings) == (0, 1)
@@ -156,8 +143,8 @@ def test_convert_anchors_leaves_a_spaced_heading_id_alone():
 
 
 def test_convert_anchors_is_repeatable():
-    """Vahti ajaa muunnoksen joka tallennuksesta, ja jos toinen ajo muuttaisi
-    tulosta, sivu kirjoitettaisiin joka kerta uudelleen."""
+    """Vahti ajaa muunnoksen joka tallennuksesta; toinen ajo ei saa muuttaa
+    tulosta."""
     text = ("## Otsikko{#tunnus}\n\n[x](sivu.md#käyttö)\n")
     once = convert.convert_anchors(text)[0]
     assert convert.convert_anchors(once) == (once, 0, 0)
@@ -178,8 +165,7 @@ def test_fence_info(info, expected):
 
 
 def test_fence_info_writes_numbers_as_attributes():
-    """Piilorivien ja korostettujen rivien numerot menevät attr_listin kautta
-    lohkon diviin sellaisinaan, eli samaa tietä kuin luokat."""
+    """Piilo- ja korostusrivien numerot menevät attr_listin kautta lohkon diviin."""
     assert convert.fence_info("java,ignore", [1, 5], {"green": [2], "red": [3]}) == (
         '{ .java .ignore data-hidden="1 5" data-hl-green="2" data-hl-red="3" }')
 
@@ -200,8 +186,7 @@ def test_convert_fences_keeps_indent_and_quote():
 
 
 def test_convert_fences_ignores_fences_inside_code():
-    """Aidat käydään pareittain, jottei koodilohkon sisällä oleva
-    aidannäköinen rivi muutu vahingossa."""
+    """Aidat käydään pareittain, jottei koodilohkon sisällä oleva aita muutu."""
     text = "````text\n```java,ignore\n````\n"
     converted, fences, hidden, marked = convert.convert_fences(text)
     assert converted == text
@@ -211,37 +196,32 @@ def test_convert_fences_ignores_fences_inside_code():
 # --- Piilorivit (README kohta 2) ---------------------------------------------
 
 def test_hide_lines_strips_the_prefix_and_numbers_the_lines():
-    """Etuliite pois ja rivinumerot talteen: piilottaminen itse tapahtuu vasta
-    selaimessa, koska Markdownissa ei ole tapaa merkitä yksittäistä riviä."""
+    """Etuliite pois ja rivinumerot talteen; piilottaminen tapahtuu selaimessa."""
     assert convert.hide_lines(["//-void main() {", "koodi;", "//-}"], "java") == (
         ["void main() {", "koodi;", "}"], [1, 3])
 
 
 def test_hide_lines_keeps_the_rest_of_the_line_as_it_is():
-    """Vain etuliite lähtee: rivin sisennys ja etuliitteen jälkeinen väli
-    jäävät, kuten mdBookissa (todennettu book/:n HTML:stä)."""
+    """Vain etuliite lähtee: sisennys ja etuliitteen jälkeinen väli jäävät."""
     assert convert.hide_lines(["    //-  IO.println(x);"], "java")[0] == [
         "      IO.println(x);"]
 
 
 def test_hide_lines_keeps_the_quote_marker():
-    """Kolme piilorivilohkoa on alertin sisällä, jossa jokaisella rivillä on
-    ">"-etuliite: convert_alerts purkaa lainauksen vasta myöhemmin, joten
-    etuliite on kirjoitettava takaisin."""
+    """Alertin sisällä rivillä on ">"-etuliite, jonka convert_alerts purkaa
+    vasta myöhemmin: se on kirjoitettava takaisin."""
     assert convert.hide_lines(["> //-void main() {"], "java") == (
         ["> void main() {"], [1])
 
 
 def test_hide_lines_numbers_from_the_rendered_body():
-    """Markdown pudottaa aidan alusta ja lopusta tyhjät rivit, joten numerointi
-    alkaa ensimmäisestä rivistä, jossa on jotain. Lainauslohkossa (alertti)
-    tyhjä rivi on "> "."""
+    """Markdown pudottaa aidan alun ja lopun tyhjät rivit, joten numerointi alkaa
+    ensimmäisestä rivistä, jossa on jotain; lainauksessa tyhjä rivi on "> "."""
     assert convert.hide_lines(["", "> ", "//-a", "b", ""], "java")[1] == [1]
 
 
 def test_hide_lines_only_touches_languages_with_a_prefix():
-    """Etuliite on book.tomlissa määritelty javalle ja javascriptille. Muissa
-    kielissä sama merkkijono on tavallista tekstiä."""
+    """Etuliite on määritelty vain javalle ja javascriptille."""
     assert convert.hide_lines(["//-x"], "text") == (["//-x"], [])
     assert convert.hide_lines(["//-x"], "javascript") == (["x"], [1])
 
@@ -270,8 +250,7 @@ def test_convert_fences_leaves_finished_fences_alone():
 # --- Korostetut rivit (README kohta 9) ---------------------------------------
 
 def test_mark_highlights_strips_the_markers_and_numbers_the_lines():
-    """Merkintärivit pois ja väliin jääneet rivit talteen väreittäin:
-    merkitseminen itse tapahtuu vasta selaimessa, kuten piiloriveillä."""
+    """Merkintärivit pois ja väliin jääneet rivit talteen väreittäin."""
     assert convert.mark_highlights(
         ["a;", "// HIGHLIGHT_GREEN_BEGIN", "b;", "c;",
          "// HIGHLIGHT_GREEN_END", "d;"], "java") == (
@@ -295,8 +274,7 @@ def test_mark_highlights_numbers_from_the_rendered_body():
 
 
 def test_mark_highlights_keeps_every_colour_apart():
-    """Yhdessä lohkossa voi olla useita alueita ja useita värejä; aineiston
-    kolme väriä ovat green, red ja yellow."""
+    """Yhdessä lohkossa voi olla useita alueita ja värejä."""
     assert convert.mark_highlights(
         ["// HIGHLIGHT_GREEN_BEGIN", "a;", "// HIGHLIGHT_GREEN_END",
          "b;", "// HIGHLIGHT_RED_BEGIN", "c;", "// HIGHLIGHT_RED_END",
@@ -305,15 +283,13 @@ def test_mark_highlights_keeps_every_colour_apart():
 
 
 def test_mark_highlights_only_touches_java():
-    """mdBookin skripti käy läpi vain java-lohkot, eli muissa kielissä sama
-    rivi on tavallinen kommentti."""
+    """Vain java-lohkot käsitellään, kuten mdBookin skriptissä."""
     body = ["// HIGHLIGHT_GREEN_BEGIN", "a;", "// HIGHLIGHT_GREEN_END"]
     assert convert.mark_highlights(body, "text") == (body, {})
 
 
 def test_mark_highlights_warns_about_an_unknown_colour(capsys):
-    """Tuntematonta väriä ei ole aineistossa, mutta jos sellainen tulee, rivi
-    jäisi hiljaisesti värittömäksi: CSS tuntee vain kirjan värit."""
+    """Tuntematon väri jäisi hiljaisesti värittömäksi, joten siitä varoitetaan."""
     lines, colors = convert.mark_highlights(
         ["// HIGHLIGHT_PINK_BEGIN", "a;", "// HIGHLIGHT_PINK_END"], "java")
     assert (lines, colors) == (["a;"], {"pink": [1]})
@@ -348,8 +324,7 @@ def test_convert_fences_numbers_hidden_lines_after_the_markers_are_gone():
 # --- Monitiedostolohkot (README kohta 5) -------------------------------------
 
 def test_split_files_tolerates_sloppy_markers():
-    """Merkinnät ovat aineistossa epätarkkoja ja mdBook sietää sen:
-    "//FILE:" ilman välilyöntiä, nimen perässä välilyöntejä, FILE_END
+    """mdBookin tapaan: "//FILE:" ilman väliä, välejä nimen perässä, FILE_END
     vapaaehtoinen ja ylimääräinen FILE_END ohitetaan."""
     body = [
         "//FILE: Main.java",
@@ -372,8 +347,8 @@ def test_convert_files_makes_one_tab_per_file():
     text = "```java,ignore\n// FILE: A.java\na\n// FILE: B.java\nb\n```\n"
     converted, blocks, files, hidden, marked = convert.convert_files(text)
     assert (blocks, files, hidden, marked) == (1, 2, 0, 0)
-    # Jokainen tiedosto omaksi välilehdekseen ja omaksi koodiaidakseen,
-    # alkuperäisen aidan määreineen ja multifile-merkinnällä (ajonappi, kohta 3).
+    # Jokainen tiedosto omaksi välilehdekseen ja aidakseen, alkuperäisen aidan
+    # määreineen ja multifile-merkinnällä.
     assert converted == (
         '=== "A.java"\n'
         "\n"
@@ -391,8 +366,8 @@ def test_convert_files_makes_one_tab_per_file():
 
 
 def test_convert_files_marks_files_for_the_run_button():
-    """Ajonappi lähettää joukon tiedostot yhtenä ohjelmana, joten aidoissa on
-    oltava tieto siitä, että ne ovat saman lohkon tiedostoja."""
+    """Ajonappi lähettää tiedostot yhtenä ohjelmana, joten aidat merkitään
+    saman lohkon tiedostoiksi."""
     text = "```java\n// FILE: A.java\na\n```\n"
     converted, *_ = convert.convert_files(text)
     assert "```{ .java .multifile }" in converted
@@ -418,8 +393,7 @@ def test_convert_files_hides_lines_file_by_file():
 
 
 def test_convert_files_marks_lines_file_by_file():
-    """Kuten piiloriveillä: toisen tiedoston korostettu rivi on sen oma rivi 1
-    eikä koko lohkon rivi 4."""
+    """Kuten piiloriveillä: toisen tiedoston korostettu rivi on sen oma rivi 1."""
     text = ("```java\n// FILE: A.java\na\n// FILE: B.java\n"
             "// HIGHLIGHT_RED_BEGIN\nb\n// HIGHLIGHT_RED_END\n```\n")
     converted, _, _, _, marked = convert.convert_files(text)
@@ -434,8 +408,8 @@ def test_convert_files_leaves_ordinary_block_alone():
 
 
 def test_convert_files_warns_instead_of_dropping_code(capsys):
-    """Koodi ennen ensimmäistä merkintää: lohko jätetään ennalleen ja siitä
-    varoitetaan, koska muunnos pudottaisi rivit hiljaisesti pois."""
+    """Koodi ennen ensimmäistä merkintää jätetään ennalleen ja siitä
+    varoitetaan."""
     text = "```java\nirrallinen\n// FILE: A.java\na\n```\n"
     assert convert.convert_files(text) == (text, 0, 0, 0, 0)
     assert "koodia ennen ensimmäistä" in capsys.readouterr().err
@@ -454,9 +428,8 @@ def test_convert_files_warns_instead_of_dropping_code(capsys):
     ("WIP", '!!! danger "WIP"'),
 ])
 def test_convert_alerts_writes_the_title_out(label, expected):
-    """Tunnus -> tyyppi ja otsikko, kirjainkoosta riippumatta. Otsikko
-    kirjoitetaan aina näkyviin, koska muuten Material näyttäisi tyypin oman
-    englanninkielisen nimen ("Tip")."""
+    """Tunnus -> tyyppi ja otsikko kirjainkoosta riippumatta; otsikko kirjoitetaan
+    aina, koska muuten Material näyttäisi tyypin englanninkielisen nimen."""
     converted, alerts, unknown = convert.convert_alerts(f"> [!{label}]\n> teksti\n")
     assert (alerts, unknown) == (1, set())
     assert converted.startswith(expected)
@@ -509,33 +482,28 @@ def test_convert_details_marks_the_block_for_markdown():
 
 
 def test_convert_details_keeps_existing_attributes():
-    """Aineistossa on myös <details closed>. Attribuutti ei ole HTML:ää eikä
-    tee mitään, mutta se jätetään paikalleen — lopputulos on sama."""
+    """Aineiston <details closed> jää paikalleen, vaikka attribuutti ei tee
+    mitään."""
     converted, tags, summaries = convert.convert_details("<details closed>\n")
     assert converted == '<details closed markdown="1">\n'
     assert (tags, summaries) == (1, 0)
 
 
 def test_convert_details_is_repeatable():
-    """convert.py ajetaan uudelleen aina kun lähde muuttuu: jo käännetty tagi
-    ei saa saada toista attribuuttia."""
+    """Jo käännetty tagi ei saa saada toista attribuuttia."""
     text = '<details markdown="1">\n'
     assert convert.convert_details(text) == (text, 0, 0)
 
 
 def test_convert_details_ignores_details_inside_code():
-    """Aidat käydään pareittain kuten convert_fencesissä, jottei koodilohkossa
-    näytetty HTML-esimerkki muuttuisi."""
+    """Aidat käydään pareittain, jottei koodissa näytetty esimerkki muuttuisi."""
     text = "```html\n<details>\n```\n"
     assert convert.convert_details(text) == (text, 0, 0)
 
 
 def test_convert_details_marks_a_summary_that_is_its_own_block():
-    """Harjoitustyön aihelohkoissa yhteenveto on otsikko ja kappale. Ilman
-    attribuuttia ne jäävät avauspalkkiin muodossa "### Kulujen seuranta ...".
-
-    Arvo on "block" eikä "1": md_in_html jäsentäisi <summary>-tagin sisällön
-    muuten vain rivinsisäisesti, ks. SUMMARY_RE."""
+    """Monirivinen yhteenveto tarvitsee markdown="block": "1" jäsentäisi
+    <summary>-tagin sisällön vain rivinsisäisesti."""
     text = ("<details><summary>\n\n### Kulujen seuranta\n\nKuvaus.\n\n"
             "</summary>\n\nSisältö.\n\n</details>\n")
     converted, tags, summaries = convert.convert_details(text)
@@ -554,9 +522,8 @@ def test_convert_details_leaves_a_one_line_summary_alone():
 
 
 def test_convert_details_leaves_a_wrapped_summary_alone():
-    """Kahdessa yhteenvedossa teksti jatkuu seuraavalle riville ilman tyhjää
-    riviä. Sama raja kuin kirjassa: ilman tyhjää riviä pulldown-cmark ei
-    jäsennä yhteenvetoa Markdownina, joten sitä ei tarvitse merkitä."""
+    """Ilman tyhjää riviä pulldown-cmark ei jäsennä yhteenvetoa Markdownina,
+    joten sitä ei merkitä."""
     text = "<details><summary>Valinnaista lisätietoa:\nJava ei voi</summary>\n"
     converted, _, summaries = convert.convert_details(text)
     assert "<summary>Valinnaista" in converted
@@ -564,9 +531,8 @@ def test_convert_details_leaves_a_wrapped_summary_alone():
 
 
 def test_drop_breaks_removes_the_spacer_between_two_blocks():
-    """Väljyydeksi kirjoitettu <br /> jää omaksi kappaleekseen (<p><br /></p>)
-    ja kolminkertaistaa lohkojen välin, ks. BREAK_LINE_RE. Tyhjiä rivejä jää
-    yksi, ei kahta."""
+    """Väljyydeksi kirjoitettu <br /> jäisi omaksi kappaleekseen ja
+    kolminkertaistaisi lohkojen välin; tyhjiä rivejä jää yksi."""
     text = "</details>\n\n<br />\n\n<details>\n"
     assert convert.drop_breaks(text) == ("</details>\n\n<details>\n", 1)
 
@@ -605,13 +571,9 @@ def test_drop_breaks_is_repeatable():
 # --- Luokkakaaviot (README kohta 15) -----------------------------------------
 
 def test_plantuml_encode_round_trips():
-    """Osoitepala on raakaa deflatea PlantUMLin omalla base64-aakkostolla.
-
-    Palvelimen vastauksesta ei voi tehdä testiä (se vaatisi verkon), eikä
-    valmista vertailumerkkijonoa voi kirjoittaa tähän: zlib saa tuottaa saman
-    tekstin monella eri tavalla pakattuna. Sen sijaan puretaan takaisin —
-    silloin testi kattaa juuri sen mikä voi mennä rikki: aakkoston ja
-    kehyksettömän deflaten."""
+    """Osoitepala on raakaa deflatea PlantUMLin base64-aakkostolla. Valmista
+    vertailumerkkijonoa ei voi kirjoittaa, koska zlib saa pakata monella
+    tavalla, joten puretaan takaisin."""
     source = "@startuml\nclass Kissa\n@enduml"
     encoded = convert.plantuml_encode(source)
     reverse = {ch: i for i, ch in enumerate(convert.PLANTUML_ALPHABET)}
@@ -621,8 +583,7 @@ def test_plantuml_encode_round_trips():
 
 
 def test_convert_plantuml_replaces_the_fence_with_an_image(monkeypatch):
-    """Ilman muunnosta aidan sisältö on sivulla koodilohkona: kirjassa on
-    kaavio, tässä 20 riviä @startuml-lähdettä."""
+    """Ilman muunnosta aidan sisältö olisi sivulla koodilohkona."""
     monkeypatch.setattr(convert, "plantuml_svg", lambda source: "abc.svg")
     text = "ennen\n\n```plantuml\n@startuml\nclass Kissa\n@enduml\n```\n\njälkeen\n"
     converted, diagrams, used = convert.convert_plantuml(
@@ -642,9 +603,8 @@ def test_convert_plantuml_path_follows_the_page(monkeypatch):
 
 
 def test_convert_plantuml_keeps_the_fence_when_the_server_is_silent(monkeypatch):
-    """Kaaviot ovat versionhallinnassa, joten käännös ei tarvitse verkkoa. Jos
-    kaavio on uusi eikä palvelin vastaa, sivu palaa siihen mitä se oli ennen
-    tätä kohtaa — käännös ei kaadu."""
+    """Kaaviot ovat versionhallinnassa, joten käännös ei tarvitse verkkoa; jos
+    palvelin ei vastaa, aita jää ennalleen eikä käännös kaadu."""
     monkeypatch.setattr(convert, "plantuml_svg", lambda source: None)
     text = "```plantuml\n@startuml\n@enduml\n```\n"
     assert convert.convert_plantuml(text, convert.DOCS / "sivu.md") == (text, 0, set())
@@ -679,9 +639,8 @@ def test_convert_svgbob_drops_blank_lines(monkeypatch):
 
 
 def test_convert_svgbob_gives_every_diagram_its_own_ids(monkeypatch):
-    """svgbob kirjoittaa jokaiseen kaavioon samat nuolenkärkimäärittelyt, joten
-    saman sivun kaavioilla olisi samat tunnisteet ja url(#arrow) osoittaisi aina
-    ensimmäiseen. Sivulla osa6/02 kaavioita on neljä."""
+    """svgbob kirjoittaa joka kaavioon samat nuolenkärkimäärittelyt, joten
+    url(#arrow) osoittaisi aina sivun ensimmäiseen."""
     monkeypatch.setattr(
         convert, "svgbob_svg",
         lambda art: '<svg><marker id="arrow"/><line marker-end="url(#arrow)"/></svg>')
@@ -691,9 +650,8 @@ def test_convert_svgbob_gives_every_diagram_its_own_ids(monkeypatch):
 
 
 def test_convert_svgbob_keeps_the_fence_without_the_tool(monkeypatch):
-    """Kaaviot ovat välimuistissa versionhallinnassa, joten svgbobia tarvitaan
-    vain uuteen tai muuttuneeseen piirrokseen. Jos sitä ei ole, aita jää
-    ennalleen eikä käännös kaadu."""
+    """Kaaviot ovat välimuistissa; ilman svgbobia aita jää ennalleen eikä
+    käännös kaadu."""
     monkeypatch.setattr(convert, "svgbob_svg", lambda art: None)
     text = "```bob\n+---+\n```\n"
     assert convert.convert_svgbob(text) == (text, 0, set())
@@ -702,9 +660,8 @@ def test_convert_svgbob_keeps_the_fence_without_the_tool(monkeypatch):
 # --- Vaatimusdivit (README kohta 25) -----------------------------------------
 
 def test_convert_divs_marks_the_block_for_markdown():
-    """Ilman attribuuttia divin sisältö menee sivulle lähdemuodossaan. Myös
-    uloin divi tarvitsee sen: md_in_html ei etene sisempiin lohkoihin, jos
-    uloin on käsittelemätöntä HTML:ää."""
+    """Myös uloin divi tarvitsee attribuutin: md_in_html ei etene sisempiin
+    lohkoihin, jos uloin on käsittelemätöntä HTML:ää."""
     text = '<div class="ht-reqs">\n\n<div class="req">\n\n### Vaatimus 1\n\n'
     converted, tags = convert.convert_divs(text)
     assert converted.startswith('<div class="ht-reqs" markdown="1">')
@@ -720,8 +677,7 @@ def test_convert_divs_leaves_a_div_inside_a_paragraph_alone():
 
 
 def test_convert_divs_is_repeatable():
-    """Kuten convert_details: jo käännetty tagi ei saa saada toista
-    attribuuttia."""
+    """Jo käännetty tagi ei saa saada toista attribuuttia."""
     text = '<div class="req" markdown="1">\n'
     assert convert.convert_divs(text) == (text, 0)
 
@@ -748,8 +704,7 @@ Tee luokka `Kello`.
 
 
 def test_convert_tasks_names_every_part():
-    """Kortista tulee divit, joilla on luokka: tyyli (assets/css/tasks.css)
-    osoittaa niihin, eikä yhtään tuntematonta tagia jää sivulle."""
+    """Kortista tulee luokitellut divit (tasks.css) eikä tuntematonta tagia jää."""
     converted, cards = convert.convert_tasks(TASK)
     assert cards == 1
     assert '<div class="task" markdown="1">' in converted
@@ -770,8 +725,8 @@ def test_convert_tasks_marks_only_the_handout_for_markdown():
 
 
 def test_convert_tasks_puts_the_bonus_badge_inside_the_name():
-    """<i class="bi bi-stars"> jää nimen sisään, kuten lähteessäkin: liuska
-    seuraa nimen viimeistä sanaa myös silloin kun nimi rivittyy."""
+    """Liuska jää nimen sisään, jotta se seuraa viimeistä sanaa myös nimen
+    rivittyessä."""
     text = ('<task-title num="1.7"><i class="bi bi-stars"></i>'
             "Numerolaskuri<points>1 p.</points></task-title>\n")
     converted, _ = convert.convert_tasks(text)
@@ -781,8 +736,8 @@ def test_convert_tasks_puts_the_bonus_badge_inside_the_name():
 
 
 def test_task_badge_draws_the_bonus_mark_as_decoration():
-    """Liuskassa sana "Bonus" lukee merkin vieressä, joten merkki itse on
-    koriste eikä sitä nimetä ruudunlukijalle."""
+    """Liuskassa lukee "Bonus", joten merkki on koriste eikä sitä nimetä
+    ruudunlukijalle."""
     text = ('<task-title num="1.7"><i class="bi bi-stars"></i>'
             "Numerolaskuri<points>1 p.</points></task-title>\n")
     converted, _ = convert.convert_tasks(text)
@@ -792,8 +747,7 @@ def test_task_badge_draws_the_bonus_mark_as_decoration():
 
 
 def test_convert_bonus_marks_names_the_mark_when_the_line_has_no_bonus_word():
-    """Harjoitustyön vaatimuslistassa merkki on rivin ainoa ero pakolliseen
-    vaatimukseen, joten se saa nimen."""
+    """Vaatimuslistassa merkki on rivin ainoa ero pakolliseen, joten se saa nimen."""
     text = ' * <i class="bi bi-stars jyu-gold"></i> Kulukategoria voi olla *pakollinen*.\n'
     converted, marks = convert.convert_bonus_marks(text)
     assert marks == 1
@@ -802,8 +756,7 @@ def test_convert_bonus_marks_names_the_mark_when_the_line_has_no_bonus_word():
 
 
 def test_convert_bonus_marks_leaves_the_mark_silent_next_to_the_word():
-    """<summary>-rivi alkaa sanalla "Bonus:" tai "Valinnaista lisätietoa:",
-    jolloin nimi vain toistaisi otsikon."""
+    """Rivi alkaa sanalla "Bonus:", jolloin nimi vain toistaisi otsikon."""
     text = ('<details markdown="1"><summary><i class="bi bi-stars jyu-gold"></i>'
             " Bonus: Lisää ominaisuuksia</summary>\n")
     converted, marks = convert.convert_bonus_marks(text)
@@ -823,8 +776,8 @@ def test_convert_bonus_marks_skips_code_fences():
 # --- Loput ikonit (README kohta 17) ------------------------------------------
 
 def test_convert_icons_writes_the_path_arrow_as_a_character():
-    """Valikkopolun nuoli on välimerkki eikä kuvake: bi-chevron-right ja
-    bi-arrow-right tekevät saman työn ja saavat saman merkin."""
+    """Valikkopolun nuoli on välimerkki eikä kuvake; molemmat nuoli-ikonit
+    saavat saman merkin."""
     text = ('**File** <i class="bi bi-chevron-right"></i> **Settings**\n'
             'Oikea nappi <i class="bi bi-arrow-right"></i> Controller class\n')
     converted, arrows, icons, unknown = convert.convert_icons(text)
@@ -835,8 +788,8 @@ def test_convert_icons_writes_the_path_arrow_as_a_character():
 
 
 def test_convert_icons_reads_a_tag_that_wraps_across_lines():
-    """Lähteessä 19 tagia on rivitetty kesken tagin, ja kahdessa jatkorivi on
-    lainauslohkossa, jolloin väliin tulee myös lainausmerkki."""
+    """Lähteessä tagi on rivitetty kesken; lainauslohkossa väliin tulee myös
+    ">"."""
     text = ('> **File** <i class="bi\n> bi-chevron-right"></i> **Settings**\n'
             'Tallenna <i\n   class="bi bi-chevron-right"></i> Save\n')
     converted, arrows, _, _ = convert.convert_icons(text)
@@ -858,8 +811,8 @@ def test_convert_icons_draws_the_icon_in_the_theme_wrapper():
 
 
 def test_convert_icons_skips_code_fences():
-    """Aidan sisällä näytetty esimerkki on tekstiä eikä merkintää. Pala
-    palalta luettu teksti ei myöskään saa muuttua muualta."""
+    """Aidan sisällä esimerkki on tekstiä; pala palalta luettu teksti ei saa
+    muuttua muualta."""
     text = ('ennen <i class="bi bi-chevron-right"></i> jälkeen\n'
             '```html\n<i class="bi bi-chevron-right"></i>\n```\n'
             'lopuksi <i class="bi bi-bug"></i>\n')
@@ -877,8 +830,8 @@ def test_convert_icons_keeps_a_leading_fence_where_it_is():
 
 
 def test_convert_icons_names_an_unknown_icon_instead_of_dropping_it():
-    """Lähdepuuhun voi tulla uusi ikoni milloin tahansa: näkyvä tagi ja
-    varoitus ovat parempia kuin hiljaa kadonnut kuvake."""
+    """Uusi ikoni: näkyvä tagi ja varoitus ovat parempia kuin hiljaa kadonnut
+    kuvake."""
     text = '<i class="bi bi-rocket-takeoff"></i>\n'
     converted, arrows, icons, unknown = convert.convert_icons(text)
     assert (arrows, icons) == (0, 0)
@@ -906,8 +859,7 @@ def test_convert_icons_warns_about_a_missing_glyph(monkeypatch, capsys,
 
 
 def test_convert_icons_is_repeatable():
-    """convert.py ajetaan uudelleen aina kun lähde muuttuu: valmiissa
-    tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    """Valmiissa tekstissä ei ole enää tagia, johon muunnos osuisi."""
     text = ('**File** <i class="bi bi-chevron-right"></i> **Save**, '
             'ajopainike <i class="bi bi-play-fill"></i>\n')
     converted = convert.convert_icons(text)[0]
@@ -915,8 +867,8 @@ def test_convert_icons_is_repeatable():
 
 
 def test_icon_glyphs_are_the_theme_files():
-    """Glyfit ovat kopioita, koska convert.py ajetaan systeemin python3:lla
-    eikä .venv:stä. Ero teemaan näkyy tässä heti kun teema vaihtaa glyfiä."""
+    """Glyfit ovat kopioita (convert.py ajetaan systeemin python3:lla), joten
+    ero teemaan näkyy tässä."""
     zensical = pytest.importorskip("zensical")
     icons = Path(zensical.__file__).parent / "templates" / ".icons"
     for icon in sorted(set(convert.ICON_MAP.values())):
@@ -943,8 +895,7 @@ def test_icon_glyph_matches_the_button_it_points_at(icon, css, variable):
 # --- Poistetut osiot ---------------------------------------------------------
 
 def test_drop_sections_takes_the_heading_and_its_body():
-    """Osio on otsikkorivi ja kaikki sen jälkeen seuraavaan samantasoiseen
-    otsikkoon asti — juuri se, mikä sisällysluettelossa on otsikon alla."""
+    """Osio on otsikkorivi ja kaikki seuraavaan samantasoiseen otsikkoon asti."""
     text = ("# Sivu\n\n## Navigointi tässä materiaalissa\n\nvinkki\n\n"
             "### Alaotsikko\n\nlisää\n\n## Palaute\n\nteksti\n")
     converted, sections = convert.drop_sections(text, "index.md")
@@ -968,17 +919,16 @@ def test_drop_sections_ignores_headings_inside_code():
 
 
 def test_drop_sections_warns_when_the_section_is_gone(capsys):
-    """Lähde on kirjan oma eikä muutu tämän mukana: jos osio poistetaan tai
-    nimetään uudelleen siellä, se pitää poistaa myös täältä."""
+    """Jos osio poistetaan tai nimetään uudelleen lähteessä, se pitää poistaa
+    myös täältä."""
     converted, sections = convert.drop_sections("# Sivu\n", "index.md")
     assert (converted, sections) == ("# Sivu\n", 0)
     assert "DROP_SECTIONS" in capsys.readouterr().err
 
 
 def test_convert_tasks_lifts_the_tags_out_of_the_indentation():
-    """Python-Markdown tunnistaa lohkotason HTML:n vain omana kappaleenaan,
-    ja neljällä välilyönnillä sisennetty rivi olisi koodilohko. Sisennys on
-    lähteessä pelkkää muotoilua — aineistossa sitä on neljää eri syvyyttä."""
+    """Neljällä välilyönnillä sisennetty rivi olisi koodilohko; sisennys on
+    lähteessä pelkkää muotoilua."""
     converted, _ = convert.convert_tasks("    <handout>\nteksti\n")
     assert converted.startswith('<div class="task-handout" markdown="1">\n\n')
 
@@ -991,15 +941,13 @@ def test_convert_tasks_does_not_pile_up_blank_lines():
 
 
 def test_convert_tasks_is_repeatable():
-    """convert.py ajetaan uudelleen aina kun lähde muuttuu: valmiissa
-    tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    """Valmiissa tekstissä ei ole enää tagia, johon muunnos osuisi."""
     converted, _ = convert.convert_tasks(TASK)
     assert convert.convert_tasks(converted) == (converted, 0)
 
 
 def test_convert_tasks_ignores_tasks_inside_code():
-    """Aidat käydään pareittain kuten convert_fencesissä, jottei koodilohkossa
-    näytetty merkkausesimerkki muuttuisi."""
+    """Aidat käydään pareittain, jottei koodissa näytetty esimerkki muuttuisi."""
     text = "```markdown\n<task>\n```\n"
     assert convert.convert_tasks(text) == (text, 0)
 
@@ -1129,8 +1077,8 @@ def test_changed_files_sees_edit_add_and_delete(watched):
     before = convert.snapshot()
     page = src / "osa1" / "sivu.md"
     page.write_text("muutettu", encoding="utf-8")
-    # Aika asetetaan käsin: testi ei saa nojata siihen, kuinka tarkka
-    # tiedostojärjestelmän kello sattuu olemaan.
+    # Aika asetetaan käsin, jottei testi nojaa tiedostojärjestelmän kellon
+    # tarkkuuteen.
     stamp = before[str(page)] + 10 ** 9
     os.utime(page, ns=(stamp, stamp))
     (src / "uusi.md").write_text("c", encoding="utf-8")

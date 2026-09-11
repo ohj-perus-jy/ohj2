@@ -1,28 +1,27 @@
-/* Tulostus: koko kirja yhdeksi PDF:ksi, ja yksittäinen luku siistinä.
- *
- * mdBookissa vastine on theme/css/print.css, joka piilottaa valikon ja
- * yläpalkin ja estää sivunvaihdot koodilohkojen keskeltä. Sama tehdään
- * tässä, Materialin luokilla. Zensicalin oma tulostustyyli on yksi rivi
- * (.md-typeset { font-size: .68rem }), joten ilman tätä paperille tulisivat
- * mukaan yläpalkki, valikko ja alatunniste.
- *
- * Sivun sisällön kokoaa assets/js/print.js; rungon kirjoittaa convert.py.
- */
+/* Tulostus: koko kirja yhdeksi PDF:ksi ja yksittäinen luku siistinä.
+ * Zensicalin oma tulostustyyli on yksi rivi, joten ilman tätä paperille
+ * tulisivat yläpalkki, valikko ja alatunniste. Sisällön kokoaa
+ * assets/js/print.js; rungon kirjoittaa convert.py. */
 
-/* Lukujen väliin jäävä erotin. Luvut ovat peräkkäin samassa säiliössä
- * (ilman kääre-elementtiä, ks. print.js), joten raja on oma elementtinsä:
- * ruudulla viiva, paperilla sivunvaihto. */
+/* Lukujen erotin: luvut ovat peräkkäin samassa säiliössä, joten raja on oma
+ * elementtinsä. Ruudulla viiva, paperilla sivunvaihto. */
 .jyu-print-break {
   margin: 2.4rem 0;
   border-top: 1px solid var(--jyu-rule);
 }
 
+/* Yläpalkin tulostuspainike pois puhelimesta: satojen sivujen PDF:ää ei
+ * tehdä sieltä, ja palkin tila on vähissä. Raja on teeman puhelinraja;
+ * kaksi luokkaa ohittaa teeman .md-header__button:not([hidden]). */
+@media screen and (max-width: 44.984375em) {
+  .md-header__button.jyu-print-button {
+    display: none;
+  }
+}
+
 @media print {
 
-  /* 1. Paperille vain sisältö. Kisko ja yläpalkki ovat @media screen
-   *    -kyselyn takana, joten ne eivät ole tulostettaessa voimassa
-   *    muutenkaan — mutta Zensical piirtää elementit silti, joten ne on
-   *    piilotettava erikseen. */
+  /* Zensical piirtää nämä paperillekin, joten ne piilotetaan erikseen. */
   .md-header,
   .md-sidebar,
   .md-footer,
@@ -32,8 +31,7 @@
     display: none;
   }
 
-  /* Sisältö koko paperin leveydelle: ruudulla ruudukko on keskitetty ja
-   * enintään 61rem, mutta paperilla reunukset tulevat tulostusasetuksista. */
+  /* Sisältö koko paperin leveydelle; reunukset tulevat tulostusasetuksista. */
   .md-grid {
     max-width: none;
     margin: 0;
@@ -43,25 +41,22 @@
     margin-top: 0;
   }
 
-  /* Otsikon jälkeen tuleva ohjeteksti ja kokoamisen tilarivi kuuluvat
-   * ruudulle, eivät kirjaan: kirjan oma nimiö on ensimmäinen luku. */
+  /* Ohjeteksti ja kokoamisen tilarivi kuuluvat ruudulle, eivät kirjaan. */
   #jyu-print-intro {
     display: none;
   }
 
-  /* Jokainen luku omalta sivultaan, kuten mdBookin print.html:ssä
-   * (<div style="break-before: page">). Erottimia on lukujen välissä,
-   * ei ennen ensimmäistä, joten alkuun ei tule tyhjää sivua. */
+  /* Jokainen luku omalta sivultaan. Erottimia on vain lukujen välissä, joten
+   * alkuun ei tule tyhjää sivua. */
   .jyu-print-break {
     margin: 0;
     border-top: 0;
     break-before: page;
   }
 
-  /* 2. Sivunvaihdot pois sellaisten kohtien keskeltä, joissa ne haittaavat
-   *    lukemista. Sama lista kuin mdBookin print.css:ssä, ja koodille myös
-   *    rivitys: paperi on kapeampi kuin näyttö, eikä vaakavieritystä ole,
-   *    joten rivittämätön koodi jäisi yksinkertaisesti pois sivulta. */
+  /* Sivunvaihdot pois otsikon jälkeen ja koodin, taulukon ja kuvan keskeltä.
+   * Koodille myös rivitys: paperilla ei ole vaakavieritystä, joten
+   * rivittämätön koodi jäisi pois sivulta. */
   .md-typeset h1,
   .md-typeset h2,
   .md-typeset h3,
@@ -84,14 +79,12 @@
     break-inside: avoid;
   }
 
-  /* Kuva ei koskaan yli sivun korkeuden, jottei se työnnä eteensä tyhjää
-   * sivua ja jää silti puolittain leikatuksi. */
+  /* Kuva ei yli sivun korkeuden, jottei se työnnä eteensä tyhjää sivua. */
   .md-typeset img {
     max-height: 22cm;
   }
 
-  /* Otsikkolinkin pykälämerkki (¶) on ruudulla näkyvissä vain hiiren alla;
-   * tulostettaessa se olisi joka otsikon perässä turha merkki. */
+  /* Pykälämerkki (¶) olisi paperilla joka otsikon perässä turha. */
   .md-typeset .headerlink {
     display: none;
   }

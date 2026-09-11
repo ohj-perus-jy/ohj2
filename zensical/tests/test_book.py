@@ -1,12 +1,8 @@
 """Oikea materiaali (../src) käännettynä.
 
-Koekirja (test_print.py, test_change.py) kertoo, toimiiko koneisto. Tämä
-kertoo, toimiiko se sillä materiaalilla joka oikeasti on olemassa: 72 lukua,
-joissa on mdBookin syntaksia, raakaa HTML:ää ja puolivalmiita lohkoja.
-Nämä testit ovat siksi ne, jotka reagoivat materiaalin muuttumiseen.
-
-Kestää n. 25 s, koska koko kirja käännetään. `pytest --nobuild` käyttää
-olemassa olevaa site/:ä, kun muutos on jo käännetty (esim. run.sh:n jäljiltä).
+Koekirja kertoo, toimiiko koneisto; tämä kertoo, toimiiko se oikealla
+materiaalilla, ja reagoi siksi materiaalin muuttumiseen. Koko kirja käännetään,
+ellei `pytest --nobuild` käytä olemassa olevaa site/:ä.
 """
 
 import re
@@ -18,9 +14,8 @@ from conftest import ROOT, open_print_page
 
 SRC = ROOT.parent / "src"
 
-# SUMMARY.md:n rivi: "[Otsikko](./polku.md)" tai "- [Otsikko](./polku.md)".
-# Luetaan tässä erikseen eikä convert.build_navilla, jotta testi vertaa
-# tulostetta lähteeseen eikä skriptiä itseensä.
+# SUMMARY.md:n linkkirivi. Luetaan erikseen eikä convert.build_navilla, jotta
+# testi vertaa tulostetta lähteeseen eikä skriptiä itseensä.
 SUMMARY_LINK = re.compile(r"^\s*(?:-\s*)?\[[^\]]*\]\((?P<href>[^)]*)\)")
 EDIT_LINK = re.compile(r'href="[^"]*/edit/main/src/(?P<path>[^"]*)"')
 
@@ -28,10 +23,8 @@ EDIT_LINK = re.compile(r'href="[^"]*/edit/main/src/(?P<path>[^"]*)"')
 def chapter_titles() -> list[str]:
     """SUMMARY.md:n luvut kirjan järjestyksessä, otsikkona sivun oma H1.
 
-    Ulkoiset linkit eivät ole lukuja eivätkä päädy tulostussivulle.
-    NEST_UNDER-siirto tehdään tässä samasta vakiosta, josta convert.py sen
-    lukee: siirto on koeputken oma päätös (Tenttiohjeet Tentin alasivuksi),
-    ei asia jonka tuloste saisi keksiä itse.
+    NEST_UNDER-siirto tehdään samasta vakiosta kuin convert.py:ssä: siirto on
+    koeputken päätös, ei asia jonka tuloste saisi keksiä itse.
     """
     order: list[str] = []
     for line in (SRC / "SUMMARY.md").read_text(encoding="utf-8").splitlines():
@@ -50,13 +43,8 @@ def chapter_titles() -> list[str]:
             for href in order]
 
 
-# Tarkistuslistan kohta 1: sisällytys tuo tehtävänannon kuvaviittaukset sivulle
-# sellaisenaan, ja suhteellinen polku ratkeaa sen sivun mukaan, jolle anto
-# sisällytetään. exercises/4-3-seikkailupeli/handout.md viittaa
-# "images/adventure.png":hen, mutta kuva on osa3/images/:ssä ja anto
-# sisällytetään osa4:n kahdelle sivulle. Sama on mdBookin omassa käännöksessä
-# (book/osa4/03-perinta-ja-rajapinta.html, book/osa4/05-tehtavat.html), eli
-# aineiston virhe, joka korjataan ../src:ssä eikä täällä.
+# Sisällytetyn tehtävänannon kuvapolku ratkeaa sisällyttävän sivun mukaan ja
+# osuu ohi. Sama virhe on mdBookin käännöksessä: korjataan ../src:ssä, ei täällä.
 KNOWN_BROKEN_IMAGES = {"osa4/images/adventure.png"}
 
 
@@ -66,9 +54,8 @@ def printed(real_site, serve, browser):
 
 
 def test_every_chapter_is_printed(printed):
-    """Jokainen SUMMARY.md:n luku on tulosteessa omalla otsikollaan ja kirjan
-    järjestyksessä. Tämä on se testi, joka huomaa, jos luku katoaa paperilta
-    materiaalia muutettaessa."""
+    """Jokainen SUMMARY.md:n luku on tulosteessa omalla otsikollaan kirjan
+    järjestyksessä: tämä huomaa, jos luku katoaa paperilta."""
     headings = printed.evaluate(
         "() => [...document.querySelectorAll('.md-content__inner > h1')]"
         "        .map(h => h.textContent.replace(/\\u00b6/g, '').trim())")
@@ -86,15 +73,9 @@ def test_page_break_between_every_chapter(printed):
 
 
 def test_identifiers_stay_unique(printed):
-    """Sama otsikko toistuu luvusta toiseen ("Tehtävät") ja koodirivien
-    ankkurit alkavat joka sivulla alusta: ilman luvun etuliitettä sivulla
-    olisi 1767 kahteen kertaan esiintyvää tunnistetta.
-
-    Nauhoitusten soittimet jäävät tarkistuksen ulkopuolelle: soitin antaa
-    toistonapin SVG-maskille saman tunnuksen joka kerta, eli tunnus toistuu
-    yhtä monta kertaa kuin sivulla on soittimia. Maskit ovat keskenään
-    identtisiä ja viittaus osuu ensimmäiseen, ja kirjassa on sama soitin ja
-    sama toisto."""
+    """Sama otsikko toistuu luvusta toiseen ja koodirivien ankkurit alkavat joka
+    sivulla alusta, joten tunnisteet tarvitsevat luvun etuliitteen. Soittimet
+    rajataan ulos: niiden SVG-maski saa saman tunnuksen joka soittimessa."""
     duplicates = printed.evaluate("""() => {
       const ids = [...document.querySelectorAll('[id]')]
         .filter(e => !e.closest('.ap-wrapper')).map(e => e.id);
@@ -104,46 +85,28 @@ def test_identifiers_stay_unique(printed):
 
 
 def test_internal_anchors_resolve(printed):
-    """Sivun sisäisiä linkkejä on yli 9000; yksikään ei jää osoittamaan
-    tyhjään.
-
-    Poikkeuksia oli kolme siihen asti, kunnes tarkistuslistan kohta 13
-    tehtiin. Kaksi niistä oli ääkkösiä ankkurissa, jotka toimivat mdBookissa
-    mutta eivät täällä; ne poistuivat convert_anchorsin mukana. Kolmas oli
-    aineiston virhe, joka oli rikki mdBookissakin
-    (harjoitustyo.md linkitti ankkuriin
-    "#harjoitustyön-tekniset-vaatimukset-ja-arviointi", vaikka otsikko on
-    "## Tekniset vaatimukset ja arviointi"), ja se korjattiin ../src:ssä
-    — toisin kuin KNOWN_BROKEN_IMAGES, joka on yhä auki."""
+    """Yksikään sivun sisäinen linkki ei jää osoittamaan tyhjään."""
     dead = printed.evaluate("""() => {
       const ids = new Set([...document.querySelectorAll('[id]')].map(e => e.id));
       return [...document.querySelectorAll('a[href^="#"]')]
         .map(a => decodeURIComponent(a.getAttribute('href').slice(1)))
         .filter(target => target && !ids.has(target));
     }""")
-    # Etuliite on luvun oma, joten sama rikkinäinen linkki näkyisi tässä
-    # luvun nimellä varustettuna.
+    # Luvun etuliite riisutaan, jotta virheilmoitus näyttää itse ankkurin.
     assert [anchor.split("--", 1)[-1] for anchor in dead] == []
 
 
 def test_every_include_is_expanded(printed):
-    """Yksikään luku ei jätä {{#include}}-makroa näkyviin. Neljä makroa jää,
-    mutta ne ovat kirjan ulkopuolisella sivulla (extra/), joka ei ole
-    SUMMARY.md:ssä eikä siksi tulosteessa."""
+    """Yksikään luku ei jätä {{#include}}-makroa näkyviin."""
     assert printed.evaluate(
         r"() => document.body.textContent.match(/\{\{#include[^}]*\}\}/g)") is None
 
 
 def test_every_diagram_is_drawn(printed):
-    """Kaaviot ovat kuvia, eivät lähdekoodia (kohta 15).
-
-    "@startuml" ei esiinny aineistossa muualla kuin ```plantuml-aidan
-    ensimmäisellä rivillä, joten jos se näkyy sivulla, jokin aita on jäänyt
-    kääntämättä — esimerkiksi siksi, että kaavio on uusi eikä sitä ole
-    assets/plantuml/:ssä eikä PlantUML-palvelinta saatu kiinni.
-
-    Kaavioiden lukumäärää ei väitetä, koska se muuttuu materiaalin mukana;
-    sen sijaan vaaditaan, ettei yksikään kääre ole tyhjä."""
+    """Kaaviot ovat kuvia, eivät lähdekoodia (kohta 15). "@startuml" esiintyy
+    vain plantuml-aidan alussa, joten sivulla näkyvä tarkoittaa kääntämättä
+    jäänyttä aitaa. Lukumäärää ei väitetä, koska se muuttuu materiaalin
+    mukana."""
     diagrams = printed.evaluate("""() => ({
       startuml: (document.body.textContent.match(/@startuml/g) || []).length,
       uml: document.querySelectorAll('img.uml').length,
@@ -157,14 +120,9 @@ def test_every_diagram_is_drawn(printed):
 
 
 def test_no_raw_markdown_leaks_into_the_page(printed):
-    """Raaka HTML-lohko päästää sisältönsä läpi sellaisenaan, ja silloin
-    otsikko jää risuaidoiksi ja lihavointi tähdiksi keskelle leipätekstiä.
-    Näin kävi harjoitustyön kahdeksalle vaatimuslohkolle (kohta 25) ja kuudelle
-    aihelohkolle (kohta 8), ja sama toistuu heti, jos aineistoon tulee uusi
-    <div> tai <summary> ilman markdown-attribuuttia.
-
-    Koodi rajataan ulos: aidan sisällä risuaita on kommentti ja tähti
-    laskutoimitus."""
+    """Raaka HTML-lohko ilman markdown-attribuuttia päästää sisältönsä läpi
+    sellaisenaan: otsikko jää risuaidoiksi ja lihavointi tähdiksi. Koodi
+    rajataan ulos, koska aidassa risuaita on kommentti ja tähti laskutoimitus."""
     leaked = printed.evaluate(r"""() => {
       const walker = document.createTreeWalker(
         document.querySelector('.md-content__inner'), NodeFilter.SHOW_TEXT);
@@ -182,16 +140,9 @@ def test_no_raw_markdown_leaks_into_the_page(printed):
 
 
 def test_every_marked_line_is_a_real_line(printed):
-    """Korostukset (kohta 9): merkinnät riisutaan käännöksessä ja rivinumerot
-    kirjoitetaan aidan attribuutiksi, joten kaksi asiaa voi mennä pieleen koko
-    kirjan mitassa. Merkintä voi jäädä sivulle, jos aineistossa on kirjoitusasu
-    jota lauseke ei tunne, ja numero voi osoittaa lohkon ulkopuolelle, jos
-    numerointi laskee eri rungosta kuin se, joka lopulta piirretään — juuri
-    niin kävi piiloriveillä (kohta 2) ennen kuin numerointi korjattiin.
-
-    Kysytään siis kirjalta itseltään: yhtään merkintää ei ole jäljellä,
-    jokainen numero osuu lohkon riviin, ja merkittyjä rivejä on tasan yhtä
-    monta kuin numeroita."""
+    """Korostukset (kohta 9) koko kirjan mitassa: yhtään merkintää ei jää
+    sivulle, jokainen rivinumero osuu lohkon riviin ja merkittyjä rivejä on
+    yhtä monta kuin numeroita."""
     marked = printed.evaluate(r"""() => {
       let numbers = 0, outside = 0, blocks = 0;
       for (const block of document.querySelectorAll('div.highlight')) {
@@ -221,11 +172,8 @@ def test_every_marked_line_is_a_real_line(printed):
 
 
 def test_requirement_numbers_come_from_the_counter(printed):
-    """Harjoitustyön vaatimuskohdat numeroidaan lohkon ja kohdan mukaan
-    (1.1, 1.2, ...), koska niihin viitataan numerolla sekä samalla sivulla
-    että osien 9-12 ohjeissa. Numero tulee CSS-laskurista kuten kirjassakin,
-    joten testi kysyy laskuria: jos assets/css/requirements.css jää pois
-    mkdocs.yml:stä, kohdat numeroituisivat hiljaisesti uudelleen 1:stä."""
+    """Vaatimuskohtien numerot (1.1, 1.2, ...) tulevat CSS-laskurista: jos
+    requirements.css jää pois, kohdat numeroituisivat hiljaisesti uudelleen."""
     counters = printed.evaluate("""() => {
       const reqs = [...document.querySelectorAll('.ht-reqs .req')];
       return {
@@ -255,10 +203,8 @@ def test_every_image_is_loaded(printed):
 
 
 def test_every_recording_is_drawn(printed):
-    """Jokainen nauhoitus (kohta 16) on soittimena ja piirrettynä jo
-    tulostushetkellä, eikä yksikään ole jäänyt paljaaksi tagiksi. Rivejä on
-    yhtä monta kuin tageissa on rows-määreitä yhteensä, eli jokainen soitin on
-    piirtänyt oman ruutunsa kokonaan."""
+    """Jokainen nauhoitus (kohta 16) on soittimena ja kokonaan piirrettynä jo
+    tulostushetkellä: rivejä on yhtä monta kuin tageissa rows-määreitä."""
     recordings = printed.evaluate("""() => {
       const tags = [...document.querySelectorAll('asciinema')];
       return {
@@ -285,9 +231,7 @@ def test_tab_sets_stay_independent(printed):
 
 
 def test_no_console_errors(printed):
-    """Tunnetun puuttuvan kuvan 404 on ainoa sallittu; se on aineiston virhe,
-    ei tulostuksen. Osoite on virhetekstissä mukana, jotta muut 404:t
-    erottuvat siitä."""
+    """Tunnetun puuttuvan kuvan 404 on ainoa sallittu virhe."""
     assert [error for error in printed.errors
             if not any(image in error for image in KNOWN_BROKEN_IMAGES)] == []
 
@@ -295,10 +239,8 @@ def test_no_console_errors(printed):
 # --- Sivusto ilman selainta --------------------------------------------------
 
 def test_every_edit_link_points_to_an_existing_source_file(real_site):
-    """Muokkauslinkki osoittaa ../src:ään, ei koeputken kertakäyttöiseen
-    docs/:iin. Siirretyt ja generoidut sivut hoidetaan polkukartalla
-    (nav.yml: extra.edit_source), joten uusi siirto rikkoisi linkin
-    hiljaisesti."""
+    """Muokkauslinkki osoittaa ../src:ään, ei docs/:iin. Siirretyt sivut
+    hoidetaan polkukartalla, joten uusi siirto rikkoisi linkin hiljaisesti."""
     pages = missing = 0
     for page in real_site.rglob("index.html"):
         for match in EDIT_LINK.finditer(page.read_text(encoding="utf-8")):

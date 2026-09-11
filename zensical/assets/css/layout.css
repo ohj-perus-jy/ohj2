@@ -1,63 +1,28 @@
-/* Työpöytäasettelu: valikko kiinteänä kiskona vasemmassa reunassa.
- *
- * Zensicalin oletuksessa valikko on osa keskitettyä ruudukkoa ja
- * position: sticky, jolloin se liikkuu sisällön mukana ensimmäiset 30 px
- * vieritystä (yhteinen säiliö on .md-main__inner { margin-top: 1.5rem })
- * ja pysähtyy sitten nytkähtäen yläpalkin alareunaan. Lisäksi yläpalkki on
- * läpikuultava ja sumennettu, joten sisältö liukuu sen alle mutta valikko
- * katkeaa siihen terävästi.
- *
- * Ratkaisu on sama kuin mdBookissa: valikko ei ole yläpalkin alla lainkaan
- * vaan omana kiskonaan ruudun vasemmassa reunassa, koko korkeudeltaan, ja
- * kurssin nimi on kiskon yläosassa. Silloin ei ole mitään mikä liikkuisi tai
- * katkeaisi, ja sumennettu yläpalkki voi jäädä sisällön päälle.
- *
- * Vain työpöydällä. Kapeilla näytöillä valikko on Zensicalin oma laatikko
- * (drawer), johon ei kosketa.
- */
+/* Työpöytäasettelu: valikko kiinteänä kiskona vasemmassa reunassa, kuten
+ * mdBookissa. Zensicalin oletusvalikko on position: sticky, joten se liikkuu
+ * sisällön mukana ensimmäiset vierityspikselit ja pysähtyy nytkähtäen, ja
+ * katkeaa terävästi sumennettuun yläpalkkiin; kiskossa ei ole mitään, mikä
+ * liikkuisi tai katkeaisi. Vain työpöydällä: kapeilla näytöillä valikko on
+ * Zensicalin oma laatikko (drawer), johon ei kosketa. */
 
 :root {
-  /* Rako kiskon ja sisällön väliin, ks. .md-main alempana. 0,8rem on tasan
-   * se, minkä verran sisällysluettelon teksti on omassa sarakkeessaan
-   * sisennettynä (.md-nav__link: 0,2rem marginaali + 0,6rem täyte), eli sen
-   * verran oikea rako on leveämpi kuin vasen ennen tätä. */
+  /* Rako kiskon ja sisällön väliin: sama kuin sisällysluettelon tekstin
+   * sisennys omassa sarakkeessaan, jotta vasen ja oikea rako ovat yhtä
+   * leveät. */
   --jyu-gap: 0.8rem;
 
-  /* Kiskon leveys: pohjana mdBookin 15rem, ja sen yli sen verran kuin
-   * ruudulla on oikeasti liikaa tilaa. Sisältöruudukon maksimi on 61rem
-   * (.md-grid), joten sitä leveämmällä näytöllä kaikki ylimenevä on tyhjää
-   * kourua sisällön molemmin puolin — siitä kisko voi ottaa osansa ilman
-   * että tekstipalstasta lähtee pikseliäkään. 62rem = ruudukko + varaus
-   * vierityspalkille, ja --jyu-gap sen päälle, koska rako on nyt osa samaa
-   * riviä eikä sekään saa jäädä kiskon syötäväksi. Yläraja 16rem, koska sitä
-   * leveämpi ei enää estä yhtään rivitystä valikossa. Zensicalin oletus on
-   * 12,1rem. */
+  /* Kiskon leveys: 15rem kuten mdBookissa, ja leveämmällä näytöllä siitä
+   * kourusta, joka jää ruudukon (61rem) ja vierityspalkin yli, enintään
+   * 16rem; tekstipalstasta ei lähde pikseliäkään. */
   --jyu-rail: clamp(15rem, 100vw - 62rem - var(--jyu-gap), 16rem);
 
-  /* Kiskon vierityspalkin väri silloin kun hiiri on valikon päällä mutta ei
-   * palkin päällä. Ks. perustelu vierityspalkkisäännöistä alempana. */
+  /* Kiskon vierityspalkin väri hiiren ollessa valikon päällä, ks. alempana. */
   --jyu-rail-scrollbar: color-mix(in srgb, var(--md-accent-fg-color) 80%, white);
 
-  /* Rajaviivojen sävy.
-   *
-   * Teemassa kaikki hiusviivat ottavat värinsä --md-default-fg-color
-   * --lightestistä, joka on vaaleassa teemassa vain 7 % mustaa (#0000000d).
-   * Valkoisella se on rgb(242,242,242): viiva on olemassa mutta ei erotu
-   * taustasta. Tummassa vastaava on .12, eli sekin himmeä joskin selvempi.
-   *
-   * Muuttujaa ei voi vain nostaa, koska teema käyttää samaa arvoa myös
-   * himmeimpiin täyttöihin: alatunnisteen tekijänoikeuspalkin taustaan
-   * (.md-footer-meta) ja valikon rivin hover-taustaan. Ne ovat pintoja eivätkä
-   * viivoja, ja nousisivat mukana selvästi harmaiksi. Siksi viivoille oma
-   * sävy, ja teeman muuttuja jää täytöille ennalleen.
-   *
-   * .20 kummassakin teemassa: vaalealla rgb(204,204,204) valkoisella,
-   * tummalla rgb(54,55,59) omalla pohjallaan — ero taustaan on kutakuinkin
-   * sama molempiin suuntiin (51 ja 43 askelta). Sama arvo käy siksi, että
-   * kumpikin on alfa oman teemansa tekstivärin päällä.
-   *
-   * Käytössä myös tasks.css:ssä (tehtäväkortin ylä- ja alaviiva) ja
-   * print.css:ssä (tulostussivun erotin). */
+  /* Rajaviivojen sävy. Teeman --md-default-fg-color--lightest on viivana
+   * liian haalea, eikä sitä voi nostaa, koska se on myös himmeimpien
+   * täyttöjen (alatunnisteen palkki, valikon hover) väri. Käytössä myös
+   * tasks.css:ssä ja print.css:ssä. */
   --jyu-rule: #00000033;
 }
 
@@ -66,24 +31,10 @@
   --jyu-rule: hsla(var(--md-hue), 15%, 90%, 0.2);
 }
 
-/* Teeman omat hiusviivat samaan sävyyn. Kaikilla leveyksillä.
- *
- * Nämä neljä ovat kaikki 1 px:n rajaviivoja, jotka teema piirtää
- * --md-default-fg-color--lightestillä. Ne jäisivät muuten sivun muita
- * viivoja haaleammiksi, ja yläpalkin alareuna on nimenomaan se viiva, jonka
- * jatkoksi kiskon reuna ja valikon erotin on tehty (ks. alempana).
- *
- * Geometria on kopio teeman omasta säännöstä, jotta vain väri muuttuu:
- * pelkkä värin vaihto ei onnistu ilman koko box-shadow'n tai borderin
- * toistoa. Jos teema muuttaa mittoja, nämä on päivitettävä käsin.
- *
- * Sitä muuttujaa ei voi nostaa suoraan, koska se on myös himmeimpien
- * täyttöjen väri; ks. --jyu-rulen perustelu tiedoston alussa.
- *
- * Loput --lightestin käyttökohteet jätetään rauhaan: ne ovat joko täyttöjä
- * tai komponentteja, joita tässä kirjassa ei ole (grid cards, koodilohkon
- * tiedostonimipalkki, rivinumeropalsta, .md-nav__source jonka overrides
- * tyhjentää). */
+/* Teeman omat hiusviivat samaan sävyyn; yläpalkin alareuna on se viiva, jonka
+ * jatkoksi kiskon reuna ja valikon erotin on tehty. Geometria on kopio teeman
+ * säännöstä, koska pelkkää väriä ei voi vaihtaa erikseen: jos teema muuttaa
+ * mittoja, nämä on päivitettävä käsin. */
 .md-header--shadow {
   box-shadow: 0 0.05rem 0 var(--jyu-rule);
 }
@@ -100,37 +51,17 @@
   box-shadow: 0 -0.05rem var(--jyu-rule) inset;
 }
 
-/* Aktiivisen välilehden osoitin hitusen paksummaksi. Zensicalin oletus on
- * 1.5px, mikä jää yllä olevan 0.05rem:n (0.8px) viivan rinnalla vaisuksi:
- * kahden ohuen viivan ero ei erotu vilkaisulla. 2px tuplaa eron
- * viivanleveydessä muuttamatta osoittimen mittasuhteita.
- *
- * .js-etuliite on pakollinen: teeman sääntö on .js .md-typeset
- * .tabbed-labels:before, ja ilman etuliitettä tämä häviää sille
- * spesifisyydessä. Osoitin on muutenkin olemassa vain JS:n kanssa. */
+/* Aktiivisen välilehden osoitin paksummaksi: teeman 1.5px ei erotu yllä
+ * olevan viivan rinnalla. .js-etuliite on pakollinen, muuten sääntö häviää
+ * teeman .js .md-typeset .tabbed-labels:before -säännölle tarkkuudessa. */
 .js .md-typeset .tabbed-labels::before {
   height: 2px;
 }
 
-/* Väljyys sisällölle, ei yhteiselle säiliölle. Kaikilla leveyksillä.
- *
- * Zensicalin oletus on .md-main__inner { margin-top: 1.5rem }, mutta se
- * koskee myös sivupalkkeja, jotka ovat position: sticky. Ne lähtevät siis
- * 30 px kiinnittymiskohtansa alapuolelta, liikkuvat ylös ensimmäiset 30 px
- * vieritystä ja pysähtyvät sitten nytkähtäen. Sama arvo pelkälle
- * sisällölle: väljyys säilyy pikselilleen, nytkähdys katoaa.
- *
- * Ei negatiivista marginaalia sivupalkeille, koska se toistaisi 30 px:n
- * taikanumerona: jos Zensical muuttaa 1.5rem:ää, nytkähdys palaisi hiljaa.
- *
- * Ei media-kyselyn sisällä, koska sääntö on tarpeen kaikilla leveyksillä:
- *  - työpöydällä (>= 76.25em) valikko on kisko eikä välitä tästä, mutta
- *    oikean reunan sisällysluettelo on yhä sticky ja nytkähtäisi,
- *  - tableteilla (60-76.25em) sama koskee sisällysluetteloa,
- *  - kapeilla näytöillä (< 60em) molemmat sivupalkit ovat position: fixed,
- *    joten säiliön marginaali ei koskenut niihin muutenkaan: siellä tämä on
- *    tasan sama asettelu kuin ennenkin, väljyys vain eri elementissä.
- */
+/* Väljyys sisällölle eikä yhteiselle säiliölle: teeman .md-main__inner-
+ * marginaali koskee myös sticky-sivupalkkeja, jotka siksi nytkähtävät
+ * ensimmäisten vierityspikselien aikana. Kaikilla leveyksillä, koska oikean
+ * reunan sisällysluettelo on sticky myös tableteilla. */
 .md-main__inner {
   margin-top: 0;
 }
@@ -139,37 +70,19 @@
   margin-top: 1.5rem;
 }
 
-/* Repo-linkin tyhjät paikat pois. Kaikilla leveyksillä.
- *
- * Linkki itse on tyhjennetty mallista (overrides/partials/source.html),
- * mutta teema piirtää sen kääreen silti, koska repo_url on asetettu
- * muokkauslinkkiä varten. Tyhjinä ne eivät ole näkymättömiä:
- *
- *  - yläpalkin .md-header__source varaa 11,5rem oikeasta reunasta 60em:stä
- *    ylöspäin. Kapeassa palkissa se ei haittaisi, mutta työpöydällä palkki
- *    on reunasta reunaan (ks. kisko alempana), jolloin se jättäisi haun
- *    roikkumaan keskelle.
- *  - laatikkovalikon .md-nav__source on reunustettu laatikko (border +
- *    0,6rem alamarginaali), joka jäisi tyhjänä raamina kurssin nimen ja
- *    ensimmäisen valikkokohdan väliin. Työpöydällä teema piilottaa sen jo
- *    itse, joten tämä on käytännössä kapeiden näyttöjen sääntö.
- *
- * :not(:has(*)) eikä suora display: none, jotta sääntö purkautuu itsestään
- * jos mallin ylikirjoitus poistetaan: silloin kääreessä on <a>, ehto ei
- * täsmää ja linkki palaa paikalleen ilman että tätä tarvitsee muistaa. */
+/* Repo-linkin tyhjät kääreet pois. Linkki on tyhjennetty mallista
+ * (overrides/partials/source.html), mutta teema piirtää kääreet, koska
+ * repo_url on asetettu muokkauslinkkiä varten; yläpalkissa tyhjä kääre
+ * jättäisi haun roikkumaan keskelle. :not(:has(*)) eikä suora display: none,
+ * jotta sääntö purkautuu itsestään, jos mallin ylikirjoitus poistetaan. */
 .md-header__source:not(:has(*)),
 .md-nav__source:not(:has(*)) {
   display: none;
 }
 
-/* Kurssin nimi yläpalkissa vie etusivulle. Kaikilla leveyksillä.
- *
- * Linkki itse on mallissa (overrides/partials/header.html); tässä siitä
- * otetaan selaimen oletusväri ja -alleviivaus pois, jotta nimi näyttää
- * täsmälleen samalta kuin ennen. Osoittimen alla alleviivaus, koska muuta
- * merkkiä linkistä ei ole: kuvakkeen himmennys (Materialin .md-header__button)
- * koskee vain logoa, ja nimen vieressä oleva sivun otsikko ei ole linkki.
- */
+/* Kurssin nimi yläpalkissa on linkki etusivulle (overrides/partials/
+ * header.html). Selaimen oletusväri ja alleviivaus pois; alleviivaus vain
+ * osoittimen alla, koska muuta merkkiä linkistä ei ole. */
 .md-header__title a {
   color: inherit;
   text-decoration: none;
@@ -179,35 +92,20 @@
   text-decoration: underline;
 }
 
-/* Kun teema on vaihtanut nimen tilalle sivun otsikon, nimi jää läpinäkyväksi
- * mutta paikalleen (.md-header__title--active). Tekstinä se oli silloin
- * pelkkää kuvaa, mutta linkkinä se on yhä näppäimistöllä kohdistettavissa:
- * mitattu 400 x 800 etusivun alalaidassa, toinen sarkain vei näkymättömään
- * "Ohjelmointi 2" -linkkiin. visibility ottaa sen myös kierrosta pois.
- *
- * Viive on teeman oma opacity-siirtymän kesto (.md-header__topic, 0,15 s),
- * jotta nimi ehtii häipyä ennen kuin se katoaa. Siirtymä on linkissä eikä
- * otsikossa, koska teeman oma transition-lyhenne on otsikossa eikä sitä
- * haluta kirjoittaa tässä uudelleen. Työpöydällä vaihtoa ei tehdä lainkaan
- * (ks. kisko alempana), joten siellä tämä perutaan. */
+/* Kun teema on vaihtanut nimen tilalle sivun otsikon, läpinäkyvä nimi olisi
+ * yhä näppäimistöllä kohdistettavissa; visibility ottaa sen kierrosta pois.
+ * Viive on teeman oman opacity-siirtymän kesto. Työpöydällä vaihtoa ei tehdä,
+ * joten tämä perutaan alempana. */
 .md-header__title--active .md-header__topic a {
   visibility: hidden;
   transition: visibility 0s 0.15s;
 }
 
-/* Alatunnisteen linkit oikeassa reunassa: muokkaus ja ongelmailmoitus.
- * Kaikilla leveyksillä.
- *
- * Linkit itse ovat mallissa (overrides/partials/copyright.html) ja lainaavat
- * teeman .md-copyright-luokkaa, josta tulevat koko, väri ja pystykeskitys.
- * Tässä niistä tehdään kuvakkeellisia rivejä ja perutaan .md-copyrightin
- * width: 100%, joka venyttäisi ne omalle riville kapeilla näytöillä.
- *
- * Kääre pitää linkit parina rivin oikeassa päässä, ks. mallin perustelu.
- * Väli linkkien väliin tulee .md-copyrightin omista sivumarginaaleista, joten
- * gapia ei ole: rivin oikea reuna pysyy siinä missä yksin ollutkin. Kapealla
- * näytöllä kääre taittuu lisenssitekstin alle, ja jos sielläkään ei ole tilaa,
- * flex-wrap pudottaa ongelmailmoituksen omalle rivilleen. */
+/* Alatunnisteen linkit oikeassa reunassa (overrides/partials/copyright.html)
+ * lainaavat teeman .md-copyright-luokkaa; tässä niistä tehdään kuvakkeelliset
+ * rivit ja perutaan width: 100%, joka venyttäisi ne omalle riville kapealla
+ * näytöllä. Väli linkkien väliin tulee .md-copyrightin sivumarginaaleista,
+ * joten gapia ei ole. */
 .jyu-footer-links {
   display: flex;
   flex-wrap: wrap;
@@ -228,40 +126,14 @@
   fill: currentcolor;
 }
 
-/* Erotin yleisten sivujen ja kirjan lukujen väliin. Kaikilla leveyksillä.
- *
- * mdBookissa raja on olemassa: SUMMARY.md:n ---erottimet piirtyvät valikkoon
- * <li class="spacer">-viivoiksi (theme/css/chrome.css: 85 % leveä, 2 px,
- * --sidebar-spacer). Zensicalin navigaatiossa erottimia ei ole lainkaan,
- * koska convert.py: build_nav ohittaa ne, joten Aloituksesta TIM-linkkiin
- * olevat yleiset sivut jäävät samaan pinoon lukujen kanssa: ainoa ero on
- * numeron puuttuminen. Tämä palauttaa rajan.
- *
- * Viiva on tarkalleen sama kuin kiskon oma oikea reunaviiva ja yläpalkin
- * alareuna: 1 px --jyu-ruleä, ja se ulottuu kiskon
- * sisällön koko leveydelle. Silloin se ei ole valikon sisäinen koriste vaan
- * jatkoa sivun omille rajaviivoille, ja yläpään yleiset sivut näyttävät
- * samalta ruudukkolohkolta kuin muutkin sivun alueet. Leveys on tässä
- * listan oma leveys; kiskon kouru kumotaan erikseen sen omassa lohkossa
- * alempana. Pystyvälit 0,7rem ja 0,5rem: listan kohtien
- * väli on 0,2rem, joka tulee viivan alapuolelle, joten epäsymmetria tekee
- * viivan ympärille yhtä suuret raot.
- *
- * Viiva ripustetaan ryhmän viimeiseen kohtaan (TIM-linkki) eikä ensimmäiseen
- * lukuun, jolloin lukujen omiin kohtiin ei kosketa lainkaan.
- *
- * Ankkuriksi kelpaa vain absoluuttinen osoite, koska sivuston sisäiset
- * osoitteet muuttuvat sivun syvyyden mukaan: linkki osaan 1 on etusivulla
- * "./osa1/", osa5/index.html:ssä "../osa1/" mutta osan 1 omilla sivuilla
- * "./.." tai "../" — [href$="osa1/"] jättäisi viivan pois juuri niiltä
- * sivuilta. TIM-linkki on sama merkkijono joka sivulla. Sama keino on
- * käytössä mdBookin puolella (theme/css/general.css:
- * .sidebar a[href$="tenttiohjeet.html"]). Jos TIM-linkki joskus poistuu,
- * viiva katoaa kokonaan eikä siirry väärään väliin.
- *
- * Ei media-kyselyä: mdBookissa erottimet näkyvät joka leveydellä, ja tämä on
- * pelkkä pseudoelementti kohdan sisällä, joten se ei kosketa kapean näytön
- * laatikkovalikon asetteluun. */
+/* Erotin yleisten sivujen ja kirjan lukujen väliin. mdBookissa SUMMARY.md:n
+ * ---erottimet piirtyvät valikkoon; Zensicalin navigaatiossa niitä ei ole
+ * (convert.py: build_nav ohittaa ne). Viiva on sama kuin kiskon reuna ja
+ * yläpalkin alareuna, ja se ripustetaan ryhmän viimeiseen kohtaan eli
+ * TIM-linkkiin, koska vain absoluuttinen osoite on sama joka sivulla:
+ * sisäiset osoitteet muuttuvat sivun syvyyden mukaan. Jos TIM-linkki poistuu,
+ * viiva katoaa eikä siirry väärään väliin. Pystyvälit ovat epäsymmetriset,
+ * koska listan kohtien oma väli tulee viivan alapuolelle. */
 .md-nav--primary > .md-nav__list > .md-nav__item:has(
     a[href^="https://tim.jyu.fi"])::after {
   display: block;
@@ -273,12 +145,10 @@
 
 @media screen and (min-width: 76.25em) {
 
-  /* 1. Kisko: kiinteä, koko korkeus, oma tausta ja erotinviiva.
-   *    Yläosaan jää tilaa yläpalkin korkeuden verran nimeä varten. */
-  /* !important siksi, että Zensicalin JavaScript kirjoittaa sivupalkille
-   * inline-tyylit (top ja vieritysalueen korkeus) olettaen sen olevan
-   * yläpalkin alla. Kiskona se laskee ne väärin. Jos Zensical muuttaa
-   * kirjoittamiaan tyylejä, tämä on ensimmäinen paikka jota katsoa. */
+  /* 1. Kisko: kiinteä, koko korkeus, oma tausta ja erotinviiva. Yläosaan jää
+   *    yläpalkin korkeuden verran tilaa kurssin nimelle. !important, koska
+   *    Zensicalin JavaScript kirjoittaa sivupalkille inline-tyylit (top ja
+   *    vieritysalueen korkeus) olettaen sen olevan yläpalkin alla. */
   .md-sidebar--primary {
     position: fixed;
     top: 0 !important;
@@ -298,38 +168,21 @@
     overflow-y: auto;
   }
 
-  /* Valikko kiskon levyiseksi. Zensical pitää sivupalkin sisällön 11,5rem
-   * levyisenä riippumatta sivupalkin leveydestä:
-   * [dir=ltr] .md-sidebar__inner { padding-right: calc(100% - 11.5rem) }.
-   * Sen omalla 12,1rem sivupalkilla tuo on 0,6rem kouru vierityspalkille,
-   * mutta 15rem kiskossa siitä tulee 3,5rem (70 px) tyhjää valikon ja
-   * vierityspalkin väliin — eli kiskon leventäminen ei näkynyt otsikoissa
-   * lainkaan, vain kourussa. Palautetaan kouru samaan 0,6rem:iin. */
+  /* Valikko kiskon levyiseksi. Teema pitää sivupalkin sisällön 11,5rem
+   * levyisenä (padding-right: calc(100% - 11.5rem)), jolloin leveämpi kisko
+   * kasvattaisi vain kourua vierityspalkin vieressä; palautetaan teeman
+   * oma 0,6rem kouru. */
   .md-sidebar--primary .md-sidebar__inner {
     padding-right: 0.6rem;
   }
 
-  /* Vierityspalkki näkyviin vasta kun hiiri on kiskon päällä (tai kun
-   * valikossa liikutaan näppäimistöllä). Zensical piirtää sen aina, jolloin
-   * kiskon reunaan jää pysyvä viiva, vaikka valikkoa ei olisi koskettu.
-   *
-   * Vain väri vaihtuu, tila ei: palkin leveys on varattu koko ajan, joten
-   * valikko ei nytkähdä hiiren tullessa päälle. Molemmat tavat tarvitaan,
-   * koska osa selaimista tottelee scrollbar-coloria ja osa vain
-   * ::-webkit-scrollbar-thumbia.
-   *
-   * Häivytys, jottei palkki iske näkyviin kerralla. Kesto on Materialin
-   * oma 0,25 s, ja siirtymä on molempiin suuntiin: palkki myös haipuu pois
-   * kun hiiri lähtee kiskolta. Transition on lepotilan säännössä, jolloin
-   * se koskee kumpaakin suuntaa ilman toistoa hover-säännössä.
-   *
+  /* Vierityspalkki näkyviin vasta kun hiiri on kiskon päällä tai valikossa
+   * liikutaan näppäimistöllä; Zensical piirtää sen aina. Vain väri vaihtuu,
+   * joten valikko ei nytkähdä. Molemmat tavat tarvitaan: osa selaimista
+   * tottelee scrollbar-coloria, osa vain ::-webkit-scrollbar-thumbia.
    * Lepoväri on sama väri nolla-alfalla eikä transparent, koska muuten
-   * häivytys kulkee mustan kautta: transparent on rgba(0,0,0,0), ja kun
-   * toinen pää on color-mix()-arvo, Chromium interpoloi ne oklabissa ilman
-   * esikerrontaa. Mitattuna vaaleassa teemassa palkki kävi kesken
-   * häivytyksen (60,59,59):ssä ja (4,3,3):ssa ennen kuin loksahti siniseksi
-   * — eli musta välähdys. Samasta väristä lähdettäessä väliarvot ovat sitä
-   * itseään läpikuultavana: (234,237,255) -> (149,164,254) -> loppuväri. */
+   * häivytys välähtäisi mustan kautta. Transition lepotilan säännössä
+   * koskee molempia suuntia. */
   .md-sidebar--primary .md-sidebar__scrollwrap {
     scrollbar-color: rgb(from var(--jyu-rail-scrollbar) r g b / 0) transparent;
     transition: scrollbar-color 0.25s;
@@ -340,39 +193,13 @@
     transition: background-color 0.25s;
   }
 
-  /* :focus-visible eikä :focus-within (jota Zensical käyttää): linkin
-   * klikkaus jättää fokuksen valikkoon, jolloin palkki jäisi näkyviin
-   * pysyvästi. Näppäimistöllä liikuttaessa se sen sijaan halutaan näkyviin.
-   *
-   * Väri on Zensicalin oma korostusväri (.md-sidebar__scrollwrap:hover
-   * { scrollbar-color: var(--md-accent-fg-color) }, jota kapeat näytöt
-   * käyttävät) mutta 20 % vaimennettuna — ja vaimennus on eri suuntaan
-   * teemasta riippuen. Syy on selaimessa: kun scrollbar-color on asetettu,
-   * Chromium piirtää palkin ITSE korostettuna sen päällä ja vetää värin
-   * kohti keskiharmaata, eli tummat vaalenevat ja vaaleat tummuvat.
-   * Erillistä valitsinta "hiiri palkin päällä" ei CSS:ssä ole, joten tuota
-   * ei voi ohittaa — ainoa keino on antaa lähtöväri, josta selaimen oma
-   * korostus vie oikeaan suuntaan. Mitattuna (Chromium, kiskon tausta):
-   *
-   *   tumma teema  valikko (66,86,203)  kontrasti 3,2  ->  palkin päällä
-   *                (119,134,218)  kontrasti 5,8
-   *   vaalea teema valikko (117,137,254) kontrasti 3,1 ->  palkin päällä
-   *                (85,98,173)    kontrasti 5,6
-   *
-   * eli molemmissa teemoissa kontrasti lähes kaksinkertaistuu, kun hiiri
-   * osuu palkkiin, ja lähtövaihe pysyy silti 3:1:n yläpuolella. Täydellä
-   * korostusvärillä tumma teema meni toisin päin: selaimen oma korostus
-   * haalisti sen väriksi (146,163,254), joka näyttää tummaa taustaa vasten
-   * himmeämmältä kuin kylläinen lähtöväri.
-   *
-   * 80 % eikä esim. 90 % siksi, että kääntöpiste on noin luminanssissa 0,2
-   * ja korostusväri itse on 0,197 — pienempi vaimennus jäisi niin lähelle
-   * rajaa, että JYU-paletti voisi kääntää suunnan huomaamatta.
-   *
-   * Webkit-säännöt jäävät teeman kaksivaiheisiksi (haalea -> korostus vasta
-   * palkin päällä), koska Chromium jättää ne huomiotta heti kun
-   * scrollbar-color on asetettu — ne ovat varalla selaimille, jotka eivät
-   * tottele scrollbar-coloria. */
+  /* :focus-visible eikä teeman :focus-within: linkin klikkaus jättää
+   * fokuksen valikkoon, jolloin palkki jäisi näkyviin pysyvästi. Väri on
+   * teeman korostusväri 20 % taustan suuntaan vaimennettuna, koska Chromium
+   * korostaa palkin itse hiiren alla vetämällä väriä kohti keskiharmaata:
+   * täydellä korostusvärillä tumman teeman palkki haalistuisi hiiren alla.
+   * Webkit-säännöt jäävät teeman kaksivaiheisiksi varalle selaimille, jotka
+   * eivät tottele scrollbar-coloria. */
   .md-sidebar--primary:hover .md-sidebar__scrollwrap,
   .md-sidebar--primary .md-sidebar__scrollwrap:has(:focus-visible) {
     scrollbar-color: var(--jyu-rail-scrollbar) transparent;
@@ -389,67 +216,37 @@
     background-color: var(--md-accent-fg-color);
   }
 
-  /* Ilmaa listan molempiin päihin: ylhäällä ensimmäinen kohta irti kurssin
-   * nimestä, alhaalla sen verran ettei viimeinen kohta jää kiinni ruudun
-   * alareunaan pitkässä listassa (ilman tätä väli on 2 px kummassakin
-   * päässä). Padding on listalla eikä vieritysalueella, koska listan oma
-   * täyte kasvattaa vieritettävää korkeutta kaikissa selaimissa. */
+  /* Ilmaa listan päihin: ensimmäinen kohta irti kurssin nimestä, viimeinen
+   * irti ruudun alareunasta. Padding listalla eikä vieritysalueella, koska
+   * listan täyte kasvattaa vieritettävää korkeutta kaikissa selaimissa. */
   .md-sidebar--primary .md-nav--primary > .md-nav__list {
     padding-top: 0.4rem;
     padding-bottom: 1rem;
   }
 
-  /* Yhdistävä viiva avatun luvun alalukujen vasemmalle puolelle. Ilman sitä
-   * alaluvut erottuvat vain 0,6rem sisennyksellä ja näyttävät yhtä
-   * itsenäisiltä kohdilta kuin numeroimattomat linkit listan yläosassa —
-   * listasta ei siis näe, mihin lukuun ne kuuluvat.
-   *
-   * Viiva piirretään listalle eikä yksittäisille kohdille, jotta se jatkuu
-   * yhtenäisenä myös kohtien välisten 0,2rem rakojen yli.
-   *
-   * margin-left: 1rem on yläluvun oman linkin marginaali 0,2rem + täyte
-   * 0,8rem, eli tasan yläluvun tekstin alku. Viiva ei siis ala mistään
-   * välistä vaan tekstin kohdalta, ja koska molemmat ovat rem-yksiköitä,
-   * kohdistus pitää myös 1920:llä, jossa teeman juurikoko kasvaa.
-   * Materialin oletus on 0,6rem, joten alaluvut siirtyvät 8 px oikealle;
-   * se maksaa yhden rivinvaihdon lisää koko navigaatiossa (8 -> 9, kun
-   * kaikki 81 linkkiä on avattu).
-   *
-   * Väri on --jyu-rule eli sama kuin muissakin rajaviivoissa. Aiemmin tässä
-   * oli --md-default-fg-color--lighter, koska teeman --lightest katosi
-   * käytännössä näkyvistä; nyt kun viivoilla on oma sävy, poikkeusta ei
-   * tarvita eikä tämä viiva jää muita tummemmaksi.
-   *
-   * Sääntö osuu kaikkiin sisäkkäisiin tasoihin, mutta rakenteessa niitä on
-   * vain yksi: osa ja sen luvut. */
+  /* Yhdistävä viiva avatun luvun alalukujen vasemmalle puolelle, jotta
+   * listasta näkee, mihin lukuun ne kuuluvat. Listalle eikä kohdille, jotta
+   * viiva jatkuu kohtien välisten rakojen yli. margin-left on yläluvun
+   * linkin marginaali + täyte eli tasan sen tekstin alku. */
   .md-sidebar--primary .md-nav__item--nested > .md-nav > .md-nav__list {
     margin-left: 1rem;
     border-left: 1px solid var(--jyu-rule);
   }
 
-  /* Erotinviiva (ks. tiedoston alkupuoli) kiskon sisällön koko leveydelle.
-   * .md-sidebar__inner jättää oikeaan reunaan 0,6rem kourun vierityspalkille,
-   * ja ilman tätä viiva päättyisi sen sisäpuolelle — eli eri kohtaan kuin
-   * yläpalkin alareuna, jonka jatkoksi se on tarkoitettu. Laatikkovalikossa
-   * kourua ei ole, joten siellä viiva on listan levyinen. */
+  /* Erotinviiva kiskon sisällön koko leveydelle: .md-sidebar__inner jättää
+   * 0,6rem kourun vierityspalkille, jonka sisäpuolelle viiva muuten
+   * päättyisi, eri kohtaan kuin yläpalkin alareuna. */
   .md-nav--primary > .md-nav__list > .md-nav__item:has(
       a[href^="https://tim.jyu.fi"])::after {
     margin-right: -0.6rem;
   }
 
-  /* Avausnuolen suunta. Materialin oletus on oikealle osoittava chevron,
-   * joka kääntyy alas avattaessa — mobiilissa se on oikein, koska siellä
-   * alikohdat liukuvat oikealta uutena paneelina. Kiskossa ne aukeavat
-   * saman listan sisään, jolloin oikealle osoittava nuoli lupaa siirtymää
-   * jota ei tule. Alas = "avaa tämä", ylös = "sulje tämä", eli nuoli
-   * osoittaa siihen suuntaan, johon lista liikkuu.
-   *
-   * Kulmat lähtevät chevron-rightistä: 90deg on alas, -90deg ylös. Teeman
-   * oma transition transform .25s hoitaa kääntymisen, ja koska matka on
-   * nyt 180deg eikä 90deg, kääntyminen myös näkyy paremmin.
-   *
-   * --indeterminate on tila, jonka Zensical antaa avoinna olevalle luvulle
-   * sivun latautuessa, joten se kuuluu samaan sääntöön kuin :checked. */
+  /* Avausnuoli alas (suljettu) ja ylös (avattu). Teeman oletus osoittaa
+   * oikealle, mikä sopii mobiilin liukuvaan paneeliin; kiskossa alikohdat
+   * aukeavat saman listan sisään, joten nuoli osoittaa siihen suuntaan,
+   * johon lista liikkuu. Kulmat lähtevät chevron-rightistä. --indeterminate
+   * on tila, jonka Zensical antaa avoinna olevalle luvulle sivun
+   * latautuessa. */
   .md-sidebar--primary .md-nav__item--nested .md-nav__icon:after {
     transform: rotate(90deg);
   }
@@ -467,48 +264,20 @@
     transform: rotate(-90deg);
   }
 
-  /* 2. Muu sisältö alkaa kiskon oikealta puolelta ja keskittyy jäljelle
-   *    jäävään tilaan (siksi padding .md-mainille eikä marginaali
-   *    ruudukolle, jonka automaattinen keskitys halutaan säilyttää).
-   *
-   *    Alatunniste tarvitsee saman erikseen: se ei ole .md-mainin sisällä
-   *    vaan sen sisarena .md-containerissa. Ilman tätä sen oma ruudukko
-   *    keskittyy koko ruudun leveyteen, jolloin "Edellinen"-linkki ja
-   *    tekijätiedot jäävät kiskon alle (mitattu 1440: linkki alkoi x=103,
-   *    kisko peittää 0-300). Tausta ja yläreunan viiva saavat jäädä koko
-   *    leveydelle, koska kisko on läpinäkymätön ja piirtyy niiden päälle.
-   *
-   *    Kiskon päälle --jyu-gap, jotta vasen rako on yhtä leveä kuin oikea.
-   *    Zensical antaa sisällölle saman 1,2rem marginaalin molemmin puolin
-   *    (.md-content__inner), mutta raot eivät silti näytä samoilta: oikealla
-   *    naapuri ei ole sisällysluettelon sarakkeen reuna vaan sen teksti, joka
-   *    on sarakkeen sisällä vielä 0,8rem sisempänä, kun taas vasemmalla
-   *    naapuri on kiskon reunaviiva. Mitattu (Chromium, 1670 x 1080, jolloin
-   *    ruudukko täyttää tilan eikä kouruja ole): vasen rako oli 26,4 px ja
-   *    oikea 44,0 px; tämän jälkeen molemmat 44,0 px.
-   *
-   *    Leveällä näytöllä ruudukko ei täytä tilaa vaan keskittyy, jolloin
-   *    kourut ovat kummallakin puolella satoja pikseleitä ja tämä rako
-   *    katoaa niiden sisään — se on siis mitoitettu juuri siihen tilaan,
-   *    jossa se on ainoa väli kiskon ja tekstin välissä. */
+  /* 2. Muu sisältö alkaa kiskon oikealta puolelta. Padding .md-mainille eikä
+   *    marginaali ruudukolle, jotta ruudukon automaattinen keskitys säilyy.
+   *    Alatunniste tarvitsee saman erikseen, koska se on .md-mainin sisar
+   *    eikä lapsi; ilman sitä "Edellinen"-linkki jäisi kiskon alle. Kiskon
+   *    päälle --jyu-gap, jotta vasen rako on yhtä leveä kuin oikea. */
   .md-main,
   .md-footer {
     padding-left: calc(var(--jyu-rail) + var(--jyu-gap));
   }
 
-  /* Alatunnisteen sävytetty kaista silti kiinni kiskoon.
-   *
-   * .md-footer-meta on oma taustavärillinen lohkonsa (tekijät, lisenssi,
-   * muokkauslinkki) alatunnisteen sisällä, joten yllä oleva täyte ei siirrä
-   * siinä pelkkää tekstiä vaan koko värillisen kaistan reunan: kiskon ja
-   * kaistan väliin jäisi 0,8rem lovi sivun taustaa. Ylempänä olevaan
-   * .md-footerin omaan taustaan ja yläreunan viivaan tätä ei tule, koska ne
-   * ovat täytteen ulkopuolella eli jatkuvat kiskon alle asti.
-   *
-   * Negatiivinen marginaali vetää kaistan reunan takaisin kiskoon kiinni ja
-   * saman kokoinen täyte palauttaa sen sisällön entiselle paikalleen, eli
-   * .md-footer-meta__inner ja sen tekstit pysyvät pikselilleen samassa
-   * linjassa sisällön kanssa. */
+  /* Alatunnisteen sävytetty kaista (.md-footer-meta) silti kiinni kiskoon:
+   * yllä oleva täyte jättäisi kiskon ja kaistan väliin loven sivun taustaa.
+   * Negatiivinen marginaali vetää reunan kiskoon ja saman kokoinen täyte
+   * palauttaa sisällön paikalleen. */
   .md-footer-meta {
     margin-left: calc(-1 * var(--jyu-gap));
     padding-left: var(--jyu-gap);
@@ -522,8 +291,8 @@
     padding-right: 1.2rem;
   }
 
-  /* Kiskon otsikko on kurssin nimi, ei sivun otsikko. Zensical vaihtaa ne
-   * keskenään vieritettäessä; kiskon päällä se olisi hämmentävää. */
+  /* Kiskon otsikko on kurssin nimi, ei sivun otsikko: Zensical vaihtaa ne
+   * keskenään vieritettäessä, mikä kiskon päällä olisi hämmentävää. */
   .md-header__topic + .md-header__topic {
     display: none;
   }
@@ -541,7 +310,7 @@
 
   /* 4. Sumennettu tausta vain kiskon oikealle puolelle. Kiskon kohdalla
    *    yläpalkki on läpinäkyvä, jolloin kiskon oma tausta näkyy sen läpi
-   *    eikä sisältö vuoda valikon nimen taakse. */
+   *    eikä sisältö vuoda kurssin nimen taakse. */
   .md-header {
     background-color: transparent;
     backdrop-filter: none;

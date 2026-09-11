@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
-# Kertaluontoinen asennus. Ajettavissa uudelleen turvallisesti.
-#
-# Devcontainer-imagessa on python3 mutta ei venv:iä eikä pip:iä, joten ne
-# asennetaan tässä. Riippuvuuksia on täsmälleen yksi: zensical.
+# Kertaluontoinen asennus; ajettavissa uudelleen turvallisesti. Devcontainer-
+# imagessa on python3 mutta ei venv:iä eikä pip:iä, joten ne asennetaan tässä.
 set -euo pipefail
 cd "$(dirname "$0")"
 

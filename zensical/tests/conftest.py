@@ -1,18 +1,8 @@
 """Testien yhteiset palikat: käännetty sivusto, palvelin ja selain.
 
-Neljä tiedostoa, ks. PERUSTELUT.md:n "Testien rakenne":
-
-* `test_convert.py` — convert.py:n muunnokset yksin. Ei käännöstä eikä
-  selainta, joten se on millisekunneissa ohi.
-* `test_print.py` — koko ketju src -> docs -> site -> tulostussivu
-  koekirjalla (`tests/book/src`), selaimessa.
-* `test_change.py` — koekirjan materiaalia muutetaan oikeasti: se testi,
-  joka vastaa kysymykseen "kun materiaalia muutetaan, tulostuuko muutos".
-* `test_book.py` — sama ketju oikealla materiaalilla (`../src`), 72 lukua.
-
-Sivusto käännetään oikeasti (convert.py + zensical build) eikä käännöstä
-jäljitellä: tulostussivu kootaan valmiista HTML:stä, joten kaikki mitä
-testataan syntyy vasta käännöksessä.
+Sivusto käännetään oikeasti (convert.py + zensical build): tulostussivu
+kootaan valmiista HTML:stä, joten testattava syntyy vasta käännöksessä.
+Tiedostojako: PERUSTELUT.md, "Testien rakenne".
 """
 
 import functools
@@ -50,19 +40,14 @@ def build(zensical_dir: Path) -> Path:
     return zensical_dir / "site"
 
 
-# Kaikki, mistä käännetty sivusto riippuu. Lähdepuun lisäksi mukana ovat
-# koeputken omat palaset, koska myös niiden muuttaminen vanhentaa sivuston.
+# Kaikki, mistä käännetty sivusto riippuu: myös koeputken omat palaset
+# vanhentavat sivuston muuttuessaan.
 SOURCES = ("../src", "assets", "overrides", "convert.py", "mkdocs.yml")
 
 
 def is_stale(site: Path) -> bool:
-    """Onko käännetty sivusto jäljessä lähteistään?
-
-    Koko kirjan kääntäminen kestää n. 50 s, josta valtaosa on convert.py:n
-    kopio ../src -> docs/. Se on turhaa työtä, jos mikään ei ole muuttunut
-    edellisen käännöksen jälkeen — ja jos jokin on, testi ei saa ajaa
-    vanhalla sivustolla. Siksi ei kysytä käyttäjältä vaan tiedostoilta.
-    """
+    """Onko käännetty sivusto jäljessä lähteistään? Käännös on hidas eikä
+    sitä tehdä turhaan, mutta vanhalla sivustolla ei saa testata."""
     index = site / "index.html"
     if not index.is_file():
         return True
@@ -87,11 +72,10 @@ def real_site(request) -> Path:
 
 
 def copy_book(target: Path) -> Path:
-    """Koekirja + koeputken oma koneisto omaan hakemistoonsa. -> zensical-hakemisto.
+    """Koekirja + koeputken koneisto omaan hakemistoonsa. -> zensical-hakemisto.
 
-    Rakenne on sama kuin oikeassa repossa (src/ ja zensical/ sisaruksina),
-    koska convert.py etsii lähdepuun omasta sijainnistaan (ROOT.parent/"src").
-    Näin skripti ajetaan testeissä täsmälleen sellaisena kuin se on.
+    Sama rakenne kuin repossa (src/ ja zensical/ sisaruksina), koska convert.py
+    etsii lähdepuun omasta sijainnistaan.
     """
     shutil.copytree(ROOT / "tests" / "book" / "src", target / "src")
     zensical = target / "zensical"
@@ -179,19 +163,15 @@ class PrintPage:
 def open_print_page(browser, base_url: str, timeout: int = 120_000) -> PrintPage:
     """Avaa /tulosta/ ja odota, että sivu on koottu ja tulostusta pyydetty.
 
-    window.print korvataan laskurilla: headless-selaimessa oikeaa
-    tulostusikkunaa ei ole, ja kutsu on samalla juuri se mitä halutaan mitata.
-    Talteen otetaan sivun tila kutsun hetkellä, koska juuri se päätyy
-    paperille: tilarivin teksti, josta näkee ettei tulostusta pyydetä kesken
-    kokoamisen, ja piirrettyjen terminaalirivien määrä, koska nauhoitusten
-    soitin (assets/js/asciinema.js) jatkaa työtään vielä kokoamisen jälkeen.
+    window.print korvataan laskurilla: headless-selaimessa tulostusikkunaa ei
+    ole. Kutsun hetkellä talletetaan tilarivi ja piirrettyjen terminaalirivien
+    määrä, koska juuri se tila päätyy paperille.
     """
     page = browser.new_page()
     result = PrintPage(page)
     page.on("pageerror", lambda error: result.errors.append(str(error)))
-    # Resurssin 404 tulee konsoliin ilman osoitetta ("Failed to load
-    # resource: ..."), joten se otetaan location-kentästä mukaan. Muuten
-    # tunnettua puuttuvaa kuvaa ei voisi erottaa mistään muusta 404:stä.
+    # Resurssin 404 tulee konsoliin ilman osoitetta, joten se otetaan mukaan
+    # location-kentästä: muuten tunnettua puuttuvaa kuvaa ei voisi erottaa.
     page.on("console", lambda message: message.type == "error"
             and result.errors.append(
                 f"{message.text} {message.location['url']}".strip()))

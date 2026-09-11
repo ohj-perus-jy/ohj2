@@ -1,48 +1,15 @@
 /* Tehtäväkortti: riippuva numerointi.
  *
- * mdBookissa <task> on laatikko (theme/tasks.css): täytetty numerolaatta
- * otsikkopalkin vasemmassa reunassa, tehtävänanto omalla alueellaan ja
- * TIM-nappi alapalkissa. Tänne valittiin kevyempi ilme: ei laatikkoa
- * lainkaan, vaan tehtävänumero riippuu vasemmassa marginaalissa oppikirjan
- * tapaan ja tehtävät erottuvat toisistaan ohuella viivalla. Kirjasta jäi
- * TIM-nappi, koska tehtävän ainoan toiminnon pitää erottua tehtävänannon
- * omista linkeistä; alapalkkia sillä ei ole, vaan se on kaistan viimeinen
- * rivi.
- *
- * Miksi eri ilme kuin kirjassa
- * ----------------------------
- * Tehtävänanto kulkee samalla palstalla kuin luvun muu teksti, joten
- * koodilohkot ja kuvat saavat täyden leveyden — ja niitä on paljon, 43
- * tehtävänannossa on koodiaita. Lisäksi tehtäviä on peräkkäin: osan
- * tehtäväsivulla niitä on 8-12, ja yhtä monta laatikkoa peräkkäin on
- * raskas sivu. Viiva riittää erottamaan tehtävät toisistaan, kun numero
- * on marginaalissa merkitsemässä alun.
- *
- * Mitään elementtiä ei ole keksitty itse: kortti on tasan ne osat, jotka
- * lähdemerkkauksessa ovat (<task-title num>, <points>, <i class="bi
- * bi-stars">, <handout>, <task-link>). Ks. convert.py: convert_tasks.
- *
- * Värit teeman muuttujista
- * ------------------------
- * Numero, pisteet ja TIM-linkki ovat --md-typeset-a-color, eli sama väri
- * jolla teema piirtää linkit. Se on ainoa Materialin muuttuja, joka on
- * *molemmissa* teemoissa oikea: vaaleassa se on indigo #4051b5, tummassa
- * teema vaihtaa sen vaaleampaan #5488e8:aan
- * ([data-md-color-scheme=slate][data-md-color-primary=indigo]).
- * --md-primary-fg-color olisi molemmissa sama tumma indigo, eli tummassa
- * teemassa lukukelvoton.
- *
- * Erotinviiva on --jyu-rule .05rem:n paksuisena, eli tasan se mitä sivun
- * muutkin rajaviivat käyttävät (muuttuja ja perustelu: layout.css).
- */
+ * mdBookin laatikon sijaan kevyempi ilme: tehtävänumero riippuu vasemmassa
+ * marginaalissa ja tehtävät erottuvat toisistaan ohuella viivalla, koska
+ * tehtäviä on sivulla monta peräkkäin ja tehtävänannon koodilohkot tarvitsevat
+ * koko palstan. TIM-nappi jäi, jotta tehtävän ainoa toiminto erottuu
+ * tehtävänannon omista linkeistä. Merkkauksen kirjoittaa convert.py:
+ * convert_tasks. */
 
-/* Bonusmerkin kulta, sama liuskassa ja leipätekstissä. mdBookin .jyu-gold on
- * #C29A5B, jonka kontrasti valkoista vasten on 2,4:1 — liian vähän pienelle
- * tekstille eikä paljon enempää merkillekään. Sama sävy
- * tummennettuna yltää 4,7:1:een, ja tummassa teemassa vaalennettuna
- * 9:1:een. Teemalla ei ole omaa muuttujaa tälle, koska JYU-paletti on
- * kokonaan tekemättä (README kohta 18); kun se tehdään, tämä muuttuja
- * osoittaa siihen. */
+/* Bonusmerkin kulta. mdBookin #C29A5B ei riitä kontrastiksi valkoista
+ * vasten; sama sävy tummennettuna vaaleaan ja vaalennettuna tummaan teemaan.
+ * Teemalla ei ole omaa muuttujaa tälle, koska JYU-paletti on tekemättä. */
 :root {
   --jyu-task-bonus: #9a7326;
 }
@@ -52,19 +19,12 @@
 }
 
 /* TIM-napin sävyt. Täyttö on --md-typeset-a-color, sama linkkiväri kuin
- * numerossa ja pisteissä, mutta tekstin väri on teemoissa eri: valkoinen on
- * vaalean teeman indigolla (#4051b5) 6,9:1 mutta tumman teeman vaaleammalla
- * sinisellä (#5488e8) vain 3,5:1, eli alle pienen tekstin 4,5:1:n rajan.
- * Tummassa teemassa teksti on siksi lähes musta (5,4:1). Sama ratkaisu kuin
- * kirjassa, jonka tumman teeman kultanapissa on musta teksti
- * (theme/css/variables.css: --task-bg-text).
- *
- * Osoittimen alla täyttö tummenee vaaleassa ja vaalenee tummassa, eli kumpaan
- * suuntaan tahansa poispäin sivun taustasta.
- *
- * Hehku on sama sävy läpinäkyvänä. Tummassa teemassa se on vahvempi (45 % /
- * 28 %) kuin vaaleassa (40 % / 22 %): tumma tausta imee värin, kun taas
- * valkoisella paperinvalkoinen sivu näyttää saman voimakkuuden sumuna. */
+ * numerossa ja pisteissä: se on ainoa teeman muuttuja, joka on luettava
+ * molemmissa teemoissa (--md-primary-fg-color on tummassa sama tumma indigo).
+ * Tekstin väri on tummassa teemassa lähes musta, koska valkoinen ei yllä
+ * tumman teeman vaaleammalla sinisellä pienen tekstin kontrastiin. Hover
+ * tummenee vaaleassa ja vaalenee tummassa, eli poispäin sivun taustasta.
+ * Hehku on tummassa vahvempi, koska tumma tausta imee värin. */
 :root {
   --jyu-task-btn-fg: #fff;
   --jyu-task-btn-bg-hover: color-mix(in srgb, var(--md-typeset-a-color) 80%, black);
@@ -81,9 +41,8 @@
 
 /* ------------------------------------------------------------------ kaista */
 
-/* Yksi tehtävä. container-type tekee kortista kyselysäiliön: kapean tilan
- * säännöt alempana katsovat kortin omaa leveyttä eivätkä ikkunan leveyttä.
- * Ks. perustelu @container-lohkon kohdalla. */
+/* Yksi tehtävä. container-type tekee kortista kyselysäiliön: leveän palstan
+ * säännöt alempana katsovat kortin omaa leveyttä eivätkä ikkunan. */
 .md-typeset .task {
   container-type: inline-size;
   margin: 1.6em 0;
@@ -91,10 +50,9 @@
   border-block: .05rem solid var(--jyu-rule);
 }
 
-/* Peräkkäiset tehtävät ovat yhtä kaistaa: ei väliä eikä kaksinkertaista
- * viivaa. Negatiivinen ylämarginaali kumoaa edellisen alamarginaalin
- * marginaalien kutistuessa (1.6em + -1.6em = 0), ja yläviiva jää pois,
- * koska edellisen alaviiva on jo siinä. */
+/* Peräkkäiset tehtävät ovat yhtä kaistaa: negatiivinen ylämarginaali kumoaa
+ * edellisen alamarginaalin, ja yläviiva jää pois, koska edellisen alaviiva
+ * on jo siinä. */
 .md-typeset .task + .task {
   margin-block-start: -1.6em;
   border-block-start: 0;
@@ -110,8 +68,8 @@
   margin-bottom: .8rem;
 }
 
-/* Numero koodikirjasimella ja tabulaarisilla numeroilla, jotta 2.9 ja 2.10
- * ovat saman levyisiä ja pinoutuvat marginaalissa suoraan riviin. */
+/* Tabulaariset numerot, jotta 2.9 ja 2.10 ovat saman levyisiä ja pinoutuvat
+ * marginaalissa suoraan riviin. */
 .md-typeset .task-num {
   flex: none;
   font-family: var(--md-code-font-family);
@@ -121,14 +79,10 @@
   color: var(--md-typeset-a-color);
 }
 
-/* Nimi on otsikko, joten se on teeman otsikkokirjasinta. Ilman tätä se
- * perisi leipätekstin Source Serif 4:n (assets/css/typography.css:
- * .md-content__inner). typography.css:n oma otsikkolista ei tavoita tätä,
- * koska se luettelee elementit h1-h6, .admonition-title ja summary.
- *
- * flex: 0 1 auto eikä 1 1 auto: nimi ei kasva, jolloin bonusliuska jää
- * kiinni nimeen sen sijaan että valuisi pistemäärän viereen. min-width: 0
- * antaa sen silti kutistua ja rivittyä sanoista kapealla palstalla. */
+/* Nimi on otsikko, joten teeman otsikkokirjasinta; typography.css:n
+ * otsikkolista ei tavoita tätä. flex: 0 1 auto: nimi ei kasva, jolloin
+ * bonusliuska jää kiinni nimeen eikä valu pistemäärän viereen; min-width: 0
+ * antaa sen silti rivittyä kapealla palstalla. */
 .md-typeset .task-name {
   flex: 0 1 auto;
   min-width: 0;
@@ -138,13 +92,9 @@
   line-height: 1.3;
 }
 
-/* Pisteet seuraavat nimeä eivätkä pakene kortin oikeaan reunaan: ne ovat
- * osa tunnusta, ja irrallaan reunassa ne lukisivat kuin oma sarakkeensa.
- *
- * Väli nimeen on .8rem riippumatta siitä, kummalla leveydellä ollaan.
- * Tunnusrivin gap on numerosarakkeen mitta (kapealla .7rem, leveällä
- * 1.4rem, ks. @container alempana), joten se kumotaan tästä välistä
- * negatiivisella marginaalilla. */
+/* Pisteet seuraavat nimeä eivätkä pakene kortin oikeaan reunaan. Väli nimeen
+ * on .8rem kummallakin leveydellä: tunnusrivin gap on numerosarakkeen mitta,
+ * joten se kumotaan negatiivisella marginaalilla. */
 .md-typeset .task-points {
   flex: none;
   margin-inline-start: calc(.8rem - var(--task-head-gap));
@@ -157,17 +107,10 @@
   color: var(--md-typeset-a-color);
 }
 
-/* Bonusliuska on nimen sisällä, kuten <i class="bi bi-stars"> on
- * <task-title>:n sisällä. Se seuraa siis nimen viimeistä sanaa myös
- * silloin kun nimi rivittyy.
- *
- * vertical-align on tässä välttämätön eikä kosmeettinen: inline-flex-
- * laatikolla, jonka oma align-items on center, ei ole tekstin peruslinjaa,
- * jolloin selain synnyttää sen laatikon alareunasta ja tunnusrivin
- * align-items: baseline kohdistaisi liuskan *alareunan* otsikon
- * peruslinjaan. middle kohdistaa laatikon keskikohdan x-korkeuden keskelle
- * ja top nostaa vielä sen verran, että liuska istuu versaalikorkeuden
- * keskelle. */
+/* Bonusliuska on nimen sisällä kuten lähdemerkkauksessa, joten se seuraa
+ * nimen viimeistä sanaa myös rivittyessä. vertical-align on välttämätön:
+ * inline-flex-laatikolla ei ole tekstin peruslinjaa, joten tunnusrivin
+ * align-items: baseline kohdistaisi liuskan alareunan otsikon peruslinjaan. */
 .md-typeset .task-bonus {
   display: inline-flex;
   align-items: center;
@@ -187,24 +130,19 @@
   white-space: nowrap;
 }
 
-/* Bonusmerkki on inline-SVG teeman omassa .twemoji-kääreessä (convert.py:
- * bonus_mark), joten koon, kohdistuksen ja fill: currentcolorin hoitaa teeman
- * oma sääntö. Tänne jää vain väri.
- *
- * Sääntö on yhteinen liuskan ja leipätekstin kanssa: sama merkki on myös
- * avattavien lohkojen <summary>-riveillä ja harjoitustyön vaatimuslistoissa,
- * eikä siellä ole liuskaa, jolta väri periytyisi. Liuskassa arvo on sama kuin
- * mitä merkki perisi, joten sääntö ei muuta siellä mitään. */
+/* Bonusmerkki on inline-SVG teeman .twemoji-kääreessä (convert.py:
+ * bonus_mark), joten koon ja kohdistuksen hoitaa teema; tänne jää väri.
+ * Sääntö on yhteinen liuskan ja leipätekstin kanssa, koska sama merkki on
+ * myös <summary>-riveillä ja vaatimuslistoissa ilman liuskaa. */
 .md-typeset .jyu-bonus {
   color: var(--jyu-task-bonus);
 }
 
 /* ------------------------------------------------------------ tehtävänanto */
 
-/* Tehtävänanto on tavallista leipätekstiä, joten teeman omat marginaalit
- * jäävät voimaan: kappaleiden, listojen, koodilohkojen ja avattavien
- * lohkojen rytmi on sama kuin luvussa. Vain reunimmaiset siivotaan, jotta
- * kaistan väljyys tulee kortin omasta paddingista eikä kahdesta lähteestä. */
+/* Tehtävänanto on tavallista leipätekstiä teeman marginaaleilla; vain
+ * reunimmaiset siivotaan, jotta kaistan väljyys tulee kortin paddingista
+ * eikä kahdesta lähteestä. */
 .md-typeset .task-handout > :first-child {
   margin-top: 0;
 }
@@ -219,20 +157,11 @@
   margin-top: 1.2rem;
 }
 
-/* Täytetty nappi eikä tekstilinkki, kahdesta syystä.
- *
- * 1. Teeman modern-tyyli alleviivaa jokaisen leipätekstin linkin
- *    (.md-typeset a { text-decoration: underline }), joten aiempi hover-tilan
- *    oma alaviiva piirtyi alleviivauksen alapuolelle: kaksi viivaa
- *    päällekkäin, ja alempi vielä nuolen yli, koska se kulki koko laatikon
- *    leveydeltä.
- * 2. Tehtävän ainoa toiminto erottuu napissa selvästi tehtävänannon omista
- *    linkeistä, joita on monessa tehtävässä. Sama kuin kirjassa, jossa
- *    TIM-linkki on täytetty nappi alapalkissa (theme/tasks.css:
- *    task > task-link > a).
- *
- * text-decoration ja väri eivät tarvitse !importantia: kahden luokan sääntö
- * on tarkempi kuin teeman .md-typeset a ja .md-typeset a:hover. */
+/* Täytetty nappi eikä tekstilinkki: teema alleviivaa jokaisen leipätekstin
+ * linkin, joten hover-alaviiva piirtyisi kahtena viivana, ja nappina
+ * tehtävän ainoa toiminto erottuu tehtävänannon linkeistä. Kahden luokan
+ * sääntö on tarkempi kuin teeman .md-typeset a, joten !importantia ei
+ * tarvita. */
 .md-typeset .task-link > a {
   display: inline-flex;
   align-items: center;
@@ -255,18 +184,10 @@
   transition: transform .15s;
 }
 
-/* :focus on mukana, koska teema värjää linkin myös kohdistettaessa
- * (.md-typeset a:focus { color: var(--md-accent-fg-color) }) — ilman tätä
- * napin teksti vaihtaisi väriä sarkaimella eikä erottuisi täytöstä.
- *
- * Hehku on kaksi varjoa: tiukka .35rem:n sumu napin ääriviivan ympärillä ja
- * sen ulkopuolella laajempi 1.1rem:n kajo. Kumpikin on levittämätön
- * (spread 0) ja siirtämätön (0 0), eli hehku on napin muotoinen halo eikä
- * pudotusvarjo — nappi ei näytä nousevan sivulta vaan syttyvän.
- *
- * Sama hehku on :focus-visiblessä, jolloin näppäimistökohdistus näkyy
- * täsmälleen samalta kuin osoitin. Se ei korvaa selaimen omaa
- * kohdistusrengasta vaan tulee sen rinnalle, koska outlinea ei kosketa. */
+/* :focus mukana, koska teema värjää linkin myös kohdistettaessa; ilman tätä
+ * napin teksti vaihtaisi väriä sarkaimella. Hehku on kaksi siirtämätöntä
+ * varjoa eli napin muotoinen halo, ei pudotusvarjo; sama hehku
+ * :focus-visiblessä selaimen oman kohdistusrenkaan rinnalle. */
 .md-typeset .task-link > a:hover,
 .md-typeset .task-link > a:focus {
   background-color: var(--jyu-task-btn-bg-hover);
@@ -291,7 +212,7 @@
 }
 
 /* Paperille tekstilinkkinä: selain ei tulosta taustavärejä oletuksena, ja
- * vaalean teeman valkoinen napinteksti katoaisi valkoiselle paperille. */
+ * valkoinen napinteksti katoaisi valkoiselle paperille. */
 @media print {
   .md-typeset .task-link > a {
     padding: 0;
@@ -302,24 +223,15 @@
 
 /* ------------------------------------------------------------ leveä palsta */
 
-/* Kapea on perustila ja leveä lisäys, kolmesta syystä:
- *
- * 1. Jos selain ei tunne @containeria, kortti piirtyy kapeana. Numero on
- *    silloin nimen edessä eikä marginaalissa — se on tylsempi mutta ehjä.
- * 2. Mitta on kortin oma leveys eikä ikkunan leveys. Artikkelipalsta on
- *    kapea myös leveällä näytöllä silloin kun ikkuna on jaettu, ja
- *    tulostuksessa (assets/css/print.css) leveys tulee paperista.
- * 3. Säiliö on kortti itse eikä artikkeli. container-type tekee
- *    elementistä sijoituksen sisältävän lohkon absoluuttisesti
- *    sijoitetuille jälkeläisille, ja se on turvallista tehdä omalle
- *    kortille mutta ei .md-content__innerille, jonka sisällä teeman omat
- *    ponnahdukset ja työkaluvihjeet elävät.
- *
- * 34rem on se leveys, jonka alapuolella 5.6rem:n sisennys alkaa syödä
- * tehtävänannon koodilohkoista liikaa. */
+/* Kapea on perustila ja leveä lisäys: ilman @container-tukea kortti piirtyy
+ * kapeana mutta ehjänä. Mitta on kortin oma leveys, koska palsta on kapea
+ * myös jaetussa ikkunassa ja tulostuksessa. Säiliö on kortti eikä
+ * artikkeli, koska container-type tekee elementistä sijoituksen sisältävän
+ * lohkon, mikä .md-content__innerissä rikkoisi teeman ponnahdukset. 34rem:n
+ * alapuolella 5.6rem:n sisennys syö koodilohkoista liikaa. */
 @container (min-width: 34rem) {
-  /* Numero omaan sarakkeeseensa vasempaan marginaaliin. Sarake 4.2rem +
-   * tunnusrivin väli 1.4rem = sisällön sisennys 5.6rem. */
+  /* Numero omaan sarakkeeseensa: 4.2rem + tunnusrivin väli 1.4rem =
+   * sisällön sisennys 5.6rem. */
   .md-typeset .task-num {
     width: 4.2rem;
     text-align: right;

@@ -1,27 +1,13 @@
-/* Koodilohkon nappirivi: ajonappi ja silmä, ks. PERUSTELUT.md kohta "Nappirivi".
- *
- * Tiedosto on oma eikä osa playground.css:ää tai hidelines.css:ää, koska se
- * koskee riviä eikä yksittäistä nappia: saman .md-code__navin napit on
- * piirrettävä samannäköisiksi. Ne kaksi tiedostoa antavat kumpikin vain oman
- * kuvakkeensa, tämä antaa napin.
- *
- * Teema piirtää napit paljaina kuvakkeina ilman omaa pintaa ja jättää ne
- * levossa --md-default-fg-color--lightestiin, joka nousee --lightiin vasta
- * kun osoitin on lohkon päällä. Kopiointinapille se sopii - se on mukavuus,
- * jonka paikan tuntee entuudestaan - mutta ajonappi ja silmä ovat kirjan omia
- * toimintoja, joita lukija ei osaa etsiä hoverin takaa, eikä
- * kosketusnäytöllä ole hoveria lainkaan.
- *
- * Nappi tehdään kohotetuksi laataksi: oma pinta, hiusviivareunus, pyöristys
- * ja varjo. Kohotettu pinta on molemmissa teemoissa lohkoa vaaleampi, koska
- * ylöspäin osoittava pinta ottaa valoa - vaaleassa valkoinen lohkon
- * #f5f5f5:tä vasten, tummassa 26 % lohkon 18 %:aa vasten. Hiusviiva on sama
- * --jyu-rule kuin sivun muissa rajoissa (assets/css/layout.css).
- */
+/* Koodilohkon nappirivi: ajonappi ja silmä kohotettuina laattoina.
+ * Teema piirtää napit paljaina kuvakkeina, jotka erottuvat vasta hoverilla;
+ * kopiointinapille se riittää, mutta kirjan omia toimintoja lukija ei osaa
+ * etsiä hoverin takaa, eikä kosketusnäytöllä hoveria ole. Tiedosto on oma,
+ * koska se koskee koko riviä: playground.css ja hidelines.css antavat vain
+ * kuvakkeen, tämä napin. */
 
 :root {
-  /* Kohotettu pinta ja sen varjo. Varjo on vaaleassa harmaa ja tummassa musta:
-   * tummalla pinnalla varjo ei näy vaaleana vaan syvempänä mustana. */
+  /* Pinta on molemmissa teemoissa lohkoa vaaleampi. Varjo on tummassa
+   * musta, koska tummalla pinnalla se ei näy vaaleana. */
   --jyu-code-button-bg: #fff;
   --jyu-code-button-shadow: 0 0.05rem 0.15rem #0000001f;
   --jyu-code-button-shadow-hover: 0 0.15rem 0.35rem #00000029;
@@ -33,17 +19,14 @@
   --jyu-code-button-shadow-hover: 0 0.15rem 0.35rem #00000080;
 }
 
-/* Nappirivin oma tausta pois. Se on olemassa siksi, että paljaat kuvakkeet
- * erottuisivat allaan juoksevasta koodista, mutta nappien omat pinnat tekevät
- * sen nyt paremmin, ja kaksi sisäkkäistä laatikkoa on yksi liikaa. */
+/* Nappirivin oma tausta pois: nappien pinnat erottavat ne koodista jo, ja
+ * kaksi sisäkkäistä laatikkoa on yksi liikaa. */
 .md-code__nav {
   background-color: transparent;
 }
 
-/* Kuvake on 1.125em ja teeman nappi 1.5em, eli väljyyttä on 0.19em joka
- * puolella. Laatta tarvitsee enemmän: 1.75em tekee reunan ja kuvakkeen väliin
- * 0.31em, jolloin kuvake ei liimaudu reunukseen. Samalla kosketuskohde
- * kasvaa. */
+/* Teeman 1.5em:ssä kuvake liimautuisi reunukseen; 1.75em antaa väljyyttä ja
+ * kasvattaa kosketuskohdetta. */
 .md-code__button {
   width: 1.75em;
   height: 1.75em;
@@ -53,8 +36,7 @@
   border-radius: 0.15rem;
   box-shadow: var(--jyu-code-button-shadow);
 
-  /* Väri, pinta ja varjo teeman omalla .25 s:llä, mutta nosto ja painallus
-   * nopeammin: liike saa tuntua napsahdukselta eikä liu'ulta. */
+  /* Nosto ja painallus nopeammin kuin värit: napsahdus, ei liuku. */
   transition:
     color 0.25s,
     background-color 0.25s,
@@ -63,13 +45,8 @@
     transform 0.1s;
 }
 
-/* Kohdistus: laatta nousee, varjo kasvaa ja aksenttiväri tulee sekä
- * kuvakkeeseen että reunukseen. Pinta saa aksentista vain 8 %, jotta laatta
- * pysyy vaaleana eikä kuvake huku siihen.
- *
- * :not(:disabled), koska selain antaa :hoverin myös pois käytöstä olevalle
- * napille: ilman tätä ajon aikana himmennetty nappi (assets/css/playground.css)
- * nousisi ja värittyisi kuin sitä voisi painaa. */
+/* :not(:disabled), koska selain antaa :hoverin myös disabled-napille: ajon
+ * aikana himmennetty nappi (playground.css) nousisi muuten kuin painettava. */
 .md-code__button:not(:disabled):hover,
 .md-code__button:not(:disabled).focus-visible {
   color: var(--md-accent-fg-color);
@@ -79,18 +56,15 @@
   transform: translateY(-0.05rem);
 }
 
-/* Painallus: laatta painuu takaisin kiinni ja varjo katoaa. Sama matka alas
- * kuin hover nosti ylös, eli lepotason läpi hieman alle - siitä tulee
- * napsahdus. */
+/* Painallus lepotason läpi hieman alle: siitä tulee napsahdus. */
 .md-code__button:not(:disabled):active {
   transform: translateY(0.05rem);
   box-shadow: none;
   transition-duration: 0.05s;
 }
 
-/* Silmän päälle jäävä tila: kun piilorivit ovat näkyvissä, nappi on päällä ja
- * näyttää siltä - painettuna pohjaan, aksenttiväri pinnassa. Ilman tätä ainoa
- * merkki tilasta olisi kuvakkeen vaihtuminen yliviivatuksi silmäksi. */
+/* Silmän päällä-tila painettuna pohjaan; muuten ainoa merkki tilasta olisi
+ * kuvakkeen vaihtuminen. */
 .md-code__button[aria-pressed="true"] {
   color: var(--md-accent-fg-color);
   background-color: color-mix(in srgb, var(--md-accent-fg-color) 12%, var(--jyu-code-button-bg));
@@ -98,7 +72,7 @@
   box-shadow: none;
 }
 
-/* Liikkumattomuutta pyytäneelle vain värit, ei nostoa eikä painumista. */
+/* Liikkumattomuutta pyytäneelle vain värit. */
 @media (prefers-reduced-motion: reduce) {
   .md-code__button {
     transition: color 0.25s, background-color 0.25s, border-color 0.25s;

@@ -1,23 +1,13 @@
-# Barebones-lähtötilanne: Zensicalin oletusteema sellaisenaan.
-#
-# Tässä tiedostossa on tarkoituksella VAIN se, mitä ilman sivustoa ei ole
-# olemassa: nimi, teema ja navigaatio. Jokainen rivi, joka tänne myöhemmin
-# lisätään, pitää pystyä perustelemaan jollakin mdBookin ominaisuudella,
-# jota oikeasti tarvitaan. Ks. README.md:n tarkistuslista.
+# Zensical-sivuston asetukset. Tänne lisätään vain se, minkä jokin mdBookin
+# ominaisuus vaatii. Navigaatio on nav.yml:ssä, jonka convert.py kirjoittaa.
 INHERIT: nav.yml
 
 site_name: Ohjelmointi 2
 docs_dir: docs
 site_dir: site
 
-# Alatunniste. mdBookin footerissa (theme/index.hbs) on CC-lisenssimerkki ja
-# linkit muutosehdotukseen; tekijät ja lisenssi ovat repon README.md:n
-# License-osiossa. Sama tieto tänne, koska sivustolla se on ainoa paikka,
-# josta materiaalin tekijät ja käyttöehdot näkee.
-#
-# Arvo menee malliin sellaisenaan (ei escapetusta), joten HTML on sallittu.
-# Zensical laittaa sen .md-copyright__highlight-lohkoon ja lisää perään oman
-# "Made with Zensical" -rivinsä.
+# Alatunniste: tekijät ja lisenssi kuten mdBookin footerissa. Arvo menee
+# malliin escapettamatta, joten HTML on sallittu.
 copyright: >-
   Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa,
   Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot;
@@ -25,75 +15,38 @@ copyright: >-
   rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0
   Kansainvälinen">CC BY-SA 4.0</a>
 
-# Muokkauslinkki. mdBookin alatunnisteessa (theme/index.hbs) on "Ehdota
-# muutosta", jonka osoite tulee book.tomlin edit-url-templatesta. Zensicalilla
-# ei ole valmista mallia, vaan osoite kootaan näistä kahdesta: repo_url +
-# edit_uri + sivun polku docs/:ssä. Linkki avaa GitHubin editorin, ja
-# tallennuksesta syntyy pull request.
-#
-# edit_uri osoittaa mdBookin lähdepuuhun src/, ei tämän koeputken docs/:iin:
-# docs/ on convert.py:n kertakäyttöinen kopio eikä sitä ole versionhallinnassa.
-# Polut ovat muuten samat, mutta convert.py:n siirtämät ja luomat sivut
-# hoidetaan erikseen (nav.yml: extra.edit_source, overrides/partials/
-# copyright.html).
-#
-# repo_url toisi samalla repo-linkin kahteen paikkaan: yläpalkin oikeaan
-# reunaan ja kapean näytön laatikkovalikon ensimmäiseksi kohdaksi ennen
-# navigaatiota. Jälkimmäistä paikkaa mdBookissa ei ole, eikä repo-nappia
-# haluta kummallekaan, joten linkki tyhjennetään mallista:
-# overrides/partials/source.html (ja layout.css piilottaa tyhjät kääreet).
+# Muokkauslinkin osoite kootaan repo_url + edit_uri + sivun polku. edit_uri
+# osoittaa lähdepuuhun src/, koska docs/ on convert.py:n kopio eikä
+# versionhallinnassa; siirretyt sivut hoitaa nav.yml:n extra.edit_source.
+# repo_url toisi myös repo-linkin, joka tyhjennetään overrides/partials/source.html:ssä.
 repo_url: https://github.com/ohj-perus-jy/ohj2
 edit_uri: edit/main/src/
 
 theme:
   name: material
 
-  # Mallien ylikirjoitukset, ks. overrides/. Muokkauslinkki on Materialissa
-  # sivun oikeassa yläkulmassa kynäkuvakkeena (feature content.action.edit),
-  # mdBookissa alatunnisteen lisenssirivillä; alempi paikka ei ole asetus
-  # vaan malli (overrides/partials/copyright.html).
+  # Mallien ylikirjoitukset (mm. muokkauslinkki alatunnisteessa), ks. overrides/.
   custom_dir: overrides
   language: fi
 
-  # Otsikoiden, valikon, yläpalkin ja sisällysluettelon kirjasin.
-  #
-  # Leipäteksti on Source Serif 4 (assets/css/typography.css), ja Source Sans on
-  # sen sisarkirjasin samasta Adoben Source-perheestä: Source Serif on piirretty
-  # täydentämään Source Sansia, joten x-korkeus ja mittasuhteet täsmäävät eikä
-  # otsikon ja leipätekstin väliin synny kokohyppyä. Zensicalin oletus on Inter,
-  # joka on selvästi isompi samalla pistekoolla.
-  #
-  # Tämä asetus menee --md-text-font -muuttujaan, jota teema käyttää
-  # body-tasolla, eli se osuu kaikkeen paitsi leipätekstiin: typography.css
-  # ohittaa sen .md-content__innerissä ja palauttaa otsikot takaisin tähän
-  # (var(--md-text-font-family)). Zensical hakee fontin Google Fontsista itse,
-  # joten typography.css:ään ei tarvita mitään lisää.
-  #
-  # font.code jätetään Zensicalin oletukseen (JetBrains Mono). Perheen kolmas
-  # jäsen Source Code Pro olisi sama kuin mdBookin --mono-font, jos yhtenäisyys
-  # kirjan kanssa alkaa painaa.
+  # Otsikoiden, valikon ja yläpalkin kirjasin. Source Sans 3 on leipätekstin
+  # Source Serif 4:n (typography.css) sisarkirjasin, joten mittasuhteet täsmäävät.
   font:
     text: Source Sans 3
 
   features:
-    # mdBookissa osan otsikko on itse linkki osan etusivulle, ja nuoli avaa
-    # alikohdat. Ilman tätä etusivu toistuisi vielä ensimmäisenä lapsena.
+    # Osan otsikko on itse linkki osan etusivulle, kuten mdBookissa.
     - navigation.indexes
 
-    # mdBookin <nav class="chapter-navigation">: edellinen/seuraava sivun
-    # alareunassa. Zensicalilla se on olemassa mutta oletuksena pois päältä.
+    # Edellinen/seuraava sivun alareunassa, kuten mdBookissa.
     - navigation.footer
 
-    # Työkalusivun käyttöjärjestelmävälilehdet: yhden valitseminen valitsee
-    # saman otsikon kaikkialta. mdBookin accordion.js teki saman sivun sisällä
-    # tunnuksesta (#tab/win) ja muisti valinnan osoitteen ?tabs=-parametrissa;
-    # Material yhdistää otsikkotekstistä ja muistaa valinnan selaimessa, eli
-    # myös sivulta toiselle. Ks. convert.py: convert_tabs.
+    # Käyttöjärjestelmävälilehdet: valinta valitsee saman otsikon kaikkialta ja
+    # muistetaan sivulta toiselle. Ks. convert.py: convert_tabs.
     - content.tabs.link
 
-  # book.toml: default-theme = "jyu-light", preferred-dark-theme = "jyu-dark".
-  # media-ehto tekee saman: teema seuraa käyttöjärjestelmää, ja vaihdin
-  # ohittaa sen. Värit ovat toistaiseksi Materialin omat, ei JYU-palettia.
+  # Teema seuraa käyttöjärjestelmää ja vaihdin ohittaa sen, kuten book.tomlin
+  # default-theme / preferred-dark-theme. Värit ovat Materialin omat.
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -107,107 +60,70 @@ theme:
         name: Vaihda vaaleaan teemaan
 
 extra_css:
-  # Leipätekstin kirjasin: mdBookin Source Serif 4. Omana tiedostonaan, koska
-  # layout.css käsittelee asettelua. Tiedoston alussa on perustelu sille, miksi
-  # tämä ei ole theme.font.text -asetus (se veisi mukanaan valikon ja otsikot).
+  # Leipätekstin kirjasin; miksi ei theme.font.text, ks. tiedoston alku.
   - assets/css/typography.css
+
+  # Kirjasinvalikko yläpalkissa (overrides/partials/header.html, assets/js/fontmenu.js).
+  - assets/css/fontmenu.css
   - assets/css/layout.css
 
-  # Alerttilaatikot Materialin classic-variantin ilmeeseen: reunus laatikon
-  # ympäri, väri vain otsikkorivillä. Omana tiedostonaan, koska layout.css on
-  # sivun asettelua ja tämä yhden komponentin tyyli. Tiedoston alussa on
-  # perustelu sille, miksi tämä ei ole theme.variant: classic (se veisi
-  # mukanaan kirjasimet, kuvakkeet ja koko teeman välistykset).
+  # Alerttilaatikot classic-variantin ilmeeseen; miksi ei theme.variant, ks. tiedoston alku.
   - assets/css/admonitions.css
 
-  # Tehtäväkortit. Omana tiedostonaan samasta syystä kuin admonitions.css:
-  # yhden komponentin tyyli, ei sivun asettelua. Ilme on tarkoituksella eri
-  # kuin kirjan laatikko (theme/tasks.css); perustelu on tiedoston alussa.
-  # Merkkauksen kääntää convert.py: convert_tasks.
-  #
-  # Tiedosto omistaa myös bonusmerkin kullan (.jyu-bonus). Merkki on sama
-  # kortin liuskassa ja leipätekstissä, joten sen väri on määritelty kerran
-  # täällä, missä liuskakin on; merkin itsensä kirjoittaa convert.py:
-  # bonus_mark.
+  # Tehtäväkortit (convert.py: convert_tasks) ja bonusmerkin väri (.jyu-bonus).
   - assets/css/tasks.css
 
-  # Valikkopolun erotin (**File** › **Settings**), yksi sääntö: pelkkä väri.
-  # Loput kirjan ikoneista ovat teeman omassa .twemoji-kääreessä eivätkä
-  # tarvitse tyyliä lainkaan. Merkkauksen kirjoittaa convert.py: convert_icons.
+  # Valikkopolun erottimen väri (convert.py: convert_icons).
   - assets/css/icons.css
 
-  # Taulukot: keskitys, otsikkorivin väri ja vuororivit. Omana tiedostonaan
-  # samasta syystä kuin edelliset kaksi. Kirjassa taulukko on keskitetty ja
-  # väritetty (theme/css/general.css), Zensicalilla harmaa ristikko vasempaan
-  # laitaan; värit haetaan teeman muuttujista, ks. tiedoston alku.
+  # Taulukot: keskitys, otsikkorivi ja vuororivit kuten kirjassa.
   - assets/css/tables.css
 
-  # Koodin erottuminen taustasta: rivitekstin koodin ja koodilohkon tausta.
-  # Omana tiedostonaan samasta syystä kuin edelliset: yhden komponentin tyyli.
-  # Teeman oma koodin tausta on molemmissa teemoissa vain 1,09:1 sivun
-  # taustaan nähden; miksi nappula korjataan kummassakin teemassa ja lohko
-  # vain tummassa, ks. tiedoston alku.
+  # Koodin tausta erottumaan sivun taustasta; ks. tiedoston alku.
   - assets/css/code.css
 
-  # Harjoitustyön vaatimusnumerot (1.1, 1.2, ...). Omana tiedostonaan samasta
-  # syystä kuin edelliset kolme: yhden komponentin tyyli, ei sivun asettelua.
-  # Kirjassa numero tulee samalla tavalla CSS-laskurista, ks. tiedoston alku.
+  # Harjoitustyön vaatimusnumerot CSS-laskurista.
   - assets/css/requirements.css
 
-  # Luokkakaaviot. Omana tiedostonaan samasta syystä kuin edelliset: yhden
-  # komponentin tyyli. Kaaviot itse syntyvät convert.py:ssä, ks. tiedoston alku.
+  # Luokkakaaviot (convert.py).
   - assets/css/diagrams.css
 
-  # Koodilohkon nappirivin ulkoasu: kohotettu laatta, nosto ja painallus.
-  # Ennen kahta seuraavaa, koska se on niiden yhteinen pohja - playground.css
-  # ja hidelines.css antavat kumpikin vain oman kuvakkeensa tähän nappiin.
+  # Koodilohkon nappirivin pohja; ennen playground.css:ää ja hidelines.css:ää,
+  # jotka antavat vain oman kuvakkeensa.
   - assets/css/codebuttons.css
 
-  # Ajonapin kuvake ja tuloste. Omana tiedostonaan samasta syystä kuin
-  # edelliset: yhden komponentin tyyli. Nappi ja tuloste syntyvät
-  # assets/js/playground.js:ssä, ks. tiedoston alku.
+  # Ajonapin kuvake ja tuloste (assets/js/playground.js).
   - assets/css/playground.css
 
-  # Korostetut rivit (kohta 9). Ennen seuraavaa: korostettu rivi on
-  # lohkotason elementti (display: block), ja piilotettu rivi on display:
-  # none. Kummankin valitsin on yhtä tarkka, joten piilotus voittaa vain
-  # myöhempänä - piilorivi, joka sattuu olemaan korostetulla alueella, jäisi
-  # muuten näkyviin. Rivien merkitseminen tapahtuu assets/js/highlights.js:ssä.
+  # Korostetut rivit. Ennen hidelines.css:ää: piilotuksen display: none
+  # voittaa korostuksen display: block vain myöhempänä.
   - assets/css/highlights.css
 
-  # Piilorivit ja niiden silmänappi. Omana tiedostonaan samasta syystä kuin
-  # edelliset, ja erillään playground.css:stä siksi, että kyse on eri
-  # ominaisuudesta: piilorivit ovat kohta 2, ajonappi kohta 3. Rivien
-  # merkitseminen tapahtuu assets/js/hidelines.js:ssä.
+  # Piilorivit ja silmänappi (assets/js/hidelines.js).
   - assets/css/hidelines.css
 
   - assets/css/print.css
 
-# Alalukujen avaaminen listan alapäässä ei vieritä kiskoa, joten alaluvut
-# jäävät viewportin alapuolelle. Ks. assets/js/nav-scroll.js.
 extra_javascript:
+  # Alalukujen avaaminen ei vieritä valikkoa; ks. assets/js/nav-scroll.js.
   - assets/js/nav-scroll.js
+
+  # Koko kirja yhdelle sivulle (/tulosta/).
   - assets/js/print.js
 
-  # Java-ohjelmien ajonapit. mdBookissa ne tekee theme/playground_ext.js;
-  # Zensicalilla vastinetta ei ole, koska koodin ajaminen on JYU:n oman
-  # suorituspalvelimen varassa eikä teeman ominaisuus. Ks. kohta 3.
+  # Kirjasinvalikon toiminta.
+  - assets/js/fontmenu.js
+
+  # Java-ohjelmien ajonapit (mdBookin theme/playground_ext.js).
   - assets/js/playground.js
 
-  # Piilorivien piilottaminen ja silmänappi. mdBookissa saman tekee book.js.
-  # Ajonapin jälkeen, jotta nappirivin järjestys on sama kuin kirjassa:
-  # ensin suoritus, sitten silmä. Ks. kohta 2.
+  # Piilorivit ja silmänappi. Ajonapin jälkeen, jotta nappirivin järjestys on
+  # sama kuin kirjassa.
   - assets/js/hidelines.js
 
-  # Korostettujen rivien merkitseminen. mdBookissa sen tekee
-  # theme/code-highlights.js. Järjestyksellä ei ole tässä väliä: tiedosto ei
-  # lisää sivulle nappia eikä kuuntele muita, vaan lisää riveille luokan.
-  # Ks. kohta 9.
+  # Korostetut rivit; järjestyksellä ei väliä.
   - assets/js/highlights.js
 
-  # Terminaalinauhoitusten soitin. mdBookissa tässä olisi kolme riviä
-  # (book.toml: asciinema-player.min.js, asciinema-component.js ja
-  # additional-css:n asciinema-player.css); täällä yksi, koska soitin ja sen
-  # tyyli haetaan vasta sivulla, jolla on nauhoitus — ne ovat 207 kt eivätkä
-  # kuulu 187 sivulle 190:stä. Ks. tiedoston alku ja kohta 16.
+  # Terminaalinauhoitusten soitin; soitin ja tyyli haetaan vasta sivulla,
+  # jolla on nauhoitus.
   - assets/js/asciinema.js

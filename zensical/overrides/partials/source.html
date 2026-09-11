@@ -1,18 +1,7 @@
 {#-
-  Repo-linkki pois. Tyhjä ylikirjoitus teeman partials/source.html:lle.
-
-  Teema piirtää repo-linkin kahteen paikkaan — yläpalkin oikeaan reunaan
-  (partials/header.html) ja kapean näytön laatikkovalikon ensimmäiseksi
-  kohdaksi ennen navigaatiota (partials/nav.html) — ja molemmat ovat
-  ehdollisia vain sille, onko repo_url asetettu. Sitä ei voi ottaa pois,
-  koska muokkauslinkin osoite kootaan siitä (ks. mkdocs.yml, copyright.html).
-
-  Siksi tyhjennetään linkki itse. Molemmille jää vain tyhjä kääre-div, ja
-  layout.css piilottaa ne :not(:has(*))-ehdolla — eli tämän tiedoston
-  poistaminen palauttaa linkin sellaisenaan.
-
-  Tämä on samalla ainoa tapa estää GitHub-kutsu: linkin mukana tulee
-  <a data-md-component="source">, jonka nähdessään teeman JavaScript hakee
-  tähdet ja forkit api.github.comista. Pelkkä CSS-piilotus jättäisi kutsun
-  jokaiselle sivulataukselle.
+  Repo-linkki pois: tyhjä ylikirjoitus teeman partials/source.html:lle.
+  repo_url on pidettävä muokkauslinkin takia, mutta se toisi repo-linkin
+  yläpalkkiin ja kapean näytön valikkoon; tyhjät kääre-divit piilottaa
+  layout.css. Samalla estyy teeman GitHub-kutsu (tähdet ja forkit), jonka
+  <a data-md-component="source"> laukaisisi; pelkkä CSS-piilotus ei estäisi sitä.
 -#}

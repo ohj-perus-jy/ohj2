@@ -1,18 +1,10 @@
-/* Luokkakaaviot: valkoinen pohja myös tummassa teemassa.
- *
- * PlantUML piirtää SVG:hen oman taustansa (style="...background:#FFFFFF")
- * eikä kaavion väreissä ole tummaa varianttia: laatikot ovat vaaleanvihreitä
- * ja teksti mustaa. Vaaleassa teemassa pohja sulautuu sivuun, tummassa se on
- * valkoinen laatikko keskellä tummaa sivua. Kirjassa on sama tilanne, koska
- * mdbook-plantuml tuottaa samat tiedostot samalta palvelimelta.
- *
- * Väriä ei siis lähdetä kääntämään — invertointi tekisi vihreistä laatikoista
- * violetteja eikä kaavio olisi enää sama kuva kuin kirjassa. Sen sijaan
- * valkoisesta tehdään tarkoituksellinen: sama valkoinen kuvan ympärille ja
- * pyöristetyt kulmat, jolloin kaavio on tummalla taustalla kortti eikä
- * näytä siltä että sivun tausta vuotaa. Vaaleassa teemassa sääntö ei näy,
- * koska pehmuste on samanvärinen kuin sivu.
- */
+/* Kaaviot: PlantUML-luokkakaaviot tummassa teemassa ja svgbob-ASCII-kaavioiden
+ * vieritys kapealla näytöllä. */
+
+/* PlantUML piirtää SVG:hen valkoisen taustan eikä väreissä ole tummaa
+ * varianttia. Invertointi tekisi kaaviosta eri kuvan kuin kirjassa, joten
+ * valkoisesta tehdään tarkoituksellinen kortti: sama valkoinen kuvan
+ * ympärille ja pyöristetyt kulmat. Vaaleassa teemassa sääntö ei näy. */
 .md-typeset img.uml {
   background-color: #fff;
   padding: .4rem;
@@ -20,30 +12,18 @@
 }
 
 
-/* ASCII-kaaviot (```bob) upotetaan sivulle SVG:nä, ks. convert.py:n
- * SVGBOB_FENCE_RE. Kaavio saa svgbobilta kiinteän leveyden eikä siinä ole
- * viewBoxia, joten se ei skaalaudu: kapealla näytöllä leveä kaavio jäisi
- * palstan reunan taakse piiloon. Sama ratkaisu kuin teemalla on taulukoille,
- * eli kaavio vierii vaakasuunnassa omassa laatikossaan.
- *
- * Värit tulevat kaavion omasta <style>-lohkosta, joka osoittaa teeman
- * muuttujiin (--md-default-fg-color, --md-code-font-family): siksi kaavio
- * seuraa teemanvaihtoa itsestään eikä täällä tarvita väriä lainkaan.
- * Kirjassa sama tehdään muuttujilla --fg ja --mono-font.
- *
- * Marginaali on sama kuin kappaleella: kaavio on lähteessä oma lohkonsa,
- * mutta kääre on divi, jolle teema ei anna välistystä.
- */
+/* ASCII-kaaviot (```bob) upotetaan SVG:nä (convert.py: SVGBOB_FENCE_RE).
+ * SVG:llä on kiinteä leveys eikä viewBoxia, joten se ei skaalaudu: leveä
+ * kaavio vierii omassa laatikossaan kuten teeman taulukot. Värit tulevat
+ * kaavion omasta <style>-lohkosta teeman muuttujilla. Marginaali on sama
+ * kuin kappaleella, koska kääre on divi, jolle teema ei anna välistystä. */
 .md-typeset .svgbob {
   margin: 1em 0;
   overflow-x: auto;
 }
 
-/* Teeman "max-width: 100%" pois kaaviolta. Se on kirjoitettu kuville, joilla
- * on viewBox ja jotka siis skaalautuvat; svgbobin SVG:ssä ei ole viewBoxia,
- * joten kavennus ei pienennä piirrosta vaan rajaa sen reunan yli menevän osan
- * pois. 400 px:n ikkunassa 736 px leveästä kaaviosta jäi näkyviin 353 px.
- * Ilman rajoitusta kaavio on luonnollisen levyinen ja kääre vierittää. */
+/* Teeman max-width: 100% on kirjoitettu skaalautuville kuville; ilman
+ * viewBoxia se ei pienennä piirrosta vaan leikkaa reunan yli menevän osan. */
 .md-typeset .svgbob > svg {
   max-width: none;
 }

@@ -1,36 +1,20 @@
-/* Koko kirja yhdelle sivulle: /tulosta/.
+/* Koko kirja yhdelle sivulle (/tulosta/), kuten mdBookin print.html.
  *
- * mdBookissa tulostussivu (print.html) syntyy käännösaikana: mdBook renderöi
- * jokaisen luvun erikseen ja liittää valmiit HTML-palat peräkkäin. Sama ei
- * onnistu Markdown-tasolla eli convert.py:ssä, koska luvut eivät ole
- * itsenäisiä: kokeiltuna 73 luvun otsikosta 32 katosi, kun luvut liitettiin
- * yhdeksi Markdown-tiedostoksi. Syy on lukujen raaka HTML (<details>,
- * tehtäväkorttien divit) ja koodiaidat: sivun loppuessa jäsennin palautuu alkutilaan, mutta
- * yhdistetyssä tiedostossa kesken jäänyt lohko jatkuu seuraavaan lukuun ja
- * nielaisee sen alun.
+ * Luvut liitetään valmiista HTML:stä, ei Markdownista: luvuissa on raakaa
+ * HTML:ää ja koodiaitoja, ja yhteen Markdown-tiedostoon liitettynä kesken
+ * jäänyt lohko nielaisisi seuraavan luvun alun. Selain hakee siis jokaisen
+ * luvun oman sivun ja poimii siitä artikkelin.
  *
- * Siksi liittäminen tehdään samasta paikasta kuin mdBookissa: valmiista
- * HTML:stä. Selain hakee jokaisen luvun oman sivun ja poimii siitä
- * artikkelin, jolloin jokainen luku on jäsennetty erikseen — täsmälleen
- * kuten sitä yksin luettaessa.
- *
- * Sivun rungon (linkkilistan) kirjoittaa convert.py. Ilman JavaScriptiä
- * lista jää näkyviin sellaisenaan, eli sivu on silloin kirjan sisällysluettelo.
- */
+ * Sivun rungon (linkkilistan) kirjoittaa convert.py; ilman JavaScriptiä
+ * sivu on kirjan sisällysluettelo. */
 
 (() => {
   "use strict";
 
-  /* Teema vaaleaksi tulostuksen ajaksi.
-   *
-   * Selaimet jättävät taustavärit oletuksena tulostamatta, joten tummassa
-   * teemassa paperille jäisi vaalea teksti valkoiselle pohjalle. Teeman oma
-   * vaihdin tekee saman kuin tämä: vaihtaa <body>:n data-md-color-scheme:n,
-   * jolloin kaikki värimuuttujat tulevat teemalta eikä niitä tarvitse
-   * toistaa tulostustyylitiedostossa.
-   *
-   * Kuuntelijat ovat kaikilla sivuilla, koska yksittäisen luvun voi tulostaa
-   * ilman tätä sivuakin. */
+  /* Teema vaaleaksi tulostuksen ajaksi: selaimet eivät tulosta taustavärejä,
+   * joten tumma teema antaisi vaalean tekstin valkoiselle. Vaihdetaan bodyn
+   * data-md-color-scheme kuten teeman oma vaihdin, jolloin värit tulevat
+   * teemalta. Kaikilla sivuilla, koska yksittäisenkin luvun voi tulostaa. */
   let schemeBeforePrint = null;
 
   addEventListener("beforeprint", () => {
@@ -58,24 +42,11 @@
     if (status) status.textContent = text;
   };
 
-  /* Yhden luvun sisältö omalta sivultaan.
-   *
-   * Osoitteille käy kaksi eri asiaa:
-   *
-   *  - Suhteelliset kuvat ja linkit ratkaistaan luvun oman sivun suhteen ja
-   *    kirjoitetaan absoluuttisina. Tulostussivu on eri hakemistossa kuin
-   *    luku, joten muuten ne osoittaisivat väärään paikkaan. Sama pätee
-   *    mdBookin print.html:ssä: luvusta toiseen menevä linkki vie luvun
-   *    omalle sivulle.
-   *  - Sivun sisäiset ankkurit (#otsikko) jäävät sivun sisäisiksi, jotta
-   *    kirjaa voi selata tällä sivulla ja jotta PDF:n sisäiset linkit
-   *    hyppäävät PDF:n sisällä. Sitä varten jokaisen luvun tunnisteet
-   *    saavat eteensä luvun oman etuliitteen: sama otsikko esiintyy
-   *    kirjassa monta kertaa (esim. "Tehtävät" joka osassa), ja Materialin
-   *    koodirivien ankkurit (__codelineno-0-1) alkavat joka sivulla
-   *    alusta. Ilman etuliitettä sivulla olisi 1767 kahteen kertaan
-   *    esiintyvää tunnistetta ja linkki veisi ensimmäiseen osumaan.
-   */
+  /* Yhden luvun artikkeli omalta sivultaan. Suhteelliset osoitteet
+   * kirjoitetaan absoluuttisina, koska tulostussivu on eri hakemistossa kuin
+   * luku. Sivun sisäiset ankkurit jäävät sivun sisäisiksi, ja luvun tunnisteet
+   * saavat luvun etuliitteen, koska sama tunniste ("Tehtävät", Materialin
+   * __codelineno-0-1) toistuu monessa luvussa. */
   async function fetchChapter(url) {
     const response = await fetch(url, { credentials: "same-origin" });
     if (!response.ok) throw new Error(`${response.status} ${response.statusText}`);
@@ -89,14 +60,9 @@
       element.id = `${prefix}--${element.id}`;
     }
 
-    /* Välilehtien radiopainikkeet tarvitsevat saman etuliitteen, vaikka
-     * kumpikaan kahdesta attribuutista ei ole tunniste: label viittaa
-     * inputiin for-attribuutilla, ja ryhmä muodostuu name-attribuutista.
-     * Ilman tätä labelin for osoittaisi etuliitteen jälkeen olemattomaan
-     * id:hen eikä välilehtiä voisi vaihtaa, ja jokaisen luvun __tabbed_1
-     * kuuluisi samaan ryhmään, jolloin koko sivulla olisi yksi valinta.
-     * Paperille tämä ei näy — Materialin print-säännöt näyttävät kaikki
-     * välilehdet joka tapauksessa — mutta ruudulla sivu on myös luettava. */
+    /* Välilehtien label[for] ja input[name] tarvitsevat saman etuliitteen,
+     * vaikka eivät ole tunnisteita: muuten for osoittaisi olemattomaan id:hen
+     * ja kaikkien lukujen __tabbed_1 kuuluisi samaan radioryhmään. */
     for (const label of article.querySelectorAll("label[for]")) {
       label.htmlFor = `${prefix}--${label.htmlFor}`;
     }
@@ -120,9 +86,9 @@
       }
     }
 
-    /* Sivukohtaiset toiminnot pois: muokkauslinkki (overrides/main.html),
-     * Materialin omat sisältöpainikkeet ja palauteruutu. Ne ovat artikkelin
-     * sisällä, joten ne tulisivat muuten mukaan jokaisen luvun perään. */
+    /* Sivukohtaiset toiminnot (muokkauslinkki, Materialin sisältöpainikkeet,
+     * palauteruutu) pois: ne ovat artikkelin sisällä ja toistuisivat joka
+     * luvun perässä. */
     for (const extra of article.querySelectorAll(
       ".md-content__button, .md-source-file, .md-feedback",
     )) {
@@ -132,21 +98,9 @@
     return article;
   }
 
-  /* Sivu valmiiksi ennen tulostusikkunaa: selain tulostaa sen mitä ruudulla
-   * on sillä hetkellä. Odotettavaa on kahdenlaista.
-   *
-   * Kuvat: lataamaton kuva jäisi tyhjäksi laatikoksi, ja decode() torjuu myös
-   * sen, että kuva on ladattu mutta ei vielä purettu.
-   *
-   * Kuuntelijoiden oma työ (pending): kokoamisen jälkeen lähetettävä tapahtuma
-   * palaa heti, mutta osa työstä jatkuu sen jälkeen — terminaalinauhoitusten
-   * soitin (assets/js/asciinema.js) haetaan verkosta vasta silloin. Kuuntelija
-   * työntää lupauksensa listaan, joka kulkee tapahtuman mukana.
-   *
-   * Aikaraja siltä varalta, ettei jokin niistä valmistu lainkaan — silloin
-   * tulostetaan ilman sitä eikä jäädä odottamaan loputtomiin. Virheet
-   * niellään samasta syystä: yksi hakematta jäänyt tiedosto ei saa estää
-   * koko kirjan tulostamista. */
+  /* Odotetaan ennen tulostusikkunaa, että kuvat on purettu ja kuuntelijoiden
+   * jälkityö (pending, esim. asciinema.js:n soitin) on valmis. Aikaraja ja
+   * nielaistut virheet: yksi puuttuva tiedosto ei saa estää tulostusta. */
   function contentReady(root, pending, timeout = 20000) {
     const images = [...root.querySelectorAll("img")].map((image) =>
       image.decode().catch(() => {}),
@@ -175,17 +129,9 @@
       }),
     );
 
-    /* Luvut suoraan artikkelin lapsiksi, ei omiin kääreisiinsä.
-     *
-     * Materialin oma tyyli osuu sisältöön suorina lapsivalitsimina
-     * (.md-typeset > .highlight, > table, ...), joten kääre-elementti jää
-     * niiden väliin ja rikkoo ne. Mitattuna 390 px:llä: suorana lapsena
-     * koodilohko saa Materialin negatiiviset marginaalit (-16 px) ja
-     * levittyy reunasta reunaan 375 px:iin, kääreen sisällä marginaalit
-     * katoavat ja lohko kutistuu 343 px:iin 16 px sisennettynä. mdBook
-     * tekee saman:
-     * print.html:ssä luvut ovat peräkkäin samassa säiliössä ja niiden
-     * välissä on pelkkä tyhjä <div>, joka pakottaa sivunvaihdon. */
+    /* Luvut suoraan artikkelin lapsiksi, ei kääreisiin: Materialin tyylit
+     * osuvat suorina lapsivalitsimina (.md-typeset > .highlight), ja kääre
+     * rikkoisi ne. Välissä pelkkä sivunvaihto-div kuten mdBookissa. */
     const assembled = document.createDocumentFragment();
     for (const chapter of chapters.filter(Boolean)) {
       if (assembled.childElementCount) {
@@ -197,13 +143,9 @@
     }
     book.replaceWith(assembled);
 
-    /* Luvut ovat vasta nyt sivulla, joten niitä käsittelevät skriptit eivät
-     * ole nähneet niitä. Piilorivit (assets/js/hidelines.js) kuuntelevat tätä;
-     * ilman sitä ne tulostuisivat kirjan mukana.
-     *
-     * Lista kulkee tapahtuman mukana niitä kuuntelijoita varten, joiden työ ei
-     * ole valmis niiden palatessa: ne työntävät sinne lupauksensa, ja
-     * tulostusta odotetaan siihen asti (contentReady). */
+    /* Luvut ovat vasta nyt sivulla; niitä käsittelevät skriptit (hidelines.js,
+     * highlights.js, asciinema.js) kuuntelevat tätä. Kuuntelija, jonka työ
+     * jatkuu vielä, työntää lupauksensa pending-listaan (ks. contentReady). */
     const pending = [];
     dispatchEvent(new CustomEvent("jyu-print-assembled", { detail: { pending } }));
 
