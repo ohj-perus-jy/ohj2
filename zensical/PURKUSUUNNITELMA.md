@@ -132,7 +132,8 @@ kääntäminen (`java,ignore` → `{ .java .ignore }`) on kertatyötä, mutta sa
 funktion sisällä laskettavat piilorivit (142 lohkoa, `hide_lines`) ja
 korostukset (79 lohkoa, `mark_highlights`) eivät ole — ne kuuluvat kohtaan 3.
 
-**`convert_anchors` halkeaa kahtia, ja vain toinen puoli on ilmainen.**
+**`convert_anchors` halkeaa kahtia: toinen puoli käy lähteeseen heti, toinen
+vasta vaihdon jälkeen.**
 
 Välilyönnin lisääminen otsikon tunnuksen eteen (1 otsikko) käy `../src`:ään
 milloin tahansa: mdBook hyväksyy molemmat muodot. Mitattu sen omasta
@@ -140,9 +141,8 @@ käännöksestä — `osa4/01-rajapinta.md`:n välilyönnitön `{#alykoti-saadet
 antaa `id="alykoti-saadettava"` aivan kuten `tyokalut.md`:n välilyönnillinen
 `{#jdk}` antaa `id="jdk"`.
 
-Ääkkösten riisuminen (6 linkkiä) **ei** käy, eikä se ole seitsemän rivin
-korjaus vaan kymmenen. Riisuttua ankkuria ei voi kirjoittaa lähteeseen, koska
-mdBook säilyttää ääkköset otsikon tunnuksessa
+Ääkkösten riisuminen (6 linkkiä) **ei** käy ennen vaihtoa. Riisuttua ankkuria
+ei voi kirjoittaa lähteeseen, koska mdBook säilyttää ääkköset otsikon tunnuksessa
 (`book/osa7/01-javafx-perusteet.html`: `id="ensimmäinen-javafx-sovellus"`):
 `#ensimmainen-javafx-sovellus` osoittaisi siellä tyhjään. Ainoa muoto, jonka
 molemmat generaattorit ymmärtävät samalla tavalla, on **otsikon oma
@@ -155,12 +155,23 @@ ascii-tunnus** — kuuden linkin lisäksi neljä kohdeotsikkoa saisi `{#tunnus}`
 | `osa7/01-javafx-perusteet.md` "Ensimmäinen JavaFX-sovellus"                          | `{#ensimmainen-javafx-sovellus}`          |
 | `osa7/01-javafx-perusteet.md` "JavaFX-sovelluksen käynnistys ja ydinluokat"          | `{#javafx-kaynnistys-ja-ydinluokat}`      |
 
-Sillä on hinta, joka pitää päättää erikseen: tunnus muuttaa myös mdBookin
-nykyisiä osoitteita, eli ulkopuolinen linkki vanhaan ääkköselliseen ankkuriin
-(TIM, kirjanmerkit — vrt. kohta 14) lakkaa toimimasta. Tämä ei siis ole
-"kannattaa tehdä ensimmäisenä" vaan päätös siitä, kumpi on halvempi: kuusi
-riviä `convert.py`:ssä vai kymmenen riviä lähteessä ja rikkoutuvat vanhat
-osoitteet.
+Tunnus muuttaa mdBookin nykyisiä osoitteita: ulkopuolinen linkki vanhaan
+ääkköselliseen ankkuriin (TIM, kirjanmerkit) lakkaa toimimasta. Kohdan 14
+päätöksen (11.9.2026, [KAYTTOONOTTO.md](KAYTTOONOTTO.md)) jälkeen se ei ole
+enää erillinen hinta, koska vanhat osoitteet menevät vaihdossa rikki joka
+tapauksessa. `.html`-polku antaa 404:n, eikä ankkurikaan osuisi, vaikka sivu
+löytyisi: Zensical riisuu ääkköset otsikon tunnuksesta
+(`site/osa7/01-javafx-perusteet/index.html`:
+`id="ensimmainen-javafx-sovellus"`). Tunnus vain aikaistaisi rikkoutumisen.
+
+Tunnuksia ei myöskään tarvita. KAYTTOONOTTO.md:n järjestyksessä purku
+tehdään vaihdon jälkeen, kun mdBookia ei enää ole. Silloin `convert_anchors`
+ajetaan lähteeseen kuten muutkin muunnokset: kuusi linkkiä riisuttuun muotoon
+ja yksi välilyönti, ja Zensical tuottaa vastaavat tunnukset itse. Ankkurit
+ovat silloin samat kuin nykyisessä `docs/`:ssä, joka kääntyy varoituksetta.
+Yllä oleva versio (kuusi linkkiä ja neljä tunnusta) on tarpeen vain, jos
+ankkurit korjataan `main`issa ennen vaihtoa, eikä siihen ole syytä:
+`convert_anchors` puretaan joka tapauksessa vasta vaihdon jälkeen.
 
 **Ikonilyhenne toimii ilman konfiguraatiota.** Zensicalin emoji-indeksi
 (`zensical/extensions/emoji.py`, `_load_twemoji_index`) indeksoi jokaisen SVG:n
