@@ -400,7 +400,7 @@ public class Main {
 ```
 
 Jos haluat testata tätä koodia omalla koneellasi, voit ladata tämänkin esimerkin
-[GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/E32_Rajapinnat2/src).
+[GitHubista](https://github.com/ohj-perus-jy/ohj2/tree/main/src/examples/osa3/E34_Klikattava_ja_Piirrettava/src).
 
 <details closed><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Piirtämisvastuun siirtäminen pois komponenteista </summary>
 

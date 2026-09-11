@@ -1,0 +1,16 @@
+# Lychee ohittaa nämä (regex, yksi per rivi). Ks. .github/workflows/links.yml.
+
+# Vain ulkoiset linkit. Paikalliset polut ovat mdBookin {{#include}}-liitosten
+# takia suhteessa liittävään sivuun, mitä lychee ei tiedä.
+^file://
+
+# XML-nimiavaruuksia SVG-, pom- ja FXML-esimerkeissä, eivät linkkejä.
+^https?://www\.w3\.org/
+^https?://javafx\.com/(fxml|javafx)
+^https?://maven\.apache\.org/(POM|xsd|maven-v)
+
+# TIM-tehtävien paikkamerkit, joille ei vielä ole osoitetta.
+^https://tim\.jyu\.fi/.*/TODO$
+
+# Palvelin ei lähetä välivarmennetta, joten TLS-tarkistus kaatuu (selain toimii).
+^https://opencs\.it\.jyu\.fi/

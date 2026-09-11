@@ -255,7 +255,7 @@ Kokeillaan etsiä äsken mainittu okHttp-kirjasto Maven Centralista.
 Aivan kaikkien kirjastojen kohdalla XML:ää ei voi välttämättä suoraan kopioida,
 vaan sinun täytyy tarkistaa kirjaston dokumentaatiosta, onko XML
 Maven-yhteensopiva. Juurikin [okHttp-kirjaston
-kohdalla](https://square.github.io/okhttp/#maven-and-jvm-projects) on niin, että
+kohdalla](https://github.com/square/okhttp#maven-and-jvm-projects) on niin, että
 XML:ää tarvitsee hivenen muuttaa, koska tarvitsemme nimen omaan
 `okhttp-jvm`-version, joka on Maven-yhteensopiva. 
 
