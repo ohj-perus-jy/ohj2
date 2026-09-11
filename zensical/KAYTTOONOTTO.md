@@ -17,27 +17,38 @@ Mitä `convert.py`:stä puretaan vaihdon jälkeen:
 Koeputki muuttaa `zensical/`-hakemiston ulkopuolella kolmea asiaa. Ne ensin
 pois tieltä.
 
-- [ ] Mergeä `fix/rikkinaiset-linkit` → `main`. Sama patch on koeputkessa
-      (`927c27f`), joten merge ei konfliktoi.
-- [ ] Päätä `src/SUMMARY.md`:n Tyyliopas-rivi. Koeputki poisti sen sivumennen
-      (`f3e51c0`), ja merge poistaisi sen myös mdBookista. Joko oma PR
-      `main`iin tai rivi takaisin `dev`:iin.
-- [ ] `.gitignore` ja `.devcontainer/devcontainer.json` (portti 8001) ovat
-      pelkkiä lisäyksiä. Ne voivat mennä `main`iin sellaisenaan.
+- [x] Mergeä `fix/rikkinaiset-linkit` → `main`. Tehty: PR #118 (`027178f`).
+      Sama patch on koeputkessa (`927c27f`), joten merge ei konfliktoi.
+- [x] Päätä `src/SUMMARY.md`:n Tyyliopas-rivi. Ratkesi `main`issa: rivi
+      poistettiin (`45b8cf4`) ja `src/tyyliopas.md` poistettiin (`9ac482b`).
+      Koeputken kopio tiedostosta on sama kuin poistettu, joten `main` → `dev`
+      vain poistaa sen. Tarkistettu 2026-09-11:
+      `git merge-tree --write-tree origin/main origin/spike/zensical` → 0.
+- [x] `.gitignore` ja `.devcontainer/devcontainer.json` (portti 8001) ovat
+      pelkkiä lisäyksiä. Vietiin `main`iin suoraan ilman PR:ää (`2c05e5a`,
+      2026-09-11).
 
 Lisäksi yksi sisältökorjaus, joka toimii myös mdBookissa:
 
-- [ ] Korjaa `src/osa1/01-hei-java.md`:n muokattava esimerkki
+- [x] Korjaa `src/osa1/01-hei-java.md`:n muokattava esimerkki
       (` ```java,editable `) sellaiseksi, ettei se vaadi käyttäjän syötettä.
       ACE-editori on siirretty myöhemmäksi (README, kohta 20), eikä ajonappi
       välitä ohjelmalle syötettä kummassakaan sivustossa, joten
-      `IO.readln` ei saa ajossa mitään.
+      `IO.readln` ei saa ajossa mitään. Päätetty 2026-09-11: lohko on
+      ` ```java,noplayground ` (pelkkä `editable`-määreen poisto ei riittäisi,
+      koska tavallinen `java`-lohko saa ajonapin molemmissa sivustoissa) ja
+      lukijaa ohjataan kokeilemaan omassa kehitysympäristössä. `main`issa
+      `44f2366`. Jäljellä on yksi `editable`-lohko:
+      `src/extra/luetelma-ja-hahmonsovitus.md`, joka ei lue syötettä.
+
+Työvälinehuomio: devcontainerissa ei ole `gh`-komentoa, joten PR:t avataan
+selaimessa.
 
 ## Vaihe 1 — `dev`-haara
 
 ```bash
 git switch -c dev spike/zensical
-git merge main            # main on 3 committia edellä
+git merge main            # main on 5 committia edellä (2026-09-11)
 git push -u origin dev
 git merge-tree --write-tree origin/main origin/dev   # paluuarvo 0 = ei konflikteja
 ```
