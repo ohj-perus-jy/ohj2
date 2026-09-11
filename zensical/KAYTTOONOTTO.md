@@ -74,7 +74,8 @@ juuri.
 | `ohjelmointi2.it.jyu.fi/`      | mdBook `main`ista, kuten nyt |
 | `ohjelmointi2.it.jyu.fi/dev/`  | Zensical `dev`:stä           |
 
-- [ ] Kirjoita `.github/workflows/pages.yml` uusiksi:
+- [x] Kirjoita `.github/workflows/pages.yml` uusiksi (haara `ci/pages-dev`,
+      `f65105e`, 2026-09-11):
   - laukaisin: push `main`iin ja `dev`:iin
   - job `mdbook`: nykyinen kontti, `checkout` refillä `main`, `mdbook build`
     → artefakti. `dev`-pushissa rakennetaan lisäksi `dev` pelkkänä
@@ -86,18 +87,23 @@ juuri.
     `deploy-pages`
 - [ ] Vie `pages.yml` **ensin `main`iin**, sitten `main` → `dev`. Tiedoston on
       oltava sama molemmissa: `main`-push ajaa `main`in version, ja vanha
-      versio pyyhkisi `/dev/`:n.
-- [ ] Settings → Environments → `github-pages` → Deployment branches: lisää
-      `dev`. Oletuksena vain oletushaara saa julkaista.
-- [ ] Lukitse versio `zensical/requirements.txt`:ssä: `zensical==0.0.60`.
+      versio pyyhkisi `/dev/`:n. PR `ci/pages-dev` → `main` avattu
+      2026-09-11; merge odottaa.
+- [x] Settings → Environments → `github-pages` → Deployment branches: lisää
+      `dev`. Oletuksena vain oletushaara saa julkaista. Tehty 2026-09-11.
+- [x] Lukitse versio `zensical/requirements.txt`:ssä: `zensical==0.0.60`.
       README kuvaa juuri 0.0.60:n käytöstä, eikä CI saa päivittää sitä
-      huomaamatta.
+      huomaamatta. Tehty `dev`:ssä 2026-09-11.
 - [ ] Todenna:
   - push `dev`:iin → `/dev/` päivittyy ja juuri on yhä mdBook
   - push `main`iin → molemmat säilyvät
   - `/dev/`-alipolussa: tyylit, ajonappi, tulostus ja asciinema toimivat
     (paikallisesti sivusto on juuressa, joten tätä ei ole vielä nähty)
   - TIM:n linkki aukeaa
+
+Sivuvaikutus, joka löytyi `dev`:n buildista: `main` poisti `src/tyyliopas.md`:n
+mutta `src/osa1/04-aliohjelmat.md` linkitti siihen kahdesti. Korjaus PR:nä
+`fix/tyyliopas-linkit` → `main` (`0e39151`), linkit pois ja teksti jää.
 
 CI ei tarvitse `svgbob_cli`:tä eikä PlantUML-palvelinta, koska `cache/svgbob/`
 ja `assets/plantuml/` ovat versionhallinnassa. Uusi tai muutettu kaavio: aja
