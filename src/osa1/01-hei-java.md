@@ -521,10 +521,11 @@ tekstin tulostamiseen ja lukemiseen komentorivillä:
 |            | `[java] IO.readln("Anna sana > ");`    | Sama kuin `readln`, mutta tulostaa ensin annetun tekstin ennen syötteen lukemista.                                                                                                                 |
 
 
-Katsotaan vielä näiden yhteistoimintaa. Voit muokata alla olevaa esimerkkiä
-vapaasti ja kokeilla, miten erilainen tulostus toimii.
+Katsotaan vielä näiden yhteistoimintaa. Kopioi esimerkki omaan
+kehitysympäristöösi, muokkaa sitä vapaasti ja kokeile, miten erilainen tulostus
+toimii.
 
-```java,editable
+```java,noplayground
 void main() {
     String nimi = IO.readln("Anna nimesi: > ");
     IO.println();
