@@ -46,9 +46,13 @@ selaimessa.
 
 ## Vaihe 1 — `dev`-haara
 
+Tehty 2026-09-11. `dev` alkaa koeputken viimeisestä commitista (`e08a991`),
+`main` mergetty siihen (`a163085`, ei konflikteja), `merge-tree` → 0.
+`spike/zensical` poistettu GitHubista ja paikallisesti; historia on `dev`:ssä.
+
 ```bash
 git switch -c dev spike/zensical
-git merge main            # main on 5 committia edellä (2026-09-11)
+git merge main
 git push -u origin dev
 git merge-tree --write-tree origin/main origin/dev   # paluuarvo 0 = ei konflikteja
 ```
