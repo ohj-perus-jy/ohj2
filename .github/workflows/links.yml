@@ -1,0 +1,37 @@
+# Tarkistaa src/-hakemiston ulkoiset linkit. Kaatuu vain 404:stä ja 410:stä:
+# 403 (esim. TIMin kirjautumista vaativat sivut), 429 ja 5xx hyväksytään.
+# Ohitettavat osoitteet: .lycheeignore. SUMMARY.md ohitetaan, koska mdBookin
+# `[nimi<url>]()`-ulkolinkki näyttää lycheelle tyhjältä URLilta.
+name: Check external links
+
+on:
+  push:
+    branches: ["main", "dev"]
+    paths: ["src/**", ".lycheeignore", ".github/workflows/links.yml"]
+  pull_request:
+    paths: ["src/**", ".lycheeignore", ".github/workflows/links.yml"]
+  # Linkit rikkoutuvat ilman committejakin. Ajetaan vain oletushaarassa.
+  schedule:
+    - cron: "0 5 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-retries 3
+            --timeout 30
+            --accept '100..=403,405..=409,411..=599'
+            --exclude-path 'src/SUMMARY\.md'
+            'src/**/*.md'
+        env:
+          # github.com-linkkien rate limit
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

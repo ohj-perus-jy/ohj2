@@ -10,4 +10,4 @@ Suosittelemme käyttämään seuraavia lähteitä JavaFX-kirjaston käyttöön:
 
 - [JavaFX JavaDoc](https://download.java.net/java/GA/javafx25/docs/api/index.html)
 - [Jenkov.com JavaFX-komponenttiohjeita](https://jenkov.com/tutorials/javafx/index.html)
-- [FXDocs - edistyneet ohjeet ja menetelmät](https://fxdocs.github.io)
+- [FXDocs - edistyneet ohjeet ja menetelmät](https://fxdocs.github.io/docs/html5/)

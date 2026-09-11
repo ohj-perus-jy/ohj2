@@ -91,4 +91,4 @@ koskee myös kehitysympäristöjen tekoälylisäkkeitä/-avustimia jne.
 
 - Tallenna vastauksesi ennen palautusajan päättymistä, mielellään muutamia minuutteja ennakkoon. Mikäli et ole tallentanut vastaustasi ennen palautusajan päättymistä, menetät viimeisimmät muutoksesi.
 - Vastausten lukumäärää ei ole tentin aikana rajoitettu. Viimeisin tallennettu vastaus arvioidaan. Voit vielä tarkistaa tentin lopussa olevalla painikkeella, että vastasit kaikkiin kysymyksiin.
-- Tentin arvioinnista, arvosanoista ja hyvityspisteistä on kerrottu tarkemmin kurssin [suoritusohjeissa](suorittaminen.html).
+- Tentin arvioinnista, arvosanoista ja hyvityspisteistä on kerrottu tarkemmin kurssin [suoritusohjeissa](suorittaminen.md).

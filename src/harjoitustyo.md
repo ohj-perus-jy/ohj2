@@ -344,7 +344,7 @@ Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
 Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
 haluamallasi tavalla. Mikäli kuitenkin
 lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa [harjoitustyön vaatimuksia
-noudattaen](../harjoitustyo.md).
+noudattaen](#tekniset-vaatimukset-ja-arviointi).
 
 **Isännöitsijän ja asukkaan näkymät**
 
@@ -474,7 +474,7 @@ Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
 Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
 haluamallasi tavalla. Mikäli kuitenkin
 lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa [harjoitustyön vaatimuksia
-noudattaen](../harjoitustyo.md).
+noudattaen](#tekniset-vaatimukset-ja-arviointi).
 
 **Pelitilastot**
 
