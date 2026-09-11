@@ -74,36 +74,44 @@ juuri.
 | `ohjelmointi2.it.jyu.fi/`      | mdBook `main`ista, kuten nyt |
 | `ohjelmointi2.it.jyu.fi/dev/`  | Zensical `dev`:stä           |
 
-- [x] Kirjoita `.github/workflows/pages.yml` uusiksi (haara `ci/pages-dev`,
-      `f65105e`, 2026-09-11):
+- [x] Kirjoita `.github/workflows/pages.yml` uusiksi (PR #119, 2026-09-11):
   - laukaisin: push `main`iin ja `dev`:iin
   - job `mdbook`: nykyinen kontti, `checkout` refillä `main`, `mdbook build`
-    → artefakti. `dev`-pushissa rakennetaan lisäksi `dev` pelkkänä
-    tarkistuksena: se todistaa, ettei `dev` riko mdBookia.
+    → artefakti. `dev`-pushissa ajetaan lisäksi erillinen job
+    `mdbook-dev-check`, joka rakentaa `dev`:n mdBookilla pelkkänä
+    tarkistuksena: se todistaa, ettei `dev` riko mdBookia. Se ei estä
+    julkaisua, mutta värjää ajon punaiseksi.
   - job `zensical`: `ubuntu-latest` + `actions/setup-python`, `checkout`
     refillä `dev`, `pip install -r zensical/requirements.txt`,
     `python3 convert.py && zensical build` → artefakti
   - job `deploy`: `_site/` + `_site/dev/`, `upload-pages-artifact`,
     `deploy-pages`
-- [ ] Vie `pages.yml` **ensin `main`iin**, sitten `main` → `dev`. Tiedoston on
+- [x] Vie `pages.yml` **ensin `main`iin**, sitten `main` → `dev`. Tiedoston on
       oltava sama molemmissa: `main`-push ajaa `main`in version, ja vanha
-      versio pyyhkisi `/dev/`:n. PR `ci/pages-dev` → `main` avattu
-      2026-09-11; merge odottaa.
+      versio pyyhkisi `/dev/`:n. Tehty 2026-09-11: PR #119 → `main`
+      (`df7a022`), sitten `main` → `dev` (`1c48281`).
 - [x] Settings → Environments → `github-pages` → Deployment branches: lisää
       `dev`. Oletuksena vain oletushaara saa julkaista. Tehty 2026-09-11.
 - [x] Lukitse versio `zensical/requirements.txt`:ssä: `zensical==0.0.60`.
       README kuvaa juuri 0.0.60:n käytöstä, eikä CI saa päivittää sitä
       huomaamatta. Tehty `dev`:ssä 2026-09-11.
-- [ ] Todenna:
-  - push `dev`:iin → `/dev/` päivittyy ja juuri on yhä mdBook
-  - push `main`iin → molemmat säilyvät
-  - `/dev/`-alipolussa: tyylit, ajonappi, tulostus ja asciinema toimivat
-    (paikallisesti sivusto on juuressa, joten tätä ei ole vielä nähty)
-  - TIM:n linkki aukeaa
+- [x] Todennettu 2026-09-11:
+  - push `dev`:iin → `/dev/` päivittyy ja juuri on yhä mdBook. Ajo
+    34566904249: kaikki neljä jobia vihreitä; `/dev/osa1/04-aliohjelmat/`
+    sai tyyliopas-korjauksen, juuren `04-aliohjelmat.html` vastaa 200 ja
+    lataa `book.js`:n.
+  - push `main`iin → molemmat säilyvät. Ajot 34566774107 (#119) ja
+    34566813874 (#120) julkaisivat juuren ja `/dev/`:n.
+  - `/dev/`-alipolussa: kaikki 23 css/js-tiedostoa vastaavat 200, polut ovat
+    suhteellisia (`../../assets/`), kuvat ja `.cast`-tiedostot löytyvät.
+    Headless-selaimella `/dev/osa1/01-hei-java/`: ajonappi tulostaa
+    "Hei, maailma!", 7 asciinema-elementtiä saavat soittimen, ei
+    JS-virheitä.
+  - TIM:n linkki (`tim.jyu.fi/view/kurssit/tie/tiep111/koti`) vastaa 200.
 
 Sivuvaikutus, joka löytyi `dev`:n buildista: `main` poisti `src/tyyliopas.md`:n
-mutta `src/osa1/04-aliohjelmat.md` linkitti siihen kahdesti. Korjaus PR:nä
-`fix/tyyliopas-linkit` → `main` (`0e39151`), linkit pois ja teksti jää.
+mutta `src/osa1/04-aliohjelmat.md` linkitti siihen kahdesti. Korjattu PR:llä
+#120 `main`iin (linkit pois, teksti jää) ja mergetty `dev`:iin.
 
 CI ei tarvitse `svgbob_cli`:tä eikä PlantUML-palvelinta, koska `cache/svgbob/`
 ja `assets/plantuml/` ovat versionhallinnassa. Uusi tai muutettu kaavio: aja
@@ -112,7 +120,8 @@ bob-kaavio jää CI:ssä koodilohkoksi.
 
 ## Vaihe 3 — `dev` pysyy mergettävänä
 
-Voimassa vaihtoon asti.
+Voimassa 2026-09-11 alkaen vaihtoon asti. Nämä eivät ole kertaluontoisia
+tehtäviä vaan sääntöjä; ruksi tarkoittaa "noudatetaan".
 
 - [ ] `main` → `dev` vähintään viikoittain ja aina ennen isompaa työtä. Ei
       rebasea, koska `dev` on julkaistu ja jaettu.
@@ -125,12 +134,14 @@ Voimassa vaihtoon asti.
 
 ## Vaihe 4 — Portti
 
-Kaikkien neljän on oltava totta ennen vaihetta 5:
+Kaikkien neljän on oltava totta ennen vaihetta 5. Tarkistetaan uudestaan
+juuri ennen vaihtoa; alla tilanne 2026-09-11 (`dev` = `1c48281`):
 
-- [ ] `git merge-tree --write-tree origin/main origin/dev` palauttaa 0
-- [ ] CI:n mdBook-tarkistus on vihreä `dev`:llä
-- [ ] `./zensical/run.sh test` menee läpi
-- [ ] `ohjelmointi2.it.jyu.fi/` ja `ohjelmointi2.it.jyu.fi/dev/` toimivat
+- [x] `git merge-tree --write-tree origin/main origin/dev` palauttaa 0
+- [x] CI:n mdBook-tarkistus on vihreä `dev`:llä (`mdbook-dev-check`, ajo
+      34566904249)
+- [x] `./zensical/run.sh test` menee läpi (198 passed)
+- [x] `ohjelmointi2.it.jyu.fi/` ja `ohjelmointi2.it.jyu.fi/dev/` toimivat
 
 ## Vaihe 5 — Vaihto ja purku
 
