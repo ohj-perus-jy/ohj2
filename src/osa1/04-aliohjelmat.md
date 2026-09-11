@@ -64,8 +64,8 @@ Esittelyrivin jälkeen kirjoitetaan aaltosulkeiden sisään aliohjelman runko-os
 Se sisältää varsinaisen koodin, joka suoritetaan, kun aliohjelmaa kutsutaan. 
 
 Kuten kaikessa lähdekoodissa muutenkin, myös aliohjelmien ja parametrien nimien
-tulee olla kuvaavia ja noudattaa Javan nimeämiskäytäntöjä ja olla [tämän opintojakson
-tyylioppaan mukaisia](../tyyliopas.md).
+tulee olla kuvaavia ja noudattaa Javan nimeämiskäytäntöjä ja olla tämän opintojakson
+tyylioppaan mukaisia.
 
 ## Paluuarvot ja datan käsittely
 
@@ -269,7 +269,7 @@ Yleisesti hyvä periaate on, että ohjelmoija pyrkii kirjoittamaan sellaista
 koodia, joka selittää itse itseään. Muuttujat, luokat, aliohjelmat ja muut
 nimet, johon ohjelmoija pystyy vaikuttamaan, pyritään nimeämään mahdollisimman
 kuvaavasti, jolloin yksittäisten rivien kommentointi ei välttämättä ole tarpeen.
-Asiaa on kuvattu myös opintojakson [tyylioppaassa](../tyyliopas.md). TODO: Linkki.
+Asiaa on kuvattu myös opintojakson tyylioppaassa. TODO: Linkki.
 
 Joskus yhden rivin kommenteilta ei voi välttyä, jos jotakin operaatiota ei voida
 olettaa itsestäänselväksi tai muuttujan nimestä tulisi kohtuuttoman pitkä:
