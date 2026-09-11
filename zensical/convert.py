@@ -1450,10 +1450,6 @@ def main() -> int:
         return 1
     FAILED.clear()
     stale = sync_docs()
-    sets = placeholders = blocks = files = fences = includes = alerts = 0
-    hidden = marked = 0
-    details = summaries = divs = tasks = bonus = diagrams = drawings = 0
-    breaks = dropped = arrows = icons = links = ids = 0
     used_diagrams: set[str] = set()
     used_drawings: set[str] = set()
     tab_labels: set[str] = set()
@@ -1474,60 +1470,36 @@ def main() -> int:
         # Järjestys: poistuvat osiot ja sisällytykset ensin, jotta muut
         # muunnokset näkevät lopullisen tekstin (sisällytyksissä on koodiaitoja
         # ja FILE-merkintöjä). Ankkurit ennen kuin mikään muunnos kirjoittaa
-        # omia linkkejään tai SVG-tunnuksiaan.
-        converted, page_dropped = drop_sections(source, source_path)
-        converted, page_includes = convert_includes(converted, origin)
-        converted, page_links, page_ids = convert_anchors(converted)
+        # omia linkkejään tai SVG-tunnuksiaan. Muunnosten laskurit jäävät
+        # käyttämättä.
+        converted, _ = drop_sections(source, source_path)
+        converted, _ = convert_includes(converted, origin)
+        converted, _, _ = convert_anchors(converted)
         # Monitiedostolohkot ennen convert_fencesiä: convert_fences ei koske
         # niiden valmiisiin aitoihin. Aidat, kaaviot, alertit ja tehtäväkortit
         # ennen convert_tabsia, koska se sisentää välilehden sisällön, eikä
         # sisennettyä aitaa, ">":tä tai HTML-lohkoa enää tunnisteta.
-        (converted, page_blocks, page_files, page_hidden_files,
-         page_marked_files) = convert_files(converted)
-        converted, page_fences, page_hidden, page_marked = convert_fences(
-            converted)
-        converted, page_diagrams, page_used = convert_plantuml(converted, page)
-        converted, page_alerts, page_unknown = convert_alerts(converted)
+        converted, *_ = convert_files(converted)
+        converted, *_ = convert_fences(converted)
+        converted, _, page_used = convert_plantuml(converted, page)
+        converted, _, page_unknown = convert_alerts(converted)
         # details ja drop_breaks: paikalla ei ole väliä.
-        converted, page_details, page_summaries = convert_details(converted)
-        converted, page_breaks = drop_breaks(converted)
+        converted, *_ = convert_details(converted)
+        converted, _ = drop_breaks(converted)
         # Divit ennen tehtäväkortteja (näkee vain lähteen divit) ja ennen
         # svgbobia (kääre ei saa markdown="1":tä).
-        converted, page_divs = convert_divs(converted)
-        converted, page_drawings, page_art = convert_svgbob(converted)
+        converted, _ = convert_divs(converted)
+        converted, _, page_art = convert_svgbob(converted)
         # Tehtäväkortit ennen bonusmerkkejä (task_head lukee kortin tagin itse)
         # ja bonusmerkit ennen ikoneita (bi-stars ei ole ICON_MAPissa).
-        converted, page_tasks = convert_tasks(converted)
-        converted, page_bonus = convert_bonus_marks(converted)
-        (converted, page_arrows, page_icons,
-         page_unknown_icons) = convert_icons(converted)
-        converted, page_sets, page_placeholders, page_labels = convert_tabs(converted)
+        converted, _ = convert_tasks(converted)
+        converted, _ = convert_bonus_marks(converted)
+        converted, _, _, page_unknown_icons = convert_icons(converted)
+        converted, _, _, page_labels = convert_tabs(converted)
         write_if_changed(page, converted)
-        sets += page_sets
-        placeholders += page_placeholders
         tab_labels |= page_labels
-        blocks += page_blocks
-        files += page_files
-        fences += page_fences
-        hidden += page_hidden + page_hidden_files
-        marked += page_marked + page_marked_files
-        includes += page_includes
-        links += page_links
-        ids += page_ids
-        alerts += page_alerts
-        details += page_details
-        summaries += page_summaries
-        breaks += page_breaks
-        divs += page_divs
-        tasks += page_tasks
-        bonus += page_bonus
-        dropped += page_dropped
-        arrows += page_arrows
-        icons += page_icons
         unknown_icons |= page_unknown_icons
-        diagrams += page_diagrams
         used_diagrams |= page_used
-        drawings += page_drawings
         used_drawings |= page_art
         unknown_alerts |= page_unknown
     for asset in ASSETS.rglob("*"):
@@ -1536,36 +1508,19 @@ def main() -> int:
     nav = build_nav()
     write_if_changed(ROOT / "nav.yml", nav + build_extra(tab_labels))
     write_if_changed(DOCS / PRINT_PAGE, build_print_page(nav))
+    prune_diagrams(PLANTUML_DIR, used_diagrams, "plantuml" not in FAILED)
+    prune_diagrams(SVGBOB_DIR, used_drawings, "svgbob" not in FAILED)
     # Jäänteet viimeisenä, kun kaikki muu on jo paikallaan (ks. sync_docs).
     for file in sorted(stale):
         file.unlink()
+    if unknown_icons:
+        print(f"varoitus: tuntematon ikoni: {', '.join(sorted(unknown_icons))}",
+              file=sys.stderr)
+    if unknown_alerts:
+        print("varoitus: tuntematon alertin tunnus: "
+              f"{', '.join(sorted(unknown_alerts))}", file=sys.stderr)
     print(f"kopioitu {len(list(DOCS.rglob('*.md')))} markdown-tiedostoa -> {DOCS}"
           + (f", {len(stale)} jäänyttä tiedostoa pois" if stale else ""))
-    print(f"välilehdet: {sets} joukkoa, {placeholders} #tab/default-lohkoa pois")
-    print(f"monitiedostolohkot: {blocks} lohkoa, {files} tiedostoa")
-    print(f"aidan attribuutit: {fences} aitaa")
-    print(f"piilorivit: {hidden} lohkoa")
-    print(f"korostetut rivit: {marked} lohkoa")
-    print(f"sisällytykset: {includes} makroa")
-    print(f"ankkurit: {links} linkkiä riisuttu, {ids} otsikon tunnusta irrotettu")
-    print(f"details-lohkot: {details} tagia, {summaries} monirivistä summarya, "
-          f"{breaks} <br />-riviä pois")
-    print(f"divit: {divs} tagia")
-    print(f"luokkakaaviot: {diagrams} kaaviota, "
-          f"{prune_diagrams(PLANTUML_DIR, used_diagrams, 'plantuml' not in FAILED)}"
-          " käyttämätöntä poistettu")
-    print(f"ascii-kaaviot: {drawings} kaaviota, "
-          f"{prune_diagrams(SVGBOB_DIR, used_drawings, 'svgbob' not in FAILED)}"
-          " käyttämätöntä poistettu")
-    print(f"tehtäväkortit: {tasks} korttia")
-    print(f"bonusmerkit: {bonus} merkkiä korttien ulkopuolella")
-    print(f"ikonit: {arrows} valikkopolun nuolta, {icons} kuvaketta"
-          + (f", tuntematon ikoni: {', '.join(sorted(unknown_icons))}"
-             if unknown_icons else ""))
-    print(f"poistetut osiot: {dropped}")
-    print(f"alertit: {alerts} lohkoa"
-          + (f", tuntematon tunnus: {', '.join(sorted(unknown_alerts))}"
-             if unknown_alerts else ""))
     return 0
 
 
@@ -1623,7 +1578,7 @@ def watch_label(changed: list[str]) -> str:
 
 
 def run_quietly() -> int:
-    """main ilman tilastorivejä. -> paluuarvo.
+    """main ilman kopiointiriviä. -> paluuarvo.
 
     Vahdin tulostus kulkee palvelimen lokin seassa. Varoitukset menevät
     stderriin, joten vaimennus ei piilota niitä.

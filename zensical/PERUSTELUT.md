@@ -1071,8 +1071,8 @@ mdBookissa oli oma `text-transform: uppercase` -sääntö.
 
 **Yksi tuntematon tunnus.** `extra/luetelma-ja-hahmonsovitus.md`:ssä on
 `[!Tärkeää — invariantti]`, joka ei ole taulukossa. Se ei katoa: otsikoksi tulee
-tunnus sellaisenaan, tyypiksi `note`, ja `convert.py` kertoo siitä ajon lopuksi
-(`alertit: 75 lohkoa, tuntematon tunnus: Tärkeää — invariantti`). Sivu ei ole
+tunnus sellaisenaan, tyypiksi `note`, ja `convert.py` varoittaa siitä ajon
+lopuksi (`varoitus: tuntematon alertin tunnus: Tärkeää — invariantti`). Sivu ei ole
 `SUMMARY.md`:ssä, joten mdBook ei käännä sitä lainkaan — mdBookissa tunnus
 olisi jäänyt yhtä lailla värittömäksi.
 
