@@ -24,13 +24,13 @@ Arvosana muodostuu harjoitustehtävien ja tentin painotettuna keskiarvona (40/60
 Harjoitustehtävien pisterajat: 
 
 | Kerättyjä pisteitä enintään | Harjoitustehtävien arvosana |
-| --------------------------- | --------------------------- |
-| <50%                        | 0                           |
-| 50%                         | 1                           |
-| 60%                         | 2                           |
-| 70%                         | 3                           |
-| 80%                         | 4                           |
-| >=90%                       | 5                           |
+| --------------------------: | --------------------------: |
+|                        <50% |                           0 |
+|                         50% |                           1 |
+|                         60% |                           2 |
+|                         70% |                           3 |
+|                         80% |                           4 |
+|                       >=90% |                           5 |
 
 Ensimmäisen kuuden osan kohdalla on mahdollista saada myös ns. DL-BONUS-pisteitä: Jos teet osasta *vähintään 50%*<sup>2</sup> osan takarajaan mennessä, lisätään kyseisen osan harjoitustehtävien pistemäärään 0,5 pistettä. Niinpä DL-BONUS-pisteitä voi saada maksimissaan 6 * 0,5 = 3 pistettä. Karkeasti ottaen, kun teet yhden osan takarajaan mennessä, se vaikuttaa noin 1%-yksikön verran kokonaisprosenttiisi. 
 
@@ -38,14 +38,14 @@ Ensimmäisen kuuden osan kohdalla on mahdollista saada myös ns. DL-BONUS-pistei
 
 Osien takarajat DL-BONUS-pisteiden saamiseksi ovat seuraavat:
 
-| Osa | Takaraja DL-BONUS-pisteille |
-| --- | --------------------------- |
-| 1   |{{#include ./takarajat.md:1}}|
-| 2   |{{#include ./takarajat.md:2}}|
-| 3   |{{#include ./takarajat.md:3}}|
-| 4   |{{#include ./takarajat.md:4}}|
-| 5   |{{#include ./takarajat.md:5}}|
-| 6   |{{#include ./takarajat.md:6}}|
+|  Osa |   Takaraja DL-BONUS-pisteille |
+| ---: | ----------------------------: |
+|    1 | {{#include ./takarajat.md:1}} |
+|    2 | {{#include ./takarajat.md:2}} |
+|    3 | {{#include ./takarajat.md:3}} |
+|    4 | {{#include ./takarajat.md:4}} |
+|    5 | {{#include ./takarajat.md:5}} |
+|    6 | {{#include ./takarajat.md:6}} |
 
 Näet [etenemissivulla](https://tim.jyu.fi/view/kurssit/tie/tiep111/koti) kerättyjen tehtäväpisteidän määrän ja prosenttiosuuden sekä DL-BONUS-pisteet erikseen.
 
@@ -56,12 +56,12 @@ arvosanaa painotetaan 60%. Sekä harjoitustehtävistä että tentistä täytyy s
 vähintään arvosana 1, jotta kurssista voi saada hyväksytyn arvosanan. 
 
 |                                          | Esim1 | Esim2 | Esim3 |
-| ---------------------------------------- | ----- | ----- | ----- |
-| Osuus harjoitustehtävistä (sis DL-BONUS) | 70%   | 90%   | 70%   |
-| Harjoitustehtävien arvosana              | 3     | 5     | 3     |
-| Tentin arvosana                          | 1     | 4     | 5     |
-| Painotettu keskiarvo                     | 1.8   | 4.4   | 4.6   |
-| Pyöristetty arvosana                     | 2     | 4     | 5     |
+| ---------------------------------------: | ----: | ----: | ----: |
+| Osuus harjoitustehtävistä (sis DL-BONUS) |   70% |   90% |   70% |
+|              Harjoitustehtävien arvosana |     3 |     5 |     3 |
+|                          Tentin arvosana |     1 |     4 |     5 |
+|                     Painotettu keskiarvo |   1.8 |   4.4 |   4.6 |
+|                     Pyöristetty arvosana |     2 |     4 |     5 |
 
 Harjoitustehtävistä saatu arvosana otetaan lukuun **kolmeen ensimmäiseen tenttiin**, jotka opiskelija suorittaa, ja enintään yhden vuoden sisällä opintojakson viimeisestä suorituspäivästä. 
 

@@ -263,12 +263,20 @@ IO.println(pino);
 IO.println(pino.peek());
 
 // Palauttaa alkion "C" ja poistaa sen pinosta.
-// Palauttaa null, jos pinossa ei ole yhtään alkiota.
+// Aiheuttaisi poikkeuksen, jos pinossa ei ole yhtään alkiota.
 IO.println(pino.pop());
 
 IO.println(pino);
 //-}
 ```
+
+Huomaa, että `push` ja `pop` ovat `Deque`-rajapinnan metodien `addFirst` ja
+`removeFirst` synonyymejä, ja ne aiheuttavat virhetilanteessa ohjelman
+pysäyttävän poikkeuksen: tyhjälle pinolle kutsuttu `pop` keskeyttää ohjelman
+sen sijaan, että palauttaisi `null`-arvon. Koska `push` ja `pop` ovat pinon
+vakiintuneet perusoperaatiot, käytämme niitä silti ja tarkistamme tarvittaessa
+`isEmpty`-metodilla, ettei pino ole tyhjä ennen `pop`-kutsua. `peek` sen sijaan
+palauttaa tyhjästä pinosta `null`-arvon.
 
 ## Jono
 
@@ -392,6 +400,18 @@ luvut.pollLast();
 IO.println(luvut); // Tulostaa [2]
 //-}
 ```
+
+Myös jonon yhteydessä esitellyt `offer`, `poll` ja `peek` toimivat
+kaksipäisellä jonolla, sillä ne ovat päätykohtaisten metodien synonyymejä:
+
+| Jonon metodi | Sama kuin      |
+| ------------ | -------------- |
+| `offer(e)`   | `offerLast(e)` |
+| `poll()`     | `pollFirst()`  |
+| `peek()`     | `peekFirst()`  |
+
+`offer` lisää alkion siis jonon loppuun, ja `poll` ja `peek` kohdistuvat sen
+alkuun — aivan kuten jonolta voi odottaakin.
 
 Sekä lisääminen että poistaminen molemmista päistä tapahtuu vakioajassa *O(1)*, 
 sillä `ArrayDeque` on toteutettu kehämäisenä taulukkona, jossa pään ja hännän 
