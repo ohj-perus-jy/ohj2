@@ -163,9 +163,10 @@ kirjanmerkit.
       hakemistomuotoon. Aiemmin muutos rikkoisi ne mdBookissa.
 - [ ] Poista mdBook: `book.toml`, `theme/`, `highlight/`, `mermaid/`,
       `start.sh`, mdBook-kohdat `.vscode/tasks.json`:sta ja
-      `.vscode/launch.json`:sta sekä devcontainerin portti 36742. Päivitä
-      mdBook-maininnat `README.md`:stä, `CONTRIBUTING.md`:stä ja
-      `.cursorrules`:sta.
+      `.vscode/launch.json`:sta sekä devcontainerin portti 36742 ja nimi
+      "Ohj2 mdBook". Päivitä mdBook-maininnat `README.md`:stä,
+      `CONTRIBUTING.md`:stä ja `.cursorrules`:sta. Devcontainerin kuva vaihtuu
+      vakiokuvaan, ks. vaihe 6.
 - [ ] Vaiheen 3 mdBook-säännöt raukeavat. `main` → `dev` -sääntö jää voimaan.
 
 **Purku** (järjestys PURKUSUUNNITELMA.md:stä):
@@ -179,3 +180,103 @@ kirjanmerkit.
 - [ ] Jos muunnoscommit konfliktoi, älä ratkaise sitä käsin. Tee commit
       uudelleen tuoreen `main`in päälle ajamalla sama muunnos.
 - [ ] Vasta sitten punnitse vaihtoehto C.
+
+## Vaihe 6 — Tooling-putki: luovutaan
+
+Devcontainer-kuva ja CI:n runner-kuva rakennetaan reposta
+`ohj-perus-jy/ohj-mdbook-tooling` (julkinen): `Dockerfile` kääntää mdbookin
+ja kahdeksan esikäsittelijää Rustista, `publish.yml` julkaisee tagit
+`runner-latest` ja `devcontainer-latest` jokaisesta `main`-pushista. Kuva
+oli mdBookille välttämätön, koska ilman sitä jokainen CI-ajo ja uusi
+devcontainer kääntäisi binäärit minuuttikaupalla.
+
+Zensicalille kuvaa ei tarvita: koko työkalu on yksi kiinnitetty pip-wheel,
+ja kaikki oma räätälöinti (`convert.py`, `assets/`, `overrides/`) on tässä
+repossa. Mitattu 2026-09-11:
+
+| Mitä                                        | Kesto     |
+| ------------------------------------------- | --------- |
+| CI `zensical`-job (ajot 34566904249, 34566813874) | 22–30 s   |
+| … josta `pip install`                       | 3–6 s     |
+| … josta `convert.py` + `zensical build`     | 4–5 s     |
+| CI `mdbook`-job vertailuksi (kuvan kanssa)   | 17–23 s   |
+| Paikallinen puhdas asennus (venv + pip, ei välimuistia) | 11 s |
+| Paikallinen `run.sh build`                  | 3 s       |
+
+**Päätetty 2026-09-11:** tooling-kuvaan ei lisätä mitään Zensicalia varten.
+Repo elää mdBookin ajan eli kunnes myös ohj1 on vaihtanut (vaihe 7), ja
+arkistoidaan sitten. Nykyisessä devcontainer-kuvassa on vain `python3`;
+`setup.sh` ja `run.sh` asentavat loput (venv, pip, chromiumin kirjastot)
+sudolla, ja se riittää vaihtoon asti.
+
+**ohj2:n vaihdossa (vaihe 5, sama PR):**
+
+- [ ] `.devcontainer/devcontainer.json`: `image` →
+      `mcr.microsoft.com/devcontainers/python:3.11-bookworm` (sama 3.11 kuin
+      CI:ssä; venv ja pip valmiina), nimi `"Ohj2 mdBook"` → `"Ohj2"`, portti
+      36742 pois, `postCreateCommand`iin `zensical/setup.sh`. Rust-feature
+      (`ghcr.io/devcontainers/features/rust:1`) mukaan vain jos `svgbob_cli`
+      halutaan; ks. alla.
+- [ ] `svgbob_cli` on ainoa Rust-riippuvuus ja tarvitaan vain, kun
+      bob-kaaviota (11 kpl) muutetaan; valmiit SVG:t ovat `cache/svgbob/`:ssa.
+      Purun kohdassa 2 bob-aidat kirjoitetaan `src/`:hen valmiina SVG:nä
+      (`convert_svgbob`in tuloste), jolloin riippuvuus poistuu kokonaan.
+      Siihen asti tarvitsija ajaa `cargo install svgbob_cli@0.7.6` itse.
+- [ ] Testien selainkirjastot jäävät `run.sh test`in asennettaviksi (sudo
+      kerran per kontti). Ei siirretä `postCreateCommand`iin: se hidastaisi
+      jokaista konttia niidenkin takia, jotka eivät aja testejä.
+- [ ] `README.md`:n kohta "mdBook-työkalukuvan päivittäminen" pois (osa
+      vaiheen 5 README-päivitystä).
+
+**ohj1:n vaihdon jälkeen:**
+
+- [ ] `grep -r mdbook-tooling .github .devcontainer` on tyhjä molemmissa
+      repoissa.
+- [ ] Arkistoi `ohj-mdbook-tooling` (Settings → Archive). GHCR-paketteja ei
+      poisteta: `-<sha>`-tagit ovat muuttumattomia ja vanhat commitit
+      viittaavat niihin.
+
+## Vaihe 7 — Sama ohj1:een
+
+Sama `zensical/`-hakemisto otetaan käyttöön `ohj-perus-jy/ohj1`:ssä. Työjärjestys
+on tämä sama tiedosto vaiheesta 0 alkaen. Alla se, mikä `ohj2`:ssa on
+repokohtaista; tarkistettu 2026-09-11 `ohj1`:n `main`ia vasten.
+
+**Iso ero: ohj1 on C#.** Aidat ovat ` ```csharp ` (45), ` ```csharp,ignore ` (11)
+ja ` ```csharp,feature-jypeli ` (1); `book.toml`:n piilorivimerkki on
+`csharp = "//-"`. Java on kovakoodattu kolmeen paikkaan:
+
+- `convert.py`: `HIDELINE_LANGUAGES`, `HIGHLIGHT_LANGUAGES`
+- `assets/js/playground.js`: `LANGUAGES` ja `EXECUTOR`
+  (`lakane.it.jyu.fi/executor`). Tarkista `ohj1/theme/playground_ext.js`:stä,
+  ajaako ohj1 C#:ää lainkaan ja millä palvelulla.
+
+**Muu repokohtainen:**
+
+- `mkdocs.yml`: `site_name`, `copyright`, `repo_url`, `edit_uri`.
+- `convert.py`: `NEST_UNDER` (ohj1:ssäkin on `tentti.md` ja
+  `tenttiohjeet.md`), `DROP_SECTIONS`, `PLANTUML_AGENT`, `PRINT_INTRO`.
+- `SUMMARY.md`:n muoto. ohj1:ssä on 10 etulinkkiä, rivi
+  `[Omat tiedot (TIM)<https://tim.jyu.fi>]()`, kommentoituja rivejä ja
+  `luennot/`-sivuja osien alla. `build_nav` on kirjoitettu ohj2:n puulle;
+  aja `python3 convert.py` ohj1:n `src`:llä ja katso raportti ennen muuta.
+- Ominaisuudet, joita ohj1 käyttää ja ohj2 ei: ei löytynyt. ohj1 ei käytä
+  plantumlia, asciinemaa eikä mermaidia; `bob` 3, `<details>` 6, alertit 8.
+  `book.toml` lataa katexin, jota `convert.py` ei tunne: tarkista, onko
+  `src`:ssä kaavoja.
+- `.devcontainer/devcontainer.json`: portti 8001 `forwardPorts`iin (ohj1
+  välittää vain 3000:n).
+- `.github/workflows/pages.yml`: ohj1:ssä on mdBookin mallipohja (vain `main`,
+  yksi build-job). Vaiheen 2 kaksoisjulkaisu kirjoitetaan sinne samalla
+  tavalla. ohj1:n sivusto on `ohj-perus-jy.github.io/ohj1/` (`site-url`),
+  ei omassa domainissa; Zensicalin polut ovat suhteellisia, joten alipolku
+  ei haittaa (todennettu `/dev/`:llä vaiheessa 2).
+- `.gitignore`:n `zensical/`-rivit.
+
+**Jakaminen:** ensin kopio (`zensical/` sellaisenaan ohj1:een), ei yhteistä
+pakettia. Kopio näyttää, mikä oikeasti on repokohtaista, ja
+PURKUSUUNNITELMAn kohta 2 pienentää `convert.py`:tä joka tapauksessa.
+Yhteisen osan (`convert.py`:n runko, `assets/`, `overrides/`, `tests/`)
+paikka päätetään vasta, kun molemmat ovat vaihtaneet ja purku on tehty:
+tooling-repo ei ole se, koska se arkistoidaan (vaihe 6). Siihen asti
+korjaukset viedään käsin molempiin.
