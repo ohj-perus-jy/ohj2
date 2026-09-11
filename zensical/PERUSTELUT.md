@@ -465,8 +465,9 @@ yhteen lohkoon ja merkitty tiedostoon.
 
 Ulkoasu tulee muuten teemalta. Linkki lainaa `.md-copyright`-luokkaa, josta
 se saa saman koon, värin ja pystykeskityksen kuin lisenssiteksti; oma
-`.md-copyright--edit` (13 riviä `layout.css`:ään) hoitaa vain kuvakkeen ja
+`.md-copyright--link` (13 riviä `layout.css`:ään) hoitaa vain kuvakkeen ja
 sen, ettei `.md-copyrightin` `width: 100%` venytä linkkiä omalle riville.
+Sama sääntö palvelee myöhemmin lisättyä ongelmailmoitusta, ks. seuraava.
 Teksti tulee kielipaketista (`action.edit` = "Muokkaa tätä sivua"), kuten
 Edellinen/Seuraavakin. Kuvake on teeman oma GitHub-merkki inline-SVG:nä: se
 ei tuo takaisin `api.github.com`-kutsua, ks. *Repo-linkki pois*.
@@ -495,6 +496,58 @@ siirtoja tai generoituja sivuja tulee lisää.
 Todennettu rakennetusta `site/`:stä ohjelmallisesti: linkki on 189 sivulla ja
 jokainen osoittaa tiedostoon, joka on olemassa `../src`:ssä (myös molemmat
 siirretyt); ainoa sivu ilman linkkiä on `tulosta/`.
+
+### Ongelmailmoitus alatunnisteeseen (`overrides/partials/copyright.html` + 5 riviä `layout.css`:ään)
+
+mdBookin alatunnisteessa on muokkauslinkin parina "Ilmoita ongelmasta"
+(`theme/index.hbs`): linkki GitHubin issue-lomakkeeseen, jonka valmis pohja
+(`.github/ISSUE_TEMPLATE/ilmoita-ongelmasta.yml`) kysyy sivun osoitteen ja
+kuvauksen ongelmasta. Osoite tulee sellaisenaan kirjasta, `repo_url`:n perään
+koottuna:
+
+```
+{repo_url}/issues/new?template=ilmoita-ongelmasta.yml&url={sivun polku}
+```
+
+Materialissa tälle ei ole paikkaa eikä asetusta: muokkauslinkille on edes
+sivun oikea yläkulma (`content.action.edit`), ongelmailmoitukselle ei mitään.
+Linkki menee siis samaan malliin kuin edellinen.
+
+**Kääre, ei kolmatta sisarta.** Teema levittää `.md-footer-meta__innerin`
+lapset rivin päihin (`justify-content: space-between`), joten kolmas lapsi
+jakaisi rivin kolmeen ja jättäisi muokkauslinkin keskelle. Molemmat linkit
+ovat siksi yhden `div.jyu-footer-links`-kääreen sisällä (5 riviä
+`layout.css`:ään: `flex`, `flex-wrap`, `align-items`). Väli linkkien väliin
+tulee `.md-copyrightin` omista sivumarginaaleista, joten kääre ei tarvitse
+`gap`ia eikä rivin oikea reuna liiku. Kääre pitää linkit parina myös silloin,
+kun muokkauslinkkiä ei ole.
+
+Mitattu 1440 × 900: oikeanpuoleisen linkin oikea reuna on x = 1409, sama luku
+kuin muokkauslinkillä yksin; leveydellä 1100 se on 1069, sekin sama. Kapealla
+näytöllä (390) kääre taittuu lisenssitekstin alle ja molemmat linkit mahtuvat
+samalle riville (16…280); jos tila loppuu, `flex-wrap` pudottaa jälkimmäisen
+omalleen.
+
+Ulkoasu tulee samasta `.md-copyright--link`-säännöstä kuin muokkauslinkillä.
+Teksti on kirjasta ("Ilmoita ongelmasta"), koska kielipaketissa ei ole tälle
+avainta — kuten ei tulostuspainikkeellekaan. Kuvake on
+`material/flag-outline`, lähin vastine kirjan `bi-flag`ille; GitHub-merkkiä ei
+voi käyttää, koska se on jo vieressä muokkauslinkissä.
+
+**Esitäyttö on sivun polku, ei osoite.** Lomakkeen kenttä kysyy "sivun
+osoitetta tai polkua", ja kirja esitäyttää siihen `{{path}}`:n eli
+lähdetiedoston polun `src`:ssä. Sama arvo on täällä jo laskettuna
+muokkauslinkkiä varten (`extra.edit_source`-kartan läpi käännetty polku),
+joten se kelpaa sellaisenaan — eikä valmiiksi osoitteeksi olisi mitään
+otettavaakaan: `site_url`:ää ei ole asetettu, joten `page.canonical_url` on
+tyhjä. Poikkeus on `tulosta/`, jolla ei ole lähdetiedostoa: kartta antaa
+tyhjän, ja esitäyttöön menee `docs/`:n oma polku (`tulosta.md`). Linkki itse
+on silti joka sivulla — ongelmasta pitää voida ilmoittaa myös sivulta, jota
+ei voi muokata.
+
+Todennettu rakennetusta `site/`:stä ohjelmallisesti: linkki on kaikilla 190
+sivulla, esitäytetty polku on 189:llä sama tiedosto kuin muokkauslinkin kohde
+`../src`:ssä, ja `tulosta/` on ainoa, jolla polku osoittaa `docs/`:iin.
 
 ### Repo-linkki pois (`overrides/partials/source.html`)
 

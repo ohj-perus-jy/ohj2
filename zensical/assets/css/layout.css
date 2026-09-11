@@ -195,13 +195,26 @@
   transition: visibility 0s 0.15s;
 }
 
-/* Muokkauslinkki alatunnisteen oikeassa reunassa. Kaikilla leveyksillä.
+/* Alatunnisteen linkit oikeassa reunassa: muokkaus ja ongelmailmoitus.
+ * Kaikilla leveyksillä.
  *
- * Linkki itse on mallissa (overrides/partials/copyright.html) ja lainaa
+ * Linkit itse ovat mallissa (overrides/partials/copyright.html) ja lainaavat
  * teeman .md-copyright-luokkaa, josta tulevat koko, väri ja pystykeskitys.
- * Tässä siitä tehdään kuvakkeellinen rivi ja perutaan .md-copyrightin
- * width: 100%, joka venyttäisi sen omalle riville kapeilla näytöillä. */
-.md-copyright--edit {
+ * Tässä niistä tehdään kuvakkeellisia rivejä ja perutaan .md-copyrightin
+ * width: 100%, joka venyttäisi ne omalle riville kapeilla näytöillä.
+ *
+ * Kääre pitää linkit parina rivin oikeassa päässä, ks. mallin perustelu.
+ * Väli linkkien väliin tulee .md-copyrightin omista sivumarginaaleista, joten
+ * gapia ei ole: rivin oikea reuna pysyy siinä missä yksin ollutkin. Kapealla
+ * näytöllä kääre taittuu lisenssitekstin alle, ja jos sielläkään ei ole tilaa,
+ * flex-wrap pudottaa ongelmailmoituksen omalle rivilleen. */
+.jyu-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.md-copyright--link {
   display: inline-flex;
   gap: 0.3rem;
   align-items: center;
@@ -209,7 +222,7 @@
   white-space: nowrap;
 }
 
-.md-copyright--edit svg {
+.md-copyright--link svg {
   width: 0.8rem;
   height: 0.8rem;
   fill: currentcolor;

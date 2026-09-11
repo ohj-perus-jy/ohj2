@@ -126,7 +126,7 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 16 | `<asciinema>`-upotukset                      | 13                        | **tehty** — `assets/js/asciinema.js` + kirjan soitin; convert.py:ssä ei mitään, soitin haetaan vain sivuille joilla on nauhoitus |
 | 17 | Ikonit `<i class="bi ...">` ja `<i class="fa ...">` | 150                | **tehty** — 66 bonusmerkkiä `convert_bonus_marks`, 58 valikkopolun nuolta merkkinä ja 22 kuvaketta teeman glyfeinä `convert_icons`; 4 poistui navigointiosion mukana |
 | 18 | JYU-paletti, kultainen korostus              | 30                        | siirretty myöhemmäksi — värit ovat toistaiseksi Materialin omat                                                    |
-| 19 | Lisenssi + "Ehdota muutosta" alatunnisteessa | —                         | **tehty** — tekijät, lisenssi ja muokkauslinkki; "Ilmoita ongelmasta" puuttuu                                      |
+| 19 | Lisenssi ja linkit alatunnisteessa           | —                         | **tehty** — tekijät, lisenssi, "Ehdota muutosta" ja "Ilmoita ongelmasta"                                           |
 | 20 | ACE-editori (`editable`-lohkot)              | 2                         | puuttuu — `.editable` säilyy nyt luokkana; ajonappi ajaa lohkon sellaisenaan, ks. kohdat 3 ja 4                     |
 | 21 | KaTeX                                        | 0                         | voi jättää pois                                                                                                    |
 | 22 | Edellinen/seuraava sivun alareunassa         | joka sivu                 | **tehty** — `navigation.footer`                                                                                    |
@@ -153,7 +153,6 @@ Tarkistuslistalta kolme kohtaa:
 
 Pienempiä:
 
-- Alatunnisteen "Ilmoita ongelmasta" -linkki (kohta 19).
 - Kopioi koodi -nappi: teemalla on siihen valmis `content.code.copy`, se on
   vain ottamatta käyttöön (1 rivi `mkdocs.yml`:ään).
 - Neljä `{{#include}}`-makroa jää sivuille näkyviin: kohde puuttuu

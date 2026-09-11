@@ -1,20 +1,27 @@
 {#-
   Kopio teeman partials/copyright.html:stä (zensical 0.0.59), johon on
-  lisätty muokkauslinkki alatunnisteen oikeaan reunaan. Ks. merkitty kohta
-  alempana; muu on teeman omaa. Jos Zensical muuttaa alatunnistettaan, tämä
-  tiedosto on päivitettävä käsin.
+  lisätty kaksi linkkiä alatunnisteen oikeaan reunaan: muokkauslinkki ja
+  ongelmailmoitus. Ks. merkitty kohta alempana; muu on teeman omaa. Jos
+  Zensical muuttaa alatunnistettaan, tämä tiedosto on päivitettävä käsin.
 
-  mdBookissa (theme/index.hbs) lisenssimerkki ja "Ehdota muutosta" ovat
-  samalla rivillä alatunnisteessa. Materialissa muokkauslinkille on vain yksi
-  paikka, sivun oikea yläkulma (content.action.edit), joten mdBookin paikka
-  vaatii mallin. Tämä on lähin mahdollinen: .md-footer-meta__inner on
-  flex-rivi, jonka lapset teema levittää päihin (justify-content:
-  space-between), eli sisareksi lisätty linkki asettuu itsestään oikeaan
-  reunaan — samaan kohtaan mihin yläpuolella oleva Seuraava-linkki päättyy.
+  mdBookissa (theme/index.hbs) lisenssimerkki, "Ehdota muutosta" ja "Ilmoita
+  ongelmasta" ovat samassa alatunnisteessa. Materialissa muokkauslinkille on
+  vain yksi paikka, sivun oikea yläkulma (content.action.edit), eikä
+  ongelmailmoitukselle mitään, joten mdBookin paikka vaatii mallin. Tämä on
+  lähin mahdollinen: .md-footer-meta__inner on flex-rivi, jonka lapset teema
+  levittää päihin (justify-content: space-between), eli sisareksi lisätty
+  lohko asettuu itsestään oikeaan reunaan — samaan kohtaan mihin yläpuolella
+  oleva Seuraava-linkki päättyy.
 
-  Linkki lainaa teeman .md-copyright-luokkaa, jotta koko, väri ja pystykeskitys
-  tulevat samasta paikasta kuin lisenssiteksti; oma .md-copyright--edit on
-  vain kuvaketta ja tasausta varten (assets/css/layout.css).
+  Molemmat linkit ovat yhden kääreen sisällä eivätkä omina sisarinaan, koska
+  kolmas lapsi jakaisi rivin kolmeen ja jättäisi muokkauslinkin keskelle.
+  Kääre pitää ne parina oikeassa reunassa myös silloin, kun muokkauslinkkiä
+  ei ole (tulosta-sivu).
+
+  Linkit lainaavat teeman .md-copyright-luokkaa, jotta koko, väri ja
+  pystykeskitys tulevat samasta paikasta kuin lisenssiteksti; oma
+  .md-copyright--link on vain kuvaketta ja tasausta varten
+  (assets/css/layout.css).
 -#}
 <div class="md-copyright">
   {% if config.copyright %}
@@ -29,20 +36,38 @@
     </a>
   {% endif %}
 </div>
-{#- LISÄYS: muokkauslinkki. Zensical laskee page.edit_url:n docs/:n polusta,
-    mutta versionhallinnassa on ../src. Polut ovat samat paitsi convert.py:n
-    NEST_UNDER-siirroissa (tentti.md -> tentti/index.md), joten ne käännetään
-    takaisin nav.yml:n extra.edit_source-kartalla — muuten linkki osoittaisi
-    tiedostoon, jota src:ssä ei ole. Kartan kirjoittaa convert.py, ks.
-    build_extra(). -#}
+{#- LISÄYS: alatunnisteen linkit.
+
+    Sivun polku ratkaistaan kerran molemmille. Zensical laskee page.edit_url:n
+    docs/:n polusta, mutta versionhallinnassa on ../src. Polut ovat samat
+    paitsi convert.py:n NEST_UNDER-siirroissa (tentti.md -> tentti/index.md),
+    joten ne käännetään takaisin nav.yml:n extra.edit_source-kartalla — muuten
+    linkki osoittaisi tiedostoon, jota src:ssä ei ole. Kartan kirjoittaa
+    convert.py, ks. build_extra(). -#}
+{% set base = "" %}
+{% set path = "" %}
+{% set source = "" %}
 {% if page.edit_url %}
   {% set base = config.repo_url ~ "/" ~ config.edit_uri ~ "/" %}
   {% set path = page.edit_url[base | length:] %}
   {% set source = config.extra.edit_source[path] | default(path) %}
+{% endif %}
+<div class="jyu-footer-links">
+  {#- Muokkauslinkki. Tyhjä source = sivua ei ole src:ssä (tulosta.md syntyy
+      convert.py:ssä), jolloin muokattavaa ei ole ja linkki jää pois. -#}
   {% if source %}
-    <a href="{{ base ~ source }}" class="md-copyright md-copyright--edit" rel="edit" title="{{ lang.t('action.edit') }} GitHubissa">
+    <a href="{{ base ~ source }}" class="md-copyright md-copyright--link" rel="edit" title="{{ lang.t('action.edit') }} GitHubissa">
       {% include ".icons/material/github.svg" %}
       {{ lang.t("action.edit") }}
     </a>
   {% endif %}
-{% endif %}
+  {#- Ongelmailmoitus. Sama osoite kuin mdBookissa (theme/index.hbs): valmis
+      issue-lomake, jonka url-kenttään esitäytetään sivun polku. Tämä linkki
+      on joka sivulla, myös tulosta-sivulla: ongelmasta voi ilmoittaa vaikkei
+      sivulla olisi lähdetiedostoa, ja silloin polku on docs/:n oma. Teksti ja
+      kuvake ovat kirjasta; kielipaketissa ei ole tälle avainta. -#}
+  <a href="{{ config.repo_url }}/issues/new?template=ilmoita-ongelmasta.yml&amp;url={{ (source or path) | urlencode }}" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    {% include ".icons/material/flag-outline.svg" %}
+    Ilmoita ongelmasta
+  </a>
+</div>
