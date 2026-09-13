@@ -30,7 +30,7 @@ body[data-jyu-font="literata"] .md-content__inner {
   font-family: var(--md-text-font-family);
 }
 
-/* Tekstin väri aavistuksen jyrkemmäksi: vaalea .87 -> .92, tumma .82 -> .88.
+/* Tekstin väri jyrkemmäksi: vaalea .87 -> .92, tumma #e1e1e1.
  * Teema johtaa muut tekstivärit tästä perusmuuttujasta, joten yksi arvo per
  * teema riittää; --light on teemassa kiinteä, joten se siirretään erikseen.
  * Vaalealla tarvitaan myös [data-md-color-scheme=default], koska teema
@@ -42,7 +42,7 @@ body[data-jyu-font="literata"] .md-content__inner {
 }
 
 [data-md-color-scheme="slate"] {
-  --md-default-fg-color: hsla(var(--md-hue), 15%, 90%, 0.88);
+  --md-default-fg-color: #e1e1e1;
   --md-default-fg-color--light: hsla(var(--md-hue), 15%, 90%, 0.62);
 }
 
