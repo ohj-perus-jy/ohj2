@@ -10,6 +10,9 @@
 
 .md-content__inner {
   font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  /* Kumoaa modern-teeman tiivistyksen (.md-typeset: -0.01em). Otsikoiden
+   * omat arvot jäävät voimaan. */
+  letter-spacing: normal;
 }
 
 /* Lukijan valitsema kirjasin (yläpalkin valikko, fontmenu.js). Oletus on
