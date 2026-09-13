@@ -58,16 +58,11 @@
   height: 2px;
 }
 
-/* Väljyys sisällölle eikä yhteiselle säiliölle: teeman .md-main__inner-
- * marginaali koskee myös sticky-sivupalkkeja, jotka siksi nytkähtävät
- * ensimmäisten vierityspikselien aikana. Kaikilla leveyksillä, koska oikean
- * reunan sisällysluettelo on sticky myös tableteilla. */
-.md-main__inner {
-  margin-top: 0;
-}
-
-.md-content {
-  margin-top: 1.5rem;
+/* Sisällysluettelo ylös .md-main__inner-marginaalin verran, ettei se liiku
+ * vierityksen alussa. Marginaalia ei poisteta: teema laskee siitä
+ * sisällysluettelon korostuksen. */
+.md-sidebar--secondary {
+  margin-top: -1.5rem;
 }
 
 /* Repo-linkin tyhjät kääreet pois. Linkki on tyhjennetty mallista

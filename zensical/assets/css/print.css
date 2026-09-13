@@ -37,10 +37,6 @@
     margin: 0;
   }
 
-  .md-content {
-    margin-top: 0;
-  }
-
   /* Ohjeteksti ja kokoamisen tilarivi kuuluvat ruudulle, eivät kirjaan. */
   #jyu-print-intro {
     display: none;
