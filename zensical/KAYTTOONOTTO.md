@@ -95,7 +95,7 @@ juuri.
 - [x] Lukitse versio `zensical/requirements.txt`:ssä: `zensical==0.0.60`.
       README kuvaa juuri 0.0.60:n käytöstä, eikä CI saa päivittää sitä
       huomaamatta. Tehty `dev`:ssä 2026-09-11. Nostettu 0.0.61:een
-      2026-09-13.
+      2026-09-13 ja 0.0.62:een 2026-09-16.
 - [x] Todennettu 2026-09-11:
   - push `dev`:iin → `/dev/` päivittyy ja juuri on yhä mdBook. Ajo
     34566904249: kaikki neljä jobia vihreitä; `/dev/osa1/04-aliohjelmat/`

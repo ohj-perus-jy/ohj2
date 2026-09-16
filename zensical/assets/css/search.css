@@ -1,7 +1,7 @@
 /* Hakuikkuna: tekstikoot teeman rem-portaina ja suodatinpaneeli piiloon.
  * Ikkuna on shadow DOM:issa, johon assets/js/search.js liittää tämän
  * tiedoston; :host-etuliite pitää säännöt poissa sivulta. Luokkanimet ovat
- * Zensicalin 0.0.61 minifioimia (bundle.js: dt, at, Ta); tests/test_search.py
+ * Zensicalin 0.0.62 minifioimia (bundle.js: ht, st, Ta); tests/test_search.py
  * kertoo, jos ne vaihtuvat.
  *   .e juuri  .l ikkuna  .k kenttärivi  .s kenttä  .a suodatinpaneeli
  *   .B tulosten määrä  .x otsikko  .u ote  .n polku  .E lisärivi */
