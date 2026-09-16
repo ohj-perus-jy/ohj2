@@ -67,6 +67,10 @@ extra_css:
   - assets/css/fontmenu.css
   - assets/css/layout.css
 
+  # Hakuikkunan tekstikoot ja suodatinpaneelin piilotus. Ikkuna on shadow
+  # DOM:issa, johon assets/js/search.js liittää tämän tiedoston.
+  - assets/css/search.css
+
   # Alerttilaatikot classic-variantin ilmeeseen; miksi ei theme.variant, ks. tiedoston alku.
   - assets/css/admonitions.css
 
@@ -113,6 +117,9 @@ extra_javascript:
 
   # Kirjasinvalikon toiminta.
   - assets/js/fontmenu.js
+
+  # Hakuikkunan tyyli (assets/css/search.css) shadow DOM:iin.
+  - assets/js/search.js
 
   # Java-ohjelmien ajonapit (mdBookin theme/playground_ext.js).
   - assets/js/playground.js

@@ -1,0 +1,47 @@
+/* Hakuikkuna: tekstikoot teeman rem-portaina ja suodatinpaneeli piiloon.
+ * Ikkuna on shadow DOM:issa, johon assets/js/search.js liittää tämän
+ * tiedoston; :host-etuliite pitää säännöt poissa sivulta. Luokkanimet ovat
+ * Zensicalin 0.0.61 minifioimia (bundle.js: dt, at, Ta); tests/test_search.py
+ * kertoo, jos ne vaihtuvat.
+ *   .e juuri  .l ikkuna  .k kenttärivi  .s kenttä  .a suodatinpaneeli
+ *   .B tulosten määrä  .x otsikko  .u ote  .n polku  .E lisärivi */
+
+:host .e {
+  --space-1: 0.2rem; /* Zensical: 4 px */
+  --font-size: 0.8rem;
+}
+
+/* 36 rem = Zensicalin 720 px perusmitassa (1 rem = 20 px). Kapealla näytöllä
+ * Zensicalin oma koko ruudun sääntö (max-width: 740px). */
+@media (min-width: 741px) {
+  :host .l {
+    width: 36rem;
+  }
+}
+
+:host .s input,
+:host .x {
+  font-size: 0.8rem;
+}
+
+:host .u {
+  font-size: 0.7rem;
+}
+
+:host .B,
+:host .n,
+:host .E {
+  font-size: 0.64rem;
+}
+
+:host .x code,
+:host .u code {
+  font-size: 0.85em;
+}
+
+/* Suodatinpaneeli ("Filters / Tags") ja sen painike (kenttärivin viimeinen)
+ * pois: materiaalissa ei ole tageja, joten paneeli on aina tyhjä. */
+:host .a,
+:host .k > button:last-child {
+  display: none;
+}

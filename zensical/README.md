@@ -78,7 +78,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 198 testiä
+./zensical/run.sh test                        # kaikki, 212 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -99,6 +99,7 @@ rikkoutumisia on kolmea lajia:
 | `tests/test_hidelines.py` | piilorivit ja silmänappi koekirjalla                       | 2 s        |
 | `tests/test_asciinema.py` | terminaalinauhoitukset koekirjalla                        | 4 s        |
 | `tests/test_highlights.py` | korostetut rivit koekirjalla                              | 2 s        |
+| `tests/test_search.py` | hakuikkuna koekirjalla: tyyli shadow DOM:issa, suodatinpaneeli piilossa | 4 s |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
@@ -135,9 +136,10 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 24 | Tulostuspainike: koko kirja yhdeksi PDF:ksi  | joka sivu                 | **tehty** — `assets/js/print.js`, `print.css`, runko `convert.py`:stä, yläpalkin malli                             |
 | 25 | `<div class="ht-reqs">` vaatimuslohkot       | 9                         | **tehty** — `convert_divs` + `assets/css/requirements.css`; numerointi 1.1, 1.2, ... CSS-laskurista               |
 | 26 | Leipätekstin kirjasinvalikko yläpalkissa     | joka sivu                 | **tehty** — ei mdBookissa, lisätty pyynnöstä; `header.html`, `typography.css`, `fontmenu.css`, `fontmenu.js`; Source Serif 4 (oletus), Atkinson Hyperlegible Next, Literata; valinta muistetaan selaimessa |
+| 27 | Haun tulokset leipätekstin kokoisina        | joka sivu                 | **tehty** — Zensicalin hakuikkunan tekstit ovat kiinteät 12–14 px ja tyhjä "Filters / Tags" -paneeli turha; `search.css` (rem-koot, paneeli piiloon) viedään hakuikkunan shadow DOM:iin `search.js`:llä; luokkanimet ovat minifioituja, `tests/test_search.py` kertoo, jos ne vaihtuvat |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
-haun ja responsiivisen navigaation.
+haun (tekstikoot kohdassa 27) ja responsiivisen navigaation.
 
 ## Mitä puuttuu
 
