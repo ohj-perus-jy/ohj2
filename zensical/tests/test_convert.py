@@ -23,6 +23,16 @@ def book_src(monkeypatch):
     return src
 
 
+# --- Sisennetyt otsikot ------------------------------------------------------
+
+def test_dedent_headings_moves_the_heading_to_column_zero():
+    """Aidan sisällä rivi on kommentti; neljällä sisennetty on koodia."""
+    text = " ## Otsikko\n```bash\n # kommentti\n```\n    # koodia\n   ### Kolmas\n"
+    converted, moved = convert.dedent_headings(text)
+    assert moved == 2
+    assert converted == "## Otsikko\n```bash\n # kommentti\n```\n    # koodia\n### Kolmas\n"
+
+
 # --- Sisällytykset (README kohta 1) -----------------------------------------
 
 @pytest.mark.parametrize("selector, expected", [
@@ -799,6 +809,18 @@ def test_convert_icons_reads_a_tag_that_wraps_across_lines():
                          'Tallenna <span class="jyu-path">›</span> Save\n')
 
 
+def test_convert_icons_wraps_a_path_arrow_written_as_a_character():
+    """Suoraan kirjoitettu › saa saman kääreen; koodissa ja attribuutissa ei."""
+    text = ('> **Muokkaa › Korvaukset**\n'
+            'Kirjoita `a › b` tai ``c › d``, <a title="e › f">g</a> › h\n')
+    converted, arrows, icons, unknown = convert.convert_icons(text)
+    assert (arrows, icons, unknown) == (2, 0, set())
+    assert converted == (
+        '> **Muokkaa <span class="jyu-path">›</span> Korvaukset**\n'
+        'Kirjoita `a › b` tai ``c › d``, <a title="e › f">g</a> '
+        '<span class="jyu-path">›</span> h\n')
+
+
 def test_convert_icons_draws_the_icon_in_the_theme_wrapper():
     """Kääre on teeman oma .twemoji, joten koon, kohdistuksen ja värin hoitaa
     teeman CSS; kuvake itse on koriste, koska nappi on nimetty vieressä."""
@@ -859,9 +881,9 @@ def test_convert_icons_warns_about_a_missing_glyph(monkeypatch, capsys,
 
 
 def test_convert_icons_is_repeatable():
-    """Valmiissa tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    """Valmiissa tekstissä ei ole enää tagia eikä kääreetöntä ›:tä."""
     text = ('**File** <i class="bi bi-chevron-right"></i> **Save**, '
-            'ajopainike <i class="bi bi-play-fill"></i>\n')
+            '**Edit › Undo**, ajopainike <i class="bi bi-play-fill"></i>\n')
     converted = convert.convert_icons(text)[0]
     assert convert.convert_icons(converted) == (converted, 0, 0, set())
 
@@ -983,6 +1005,20 @@ def test_convert_tabs_keeps_paragraphs_apart():
     assert converted == "edellinen\n\nseuraava\n"
 
 
+# --- Tiedostot, jotka eivät ole sivuja ---------------------------------------
+
+@pytest.mark.parametrize("source_path, page", [
+    ("index.md", True),
+    ("exercises/3-5-korvaaminen-1/handout.md", True),
+    ("SUMMARY.md", False),
+    ("exercises/1-8-1-bonus/starter/pohja.md", False),
+])
+def test_is_page(monkeypatch, source_path, page):
+    """SUMMARY.md ja NOT_PAGES eivät ole sivuja, muut .md:t ovat."""
+    monkeypatch.setattr(convert, "NOT_PAGES", ("exercises/*/starter/*.md",))
+    assert convert.is_page(source_path) is page
+
+
 # --- Navigaatio (README kohdat 10, 11 ja Tenttiohjeet) -----------------------
 
 def test_build_nav(book_src):
@@ -1008,12 +1044,67 @@ def test_build_nav(book_src):
     )
 
 
+def test_build_nav_accepts_star_bullets_and_uneven_indent(tmp_path, monkeypatch):
+    """ohj1:n SUMMARY.md: "*"-merkit ja 1, 3 ja 4 välilyönnin sisennys. Taso
+    ei riipu sisennyksen leveydestä; kommentoitu rivi ei ole luku."""
+    (tmp_path / "SUMMARY.md").write_text(
+        "# Summary\n\n"
+        "[Aloitus](./index.md)\n\n---\n\n"
+        " * [Osa 1](./osa1/index.md)\n"
+        "   * [Luento 1](./luennot/luento1.md)\n"
+        "<!-- * [Piilossa](./osa1/piilossa.md) -->\n"
+        " * [Osa 2](./osa2/index.md)\n"
+        "    * [Luento 2](./luennot/luento2.md)\n"
+        " * [Extrat](./luennot/extra.md)\n", encoding="utf-8")
+    monkeypatch.setattr(convert, "SRC", tmp_path)
+    assert convert.build_nav() == (
+        'nav:\n'
+        '  - "Aloitus": index.md\n'
+        '  - "1 Osa 1":\n'
+        '    - "1 Osa 1": osa1/index.md\n'
+        '    - "1.1 Luento 1": luennot/luento1.md\n'
+        '  - "2 Osa 2":\n'
+        '    - "2 Osa 2": osa2/index.md\n'
+        '    - "2.1 Luento 2": luennot/luento2.md\n'
+        '  - "3 Extrat": luennot/extra.md\n'
+    )
+
+
 def test_nest_moves():
     """Yläsivu omaan hakemistoonsa index.md:ksi, alasivu sen viereen."""
     assert convert.nest_moves() == {
         "tentti.md": "tentti/index.md",
         "tenttiohjeet.md": "tentti/tenttiohjeet.md",
     }
+
+
+def test_convert_moved_links_points_at_the_new_place():
+    """Linkki siirrettyyn sivuun seuraa siirtoa; ankkuri säilyy."""
+    converted, count = convert.convert_moved_links(
+        "[Tentti](tentti.md) ja [ohjeet](./tenttiohjeet.md#jy) ja "
+        "[muu](ukk.md) ja [ulkoinen](https://example.invalid/tentti.md)",
+        "index.md")
+    assert count == 2
+    assert converted == (
+        "[Tentti](tentti/index.md) ja [ohjeet](tentti/tenttiohjeet.md#jy) ja "
+        "[muu](ukk.md) ja [ulkoinen](https://example.invalid/tentti.md)")
+
+
+def test_convert_moved_links_from_a_moved_page():
+    """Siirretyn sivun linkit: viereen siirtyneeseen lyhyt polku, muualle
+    askel ylös."""
+    converted, count = convert.convert_moved_links(
+        "[ohjeet](./tenttiohjeet.md) [ukk](ukk.md) ![k](images/kuva.png) [#](#a)",
+        "tentti.md")
+    assert count == 3
+    assert converted == (
+        "[ohjeet](tenttiohjeet.md) [ukk](../ukk.md) ![k](../images/kuva.png) [#](#a)")
+
+
+def test_convert_moved_links_leaves_other_pages_alone():
+    """Sivu ja kohde paikallaan: ei muutosta, ei edes polun siistimistä."""
+    text = "[a](./osa1/index.md) [b](../ukk.md#x)"
+    assert convert.convert_moved_links(text, "osa2/index.md") == (text, 0)
 
 
 # --- Tulostussivun runko (README kohta 24) -----------------------------------

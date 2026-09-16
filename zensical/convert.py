@@ -17,6 +17,7 @@ Generoitu docs/ on kertakäyttöinen — tämä skripti on totuus.
 import contextlib
 import fcntl
 import filecmp
+import fnmatch
 import hashlib
 import io
 import os
@@ -43,13 +44,18 @@ ASSETS = ROOT / "assets"
 ICONS = ROOT / "icons"
 
 SUMMARY_LINK_RE = re.compile(
-    r"^(?P<indent>\s*)(?P<bullet>-\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
+    r"^(?P<indent>\s*)(?P<bullet>[-*]\s*)?\[(?P<title>[^\]]*)\]\((?P<href>[^)]*)\)")
 
 # Etulinkkien sisäkkäisyys, jota mdBookin SUMMARY.md ei salli.
 # Avain = alasivun polku, arvo = sen sivun polku, jonka alle se siirretään.
 NEST_UNDER = {
     "tenttiohjeet.md": "tentti.md",
 }
+
+# Markdown-tiedostot, joista ei tehdä sivua (fnmatch lähdepuun polusta), ks.
+# is_page. mdBook kääntää vain SUMMARY.md:n luvut, Zensical jokaisen .md:n.
+# ohj1:ssä tehtävien aloituspohjat (exercises/*/starter/*.md).
+NOT_PAGES: tuple[str, ...] = ()
 
 # Osiot, jotka kuvaavat mdBookin käyttöliittymää (laitanuolet) eivätkä pidä
 # Zensicalissa paikkaansa. Lähteeseen ei kosketa, joten poisto tehdään tässä.
@@ -58,6 +64,9 @@ DROP_SECTIONS = {
     "index.md": "Navigointi tässä materiaalissa",
 }
 HEADING_RE = re.compile(r"(?P<level>#+)\s+(?P<title>.*?)\s*$")
+
+# 1-3 välilyönnillä sisennetty otsikko: CommonMark sallii, Python-Markdown ei.
+INDENTED_HEADING_RE = re.compile(r"^ {1,3}(?=#{1,6}\s)")
 
 # Linkin ankkuriosa "](../sivu.md#käyttö)", ks. convert_anchors.
 ANCHOR_LINK_RE = re.compile(r"\]\((?P<target>[^)\s]*)#(?P<fragment>[^)\s]+)\)")
@@ -277,6 +286,11 @@ ICON_TAG_RE = re.compile(
 # assets/css/icons.css:ssä.
 PATH_ARROW_ICONS = ("bi-chevron-right", "bi-arrow-right")
 PATH_ARROW = '<span class="jyu-path">›</span>'
+# Suoraan kirjoitettu › saa saman kääreen. Ohitetaan inline-koodi, valmis
+# kääre ja HTML-tagi; kääre ennen tagia, koska tagin kuvio osuisi sen alkuun.
+PATH_ARROW_CHAR_RE = re.compile(
+    r"(?P<skip>(?P<ticks>`+).+?(?<!`)(?P=ticks)(?!`)"
+    r"|" + re.escape(PATH_ARROW) + r"|<[A-Za-z/][^<>]*>)|›", re.DOTALL)
 
 # Oikeat kuvakkeet: käyttöliittymän nappeja, joihin teksti viittaa. Sivuston
 # omille napeille sama glyfi kuin napissa (header.html, mkdocs.yml,
@@ -349,6 +363,16 @@ def nest_moves() -> dict[str, str]:
     return moves
 
 
+def is_page(source_path: str) -> bool:
+    """Tuleeko lähdepuun .md-tiedostosta sivu.
+
+    SUMMARY.md on navigaatio, NOT_PAGES ei sivuja. Kumpaakaan ei kirjoiteta
+    docs/:iin, joten sync_docs poistaa aiemman ajon kopion.
+    """
+    return source_path != "SUMMARY.md" and not any(
+        fnmatch.fnmatchcase(source_path, pattern) for pattern in NOT_PAGES)
+
+
 def prune_diagrams(folder: Path, used: set[str], complete: bool = True) -> int:
     """Käyttämättömät kaaviotiedostot pois. -> poistettuja.
 
@@ -412,6 +436,9 @@ def build_nav() -> str:
     etu- ja jälkilinkit jäävät numeroimatta.
     """
     entries: list[tuple[int, str, str, bool]] = []
+    # Taso on sisennyspinon syvyys eikä leveys // 2, koska sisennys voi olla
+    # epätasainen (ohj1: 1, 3 ja 4 välilyöntiä).
+    indents: list[int] = []
     for raw in (SRC / "SUMMARY.md").read_text(encoding="utf-8").split("\n"):
         if not raw.strip() or raw.strip().startswith("#") or set(raw.strip()) == {"-"}:
             continue
@@ -428,7 +455,19 @@ def build_nav() -> str:
             title, href = embedded.group("t").strip(), embedded.group("u")
         else:
             href = href.lstrip("./")
-        entries.append((len(match.group("indent")) // 2, title.replace('"', "'"), href,
+        if match.group("bullet"):
+            width = len(match.group("indent").expandtabs(4))
+            while indents and width < indents[-1]:
+                indents.pop()
+            if not indents or width > indents[-1]:
+                indents.append(width)
+            level = len(indents) - 1
+        else:
+            # Etu- ja jälkilinkki on aina ylin taso, ja seuraava luettelo
+            # alkaa alusta.
+            indents.clear()
+            level = 0
+        entries.append((level, title.replace('"', "'"), href,
                         bool(match.group("bullet"))))
 
     moves = nest_moves()
@@ -477,6 +516,28 @@ def build_nav() -> str:
     lines = ["nav:"]
     emit(0, 0, lines)
     return "\n".join(lines) + "\n"
+
+
+def dedent_headings(text: str) -> tuple[str, int]:
+    """Otsikon edestä 1-3 välilyöntiä pois. -> (teksti, siirrettyjä).
+
+    Koodiaidat ohitetaan: aidan sisällä sisennetty "#" on kommentti.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    moved = 0
+    for line in text.split("\n"):
+        fence = CODE_FENCE_RE.match(line)
+        if fence and open_fence is None:
+            open_fence = fence["fence"]
+        elif (fence and open_fence is not None and not fence["info"].strip()
+                and len(fence["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None and INDENTED_HEADING_RE.match(line):
+            line = line.lstrip(" ")
+            moved += 1
+        out.append(line)
+    return "\n".join(out), moved
 
 
 def drop_sections(text: str, relative: str) -> tuple[str, int]:
@@ -603,6 +664,43 @@ def convert_anchors(text: str) -> tuple[str, int, int]:
             line = ANCHOR_LINK_RE.sub(fold, line)
         out.append(line)
     return "\n".join(out), links, headings
+
+
+# Suhteellinen linkki toiseen tiedostoon: ei osoitteita, pelkkiä ankkureita
+# eikä absoluuttisia polkuja. Ks. convert_moved_links.
+RELATIVE_LINK_RE = re.compile(
+    r"\]\((?P<target>(?![a-z]+:|#|/)[^)\s#]+)(?P<fragment>#[^)\s]*)?\)")
+
+
+def convert_moved_links(text: str, source_path: str) -> tuple[str, int]:
+    """Linkit NEST_UNDER-siirtojen jälkeen. -> (teksti, korjattuja).
+
+    Siirretyn sivun omat suhteelliset linkit ja muiden sivujen linkit siihen
+    osoittaisivat harhaan. Kohde ratkaistaan lähdepuun polusta, kuvataan
+    siirron läpi ja kirjoitetaan sivun uudesta paikasta. Muut linkit jäävät
+    ennalleen.
+    """
+    moves = nest_moves()
+    page_dir = Path(moves.get(source_path, source_path)).parent
+    source_dir = Path(source_path).parent
+    count = 0
+
+    def fix(match: re.Match[str]) -> str:
+        nonlocal count
+        target = match["target"]
+        resolved = os.path.normpath(source_dir / target).replace(os.sep, "/")
+        if resolved.startswith(".."):
+            return match.group(0)
+        if resolved not in moves and source_path not in moves:
+            return match.group(0)
+        new_target = os.path.relpath(moves.get(resolved, resolved), page_dir)
+        new_target = new_target.replace(os.sep, "/")
+        if new_target == target:
+            return match.group(0)
+        count += 1
+        return f"]({new_target}{match['fragment'] or ''})"
+
+    return RELATIVE_LINK_RE.sub(fix, text), count
 
 
 def read_tab_set(lines: list[str],
@@ -1162,9 +1260,10 @@ def convert_icons(text: str) -> tuple[str, int, int, set[str]]:
     """Ikonitagit merkeiksi ja kuvakkeiksi. -> (teksti, nuolia, kuvakkeita,
     tuntemattomia).
 
-    Valikkopolun nuolesta PATH_ARROW, muista ICON_MAPin glyfi. Tuntematon tagi
-    jää näkyviin ja palautuu kutsujalle varoitettavaksi. Teksti käsitellään
-    aitojen välisinä paloina eikä riveittäin, koska tagi voi olla rivitetty.
+    Valikkopolun nuolesta ja suoraan kirjoitetusta ›:stä PATH_ARROW, muista
+    ICON_MAPin glyfi. Tuntematon tagi jää näkyviin ja palautuu kutsujalle
+    varoitettavaksi. Teksti käsitellään aitojen välisinä paloina eikä
+    riveittäin, koska tagi voi olla rivitetty.
     """
     parts: list[tuple[bool, list[str]]] = [(False, [])]
     open_fence: str | None = None
@@ -1200,10 +1299,19 @@ def convert_icons(text: str) -> tuple[str, int, int, set[str]]:
         icons += 1
         return mark
 
+    def wrap(match: re.Match[str]) -> str:
+        nonlocal arrows
+        if match["skip"]:
+            return match[0]
+        arrows += 1
+        return PATH_ARROW
+
     out: list[str] = []
     for fenced, lines in parts:
         chunk = "\n".join(lines)
-        out.append(chunk if fenced else ICON_TAG_RE.sub(replace, chunk))
+        if not fenced:
+            chunk = PATH_ARROW_CHAR_RE.sub(wrap, ICON_TAG_RE.sub(replace, chunk))
+        out.append(chunk)
     return "\n".join(out), arrows, icons, unknown
 
 
@@ -1402,7 +1510,7 @@ def sync_docs() -> set[Path]:
         if not file.is_file():
             continue
         relative = file.relative_to(SRC).as_posix()
-        if relative == "SUMMARY.md":
+        if file.suffix == ".md" and not is_page(relative):
             continue
         target = DOCS / moves.get(relative, relative)
         fresh.add(target)
@@ -1460,8 +1568,7 @@ def main() -> int:
     # raakana paikalleen (turha kirjoitus on vahdille tapahtuma).
     for origin in sorted(SRC.rglob("*.md")):
         source_path = origin.relative_to(SRC).as_posix()
-        if source_path == "SUMMARY.md":
-            # Navigaatio, ei sivu: ks. build_nav.
+        if not is_page(source_path):
             continue
         # Sivu kirjoitetaan NEST_UNDER-siirron jälkeiseen paikkaan, mutta
         # sisällytykset ja DROP_SECTIONS ratkeavat lähdepuun polusta.
@@ -1472,9 +1579,13 @@ def main() -> int:
         # ja FILE-merkintöjä). Ankkurit ennen kuin mikään muunnos kirjoittaa
         # omia linkkejään tai SVG-tunnuksiaan. Muunnosten laskurit jäävät
         # käyttämättä.
-        converted, _ = drop_sections(source, source_path)
+        # Sisennetyt otsikot ensin, jotta drop_sections ja convert_anchors
+        # tunnistavat ne.
+        converted, _ = dedent_headings(source)
+        converted, _ = drop_sections(converted, source_path)
         converted, _ = convert_includes(converted, origin)
         converted, _, _ = convert_anchors(converted)
+        converted, _ = convert_moved_links(converted, source_path)
         # Monitiedostolohkot ennen convert_fencesiä: convert_fences ei koske
         # niiden valmiisiin aitoihin. Aidat, kaaviot, alertit ja tehtäväkortit
         # ennen convert_tabsia, koska se sisentää välilehden sisällön, eikä

@@ -78,7 +78,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 212 testiä
+./zensical/run.sh test                        # kaikki, 222 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```

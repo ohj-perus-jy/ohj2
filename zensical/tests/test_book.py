@@ -16,7 +16,7 @@ SRC = ROOT.parent / "src"
 
 # SUMMARY.md:n linkkirivi. Luetaan erikseen eikä convert.build_navilla, jotta
 # testi vertaa tulostetta lähteeseen eikä skriptiä itseensä.
-SUMMARY_LINK = re.compile(r"^\s*(?:-\s*)?\[[^\]]*\]\((?P<href>[^)]*)\)")
+SUMMARY_LINK = re.compile(r"^\s*(?:[-*]\s*)?\[[^\]]*\]\((?P<href>[^)]*)\)")
 EDIT_LINK = re.compile(r'href="[^"]*/edit/main/src/(?P<path>[^"]*)"')
 
 
