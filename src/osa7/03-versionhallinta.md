@@ -5,7 +5,7 @@
 > Tämä luku olettaa, että olet käyttänyt Git-versiohallintaa aikaisemman.
 > Jos et ole aiemmin käyttänyt Gitiä tai kaipaat kertausta, lue aluksi
 > Ohjelmointi 1 -kurssin materiaalin
-> [Git-osio](https://ohjelmointi1.it.jyu.fi/git.html). Emme tässä vaiheessa
+> [Git-osio](https://ohjelmointi1.it.jyu.fi/git/). Emme tässä vaiheessa
 > tarvitse vielä etävarastoa, joten voit ohittaa GitLab-etävarastoa käsittelevän
 > kohdan. 
 >
