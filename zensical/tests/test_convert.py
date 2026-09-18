@@ -4,6 +4,7 @@ Lähdepuuna on tests/book/src, jossa on yksi esimerkki jokaisesta muunnoksesta.
 """
 
 import fcntl
+import json
 import os
 import re
 import zlib
@@ -12,6 +13,16 @@ from pathlib import Path
 import pytest
 
 import convert
+
+
+@pytest.fixture(autouse=True)
+def ohj1_page_config(monkeypatch):
+    """Testit on kirjoitettu ohj1:n sivusiirroille ja etusivun osiolle, joten
+    ne kiinnitetään tässä eivätkä riipu tämän kirjan NEST_UNDERista."""
+    monkeypatch.setattr(convert, "NEST_UNDER",
+                        {"tenttiohjeet.md": "tentti.md", "git-ht-ohje.md": "git.md"})
+    monkeypatch.setattr(convert, "DROP_SECTIONS",
+                        {"index.md": "Navigointi tässä materiaalissa"})
 
 
 @pytest.fixture
@@ -986,6 +997,175 @@ def test_convert_tasks_ignores_tasks_inside_code():
     assert convert.convert_tasks(text) == (text, 0)
 
 
+# --- Vaiheittainen ohje (assets/js/walkthrough.js) ----------------------------
+
+WALK = (
+    '<walkthrough scenes="images/vaiheet.js">\n\n'
+    "## Luku\n\n"
+    '<step scene="alku">\n\n'
+    "### Vaihe\n\n"
+    "Teksti.\n\n"
+    "</step>\n\n"
+    "</walkthrough>\n")
+
+
+def test_convert_walkthroughs_turns_the_tags_into_html():
+    """Kohtaustiedosto <script>-tagiksi ohjeen eteen, ohje diviksi ja vaihe
+    sectioniksi; markdown="1", jotta sisältö käännetään Markdownina."""
+    assert convert.convert_walkthroughs(WALK, "osa1/vaiheet.md") == (
+        '<script src="images/vaiheet.js"></script>\n\n'
+        '<div class="jyu-walk" markdown="1">\n\n'
+        "## Luku\n\n"
+        '<section class="jyu-step" data-scene="alku" markdown="1">\n\n'
+        "### Vaihe\n\n"
+        "Teksti.\n\n"
+        "</section>\n\n"
+        "</div>\n", 1)
+
+
+def test_convert_walkthroughs_writes_the_scenes_path_from_the_moved_page():
+    """NEST_UNDER siirtää sivun alikansioon (git-ht-ohje.md -> git/), joten
+    lähdepuun suhteellinen polku saa askeleen ylös. Hakemisto-osoitteen
+    askeleen lisää Zensical kuten <asciinema src>:lle."""
+    converted, _ = convert.convert_walkthroughs(
+        '<walkthrough scenes="images/git-ht-ohje/scenes.js">\n</walkthrough>\n',
+        "git-ht-ohje.md")
+    assert converted.startswith(
+        '<script src="../images/git-ht-ohje/scenes.js"></script>\n')
+
+
+def test_convert_walkthroughs_lifts_the_tags_out_of_the_indentation():
+    """Sisennetty tagi olisi Python-Markdownille koodilohko, kuten <task>."""
+    converted, _ = convert.convert_walkthroughs('    <step scene="a">\nx\n', "index.md")
+    assert converted == '<section class="jyu-step" data-scene="a" markdown="1">\n\nx\n'
+
+
+def test_convert_walkthroughs_is_repeatable():
+    """Valmiissa tekstissä ei ole enää tagia, johon muunnos osuisi."""
+    converted, _ = convert.convert_walkthroughs(WALK, "osa1/vaiheet.md")
+    assert convert.convert_walkthroughs(converted, "osa1/vaiheet.md") == (converted, 0)
+
+
+def test_convert_walkthroughs_ignores_tags_inside_code():
+    """Ohjeen merkinnät voi näyttää koodiesimerkissä."""
+    text = '```markdown\n<step scene="a">\n</step>\n```\n'
+    assert convert.convert_walkthroughs(text, "index.md") == (text, 0)
+
+
+def test_convert_walkthroughs_gives_the_steps_their_audio():
+    """audio="kansio" ei muuta ohjeen HTML:ää; vaihe, jolla on ajantasainen
+    ääni (walkthrough_audio), saa sen data-audiona."""
+    text = WALK.replace('scenes="images/vaiheet.js"',
+                        'scenes="images/vaiheet.js" audio="images/puhe"')
+    converted, count = convert.convert_walkthroughs(
+        text, "osa1/vaiheet.md", {"alku": "../images/puhe/alku.mp3"})
+    assert count == 1
+    assert converted.startswith(
+        '<script src="images/vaiheet.js"></script>\n\n<div class="jyu-walk" markdown="1">\n')
+    assert ('<section class="jyu-step" data-scene="alku" data-audio="../images/puhe/alku.mp3"'
+            ' markdown="1">') in converted
+
+
+def test_convert_animations_turns_the_tag_into_a_div_and_loads_the_scenes_at_the_end():
+    """Tagista div markdown="1" varasisällön ympärille ja kohtaustiedostosta
+    <script>-tagi sivun loppuun."""
+    text = ("Teksti.\n"
+            '<animation scenes="images/vaiheet.js" scene="a">\n\n'
+            "![Kuva](kuva.png)\n\n"
+            "</animation>\n\n"
+            "Loppu.\n")
+    assert convert.convert_animations(text, "osa1/vaiheet.md") == (
+        "Teksti.\n\n"
+        '<div class="jyu-anim" data-scene="a" markdown="1">\n\n'
+        "![Kuva](kuva.png)\n\n"
+        "</div>\n\n"
+        "Loppu.\n\n"
+        '<script src="images/vaiheet.js"></script>\n', 1)
+
+
+def test_convert_animations_keeps_the_tag_in_its_list_item_and_tab():
+    """Sisennys säilyy, jotta animaatio jää välilehdelle ja listan kohtaan;
+    skripti tulee sarakkeeseen 0 viimeisen välilehden ulkopuolelle."""
+    text = ('=== "Windows"\n\n'
+            "    1. Kohta\n\n"
+            '        <animation scenes="images/vaiheet.js" scene="a">\n\n'
+            "        ![Kuva](kuva.png)\n\n"
+            "        </animation>\n")
+    assert convert.convert_animations(text, "osa1/vaiheet.md") == (
+        '=== "Windows"\n\n'
+        "    1. Kohta\n\n"
+        '        <div class="jyu-anim" data-scene="a" markdown="1">\n\n'
+        "        ![Kuva](kuva.png)\n\n"
+        "        </div>\n\n"
+        '<script src="images/vaiheet.js"></script>\n', 1)
+
+
+def test_convert_animations_loads_each_scenes_file_once_from_the_moved_page():
+    """Sama tiedosto kahdesti -> yksi <script>. NEST_UNDER-siirretyn sivun
+    polku uudesta paikasta kuten ohjeessa (git.md -> git/index.md)."""
+    tag = '<animation scenes="images/git-ht-ohje/scenes.js" scene="{}">\n</animation>\n'
+    converted, count = convert.convert_animations(tag.format("a") + tag.format("b"), "git.md")
+    assert count == 2
+    assert converted.count("<script") == 1
+    assert converted.endswith('<script src="../images/git-ht-ohje/scenes.js"></script>\n')
+
+
+def test_convert_animations_is_repeatable():
+    """Valmiissa tekstissä ei ole enää tagia, eikä skriptiä lisätä toista kertaa."""
+    converted, _ = convert.convert_animations(
+        '<animation scenes="a.js" scene="a">\n\n![Kuva](kuva.png)\n\n</animation>\n', "index.md")
+    assert convert.convert_animations(converted, "index.md") == (converted, 0)
+
+
+def test_convert_animations_ignores_tags_inside_code():
+    """Animaation merkinnän voi näyttää koodiesimerkissä."""
+    text = '```markdown\n<animation scenes="a.js" scene="a">\n</animation>\n```\n'
+    assert convert.convert_animations(text, "index.md") == (text, 0)
+
+
+def test_walkthrough_speech_reads_the_text_without_addresses_or_code():
+    """Otsikko, kappale, luettelon kohta ja alertin otsikko omille riveilleen;
+    linkeistä teksti, osoitteet ja koodilohkot pois; polun erottimet,
+    näppäimet ja valikkopolku sanoina; tiedostonimen piste säilyy."""
+    source = (
+        '<walkthrough scenes="images/vaiheet.js" audio="images/puhe">\n\n'
+        '<step scene="alku">\n\n'
+        "### Avaa sivu\n\n"
+        "Mene osoitteeseen <https://gitlab.jyu.fi> ja lue [ohje\n"
+        "tästä](git.md#fork). Paina **Access › Personal access tokens**.\n\n"
+        "```bash\ngit clone https://gitlab.jyu.fi/x.git .\n```\n\n"
+        "- **Windows**: paina <kbd>Ctrl</kbd> + <kbd>V</kbd> kansiossa\n"
+        "  `C:\\Users\\olli\\ohj1` (Git Bashissa `/c/Users/olli/ohj1/`).\n\n"
+        "> [!VAROITUS]\n> Älä anna `git add --all` -komentoa vain `.gitignore`-tiedostolle.\n\n"
+        "</step>\n\n</walkthrough>\n")
+    assert convert.walkthrough_speech(source) == ("images/puhe", {"alku": (
+        "Avaa sivu.\n"
+        "Mene osoitteeseen ja lue ohje tästä. Paina Access, Personal access tokens.\n"
+        "Windows: paina Control plus V kansiossa C-asema kenoviiva Users kenoviiva olli"
+        " kenoviiva ohj1 (Git Bashissa kauttaviiva c kauttaviiva Users kauttaviiva olli"
+        " kauttaviiva ohj1).\n"
+        "Varoitus.\n"
+        "Älä anna git add all -komentoa vain .gitignore-tiedostolle.")})
+
+
+def test_walkthrough_audio_uses_only_audio_made_from_the_current_text(tmp_path):
+    """Ääni kelpaa vain nykyisestä tekstistä tehtynä (puhe.json:n tiiviste);
+    vanhentunut ja puuttuva jäävät pois ja listataan. Osoitteessa on
+    hakemisto-osoitteen askel, koska Zensical ei korjaa data-attribuutteja."""
+    source = ('<walkthrough scenes="images/git-ht-ohje/scenes.js" audio="images/git-ht-ohje/puhe">\n'
+              '<step scene="a">\nEka.\n</step>\n<step scene="b">\nToka.\n</step>\n'
+              '<step scene="c">\nKolmas.\n</step>\n</walkthrough>\n')
+    folder = tmp_path / "images" / "git-ht-ohje" / "puhe"
+    folder.mkdir(parents=True)
+    for scene in "abc":
+        (folder / f"{scene}.mp3").write_bytes(b"")
+    (folder / "puhe.json").write_text(json.dumps({"voice": "fi-FI-NooraNeural", "steps": {
+        "a": convert.speech_hash("Eka."), "b": convert.speech_hash("Vanha.")}}))
+    assert convert.walkthrough_audio(source, "git-ht-ohje.md", tmp_path) == (
+        {"a": "../../images/git-ht-ohje/puhe/a.mp3"}, ["b", "c"])
+    assert convert.walkthrough_audio(WALK, "osa1/vaiheet.md", tmp_path) == ({}, [])
+
+
 # --- Testaa tietosi -visa (assets/js/visa.js) --------------------------------
 
 QUIZ = """\
@@ -1194,6 +1374,8 @@ def test_nest_moves():
     assert convert.nest_moves() == {
         "tentti.md": "tentti/index.md",
         "tenttiohjeet.md": "tentti/tenttiohjeet.md",
+        "git.md": "git/index.md",
+        "git-ht-ohje.md": "git/git-ht-ohje.md",
     }
 
 

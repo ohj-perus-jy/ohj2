@@ -5,10 +5,17 @@
 #   ./run.sh 8003         -> sama, eri portissa
 #   ./run.sh build        -> pelkkä rakennus site/-hakemistoon
 #   ./run.sh test         -> testit
+#   ./run.sh puhe SIVU    -> vaiheittaisen ohjeen äänet, esim.
+#                            ./run.sh puhe ../src/sivu.md (puhe.py)
 set -euo pipefail
 cd "$(dirname "$0")"
 
 [[ -x .venv/bin/zensical ]] || ./setup.sh
+
+if [[ ${1:-} == puhe ]]; then
+    shift
+    exec .venv/bin/python puhe.py "$@"
+fi
 
 # Testit kääntävät itse sen mitä tarvitsevat, joten convert.py:tä ei ajeta.
 # Selain tarkistetaan erikseen, koska se ei ole .venv:ssä vaan kotihakemistossa

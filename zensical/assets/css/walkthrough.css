@@ -1,0 +1,1778 @@
+/* Vaiheittainen ohje (assets/js/walkthrough.js). Ilman skriptiä .jyu-walk on
+ * tavallinen tekstiosio, eikä tämä tiedosto koske siihen: kaikki alla oleva
+ * osuu vain skriptin rakentamaan esitykseen (.jyu-walk--live).
+ *
+ * Kaksi osaa: esityksen kehys teeman muuttujilla (seuraa vaaleaa ja tummaa
+ * teemaa) ja kohtausten sovellusikkunat kiinteillä väreillä, koska ne
+ * jäljittelevät oikeita sovelluksia (GitLab, Git Bash, Rider), jotka näyttävät
+ * samalta teemasta riippumatta. Kohtaus piirretään 800 × 500 pikselin kokoon
+ * ja skaalataan (transform), joten sen mitat ovat pikseleitä. */
+
+/* --- Esityksen kehys ------------------------------------------------------ */
+
+.jyu-walk--live {
+  margin: 1.5em 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+  outline: none;
+  /* Ohjainrivin asettelu palstan eikä ikkunan leveydestä, ks. @container. */
+  container-type: inline-size;
+}
+
+/* Esityksessä näkyy vain nykyinen vaihe ohjainten alla, viivan takana; luvun
+ * nimi on aikajanan pillerissä. */
+.jyu-walk--live:not(.jyu-walk--text) > h2,
+.jyu-walk--live:not(.jyu-walk--text) > .jyu-step:not(.jyu-step--current) {
+  display: none;
+}
+
+.jyu-walk--live > .jyu-step,
+.jyu-walk--text > h2 {
+  padding-inline: 0.8rem;
+}
+
+.jyu-walk--live > .jyu-step {
+  padding-bottom: 0.4rem;
+}
+
+.jyu-walk--live:not(.jyu-walk--text) > .jyu-step {
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.jyu-walk--live:not(.jyu-walk--text) > .jyu-step > :first-child {
+  margin-top: 0;
+}
+
+.jyu-walk--text .jw-stage,
+.jyu-walk--text .jw-live {
+  display: none;
+}
+
+/* Ohjaimet teeman käyttöliittymäkirjasimella, eivät leipätekstin serifillä. */
+.jw-ui {
+  font-family: var(--md-text-font-family);
+}
+
+/* Hover ja näppäimistökohdistus teeman korostusvärillä, samoilla muuttujilla
+ * joilla teema piirtää omat hoverinsa (.md-button, sivutuslinkit, välilehdet)
+ * ja codebuttons.css koodilohkon napit; omia muuttujia ei tarvita.
+ * Tekstinappi ja pilleri saavat korostusvärin ja sen läpikuultavan pohjan
+ * (--md-accent-fg-color--transparent), täytetty nappi vaihtaa täytön
+ * pääväristä korostusväriin kuten teeman .md-button--primary. Kestot ovat
+ * teeman .md-buttonin. */
+.jw-ui button {
+  font: inherit;
+  cursor: pointer;
+  transition: color 125ms, background-color 125ms, border-color 125ms;
+}
+
+.jw-ui button:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+/* Ohjainrivi: tekstinappi oikeassa reunassa; ilmoitus (tekstinä puhelimella)
+ * omalla rivillään. */
+.jw-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.jw-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.8rem;
+  margin-left: auto;
+}
+
+.jw-mode {
+  padding: 0.3rem 0;
+  border: 0;
+  background: none;
+  color: var(--md-typeset-a-color);
+  font-size: 0.7rem;
+}
+
+/* Tekstinapilla ei ole sivutäytettä, joten pohjaväri ei sovi: pelkkä väri
+ * kuten teeman linkeillä. */
+.jw-mode:hover,
+.jw-mode:focus-visible {
+  color: var(--md-accent-fg-color);
+}
+
+.jw-notice {
+  flex-basis: 100%;
+  margin: 0.2rem 0 0;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.jw-stage {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  max-width: 100%;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--md-primary-fg-color) 9%, var(--md-default-bg-color));
+  /* Vaakapyyhkäisy skriptille, pystyvieritys selaimelle. */
+  touch-action: pan-y;
+}
+
+.jw-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 800px;
+  height: 500px;
+  transform-origin: 0 0;
+}
+
+.jw-canvas--moving {
+  transition: transform 0.5s ease;
+}
+
+.jw-zoom {
+  position: absolute;
+  z-index: 6;
+  top: 0.4rem;
+  right: 0.4rem;
+  padding: 0.25rem 0.6rem;
+  border: 0;
+  border-radius: 1rem;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  font-size: 0.64rem;
+}
+
+.jw-zoom:hover,
+.jw-zoom:focus-visible {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+/* Iso toistonappi (walkthrough.js: go "wait"): esitys avautuu odottamaan
+ * sitä. Nappi peittää koko näyttämön, joten kohtausta klikkaamalla esitys
+ * alkaa; näkyvä ympyrä on keskellä kuten videosoittimissa, värit kuin
+ * .jw-zoom. Kohdistuskehys ympyrään: koko näyttämön ympärillä se jäisi
+ * näyttämön overflow: hiddenin alle. Lähikuvan nappi (.jw-zoom) on päällä. */
+.jw-play {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #fff;
+}
+
+.jw-play[hidden] {
+  display: none;
+}
+
+.jw-play svg {
+  width: 4.4rem;
+  height: 4.4rem;
+  padding: 1.1rem;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 60%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 30%);
+  transition: color 125ms, background-color 125ms;
+}
+
+.jw-play:hover svg,
+.jw-play:focus-visible svg {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.jw-ui .jw-play:focus-visible {
+  outline: none;
+}
+
+.jw-play:focus-visible svg {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+/* Kuvakkeet näyttämön oikeassa alakulmassa kuten videosoittimissa: kaiutin
+ * (walkthrough.js: SPEAKER, setSpeaking) ja koko ruutu (FULL, setFull);
+ * sama tumma pohja kuin lähikuvan napilla. Kaiuttimessa aallot, kun lukeminen
+ * on päällä, ja risti, kun ei; koko ruudun nuolet ulos, kun koko ruutu ei
+ * ole päällä, ja sisään, kun on. */
+.jw-controls {
+  position: absolute;
+  z-index: 6;
+  right: 0.4rem;
+  bottom: 0.4rem;
+  display: flex;
+  gap: 0.3rem;
+}
+
+.jw-controls button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+}
+
+.jw-controls svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.jw-controls button:hover,
+.jw-controls button:focus-visible {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.jw-speak[aria-pressed="true"] .jw-speak-off,
+.jw-speak[aria-pressed="false"] .jw-speak-on,
+.jw-full[aria-pressed="true"] .jw-full-on,
+.jw-full[aria-pressed="false"] .jw-full-off {
+  display: none;
+}
+
+/* Aikajana kohtauksen alla luvuittain (walkthrough.js: parts): ylärivillä
+ * luvun pilleri ja alarivillä luvun vaiheet. Sarakkeet (skriptistä, Nfr)
+ * jakavat leveyden vaiheiden määrän suhteessa, mutta sarake on vähintään
+ * pillerin pisimmän sanan levyinen: yhden vaiheen luku saa leveän palkin, ja
+ * pitkä nimi rivittyy kahdelle riville, jolloin pillerien rivi on kaikilla
+ * yhtä korkea. Osan rivit ovat aikajanan rivit (subgrid), jotta pillerit ja
+ * vaiheet pysyvät omillaan, vaikka osalta puuttuisi pilleri (vaiheet ennen
+ * ensimmäistä lukua). */
+.jw-timeline {
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 2px 6px;
+  padding: 0.5rem 0.8rem 0;
+}
+
+.jw-part {
+  display: grid;
+  grid-row: 1 / 3;
+  grid-template-rows: subgrid;
+}
+
+/* Pilleri on pieni versaaliotsake harvalla kirjainvälillä. Valitsin on
+ * tarkempi kuin .jw-ui button, joka nollaa kirjasimen (font: inherit). */
+.jw-timeline .jw-pill {
+  padding: 0.15rem 0.5rem;
+  border: 0;
+  border-radius: 1rem;
+  background: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  font-size: 0.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.jw-pill:hover,
+.jw-pill:focus-visible {
+  background: var(--md-accent-fg-color--transparent);
+  color: var(--md-accent-fg-color);
+}
+
+.jw-pill[aria-current="true"] {
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.jw-pill[aria-current="true"]:hover,
+.jw-pill[aria-current="true"]:focus-visible {
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+/* Painikkeen näkyvä palkki on 6 px, nykyisen vaiheen 10 px, osuma-alue 22 px
+ * (sormi). Palkki on täytteen sisällä (background-clip), joten sen korkeus
+ * on 22 px miinus täytteet. */
+.jw-ticks {
+  display: flex;
+  grid-row: 2;
+  gap: 3px;
+}
+
+.jw-tick {
+  flex: 1;
+  box-sizing: border-box;
+  height: 22px;
+  padding: 8px 0;
+  border: 0;
+  border-radius: 2px;
+  background: var(--md-default-fg-color--lightest);
+  background-clip: content-box;
+}
+
+.jw-tick--done {
+  background-color: color-mix(in srgb, var(--md-primary-fg-color) 45%, transparent);
+}
+
+.jw-tick--current {
+  padding-block: 6px;
+  background-color: var(--md-primary-fg-color);
+}
+
+.jw-tick:hover,
+.jw-tick:focus-visible {
+  background-color: var(--md-accent-fg-color);
+}
+
+.jw-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem 0.5rem;
+}
+
+.jw-count {
+  margin-right: auto;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.jw-bar button {
+  padding: 0.45rem 0.8rem;
+  border: 1px solid var(--md-default-fg-color--lighter);
+  border-radius: 0.1rem;
+  background: transparent;
+  color: var(--md-default-fg-color);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.jw-bar .jw-next {
+  border-color: var(--md-primary-fg-color);
+  background: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.jw-bar .jw-replay {
+  border-color: transparent;
+  color: var(--md-default-fg-color--light);
+  font-weight: 400;
+}
+
+/* :not(:disabled), koska selain antaa :hoverin myös disabled-napille (vrt.
+ * codebuttons.css). Toista on tekstinappi, joten sen reuna pysyy
+ * näkymättömänä; vain Edellinen saa reunaan korostusvärin. */
+.jw-bar button:not(:disabled):hover,
+.jw-bar button:not(:disabled):focus-visible {
+  background: var(--md-accent-fg-color--transparent);
+  color: var(--md-accent-fg-color);
+}
+
+.jw-bar .jw-prev:not(:disabled):hover,
+.jw-bar .jw-prev:not(:disabled):focus-visible {
+  border-color: var(--md-accent-fg-color);
+}
+
+.jw-bar .jw-next:not(:disabled):hover,
+.jw-bar .jw-next:not(:disabled):focus-visible {
+  border-color: var(--md-accent-fg-color);
+  background: var(--md-accent-fg-color);
+  color: var(--md-accent-bg-color);
+}
+
+.jw-bar button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* Leveä palsta: nimet mahtuvat yhdelle riville, joten pilleri ei rivity vaan
+ * levittää kapeankin sarakkeen nimensä levyiseksi. Raja on leveys, jolla
+ * harjoitustyön ohjeen kuusi luvun nimeä mahtuvat rivittymättä (mitattu
+ * 38 rem); rem, koska nimien leveys seuraa teeman kirjasinkokoa, joka kasvaa
+ * 1600 px:n ikkunasta alkaen. */
+@container (min-width: 39rem) {
+  .jw-pill {
+    white-space: nowrap;
+  }
+}
+
+/* Kapea palsta (puhelin): luvun nimet pois, koska ne eivät mahdu vaiheidensa
+ * päälle; selataan vaiheista ja Edellinen- ja Seuraava-napeilla. Vaiheet ovat
+ * yhdessä rivissä, ja luvut erottaa isompi rako; osan leveys vaiheiden määrän
+ * mukaan (flex-grow skriptistä). Raja on leveys, jolla ohjeen kuusi luvun
+ * nimeä vielä mahtuvat rivitettyinä (mitattu 31 rem; tavallinen palsta on
+ * 33 rem). */
+@container (max-width: 32rem) {
+  .jw-timeline {
+    display: flex;
+    gap: 6px;
+    padding-top: 0.2rem;
+  }
+
+  .jw-part {
+    display: flex;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .jw-pill {
+    display: none;
+  }
+
+  .jw-ticks {
+    flex: 1;
+  }
+}
+
+/* Kapea palsta (puhelin): Edellinen ja Seuraava puoliksi omalle rivilleen,
+ * esityksen avausnappi näkyväksi napiksi ilmoituksen alle. */
+@container (max-width: 520px) {
+  .jyu-walk--text .jw-actions {
+    margin-left: 0;
+  }
+
+  .jw-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .jw-bar .jw-replay {
+    justify-self: end;
+  }
+
+  .jyu-walk--text .jw-mode {
+    padding: 0.4rem 0.8rem;
+    border: 1px solid var(--md-primary-fg-color);
+    border-radius: 0.1rem;
+    font-weight: 700;
+  }
+
+  .jyu-walk--text .jw-mode:hover,
+  .jyu-walk--text .jw-mode:focus-visible {
+    border-color: var(--md-accent-fg-color);
+    background: var(--md-accent-fg-color--transparent);
+  }
+}
+
+/* Koko ruutu (walkthrough.js: setFull). Kehys ja ohjainrivi hajotetaan
+ * (display: contents), jotta niiden osat asettuvat ruudukkoon: vasemmalla
+ * kohtaus, aikajana ja siirtymisnapit, oikealla vaiheen teksti omalla
+ * vierityksellään. Kohtaus sovitetaan kehykseensä
+ * leveyden tai korkeuden mukaan (160cqh = korkeus × 8/5). Pystynäytöllä
+ * teksti tulee kohtauksen alle. */
+/* Teeman html:n scrollbar-gutter: stable varaisi vierityspalkin tilan
+ * koko ruudun oikeaan reunaan, vaikka sivu ei vierity. */
+.jw-full-open {
+  overflow: hidden;
+  scrollbar-gutter: auto;
+}
+
+.jyu-walk--full {
+  position: fixed;
+  z-index: 100;
+  inset: 0;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto auto;
+  grid-template-columns: minmax(0, 1fr) minmax(18rem, 30%);
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: var(--md-default-bg-color);
+}
+
+.jyu-walk--full .jw-ui,
+.jyu-walk--full .jw-live {
+  display: contents;
+}
+
+/* Ylärivillä on vain tekstinäkymän nappi, jota koko ruudussa ei ole. */
+.jyu-walk--full .jw-top {
+  display: none;
+}
+
+.jyu-walk--full .jw-screen {
+  display: grid;
+  grid-row: 1;
+  grid-column: 1;
+  place-items: center;
+  min-height: 0;
+  padding: 0.8rem 0.8rem 0;
+  container-type: size;
+}
+
+.jyu-walk--full .jw-stage {
+  width: min(100cqw, 160cqh);
+}
+
+.jyu-walk--full .jw-timeline {
+  grid-row: 2;
+  grid-column: 1;
+}
+
+.jyu-walk--full .jw-bar {
+  grid-row: 3;
+  grid-column: 1;
+}
+
+.jyu-walk--full > .jyu-step {
+  grid-row: 1 / -1;
+  grid-column: 2;
+  overflow-y: auto;
+  padding: 0.4rem 1.2rem 1rem;
+  border-top: 0;
+  border-left: 1px solid var(--md-default-fg-color--lightest);
+}
+
+@media (max-aspect-ratio: 1 / 1) {
+  .jyu-walk--full {
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .jyu-walk--full .jw-screen {
+    padding: 0;
+    container-type: normal;
+  }
+
+  .jyu-walk--full .jw-stage {
+    width: 100%;
+  }
+
+  .jyu-walk--full > .jyu-step {
+    grid-row: 4;
+    grid-column: 1;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    border-left: 0;
+  }
+}
+
+/* Paperille koko ohje tekstinä. !important, koska esityksen piilotus on
+ * tarkempi valitsin kuin tämä. */
+@media print {
+  .jw-ui {
+    display: none;
+  }
+
+  .jyu-walk--live {
+    border: 0;
+  }
+
+  .jyu-walk--live > h2,
+  .jyu-walk--live > .jyu-step {
+    display: block !important;
+    padding-inline: 0;
+  }
+}
+
+/* --- Yksittäinen animaatio (walkthrough.js: enhanceAnimation) ------------ */
+
+/* Kohtaus ja sen alla Toista-nappi. Tagin sisältö (kuvakaappaukset) jää
+ * sivulle ruudunlukijaa varten mutta piiloutuu näytöltä; tulosteessa se on
+ * kohtauksen tilalla. */
+.jyu-anim--live {
+  position: relative;
+  margin: 1em 0;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 0.2rem;
+}
+
+@media screen {
+  .jyu-anim--live > :not(.jw-anim) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+.jw-anim-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 0.2rem 0.4rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.jw-anim-bar button {
+  padding: 0.35rem 0.8rem;
+  border: 0;
+  background: none;
+  color: var(--md-default-fg-color--light);
+  font: 0.7rem var(--md-text-font-family);
+  cursor: pointer;
+}
+
+.jw-anim-bar button:focus-visible {
+  outline: 2px solid var(--md-accent-fg-color);
+  outline-offset: 2px;
+}
+
+@media print {
+  .jw-anim {
+    display: none;
+  }
+
+  .jyu-anim--live {
+    border: 0;
+  }
+}
+
+/* --- Kohtausten ikkunat (kiinteät värit) --------------------------------- */
+
+/* --jw-mark: korostuskehyksen ja klikkauksen merkin väri (.jw-ring, .jw-pulse). */
+.jw-canvas {
+  --jw-mark: #e8a317;
+  --jw-mark-soft: rgb(232 163 23 / 28%);
+  --jw-sans: var(--md-text-font-family, "Source Sans 3"), "Segoe UI", Helvetica, Arial, sans-serif;
+  --jw-mono: var(--md-code-font-family, "Roboto Mono"), Consolas, monospace;
+  color: #1f1e24;
+  font: 13px/1.45 var(--jw-sans);
+}
+
+/* Windows 11 tummalla teemalla: työpöytä, tehtäväpalkki ja haku
+ * (git-ht-ohje/scenes.js: avaa-windows). Hakupaneeli kuvakaappauksen
+ * mittasuhteissa noin 0,6-kertaisena. */
+
+.jw-w11 {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: radial-gradient(130% 100% at 80% 90%, #3b8cff, #0e4fd8 30%, #062a7a 60%, #030b26);
+  color: #fff;
+}
+
+.jw-w11-taskbar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 44px;
+  border-top: 1px solid #333;
+  background: #1f1f1f;
+}
+
+.jw-w11-taskbar > span {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+}
+
+.jw-w11-taskbar i {
+  display: block;
+}
+
+.jw-w11-start b {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  width: 20px;
+  height: 20px;
+}
+
+.jw-w11-start i {
+  border-radius: 1px;
+  background: linear-gradient(135deg, #1e9bf0, #78d6ff);
+}
+
+.jw-w11-taskbar > .jw-w11-search {
+  gap: 8px;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 170px;
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid #3a3a3a;
+  border-radius: 16px;
+  background: #2b2b2b;
+  color: #cfcfcf;
+  font-size: 12px;
+}
+
+.jw-w11-search svg,
+.jw-w11-query svg {
+  color: #4cc2ff;
+}
+
+/* Käynnissä olevan sovelluksen merkki kuvakkeen alla. */
+.jw-w11-run::after {
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  width: 6px;
+  height: 3px;
+  margin-left: -3px;
+  border-radius: 2px;
+  background: #9d9d9d;
+  content: "";
+}
+
+.jw-w11-panel {
+  position: absolute;
+  bottom: 52px;
+  left: 90px;
+  box-sizing: border-box;
+  width: 620px;
+  padding: 14px 16px;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  background: linear-gradient(160deg, #2a2a2c, #202022 55%, #23243a);
+  box-shadow: 0 16px 40px rgb(0 0 0 / 50%);
+  font-size: 12px;
+}
+
+.jw-w11-query {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid #3d3d3d;
+  border-radius: 17px;
+  background: #1b1b1b;
+  font-size: 14px;
+}
+
+.jw-w11-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  white-space: nowrap;
+}
+
+.jw-w11-chips span {
+  padding: 2px 12px;
+  border: 1px solid #3d3d3d;
+  border-radius: 13px;
+  background: #2b2b2b;
+}
+
+.jw-w11-chips .jw-w11-on {
+  border-color: #4cc2ff;
+  background: #4cc2ff;
+  color: #000;
+}
+
+.jw-w11-chips .jw-w11-back {
+  padding: 2px 6px;
+  border: 0;
+  background: none;
+}
+
+.jw-w11-results {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.jw-w11-heading {
+  margin: 0 0 6px 4px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.jw-w11-best {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 5px;
+  background: #3a3a3c;
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+/* Valitun tuloksen korostusviiva vasemmassa reunassa. */
+.jw-w11-best::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 3px;
+  height: 16px;
+  margin-top: -8px;
+  border-radius: 2px;
+  background: #4cc2ff;
+  content: "";
+}
+
+.jw-w11 small {
+  display: block;
+  color: #c5c5c5;
+  font-size: 11px;
+}
+
+.jw-w11-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 26px;
+  padding: 0 6px 0 8px;
+}
+
+.jw-w11-row span {
+  flex: 1;
+}
+
+.jw-w11-row small {
+  display: inline;
+}
+
+.jw-w11-card {
+  padding: 14px 10px 6px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: rgb(255 255 255 / 4%);
+  text-align: center;
+}
+
+.jw-w11-card > svg {
+  display: block;
+  margin: 0 auto 6px;
+}
+
+.jw-w11-card > b {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.jw-w11-actions {
+  margin-top: 10px;
+  padding-top: 6px;
+  border-top: 1px solid #3d3d3d;
+  text-align: left;
+}
+
+.jw-w11-actions div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 24px;
+  padding-left: 8px;
+}
+
+.jw-win {
+  position: absolute;
+  top: 20px;
+  left: 24px;
+  display: flex;
+  flex-direction: column;
+  width: 752px;
+  height: 460px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgb(10 14 30 / 25%), 0 0 0 1px rgb(10 14 30 / 12%);
+}
+
+.jw-titlebar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 10px;
+  background: #dee1e8;
+  color: #444;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.jw-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.jw-dots i {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #b9bdc8;
+}
+
+.jw-win--dark,
+.jw-win--dark .jw-titlebar {
+  background: #2b2d30;
+  color: #dfe1e5;
+}
+
+.jw-win--dark .jw-titlebar {
+  background: #1e1f22;
+}
+
+.jw-win--dark .jw-dots i {
+  background: #4e5157;
+}
+
+.jw-win--terminal {
+  background: #0c0c0c;
+  color: #ccc;
+}
+
+.jw-win--terminal .jw-titlebar {
+  background: #2b2b2b;
+  color: #ddd;
+}
+
+.jw-win--terminal .jw-dots i {
+  background: #555;
+}
+
+.jw-address {
+  display: flex;
+  flex: none;
+  align-items: center;
+  height: 34px;
+  padding: 0 10px;
+  border-bottom: 1px solid #dcdfe6;
+  background: #f3f4f7;
+}
+
+.jw-url {
+  flex: 1;
+  min-height: 21px;
+  padding: 2px 12px;
+  overflow: hidden;
+  border: 1px solid #d3d6de;
+  border-radius: 99px;
+  background: #fff;
+  color: #333;
+  font: 12px/15px var(--jw-mono);
+  white-space: nowrap;
+}
+
+.jw-page {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* Lomakkeet ja napit */
+
+.jw-field {
+  margin-bottom: 10px;
+}
+
+.jw-field > label,
+.jw-label {
+  display: block;
+  margin-bottom: 3px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.jw-input {
+  min-height: 29px;
+  padding: 5px 8px;
+  overflow: hidden;
+  border: 1px solid #bfbfc3;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.jw-input--mono {
+  font: 12px/17px var(--jw-mono);
+}
+
+.jw-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.jw-hint {
+  margin-top: 2px;
+  color: #737278;
+  font-size: 11px;
+}
+
+.jw-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border: 1px solid #bfbfc3;
+  border-radius: 4px;
+  background: #fff;
+  color: #333;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.jw-btn--primary {
+  border-color: #1f75cb;
+  background: #1f75cb;
+  color: #fff;
+}
+
+.jw-radio,
+.jw-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.jw-radio > i,
+.jw-check > i {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  margin-top: 2px;
+  border: 1px solid #89888d;
+  border-radius: 50%;
+}
+
+.jw-check > i {
+  border-radius: 3px;
+}
+
+.jw-radio.jw-on > i {
+  border: 4px solid #1f75cb;
+}
+
+/* Ryhmässä klikattu vaihtoehto (data-on="jw-on") syrjäyttää valmiiksi
+ * valitun (.jw-default), jottei valittuja ole kahta. */
+.jw-radio-group:has(.jw-radio.jw-on:not(.jw-default)) .jw-default > i {
+  border: 1px solid #89888d;
+}
+
+.jw-check.jw-on > i {
+  border-color: #1f75cb;
+  background: #1f75cb linear-gradient(135deg, transparent 45%, #fff 45%, #fff 55%, transparent 55%);
+}
+
+.jw-radio small,
+.jw-check small {
+  display: block;
+  color: #737278;
+}
+
+/* GitLab */
+
+.jw-gl {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 170px minmax(0, 1fr);
+  min-height: 0;
+}
+
+.jw-gl-side {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-right: 1px solid #e3e3e8;
+  background: #f6f6f8;
+  color: #555;
+  font-size: 12px;
+}
+
+.jw-gl-side b {
+  margin-bottom: 4px;
+  color: #222;
+  font-size: 13px;
+}
+
+.jw-gl-side .jw-sel {
+  margin-inline: -6px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #e7e4f2;
+  color: #222;
+}
+
+.jw-gl-main {
+  position: relative;
+  padding: 14px 22px;
+  overflow: hidden;
+}
+
+.jw-gl-crumb {
+  margin-bottom: 8px;
+  color: #737278;
+  font-size: 12px;
+}
+
+.jw-gl-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.jw-gl-title h4 {
+  flex: 1;
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.2;
+}
+
+.jw-gl-avatar {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 6px;
+  background: #e7e4f2;
+  color: #5b4fa3;
+  font-weight: 700;
+}
+
+.jw-gl-files {
+  border: 1px solid #dcdcde;
+  border-radius: 4px;
+}
+
+.jw-gl-files > div {
+  display: grid;
+  grid-template-columns: 1.1fr 1.6fr 0.7fr;
+  padding: 6px 10px;
+  border-top: 1px solid #ececef;
+  font-size: 12px;
+}
+
+.jw-gl-files > div:first-child {
+  border-top: 0;
+  background: #fbfafd;
+  font-weight: 600;
+}
+
+.jw-gl-files > div > span + span {
+  color: #737278;
+}
+
+.jw-gl-files > div > span:last-child {
+  text-align: right;
+}
+
+.jw-alert-ok {
+  margin-bottom: 10px;
+  padding: 7px 10px;
+  border-left: 3px solid #108548;
+  background: #ecf4ee;
+  font-size: 12px;
+}
+
+.jw-popover {
+  position: absolute;
+  padding: 10px 12px;
+  border: 1px solid #dcdcde;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 6px 18px rgb(0 0 0 / 15%);
+  font-size: 12px;
+}
+
+.jw-icon {
+  display: inline-block;
+  width: 12px;
+  height: 14px;
+  margin-right: 6px;
+  border-radius: 2px;
+  background: #9aa3b5;
+  vertical-align: -2px;
+}
+
+.jw-icon--dir {
+  height: 11px;
+  background: #e8b64c;
+}
+
+.jw-icon--img {
+  background: #4aa3df;
+}
+
+/* Git Bash */
+
+.jw-terminal {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8px 12px;
+  overflow: hidden;
+  font: 13px/1.42 var(--jw-mono);
+  tab-size: 8;
+  white-space: pre;
+}
+
+/* Terminaalissa tulematon tuloste ei varaa tilaa: rivit nousevat ylös vasta
+ * kun tuloste tulee, kuten oikeassa päätteessä. Terminaalissa ei ole
+ * klikattavaa, jonka paikka pitäisi tietää etukäteen (vrt. .jw-hidden). */
+.jw-terminal .jw-hidden {
+  display: none;
+}
+
+.jw-t-green { color: #16c60c; }
+.jw-t-magenta { color: #b148c6; }
+.jw-t-yellow { color: #c19c00; }
+.jw-t-cyan { color: #3a96dd; }
+.jw-t-red { color: #e74856; }
+
+.jw-caret {
+  display: inline-block;
+  width: 8px;
+  height: 15px;
+  background: #ccc;
+  vertical-align: -2px;
+  animation: jw-blink 1s steps(1) infinite;
+}
+
+@keyframes jw-blink {
+  50% { opacity: 0; }
+}
+
+/* Editori ja Rider */
+
+.jw-tabs {
+  display: flex;
+  flex: none;
+  height: 28px;
+  border-bottom: 1px solid #1e1f22;
+  background: #2b2d30;
+  font-size: 12px;
+}
+
+.jw-tabs span {
+  padding: 5px 14px;
+  border-bottom: 2px solid #3574f0;
+  color: #dfe1e5;
+}
+
+.jw-code {
+  flex: 1;
+  padding: 8px 0;
+  overflow: hidden;
+  background: #1e1f22;
+  color: #bcbec4;
+  font: 13px/1.6 var(--jw-mono);
+  white-space: pre;
+}
+
+.jw-code > div {
+  display: flex;
+}
+
+.jw-ln {
+  flex: none;
+  width: 38px;
+  padding-right: 12px;
+  color: #4b5059;
+  text-align: right;
+}
+
+.jw-c-head { color: #cf8e6d; font-weight: 500; }
+.jw-c-key { color: #cf8e6d; }
+.jw-c-link { color: #56a8f5; }
+.jw-c-str { color: #6aab73; }
+.jw-c-com { color: #7a7e85; }
+.jw-c-note { color: #f0b429; }
+
+/* Muistio ja TextEdit */
+
+.jw-np-tabs {
+  display: flex;
+  flex: none;
+  height: 32px;
+  padding: 5px 8px 0;
+  background: #eee;
+  font-size: 12px;
+}
+
+.jw-np-tabs span {
+  padding: 6px 16px;
+  border-radius: 6px 6px 0 0;
+  background: #fff;
+}
+
+.jw-np-menu {
+  display: flex;
+  flex: none;
+  gap: 18px;
+  padding: 5px 14px;
+  border-bottom: 1px solid #e5e5e5;
+  font-size: 12px;
+}
+
+.jw-np-text {
+  flex: 1;
+  padding: 8px 14px;
+  overflow: hidden;
+  background: #fff;
+  color: #1a1a1a;
+  font: 13px/1.6 var(--jw-mono);
+  white-space: pre;
+}
+
+.jw-np-status {
+  display: flex;
+  flex: none;
+  justify-content: flex-end;
+  gap: 24px;
+  padding: 3px 14px;
+  border-top: 1px solid #e5e5e5;
+  background: #f3f3f3;
+  color: #555;
+  font-size: 11px;
+}
+
+.jw-np-note {
+  color: #a15c00;
+}
+
+/* Sovelluksen valikko (macOS). data-on="jw-hover" korostaa klikatun rivin,
+ * data-on="jw-unchecked" poistaa rivin valintamerkin. */
+
+.jw-menu {
+  position: absolute;
+  z-index: 3;
+  padding: 5px;
+  border-radius: 6px;
+  background: rgb(240 240 243 / 97%);
+  box-shadow: 0 10px 30px rgb(0 0 0 / 30%), 0 0 0 1px rgb(0 0 0 / 12%);
+  color: #1f1e24;
+  font-size: 13px;
+}
+
+.jw-menu > div {
+  display: flex;
+  padding: 2px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.jw-menu > hr {
+  margin: 4px 8px;
+  border: 0;
+  border-top: 1px solid #d0d0d6;
+}
+
+.jw-menu .jw-mark {
+  width: 16px;
+}
+
+.jw-menu .jw-sub {
+  margin-left: auto;
+  padding-left: 16px;
+}
+
+.jw-hover {
+  background: #2f6fe4;
+  color: #fff;
+}
+
+.jw-unchecked > .jw-mark {
+  visibility: hidden;
+}
+
+/* Pitkä valintalista (GitLabin oikeudet): kuvaus yhdelle riville. */
+.jw-scopes .jw-check {
+  margin: 0 0 6px;
+}
+
+.jw-scopes .jw-check > div {
+  min-width: 0;
+}
+
+.jw-scopes small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Vieritys (data-scroll="px"): sisältö liukuu ylös kuten vieritettäessä. */
+[data-scroll] {
+  transition: transform 0.5s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll] {
+    transition: none;
+  }
+}
+
+.jw-ide {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 200px minmax(0, 1fr);
+  min-height: 0;
+}
+
+.jw-ide-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 8px;
+  background: #26282b;
+  font-size: 12px;
+}
+
+.jw-ide-list small {
+  margin: 8px 6px 2px;
+  color: #8c8f96;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.jw-ide-list span {
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.jw-ide-list .jw-sel {
+  background: #2e436e;
+}
+
+.jw-win--dark .jw-input {
+  border-color: #43454a;
+  background: #1e1f22;
+  color: #dfe1e5;
+  font-size: 12px;
+}
+
+.jw-win--dark .jw-btn {
+  border-color: #4e5157;
+  background: #3c3f44;
+  color: #dfe1e5;
+}
+
+.jw-win--dark .jw-btn--primary {
+  border-color: #3574f0;
+  background: #3574f0;
+  color: #fff;
+}
+
+.jw-win--dark .jw-check > i {
+  border-color: #6f737a;
+}
+
+.jw-win--dark .jw-hint {
+  color: #8c8f96;
+}
+
+.jw-form {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 18px 22px;
+  overflow: hidden;
+}
+
+.jw-form-row {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  align-items: center;
+  font-size: 12px;
+}
+
+.jw-foot {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.jw-game {
+  position: absolute;
+  top: 130px;
+  left: 260px;
+  display: flex;
+  flex-direction: column;
+  width: 420px;
+  height: 300px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 12px 30px rgb(0 0 0 / 45%);
+}
+
+.jw-game > div:last-child {
+  flex: 1;
+  background: #add8e6;
+}
+
+/* Tiedostonhallinta */
+
+.jw-ex-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-bottom: 1px solid #e5e5e5;
+  background: #fafafa;
+  font-size: 12px;
+}
+
+.jw-ex-path {
+  flex: 1;
+  padding: 3px 8px;
+  border: 1px solid #d6d6d6;
+  background: #fff;
+}
+
+.jw-ex {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 160px minmax(0, 1fr);
+  min-height: 0;
+}
+
+.jw-ex-side {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px;
+  border-right: 1px solid #eee;
+  color: #444;
+  font-size: 12px;
+}
+
+.jw-ex-list > div {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 0.6fr;
+  padding: 5px 12px;
+  font-size: 12px;
+}
+
+.jw-ex-list > div:first-child {
+  border-bottom: 1px solid #eee;
+  color: #666;
+}
+
+.jw-new {
+  background: #e5f1fb;
+}
+
+/* Erillinen valintaikkuna toisen ikkunan päällä */
+
+.jw-dialog {
+  position: absolute;
+  top: 90px;
+  left: 210px;
+  width: 380px;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgb(0 0 0 / 45%), 0 0 0 1px rgb(0 0 0 / 20%);
+  color: #1f1e24;
+}
+
+.jw-dialog-body {
+  padding: 14px 18px 16px;
+}
+
+/* Teeman h5 on versaalia ja harvennettu; ikkunan otsikko ei ole. */
+.jw-dialog-body h5 {
+  margin: 0 0 4px;
+  color: inherit;
+  font-size: 17px;
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.jw-segments {
+  display: flex;
+  margin: 10px 0 12px;
+  border-bottom: 1px solid #ddd;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.jw-segments span {
+  padding: 5px 12px;
+  color: #777;
+}
+
+.jw-segments .jw-sel {
+  border-bottom: 2px solid #1f75cb;
+  color: #1f1e24;
+}
+
+/* TIM */
+
+.jw-tim {
+  flex: 1;
+  padding: 14px 26px;
+  overflow: hidden;
+}
+
+.jw-tim-nav {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e4e4e4;
+  color: #555;
+  font-size: 12px;
+}
+
+.jw-tim-nav b {
+  color: #0f4096;
+}
+
+.jw-tim h4 {
+  margin: 0 0 10px;
+  color: #0f4096;
+  font-size: 22px;
+  text-align: center;
+}
+
+/* Taulukolla on luokka, jotta teeman ja tables.css:n table:not([class])
+ * -säännöt eivät osu siihen: ne tekisivät taulusta sisältönsä levyisen ja
+ * keskitetyn, jolloin se venyisi osoitetta kirjoitettaessa, ja antaisivat
+ * sille teeman taustan (tummassa teemassa musta) ja täytteet. Taulu on koko
+ * sivun levyinen, joten osoitekenttä on alusta asti osoitteen levyinen. */
+.jw-tim-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.jw-tim-table td {
+  padding: 6px 8px;
+  border: 1px solid #d9d9d9;
+}
+
+.jw-tim-table td:first-child {
+  width: 190px;
+  background: #f4f6fa;
+  font-weight: 600;
+}
+
+/* --- Animaation merkit ----------------------------------------------------- */
+
+.jw-cursor {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 50%));
+  pointer-events: none;
+  transition: transform 0.7s cubic-bezier(0.45, 0.05, 0.25, 1);
+}
+
+.jw-cursor path {
+  fill: #fff;
+  stroke: #111;
+  stroke-linejoin: round;
+  stroke-width: 1.4;
+}
+
+.jw-cursor--none {
+  display: none;
+}
+
+.jw-ring {
+  position: absolute;
+  z-index: 4;
+  border: 3px solid var(--jw-mark);
+  border-radius: 6px;
+  box-shadow: 0 0 0 5px var(--jw-mark-soft);
+  pointer-events: none;
+}
+
+.jw-pulse {
+  position: absolute;
+  z-index: 4;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 3px solid var(--jw-mark);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: jw-pulse 0.6s ease-out forwards;
+}
+
+@keyframes jw-pulse {
+  from { opacity: 1; transform: scale(0.3); }
+  to { opacity: 0; transform: scale(1.4); }
+}
+
+/* Piilotus visibilityllä eikä displaylla: piilossa oleva elementti pitää
+ * paikkansa, joten kursori osaa sen päälle ennen kuin se tulee näkyviin. */
+.jw-hidden {
+  visibility: hidden;
+}
+
+/* Poikkeus: .jw-collapse ei vie tilaa ennen kuin tulee näkyviin, kuten
+ * avautuva alavalikko. Kursori klikkaa sen rivejä vasta näkyviin tulon
+ * jälkeen. !important, koska valikon rivien asettelu on tyyliattribuutissa. */
+.jw-collapse.jw-hidden {
+  display: none !important;
+}
+
+.jw-gone {
+  display: none;
+}
+
+.jw-reveal {
+  animation: jw-reveal 0.35s ease-out both;
+}
+
+/* Pelkkä läpinäkyvyys, ei transformia: transform-animaatio (myös täytetty
+ * loppu) tekee elementistä sisältämiensä absoluuttisten osien asemointilaatikon,
+ * jolloin esim. avautuva valikko siirtyi animoituna eri kohtaan kuin suoraan
+ * piirrettynä. */
+@keyframes jw-reveal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.jw-missing {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #b00020;
+  font: 16px var(--jw-mono);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jw-cursor,
+  .jw-canvas--moving {
+    transition: none;
+  }
+
+  .jw-pulse,
+  .jw-reveal,
+  .jw-caret {
+    animation: none;
+  }
+}

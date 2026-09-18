@@ -108,6 +108,9 @@ extra_css:
 
   - assets/css/print.css
 
+  # Vaiheittainen ohje (assets/js/walkthrough.js).
+  - assets/css/walkthrough.css
+
   # Testaa tietosi -visa (convert.py: convert_quizzes, assets/js/visa.js).
   # admonitions.css:n jälkeen: perustelulaatikon värit voittavat myöhempänä.
   - assets/css/visa.css
@@ -138,6 +141,10 @@ extra_javascript:
   # Terminaalinauhoitusten soitin; soitin ja tyyli haetaan vasta sivulla,
   # jolla on nauhoitus.
   - assets/js/asciinema.js
+
+  # Vaiheittainen ohje. Sivun oma kohtaustiedosto on sisällössä <script>-tagina
+  # (convert.py: convert_walkthroughs), joten se on ajettu ennen tätä.
+  - assets/js/walkthrough.js
 
   # Testaa tietosi -visan napit ja vastausten muisti.
   - assets/js/visa.js

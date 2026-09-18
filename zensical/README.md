@@ -78,7 +78,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 247 testiä
+./zensical/run.sh test                        # kaikki, 292 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -101,6 +101,8 @@ rikkoutumisia on kolmea lajia:
 | `tests/test_highlights.py` | korostetut rivit koekirjalla                              | 2 s        |
 | `tests/test_search.py` | hakuikkuna koekirjalla: tyyli shadow DOM:issa, suodatinpaneeli piilossa | 4 s |
 | `tests/test_visa.py` | Testaa tietosi -visa koekirjalla: napit, paljastus, muisti, tila ilman skriptiä | 5 s |
+| `tests/test_walkthrough.py` | vaiheittainen ohje ja animaatiot koekirjalla: vaiheet, kohtaukset, ääni | 43 s |
+| `tests/test_puhe.py` | `puhe.py`: luettava teksti ja äänten luettelo, puhepalvelu korvattuna | alle 1 s |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
@@ -139,9 +141,34 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 26 | Leipätekstin kirjasinvalikko yläpalkissa     | joka sivu                 | **tehty** — ei mdBookissa, lisätty pyynnöstä; `header.html`, `typography.css`, `fontmenu.css`, `fontmenu.js`; Source Serif 4 (oletus), Atkinson Hyperlegible Next, Literata; valinta muistetaan selaimessa |
 | 27 | Haun tulokset leipätekstin kokoisina        | joka sivu                 | **tehty** — Zensicalin hakuikkunan tekstit ovat kiinteät 12–14 px ja tyhjä "Filters / Tags" -paneeli turha; `search.css` (rem-koot, paneeli piiloon) viedään hakuikkunan shadow DOM:iin `search.js`:llä; luokkanimet ovat minifioituja, `tests/test_search.py` kertoo, jos ne vaihtuvat |
 | 28 | Testaa tietosi -visa (`<visa>`)             | ei vielä kirjassa         | **tehty** — ei mdBookissa, tuotu ohj1:stä; `convert_quizzes` + `assets/js/visa.js` + `assets/css/visa.css`; valinta paljastaa oikean vastauksen ja perustelun ja jää selaimen muistiin, ks. [Testaa tietosi -visa](#testaa-tietosi-visa) |
+| 29 | Vaiheittainen ohje (`<walkthrough>`, `<animation>`) | ei vielä kirjassa  | **tehty** — ei mdBookissa, tuotu ohj1:stä; `convert_walkthroughs` + `convert_animations` + `assets/js/walkthrough.js` + `assets/css/walkthrough.css`; ääneen luku `puhe.py`:llä, ks. [Vaiheittainen ohje](#vaiheittainen-ohje) |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
 haun (tekstikoot kohdassa 27) ja responsiivisen navigaation.
+
+### Vaiheittainen ohje
+
+Ohjevideon korvaava animoitu ohje (tarkistuslistan kohta 29, tuotu ohj1:stä,
+jossa sitä käyttää `src/git-ht-ohje.md`). `<walkthrough scenes="kohtaukset.js">`
+kääritään `.jyu-walk`-diviksi ja kohtaustiedosto tulee sivulle
+`<script>`-tagina; sen sisällä kukin `<step scene="nimi">` on
+`.jyu-step`-section. Kukin tagi omalla rivillään. Toiminta
+`assets/js/walkthrough.js`, ilme `assets/css/walkthrough.css`.
+
+- Yksittäinen animaatio tavalliselle sivulle: `<animation scenes scene>`
+  (`convert_animations`, ajetaan `convert_tabs`in jälkeen). Tagin sisältö on
+  varalla ilman skriptiä ja tulosteessa.
+- Ääneen lukeminen: `<walkthrough audio="kansio">`. Äänet tekee `puhe.py`
+  (Azure Speech; avain ja alue ympäristömuuttujista `AZURE_SPEECH_KEY` ja
+  `AZURE_SPEECH_REGION`), ajo `./run.sh puhe ../src/sivu.md`. Kansion
+  `puhe.json` kertoo, mistä tekstistä kukin ääni on tehty: `walkthrough_audio`
+  jättää vanhentuneen äänen pois ja `convert.py` varoittaa siitä.
+- Koesivu `tests/book/src/osa1/vaiheet.md` SUMMARY.md:n ulkopuolella, testit
+  `tests/test_walkthrough.py`, `tests/test_puhe.py` ja `tests/test_convert.py`.
+- `tests/test_convert.py` kiinnittää sivusiirrot (`NEST_UNDER`) ja poistettavan
+  osion (`DROP_SECTIONS`) fixturella ohj1:n arvoihin, koska ohjeen testit on
+  kirjoitettu niille; näin testitiedosto on sama kuin ohj1:ssä ja
+  jypelidocsissa eikä riipu tämän kirjan asetuksista.
 
 ### Testaa tietosi -visa
 

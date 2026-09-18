@@ -20,6 +20,7 @@ import filecmp
 import fnmatch
 import hashlib
 import io
+import json
 import os
 import re
 import shutil
@@ -1537,6 +1538,315 @@ def convert_quizzes(text: str, source_path: str = "") -> tuple[str, int]:
     return "\n".join(out), questions
 
 
+# Vaiheittainen ohje (assets/js/walkthrough.js): <walkthrough scenes="...">
+# (valinnaisesti audio="kansio", ks. walkthrough_audio) ja sen sisällä
+# <step scene="...">, kukin tagi omalla rivillään.
+WALK_OPEN_RE = re.compile(r'^\s*<walkthrough\s+scenes="(?P<scenes>[^"]+)"'
+                          r'(?:\s+audio="(?P<audio>[^"]+)")?\s*>\s*$')
+STEP_OPEN_RE = re.compile(r'^\s*<step\s+scene="(?P<scene>[^"]+)"\s*>\s*$')
+WALK_CLOSE_RE = re.compile(r"^\s*</(?P<tag>walkthrough|step)>\s*$")
+WALK_CLOSING = {"walkthrough": "</div>", "step": "</section>"}
+
+
+def walkthrough_scenes_path(scenes: str, source_path: str) -> str:
+    """Kohtaustiedoston tai äänikansion polku sivun lopullisesta paikasta."""
+    if re.match(r"^(?:[a-z]+:|/)", scenes):
+        return scenes
+    page_dir = Path(nest_moves().get(source_path, source_path)).parent
+    resolved = os.path.normpath(Path(source_path).parent / scenes)
+    return os.path.relpath(resolved, page_dir).replace(os.sep, "/")
+
+
+def walkthrough_tag(line: str, source_path: str,
+                    audio: dict[str, str] | None = None) -> list[str] | None:
+    """Yksi tagirivi HTML-riveiksi; None, jos rivi ei ole tagi. audio:
+    kohtaus -> äänitiedoston osoite (walkthrough_audio)."""
+    if match := WALK_OPEN_RE.match(line):
+        src = escape(walkthrough_scenes_path(match["scenes"], source_path))
+        return [f'<script src="{src}"></script>', "",
+                '<div class="jyu-walk" markdown="1">']
+    if match := STEP_OPEN_RE.match(line):
+        scene = match["scene"]
+        sound = f' data-audio="{escape(audio[scene])}"' if audio and scene in audio else ""
+        return [f'<section class="jyu-step" data-scene="{escape(scene)}"{sound}'
+                ' markdown="1">']
+    if match := WALK_CLOSE_RE.match(line):
+        return [WALK_CLOSING[match["tag"]]]
+    return None
+
+
+def convert_walkthroughs(text: str, source_path: str,
+                         audio: dict[str, str] | None = None) -> tuple[str, int]:
+    """<walkthrough>- ja <step>-tagit HTML:ksi. -> (teksti, ohjeita).
+
+    audio: kohtaus -> äänitiedoston osoite vaiheille, joilla on ajantasainen
+    ääni (walkthrough_audio); vaihe saa sen data-audio-attribuuttina.
+
+    Ohjeesta tulee div ja vaiheesta section, molemmat markdown="1", joten
+    sisältö käännetään Markdownina ja ohje on ilman skriptiä tavallista tekstiä.
+    Kohtaustiedosto tulee ohjeen eteen <script>-tagina. Sen polku on lähteessä
+    sivun hakemistosta kuten linkeissä; NEST_UNDER-siirretylle sivulle polku
+    kirjoitetaan uudesta paikasta (convert_moved_links korjaa vain
+    ](...)-linkit), ja hakemisto-osoitteen askeleen lisää Zensical kuten
+    <asciinema src>:lle. Tyhjät rivit ja koodiaidat kuten convert_tasksissa.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    walkthroughs = 0
+    skip_blank = False
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        tag = None
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            tag = walkthrough_tag(line, source_path, audio)
+        if tag:
+            walkthroughs += WALK_OPEN_RE.match(line) is not None
+            if out and out[-1].strip():
+                out.append("")
+            out.extend(tag)
+            out.append("")
+            # Lähteen oma tyhjä rivi tagin perässä ei tule toiseen kertaan.
+            skip_blank = True
+            continue
+        if skip_blank and not line.strip():
+            skip_blank = False
+            continue
+        skip_blank = False
+        out.append(line)
+    return "\n".join(out), walkthroughs
+
+
+# Yksittäinen animaatio tavallisella sivulla (assets/js/walkthrough.js:
+# animate): <animation scenes="..." scene="..."> ja </animation>, kumpikin
+# omalla rivillään. Tagien välissä on varasisältö, esim. kuvakaappaukset.
+ANIM_OPEN_RE = re.compile(r'^(?P<indent>\s*)<animation\s+scenes="(?P<scenes>[^"]+)"'
+                          r'\s+scene="(?P<scene>[^"]+)"\s*>\s*$')
+ANIM_CLOSE_RE = re.compile(r"^(?P<indent>\s*)</animation>\s*$")
+
+
+def convert_animations(text: str, source_path: str) -> tuple[str, int]:
+    """<animation>-tagit HTML:ksi. -> (teksti, animaatioita).
+
+    Tagista tulee div markdown="1". Sen sisältö näkyy ilman skriptiä ja
+    tulosteessa; skripti piirtää kohtauksen sen tilalle. Toisin kuin
+    convert_walkthroughs, tagia ei nosteta sarakkeeseen 0, koska animaatio on
+    usein välilehdellä tai listan kohdassa, ja nosto katkaisisi ne. Sisennetty
+    div ei ole Python-Markdownille HTML-lohko, mutta omana kappaleenaan se
+    tulee ulos ilman <p>:tä, ja sisältö käännetään tavallisena Markdownina
+    (markdown="1" jää vaikutuksettomaksi attribuutiksi). Siksi tagin ympärille
+    tulee tyhjät rivit.
+
+    Ajetaan convert_tabsin jälkeen, jotta kohtaustiedostojen <script>-tagit
+    tulevat sivun loppuun sarakkeeseen 0 eivätkä viimeisen välilehden
+    sisään. Polku kuten convert_walkthroughsissa, sama tiedosto kerran.
+    Koodiaidat ohitetaan.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    scripts: list[str] = []
+    animations = 0
+    skip_blank = False
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        tag = None
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            if opening := ANIM_OPEN_RE.match(line):
+                animations += 1
+                src = walkthrough_scenes_path(opening["scenes"], source_path)
+                if src not in scripts:
+                    scripts.append(src)
+                tag = (f'{opening["indent"]}<div class="jyu-anim"'
+                       f' data-scene="{escape(opening["scene"])}" markdown="1">')
+            elif closing := ANIM_CLOSE_RE.match(line):
+                tag = f'{closing["indent"]}</div>'
+        if tag:
+            if out and out[-1].strip():
+                out.append("")
+            out.extend([tag, ""])
+            # Lähteen oma tyhjä rivi tagin perässä ei tule toiseen kertaan.
+            skip_blank = True
+            continue
+        if skip_blank and not line.strip():
+            skip_blank = False
+            continue
+        skip_blank = False
+        out.append(line)
+    if scripts:
+        while out and not out[-1].strip():
+            out.pop()
+        out.append("")
+        out.extend(f'<script src="{escape(src)}"></script>' for src in scripts)
+        out.append("")
+    return "\n".join(out), animations
+
+
+# Ääneen luettava vaihe (walkthrough.js: kaiutin, äänet tekee puhe.py).
+# Äänikansion luettelo: ääni ja kunkin vaiheen luettavan tekstin tiiviste.
+SPEECH_MANIFEST = "puhe.json"
+SPEECH_KEYS = {"Ctrl": "Control", "Cmd": "Command"}
+SPEECH_HEADING_RE = re.compile(r"^#{1,6}\s+(?P<text>.*?)(?:\s*\{[^}]*\})?\s*$")
+SPEECH_ITEM_RE = re.compile(r"^(?:[-*+]|\d+\.)\s+(?P<text>.*)$")
+SPEECH_ALERT_RE = re.compile(r"^\[!(?P<label>[^\]]+)\]$")
+
+
+def speech_code(code: str) -> str:
+    """Koodin pätkä luettavaksi: osoite ja pelkkä ~ pois, polun erottimet ja
+    asema sanoina (ohje vertaa Windowsin ja Git Bashin polkuja), valitsimen
+    viivat pois."""
+    if "://" in code or code == "~":
+        return ""
+    if re.search(r"[\\/]", code) and " " not in code:
+        code = re.sub(r"^([A-Za-z]):", r"\1-asema", code.rstrip("\\/"))
+        code = re.sub(r"^~(?=/)", "kotikansio", code)
+        return code.replace("\\", " kenoviiva ").replace("/", " kauttaviiva ").strip()
+    return re.sub(r"(?<![\w-])--?(?=\w)", "", code)
+
+
+def speech_inline(text: str) -> str:
+    """Kappaleen Markdown luettavaksi: linkeistä teksti, osoitteet ja merkinnät
+    pois, näppäimet sanoina ja valikkopolun › taukona."""
+    text = re.sub(r"</kbd>\s*\+\s*<kbd>", " plus ", text)
+    text = re.sub(r"<kbd>([^<]*)</kbd>",
+                  lambda m: " ".join(SPEECH_KEYS.get(word, word) for word in m[1].split()), text)
+    text = re.sub(r"`([^`]*)`", lambda m: speech_code(m[1]), text)
+    text = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", text)
+    text = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", text)
+    text = re.sub(r"<[^>]+>", "", text)
+    text = re.sub(r"\b[a-z]+://\S+", "", text)
+    text = text.replace("*", "").replace("_", " ")
+    text = text.replace("›", ",").replace("→", " ").replace("▶", "kolmio").replace("×", "kertaa")
+    text = re.sub(r"\(\s*\)", "", text)
+    text = re.sub(r"\s+", " ", text)
+    # Välilyönti pois välimerkin edestä, ei tiedostonimen pisteen (vain .gitignore).
+    text = re.sub(r"\s+([,.:;!?])(?=[\s,.:;!?)]|$)", r"\1", text)
+    text = re.sub(r"\s+\)", ")", text)
+    return re.sub(r"\(\s+", "(", text).strip()
+
+
+def speech_text(block: str) -> str:
+    """Vaiheen Markdown ääneen luettavaksi: kappale, otsikko, luettelon kohta
+    ja alertin otsikko kukin omalle rivilleen (puhe.py: tauko); koodilohkot pois."""
+    lines: list[str] = []
+    paragraph: list[str] = []
+    fence: str | None = None
+
+    def flush() -> None:
+        text = speech_inline(" ".join(paragraph))
+        paragraph.clear()
+        if text:
+            lines.append(text if text[-1] in ".!?:;" else f"{text}.")
+
+    for raw in block.split("\n"):
+        line = re.sub(r"^\s*>\s?", "", raw).strip()
+        match = CODE_FENCE_RE.match(line)
+        if fence is not None:
+            if match and not match["info"].strip() and len(match["fence"]) >= len(fence):
+                fence = None
+            continue
+        if match:
+            flush()
+            fence = match["fence"]
+        elif alert := SPEECH_ALERT_RE.match(line):
+            flush()
+            label = alert["label"]
+            lines.append(ALERT_KINDS.get(label.lower(), ("", label.capitalize()))[1] + ".")
+        elif heading := SPEECH_HEADING_RE.match(line):
+            flush()
+            paragraph.append(heading["text"])
+            flush()
+        elif item := SPEECH_ITEM_RE.match(line):
+            flush()
+            paragraph.append(item["text"])
+        elif line:
+            paragraph.append(line)
+        else:
+            flush()
+    flush()
+    return "\n".join(lines)
+
+
+def speech_hash(text: str) -> str:
+    """Luettavan tekstin tiiviste: muuttunut teksti tarvitsee uuden äänen."""
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()[:16]
+
+
+def walkthrough_speech(text: str) -> tuple[str | None, dict[str, str]]:
+    """Sivun lähteestä vaiheiden luettavat tekstit. -> (äänikansio, kohtaus -> teksti).
+
+    Kansio on ensimmäisestä audio-attribuutillisesta <walkthrough>-tagista
+    (None, jos sellaista ei ole). Koodiaidan sisällä tagit ohitetaan kuten
+    convert_walkthroughsissa.
+    """
+    audio: str | None = None
+    speech: dict[str, str] = {}
+    scene: str | None = None
+    body: list[str] = []
+    fence: str | None = None
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        if match and fence is None:
+            fence = match["fence"]
+        elif match and not match["info"].strip() and len(match["fence"]) >= len(fence):
+            fence = None
+        elif fence is None:
+            if (opening := WALK_OPEN_RE.match(line)) and audio is None:
+                audio = opening["audio"]
+            if step := STEP_OPEN_RE.match(line):
+                scene, body = step["scene"], []
+                continue
+            closing = WALK_CLOSE_RE.match(line)
+            if closing and closing["tag"] == "step" and scene is not None:
+                speech[scene] = speech_text("\n".join(body))
+                scene = None
+                continue
+        if scene is not None:
+            body.append(line)
+    return audio, speech
+
+
+def walkthrough_audio(text: str, source_path: str,
+                      root: Path | None = None) -> tuple[dict[str, str], list[str]]:
+    """Vaiheiden äänitiedostot. -> (kohtaus -> osoite, äänettömät kohtaukset).
+
+    Ääni kelpaa vain, jos se on tehty vaiheen nykyisestä tekstistä (tiiviste
+    äänikansion puhe.json:ssa): vanhaa ohjetta lukeva ääni johtaisi harhaan,
+    joten vaihe jää silloin äänettömäksi, ja main varoittaa. Osoitteessa on
+    hakemisto-osoitteen askel itse, koska Zensical ei korjaa data-attribuutteja.
+    root: lähdepuu (testeille).
+    """
+    if "<walkthrough" not in text:
+        return {}, []
+    audio, speech = walkthrough_speech(text)
+    if audio is None:
+        return {}, []
+    folder = (root or SRC) / Path(source_path).parent / audio
+    try:
+        made = json.loads((folder / SPEECH_MANIFEST).read_text(encoding="utf-8"))["steps"]
+    except (OSError, ValueError, KeyError):
+        made = {}
+    base = walkthrough_scenes_path(audio, source_path)
+    if Path(nest_moves().get(source_path, source_path)).name != "index.md":
+        base = f"../{base}"
+    urls: dict[str, str] = {}
+    silent: list[str] = []
+    for scene, spoken in speech.items():
+        if made.get(scene) == speech_hash(spoken) and (folder / f"{scene}.mp3").is_file():
+            urls[scene] = f"{base}/{scene}.mp3"
+        else:
+            silent.append(scene)
+    return urls, silent
+
+
 def split_files(body: list[str]) -> list[tuple[str, list[str]]]:
     """Koodiaidan rivit -> [(tiedostonimi, rivit)] FILE-merkintöjen mukaan.
 
@@ -1771,9 +2081,21 @@ def main() -> int:
         # Tehtäväkortit ennen bonusmerkkejä (task_head lukee kortin tagin itse)
         # ja bonusmerkit ennen ikoneita (bi-stars ei ole ICON_MAPissa).
         converted, _ = convert_tasks(converted)
+        # Vaiheittainen ohje ennen convert_tabsia kuten tehtäväkortit: tagit
+        # nostetaan sarakkeeseen 0, eikä sisennettyä HTML-lohkoa tunnisteta.
+        # Äänet lähteestä kuten puhe.py, ei muunnetusta tekstistä.
+        audio, silent = walkthrough_audio(source, source_path)
+        if silent:
+            names = ", ".join(silent[:5]) + (", ..." if len(silent) > 5 else "")
+            print(f"varoitus: {source_path}: {len(silent)} vaiheen ääni puuttuu tai on "
+                  f"vanhentunut ({names}); aja ./run.sh puhe ../src/{source_path}",
+                  file=sys.stderr)
+        converted, _ = convert_walkthroughs(converted, source_path, audio)
         converted, _ = convert_bonus_marks(converted)
         converted, _, _, page_unknown_icons = convert_icons(converted)
         converted, _, _, page_labels = convert_tabs(converted)
+        # Animaatiot välilehtien jälkeen, ks. convert_animations.
+        converted, _ = convert_animations(converted, source_path)
         write_if_changed(page, converted)
         tab_labels |= page_labels
         unknown_icons |= page_unknown_icons
