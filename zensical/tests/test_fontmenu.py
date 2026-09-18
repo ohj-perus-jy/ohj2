@@ -149,3 +149,39 @@ def test_the_menu_works_from_the_keyboard(browser, base_url):
     assert body_font(page) == "atkinson"
     assert page.evaluate("document.activeElement.id") == "jyu-font-button"
     assert errors == []
+
+
+def test_the_mouse_moves_the_focus_so_one_item_is_highlighted(browser, base_url):
+    """Hiiren alla oleva kohta saa kohdistuksen, ja korostus seuraa vain
+    kohdistusta: nuolella siirtyminen ei jätä toista korostusta hiiren alle."""
+    page, errors = open_page(browser, base_url)
+    page.click(".jyu-font__button")
+    page.hover(".jyu-font__item[data-font=literata]")
+    assert page.evaluate("document.activeElement.dataset.font") == "literata"
+    page.keyboard.press("ArrowUp")
+    highlighted = page.evaluate(
+        "[...document.querySelectorAll('.jyu-font__item')]"
+        ".filter(item => getComputedStyle(item).backgroundColor !== 'rgba(0, 0, 0, 0)')"
+        ".map(item => item.dataset.font)")
+    assert highlighted == ["atkinson"]
+    assert errors == []
+
+
+def test_the_fonts_are_requested_before_the_list_opens(browser, base_url):
+    """Kohtien nimet näkyvät omilla kirjasimillaan. Lataus pyydetään jo kun
+    osoitin tulee painikkeelle, jotta nimet eivät vaihda kirjasinta listan
+    auettua."""
+    page, errors = open_page(
+        browser, base_url,
+        init_script="window.requested = []; const load = FontFaceSet.prototype.load;"
+        "FontFaceSet.prototype.load = function (font, text) {"
+        " window.requested.push(font); return load.call(this, font, text); };")
+    assert page.evaluate("window.requested") == []
+    page.hover(".jyu-font__button")
+    assert page.is_hidden(".jyu-font__list")
+    requested = page.evaluate("window.requested")
+    assert len(requested) == 3
+    for family in ("Source Serif 4", "Atkinson Hyperlegible Next", "Literata"):
+        # Selain jättää yksisanaisen perheen (Literata) ilman lainausmerkkejä.
+        assert any(family in font for font in requested)
+    assert errors == []

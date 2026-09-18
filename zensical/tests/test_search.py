@@ -91,3 +91,31 @@ def test_the_rules_do_not_leak_into_the_page(browser, base_url):
     assert display == "block"
     assert errors == []
     page.close()
+
+
+def test_arrow_keys_leave_only_the_selected_result_highlighted(browser, base_url):
+    """Zensical korostaa sekä valitun että hiiren alla olevan tuloksen ja
+    vierittää listaa nuolilla liikuttaessa, jolloin paikallaan olevan hiiren
+    korostus hyppisi rivien mukana. Nuolinäppäin sammuttaa hiiren korostuksen,
+    ja hiiren liike palauttaa sen."""
+    page, errors = open_search(browser, base_url, "a")
+    results = f"[...{SHADOW}.querySelectorAll('.b .i')]"
+    assert page.evaluate(f"{results}.length") >= 3
+    highlighted = (
+        f"{results}.map((a, i) => [i, getComputedStyle(a, '::before').opacity])"
+        ".filter(([, opacity]) => opacity === '1').map(([i]) => i)")
+
+    # Hiiri kolmannen tuloksen päälle: valittu (1.) ja hiiren alla oleva.
+    box = page.evaluate(
+        f"(({{x, y, width, height}}) => [x + width / 2, y + height / 2])"
+        f"({results}[2].getBoundingClientRect())")
+    page.mouse.move(*box)
+    page.wait_for_function(f"{highlighted}.join() === '0,2'")
+
+    page.keyboard.press("ArrowDown")
+    page.wait_for_function(f"{highlighted}.join() === '1'")
+
+    page.mouse.move(box[0] + 5, box[1] + 5)
+    page.wait_for_function(f"{highlighted}.length === 2")
+    assert errors == []
+    page.close()

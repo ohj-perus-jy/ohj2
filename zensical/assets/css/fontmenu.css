@@ -25,9 +25,10 @@
   border: 0;
   border-radius: 0.4rem;
   cursor: pointer;
-  transition: background-color 0.4s;
 }
 
+/* Täyttö vaihtuu kerralla: läpikuultavan taustan häivytys yläpalkin
+ * sumennuksen päällä välkkyi osalla näytönohjaimista. Sama haussa (layout.css). */
 .jyu-font__button:hover,
 .jyu-font__button:focus-visible,
 .jyu-font__button[aria-expanded="true"] {
@@ -95,8 +96,9 @@
   cursor: pointer;
 }
 
-.jyu-font__item:hover,
-.jyu-font__item:focus-visible {
+/* Korostus seuraa kohdistusta, jota sekä nuolet että hiiri siirtävät
+ * (fontmenu.js). Ei :focus-visible, koska hiirellä saatu kohdistus ei täytä sitä. */
+.jyu-font__item:focus {
   background-color: var(--md-default-fg-color--lightest);
   outline: none;
 }

@@ -139,6 +139,14 @@
   content: "";
 }
 
+/* Hakupainikkeen, valikon ja sisällysluettelon rivien hover vaihtuu kerralla
+ * kuten kirjasinvalikossa (syy fontmenu.css:ssä); teeman häivytykset pois.
+ * Nuolen kääntö ja alalukujen avautuminen jäävät. */
+.md-search__button,
+.md-nav__link {
+  transition: none;
+}
+
 /* Laatikon vierityspalkki pyöristettyjen kulmien väliin: raitaa lyhennetään
  * säteen verran. Onnistuu vain webkit-palkilla, jonka Chromium piirtää vasta,
  * kun teeman scrollbar-width ja -color on palautettu; Firefoxiin ei vaikuta.

@@ -4,7 +4,8 @@
  * Zensicalin 0.0.62 minifioimia (bundle.js: ht, st, Ta); tests/test_search.py
  * kertoo, jos ne vaihtuvat.
  *   .e juuri  .l ikkuna  .k kenttärivi  .s kenttä  .a suodatinpaneeli
- *   .B tulosten määrä  .x otsikko  .u ote  .n polku  .E lisärivi */
+ *   .B tulosten määrä  .x otsikko  .u ote  .n polku  .E lisärivi
+ *   .i tulos (linkki)  .h valittu tulos */
 
 :host .e {
   --space-1: 0.2rem; /* Zensical: 4 px */
@@ -44,4 +45,12 @@
 :host .a,
 :host .k > button:last-child {
   display: none;
+}
+
+/* Nuolinäppäimillä liikuttaessa vain valittu tulos on korostettu, ei hiiren
+ * alla oleva (search.js asettaa attribuutin ja poistaa sen hiiren liikkuessa).
+ * Arvot ovat Zensicalin korostamattoman tuloksen. */
+:host([data-jyu-keys]) .i:not(.h):hover::before {
+  opacity: 0;
+  transform: scale(0.9);
 }

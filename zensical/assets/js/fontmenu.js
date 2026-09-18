@@ -5,6 +5,7 @@
  *
  * Oletus (data-font="") ei tallennu vaan poistaa tallennuksen. Lista on
  * role="listbox" kuten <select>: nuolet liikkuvat, Enter valitsee, Esc sulkee.
+ * Myös hiiri siirtää kohdistusta, joten korostettuna on aina yksi kohta.
  * Painikkeessa on vain kuvake, joten valinta kerrotaan sen title- ja
  * aria-label-attribuuteissa (kohdan data-short). */
 
@@ -51,6 +52,20 @@
     button.setAttribute("aria-label", name);
   };
 
+  /* Kohtien nimet näkyvät omilla kirjasimillaan, ja selain lataa kirjasimen
+   * vasta kun sitä käytetään: ilman tätä nimet piirtyisivät avattaessa ensin
+   * varakirjasimella ja vaihtuisivat hetken päästä, jolloin listan leveyskin
+   * muuttuu. Lataus alkaa, kun osoitin tai kohdistus tulee valikkoon, eli
+   * ennen kuin lista ehtii aueta. Perheet luetaan tyyleistä (fontmenu.css). */
+  const preload = () => {
+    for (const item of items) {
+      const name = item.querySelector(".jyu-font__name");
+      document.fonts?.load("1em " + getComputedStyle(name).fontFamily, name.textContent);
+    }
+  };
+  root.addEventListener("pointerenter", preload, { once: true });
+  root.addEventListener("focusin", preload, { once: true });
+
   const selected = () => items.find((item) => item.getAttribute("aria-selected") === "true") || items[0];
 
   const open = () => {
@@ -84,6 +99,13 @@
   list.addEventListener("click", (event) => {
     const item = event.target.closest(".jyu-font__item");
     if (item) choose(item);
+  });
+
+  /* Hiiren alla oleva kohta saa kohdistuksen (ulkoasu: :focus). Erillinen
+   * :hover-korostus jäisi näkyviin nuolilla liikuttaessa toisen rinnalle. */
+  list.addEventListener("pointermove", (event) => {
+    const item = event.target.closest(".jyu-font__item");
+    if (item && item !== document.activeElement) item.focus();
   });
 
   list.addEventListener("keydown", (event) => {
