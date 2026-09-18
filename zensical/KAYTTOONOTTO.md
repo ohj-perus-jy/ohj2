@@ -223,7 +223,8 @@ sudolla, ja se riittää vaihtoon asti.
       bob-kaaviota (11 kpl) muutetaan; valmiit SVG:t ovat `cache/svgbob/`:ssa.
       Purun kohdassa 2 bob-aidat kirjoitetaan `src/`:hen valmiina SVG:nä
       (`convert_svgbob`in tuloste), jolloin riippuvuus poistuu kokonaan.
-      Siihen asti tarvitsija ajaa `cargo install svgbob_cli@0.7.6` itse.
+      Siihen asti `convert.py` asentaa `svgbob_cli`:n cargolla, kun uusi
+      tai muutettu kaavio sitä tarvitsee (kirjatyokalut 1c5fca4).
 - [ ] Testien selainkirjastot jäävät `run.sh test`in asennettaviksi (sudo
       kerran per kontti). Ei siirretä `postCreateCommand`iin: se hidastaisi
       jokaista konttia niidenkin takia, jotka eivät aja testejä.

@@ -1,6 +1,6 @@
 {
 	"name": "Ohj2 mdBook",
-	// Kuvassa on Rust: bob-kaavioihin cargo install svgbob_cli@0.7.6.
+	// Kuvassa on Rust, jolla convert.py asentaa svgbob_cli:n bob-kaavioita varten.
 	"image": "ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
