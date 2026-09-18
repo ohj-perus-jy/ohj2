@@ -3,7 +3,8 @@
  * sisällön mukana ensimmäiset vierityspikselit ja pysähtyy nytkähtäen, ja
  * katkeaa terävästi sumennettuun yläpalkkiin; kiskossa ei ole mitään, mikä
  * liikkuisi tai katkeaisi. Vain työpöydällä: kapeilla näytöillä valikko on
- * Zensicalin oma laatikko (drawer), johon ei kosketa. */
+ * Zensicalin oma laatikko (drawer), josta muutetaan vain vierityspalkin
+ * pituus (ks. alempana). */
 
 :root {
   /* Rako kiskon ja sisällön väliin: sama kuin sisällysluettelon tekstin
@@ -136,6 +137,39 @@
   margin: 0.7rem 0 0.5rem;
   background-color: var(--jyu-rule);
   content: "";
+}
+
+/* Laatikon vierityspalkki pyöristettyjen kulmien väliin: raitaa lyhennetään
+ * säteen verran. Onnistuu vain webkit-palkilla, jonka Chromium piirtää vasta,
+ * kun teeman scrollbar-width ja -color on palautettu; Firefoxiin ei vaikuta.
+ * Vain hiirellä: kosketusnäytöllä webkit-palkki jäisi pysyvästi näkyviin. */
+@media screen and (max-width: 76.2344em) and (hover: hover) {
+  @supports selector(::-webkit-scrollbar) {
+    .md-sidebar--primary .md-sidebar__scrollwrap {
+      scrollbar-width: auto;
+      scrollbar-color: auto;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-track {
+      margin-block: 0.8rem;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+      background-color: var(--md-default-fg-color--lighter);
+      background-clip: padding-box;
+      border: 0.1rem solid transparent;
+      border-radius: 0.25rem;
+    }
+
+    .md-sidebar--primary
+      .md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb {
+      background-color: var(--md-accent-fg-color);
+    }
+  }
 }
 
 @media screen and (min-width: 76.25em) {

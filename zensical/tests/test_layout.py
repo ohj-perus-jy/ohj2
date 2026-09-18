@@ -40,3 +40,24 @@ def test_contents_stays_put_when_scrolling(page):
     start = title.bounding_box()["y"]
     page.evaluate("scrollTo(0, 40)")
     assert title.bounding_box()["y"] == pytest.approx(start, abs=1)
+
+
+def test_drawer_scrollbar_stays_between_the_rounded_corners(browser, chapter_url):
+    """Kapean näytön laatikon vierityspalkin raita alkaa ja päättyy kulmien
+    pyöristyksen sisäpuolella, mutta vieritysalue on yhä koko laatikon korkuinen."""
+    context = browser.new_context(viewport={"width": 1100, "height": 500})
+    page = context.new_page()
+    page.goto(chapter_url, wait_until="load")
+    page.click(".md-header__button[for=__drawer]")
+    box, rail, radius, track = page.evaluate("""() => {
+        const drawer = document.querySelector(".md-sidebar--primary")
+        const rail = drawer.querySelector(".md-sidebar__scrollwrap")
+        const track = getComputedStyle(rail, "::-webkit-scrollbar-track")
+        const rect = element => element.getBoundingClientRect().toJSON()
+        return [rect(drawer), rect(rail), getComputedStyle(drawer).borderTopLeftRadius,
+                [track.marginTop, track.marginBottom]]
+    }""")
+    assert radius != "0px"
+    assert track == [radius, radius]
+    assert (rail["top"], rail["bottom"]) == (box["top"], box["bottom"])
+    context.close()
