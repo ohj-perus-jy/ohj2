@@ -1,34 +1,20 @@
 {
 	"name": "Ohj2 mdBook",
+	// Kuvassa on Rust: bob-kaavioihin cargo install svgbob_cli@0.7.6.
 	"image": "ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-        "ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
+		"ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {}
 	},
 
-
 	"mounts": [
-  		"source=claude-code-config,target=/home/vscode/.claude,type=volume"
-	], 
+		"source=claude-code-config,target=/home/vscode/.claude,type=volume"
+	],
 
-	// Use 'mounts' to make the cargo cache persistent in a Docker Volume.
-	// "mounts": [
-	// 	{
-	// 		"source": "devcontainer-cargo-cache-${devcontainerId}",
-	// 		"target": "/usr/local/cargo",
-	// 		"type": "volume"
-	// 	}
-	// ]
-
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
-
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// 36742 = mdbook serve (.vscode/tasks.json), 8001 = zensical/run.sh
 	"forwardPorts": [36742, 8001],
 
-	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
 			"extensions": [
@@ -37,5 +23,7 @@
 			]
 		}
 	},
-	"postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && ln -sf /home/vscode/.claude/.claude.json /home/vscode/.claude.json"
+
+	// Työkalut (submodule) ja zensical/.venv valmiiksi; run.sh tekisi saman ensimmäisellä ajolla.
+	"postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && ln -sf /home/vscode/.claude/.claude.json /home/vscode/.claude.json && git submodule update --init && ./zensical/tyokalut/setup.sh"
 }

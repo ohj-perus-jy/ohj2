@@ -75,7 +75,8 @@ git config submodule.recurse true     # git pull ja git switch päivittävät ja
 ./zensical/run.sh test       # testit (pytest + Playwright)
 ```
 
-`run.sh` hakee submodulen ja asentaa Zensicalin ensimmäisellä ajolla. Lisää:
+DevContainer hakee submodulen ja asentaa Zensicalin jo kontin luonnissa;
+ilman sitä `run.sh` tekee saman ensimmäisellä ajolla. Lisää:
 [zensical/README.md](zensical/README.md) ja
 [kirjatyokalut/README.md](https://github.com/ohj-perus-jy/kirjatyokalut#readme).
 

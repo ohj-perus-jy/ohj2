@@ -215,7 +215,8 @@ sudolla, ja se riittää vaihtoon asti.
 - [ ] `.devcontainer/devcontainer.json`: `image` →
       `mcr.microsoft.com/devcontainers/python:3.11-bookworm` (sama 3.11 kuin
       CI:ssä; venv ja pip valmiina), nimi `"Ohj2 mdBook"` → `"Ohj2"`, portti
-      36742 pois, `postCreateCommand`iin `zensical/setup.sh`. Rust-feature
+      36742 pois. `postCreateCommand` hakee submodulen ja ajaa
+      `zensical/tyokalut/setup.sh`:n jo nyt (2026-09-18). Rust-feature
       (`ghcr.io/devcontainers/features/rust:1`) mukaan vain jos `svgbob_cli`
       halutaan; ks. alla.
 - [ ] `svgbob_cli` on ainoa Rust-riippuvuus ja tarvitaan vain, kun
