@@ -3,6 +3,7 @@
 Nappi lähettää koodin JYU:n suorituspalvelimelle, joten testit vastaavat
 pyyntöön itse (page.route): mitataan mitä selain lähettää ja näyttää, ei
 palvelimen tilaa. Koekirjassa on yksi esimerkki kustakin lohkolajista.
+Lopussa ohj1:n C#-lohkot omalla sivullaan (osa1/csharp.md).
 """
 
 import json
@@ -85,13 +86,14 @@ def test_button_is_added_to_runnable_blocks_only(chapter):
 
 
 def test_request_is_the_same_as_mdbook_sends(chapter):
-    """Pyyntö on kenttä kentältä sama kuin mdBookissa."""
+    """Pyyntö on kenttä kentältä sama kuin ohj1:n mdBookissa: yhden lohkon
+    pyynnössä ei ole multifile-kenttää, koska suorituspalvelimen C#-polku
+    aikakatkaisee pyynnön, jossa on multifile: false."""
     chapter.answer(output="Hei, maailma!\n")
     assert chapter.run(SINGLE) == "Hei, maailma!"
     assert chapter.requests == [{
         "language": "java",
         "code": 'void main() {\nIO.println("Hei, maailma!");\n}\n',
-        "multifile": False,
     }]
 
 
@@ -166,3 +168,109 @@ def test_no_console_errors(chapter):
     chapter.answer(output="rivi\n")
     chapter.run(SINGLE)
     assert chapter.errors == []
+
+
+# --- ohj1: C#-lohkot -----------------------------------------------------------
+
+CSHARP = "div.highlight.language-csharp:not(.ignore):not(.feature-jypeli)"
+JYPELI = "div.highlight.language-csharp.feature-jypeli"
+
+# Suorituspalvelin palauttaa Jypelin ikkunan PNG-kuvana data-URI:na merkkien
+# välissä tulosteen seassa (playground.js: DATA_URI_RE); tässä 1×1 pikseli.
+PIXEL = ("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAA"
+         "C0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=")
+WINDOW = f"@@@DATA_URI_BEGIN@@@{PIXEL}@@@DATA_URI_END@@@"
+
+
+@pytest.fixture
+def csharp_chapter(chapter, book, serve) -> Chapter:
+    """chapter koekirjan C#-sivulla, joka on SUMMARY.md:n ulkopuolella, jottei
+    ohj2:n testien laskemat luvut ja lohkot muutu."""
+    chapter.page.goto(f"{serve(book.site)}/osa1/csharp/", wait_until="load")
+    return chapter
+
+
+def images(chapter: Chapter) -> list:
+    """Tulosteen kuvat ladattuina: [src, onko kuva piirtynyt]."""
+    chapter.page.wait_for_function(
+        "() => [...document.querySelectorAll('img.jyu-result-image')]"
+        "        .every(img => img.complete)")
+    return chapter.page.eval_on_selector_all(
+        ".jyu-result img.jyu-result-image",
+        "imgs => imgs.map(img => [img.getAttribute('src'), img.naturalWidth > 0])")
+
+
+def test_csharp_button_is_added_to_runnable_blocks_only(csharp_chapter):
+    """Nappi ```csharp- ja ```csharp,feature-jypeli-lohkoon, ei ignore-lohkoon."""
+    blocks = csharp_chapter.page.evaluate("""() => [...document.querySelectorAll('div.highlight')]
+      .map(block => [[...block.classList].filter(name => name !== 'highlight').join(' '),
+                     block.querySelectorAll('[data-md-type=run]').length])""")
+    assert blocks == [
+        ["language-csharp", 1],
+        ["language-csharp ignore", 0],
+        ["language-csharp feature-jypeli", 1],
+    ]
+
+
+def test_csharp_request_is_the_same_as_mdbook_sends(csharp_chapter):
+    """Kuten ohj1:n mdBookissa: kieli csharp, piilorivit mukana ilman
+    etuliitettä, eikä multifile-kenttää, jonka palvelimen C#-polku
+    aikakatkaisee."""
+    csharp_chapter.answer(output="Hei, maailma!\n")
+    assert csharp_chapter.run(CSHARP) == "Hei, maailma!"
+    assert "using System;" not in csharp_chapter.page.inner_text(CSHARP)
+    assert csharp_chapter.requests == [{
+        "language": "csharp",
+        "code": ("using System;\npublic class Hei\n{\n    public static void Main()\n"
+                 '    {\n        Console.WriteLine("Hei, maailma!");\n    }\n}\n'),
+    }]
+
+
+def test_jypeli_block_is_sent_with_the_feature(csharp_chapter):
+    """feature-jypeli-määre kielen perään, kuten ../theme/playground_ext.js."""
+    csharp_chapter.answer(output=WINDOW)
+    csharp_chapter.run(JYPELI)
+    assert csharp_chapter.requests[0]["language"] == "csharp-jypeli"
+
+
+def test_jypeli_window_is_the_output(csharp_chapter):
+    """Pelkkä ikkunan kuva on tuloste: kuva näkyy, eikä sen yllä lue
+    "Ei tulostetta" (mdBookissa lukee)."""
+    csharp_chapter.answer(output=WINDOW + "\n")
+    assert csharp_chapter.run(JYPELI) == ""
+    assert images(csharp_chapter) == [[PIXEL, True]]
+    assert not csharp_chapter.page.is_visible(".jyu-result pre")
+
+
+def test_text_and_window_are_both_shown(csharp_chapter):
+    """Tekstiä tulostava peli: teksti laatikkoon ilman merkkejä, kuva alle."""
+    csharp_chapter.answer(output=f"Peli alkaa\n{WINDOW}\n")
+    assert csharp_chapter.run(JYPELI) == "Peli alkaa"
+    assert csharp_chapter.page.is_visible(".jyu-result pre")
+    assert images(csharp_chapter) == [[PIXEL, True]]
+
+
+def test_second_run_replaces_the_window(csharp_chapter):
+    """Toinen ajo vie edellisen kuvan, ja tekstilaatikko palaa näkyviin."""
+    csharp_chapter.answer(output=WINDOW)
+    csharp_chapter.run(JYPELI)
+    csharp_chapter.page.unroute("**/executor/execute")
+    csharp_chapter.answer(output="rivi\n")
+    assert csharp_chapter.run(JYPELI) == "rivi"
+    assert images(csharp_chapter) == []
+    assert csharp_chapter.page.is_visible(".jyu-result pre")
+
+
+def test_window_has_the_corners_of_a_code_block(csharp_chapter):
+    """Kuva on lohko (ei tekstirivin rakoa alla) ja pyöristetty kuten
+    koodilohko; arvot tulevat tyylitiedostosta."""
+    csharp_chapter.answer(output=WINDOW)
+    csharp_chapter.run(JYPELI)
+    images(csharp_chapter)
+    assert csharp_chapter.page.evaluate("""() => {
+      const img = getComputedStyle(document.querySelector('img.jyu-result-image'));
+      const code = getComputedStyle(document.querySelector(
+        'div.highlight.feature-jypeli pre > code'));
+      return [img.display, img.borderRadius === code.borderRadius];
+    }""") == ["block", True]
+    assert csharp_chapter.errors == []

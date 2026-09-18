@@ -1,7 +1,8 @@
 # Visa
 
-<!-- Vain test_visa.py käyttää tätä sivua. Se on SUMMARY.md:n ulkopuolella,
-     jotta muiden testien laskemat luvut eivät muutu. -->
+<!-- ohj1: vain test_visa.py käyttää tätä sivua. Se on SUMMARY.md:n
+     ulkopuolella kuten csharp.md, jotta muiden testien laskemat luvut
+     eivät muutu. -->
 
 ## Testaa tietosi
 

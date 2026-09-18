@@ -1,7 +1,7 @@
 {#-
   Kopio teeman partials/header.html:stä (zensical 0.0.59), johon on lisätty
-  kotilinkki kurssin nimeen, tulostuspainike ja leipätekstin kirjasinvalikko
-  (merkityt kohdat alempana). Yläpalkkiin ei ole laajennuspistettä, joten
+  kotilinkki kurssin nimeen, sivustovalikko, tulostuspainike ja leipätekstin
+  kirjasinvalikko (merkityt kohdat alempana). Yläpalkkiin ei ole laajennuspistettä, joten
   lisäykset vaativat kopion; jos Zensical muuttaa yläpalkkiaan, tämä on
   päivitettävä käsin.
 -#}
@@ -22,13 +22,36 @@
     </label>
     <div class="md-header__title" data-md-component="header-title">
       <div class="md-header__ellipsis">
-        <div class="md-header__topic">
+        {% set home = config.extra.homepage | d(nav.homepage.url, true) | url %}
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
           <span class="md-ellipsis">
             {#- Kurssin nimi linkiksi etusivulle, sama osoite kuin logossa.
                 Teemassa kotiin pääsee vain logosta, jonka teema piilottaa
                 kapealla näytöllä. Ulkoasu: assets/css/layout.css. -#}
-            <a href="{{ config.extra.homepage | d(nav.homepage.url, true) | url }}">{{ config.site_name }}</a>
+            <a href="{{ home }}">{{ config.site_name }}</a>
           </span>
+          {#- Sivustovalikko nimen vieressä (mkdocs.yml: extra.sites). Ellipsiksen
+              ulkopuolella, koska se leikkaa ylivuodon. Ulkoasu
+              assets/css/sitemenu.css, toiminta assets/js/sitemenu.js. -#}
+          {% if config.extra.sites %}
+            <button type="button" class="jyu-sites__button" id="jyu-sites-button"
+                    title="Vaihda sivustoa" aria-label="Vaihda sivustoa"
+                    aria-expanded="false" aria-controls="jyu-sites-list">
+              {% include ".icons/lucide/chevron-down.svg" %}
+            </button>
+            <ul class="jyu-sites__list" id="jyu-sites-list" aria-label="Sivustot" hidden>
+              {% for site in config.extra.sites %}
+                {#- Oma sivusto omaan etusivuun, jotta /dev/ ja localhost pysyvät itsessään. -#}
+                {% set current = site.name == config.site_name %}
+                <li>
+                  <a class="jyu-sites__item" href="{{ home if current else site.url }}"{% if current %} aria-current="true"{% endif %}>
+                    {% include ".icons/lucide/check.svg" %}
+                    <span>{{ site.name }}</span>
+                  </a>
+                </li>
+              {% endfor %}
+            </ul>
+          {% endif %}
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">

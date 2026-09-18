@@ -67,6 +67,9 @@ extra_css:
   - assets/css/fontmenu.css
   - assets/css/layout.css
 
+  # Sivustovalikko yläpalkissa (assets/js/sitemenu.js).
+  - assets/css/sitemenu.css
+
   # Hakuikkunan tekstikoot ja suodatinpaneelin piilotus. Ikkuna on shadow
   # DOM:issa, johon assets/js/search.js liittää tämän tiedoston.
   - assets/css/search.css
@@ -124,6 +127,9 @@ extra_javascript:
 
   # Kirjasinvalikon toiminta.
   - assets/js/fontmenu.js
+
+  # Sivustovalikon avaus ja sulkeminen.
+  - assets/js/sitemenu.js
 
   # Hakuikkunan tyyli (assets/css/search.css) shadow DOM:iin.
   - assets/js/search.js

@@ -78,7 +78,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 292 testiä
+./zensical/run.sh test                        # kaikki, 314 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -212,6 +212,28 @@ vaihtoehdot listaksi ja perustelun `<details>`-lohkoksi; napit tekee
 - Koesivu `tests/book/src/osa1/visa.md` SUMMARY.md:n ulkopuolella, testit
   `tests/test_visa.py`. Oikean kirjan visat tarkistaa `tests/test_book.py`;
   testi ohitetaan (`source_uses`), kunnes kirjassa on ensimmäinen `<visa>`.
+
+### Yhteiset työkalut ohj1:n kanssa
+
+Työkalut (convert.py, `assets/`, `overrides/`, `icons/`, testit) pidetään
+samoina kuin ohj1:ssä ja jypelidocsissa; tavoite on yksi yhteinen kopio
+(tilanne: ohj1:n `zensical/YHTENAISTYS.md`). convert.py eroaa ohj1:stä vain
+asetusvakioissa (`NEST_UNDER`, `NOT_PAGES`, `PLANTUML_AGENT`), ja `assets/`
+vain tämän kirjan PlantUML-kuvissa. Siksi mukana on myös osia, joita tämä
+kirja ei käytä:
+
+- Sivustovalikko (`header.html`, `sitemenu.css`, `sitemenu.js`) näkyy vain,
+  jos mkdocs.yml:ssä on `extra.sites`. Täällä listaa ei ole, joten kurssin
+  nimi on pelkkä linkki etusivulle; `tests/test_sitemenu.py` puuttuu samasta
+  syystä.
+- Ajonappi (`playground.js`) tuntee myös C#:n, `feature-`-määreen ja
+  kuvatulosteen. `multifile`-kenttä lähetetään vain monitiedostolohkolle;
+  palvelin ajaa Javan ilman sitä (kokeiltu 2026-09-18). Koesivu
+  `tests/book/src/osa1/csharp.md`.
+- Kielilistoissa (`HIDELINE_LANGUAGES`, `HIGHLIGHT_LANGUAGES`) on myös csharp
+  ja `ICON_MAP`issa ohj1:n etusivun nuolet.
+- Luvun avausnuoli osoittaa alas ja ylös kaikilla leveyksillä (`layout.css`),
+  ja taulukon teksti on leipätekstin kokoista (`tables.css`).
 
 ## Mitä puuttuu
 

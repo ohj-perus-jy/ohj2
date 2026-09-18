@@ -27,12 +27,13 @@
   cursor: pointer;
 }
 
-/* Täyttö vaihtuu kerralla: läpikuultavan taustan häivytys yläpalkin
- * sumennuksen päällä välkkyi osalla näytönohjaimista. Sama haussa (layout.css). */
+/* Sama hover-täyttö kuin sivustovalikossa (sitemenu.css). Täyttö vaihtuu
+ * kerralla: läpikuultavan taustan häivytys yläpalkin sumennuksen päällä
+ * välkkyi osalla näytönohjaimista. Sama haussa (layout.css). */
 .jyu-font__button:hover,
 .jyu-font__button:focus-visible,
 .jyu-font__button[aria-expanded="true"] {
-  background-color: var(--md-default-fg-color--lighter);
+  background-color: var(--jyu-rule);
 }
 
 .jyu-font__button:focus-visible {
@@ -53,6 +54,7 @@
 .jyu-font__chevron {
   display: flex;
   flex: none;
+  transition: transform 0.25s; /* kuten teeman valikkonuoli */
 }
 
 .jyu-font__chevron svg {
@@ -78,6 +80,11 @@
   background-color: var(--md-default-bg-color);
   border-radius: 0.2rem;
   box-shadow: var(--md-shadow-z3);
+}
+
+/* Tummassa teemassa z3-varjon hiusviiva on musta eikä erotu taustasta. */
+[data-md-color-scheme="slate"] .jyu-font__list {
+  box-shadow: var(--md-shadow-z3), 0 0 0 0.05rem var(--jyu-rule);
 }
 
 .jyu-font__list[hidden] {

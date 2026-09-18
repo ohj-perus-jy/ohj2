@@ -1,5 +1,6 @@
 /* Valikkopolun erotin ›. Lähteen <i class="bi bi-chevron-right"> muuntaa
- * convert.py (PATH_ARROW) tekstimerkiksi, joten koon ja kohdistuksen hoitaa
+ * convert.py (PATH_ARROW) tekstimerkiksi ja käärii samaan spaniin myös suoraan
+ * kirjoitetun ›:n, joten koon ja kohdistuksen hoitaa
  * leipätekstin kirjasin; muut kuvakkeet ovat teeman .twemoji-kääreessä.
  * Väri vaimennetaan toissijaisen tekstin väriin, koska polun kohdat ovat
  * usein lihavoituja ja täydellä värillä erotin painaisi rivillä yhtä paljon

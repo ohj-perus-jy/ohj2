@@ -1,4 +1,4 @@
-/* Java-ohjelmien ajonapit: koodilohkon nappi lähettää koodin JYU:n
+/* C#-ohjelmien ajonapit: koodilohkon nappi lähettää koodin JYU:n
  * suorituspalvelimelle ja näyttää tulosteen koodin alle, kuten mdBookin
  * theme/playground_ext.js. Pyyntö on kenttä kentältä sama kuin mdBookissa.
  *
@@ -10,8 +10,17 @@
 (() => {
   "use strict";
 
-  /* mdBookin PLAYGROUND_LANGS. */
-  const LANGUAGES = ["java", "javascript"];
+  /* mdBookin PLAYGROUND_LANG (ohj1: csharp); java ja javascript ohj2:n koekirjan
+   * (tests/book) ja testien takia. */
+  const LANGUAGES = ["csharp", "java", "javascript"];
+
+  /* mdBookin "feature-jypeli"-määre: kieleksi lähetetään "csharp-jypeli", kuten
+   * theme/playground_ext.js tekee. */
+  const FEATURE_PREFIX = "feature-";
+
+  /* Suorituspalvelin palauttaa Jypeli-ohjelman ruudun tulosteen sisällä kuvana
+   * (data-URI merkkien välissä), kuten mdBookissa. */
+  const DATA_URI_RE = /@@@DATA_URI_BEGIN@@@(.+?)@@@DATA_URI_END@@@/g;
 
   /* mdBookin määreet, jotka jättävät napin pois; luokkina lohkon divissä
    * (convert.py: fence_info). */
@@ -23,6 +32,14 @@
 
   const language = (block) =>
     LANGUAGES.find((lang) => block.classList.contains(`language-${lang}`));
+
+  /* Palvelimelle lähetettävä kieli: kieli ja feature-määreet väliviivoin. */
+  const executorLanguage = (block) => {
+    const features = [...block.classList]
+      .filter((cls) => cls.startsWith(FEATURE_PREFIX))
+      .map((cls) => cls.slice(FEATURE_PREFIX.length));
+    return [language(block), ...features].join("-");
+  };
 
   const runnable = (block) =>
     language(block) && !SKIPPED.some((cls) => block.classList.contains(cls));
@@ -92,10 +109,29 @@
     output.classList.toggle("jyu-result-no-output", empty);
   };
 
+  /* Tulosteen kuvat (Jypeli): data-URI:t pois tekstistä ja <img>-elementeiksi
+   * tulostelaatikon perään; edellisen ajon kuvat pois ensin.
+   * -> [loppu teksti, kuvien määrä] */
+  const showImages = (box, text) => {
+    box.querySelectorAll("img.jyu-result-image").forEach((img) => img.remove());
+    let images = 0;
+    const rest = text.replace(DATA_URI_RE, (_, uri) => {
+      const img = document.createElement("img");
+      img.src = uri;
+      img.className = "jyu-result-image";
+      box.append(img);
+      images += 1;
+      return "";
+    });
+    return [rest, images];
+  };
+
   const run = async (anchor, blocks, buttons) => {
     const output = outputFor(anchor);
+    const box = output.closest(".jyu-result");
     const set = anchor.classList.contains("tabbed-set") ? anchor : null;
     buttons.forEach((button) => (button.disabled = true));
+    box.classList.remove("jyu-result-image-only");
     say(output, "Suoritetaan…");
 
     /* Aikaraja katkaisee myös pyynnön; nappi palaa käyttöön ja tuloste kertoo syyn. */
@@ -107,9 +143,12 @@
         mode: "cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          language: language(blocks[0]),
+          language: executorLanguage(blocks[0]),
           code: set ? JSON.stringify(files(set)) : source(blocks[0]),
-          multifile: Boolean(set),
+          /* multifile vain monitiedostolohkolle: ohj1:n mdBook-skripti ei
+           * lähetä kenttää lainkaan, ja palvelimen C#-polku aikakatkaisee
+           * pyynnön, jossa on multifile: false (Java sietää sen). */
+          ...(set ? { multifile: true } : {}),
         }),
         signal: abort.signal,
       });
@@ -117,8 +156,13 @@
       /* Kuten mdBookissa: virheet ensin, muuten tuloste. Kääntäjän virheet
        * tulevat output-kentässä. Lopun rivinvaihto pois, koska se näkyisi
        * laatikossa tyhjänä rivinä. */
-      const text = (body.errors || body.output || "").replace(/\n+$/, "");
-      say(output, text || "Ei tulostetta", !text);
+      const [rest, images] = showImages(box, body.errors || body.output || "");
+      const text = rest.replace(/\n+$/, "");
+      /* Pelkkä kuva (Jypelin ikkuna) on tuloste sekin: tekstilaatikko jää
+       * pois, ettei kuvan yllä lue "Ei tulostetta" kuten mdBookissa. */
+      const imageOnly = !text && images > 0;
+      box.classList.toggle("jyu-result-image-only", imageOnly);
+      say(output, text || (imageOnly ? "" : "Ei tulostetta"), !text && !imageOnly);
     } catch (error) {
       say(output, error.name === "AbortError"
         ? `Ohjelma ei vastannut ${TIMEOUT / 1000} sekunnissa.`

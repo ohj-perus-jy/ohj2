@@ -3,8 +3,8 @@
  * sisällön mukana ensimmäiset vierityspikselit ja pysähtyy nytkähtäen, ja
  * katkeaa terävästi sumennettuun yläpalkkiin; kiskossa ei ole mitään, mikä
  * liikkuisi tai katkeaisi. Vain työpöydällä: kapeilla näytöillä valikko on
- * Zensicalin oma laatikko (drawer), josta muutetaan vain vierityspalkin
- * pituus (ks. alempana). */
+ * Zensicalin oma laatikko (drawer), josta muutetaan vain avausnuolen suunta
+ * ja vierityspalkin pituus (ks. alempana). */
 
 :root {
   /* Rako kiskon ja sisällön väliin: sama kuin sisällysluettelon tekstin
@@ -77,24 +77,36 @@
 }
 
 /* Kurssin nimi yläpalkissa on linkki etusivulle (overrides/partials/
- * header.html). Selaimen oletusväri ja alleviivaus pois; alleviivaus vain
- * osoittimen alla, koska muuta merkkiä linkistä ei ole. */
+ * header.html). Selaimen oletusväri ja alleviivaus pois; osoittimen alla
+ * linkki saa taustan yhdessä sivustovalikon nuolen kanssa (sitemenu.css). */
 .md-header__title a {
   color: inherit;
   text-decoration: none;
 }
 
-.md-header__title a:hover {
-  text-decoration: underline;
+/* Hakupainikkeen hover samalla täytöllä kuin sivusto- ja kirjasinvalikon
+ * (sitemenu.css, fontmenu.css); teeman --md-default-fg-color--lighter on
+ * liian tumma. Teeman 0,4 s:n häivytys pois kuten niissäkin (syy
+ * fontmenu.css:ssä). */
+.md-search__button {
+  transition: none;
+}
+
+.md-search__button:focus,
+.md-search__button:hover {
+  background-color: var(--jyu-rule);
 }
 
 /* Kun teema on vaihtanut nimen tilalle sivun otsikon, läpinäkyvä nimi olisi
  * yhä näppäimistöllä kohdistettavissa; visibility ottaa sen kierrosta pois.
- * Viive on teeman oman opacity-siirtymän kesto. Työpöydällä vaihtoa ei tehdä,
- * joten tämä perutaan alempana. */
-.md-header__title--active .md-header__topic a {
-  visibility: hidden;
-  transition: visibility 0s 0.15s;
+ * Viive on teeman oman opacity-siirtymän kesto. Sama sivustovalikon
+ * painikkeelle ja linkeille. Työpöydällä vaihtoa ei tehdä (alempana), joten
+ * sääntö on rajattu sen ulkopuolelle eikä jätä sinne omaa transitioniaan. */
+@media screen and (max-width: 76.2344em) {
+  .md-header__title--active .md-header__topic :is(a, button) {
+    visibility: hidden;
+    transition: visibility 0s 0.15s;
+  }
 }
 
 /* Alatunnisteen linkit oikeassa reunassa (overrides/partials/copyright.html)
@@ -139,10 +151,32 @@
   content: "";
 }
 
-/* Hakupainikkeen, valikon ja sisällysluettelon rivien hover vaihtuu kerralla
- * kuten kirjasinvalikossa (syy fontmenu.css:ssä); teeman häivytykset pois.
- * Nuolen kääntö ja alalukujen avautuminen jäävät. */
-.md-search__button,
+/* Avausnuoli alas (suljettu) ja ylös (avattu) kaikilla leveyksillä. Teeman
+ * oletus on oikealle ja avattuna alas, mutta alaluvut aukeavat saman listan
+ * sisään niin kiskossa kuin kapean näytön laatikossakin, joten nuoli osoittaa
+ * siihen suuntaan, johon lista liikkuu. Kulmat lähtevät chevron-rightistä.
+ * --indeterminate on tila, jonka Zensical antaa avoinna olevalle luvulle
+ * sivun latautuessa. */
+.md-sidebar--primary .md-nav__item--nested .md-nav__icon:after {
+  transform: rotate(90deg);
+}
+
+.md-sidebar--primary
+  .md-nav__item--nested
+  .md-nav__toggle:checked
+  ~ .md-nav__link
+  .md-nav__icon:after,
+.md-sidebar--primary
+  .md-nav__item--nested
+  .md-toggle--indeterminate
+  ~ .md-nav__link
+  .md-nav__icon:after {
+  transform: rotate(-90deg);
+}
+
+/* Valikon ja sisällysluettelon rivien väri ja tausta vaihtuvat osoittimen
+ * alla kerralla kuten yläpalkin painikkeissa (fontmenu.css); teeman 0,25 s:n
+ * häivytys pois. Nuolen kääntö ja alalukujen avautuminen jäävät. */
 .md-nav__link {
   transition: none;
 }
@@ -278,29 +312,6 @@
     margin-right: -0.6rem;
   }
 
-  /* Avausnuoli alas (suljettu) ja ylös (avattu). Teeman oletus osoittaa
-   * oikealle, mikä sopii mobiilin liukuvaan paneeliin; kiskossa alikohdat
-   * aukeavat saman listan sisään, joten nuoli osoittaa siihen suuntaan,
-   * johon lista liikkuu. Kulmat lähtevät chevron-rightistä. --indeterminate
-   * on tila, jonka Zensical antaa avoinna olevalle luvulle sivun
-   * latautuessa. */
-  .md-sidebar--primary .md-nav__item--nested .md-nav__icon:after {
-    transform: rotate(90deg);
-  }
-
-  .md-sidebar--primary
-    .md-nav__item--nested
-    .md-nav__toggle:checked
-    ~ .md-nav__link
-    .md-nav__icon:after,
-  .md-sidebar--primary
-    .md-nav__item--nested
-    .md-toggle--indeterminate
-    ~ .md-nav__link
-    .md-nav__icon:after {
-    transform: rotate(-90deg);
-  }
-
   /* 2. Muu sisältö alkaa kiskon oikealta puolelta. Padding .md-mainille eikä
    *    marginaali ruudukolle, jotta ruudukon automaattinen keskitys säilyy.
    *    Alatunniste tarvitsee saman erikseen, koska se on .md-mainin sisar
@@ -339,10 +350,6 @@
     pointer-events: auto;
     opacity: 1;
     transform: none;
-  }
-
-  .md-header__title--active .md-header__topic a {
-    visibility: visible;
   }
 
   /* 4. Sumennettu tausta vain kiskon oikealle puolelle. Kiskon kohdalla

@@ -55,9 +55,10 @@ NEST_UNDER = {
     "tenttiohjeet.md": "tentti.md",
 }
 
-# Markdown-tiedostot, joista ei tehdä sivua (fnmatch lähdepuun polusta), ks.
-# is_page. mdBook kääntää vain SUMMARY.md:n luvut, Zensical jokaisen .md:n.
-# ohj1:ssä tehtävien aloituspohjat (exercises/*/starter/*.md).
+# Markdown-tiedostot, jotka eivät ole sivuja (fnmatch lähdepuun polusta).
+# mdBook kääntää vain SUMMARY.md:n luvut, Zensical jokaisen .md:n. ohj1:
+# tehtävän aloituspohja on opiskelijalle annettava tiedosto, jonka linkki
+# #lisaa_osoite on paikkamerkki ja siksi aina rikki. Ks. is_page.
 NOT_PAGES: tuple[str, ...] = ()
 
 # Osiot, jotka kuvaavat mdBookin käyttöliittymää (laitanuolet) eivätkä pidä
@@ -68,7 +69,8 @@ DROP_SECTIONS = {
 }
 HEADING_RE = re.compile(r"(?P<level>#+)\s+(?P<title>.*?)\s*$")
 
-# 1-3 välilyönnillä sisennetty otsikko: CommonMark sallii, Python-Markdown ei.
+# Otsikko, jonka edessä on 1-3 välilyöntiä: CommonMark (mdBook) sallii sen,
+# Python-Markdown ei, vaan jättää risuaidat näkyviin. Ks. dedent_headings.
 INDENTED_HEADING_RE = re.compile(r"^ {1,3}(?=#{1,6}\s)")
 
 # Linkin ankkuriosa "](../sivu.md#käyttö)", ks. convert_anchors.
@@ -132,11 +134,12 @@ QUOTED_FENCE_RE = re.compile(
     r"^(?P<indent>[\s>]*)(?P<fence>```+|~~~+)(?P<info>[^\n`]*)$")
 
 # mdBookin piilorivit (book.toml: hidelines): "//-"-alkuinen rivi kuuluu
-# ohjelmaan muttei näy. Vain javalle ja javascriptille, kuten kirjassa.
+# ohjelmaan muttei näy. ohj1:n book.toml määrittelee vain csharpin; java ja
+# javascript ovat mukana ohj2:n koekirjan (tests/book) ja testien takia.
 # Lainausmerkit rivin alussa otetaan talteen: alertin sisällä olevassa aidassa
 # ">" on vielä paikallaan, koska convert_alerts ajetaan myöhemmin.
 HIDELINE_RE = re.compile(r"^((?:[ \t]*>)*[ \t]*)//-")
-HIDELINE_LANGUAGES = ("java", "javascript")
+HIDELINE_LANGUAGES = ("csharp", "java", "javascript")
 
 # mdBookin korostusmerkinnät (theme/code-highlights.js): "// HIGHLIGHT_GREEN_BEGIN"
 # ... "// HIGHLIGHT_GREEN_END" värittää väliin jäävät rivit, merkintärivit eivät
@@ -146,8 +149,10 @@ HIGHLIGHT_RE = re.compile(
     r"^[\s>]*//\s*HIGHLIGHT_(?P<color>[A-Z0-9]+)_(?P<edge>BEGIN|END)\s*$")
 HIGHLIGHT_COLORS = ("green", "yellow", "red", "blue")
 
-# mdBookin skripti käsittelee vain javan; muissa kielissä rivi on kommentti.
-HIGHLIGHT_LANGUAGES = ("java",)
+# ohj1:n mdBook-skripti (theme/code-highlights.js) käsittelee vain javan, eikä
+# ohj1:n aineistossa ole yhtään merkintää; csharp on mukana, jotta merkintä
+# toimisi jos sitä joskus käytetään, java koekirjan ja testien takia.
+HIGHLIGHT_LANGUAGES = ("csharp", "java")
 
 # mdBookin sisällytysmakro. Polun perässä voi olla rivivalinta, ks. take_lines.
 INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<spec>[^}\s][^}]*?)\s*\}\}")
@@ -307,8 +312,10 @@ ICON_TAG_RE = re.compile(
 # assets/css/icons.css:ssä.
 PATH_ARROW_ICONS = ("bi-chevron-right", "bi-arrow-right")
 PATH_ARROW = '<span class="jyu-path">›</span>'
-# Suoraan kirjoitettu › saa saman kääreen. Ohitetaan inline-koodi, valmis
-# kääre ja HTML-tagi; kääre ennen tagia, koska tagin kuvio osuisi sen alkuun.
+# Suoraan kirjoitettu › (**Access › Personal access tokens**) saa saman kääreen,
+# muuten se jäisi täyteen tekstiväriin. Ohitetaan inline-koodi (merkki on
+# esimerkkiä), valmis kääre (muunnos toistuu) ja HTML-tagi (attribuuttiin span ei
+# kuulu). Kääre ennen tagia, koska tagin kuvio osuisi kääreen alkuun.
 PATH_ARROW_CHAR_RE = re.compile(
     r"(?P<skip>(?P<ticks>`+).+?(?<!`)(?P=ticks)(?!`)"
     r"|" + re.escape(PATH_ARROW) + r"|<[A-Za-z/][^<>]*>)|›", re.DOTALL)
@@ -335,6 +342,9 @@ ICON_MAP = {
     "bi-gear-fill": "material/cog",
     "bi-lightbulb-fill": "material/lightbulb-on-outline",
     "bi-info-circle": "material/information-outline",
+    # ohj1: index.md:n edellinen/seuraava-nuolet (navigation.footer).
+    "bi-arrow-left-circle": "material/arrow-left-circle-outline",
+    "bi-arrow-right-circle": "material/arrow-right-circle-outline",
 }
 
 
@@ -385,10 +395,11 @@ def nest_moves() -> dict[str, str]:
 
 
 def is_page(source_path: str) -> bool:
-    """Tuleeko lähdepuun .md-tiedostosta sivu.
+    """Tuleeko lähdepuun Markdown-tiedostosta (polku lähdepuusta) sivu.
 
-    SUMMARY.md on navigaatio, NOT_PAGES ei sivuja. Kumpaakaan ei kirjoiteta
-    docs/:iin, joten sync_docs poistaa aiemman ajon kopion.
+    SUMMARY.md on navigaatio (build_nav), NOT_PAGES tiedostoja, joita mdBook ei
+    julkaise. Kumpaakaan ei kirjoiteta docs/:iin, joten sync_docs poistaa
+    aiemman ajon kopion jäänteenä.
     """
     return source_path != "SUMMARY.md" and not any(
         fnmatch.fnmatchcase(source_path, pattern) for pattern in NOT_PAGES)
@@ -457,8 +468,8 @@ def build_nav() -> str:
     etu- ja jälkilinkit jäävät numeroimatta.
     """
     entries: list[tuple[int, str, str, bool]] = []
-    # Taso on sisennyspinon syvyys eikä leveys // 2, koska sisennys voi olla
-    # epätasainen (ohj1: 1, 3 ja 4 välilyöntiä).
+    # Sisennyspino: taso on pinon syvyys, ei leveys jaettuna kahdella, koska
+    # lähteen sisennys ei ole tasainen (ohj1: 1, 3 ja 4 välilyöntiä).
     indents: list[int] = []
     for raw in (SRC / "SUMMARY.md").read_text(encoding="utf-8").split("\n"):
         if not raw.strip() or raw.strip().startswith("#") or set(raw.strip()) == {"-"}:
@@ -484,8 +495,8 @@ def build_nav() -> str:
                 indents.append(width)
             level = len(indents) - 1
         else:
-            # Etu- ja jälkilinkki on aina ylin taso, ja seuraava luettelo
-            # alkaa alusta.
+            # Etu- ja jälkilinkki ei kuulu luetteloon: aina ylin taso, ja
+            # seuraava luettelo alkaa alusta.
             indents.clear()
             level = 0
         entries.append((level, title.replace('"', "'"), href,
@@ -542,7 +553,8 @@ def build_nav() -> str:
 def dedent_headings(text: str) -> tuple[str, int]:
     """Otsikon edestä 1-3 välilyöntiä pois. -> (teksti, siirrettyjä).
 
-    Koodiaidat ohitetaan: aidan sisällä sisennetty "#" on kommentti.
+    Koodiaidat ohitetaan: aidan sisällä sisennetty "#" on kommentti. ohj1:
+    kaksi otsikkoa (osa5/1-debuggaus.md, luennot/luento16.md).
     """
     out: list[str] = []
     open_fence: str | None = None
@@ -687,8 +699,8 @@ def convert_anchors(text: str) -> tuple[str, int, int]:
     return "\n".join(out), links, headings
 
 
-# Suhteellinen linkki toiseen tiedostoon: ei osoitteita, pelkkiä ankkureita
-# eikä absoluuttisia polkuja. Ks. convert_moved_links.
+# Suhteellinen linkki toiseen tiedostoon, ks. convert_moved_links. Ei
+# osoitteita (://), ei pelkkiä ankkureita (#...), ei absoluuttisia polkuja.
 RELATIVE_LINK_RE = re.compile(
     r"\]\((?P<target>(?![a-z]+:|#|/)[^)\s#]+)(?P<fragment>#[^)\s]*)?\)")
 
@@ -696,10 +708,12 @@ RELATIVE_LINK_RE = re.compile(
 def convert_moved_links(text: str, source_path: str) -> tuple[str, int]:
     """Linkit NEST_UNDER-siirtojen jälkeen. -> (teksti, korjattuja).
 
-    Siirretyn sivun omat suhteelliset linkit ja muiden sivujen linkit siihen
-    osoittaisivat harhaan. Kohde ratkaistaan lähdepuun polusta, kuvataan
-    siirron läpi ja kirjoitetaan sivun uudesta paikasta. Muut linkit jäävät
-    ennalleen.
+    Siirretty sivu (tentti.md -> tentti/index.md) ei ole enää samassa
+    hakemistossa kuin ennen, joten sen omat suhteelliset linkit ja muiden
+    sivujen linkit siihen osoittaisivat harhaan. Kohde ratkaistaan lähdepuun
+    polusta, kuvataan siirron läpi ja kirjoitetaan suhteellisena sivun
+    uudesta paikasta. Sivuille ja kohteille, joita siirto ei koske, teksti
+    jää ennalleen. ohj1: index.md ja suorittaminen.md linkittävät tentti.md:hen.
     """
     moves = nest_moves()
     page_dir = Path(moves.get(source_path, source_path)).parent
@@ -2117,7 +2131,7 @@ def main(strict: bool = False) -> int:
         # omia linkkejään tai SVG-tunnuksiaan. Muunnosten laskurit jäävät
         # käyttämättä.
         # Sisennetyt otsikot ensin, jotta drop_sections ja convert_anchors
-        # tunnistavat ne.
+        # tunnistavat ne otsikoiksi.
         converted, _ = dedent_headings(source)
         converted, _ = drop_sections(converted, source_path)
         converted, _ = convert_includes(converted, origin)

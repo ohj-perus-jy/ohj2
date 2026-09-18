@@ -32,6 +32,21 @@
   font-style: italic;
 }
 
+/* Jypelin kuvatuloste (playground.js: showImages) tulosteen alla. Lohkona,
+ * jottei kuvan alle jää tekstirivin rakoa, ja kulmat kuten teeman
+ * koodilohkoissa (.md-typeset pre > code: .4rem). Leveyden rajaa teema
+ * (.md-typeset img: max-width: 100 %), kuten mdBookin .content img. */
+.jyu-result-image {
+  display: block;
+  border-radius: 0.4rem;
+}
+
+/* Pelkkä kuva ilman tekstiä: tekstilaatikko pois. hidden-attribuutti ei
+ * riittäisi, koska teeman .md-typeset pre antaa display: flow-root. */
+.jyu-result-image-only > pre {
+  display: none;
+}
+
 /* Paperille jää tuloste muttei nappiriviä; teemalla ei ole sille sääntöä,
  * koska rivi syntyy vain ruudulla. */
 @media print {

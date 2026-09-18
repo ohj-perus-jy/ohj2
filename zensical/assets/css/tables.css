@@ -32,6 +32,23 @@
   margin: 0;
 }
 
+/* Teksti leipätekstin kokoiseksi (teema pienentää sen .64rem:iin) ja
+ * valikoiden kirjasimeen, kuten otsikot typography.css:ssä. Lukijan
+ * kirjasinvalinta (fontmenu.js) koskee vain leipätekstiä, ei taulukoita. */
+.md-typeset table:not([class]) {
+  font-family: var(--md-text-font-family);
+  font-size: inherit;
+}
+
+/* Solujen täyte pikseleinä ennalleen: teeman em-täyte kasvaisi tekstin
+ * mukana, levittäisi taulukot palstan levyisiksi ja rivittäisi soluja.
+ * Riviväli tiiviimmäksi, koska leipätekstin 1.8 hajottaa rivittyvän solun.
+ * :is(th, td) on tarkkuudeltaan sama kuin teeman th- ja td-säännöt. */
+.md-typeset table:not([class]) :is(th, td) {
+  padding: .6rem .8rem;
+  line-height: 1.5;
+}
+
 /* Sävyt. Tummassa teemassa sama peitto näyttää laimeammalta, joten
  * otsikkorivi ja hover ovat siellä vahvempia. */
 .md-typeset table:not([class]) {
