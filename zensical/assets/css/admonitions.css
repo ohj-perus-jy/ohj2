@@ -173,3 +173,44 @@ html .md-typeset details[open] > :last-child {
     box-shadow: none;
   }
 }
+
+
+/* Oppaiden merkinnät (convert.py: ALERT_KINDS): Kokeile, Ei toimi vielä ja
+ * Kysymys. TIM-wikissä nämä olivat pieniä PNG-kuvia (play-nappi, punainen
+ * rasti, kysymysmerkki), jotka eivät skaalautuneet eivätkä seuranneet teemaa.
+ * Nyt ne ovat omia admonition-tyyppejä, useimmiten pelkkä otsikkorivi. Kokeile
+ * ja Ei toimi vielä saavat Materialin success- ja failure-tyyppien värit;
+ * Kysymys example-tyypin violetin, koska Materialin question-lime ei erottuisi
+ * Kokeile-vihreästä. Kuvakkeet ovat teeman Lucide-sarjasta: play ja circle-x
+ * omina muuttujina, koska teemalla ei ole niille muuttujaa (failure on
+ * huutomerkki, mutta merkinnän kuva oli rasti); kysymysmerkki teeman omasta.
+ * Teema ei tunne tyyppejä, joten kuvakkeen väri annetaan tässä. */
+.md-typeset .kokeile  { --adm: #00c853; }
+.md-typeset .ei-toimi { --adm: #ff5252; }
+.md-typeset .kysymys  { --adm: #7c4dff; }
+
+.md-typeset .kokeile > .admonition-title:before,
+.md-typeset .ei-toimi > .admonition-title:before,
+.md-typeset .kysymys > .admonition-title:before {
+  background-color: var(--adm);
+}
+
+.md-typeset .kokeile > .admonition-title:before {
+  -webkit-mask-image: var(--jyu-admonition-icon--kokeile);
+  mask-image: var(--jyu-admonition-icon--kokeile);
+}
+
+.md-typeset .ei-toimi > .admonition-title:before {
+  -webkit-mask-image: var(--jyu-admonition-icon--ei-toimi);
+  mask-image: var(--jyu-admonition-icon--ei-toimi);
+}
+
+.md-typeset .kysymys > .admonition-title:before {
+  -webkit-mask-image: var(--md-admonition-icon--question);
+  mask-image: var(--md-admonition-icon--question);
+}
+
+:root {
+  --jyu-admonition-icon--kokeile: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z"/></svg>');
+  --jyu-admonition-icon--ei-toimi: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6M9 9l6 6"/></svg>');
+}

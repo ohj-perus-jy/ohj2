@@ -155,8 +155,11 @@ INCLUDE_RE = re.compile(r"\{\{#include\s+(?P<spec>[^}\s][^}]*?)\s*\}\}")
 ALERT_RE = re.compile(r"^>\s*\[!(?P<label>[^\]]+)\]\s*$")
 
 # Tunnus (pienellä) -> admonition-tyyppi ja otsikko. Tyyppi valittu mdBookin
-# värin ja kuvakkeen mukaan. Vain kanoniset tyypit: Zensicalin CSS:ssä ei ole
-# aliaksia, joten esim. "important" jäisi tyylittömäksi — siksi Tärkeää on "tip".
+# värin ja kuvakkeen mukaan. Teeman tyypeistä vain kanoniset: Zensicalin CSS:ssä
+# ei ole aliaksia, joten esim. "important" jäisi tyylittömäksi — siksi Tärkeää
+# on "tip". Oppaiden merkinnät (Kokeile, Ei toimi vielä, Kysymys) ovat omia
+# tyyppejä, joiden väri ja kuvake ovat assets/css/admonitions.css:ssä; ne
+# korvaavat TIM-wikin kuvatiedostot, ja useimmiten lohkossa on pelkkä tunnusrivi.
 ALERT_KINDS = {
     "osaamistavoitteet": ("abstract", "Osaamistavoitteet"),
     "huomautus": ("note", "Huomautus"),
@@ -165,6 +168,9 @@ ALERT_KINDS = {
     "varoitus": ("warning", "Varoitus"),
     "todo": ("info", "Todo"),
     "wip": ("danger", "WIP"),
+    "kokeile": ("kokeile", "Kokeile käynnistää pelisi"),
+    "ei toimi vielä": ("ei-toimi", "Ei toimi vielä"),
+    "kysymys": ("kysymys", "Kysymys"),
 }
 
 # Tuntematon tunnus säilyy otsikkona sellaisenaan; tyypiksi tulee neutraalein.
@@ -927,8 +933,11 @@ def convert_alerts(text: str) -> tuple[str, int, set[str]]:
         if out and out[-1].strip():
             out.append("")
         out.append(f'!!! {kind} "{title}"')
-        out.append("")
-        out.extend(alert_body(body))
+        # Pelkkä tunnusrivi (oppaiden merkinnät) on otsikollinen laatikko ilman
+        # sisältöä; tyhjä rivi kuuluu vain otsikon ja sisällön väliin.
+        if body:
+            out.append("")
+            out.extend(alert_body(body))
         # Tyhjä rivi perään vain jos lähteessä ei jo ollut.
         if index < len(lines) and lines[index].strip():
             out.append("")

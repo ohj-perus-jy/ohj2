@@ -436,6 +436,9 @@ def test_convert_files_warns_instead_of_dropping_code(capsys):
     ("VAROITUS", '!!! warning "Varoitus"'),
     ("todo", '!!! info "Todo"'),
     ("WIP", '!!! danger "WIP"'),
+    ("KOKEILE", '!!! kokeile "Kokeile käynnistää pelisi"'),
+    ("EI TOIMI VIELÄ", '!!! ei-toimi "Ei toimi vielä"'),
+    ("Kysymys", '!!! kysymys "Kysymys"'),
 ])
 def test_convert_alerts_writes_the_title_out(label, expected):
     """Tunnus -> tyyppi ja otsikko kirjainkoosta riippumatta; otsikko kirjoitetaan
@@ -443,6 +446,15 @@ def test_convert_alerts_writes_the_title_out(label, expected):
     converted, alerts, unknown = convert.convert_alerts(f"> [!{label}]\n> teksti\n")
     assert (alerts, unknown) == (1, set())
     assert converted.startswith(expected)
+
+
+def test_convert_alerts_writes_a_title_only_block():
+    """Oppaiden merkintä on usein pelkkä tunnusrivi; siitä tulee otsikollinen
+    admonition ilman sisältöä, ei tyhjää lainausta."""
+    text = "koodi\n\n> [!KOKEILE]\n\nseuraava\n"
+    converted, alerts, unknown = convert.convert_alerts(text)
+    assert (alerts, unknown) == (1, set())
+    assert converted == 'koodi\n\n!!! kokeile "Kokeile käynnistää pelisi"\n\nseuraava\n'
 
 
 def test_convert_alerts_keeps_an_unknown_label_as_the_title():
