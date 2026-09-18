@@ -1,8 +1,5 @@
-# Lychee ohittaa nämä (regex, yksi per rivi). Ks. .github/workflows/links.yml.
-
-# Vain ulkoiset linkit. Paikalliset polut ovat mdBookin {{#include}}-liitosten
-# takia suhteessa liittävään sivuun, mitä lychee ei tiedä.
-^file://
+# ohj2:n omat lychee-ohitukset (regex, yksi per rivi). Yhteiset asetukset:
+# zensical/tyokalut/linkit/lychee.toml.
 
 # XML-nimiavaruuksia SVG-, pom- ja FXML-esimerkeissä, eivät linkkejä.
 ^https?://www\.w3\.org/
