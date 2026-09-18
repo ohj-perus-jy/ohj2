@@ -21,6 +21,7 @@ import fnmatch
 import hashlib
 import io
 import json
+import math
 import os
 import re
 import shutil
@@ -32,7 +33,7 @@ import traceback
 import urllib.error
 import urllib.request
 import zlib
-from html import escape
+from html import escape, unescape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -246,6 +247,17 @@ SVGBOB_COMMAND = [
     "--stroke-width", "2",
     "--background", "transparent",
 ]
+
+# svgbob_problems: tekstin sijainti (solu 8 × 16 px) ja lähteen lainatut osat.
+SVGBOB_TEXT_RE = re.compile(
+    r'<text x="(?P<x>\d+)" y="(?P<y>\d+)"\s*>(?P<text>[^<]*)</text>')
+SVGBOB_QUOTED_RE = re.compile(r'"[^"]*"')
+SVGBOB_PAREN_RE = re.compile(r"\w[()]|[()]\w")
+
+# svgbob_fit_text: kuvan ja taustan koko sekä merkin todellinen leveys
+# (0,6 em 14 px:n kirjasimella; svgbob olettaa 8 px).
+SVGBOB_SIZE_RE = re.compile(r'width="(?P<width>\d+)" height="(?P<height>\d+)"')
+SVGBOB_CHAR_WIDTH = 8.4
 
 # Tehtäväkortit: mdBookin omat elementit <task>, <task-title num="">, <points>,
 # <handout>, <task-link>. <task> ei ole Python-Markdownin BLOCK_LEVEL_ELEMENTS-
@@ -1073,7 +1085,52 @@ def svgbob_prefix_ids(svg: str, number: int) -> str:
     return SVGBOB_REF_RE.sub(lambda m: f'url(#bob{number}-{m["name"]})', svg)
 
 
-def convert_svgbob(text: str) -> tuple[str, int, set[str]]:
+def svgbob_fit_text(svg: str) -> str:
+    """Kuvan koko niin suureksi, että kaikki teksti mahtuu.
+
+    svgbob 0.7.6 laskee koon viivoista ja lainaamattomasta tekstistä, joten
+    oikean tai alareunan lainattu teksti leikkautuisi pois. Reunaan jää sama
+    6 px kuin svgbobin omassa laskennassa.
+    """
+    size = SVGBOB_SIZE_RE.search(svg)
+    if not size:
+        return svg
+    width, height = int(size["width"]), int(size["height"])
+    fit_width, fit_height = width, height
+    for match in SVGBOB_TEXT_RE.finditer(svg):
+        end = int(match["x"]) + len(unescape(match["text"])) * SVGBOB_CHAR_WIDTH
+        fit_width = max(fit_width, math.ceil(end) + 6)
+        fit_height = max(fit_height, ((int(match["y"]) - 12) // 16 + 2) * 16)
+    if (fit_width, fit_height) == (width, height):
+        return svg
+    return svg.replace(size[0], f'width="{fit_width}" height="{fit_height}"')
+
+
+def svgbob_problems(art: str, svg: str) -> list[str]:
+    """Kaavion rivit, jotka svgbob 0.7.6 piirtää eri tavalla kuin ne lukevat.
+
+    Peräkkäiset ääkköset hajoavat päällekkäisiksi paloiksi (Käännä -> "Kän"
+    ja "änä"), ja kirjaimen vieressä oleva sulku piirtyy kaarena (Main()).
+    Kumpikin korjaantuu lainausmerkeillä, joita svgbob ei piirrä.
+    """
+    lines = art.split("\n")
+    problems: dict[str, None] = {}
+    for match in SVGBOB_TEXT_RE.finditer(svg):
+        text = unescape(match["text"])
+        row, col = (int(match["y"]) - 12) // 16, (int(match["x"]) - 2) // 8
+        line = lines[row] if row < len(lines) else ""
+        # Lainattu teksti alkaa lainausmerkin sarakkeesta.
+        if text not in (line[col:col + len(text)],
+                        line[col + 1:col + 1 + len(text)]):
+            problems[f"teksti sotkeutuu: {line.strip()}"] = None
+    for line in lines:
+        bare = SVGBOB_QUOTED_RE.sub(lambda m: " " * len(m[0]), line)
+        if SVGBOB_PAREN_RE.search(bare):
+            problems[f"sulut piirtyvät kaarina: {line.strip()}"] = None
+    return list(problems)
+
+
+def convert_svgbob(text: str, source_path: str = "") -> tuple[str, int, set[str]]:
     """```bob-aidat upotetuiksi SVG-kaavioiksi. -> (teksti, kaavioita, nimet).
 
     Ajetaan convert_divsin jälkeen, jottei kääre saisi markdown="1":tä.
@@ -1102,9 +1159,12 @@ def convert_svgbob(text: str) -> tuple[str, int, set[str]]:
         if svg is None:
             out.extend(lines[number:end + 1])
         else:
+            for problem in svgbob_problems(art, svg):
+                print(f"varoitus: {source_path}: svgbob-kaavio, {problem}"
+                      " (kirjoita teksti lainausmerkkeihin)", file=sys.stderr)
             used.add(hashlib.sha1(art.encode("utf-8")).hexdigest() + ".svg")
             diagrams += 1
-            svg = svgbob_prefix_ids(svg, diagrams)
+            svg = svgbob_prefix_ids(svgbob_fit_text(svg), diagrams)
             indent = match["indent"]
             out.append(f'{indent}<div class="svgbob">')
             out += [indent + line for line in svg.split("\n") if line.strip()]
@@ -2079,7 +2139,7 @@ def main(strict: bool = False) -> int:
         # Divit ennen tehtäväkortteja (näkee vain lähteen divit) ja ennen
         # svgbobia (kääre ei saa markdown="1":tä).
         converted, _ = convert_divs(converted)
-        converted, _, page_art = convert_svgbob(converted)
+        converted, _, page_art = convert_svgbob(converted, source_path)
         # Tehtäväkortit ennen bonusmerkkejä (task_head lukee kortin tagin itse)
         # ja bonusmerkit ennen ikoneita (bi-stars ei ole ICON_MAPissa).
         converted, _ = convert_tasks(converted)

@@ -690,6 +690,48 @@ def test_convert_svgbob_keeps_the_fence_without_the_tool(monkeypatch):
     assert convert.convert_svgbob(text) == (text, 0, set())
 
 
+@pytest.mark.parametrize("art, svg, problem", [
+    # svgbob 0.7.6:n oikea tuloste: palat menevät päällekkäin, ä ja n puuttuvat.
+    ("| Käännä |\n", '<text x="18" y="12">Kän</text><text x="34" y="12">änä</text>',
+     "teksti sotkeutuu: | Käännä |"),
+    ('| "Käännä" |\n', '<text x="18" y="12" >Käännä</text>', None),
+    ("  Main()\n", '<text x="18" y="12" >Main</text>',
+     "sulut piirtyvät kaarina: Main()"),
+    ('  "Main()"\n', '<text x="18" y="12" >Main()</text>', None),
+    ("( )\n", "", None),
+])
+def test_svgbob_problems(art, svg, problem):
+    """Kumpaakaan vikaa ei näe ilman kuvaa, ja lainausmerkit korjaavat
+    molemmat; pelkkä piirrosmerkkinä käytetty sulku ei ole vika."""
+    assert convert.svgbob_problems(art, svg) == ([problem] if problem else [])
+
+
+@pytest.mark.parametrize("texts, size", [
+    # Lainattu teksti oikealla ja alla: svgbob 0.7.6 mitoittaa vain laatikon.
+    ('<text x="74" y="12" >pitka teksti tassa</text>', (232, 64)),
+    ('<text x="18" y="76" >alla</text>', (58, 96)),
+    ('<text x="18" y="28" >a</text>', (56, 64)),
+    ("", (56, 64)),
+])
+def test_svgbob_fit_text(texts, size):
+    """Koko kasvaa sekä <svg>:ssä että taustassa, muttei piirroksen laatikossa
+    eikä koskaan pienene."""
+    svg = ('<svg width="56" height="64" class="svgbob">'
+           '<rect class="backdrop" x="0" y="0" width="56" height="64"></rect>'
+           f'<rect x="20" y="8" width="24" height="32"></rect>{texts}</svg>')
+    fitted = convert.svgbob_fit_text(svg)
+    assert fitted.count('width="%d" height="%d"' % size) == 2
+    assert 'width="24" height="32"' in fitted
+
+
+def test_convert_svgbob_warns_with_the_page(monkeypatch, capsys):
+    monkeypatch.setattr(convert, "svgbob_svg",
+                        lambda art: '<svg><text x="2" y="12" >Main</text></svg>')
+    convert.convert_svgbob("```bob\nMain()\n```\n", "osa2/sivu.md")
+    assert ("varoitus: osa2/sivu.md: svgbob-kaavio, sulut piirtyvät kaarina: Main()"
+            in capsys.readouterr().err)
+
+
 # --- Vaatimusdivit (README kohta 25) -----------------------------------------
 
 def test_convert_divs_marks_the_block_for_markdown():
