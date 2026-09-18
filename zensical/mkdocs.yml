@@ -108,6 +108,10 @@ extra_css:
 
   - assets/css/print.css
 
+  # Testaa tietosi -visa (convert.py: convert_quizzes, assets/js/visa.js).
+  # admonitions.css:n jälkeen: perustelulaatikon värit voittavat myöhempänä.
+  - assets/css/visa.css
+
 extra_javascript:
   # Alalukujen avaaminen ei vieritä valikkoa; ks. assets/js/nav-scroll.js.
   - assets/js/nav-scroll.js
@@ -134,3 +138,6 @@ extra_javascript:
   # Terminaalinauhoitusten soitin; soitin ja tyyli haetaan vasta sivulla,
   # jolla on nauhoitus.
   - assets/js/asciinema.js
+
+  # Testaa tietosi -visan napit ja vastausten muisti.
+  - assets/js/visa.js

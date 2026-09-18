@@ -31,6 +31,7 @@ import traceback
 import urllib.error
 import urllib.request
 import zlib
+from html import escape
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -1372,6 +1373,161 @@ def convert_tasks(text: str) -> tuple[str, int]:
     return "\n".join(out), cards
 
 
+# Testaa tietosi -visat (assets/js/visa.js): <visa>-kääreessä <vaittama
+# vastaus="totta|tarua"> ja <kysymys>, jonka vaihtoehdot ovat tehtävälistan
+# rivejä (- [x] oikea, - [ ] väärä). Kummankin lopussa <perustelu>. Kukin tagi
+# omalla rivillään.
+QUIZ_OPEN_RE = re.compile(
+    r'^\s*<(?P<tag>visa|kysymys|perustelu|vaittama)'
+    r'(?:\s+vastaus="(?P<answer>[^"]*)")?\s*>\s*$')
+QUIZ_CLOSE_RE = re.compile(r"^\s*</(?P<tag>visa|vaittama|kysymys|perustelu)>\s*$")
+QUIZ_OPTION_RE = re.compile(r"^- \[(?P<mark>[ xX])\] (?P<text>.*)$")
+QUIZ_CLAIM_OPTIONS = (("totta", "Totta"), ("tarua", "Tarua"))
+QUIZ_SUMMARY = "Näytä vastaus"
+
+
+def trim_blank(lines: list[str]) -> list[str]:
+    """Tyhjät rivit pois alusta ja lopusta."""
+    start, end = 0, len(lines)
+    while start < end and not lines[start].strip():
+        start += 1
+    while end > start and not lines[end - 1].strip():
+        end -= 1
+    return lines[start:end]
+
+
+def quiz_question(answer: str | None, body: list[tuple[str, bool]],
+                  explanation: list[str]) -> tuple[list[str], str | None]:
+    """Yksi kysymys HTML-riveiksi. -> (rivit, virhe).
+
+    answer: väittämän vastaus, monivalinnalla None (oikea on [x]-rivi).
+    body: (rivi, onko koodiaidassa) ennen perustelua. Vaihtoehdot tulevat
+    ensimmäisen vaihtoehtorivin paikalle, sisennetty jatkorivi kuuluu
+    edelliseen vaihtoehtoon. Tunniste on kysymyksen tekstin tiiviste, joten
+    muuttunut kysymys unohtaa selaimeen tallennetun vastauksen.
+    """
+    question: list[str] = []
+    options: list[list] = []
+    place = None
+    for line, fenced in body:
+        match = None if fenced else QUIZ_OPTION_RE.match(line)
+        if match:
+            if place is None:
+                place = len(question)
+            options.append([match["mark"] != " ", match["text"].strip()])
+        elif (options and not fenced and line[:1].isspace() and line.strip()
+              and place == len(question)):
+            options[-1][1] += " " + line.strip()
+        else:
+            question.append(line)
+    problem = None
+    if answer is None:
+        right = [number for number, (correct, _) in enumerate(options) if correct]
+        if len(options) < 2 or len(right) != 1:
+            problem = "kysymyksessä pitää olla vaihtoehdot ja täsmälleen yksi [x]"
+        answer = "abcdefgh"[right[0]] if len(right) == 1 and right[0] < 8 else ""
+        items = ['<ol class="jyu-visa-vaihtoehdot" type="a" markdown="1">']
+        items += [f'<li data-arvo="{"abcdefgh"[number]}" markdown="1">{text}</li>'
+                  for number, (_, text) in enumerate(options[:8])]
+        items.append("</ol>")
+    else:
+        if options:
+            problem = "väittämällä ei ole vaihtoehtoja, vastaus on tagissa"
+        place = None
+        items = ['<ul class="jyu-visa-vaihtoehdot jyu-visa-tt">']
+        items += [f'<li data-arvo="{value}">{label}</li>'
+                  for value, label in QUIZ_CLAIM_OPTIONS]
+        items.append("</ul>")
+    identity = "\n".join(line for line, _ in body).strip()
+    digest = hashlib.sha1(identity.encode("utf-8")).hexdigest()[:8]
+    if place is None:
+        place = len(question)
+    out = [f'<div class="jyu-visa-q" data-vastaus="{escape(answer)}"'
+           f' data-id="{digest}" markdown="1">', ""]
+    out += trim_blank(question[:place]) + ["", *items, ""]
+    if rest := trim_blank(question[place:]):
+        out += rest + [""]
+    if explanation := trim_blank(explanation):
+        out += ['<details markdown="1">', f"<summary>{QUIZ_SUMMARY}</summary>", "",
+                *explanation, "", "</details>", ""]
+    return out + ["</div>"], problem
+
+
+def convert_quizzes(text: str, source_path: str = "") -> tuple[str, int]:
+    """<visa>-lohkot HTML:ksi. -> (teksti, kysymyksiä). Ks. QUIZ_OPEN_RE.
+
+    Ilman skriptiä kysymys on tekstiä, vaihtoehdot lista ja perustelu
+    <details>-lohko; visa.js tekee vaihtoehdoista napit. Tyhjät rivit kuten
+    convert_tasksissa. Koodiaidat ohitetaan, mutta kysymyksen sisällä ne
+    kulkevat mukana.
+    """
+    out: list[str] = []
+    open_fence: str | None = None
+    questions = 0
+    skip_blank = False
+    answer: str | None = None
+    body: list[tuple[str, bool]] | None = None
+    explanation: list[str] = []
+    explaining = False
+
+    def emit(lines: list[str]) -> None:
+        if out and out[-1].strip():
+            out.append("")
+        out.extend(lines)
+        out.append("")
+
+    for line in text.split("\n"):
+        match = CODE_FENCE_RE.match(line)
+        fenced = open_fence is not None
+        tag = None
+        if match and open_fence is None:
+            open_fence = match["fence"]
+        elif (match and not match["info"].strip()
+                and len(match["fence"]) >= len(open_fence)):
+            open_fence = None
+        elif open_fence is None:
+            tag = QUIZ_OPEN_RE.match(line) or QUIZ_CLOSE_RE.match(line)
+        closing = tag is not None and line.lstrip().startswith("</")
+        if tag and tag["tag"] == "visa":
+            emit(["</div>"] if closing else ['<div class="jyu-visa" markdown="1">'])
+            skip_blank = True
+            continue
+        if tag and tag["tag"] in ("vaittama", "kysymys") and not closing:
+            answer = tag["answer"] if tag["tag"] == "vaittama" else None
+            if tag["tag"] == "vaittama" and answer not in dict(QUIZ_CLAIM_OPTIONS):
+                print(f'varoitus: {source_path}: <vaittama vastaus="{answer}">,'
+                      " pitää olla totta tai tarua", file=sys.stderr)
+                answer = answer or ""
+            body, explanation, explaining = [], [], False
+            continue
+        if body is not None:
+            if tag and tag["tag"] == "perustelu":
+                explaining = not closing
+            elif tag:
+                lines, problem = quiz_question(answer, body, explanation)
+                if problem:
+                    print(f"varoitus: {source_path}: {problem}", file=sys.stderr)
+                emit(lines)
+                questions += 1
+                body = None
+                skip_blank = True
+            elif explaining:
+                explanation.append(line)
+            else:
+                body.append((line, fenced or match is not None))
+            continue
+        if skip_blank and not line.strip():
+            skip_blank = False
+            continue
+        skip_blank = False
+        out.append(line)
+    if body is not None:
+        print(f"varoitus: {source_path}: visan kysymys jää sulkematta",
+              file=sys.stderr)
+        emit(quiz_question(answer, body, explanation)[0])
+    return "\n".join(out), questions
+
+
 def split_files(body: list[str]) -> list[tuple[str, list[str]]]:
     """Koodiaidan rivit -> [(tiedostonimi, rivit)] FILE-merkintöjen mukaan.
 
@@ -1586,6 +1742,8 @@ def main() -> int:
         converted, _ = convert_includes(converted, origin)
         converted, _, _ = convert_anchors(converted)
         converted, _ = convert_moved_links(converted, source_path)
+        # Visat ennen aitoja: kysymyksen tunniste lasketaan lähteen tekstistä.
+        converted, _ = convert_quizzes(converted, source_path)
         # Monitiedostolohkot ennen convert_fencesiä: convert_fences ei koske
         # niiden valmiisiin aitoihin. Aidat, kaaviot, alertit ja tehtäväkortit
         # ennen convert_tabsia, koska se sisentää välilehden sisällön, eikä

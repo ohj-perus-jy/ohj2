@@ -48,6 +48,15 @@ def chapter_titles() -> list[str]:
 KNOWN_BROKEN_IMAGES = {"osa4/images/adventure.png"}
 
 
+def source_uses(pattern: str) -> bool:
+    """Käyttääkö lähdepuu ominaisuutta. Kirjoja on kaksi (ohj1, ohj2) eivätkä
+    ne käytä samoja mdBookin ominaisuuksia; ominaisuuden testi ohitetaan
+    kirjassa, jossa ominaisuutta ei ole, eikä sitä väitetä olemattomaksi."""
+    finder = re.compile(pattern, re.MULTILINE)
+    return any(finder.search(page.read_text(encoding="utf-8"))
+               for page in SRC.rglob("*.md"))
+
+
 @pytest.fixture(scope="session")
 def printed(real_site, serve, browser):
     return open_print_page(browser, serve(real_site))
@@ -191,6 +200,31 @@ def test_requirement_numbers_come_from_the_counter(printed):
     assert counters["reset"] == ["req 0"]
     assert counters["increment"] == ["req 1"]
     assert counters["marker"] == ['counter(req) "." counter(list-item) " "']
+
+
+def test_every_quiz_question_can_be_answered(printed):
+    """Visat (assets/js/visa.js) koko kirjan mitassa: oikea vastaus on
+    vaihtoehtojen joukossa ja perustelu on mukana, eikä lähteen tageja jää
+    sivulle. Tulostussivulle napit eivät tule: paperilla kysymys on lista."""
+    if not source_uses(r"^<visa>"):
+        pytest.skip("kirjassa ei ole visoja")
+    quizzes = printed.evaluate("""() => ({
+      questions: [...document.querySelectorAll('.jyu-visa-q')].map(question => ({
+        answer: question.dataset.vastaus,
+        options: [...question.querySelectorAll('.jyu-visa-vaihtoehdot > li')]
+          .map(option => option.dataset.arvo),
+        explained: question.querySelector(':scope > details') !== null,
+        number: getComputedStyle(question).counterIncrement,
+      })),
+      buttons: document.querySelectorAll('.jyu-visa-nappi').length,
+      tags: document.querySelectorAll('visa, vaittama, kysymys, perustelu').length,
+    })""")
+    assert quizzes["questions"]
+    assert [question for question in quizzes["questions"]
+            if question["answer"] not in question["options"] or not question["explained"]
+            or question["number"] != "jyu-visa-q 1"] == []
+    assert quizzes["buttons"] == 0
+    assert quizzes["tags"] == 0
 
 
 def test_every_image_is_loaded(printed):

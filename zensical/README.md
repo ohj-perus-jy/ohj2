@@ -78,7 +78,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 222 testiä
+./zensical/run.sh test                        # kaikki, 247 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -100,6 +100,7 @@ rikkoutumisia on kolmea lajia:
 | `tests/test_asciinema.py` | terminaalinauhoitukset koekirjalla                        | 4 s        |
 | `tests/test_highlights.py` | korostetut rivit koekirjalla                              | 2 s        |
 | `tests/test_search.py` | hakuikkuna koekirjalla: tyyli shadow DOM:issa, suodatinpaneeli piilossa | 4 s |
+| `tests/test_visa.py` | Testaa tietosi -visa koekirjalla: napit, paljastus, muisti, tila ilman skriptiä | 5 s |
 | `tests/test_change.py`  | koekirjan materiaalia muutetaan: näkyykö muutos tulosteessa   | 25 s       |
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
@@ -137,9 +138,53 @@ selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
 | 25 | `<div class="ht-reqs">` vaatimuslohkot       | 9                         | **tehty** — `convert_divs` + `assets/css/requirements.css`; numerointi 1.1, 1.2, ... CSS-laskurista               |
 | 26 | Leipätekstin kirjasinvalikko yläpalkissa     | joka sivu                 | **tehty** — ei mdBookissa, lisätty pyynnöstä; `header.html`, `typography.css`, `fontmenu.css`, `fontmenu.js`; Source Serif 4 (oletus), Atkinson Hyperlegible Next, Literata; valinta muistetaan selaimessa |
 | 27 | Haun tulokset leipätekstin kokoisina        | joka sivu                 | **tehty** — Zensicalin hakuikkunan tekstit ovat kiinteät 12–14 px ja tyhjä "Filters / Tags" -paneeli turha; `search.css` (rem-koot, paneeli piiloon) viedään hakuikkunan shadow DOM:iin `search.js`:llä; luokkanimet ovat minifioituja, `tests/test_search.py` kertoo, jos ne vaihtuvat |
+| 28 | Testaa tietosi -visa (`<visa>`)             | ei vielä kirjassa         | **tehty** — ei mdBookissa, tuotu ohj1:stä; `convert_quizzes` + `assets/js/visa.js` + `assets/css/visa.css`; valinta paljastaa oikean vastauksen ja perustelun ja jää selaimen muistiin, ks. [Testaa tietosi -visa](#testaa-tietosi-visa) |
 
 Zensical antaa itse ilman mitään lisäystä: oikean reunan sisällysluettelon,
 haun (tekstikoot kohdassa 27) ja responsiivisen navigaation.
+
+### Testaa tietosi -visa
+
+Luvun lopun totta/tarua-väittämät ja monivalinnat (tarkistuslistan kohta 28,
+tuotu ohj1:stä). Eivät ole tehtäviä eivätkä anna pisteitä: lukija valitsee
+vastauksen, sivu näyttää oikean vastauksen ja perustelun, eikä vastausta voi
+vaihtaa; "Tyhjennä vastaukset" nollaa sivun visan.
+
+Merkkaus: koko osio on `<visa>`-kääreen sisällä, kukin tagi omalla rivillään.
+Väittämä on `<vaittama vastaus="totta|tarua">`, monivalinta `<kysymys>`, jonka
+vaihtoehdot ovat tehtävälistan rivejä: `- [x]` oikea, `- [ ]` väärä (pitkä
+vaihtoehto jatkuu kahdella välilyönnillä sisennettynä). Kysymyksen koodilohko
+tulee ennen vaihtoehtoja, ja kummankin lopussa on `<perustelu>`. Numerot ja
+kirjaimet tulevat sivustolta, joten niitä ei kirjoiteta; perustelu alkaa silti
+oikealla vastauksella (`**Tarua.**`, `**b.**`). Täysi esimerkki on koesivu
+`tests/book/src/osa1/visa.md`.
+
+`convert.py`:n `convert_quizzes` kirjoittaa kysymyksen `.jyu-visa-q`-diviksi,
+vaihtoehdot listaksi ja perustelun `<details>`-lohkoksi; napit tekee
+`assets/js/visa.js`, ilmeen `assets/css/visa.css`.
+
+- Oikea vastaus merkitään vaihtoehtoon itseensä (`- [x]`) eikä kirjaimena
+  tagiin, jotta vaihtoehtojen järjestyksen voi muuttaa rikkomatta vastausta.
+  Numerot ja kirjaimet tulevat CSS-laskureista samasta syystä.
+- Ilman skriptiä kysymys on tekstiä, vaihtoehdot kirjainlista ja perustelu
+  avattava `<details>`. Tulostussivulle (print.js) napit jätetään
+  tarkoituksella tekemättä, joten paperilla on sama muoto.
+- Vastaukset ovat localStoragen avaimessa `jyu-visa` (kysymyksen `data-id`
+  → valittu arvo). Tunniste on kysymyksen lähdetekstin tiiviste eikä
+  järjestysnumero: kysymysten lisääminen tai siirtäminen ei sekoita
+  tallennettuja vastauksia, ja muutettu kysymys unohtaa vanhan vastauksen.
+  Siksi muunnos ajetaan ennen `convert_fences`iä.
+- Ilme on teeman tehtävälistan kevyt pallukka eikä reunustettu nappi.
+  Kirjain on pallukan sisällä, koska perustelut viittaavat kirjaimiin. Oma
+  valinta on täytetty pallukka, ja ✓/✗ tekstin perässä kertoo tuloksen
+  myös ilman väriä. Oikean ja väärän värit ovat omia tokeneita
+  (`--jyu-visa-ok`, `--jyu-visa-wrong`), koska teeman vihreä ja punainen
+  eivät riitä tekstin kontrastiin; perustelulaatikko käyttää
+  admonitions.css:n `--adm`-muuttujaa ja teeman check-kuvaketta, rasti on
+  saman Lucide-sarjan x.
+- Koesivu `tests/book/src/osa1/visa.md` SUMMARY.md:n ulkopuolella, testit
+  `tests/test_visa.py`. Oikean kirjan visat tarkistaa `tests/test_book.py`;
+  testi ohitetaan (`source_uses`), kunnes kirjassa on ensimmäinen `<visa>`.
 
 ## Mitä puuttuu
 

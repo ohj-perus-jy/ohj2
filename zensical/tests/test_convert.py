@@ -974,6 +974,113 @@ def test_convert_tasks_ignores_tasks_inside_code():
     assert convert.convert_tasks(text) == (text, 0)
 
 
+# --- Testaa tietosi -visa (assets/js/visa.js) --------------------------------
+
+QUIZ = """\
+<visa>
+
+**Totta vai tarua?**
+
+<vaittama vastaus="tarua">
+Käännösvirhe ilmenee vasta, kun `ohjelmaa` ajetaan.
+<perustelu>
+**Tarua.** Käännösvirhe estää kääntämisen.
+</perustelu>
+</vaittama>
+
+<kysymys>
+Mitä koodi tulostaa?
+
+```csharp,ignore
+- [x] tämä on koodia
+```
+
+- [ ] `Iso luku`
+- [x] Ei mitään, koska ehto on epätosi ja rivi on niin pitkä, että se
+  jatkuu toiselle riville
+- [ ] Käännösvirheen
+
+<perustelu>
+**b.** Ehto on epätosi.
+</perustelu>
+</kysymys>
+
+</visa>
+"""
+
+
+def test_convert_quizzes_turns_a_claim_into_a_true_false_question():
+    """Väittämän vaihtoehdot kirjoittaa muunnos; vastaus tulee tagista ja
+    perustelu on ilman skriptiä tavallinen <details>."""
+    text, questions = convert.convert_quizzes(QUIZ)
+    assert questions == 2
+    assert re.search(
+        r'<div class="jyu-visa-q" data-vastaus="tarua" data-id="[0-9a-f]{8}" markdown="1">\n\n'
+        + re.escape(
+            'Käännösvirhe ilmenee vasta, kun `ohjelmaa` ajetaan.\n\n'
+            '<ul class="jyu-visa-vaihtoehdot jyu-visa-tt">\n'
+            '<li data-arvo="totta">Totta</li>\n<li data-arvo="tarua">Tarua</li>\n</ul>\n\n'
+            '<details markdown="1">\n<summary>Näytä vastaus</summary>\n\n'
+            '**Tarua.** Käännösvirhe estää kääntämisen.\n\n</details>\n\n</div>\n'), text)
+
+
+def test_convert_quizzes_reads_the_answer_from_the_marked_option():
+    """Oikea vastaus on [x]-rivin kirjain. Lista tulee vaihtoehtojen paikalle
+    koodilohkon jälkeen, sisennetty jatkorivi kuuluu vaihtoehtoon, ja aidan
+    sisällä oleva [x] on koodia."""
+    text, _ = convert.convert_quizzes(QUIZ)
+    assert 'data-vastaus="b"' in text
+    assert ('```csharp,ignore\n- [x] tämä on koodia\n```\n\n'
+            '<ol class="jyu-visa-vaihtoehdot" type="a" markdown="1">\n'
+            '<li data-arvo="a" markdown="1">`Iso luku`</li>\n'
+            '<li data-arvo="b" markdown="1">Ei mitään, koska ehto on epätosi ja rivi on'
+            ' niin pitkä, että se jatkuu toiselle riville</li>\n'
+            '<li data-arvo="c" markdown="1">Käännösvirheen</li>\n</ol>\n\n'
+            '<details markdown="1">') in text
+
+
+def test_convert_quizzes_wraps_the_quiz_and_leaves_no_tags():
+    text, _ = convert.convert_quizzes(QUIZ)
+    assert text.startswith('<div class="jyu-visa" markdown="1">\n\n**Totta vai tarua?**\n\n')
+    assert text.endswith("</div>\n\n</div>\n")
+    assert not re.search(r"</?(visa|vaittama|kysymys|perustelu)\b", text)
+
+
+def test_convert_quizzes_identifies_a_question_by_its_text():
+    """Tallennettu vastaus seuraa kysymystä, ei sen paikkaa: tunniste säilyy,
+    kun perustelu tai järjestys muuttuu, ja vaihtuu, kun kysymys muuttuu."""
+    def identifiers(text):
+        return re.findall(r'data-id="([0-9a-f]{8})"', convert.convert_quizzes(text)[0])
+
+    first, second = identifiers(QUIZ)
+    assert first != second
+    assert identifiers(QUIZ.replace("Ehto on epätosi.", "Toinen perustelu.")) == [first, second]
+    assert identifiers(QUIZ.replace("Mitä koodi tulostaa?", "Mitä tämä tulostaa?")) != [first, second]
+
+
+def test_convert_quizzes_is_repeatable():
+    once, _ = convert.convert_quizzes(QUIZ)
+    assert convert.convert_quizzes(once) == (once, 0)
+
+
+def test_convert_quizzes_ignores_tags_inside_code():
+    text = "```html\n<visa>\n<kysymys>\n- [x] a\n</kysymys>\n</visa>\n```\n"
+    assert convert.convert_quizzes(text) == (text, 0)
+
+
+@pytest.mark.parametrize("question, problem", [
+    ("<kysymys>\nKumpi?\n\n- [ ] a\n- [ ] b\n</kysymys>\n", "täsmälleen yksi [x]"),
+    ("<kysymys>\nKumpi?\n\n- [x] a\n- [x] b\n</kysymys>\n", "täsmälleen yksi [x]"),
+    ('<vaittama vastaus="ehka">\nOnko?\n</vaittama>\n', "pitää olla totta tai tarua"),
+    ('<vaittama vastaus="totta">\nOnko?\n', "jää sulkematta"),
+])
+def test_convert_quizzes_warns_about_a_question_without_one_answer(capsys, question, problem):
+    """Vastaukseton kysymys näyttäisi jokaisen valinnan vääräksi."""
+    convert.convert_quizzes(f"<visa>\n\n{question}\n</visa>\n", "osa1/sivu.md")
+    warning = capsys.readouterr().err
+    assert warning.startswith("varoitus: osa1/sivu.md: ") and problem in warning
+
+
 # --- Käyttöjärjestelmävälilehdet (README kohta 23) ---------------------------
 
 def test_convert_tabs_drops_placeholder():
