@@ -222,6 +222,7 @@ PLANTUML_ALT = "UML-luokkakaavio"
 # ASCII-kaaviot: ```bob-aita piirretään svgbob_cli:llä (cargo install svgbob_cli,
 # sama svgbob kuin mdbook-svgbobissa). Riippuvuus on pehmeä: valmiit kaaviot
 # ovat versionhallinnassa (cache/svgbob/), ja ilman komentoa aita jää ennalleen.
+# Julkaisussa --strict kaataa ajon, jottei kaavio katoa huomaamatta.
 # SVG upotetaan sivulle eikä viitata <img>:llä, koska sen värit tulevat sivun
 # CSS-muuttujista, joita <img>:n sisältö ei näe; siksi hakemisto on välimuisti
 # eikä asset. Kääre on <div>, koska <svg> ei ole Python-Markdownin
@@ -981,6 +982,7 @@ def plantuml_svg(source: str) -> str | None:
     except (urllib.error.URLError, OSError) as error:
         print(f"varoitus: plantuml-palvelin ei vastannut: {error}",
               file=sys.stderr)
+        FAILED.add("plantuml")
         return None
     # Syntaksivirheestä palvelin vastaa 200:lla ja virhekuvalla; se kelpaa,
     # mutta muu kuin SVG ei.
@@ -2027,7 +2029,7 @@ def write_if_changed(path: Path, text: str) -> None:
     path.write_text(text, encoding="utf-8")
 
 
-def main() -> int:
+def main(strict: bool = False) -> int:
     if not SRC.is_dir():
         print(f"lähdepuu puuttuu: {SRC}", file=sys.stderr)
         return 1
@@ -2121,6 +2123,13 @@ def main() -> int:
               f"{', '.join(sorted(unknown_alerts))}", file=sys.stderr)
     print(f"kopioitu {len(list(DOCS.rglob('*.md')))} markdown-tiedostoa -> {DOCS}"
           + (f", {len(stale)} jäänyttä tiedostoa pois" if stale else ""))
+    # --strict: julkaisussa puuttuva kaavio on virhe, ei varoitus. Paikallisesti
+    # pehmeä riippuvuus säilyy, ks. svgbob_svg.
+    if strict and FAILED:
+        print(f"virhe: kaavioita jäi piirtämättä ({', '.join(sorted(FAILED))});"
+              " aja muunnos paikallisesti ja committoi syntyneet kuvat",
+              file=sys.stderr)
+        return 1
     return 0
 
 
@@ -2231,10 +2240,11 @@ def watch() -> int:
 
 if __name__ == "__main__":
     arguments = sys.argv[1:]
-    if arguments and arguments != ["--watch"]:
-        print(f"käyttö: {Path(__file__).name} [--watch]", file=sys.stderr)
-        raise SystemExit(2)
-    if arguments:
+    if arguments == ["--watch"]:
         raise SystemExit(watch())
+    if arguments not in ([], ["--strict"]):
+        print(f"käyttö: {Path(__file__).name} [--watch | --strict]",
+              file=sys.stderr)
+        raise SystemExit(2)
     with only_one_run():
-        raise SystemExit(main())
+        raise SystemExit(main(strict=bool(arguments)))
