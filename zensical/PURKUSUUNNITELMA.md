@@ -6,7 +6,7 @@ Se vastaa yhteen kysymykseen — mitkä `convert.py`:n vaiheista lakkaavat sillo
 olemasta, mitkä vasta lähdettä muokkaamalla ja mitkä eivät koskaan.
 
 Tila ja käyttöohjeet ovat [README.md](README.md):ssä, tehtyjen ratkaisujen
-perustelut [PERUSTELUT.md](PERUSTELUT.md):ssä. Vaihenumerot viittaavat
+perustelut [PERUSTELUT.md](tyokalut/PERUSTELUT.md):ssä. Vaihenumerot viittaavat
 `convert.py`:n alkukommenttiin, kohtanumerot README.md:n tarkistuslistaan.
 Esiintymäluvut ovat `python3 convert.py`:n raportista (10.9.2026).
 

@@ -281,3 +281,8 @@ Yhteisen osan (`convert.py`:n runko, `assets/`, `overrides/`, `tests/`)
 paikka päätetään vasta, kun molemmat ovat vaihtaneet ja purku on tehty:
 tooling-repo ei ole se, koska se arkistoidaan (vaihe 6). Siihen asti
 korjaukset viedään käsin molempiin.
+
+**Päivitys 2026-09-18:** paikka on päätetty. Yhteinen osa on repo
+[kirjatyokalut](https://github.com/ohj-perus-jy/kirjatyokalut), jota ohj1,
+ohj2 ja jypelidocs käyttävät submodulena `zensical/tyokalut/`; kirjan omat
+asetukset ovat `zensical/kirja.toml`issa. Käsin vieminen on päättynyt.

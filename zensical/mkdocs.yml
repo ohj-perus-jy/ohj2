@@ -1,10 +1,9 @@
-# Zensical-sivuston asetukset. Tänne lisätään vain se, minkä jokin mdBookin
-# ominaisuus vaatii. Navigaatio on nav.yml:ssä, jonka convert.py kirjoittaa.
+# Kirjan omat Zensical-asetukset. Yhteiset asetukset (teema, tyylit, skriptit)
+# ja navigaatio tulevat nav.yml:stä, jonka tyokalut/convert.py kirjoittaa
+# tiedostosta tyokalut/mkdocs-pohja.yml; tämän tiedoston arvo voittaa.
 INHERIT: nav.yml
 
 site_name: Ohjelmointi 2
-docs_dir: docs
-site_dir: site
 
 # Alatunniste: tekijät ja lisenssi kuten mdBookin footerissa. Arvo menee
 # malliin escapettamatta, joten HTML on sallittu.
@@ -15,142 +14,5 @@ copyright: >-
   rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0
   Kansainvälinen">CC BY-SA 4.0</a>
 
-# Muokkauslinkin osoite kootaan repo_url + edit_uri + sivun polku. edit_uri
-# osoittaa lähdepuuhun src/, koska docs/ on convert.py:n kopio eikä
-# versionhallinnassa; siirretyt sivut hoitaa nav.yml:n extra.edit_source.
-# repo_url toisi myös repo-linkin, joka tyhjennetään overrides/partials/source.html:ssä.
+# Muokkauslinkin repo; edit_uri tulee pohjasta.
 repo_url: https://github.com/ohj-perus-jy/ohj2
-edit_uri: edit/main/src/
-
-theme:
-  name: material
-
-  # Mallien ylikirjoitukset (mm. muokkauslinkki alatunnisteessa), ks. overrides/.
-  custom_dir: overrides
-  language: fi
-
-  # Otsikoiden, valikon ja yläpalkin kirjasin. Source Sans 3 on leipätekstin
-  # Source Serif 4:n (typography.css) sisarkirjasin, joten mittasuhteet täsmäävät.
-  font:
-    text: Source Sans 3
-
-  features:
-    # Osan otsikko on itse linkki osan etusivulle, kuten mdBookissa.
-    - navigation.indexes
-
-    # Edellinen/seuraava sivun alareunassa, kuten mdBookissa.
-    - navigation.footer
-
-    # Käyttöjärjestelmävälilehdet: valinta valitsee saman otsikon kaikkialta ja
-    # muistetaan sivulta toiselle. Ks. convert.py: convert_tabs.
-    - content.tabs.link
-
-  # Teema seuraa käyttöjärjestelmää ja vaihdin ohittaa sen, kuten book.tomlin
-  # default-theme / preferred-dark-theme. Värit ovat Materialin omat.
-  palette:
-    - media: "(prefers-color-scheme: light)"
-      scheme: default
-      toggle:
-        icon: material/weather-night
-        name: Vaihda tummaan teemaan
-    - media: "(prefers-color-scheme: dark)"
-      scheme: slate
-      toggle:
-        icon: material/weather-sunny
-        name: Vaihda vaaleaan teemaan
-
-extra_css:
-  # Leipätekstin kirjasin; miksi ei theme.font.text, ks. tiedoston alku.
-  - assets/css/typography.css
-
-  # Kirjasinvalikko yläpalkissa (overrides/partials/header.html, assets/js/fontmenu.js).
-  - assets/css/fontmenu.css
-  - assets/css/layout.css
-
-  # Sivustovalikko yläpalkissa (assets/js/sitemenu.js).
-  - assets/css/sitemenu.css
-
-  # Hakuikkunan tekstikoot ja suodatinpaneelin piilotus. Ikkuna on shadow
-  # DOM:issa, johon assets/js/search.js liittää tämän tiedoston.
-  - assets/css/search.css
-
-  # Alerttilaatikot classic-variantin ilmeeseen; miksi ei theme.variant, ks. tiedoston alku.
-  - assets/css/admonitions.css
-
-  # Tehtäväkortit (convert.py: convert_tasks) ja bonusmerkin väri (.jyu-bonus).
-  - assets/css/tasks.css
-
-  # Valikkopolun erottimen väri (convert.py: convert_icons).
-  - assets/css/icons.css
-
-  # Taulukot: keskitys, otsikkorivi ja vuororivit kuten kirjassa.
-  - assets/css/tables.css
-
-  # Koodin tausta erottumaan sivun taustasta; ks. tiedoston alku.
-  - assets/css/code.css
-
-  # Harjoitustyön vaatimusnumerot CSS-laskurista.
-  - assets/css/requirements.css
-
-  # Luokkakaaviot (convert.py).
-  - assets/css/diagrams.css
-
-  # Koodilohkon nappirivin pohja; ennen playground.css:ää ja hidelines.css:ää,
-  # jotka antavat vain oman kuvakkeensa.
-  - assets/css/codebuttons.css
-
-  # Ajonapin kuvake ja tuloste (assets/js/playground.js).
-  - assets/css/playground.css
-
-  # Korostetut rivit. Ennen hidelines.css:ää: piilotuksen display: none
-  # voittaa korostuksen display: block vain myöhempänä.
-  - assets/css/highlights.css
-
-  # Piilorivit ja silmänappi (assets/js/hidelines.js).
-  - assets/css/hidelines.css
-
-  - assets/css/print.css
-
-  # Vaiheittainen ohje (assets/js/walkthrough.js).
-  - assets/css/walkthrough.css
-
-  # Testaa tietosi -visa (convert.py: convert_quizzes, assets/js/visa.js).
-  # admonitions.css:n jälkeen: perustelulaatikon värit voittavat myöhempänä.
-  - assets/css/visa.css
-
-extra_javascript:
-  # Alalukujen avaaminen ei vieritä valikkoa; ks. assets/js/nav-scroll.js.
-  - assets/js/nav-scroll.js
-
-  # Koko kirja yhdelle sivulle (/tulosta/).
-  - assets/js/print.js
-
-  # Kirjasinvalikon toiminta.
-  - assets/js/fontmenu.js
-
-  # Sivustovalikon avaus ja sulkeminen.
-  - assets/js/sitemenu.js
-
-  # Hakuikkunan tyyli (assets/css/search.css) shadow DOM:iin.
-  - assets/js/search.js
-
-  # Java-ohjelmien ajonapit (mdBookin theme/playground_ext.js).
-  - assets/js/playground.js
-
-  # Piilorivit ja silmänappi. Ajonapin jälkeen, jotta nappirivin järjestys on
-  # sama kuin kirjassa.
-  - assets/js/hidelines.js
-
-  # Korostetut rivit; järjestyksellä ei väliä.
-  - assets/js/highlights.js
-
-  # Terminaalinauhoitusten soitin; soitin ja tyyli haetaan vasta sivulla,
-  # jolla on nauhoitus.
-  - assets/js/asciinema.js
-
-  # Vaiheittainen ohje. Sivun oma kohtaustiedosto on sisällössä <script>-tagina
-  # (convert.py: convert_walkthroughs), joten se on ajettu ennen tätä.
-  - assets/js/walkthrough.js
-
-  # Testaa tietosi -visan napit ja vastausten muisti.
-  - assets/js/visa.js

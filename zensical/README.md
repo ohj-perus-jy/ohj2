@@ -7,9 +7,20 @@ eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan
 **Tila: tarkistuslistan 25 kohdasta 20 on tehty**, kaksi ei tarvita, kaksi on
 siirretty myöhemmäksi ja yksi jätetään tietoisesti tekemättä. Jokaisen
 ratkaisun perustelut, vaihtoehdot ja todennus ovat omassa tiedostossaan:
-[PERUSTELUT.md](PERUSTELUT.md). Mitä `convert.py`:stä poistuu, jos koeputki
+[PERUSTELUT.md](tyokalut/PERUSTELUT.md). Mitä `convert.py`:stä poistuu, jos koeputki
 voittaa ja mdBook puretaan: [PURKUSUUNNITELMA.md](PURKUSUUNNITELMA.md).
 Työjärjestys tuotantoon: [KAYTTOONOTTO.md](KAYTTOONOTTO.md).
+
+**Työkalut ovat git-submodule** [`tyokalut/`](https://github.com/ohj-perus-jy/kirjatyokalut)
+(`convert.py`, `puhe.py`, `assets/`, `overrides/`, `icons/`, `tests/`),
+yhteinen ohj1:n ja jypelidocsin kanssa. Tässä tekstissä mainitut työkalujen
+tiedostot ovat siellä; tässä hakemistossa ovat vain kirjan omat: `kirja.toml`
+(sivusiirrot, poistettavat osiot, tunnetut rikkinäiset kuvat), `mkdocs.yml`
+(nimi, tekijät, repo), `cache/` (bob- ja PlantUML-kaaviot) ja kääre `run.sh`.
+Rakenne, asetukset ja työkalujen muuttaminen:
+[tyokalut/README.md](tyokalut/README.md). Kloonin jälkeen
+`git submodule update --init` (`run.sh` tekee sen itse), ja
+`git config submodule.recurse true`, jotta `git pull` päivittää myös työkalut.
 
 ## Käynnistys
 
@@ -78,7 +89,7 @@ tilakoodi 200), ei 404:llä. Silloin käynnistä palvelin uudelleen.
 ## Testit
 
 ```bash
-./zensical/run.sh test                        # kaikki, 314 testiä
+./zensical/run.sh test                        # kaikki, 326 testiä
 ./zensical/run.sh test tests/test_convert.py  # pelkät muunnokset, 0,2 s
 ./zensical/run.sh test --nobuild              # käytä olemassa olevaa site/:ä
 ```
@@ -107,7 +118,7 @@ rikkoutumisia on kolmea lajia:
 | `tests/test_book.py`    | sama oikealla materiaalilla, 72 lukua                          | 10 s       |
 
 Koekirja (`tests/book/src`), testeihin kirjatut tunnetut poikkeukset ja
-selaimen systeemikirjastot: [PERUSTELUT.md](PERUSTELUT.md).
+selaimen systeemikirjastot: [PERUSTELUT.md](tyokalut/PERUSTELUT.md).
 
 ## Tarkistuslista
 
@@ -215,17 +226,16 @@ vaihtoehdot listaksi ja perustelun `<details>`-lohkoksi; napit tekee
 
 ### Yhteiset työkalut ohj1:n kanssa
 
-Työkalut (convert.py, `assets/`, `overrides/`, `icons/`, testit) pidetään
-samoina kuin ohj1:ssä ja jypelidocsissa; tavoite on yksi yhteinen kopio
-(tilanne: ohj1:n `zensical/YHTENAISTYS.md`). convert.py eroaa ohj1:stä vain
-asetusvakioissa (`NEST_UNDER`, `NOT_PAGES`, `PLANTUML_AGENT`), ja `assets/`
-vain tämän kirjan PlantUML-kuvissa. Siksi mukana on myös osia, joita tämä
-kirja ei käytä:
+Työkalut ovat samat kuin ohj1:ssä ja jypelidocsissa (submodule `tyokalut/`,
+tilanne: `tyokalut/YHTENAISTYS.md`); kirjan erot ovat `kirja.toml`issa ja
+`mkdocs.yml`:ssä. PlantUML-kuvat ovat kirjan `cache/plantuml/`:ssa (ennen
+työkalujen `assets/plantuml/`:ssa). Mukana on siksi myös osia, joita tämä kirja
+ei käytä:
 
 - Sivustovalikko (`header.html`, `sitemenu.css`, `sitemenu.js`) näkyy vain,
   jos mkdocs.yml:ssä on `extra.sites`. Täällä listaa ei ole, joten kurssin
-  nimi on pelkkä linkki etusivulle; `tests/test_sitemenu.py` puuttuu samasta
-  syystä.
+  nimi on pelkkä linkki etusivulle. `tests/test_sitemenu.py` ajetaan
+  koekirjalla, jolla on oma listansa.
 - Ajonappi (`playground.js`) tuntee myös C#:n, `feature-`-määreen ja
   kuvatulosteen. `multifile`-kenttä lähetetään vain monitiedostolohkolle;
   palvelin ajaa Javan ilman sitä (kokeiltu 2026-09-18). Koesivu
@@ -265,7 +275,7 @@ rikkinäisiä linkkejä — väärä suhteellinen polku tai otsikko, joka on nim
 uudelleen linkkiä päivittämättä — ja ne olivat rikki myös mdBookin omassa
 käännöksessä, joten ne korjattiin `../src`:ssä eikä täällä. Se on ainoa kohta,
 jossa koeputki on koskenut lähdepuuhun, ja se on omana committinaan; luettelo
-on [PERUSTELUT.md](PERUSTELUT.md):n kohdassa "Ankkurit".
+on [PERUSTELUT.md](tyokalut/PERUSTELUT.md):n kohdassa "Ankkurit".
 
 `convert.py` varoittaa vielä neljästä `{{#include}}`-makrosta, joiden kohde
 puuttuu aineistosta, ja yhdestä tuntemattomasta alerttitunnuksesta
@@ -296,6 +306,6 @@ puuttuu aineistosta, ja yhdestä tuntemattomasta alerttitunnuksesta
 
 Lähtötilanne on Zensicalin oletusteema sellaisenaan: jokainen lisätty rivi
 pitää pystyä perustelemaan jollakin mdBookin ominaisuudella, jota oikeasti
-tarvitaan. Perustelut ovat [PERUSTELUT.md](PERUSTELUT.md):ssä ja tiedostojen
+tarvitaan. Perustelut ovat [PERUSTELUT.md](tyokalut/PERUSTELUT.md):ssä ja tiedostojen
 omissa alkukommenteissa. Aiempi, täysin viritetty versio on tallessa branchissa
 `spike/mkdocs`.

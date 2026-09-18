@@ -1,52 +1,12 @@
 #!/usr/bin/env bash
-# Zensical-koeputken ajo:
-#   ./run.sh              -> kopioi ../src -> docs/, vahdi muutoksia ja tarjoile
-#                            portissa 8001
-#   ./run.sh 8003         -> sama, eri portissa
-#   ./run.sh build        -> pelkkä rakennus site/-hakemistoon
-#   ./run.sh test         -> testit
-#   ./run.sh puhe SIVU    -> vaiheittaisen ohjeen äänet, esim.
-#                            ./run.sh puhe ../src/sivu.md (puhe.py)
+# Sivuston ajo: ./run.sh [portti | build | test | puhe SIVU], ks. tyokalut/README.md.
+# Työkalut ovat git-submodule (github.com/ohj-perus-jy/kirjatyokalut).
 set -euo pipefail
 cd "$(dirname "$0")"
-
-[[ -x .venv/bin/zensical ]] || ./setup.sh
-
-if [[ ${1:-} == puhe ]]; then
-    shift
-    exec .venv/bin/python puhe.py "$@"
+[[ -f tyokalut/run.sh ]] || git submodule update --init tyokalut
+# "+" = tyokalut/ on eri versiossa kuin kirja odottaa (git pull ei päivitä sitä).
+if git submodule status tyokalut | grep -q '^+'; then
+    echo "huom: zensical/tyokalut on eri versiossa kuin kirja odottaa;" \
+         "päivitä: git submodule update (tai committaa uusi versio)" >&2
 fi
-
-# Testit kääntävät itse sen mitä tarvitsevat, joten convert.py:tä ei ajeta.
-# Selain tarkistetaan erikseen, koska se ei ole .venv:ssä vaan kotihakemistossa
-# ja sen systeemikirjastot kontissa; uusi devcontainer aloittaa ilman molempia.
-# Tarkistus on ldd, koska "playwright install-deps" ajaisi apt-get updaten joka ajolla.
-if [[ ${1:-} == test ]]; then
-    shift
-    if ! .venv/bin/python -c "import pytest, playwright" 2>/dev/null; then
-        .venv/bin/pip install --quiet -r requirements-dev.txt
-    fi
-    browser=$(.venv/bin/python -c 'from playwright.sync_api import sync_playwright
-with sync_playwright() as play:
-    path = play.chromium.executable_path
-print(path)' 2>/dev/null)
-    if [[ ! -x $browser ]] || ldd "$browser" | grep -q "not found"; then
-        .venv/bin/playwright install chromium
-        echo "Asennetaan selaimen systeemikirjastot (vaatii sudon)..."
-        sudo .venv/bin/playwright install-deps chromium
-    fi
-    exec .venv/bin/python -m pytest "$@"
-fi
-
-python3 convert.py
-
-if [[ ${1:-} == build ]]; then
-    exec .venv/bin/zensical build
-fi
-
-# Vahti palvelimen rinnalle: `zensical serve` seuraa docs/:ia, ei ../src:iä
-# (convert.py: watch). Palvelinta ei exec:ata, jotta trap ehtii lopettaa vahdin.
-python3 convert.py --watch &
-watcher=$!
-trap 'kill "$watcher" 2>/dev/null' EXIT INT TERM
-.venv/bin/zensical serve --dev-addr "0.0.0.0:${1:-8001}"
+exec tyokalut/run.sh "$@"
