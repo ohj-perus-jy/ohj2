@@ -128,6 +128,18 @@ def test_every_diagram_is_drawn(printed):
     assert diagrams["emptyBob"] == 0
 
 
+def test_diagram_text_fits_the_svgbob_grid(printed):
+    """svgbob sijoittaa sanat ja ä:n jälkeen katkaisemansa palat 8 px:n
+    ruutuihin. Koodikirjasimen merkki on 0,6 em, joten svgbobin omalla 14 px:n
+    koolla palat menivät päällekkäin ("tapahtumankäsittelijät")."""
+    if not source_uses(r"^\s*```bob"):
+        pytest.skip("kirjassa ei ole ascii-kaavioita")
+    sizes = printed.evaluate("""() => [...new Set(
+      [...document.querySelectorAll('div.svgbob text')]
+        .map(text => parseFloat(getComputedStyle(text).fontSize)))]""")
+    assert sizes and all(size * 0.6 <= 8.001 for size in sizes), sizes
+
+
 def test_no_raw_markdown_leaks_into_the_page(printed):
     """Raaka HTML-lohko ilman markdown-attribuuttia päästää sisältönsä läpi
     sellaisenaan: otsikko jää risuaidoiksi ja lihavointi tähdiksi. Koodi

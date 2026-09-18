@@ -27,3 +27,10 @@
 .md-typeset .svgbob > svg {
   max-width: none;
 }
+
+/* svgbob sijoittaa jokaisen sanan ja ä:n/ö:n jälkeisen palan 8 px:n ruutuihin.
+ * JetBrains Monon merkki on 0,6 em eli 14 px:n koossa 8,4 px, jolloin palat
+ * menevät päällekkäin; tällä koolla merkki on tasan ruudun levyinen. */
+.md-typeset .svgbob text {
+  font-size: calc(8px / .6);
+}
