@@ -54,6 +54,31 @@ docker pull ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest
 
 tai VS Codessa komennolla `Dev Containers: Rebuild and Reopen in Container`.
 
+## Zensical-esikatselu (`dev`-haara)
+
+`main` julkaistaan vielä mdBookilla. `dev`-haarasta rakennetaan samasta
+`src/`-puusta **[Zensical](https://zensical.org)**-sivusto esikatseluun
+osoitteeseen <https://ohjelmointi2.it.jyu.fi/dev/>; vaihdon työjärjestys on
+tiedostossa [zensical/KAYTTOONOTTO.md](zensical/KAYTTOONOTTO.md).
+
+Zensicalin työkalut (muunnos, tyylit, skriptit, testit) ovat git-submodule
+`zensical/tyokalut`, repo
+[kirjatyokalut](https://github.com/ohj-perus-jy/kirjatyokalut), joka on yhteinen
+Ohjelmointi 1:n ja Jypeli-ohjeiden kanssa:
+
+```bash
+git submodule update --init           # kloonin tai haaran vaihdon jälkeen
+git config submodule.recurse true     # git pull ja git switch päivittävät jatkossa myös työkalut
+
+./zensical/run.sh            # http://localhost:8001, seuraa src/:n muutoksia
+./zensical/run.sh build      # pelkkä rakennus zensical/site/-hakemistoon
+./zensical/run.sh test       # testit (pytest + Playwright)
+```
+
+`run.sh` hakee submodulen ja asentaa Zensicalin ensimmäisellä ajolla. Lisää:
+[zensical/README.md](zensical/README.md) ja
+[kirjatyokalut/README.md](https://github.com/ohj-perus-jy/kirjatyokalut#readme).
+
 ## Pikaohje kirjoittamiseen
 
 Koodiesimerkit voivat sisältää useita tiedostoja. Käytä `// FILE: filename`- ja 
