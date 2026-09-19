@@ -26,7 +26,7 @@ on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 > Tämän sivun ohjeet vaativat komentorivin käyttöä. Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
 >
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
-> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
+> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
 
 
 Kurssilla virallisesti tuettuja käyttöjärjestelmiä ovat Windows, macOS ja Linux.

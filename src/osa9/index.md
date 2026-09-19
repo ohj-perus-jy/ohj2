@@ -235,7 +235,7 @@ idea käyttöliittymän näkymistä.
 Tallenna kuvat `suunnitelma`-kansioon ja mainitse ne
 `kayttoliittyma.md`-tiedostossa. Löydät ohjeita kuvien upottamiseen
 Markdown-tiedostoihin
-[verkosta](https://www.markdownguide.org/basic-syntax/#images-1).
+[verkosta](https://www.markdownguide.org/basic-syntax/#images).
 
 Ota suunnitelmassa kantaa, mitä näkymässä näytetään ja millä eri tavoin käyttäjä
 voi vuorovaikuttaa käyttöliittymän kanssa. Näin voit varmistaa jo tässä

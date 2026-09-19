@@ -8,6 +8,3 @@
 
 # TIM-tehtävien paikkamerkit, joille ei vielä ole osoitetta.
 ^https://tim\.jyu\.fi/.*/TODO$
-
-# Palvelin ei lähetä välivarmennetta, joten TLS-tarkistus kaatuu (selain toimii).
-^https://opencs\.it\.jyu\.fi/
