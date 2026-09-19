@@ -1,0 +1,1 @@
+@zensical/tyokalut/CLAUDE.md
