@@ -1,12 +1,13 @@
-# Julkaisee GitHub Pagesiin kaksi sivustoa samasta artefaktista:
+# Julkaisee GitHub Pagesiin kaksi Zensical-sivustoa samasta artefaktista:
 #
-#   /      mdBook `main`-haarasta (kuten ennenkin)
-#   /dev/  Zensical `dev`-haarasta
+#   /      `main`-haarasta (tuotanto)
+#   /dev/  `dev`-haarasta (esikatselu)
 #
 # Molemmat rakennetaan jokaisella pushilla kumpaan tahansa haaraan, koska
 # Pages-sivusto on yksi kokonaisuus: osittainen julkaisu pyyhkisi toisen.
 # Tämän tiedoston on oltava sama `main`issa ja `dev`:ssä; `main`-push ajaa
-# `main`in version. Ks. zensical/KAYTTOONOTTO.md, vaihe 2.
+# `main`in version. mdBook poistui vaihdossa (zensical/KAYTTOONOTTO.md,
+# vaihe 5).
 name: Deploy site to Pages
 
 on:
@@ -19,55 +20,32 @@ permissions:
   pages: write
   id-token: write
 
-# Yksi julkaisu kerrallaan; jonossa olevia ei perutaan, jotta tuotantojulkaisu
+# Yksi julkaisu kerrallaan; jonossa olevia ei peruta, jotta tuotantojulkaisu
 # valmistuu aina.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # mdBook `main`ista sivuston juureen.
-  mdbook:
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:runner-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: main
-      - name: Build with mdBook
-        run: mdbook build
-      - uses: actions/upload-artifact@v4
-        with:
-          name: mdbook
-          path: book
-
-  # Pelkkä tarkistus `dev`-pushissa: `dev` ei saa rikkoa mdBookia, koska sen
-  # on pysyttävä mergettävänä `main`iin. Ei estä julkaisua, mutta värjää ajon
-  # punaiseksi.
-  mdbook-dev-check:
-    if: github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
-    container:
-      image: ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:runner-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: dev
-      - name: Check that dev still builds with mdBook
-        run: mdbook build
-
-  # Zensical `dev`:stä alipolkuun /dev/. convert.py tarvitsee vain
-  # standardikirjaston; kaaviot (cache/svgbob/, assets/plantuml/) ovat
+  # Sama rakennus kummallekin haaralle. convert.py tarvitsee vain
+  # standardikirjaston; kaaviot (cache/svgbob/, cache/plantuml/) ovat
   # versionhallinnassa, joten svgbobia tai PlantUML-palvelinta ei tarvita.
-  # --strict kaataa ajon, jos jokin kaavio puuttuu: ilman sitä sivu
-  # julkaistaisiin kaavio koodilohkona.
+  # --strict kaataa ajon, jos jokin kaavio puuttuu välimuistista: ilman sitä
+  # sivu julkaistaisiin kaavio koodilohkona.
   zensical:
+    strategy:
+      matrix:
+        include:
+          - ref: main
+            artifact: site
+          - ref: dev
+            artifact: site-dev
+    name: zensical (${{ matrix.ref }})
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: dev
+          ref: ${{ matrix.ref }}
           # Työkalut: zensical/tyokalut (kirjatyokalut-repo).
           submodules: true
       - uses: actions/setup-python@v5
@@ -84,11 +62,11 @@ jobs:
           zensical build
       - uses: actions/upload-artifact@v4
         with:
-          name: zensical
+          name: ${{ matrix.artifact }}
           path: zensical/site
 
   deploy:
-    needs: [mdbook, zensical]
+    needs: zensical
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -96,11 +74,11 @@ jobs:
     steps:
       - uses: actions/download-artifact@v4
         with:
-          name: mdbook
+          name: site
           path: _site
       - uses: actions/download-artifact@v4
         with:
-          name: zensical
+          name: site-dev
           path: _site/dev
       - uses: actions/upload-pages-artifact@v3
         with:
