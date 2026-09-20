@@ -1,8 +1,10 @@
 # Zensical-koeputki
 
-Kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista **Zensicaliin**
-(Material for MkDocsin tekijöiden uusi generaattori). Ei koske `../src`:ään
-eikä `../book.toml`:iin — `bash ../start.sh` toimii koko ajan entiseen tapaan.
+Alun perin kokeilu siitä, voisiko Ohj2-materiaalin siirtää mdBookista
+**Zensicaliin** (Material for MkDocsin tekijöiden uusi generaattori). Kokeilu
+voitti: mdBookin tiedostot (`book.toml`, `theme/`, `start.sh` ym.) on
+poistettu, ja sivusto rakennetaan tästä hakemistosta. `../src` on yhä
+mdBookin merkkauksella, ja `convert.py` muuntaa sen Zensicalille.
 
 **Tila: tarkistuslistan 25 kohdasta 20 on tehty**, kaksi ei tarvita, kaksi on
 siirretty myöhemmäksi ja yksi jätetään tietoisesti tekemättä. Jokaisen

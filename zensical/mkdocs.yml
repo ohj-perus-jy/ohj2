@@ -5,8 +5,8 @@ INHERIT: nav.yml
 
 site_name: Ohjelmointi 2
 
-# Alatunniste: tekijät ja lisenssi kuten mdBookin footerissa. Arvo menee
-# malliin escapettamatta, joten HTML on sallittu.
+# Alatunniste: tekijät ja lisenssi. Arvo menee malliin escapettamatta, joten
+# HTML on sallittu.
 copyright: >-
   Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa,
   Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot;

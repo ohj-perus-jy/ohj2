@@ -30,37 +30,32 @@ Jos haluat tehdä laajempia muutoksia ja nähdä ne livenä omalla koneellasi, t
 Suosittelemme [SSH-avaimen](https://docs.github.com/en/authentication/connecting-to-github-with-ssh) käyttöä autentikointiin.
 
 ```bash
-git clone git@github.com:ohj-perus-jy/ohj2.git
+git clone --recurse-submodules git@github.com:ohj-perus-jy/ohj2.git
 cd ohj2
+git config submodule.recurse true    # git pull ja git switch päivittävät jatkossa myös työkalut
 ```
 
 ### 2. Työkalujen asennus
-Materiaali on toteutettu **mdBookilla**. Suositeltu tapa on käyttää mukana
-olevaa DevContaineria. Se käyttää valmista GHCR-kuvaa
-`ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:main`, jossa mdBook ja tarvittavat
-laajennokset ovat valmiiksi asennettuina.
+Materiaali on toteutettu **[Zensicalilla](https://zensical.org)**. Työkalut
+ovat git-submodule `zensical/tyokalut`. Suositeltu tapa on käyttää mukana
+olevaa DevContaineria: se hakee submodulen ja asentaa Zensicalin jo kontin
+luonnissa.
 
-Jos et käytä DevContaineria, tarvitset [Rust & Cargon](https://www.rust-lang.org/tools/install)
-ja voit asentaa mdBook-työkalut fallback-skriptillä:
-
-```bash
-bash ./update-mdbook.sh
-```
-
-Fallback-asennus kääntää osan työkaluista lähdekoodista, joten ensimmäinen ajo voi
-kestää jonkin aikaa.
+Jos et käytä DevContaineria, tarvitset Python 3.11:n tai uudemman. Ensimmäinen
+`./zensical/run.sh` asentaa loput hakemistoon `zensical/.venv` (tarvittaessa
+myös `python3-venv`-paketin, mihin tarvitaan sudo).
 
 ### 3. Paikallinen esikatselu
 Käynnistä kehityspalvelin projektin juuresta:
 ```bash
-bash ./start.sh
+./zensical/run.sh
 ```
-Tämä avaa materiaalin selaimeesi (oletuksena localhost:3000) ja päivittää näkymän automaattisesti, kun tallennat muutoksia.
+Materiaali on osoitteessa <http://localhost:8001>, ja näkymä päivittyy automaattisesti, kun tallennat muutoksia.
 
 Voit testata pelkän käännöksen ilman kehityspalvelinta ajamalla:
 
 ```bash
-mdbook build
+./zensical/run.sh build
 ```
 
 ---

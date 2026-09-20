@@ -158,16 +158,27 @@ kirjanmerkit.
 **Vaihto:**
 
 - [ ] PR `dev` → `main`
-- [ ] `pages.yml`: Zensical `main`ista juureen ja `dev`:stä `/dev/`:iin
-      (esikatselu). mdBook-job pois.
-- [ ] Samassa PR:ssä `src/exercises/*/handout.md`:n viisi `.html`-linkkiä
-      hakemistomuotoon. Aiemmin muutos rikkoisi ne mdBookissa.
-- [ ] Poista mdBook: `book.toml`, `theme/`, `highlight/`, `mermaid/`,
+- [x] `pages.yml`: Zensical `main`ista juureen ja `dev`:stä `/dev/`:iin
+      (esikatselu). mdBook-jobit pois. Tehty 2026-09-20 ohj1:n mallilla:
+      `zensical`-job matriisina (`main` → juuri, `dev` → `/dev/`). Huom:
+      ennen mergeä `main`issa ei ole `zensical/`-hakemistoa, joten
+      `zensical (main)` kaatuu eikä mitään julkaista. Siksi muutos viedään
+      `main`iin PR:llä haarasta, ei `dev`-pushilla (ohj1: haara `vaihto`).
+- [x] Samassa PR:ssä `src/exercises/*/handout.md`:n viisi `.html`-linkkiä
+      hakemistomuotoon. Aiemmin muutos rikkoisi ne mdBookissa. Tehty
+      2026-09-20; sivut ja ankkurit tarkistettu `zensical/site/`:stä. Huom:
+      `links.yml` näyttää nämä viisi rikkinäisinä (404), kunnes vaihto on
+      julkaistu, koska lychee tarkistaa ne tuotantoa vasten. Aja tarkistus
+      uudelleen julkaisun jälkeen.
+- [x] Poista mdBook: `book.toml`, `theme/`, `highlight/`, `mermaid/`,
       `start.sh`, mdBook-kohdat `.vscode/tasks.json`:sta ja
       `.vscode/launch.json`:sta sekä devcontainerin portti 36742 ja nimi
       "Ohj2 mdBook". Päivitä mdBook-maininnat `README.md`:stä,
-      `CONTRIBUTING.md`:stä ja `.cursorrules`:sta. Devcontainerin kuva vaihtuu
-      vakiokuvaan, ks. vaihe 6.
+      `CONTRIBUTING.md`:stä ja `.cursorrules`:sta. Tehty 2026-09-20. VS Coden
+      F5 käynnistää nyt `zensical/run.sh`:n samaan porttiin 36742. Lisäksi
+      `.gitignore`:sta `/book` ja GitHubin Rust-pohjan rivit (Cargo,
+      rustfmt), jotka olivat mukana mdBookin takia. Devcontainerin kuva jää
+      toistaiseksi, ks. vaihe 6.
 - [ ] Vaiheen 3 mdBook-säännöt raukeavat. `main` → `dev` -sääntö jää voimaan.
 
 **Purku** (järjestys PURKUSUUNNITELMA.md:stä):
@@ -212,13 +223,15 @@ sudolla, ja se riittää vaihtoon asti.
 
 **ohj2:n vaihdossa (vaihe 5, sama PR):**
 
-- [ ] `.devcontainer/devcontainer.json`: `image` →
-      `mcr.microsoft.com/devcontainers/python:3.11-bookworm` (sama 3.11 kuin
-      CI:ssä; venv ja pip valmiina), nimi `"Ohj2 mdBook"` → `"Ohj2"`, portti
-      36742 pois. `postCreateCommand` hakee submodulen ja ajaa
-      `zensical/tyokalut/setup.sh`:n jo nyt (2026-09-18). Rust-feature
-      (`ghcr.io/devcontainers/features/rust:1`) mukaan vain jos `svgbob_cli`
-      halutaan; ks. alla.
+- [x] `.devcontainer/devcontainer.json`: nimi `"Ohj2 mdBook"` → `"Ohj2"`,
+      portti 36742 pois (2026-09-20, sama tiedosto kuin ohj1:ssä).
+      `postCreateCommand` hakee submodulen ja ajaa
+      `zensical/tyokalut/setup.sh`:n (2026-09-18).
+- [ ] `image` → `mcr.microsoft.com/devcontainers/python:3.11-bookworm` (sama
+      3.11 kuin CI:ssä; venv ja pip valmiina). Odottaa kuten ohj1:ssä
+      (päätetty siellä 2026-09-18 pitää kuva toistaiseksi): `svgbob_cli`
+      asennetaan cargolla, ja Rust tulee nyt `ohj-mdbook-tooling`-kuvasta;
+      Python-kuvaan tarvittaisiin `ghcr.io/devcontainers/features/rust:1`.
 - [ ] `svgbob_cli` on ainoa Rust-riippuvuus ja tarvitaan vain, kun
       bob-kaaviota (11 kpl) muutetaan; valmiit SVG:t ovat `cache/svgbob/`:ssa.
       Purun kohdassa 2 bob-aidat kirjoitetaan `src/`:hen valmiina SVG:nä
@@ -228,8 +241,8 @@ sudolla, ja se riittää vaihtoon asti.
 - [ ] Testien selainkirjastot jäävät `run.sh test`in asennettaviksi (sudo
       kerran per kontti). Ei siirretä `postCreateCommand`iin: se hidastaisi
       jokaista konttia niidenkin takia, jotka eivät aja testejä.
-- [ ] `README.md`:n kohta "mdBook-työkalukuvan päivittäminen" pois (osa
-      vaiheen 5 README-päivitystä).
+- [x] `README.md`:n kohta "mdBook-työkalukuvan päivittäminen" pois (osa
+      vaiheen 5 README-päivitystä, 2026-09-20).
 
 **ohj1:n vaihdon jälkeen:**
 
