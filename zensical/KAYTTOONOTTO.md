@@ -121,7 +121,7 @@ bob-kaavio jää CI:ssä koodilohkoksi.
 
 ## Vaihe 3 — `dev` pysyy mergettävänä
 
-Voimassa 2026-09-11 alkaen vaihtoon asti. Nämä eivät ole kertaluontoisia
+Voimassa 2026-09-11 – 2026-09-20 (vaihto, vaihe 5). Nämä eivät ole kertaluontoisia
 tehtäviä vaan sääntöjä; ruksi tarkoittaa "noudatetaan".
 
 - [ ] `main` → `dev` vähintään viikoittain ja aina ennen isompaa työtä. Ei
@@ -157,7 +157,19 @@ kirjanmerkit.
 
 **Vaihto:**
 
-- [ ] PR `dev` → `main`
+- [x] PR `dev` → `main`. Vaihto 2026-09-20: `main` → `dev` (`32eed89`), haara
+      `vaihto` `dev`:n päälle (devcontainer, handout-linkit, `pages.yml`,
+      mdBookin poisto), PR #121 `vaihto` → `main` merge-committina
+      (`bee46c1`), sitten `main` → `dev` (fast-forward). Portti ennen
+      vaihtoa: `merge-tree` → 0, `run.sh test` 337 passed, 1 skipped. Ajot
+      35504685428 (`main`) ja 35504724072 (`dev`) vihreitä. Todennettu: juuri
+      ja `/dev/` Zensical 0.0.62, 11 otossivua ja 33 css/js-tiedostoa 200,
+      ajonappi tulostaa "Hei, maailma!" oikeaa palvelinta vasten
+      (Playwright), 7 asciinema-soitinta, ei JS-virheitä, vanha
+      `.html`-osoite 404 ja 404-sivu Zensicalin. `links.yml` kaatui
+      `main`-pushissa (ajettiin ennen julkaisua) ja meni läpi `dev`-pushissa
+      julkaisun jälkeen. `tenttiohjeet` on osoitteessa `/tentti/tenttiohjeet/`
+      (`kirja.toml`, `[siirrot]`).
 - [x] `pages.yml`: Zensical `main`ista juureen ja `dev`:stä `/dev/`:iin
       (esikatselu). mdBook-jobit pois. Tehty 2026-09-20 ohj1:n mallilla:
       `zensical`-job matriisina (`main` → juuri, `dev` → `/dev/`). Huom:
@@ -179,7 +191,18 @@ kirjanmerkit.
       `.gitignore`:sta `/book` ja GitHubin Rust-pohjan rivit (Cargo,
       rustfmt), jotka olivat mukana mdBookin takia. Devcontainerin kuva jää
       toistaiseksi, ks. vaihe 6.
-- [ ] Vaiheen 3 mdBook-säännöt raukeavat. `main` → `dev` -sääntö jää voimaan.
+- [ ] TIMin linkit kirjaan hakemistomuotoon (kohta 14). Kartoitettu
+      2026-09-20 kirjautuneena (`tim.py`, kansio `kurssit/tie/tiep111`): 152
+      dokumentista 18:ssa oli rikkinäisiä linkkejä, yhteensä 27. Huom:
+      `tenttiohjeet.html` → `tentti/tenttiohjeet/` (`kirja.toml`, `[siirrot]`).
+      `osaN/index.html`-linkit toimivat sellaisinaan. Korjattu `koti` (3
+      linkkiä) ja kansion preamble `templates/preambles/preamble` (valikon
+      `tentti.html`). Korjaamatta: `tehtavat/templates/preambles/preamble` ja
+      `tehtavat/osa1/tehtava3` (`suorittaminen.html#eettiset-ohjeet`) sekä 14
+      menneen tentin dokumenttia kansiossa `tentti/` (`tentti.html`,
+      `tenttiohjeet.html`).
+- [x] Vaiheen 3 mdBook-säännöt raukeavat. `main` → `dev` -sääntö jää voimaan.
+      Rauenneet 2026-09-20.
 
 **Purku** (järjestys PURKUSUUNNITELMA.md:stä):
 
