@@ -1,6 +1,6 @@
 Valitse sinua kiinnostava harjoitustyön aihe.
 Voit valita valmiin aiheen [harjoitustyön
-ohjesivulta](https://ohjelmointi2.it.jyu.fi/harjoitustyo.html) tai tehdä
+ohjesivulta](https://ohjelmointi2.it.jyu.fi/harjoitustyo/) tai tehdä
 harjoitustyön omasta aiheesta.
 
 **Jos valitset valmiin aiheen**, palauta vastauksena valitsemasi aiheen nimi
