@@ -274,9 +274,9 @@ Huomaa, että `push` ja `pop` ovat `Deque`-rajapinnan metodien `addFirst` ja
 `removeFirst` synonyymejä, ja ne aiheuttavat virhetilanteessa ohjelman
 pysäyttävän poikkeuksen: tyhjälle pinolle kutsuttu `pop` keskeyttää ohjelman
 sen sijaan, että palauttaisi `null`-arvon. Koska `push` ja `pop` ovat pinon
-vakiintuneet perusoperaatiot, käytämme niitä silti ja tarkistamme tarvittaessa
-`isEmpty`-metodilla, ettei pino ole tyhjä ennen `pop`-kutsua. `peek` sen sijaan
-palauttaa tyhjästä pinosta `null`-arvon.
+vakiintuneet perusoperaatiot, käytämme niitä silti pinon yhteydessä ja
+tarkistamme tarvittaessa `isEmpty`-metodilla, ettei pino ole tyhjä ennen
+`pop`-kutsua. `peek` sen sijaan palauttaa tyhjästä pinosta `null`-arvon.
 
 ## Jono
 
@@ -337,8 +337,8 @@ tapauksissa lisätä alkion esimerkiksi sen tärkeyden mukaan.
 toiminnallisuudet. Käytännössä tämä tarkoittaa sitä, että se lupaa kaikki
 jonon ja pinon tarvitsemat metodit sekä muutamia muita hyödyllisiä
 toiminnallisuuksia, kuten mahdollisuuden alkioiden läpikäymiseen käänteisessä
-järjestyksessä. Huomaa, että `Deque` sisältää tässä kohdassa mainittujen
-metodien lisäksi myös pinon ja jonon yhteydessä mainitut metodit.
+järjestyksessä. Näytämme alempana, miten pinon ja jonon metodit vastaavat
+kaksipäisen jonon omia metodeja.
 
 `Deque`-rajapinnan yleisimmin käytetty toteutusluokka on `ArrayDeque`, joka
 nimensä mukaisesti käyttää taulukkoa sisäisenä tietorakenteenaan.
@@ -404,14 +404,34 @@ IO.println(luvut); // Tulostaa [2]
 Myös jonon yhteydessä esitellyt `offer`, `poll` ja `peek` toimivat
 kaksipäisellä jonolla, sillä ne ovat päätykohtaisten metodien synonyymejä:
 
-| Jonon metodi | Sama kuin      |
-| ------------ | -------------- |
-| `offer(e)`   | `offerLast(e)` |
-| `poll()`     | `pollFirst()`  |
-| `peek()`     | `peekFirst()`  |
+| Jonon metodi | Kaksipäisen jonon metodi |
+| ------------ | ------------------------ |
+| `offer(e)`   | `offerLast(e)`           |
+| `poll()`     | `pollFirst()`            |
+| `peek()`     | `peekFirst()`            |
 
 `offer` lisää alkion siis jonon loppuun, ja `poll` ja `peek` kohdistuvat sen
 alkuun — aivan kuten jonolta voi odottaakin.
+
+Sama pätee pinon yhteydessä esiteltyihin `push`- ja `pop`-metodeihin.
+Kaksipäisen jonon tapauksessa ne kohdistuvat molemmat sen alkuun:
+
+| Pinon metodi | Kaksipäisen jonon metodi |
+| ------------ | ------------------------ |
+| `push(e)`    | `addFirst(e)`            |
+| `pop()`      | `removeFirst()`          |
+| `peek()`     | `peekFirst()`            |
+
+`push` ja `pop` käyttävät samaa päätä, koska pino toimii *viimeisenä sisään,
+ensimmäisenä ulos* -periaatteen mukaisesti: viimeksi lisätty alkio poistetaan
+ensimmäisenä. Jos `push` lisäisi alkuun ja `pop` poistaisi lopusta, rakenne
+toimisikin *ensimmäisenä sisään, ensimmäisenä ulos* -periaatteen mukaisesti eli
+jonona. Javassa pinon päädyksi on valittu kaksipäisen jonon alku, joten
+poistaminen ja kurkistaminen kohdistuvat aina alkuun riippumatta siitä,
+käytetäänkö rakennetta pinona vai jonona. Vain lisäyspää vaihtuu: jono lisää
+loppuun ja pino alkuun. Siksi pinon ja jonon `peek` ovat sama metodi. Huomaa,
+että `pop` on `removeFirst`-metodin synonyymi ja heittää tyhjällä rakenteella
+poikkeuksen, toisin kuin `pollFirst`.
 
 Sekä lisääminen että poistaminen molemmista päistä tapahtuu vakioajassa *O(1)*, 
 sillä `ArrayDeque` on toteutettu kehämäisenä taulukkona, jossa pään ja hännän 
