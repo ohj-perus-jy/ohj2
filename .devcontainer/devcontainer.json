@@ -1,5 +1,5 @@
 {
-	"name": "Ohj2 mdBook",
+	"name": "Ohj2",
 	// Kuvassa on Rust, jolla convert.py asentaa svgbob_cli:n bob-kaavioita varten.
 	"image": "ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest",
 	"features": {
@@ -12,8 +12,8 @@
 		"source=claude-code-config,target=/home/vscode/.claude,type=volume"
 	],
 
-	// 36742 = mdbook serve (.vscode/tasks.json), 8001 = zensical/run.sh
-	"forwardPorts": [36742, 8001],
+	// 8001 = zensical/run.sh
+	"forwardPorts": [8001],
 
 	"customizations": {
 		"vscode": {
