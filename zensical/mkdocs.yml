@@ -1,0 +1,18 @@
+# Kirjan omat Zensical-asetukset. Yhteiset asetukset (teema, tyylit, skriptit)
+# ja navigaatio tulevat nav.yml:stä, jonka tyokalut/convert.py kirjoittaa
+# tiedostosta tyokalut/mkdocs-pohja.yml; tämän tiedoston arvo voittaa.
+INHERIT: nav.yml
+
+site_name: Ohjelmointi 2
+
+# Alatunniste: tekijät ja lisenssi. Arvo menee malliin escapettamatta, joten
+# HTML on sallittu.
+copyright: >-
+  Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa,
+  Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot;
+  <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi"
+  rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0
+  Kansainvälinen">CC BY-SA 4.0</a>
+
+# Muokkauslinkin repo; edit_uri tulee pohjasta.
+repo_url: https://github.com/ohj-perus-jy/ohj2

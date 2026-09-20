@@ -3,11 +3,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Launch mdBook in Chrome",
+      "name": "Launch Zensical in Chrome",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:36742",
-      "preLaunchTask": "mdbook: serve",
+      "preLaunchTask": "zensical: serve",
       "webRoot": "${workspaceFolder}",
       "timeout": 20000
     }

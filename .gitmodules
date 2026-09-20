@@ -1,0 +1,3 @@
+[submodule "zensical/tyokalut"]
+	path = zensical/tyokalut
+	url = https://github.com/ohj-perus-jy/kirjatyokalut.git

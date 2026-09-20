@@ -14,7 +14,7 @@
 > Ohjelmointi 1 -kurssin komentorivimateriaaliin:
 >
 > - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
-> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://tim.jyu.fi/view/kurssit/tie/itkp102/ohjeet/tyokalut#pikakurssi-komentorivin-k%C3%A4ytt%C3%B6%C3%B6n)
+> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
 
 Tässä vaiheessa on hyvä hetki aloittaa versionhallinta. Käytämme
 Git-versionhallintaa, joka on laajasti käytetty työkalu ohjelmistokehityksessä.

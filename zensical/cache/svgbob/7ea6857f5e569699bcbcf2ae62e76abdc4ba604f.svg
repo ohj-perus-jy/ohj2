@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="272" height="432" class="svgbob">
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: var(--md-default-fg-color);
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
+
+.svgbob text {
+  white-space: pre;
+  fill: var(--md-default-fg-color);
+  font-family: var(--md-code-font-family);
+  font-size: 14px;
+}
+
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: transparent;
+}
+
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
+
+.svgbob .filled {
+  fill: var(--md-default-fg-color);
+}
+
+.svgbob .bg_filled {
+  fill: transparent;
+  stroke-width: 1;
+}
+
+.svgbob .nofill {
+  fill: transparent;
+}
+
+.svgbob .end_marked_arrow {
+  marker-end: url(#arrow);
+}
+
+.svgbob .start_marked_arrow {
+  marker-start: url(#arrow);
+}
+
+.svgbob .end_marked_diamond {
+  marker-end: url(#diamond);
+}
+
+.svgbob .start_marked_diamond {
+  marker-start: url(#diamond);
+}
+
+.svgbob .end_marked_circle {
+  marker-end: url(#circle);
+}
+
+.svgbob .start_marked_circle {
+  marker-start: url(#circle);
+}
+
+.svgbob .end_marked_open_circle {
+  marker-end: url(#open_circle);
+}
+
+.svgbob .start_marked_open_circle {
+  marker-start: url(#open_circle);
+}
+
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#big_open_circle);
+}
+
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#big_open_circle);
+}
+
+</style>
+  <defs>
+    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="272" height="432"></rect>
+  <rect x="4" y="8" width="256" height="224" class="solid nofill m" rx="0"></rect>
+  <rect x="52" y="72" width="160" height="112" class="solid nofill p" rx="0"></rect>
+  <rect x="84" y="104" width="88" height="48" class="solid nofill c" rx="0"></rect>
+  <text x="98" y="140" >Sisältö</text>
+  <text x="98" y="92" >padding</text>
+  <text x="106" y="28" >width</text>
+  <line x1="52" y1="32" x2="52" y2="48" class="solid"></line>
+  <polygon points="64,36 56,40 64,44" class="filled"></polygon>
+  <line x1="64" y1="40" x2="200" y2="40" class="solid"></line>
+  <text x="10" y="92" >h</text>
+  <text x="10" y="108" >e</text>
+  <text x="10" y="124" >i</text>
+  <text x="10" y="140" >g</text>
+  <text x="10" y="156" >h</text>
+  <text x="10" y="172" >t</text>
+  <text x="98" y="220" >margin</text>
+  <line x1="212" y1="32" x2="212" y2="48" class="solid"></line>
+  <line x1="24" y1="72" x2="32" y2="72" class="solid"></line>
+  <polygon points="24,92 28,80 32,92" class="filled"></polygon>
+  <line x1="28" y1="92" x2="28" y2="164" class="solid"></line>
+  <polygon points="24,164 32,164 28,176" class="filled"></polygon>
+  <line x1="24" y1="184" x2="32" y2="184" class="solid"></line>
+  <text x="2" y="268" >Legend:</text>
+  <text x="2" y="284" >m</text>
+  <line x1="16" y1="278" x2="24" y2="278" class="solid"></line>
+  <line x1="16" y1="282" x2="24" y2="282" class="solid"></line>
+  <text x="34" y="284" >{</text>
+  <text x="34" y="300" >fill:</text>
+  <text x="82" y="300" >#af8255;</text>
+  <text x="2" y="316" >}</text>
+  <text x="2" y="332" >p</text>
+  <line x1="16" y1="326" x2="24" y2="326" class="solid"></line>
+  <line x1="16" y1="330" x2="24" y2="330" class="solid"></line>
+  <text x="34" y="332" >{</text>
+  <text x="34" y="348" >fill:</text>
+  <text x="82" y="348" >#b7c37f;</text>
+  <text x="2" y="364" >}</text>
+  <text x="2" y="380" >c</text>
+  <line x1="16" y1="374" x2="24" y2="374" class="solid"></line>
+  <line x1="16" y1="378" x2="24" y2="378" class="solid"></line>
+  <text x="34" y="380" >{</text>
+  <text x="34" y="396" >fill:</text>
+  <text x="82" y="396" >#87b0bc;</text>
+  <text x="2" y="412" >}</text>
+</svg>

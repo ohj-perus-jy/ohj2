@@ -14,7 +14,7 @@
   - `01-topic.md`, `02-topic.md`: Content files.
   - `XX-tehtavat.md`: Collection of all exercises for the chapter.
 - **Key Files:**
-  - `SUMMARY.md`: Table of Contents (mdbook structure).
+  - `SUMMARY.md`: Table of Contents (source of the site navigation).
   - `suorittaminen.md`: Grading and completion modes.
   - `tyokalut.md`: Tooling instructions.
   - `tyyliopas.md`: Style guide (infer style from content).

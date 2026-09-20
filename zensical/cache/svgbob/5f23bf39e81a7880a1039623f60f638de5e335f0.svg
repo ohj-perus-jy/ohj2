@@ -1,0 +1,186 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="680" height="160" class="svgbob">
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: var(--md-default-fg-color);
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
+
+.svgbob text {
+  white-space: pre;
+  fill: var(--md-default-fg-color);
+  font-family: var(--md-code-font-family);
+  font-size: 14px;
+}
+
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: transparent;
+}
+
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
+
+.svgbob .filled {
+  fill: var(--md-default-fg-color);
+}
+
+.svgbob .bg_filled {
+  fill: transparent;
+  stroke-width: 1;
+}
+
+.svgbob .nofill {
+  fill: transparent;
+}
+
+.svgbob .end_marked_arrow {
+  marker-end: url(#arrow);
+}
+
+.svgbob .start_marked_arrow {
+  marker-start: url(#arrow);
+}
+
+.svgbob .end_marked_diamond {
+  marker-end: url(#diamond);
+}
+
+.svgbob .start_marked_diamond {
+  marker-start: url(#diamond);
+}
+
+.svgbob .end_marked_circle {
+  marker-end: url(#circle);
+}
+
+.svgbob .start_marked_circle {
+  marker-start: url(#circle);
+}
+
+.svgbob .end_marked_open_circle {
+  marker-end: url(#open_circle);
+}
+
+.svgbob .start_marked_open_circle {
+  marker-start: url(#open_circle);
+}
+
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#big_open_circle);
+}
+
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#big_open_circle);
+}
+
+</style>
+  <defs>
+    <marker id="arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="680" height="160"></rect>
+  <text x="34" y="12" >42</text>
+  <text x="34" y="28" >67</text>
+  <text x="34" y="44" >148</text>
+  <text x="586" y="76" >int</text>
+  <line x1="120" y1="104" x2="128" y2="104" class="solid"></line>
+  <text x="130" y="108" >148</text>
+  <text x="306" y="108" >18</text>
+  <text x="586" y="108" >508</text>
+  <line x1="624" y1="104" x2="664" y2="104" class="solid"></line>
+  <polygon points="664,100 672,104 664,108" class="filled"></polygon>
+  <text x="194" y="44" >tietovirta</text>
+  <line x1="280" y1="40" x2="296" y2="40" class="solid"></line>
+  <polygon points="296,36 304,40 296,44" class="filled"></polygon>
+  <text x="18" y="108" >Stream</text>
+  <text x="202" y="108" >filter</text>
+  <text x="402" y="108" >mapToInt</text>
+  <text x="194" y="124" >i%2==0</text>
+  <text x="378" y="124" >Integer::intValue</text>
+  <g>
+    <line x1="0" y1="0" x2="40" y2="80" class="solid"></line>
+    <line x1="80" y1="0" x2="40" y2="80" class="solid"></line>
+    <line x1="20" y1="40" x2="32" y2="40" class="solid"></line>
+    <line x1="4" y1="72" x2="36" y2="72" class="solid"></line>
+    <line x1="4" y1="72" x2="4" y2="136" class="solid"></line>
+    <line x1="44" y1="72" x2="76" y2="72" class="solid"></line>
+    <line x1="76" y1="72" x2="76" y2="136" class="solid"></line>
+    <line x1="76" y1="104" x2="104" y2="104" class="solid"></line>
+    <line x1="4" y1="136" x2="76" y2="136" class="solid"></line>
+  </g>
+  <g>
+    <line x1="188" y1="72" x2="260" y2="72" class="solid"></line>
+    <line x1="188" y1="72" x2="188" y2="136" class="solid"></line>
+    <line x1="260" y1="72" x2="260" y2="136" class="solid"></line>
+    <line x1="160" y1="104" x2="188" y2="104" class="solid"></line>
+    <line x1="260" y1="104" x2="288" y2="104" class="solid"></line>
+    <line x1="188" y1="136" x2="260" y2="136" class="solid"></line>
+  </g>
+  <g>
+    <line x1="372" y1="72" x2="532" y2="72" class="solid"></line>
+    <line x1="372" y1="72" x2="372" y2="136" class="solid"></line>
+    <line x1="532" y1="72" x2="532" y2="136" class="solid"></line>
+    <line x1="344" y1="104" x2="372" y2="104" class="solid"></line>
+    <line x1="532" y1="104" x2="568" y2="104" class="solid"></line>
+    <line x1="372" y1="136" x2="532" y2="136" class="solid"></line>
+  </g>
+  <g>
+    <path d="M 120,88 A 8,8 0,0,0 114,92" class="nofill"></path>
+    <line x1="114" y1="92" x2="112" y2="96" class="solid"></line>
+    <line x1="120" y1="88" x2="144" y2="88" class="solid"></line>
+    <path d="M 144,88 A 8,8 0,0,1 150,92" class="nofill"></path>
+    <line x1="150" y1="92" x2="152" y2="96" class="solid"></line>
+    <path d="M 112,96 A 16,16 0,0,0 112,112" class="nofill"></path>
+    <path d="M 152,96 A 16,16 0,0,1 152,112" class="nofill"></path>
+    <line x1="112" y1="112" x2="114" y2="116" class="solid"></line>
+    <path d="M 114,116 A 8,8 0,0,0 120,120" class="nofill"></path>
+    <line x1="120" y1="120" x2="144" y2="120" class="solid"></line>
+    <line x1="152" y1="112" x2="150" y2="116" class="solid"></line>
+    <path d="M 150,116 A 8,8 0,0,1 144,120" class="nofill"></path>
+  </g>
+  <g>
+    <path d="M 304,88 A 8,8 0,0,0 298,92" class="nofill"></path>
+    <line x1="298" y1="92" x2="296" y2="96" class="solid"></line>
+    <line x1="304" y1="88" x2="328" y2="88" class="solid"></line>
+    <path d="M 328,88 A 8,8 0,0,1 334,92" class="nofill"></path>
+    <line x1="334" y1="92" x2="336" y2="96" class="solid"></line>
+    <path d="M 296,96 A 16,16 0,0,0 296,112" class="nofill"></path>
+    <path d="M 336,96 A 16,16 0,0,1 336,112" class="nofill"></path>
+    <line x1="296" y1="112" x2="298" y2="116" class="solid"></line>
+    <path d="M 298,116 A 8,8 0,0,0 304,120" class="nofill"></path>
+    <line x1="304" y1="120" x2="328" y2="120" class="solid"></line>
+    <line x1="336" y1="112" x2="334" y2="116" class="solid"></line>
+    <path d="M 334,116 A 8,8 0,0,1 328,120" class="nofill"></path>
+  </g>
+  <g>
+    <path d="M 584,88 A 8,8 0,0,0 578,92" class="nofill"></path>
+    <line x1="578" y1="92" x2="576" y2="96" class="solid"></line>
+    <line x1="584" y1="88" x2="608" y2="88" class="solid"></line>
+    <path d="M 608,88 A 8,8 0,0,1 614,92" class="nofill"></path>
+    <line x1="614" y1="92" x2="616" y2="96" class="solid"></line>
+    <path d="M 576,96 A 16,16 0,0,0 576,112" class="nofill"></path>
+    <path d="M 616,96 A 16,16 0,0,1 616,112" class="nofill"></path>
+    <line x1="576" y1="112" x2="578" y2="116" class="solid"></line>
+    <path d="M 578,116 A 8,8 0,0,0 584,120" class="nofill"></path>
+    <line x1="584" y1="120" x2="608" y2="120" class="solid"></line>
+    <line x1="616" y1="112" x2="614" y2="116" class="solid"></line>
+    <path d="M 614,116 A 8,8 0,0,1 608,120" class="nofill"></path>
+  </g>
+</svg>

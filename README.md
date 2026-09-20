@@ -10,51 +10,59 @@ Tehtävien palauttaminen vaatii opintojaksolle
 
 ## Materiaalin kehittäminen omalla koneella
 
-- Käytä mukana olevaa DevContaineria. Se käyttää valmista mdBook-työkalukuvaa,
-  joka sisältää tarvittavat laajennokset.
-- Käynnistä esikatselu DevContainerin sisällä:
+Sivusto rakennetaan **[Zensicalilla](https://zensical.org)**. Materiaali on
+kansiossa `src/`. Työkalut (muunnos, tyylit, skriptit, testit) ovat
+git-submodule `zensical/tyokalut`, repo
+[kirjatyokalut](https://github.com/ohj-perus-jy/kirjatyokalut), joka on yhteinen
+Ohjelmointi 1:n ja Jypeli-ohjeiden kanssa.
 
 ```bash
-bash ./start.sh
+git clone --recurse-submodules https://github.com/ohj-perus-jy/ohj2.git
+cd ohj2
+git config submodule.recurse true    # git pull ja git switch päivittävät jatkossa myös työkalut
 ```
 
-- Jos et halua käyttää DevContaineria (esimerkiksi nopeita muokkauksia tai et halua
-  ladata isoa DevContainer-kuvaa),
-  voit sen sijaan käyttää pelkästään mdbook-työkalua ja sen laajennoksia
-  sisältävän Docker-kuvaa. Esimerkiksi materiaalin koko rakentaminen yhdellä komennolla:
-
-  ```bash
-  docker run --rm -v .:/workspace \
-    ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:runner-latest \
-    build
-  ```
-
-  Vastaavasti materiaalin avaaminen paikallisesti:
-
-  ```bash
-  docker run --rm -it -v .:/workspace -p 3000:3000 \
-    ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:runner-latest \
-    serve --hostname 0.0.0.0 --port 3000
-  ```
-
-### mdBook-työkalukuvan päivittäminen
-
-DevContainer käyttää valmista GHCR-kuvaa
-`ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest`. Jos mdBook-työkaluja tai
-esikäsittelijöitä pitää päivittää, tee muutokset repossa
-`ohj-perus-jy/ohj-mdbook-tooling` ja pushaa ne `main`-haaraan. Tämän seurauksena
-rakentaminen ja julkaisu tapahtuvat automaattisesti.
-
-Huomaa, että `:devcontainer-latest` on liikkuva tagi: jo käynnissä oleva DevContainer ei päivity
-automaattisesti. Päivitetty kuva otetaan käyttöön ajamalla esimerkiksi:
+Suositeltu tapa on käyttää mukana olevaa DevContaineria. Käynnistä
+kehityspalvelin projektin juuresta:
 
 ```bash
-docker pull ghcr.io/ohj-perus-jy/ohj-mdbook-tooling:devcontainer-latest
+./zensical/run.sh            # http://localhost:8001, seuraa src/:n muutoksia
+./zensical/run.sh 8003       # eri portti
+./zensical/run.sh build      # pelkkä rakennus zensical/site/-hakemistoon
+./zensical/run.sh test       # testit (pytest + Playwright)
 ```
 
-tai VS Codessa komennolla `Dev Containers: Rebuild and Reopen in Container`.
+DevContainer hakee submodulen ja asentaa Zensicalin hakemistoon
+`zensical/.venv` jo kontin luonnissa. Ilman DevContaineria saman tekee
+ensimmäinen ajo (tarvittaessa myös `python3-venv`-paketin asennuksen, mihin
+tarvitaan sudo); Python 3.11 tai uudempi riittää. Uuden tai muutetun
+ASCII-kaavion (`bob`-koodilohko) piirtämiseen tarvitaan `svgbob_cli`, jonka
+ajo asentaa itse cargolla (DevContainerissa Rust on valmiina).
+
+**Muokattava sisältö on kansiossa `src/`.** `zensical/docs/` ja
+`zensical/site/` ovat generoituja.
+
+Haarat ja julkaisu: `main` on tuotanto (<https://ohjelmointi2.it.jyu.fi>),
+`dev` on työhaara ja esikatselu osoitteessa
+<https://ohjelmointi2.it.jyu.fi/dev/>. GitHub Actions julkaisee molemmat joka
+työnnöllä. Muutokset viedään `dev` → `main` merge-committina.
+Ulkoiset linkit tarkistetaan joka työnnössä ja maanantaisin (lychee,
+`.github/workflows/links.yml`).
+
+Lisää:
+
+- [zensical/README.md](zensical/README.md): tämän kirjan asetukset
+  (`kirja.toml`, `mkdocs.yml`, kaaviot) ja työkalujen päivittäminen
+- [kirjatyokalut/README.md](https://github.com/ohj-perus-jy/kirjatyokalut#readme):
+  rakenne, asetukset, työkalujen muuttaminen ja testit
+- [zensical/KAYTTOONOTTO.md](zensical/KAYTTOONOTTO.md): mitä siirrossa
+  mdBookista on vielä tekemättä
 
 ## Pikaohje kirjoittamiseen
+
+Sivut kirjoitetaan Markdownilla samalla merkkauksella kuin mdBookin aikana;
+työkalut muuntavat sen Zensicalille. Navigaatio on tiedostossa
+`src/SUMMARY.md`.
 
 Koodiesimerkit voivat sisältää useita tiedostoja. Käytä `// FILE: filename`- ja 
 `// FILE_END`-merkintöjä erottaaksesi eri tiedostot.
@@ -130,8 +138,10 @@ tehtävänannon ja linkin TIM-tehtävään.
 
 ### Katso myös
 
-- [mdBook-ohjeet](https://rust-lang.github.io/mdBook/index.html)
-- [KaTeX-ohjeet](https://katex.org/docs/supported)
+- [Työkalujen tukema merkkaus](https://github.com/ohj-perus-jy/kirjatyokalut/blob/main/TAUSTA.md):
+  alertit, välilehdet, piilorivit, kaaviot, terminaalinauhoitukset,
+  vaiheittainen ohje, Testaa tietosi -visa
+- [Zensicalin ohjeet](https://zensical.org/docs/)
 
 ## License
 
