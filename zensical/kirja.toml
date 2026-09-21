@@ -1,10 +1,6 @@
 # Kirjan asetukset työkaluille (tyokalut/convert.py); avaimet: tyokalut/README.md.
 nimi = "ohj2"
 
-# mdBookin käyttöliittymää kuvaavat osiot, jotka eivät päde Zensicalissa.
-[poistettavat_osiot]
-"index.md" = "Navigointi tässä materiaalissa"
-
 # Sisällytetyn tehtävänannon kuvapolku ratkeaa sisällyttävän sivun mukaan ja
 # osuu ohi. Sama virhe on mdBookin käännöksessä: korjataan ../src:ssä.
 [testit]
