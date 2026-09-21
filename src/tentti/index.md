@@ -26,8 +26,8 @@ järjestelynä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan
 ilmoita siitä lomakkeella tenttiin ilmoittautumisen yhteydessä.
 
 Ennen kuin ilmoittaudut tenttiin, lue huolellisesti (i) [Jyväskylän yliopiston
-ohjeet verkkotenttien suorittamiseen](./tenttiohjeet.md#jy-tenttiohjeet) ja (ii) [Tarkentavat
-ohjeet opintojakson Ohjelmointi 2 (TIEP111) -tenttiin](./tenttiohjeet.md#ohj2-tenttiohjeet) ennen
+ohjeet verkkotenttien suorittamiseen](tenttiohjeet.md#jy-tenttiohjeet) ja (ii) [Tarkentavat
+ohjeet opintojakson Ohjelmointi 2 (TIEP111) -tenttiin](tenttiohjeet.md#ohj2-tenttiohjeet) ennen
 tenttiin ilmoittautumista. Jos yliopiston ohjeiden ja opintojakson tarkentavien
 ohjeiden välillä on ristiriita, opintojakson ohjeet pätevät.
 

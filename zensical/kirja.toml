@@ -1,10 +1,6 @@
 # Kirjan asetukset työkaluille (tyokalut/convert.py); avaimet: tyokalut/README.md.
 nimi = "ohj2"
 
-# Etulinkkien sisäkkäisyys: avain siirretään arvon alle.
-[siirrot]
-"tenttiohjeet.md" = "tentti.md"
-
 # mdBookin käyttöliittymää kuvaavat osiot, jotka eivät päde Zensicalissa.
 [poistettavat_osiot]
 "index.md" = "Navigointi tässä materiaalissa"
