@@ -165,20 +165,6 @@ voit pyytää etäohjausta Zoomin kautta seuraavasti:
 
 </details>
 
-## Navigointi tässä materiaalissa
-
-Tässä muutama pikavinkki tässä materiaalissa navigoimiseen.
-
- * Sisällysluettelon saat auki ja kiinni sivupalkki-kuvakkeesta <i class="bi
-   bi-layout-sidebar"></i>.
- * Voit selata materiaalia eteen- ja taaksepäin nuolikuvakkeista sivun
-   vasemmassa ja oikeassa laidassa (tai ihan sivun alalaidassa, jos käytät
-   mobiililaitetta) <i class="bi bi-arrow-left-circle"></i> <i class="bi
-   bi-arrow-right-circle"></i>.
- * Hakutoiminnon saat auki suurennuslasista oikeasta yläreunasta tai painamalla
-   S-kirjainta näppäimistöltä <i class="bi bi-search"></i>.
-
-
 ## Palaute ja kehittäminen
 
 Olemme erittäin kiitollisia kaikesta palautteesta, joka auttaa meitä kehittämään
