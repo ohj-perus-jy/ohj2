@@ -131,7 +131,7 @@ fi.jyu.ohj2.nimi.todo
 Refaktoroidaan nykyisten pakkausten nimet ja jaetaan luokat uusiin pakkauksiin niin, että
 MVC-arkkitehtuurin mukainen vastuunjako näkyy selkeämmin:
 
-```text
+```bob 
 fi.jyu.ohj2.nimi.todo
 ├── model
 │   └── Tehtava
@@ -145,9 +145,8 @@ Aloitetaan muuttamalla nykyinen `data`-alipakkaus `model`-alipakkaukseen.
 (Alipakkaus on siis pakkaus, joka sijaitsee toisen pakkauksen sisällä, kuten
 `data`-alipakkaus on `fi.jyu.ohj2.nimi.todo`-pakkauksen alipakkaus.) Avaa IDEAn
 projektiselain ja klikkaa hiiren toissijaisella painikkeella
-`data`-alipakkausta. Valitse sitten **Rename** avautuneesta valikosta. Tämän
-jälkeen muuta avautuneesta valikosta pakkauksen `data`-loppuosa
-`model`-loppuosaan ja paina **Refactor**:
+`data`-alipakkausta. Valitse sitten *Rename* avautuneesta valikosta. Tämän
+jälkeen muuta pakkauksen `data`-loppuosa `model`-loppuosaan ja paina *Refactor*:
 
 <video src="images/intellij-refactor-rename.mp4" controls></video>
 
