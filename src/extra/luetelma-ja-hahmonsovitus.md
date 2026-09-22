@@ -130,8 +130,8 @@ class Kerailykortti {
 // FILE_END
 ```
 
-> [!Tärkeää — invariantti]
-> Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1-5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
+> [!TÄRKEÄÄ]
+> **Invariantti.** Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1–5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
 >
 > Invarianttien ymmärtäminen (mitä oletamme koodistamme todeksi?) ja varmistaminen on tärkeä osa ohjelmiston suunnittelua ja toteutusta. Mikäli emme ole hyvin perillä siitä, mitä oletuksia koodistamme voimme tehdä, on vaarallisen helppoa kirjoittaa koodia, joka pettää tosipaikan tullen.
 
