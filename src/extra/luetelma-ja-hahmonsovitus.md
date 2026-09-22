@@ -215,7 +215,7 @@ Kun katsomme vielä ylläolevan esimerkin `main.java`-tiedostoa, huomaamme miten
   <task-title num="4.5">Oma luetelma.<points>0.25 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/4-5-luetelma/handout.md}}
+{{#include ../exercises/99-4-luetelma/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
@@ -320,7 +320,7 @@ enum Suunta {
   <task-title num="4.6">Luetelma arvoilla.<points>0.25 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/4-6-luetelma-2/handout.md}}
+{{#include ../exercises/99-5-luetelma-2/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
@@ -580,10 +580,10 @@ Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:
 > Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
 
 <task>
-  <task-title num="4.8">Hahmonsovitus 2<points>0.25 p.</points></task-title>
+  <task-title num="4.7">Hahmonsovitus<points>0.25 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}
+{{#include ../exercises/99-2-hahmonsovitus/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
@@ -709,7 +709,7 @@ void main() {
   <task-title num="4.8">Hahmonsovitus 2<points>0.25 p.</points></task-title>
   <handout>
 
-{{#include ../exercises/4-7-hahmonsovitus-2/handout.md}}
+{{#include ../exercises/99-3-hahmonsovitus-2/handout.md}}
 
   </handout>
   <task-link><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/TODO">Tee tehtävä TIMissä</a></task-link>
