@@ -388,12 +388,6 @@ export JAVA_HOME=$(printf "%s\n" ~/.jdks/* | sort -V | tail -n 1) && export PATH
 
 ***
 
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
-
-***
-
 Yllä oleva komento mahdollistaa JDK:n työkalujen käyttöä komentoriviltä
 *väliaikaisesti*. Komentorivi palautuu ennalleen, kun suljet ja avaat
 komentorivin uudelleen.

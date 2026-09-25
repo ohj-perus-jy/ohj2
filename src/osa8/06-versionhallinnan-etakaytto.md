@@ -20,6 +20,11 @@ Jotta Git-varasto voidaan ladata etävarastopalveluun, palvelussa tulee ensin al
 etävarasto. Etävarastopalvelut kutsuvat etävarastoja usein myös projekteiksi
 tarjottujen lisäpalvelujen takia.
 
+Valitse käytettävä etävarastopalvelu:
+
+- **Jyväskylän yliopiston opiskelijat**: valitse GitLab (JY). Halutessaan voi vaihtoehtoisesti käyttää GitHubia.
+- **Muussa tapauksessa** valitse GitHub.
+
 ### [GitLab (JY)](#tab/gitlab)
 
 1. Kirjaudu sisään [Jyväskylän yliopiston GitLab-palveluun](https://gitlab.jyu.fi/) yliopiston
@@ -78,15 +83,6 @@ Lopuksi lomakkeen pitäisi näyttää täältä:
 
 ***
 
-### [Valitse](#tab/default)
-
-Valitse käytettävä etävarastopalvelu:
-
-- **Jyväskylän yliopiston opiskelijat**: valitse GitLab (JYU). Halutessaan voi vaihtoehtoisesti käyttää GitHubia.
-- **Muussa tapauksessa**, valitse GitHub.
-
-***
-
 ## Etävaraston yhdistäminen lokaaliin projektiin
 
 Avaa komentorivi ja siirry projektin juurikansioon. Juurikansio on se kansio,
@@ -127,15 +123,6 @@ meidän ensin pitäisi tietää git-etävaraston osoite.
     **Code**-painikkeesta ja valitsemalla HTTPS-osoitteen:
 
     <img src="images/github-clone-old.png">
-
-***
-
-### [Valitse](#tab/default)
-
-Valitse käytettävä etävarastopalvelu:
-
-- **Jyväskylän yliopiston opiskelijat**: valitse GitLab (JYU). Halutessaan voi vaihtoehtoisesti käyttää GitHubia.
-- **Muussa tapauksessa**, valitse GitHub.
 
 ***
 
@@ -181,15 +168,6 @@ erillinen pääsyavain (engl. Personal Access Token, PAT):
 4. Paina lopuksi **Generate token** sivun alapuolella.
 5. Pääsyavain näkyy vihreässä kentässä. Tämä avain toimii jatkossa salasanana
    aina, kun koodia lähetetään GitHubiin. Laita tämä koodi talteen.
-
-***
-
-### [Valitse](#tab/default)
-
-Valitse käytettävä etävarastopalvelu:
-
-- **Jyväskylän yliopiston opiskelijat**: valitse GitLab (JY). Halutessasi voit vaihtoehtoisesti käyttää GitHubia.
-- **Muussa tapauksessa**, valitse GitHub.
 
 ***
 
