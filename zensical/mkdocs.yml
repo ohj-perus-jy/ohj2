@@ -4,6 +4,10 @@
 INHERIT: nav.yml
 
 site_name: Ohjelmointi 2
+# Julkaisuosoite: GitHub Pages omalla domainilla (pages.yml). Tarvitaan
+# sitemapiin, canonical-linkkeihin ja 404-sivun absoluuttisiin polkuihin;
+# sivuston sisäiset linkit ovat suhteellisia ilmankin.
+site_url: https://ohjelmointi2.it.jyu.fi/
 
 # Alatunniste: tekijät ja lisenssi. Arvo menee malliin escapettamatta, joten
 # HTML on sallittu.

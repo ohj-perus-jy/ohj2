@@ -18,8 +18,8 @@ Työjärjestys tuotantoon: [KAYTTOONOTTO.md](KAYTTOONOTTO.md).
 yhteinen ohj1:n ja jypelidocsin kanssa. Tässä tekstissä mainitut työkalujen
 tiedostot ovat siellä; tässä hakemistossa ovat vain kirjan omat: `kirja.toml`
 (sivusiirrot, poistettavat osiot, tunnetut rikkinäiset kuvat), `mkdocs.yml`
-(nimi, tekijät, repo), `cache/` (bob- ja PlantUML-kaaviot) ja kääre `run.sh`.
-Rakenne, asetukset ja työkalujen muuttaminen:
+(nimi, osoite, tekijät, repo), `cache/` (bob- ja PlantUML-kaaviot) ja kääre
+`run.sh`. Rakenne, asetukset ja työkalujen muuttaminen:
 [tyokalut/README.md](tyokalut/README.md). Kloonin jälkeen
 `git submodule update --init` (`run.sh` tekee sen itse), ja
 `git config submodule.recurse true`, jotta `git pull` päivittää myös työkalut.
