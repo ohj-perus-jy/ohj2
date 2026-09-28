@@ -5,3 +5,9 @@ nimi = "ohj2"
 # osuu ohi. Sama virhe on mdBookin käännöksessä: korjataan ../src:ssä.
 [testit]
 rikkinaiset_kuvat = ["osa4/images/adventure.png"]
+
+[puhe]
+sivut = [
+    "osa1/02-muuttujat-ja-tietotyypit.md",
+]
+repo = "https://github.com/ohj-perus-jy/ohj2-puhe.git"
