@@ -17,7 +17,7 @@
   - `SUMMARY.md`: Table of Contents (source of the site navigation).
   - `suorittaminen.md`: Grading and completion modes.
   - `tyokalut.md`: Tooling instructions.
-  - `tyyliopas.md`: Style guide (infer style from content).
+  - Style rules: `../CONTRIBUTING.md` (*Kirjoitusasu*: menu paths, number ranges, list indentation).
 - **Assets:**
   - `images/`: Images and screencasts (`.cast`).
   - `examples/`: Java source code included in markdown.
@@ -52,12 +52,13 @@
     - If a block is non-runnable but output is relevant, add a separate ` ```text ` block immediately below to simulate the result.
 - **Interactive Elements:**
   - Editable code blocks: ` ```java,editable `
+  - The run button passes no input: a block that reads input (`IO.readln`) is ` ```java,noplayground `.
   - Highlight markers: `// HIGHLIGHT_GREEN_BEGIN/END` (also RED, YELLOW, BLUE) inside code blocks.
   - Multi-file examples: `// FILE: Filename.java` and `// FILE_END` markers.
   - Details/Summary: `<details closed><summary>Title</summary>Content</details>` (`closed` attribute is preferred).
-  - Icons: `<i class="bi bi-..."></i>` (Bootstrap) or `<i class="fa fa-..."></i>` (FontAwesome).
+  - Menu paths: *File* › *New* (not `bi-chevron-right`). Icons `<i class="bi bi-..."></i>`: only names in `convert.py`'s `ICON_MAP`; others give a warning.
   - Keyboard keys: `<kbd>Key</kbd>`.
-  - Anchors: Custom anchors like `{#anchor}` in headers.
+  - Anchors: `## Heading {#anchor}` (space before the brace); anchor links without ä/ö.
   - Tabs: Tabbed content using `### [Label](#tab/id)`, content, and `***` separator.
 - **Tasks (Custom Tags):**
   - `<task>` wrapper.
@@ -65,7 +66,7 @@
   - `<handout>` containing `{{#include ...}}`.
   - `<task-link>` to TIM.
 - **Visuals:**
-  - Diagrams: `plantuml`, `mermaid`, or `svgbob`.
+  - Diagrams: ` ```plantuml `, ` ```mermaid ` or ` ```bob `. After a new or changed diagram, run `./zensical/run.sh build` and commit `zensical/cache/`.
   - Multimedia: `<video src="..." controls></video>` or `<asciinema src="..." ...></asciinema>`.
   - Images: `![alt](path)` or `<img>` tag for size control.
 
