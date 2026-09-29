@@ -1,5 +1,7 @@
 # Ulkoisten linkkien tarkistus: zensical/tyokalut/linkit (asetukset ja
 # perustelut työkalujen READMEssa). Kirjan omat ohitukset: .lycheeignore.
+# Ei TIM-ajoa (vrt. ohj1): kurssikansio kurssit/tie/tiep111 ei ole julkinen
+# (getItems antaa kirjautumatta 403).
 name: Check external links
 
 on:
