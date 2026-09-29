@@ -279,11 +279,6 @@ käännöksessä, joten ne korjattiin `../src`:ssä eikä täällä. Se on ainoa
 jossa koeputki on koskenut lähdepuuhun, ja se on omana committinaan; luettelo
 on [PERUSTELUT.md](tyokalut/PERUSTELUT.md):n kohdassa "Ankkurit".
 
-`convert.py` varoittaa vielä neljästä `{{#include}}`-makrosta, joiden kohde
-puuttuu aineistosta, ja yhdestä tuntemattomasta alerttitunnuksesta
-("Tärkeää — invariantti"). Molemmat ovat samalla kirjan ulkopuolisella sivulla
-(`extra/luetelma-ja-hahmonsovitus.md`), jota mdBook ei käännä lainkaan.
-
 ## Avoimet kysymykset
 
 - **Sivuston hakemistorakenne** — siirretty purun jälkeiseksi, ei estä

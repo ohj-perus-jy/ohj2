@@ -127,7 +127,7 @@ vastaamaan uutta nimeä.
 
 Voit helposti muuttaa nimen siirtämällä kursorin uudelleennimettävän kohteen
 kohdalle, klikkaamalla hiiren toissijaisella painikkeella ja valitsemalla
-**Rename**. Tämän jälkeen anna attribuutille uusi nimi ja paina
+*Rename*. Tämän jälkeen anna attribuutille uusi nimi ja paina
 <kbd>Enter</kbd>. IDEA tämän jälkeen kysyy, haluatko samalla uudelleennimetä
 metodit sekä kaikki muut mahdolliset paikat, joissa attribuuttia käytetään.
 
@@ -149,8 +149,8 @@ Luodaan uusi näkymä tulevalle dialogille. Muistamme, että käyttöliittymää
 tarvitsemme näkymän eli uuden FXML-tiedoston sekä uuden kontrolleriluokan.
 Aloitamme ensin näkymästä.
 
-Avaa SceneBuilder ja valitse etusivulta "New Project from Template" -kohdasta
-*Empty* -pohjan.
+Avaa SceneBuilder ja valitse etusivulta *New Project from Template* -kohdasta
+*Empty* -pohja.
 
 <img src="images/scenebuilder-new-empty.png">
 

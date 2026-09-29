@@ -32,6 +32,8 @@ jobs:
   # versionhallinnassa, joten svgbobia tai PlantUML-palvelinta ei tarvita.
   # --strict kaataa ajon, jos jokin kaavio puuttuu välimuistista: ilman sitä
   # sivu julkaistaisiin kaavio koodilohkona.
+  # Ääneenluvun leikkeet ovat erillisessä repossa (kirja.toml: [puhe] repo),
+  # jonka tyokalut/puhe.py täyttää; --strict kaatuu myös, jos se puuttuu.
   zensical:
     strategy:
       matrix:
@@ -48,6 +50,11 @@ jobs:
           ref: ${{ matrix.ref }}
           # Työkalut: zensical/tyokalut (kirjatyokalut-repo).
           submodules: true
+      - uses: actions/checkout@v7
+        with:
+          repository: ohj-perus-jy/ohj2-puhe
+          path: zensical/puhe
+          fetch-depth: 1
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"

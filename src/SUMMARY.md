@@ -4,9 +4,9 @@
 [Suorittaminen](./suorittaminen.md)
 [Työkalut ja asentaminen](./tyokalut.md)
 [Harjoitustyö](./harjoitustyo.md)
-[Tentti](./tentti.md)
+[Tentti](./tentti/index.md)
+  [Tenttiohjeet](./tentti/tenttiohjeet.md)
 [Usein kysyttyä](./ukk.md)
-[Tenttiohjeet](./tenttiohjeet.md)
 
 ---
 

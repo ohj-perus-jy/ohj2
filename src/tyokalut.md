@@ -70,12 +70,6 @@ Alla olevat ohjeet on testattu seuraavilla käyttöjärjestelmillä:
 
 ***
 
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
-
-***
-
 ## Esivalmistelut
 
 ### [Windows](#tab/win)
@@ -201,12 +195,6 @@ Ota huomioon seuraavat asiat seuratessa ohjeita:
    pakkauksia, jos niitä on. Linux Mint-jakelulle saat Snapin asennettua [jakelun ohjetta](https://linuxmint-user-guide.readthedocs.io/en/latest/snap.html#how-to-install-the-snap-store-in-linux-mint-20) seuraamalla.
 
 - Kun olet asentanut tarvittavat esipakkaukset, käynnistä uusi tyhjä pääte.
-
-***
-
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
@@ -354,12 +342,6 @@ Jos taas näet virheen, että komentoa ei löydy, jatka alla olevilla ohjeilla.
 
 ***
 
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
-
-***
-
 ## IntelliJ IDEA {#idea}
 
 ### [Windows](#tab/win)
@@ -469,12 +451,6 @@ Valmis!
    tekoälyavustusten kytkeminen pois päältä](#idea-ai) ohjeiden mukaisesti.
 
 Valmis!
-
-***
-
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 
@@ -646,12 +622,6 @@ Valmis!
     Sulje ohjelma.
 
 Valmis!
-
-***
-
-### [Valitse](#tab/default)
-
-Valitse käyttöjärjestelmäsi yllä olevista vaihtoehdoista.
 
 ***
 

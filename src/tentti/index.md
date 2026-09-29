@@ -5,7 +5,6 @@ olemaan 3 tuntia</u>. Alla näkyy tentin kestona 4 tuntia, johon sisältyy mahdo
 
 | Tentti  | Päivämäärä    | Aika            | Paikka          | Ilmoittaudu                                          | Muuta     |
 | ------- | ------------- | --------------- | --------------- | ---------------------------------------------------- | --------- |
-| Kesä 3  | 10.9.2026     | klo 16-20       | Ag Aud 3 / Zoom | [Ilmoittaudu](https://tim.pm/ohj2-tentti-2026-09-10) | Myös Ohj1 |
 | Syksy 1 | to 17.12.2026 | klo 10–14       | Ag Aud 3 / Zoom |                                                      | Myös Ohj1 |
 | Kevät 1 | to 15.4.2027  | klo 16-20       | Ag Aud 2 / Zoom |                                                      |           |
 | Kevät 2 | ke 28.4.2027  | klo 16:30–20:30 | Ag Aud 3 / Zoom |                                                      | Myös Ohj1 |
@@ -27,8 +26,8 @@ järjestelynä](https://www.jyu.fi/fi/opiskelijalle/kandi-ja-maisteriopiskelijan
 ilmoita siitä lomakkeella tenttiin ilmoittautumisen yhteydessä.
 
 Ennen kuin ilmoittaudut tenttiin, lue huolellisesti (i) [Jyväskylän yliopiston
-ohjeet verkkotenttien suorittamiseen](./tenttiohjeet.md#jy-tenttiohjeet) ja (ii) [Tarkentavat
-ohjeet opintojakson Ohjelmointi 2 (TIEP111) -tenttiin](./tenttiohjeet.md#ohj2-tenttiohjeet) ennen
+ohjeet verkkotenttien suorittamiseen](tenttiohjeet.md#jy-tenttiohjeet) ja (ii) [Tarkentavat
+ohjeet opintojakson Ohjelmointi 2 (TIEP111) -tenttiin](tenttiohjeet.md#ohj2-tenttiohjeet) ennen
 tenttiin ilmoittautumista. Jos yliopiston ohjeiden ja opintojakson tarkentavien
 ohjeiden välillä on ristiriita, opintojakson ohjeet pätevät.
 

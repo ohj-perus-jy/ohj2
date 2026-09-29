@@ -334,3 +334,5 @@ zensical/site/
 zensical/nav.yml
 zensical/.cache/
 zensical/.convert.lock
+# Ääneenluvun leikkeet: erillisen repon (kirja.toml: [puhe] repo) klooni
+zensical/puhe/
