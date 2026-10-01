@@ -39,13 +39,6 @@ Zensicalin omaan ja työkalujen avoimet asiat: `zensical/tyokalut/YHTENAISTYS.md
       (`suorittaminen.html#eettiset-ohjeet`) ja 14 menneen tentin dokumenttia
       kansiossa `tentti/`. Kansio ei ole julkinen: tarkista kirjautuneena.
 
-## Kehitysympäristö
-
-- [ ] Devcontainerin kuva `ohj-mdbook-tooling` →
-      `mcr.microsoft.com/devcontainers/python:3.11-bookworm` ja feature
-      `ghcr.io/devcontainers/features/rust:1` (svgbob_cli), kuten
-      jypelidocsissa. Kuvan repon arkistointi: ohj1:n TODO.md.
-
 ## Merkkaus
 
 - [ ] Lähde Zensicalin merkintätapaan YHTENAISTYS.md:n taulukon mukaan.
