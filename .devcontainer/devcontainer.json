@@ -9,8 +9,9 @@
 		"ghcr.io/devcontainers/features/rust:1": {}
 	},
 
+	// WSL:n ~/.claude liitetään, jotta kirjautuminen on yhteinen kaikille konteille.
 	"mounts": [
-		"source=claude-code-config,target=/home/vscode/.claude,type=volume"
+		"source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"
 	],
 
 	// 8001 = zensical/run.sh
@@ -26,5 +27,5 @@
 	},
 
 	// Työkalut (submodule) ja zensical/.venv valmiiksi; run.sh tekisi saman ensimmäisellä ajolla.
-	"postCreateCommand": "sudo chown -R vscode:vscode /home/vscode/.claude && ln -sf /home/vscode/.claude/.claude.json /home/vscode/.claude.json && git submodule update --init && ./zensical/tyokalut/setup.sh"
+	"postCreateCommand": "ln -sf /home/vscode/.claude/.claude.json /home/vscode/.claude.json && git submodule update --init && ./zensical/tyokalut/setup.sh"
 }
