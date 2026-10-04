@@ -668,7 +668,7 @@ Tällöin `tehtava`-lista ilmoittaa kaikista tehtävien ominaisuuksiin tehdyist�
 muutoksista. Toisin sanoen aina, kun jokin tehtävän ominaisuus muuttuu,
 `Tehtavakokoelma`-luokassa määritelty havaitsija tallentaa kaikki tehtävät.
 
-<details closed><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: Tallentaminen pienellä viiveellä</summary>
+<details closed><summary><i class="jyu-star"></i>Valinnaista lisätietoa: Tallentaminen pienellä viiveellä</summary>
 
 Yllä oleva ratkaisu ei ole ideaalinen: nyt jokainen tehtävän `set`-metodin kutsuminen
 aiheuttaa kaikkien tehtävien tallentumista. 

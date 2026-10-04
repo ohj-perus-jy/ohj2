@@ -462,7 +462,7 @@ avainten jatkuvaa järjestystä sekä järjestykseen perustuvia hakuja.
 </task>
 
 <task>
-  <task-title num="5.6"><i class="bi bi-stars"></i>Varaukset<points>1 p.</points></task-title>
+  <task-title num="5.6"><i class="jyu-star"></i>Varaukset<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-6-varaukset/handout.md}}
@@ -472,7 +472,7 @@ avainten jatkuvaa järjestystä sekä järjestykseen perustuvia hakuja.
 </task>
 
 <task>
-  <task-title num="5.7"><i class="bi bi-stars"></i>Hajautustaulu<points>1 p.</points></task-title>
+  <task-title num="5.7"><i class="jyu-star"></i>Hajautustaulu<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-7-hajautustaulu/handout.md}}

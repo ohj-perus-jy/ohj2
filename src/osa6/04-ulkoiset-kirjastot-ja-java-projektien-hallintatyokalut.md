@@ -296,7 +296,7 @@ Projektin käytössä olevien varastojen lista löytyy Intellij IDEA:n asetuksis
 `File > Settings > Build, Execution, Deployment > Build Tools > Maven >
 Repositories`
 
-<details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Mihin Maven tallentaa kirjastot?</summary>
+<details><summary><i class="jyu-star"></i> Bonus: Mihin Maven tallentaa kirjastot?</summary>
 
 Maven asentaa kaikki lataamansa riippuvuudet paikalliseen kansioon, minkä
 jälkeen ne ovat kaikkien projektien käytettävissä. Tämä kansio löytyy

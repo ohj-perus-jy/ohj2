@@ -569,7 +569,7 @@ keskeiset erot syntaktin ja käyttötarkoituksen osalta.
 
 
 <task>
-  <task-title num="4.4"><i class="bi bi-stars"></i>Kotityörobotti.<points>1 p.</points></task-title>
+  <task-title num="4.4"><i class="jyu-star"></i>Kotityörobotti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-4-kotityorobotti/handout.md}}

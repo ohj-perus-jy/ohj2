@@ -57,7 +57,7 @@
 </task>
 
 <task>
-  <task-title num="5.6"><i class="bi bi-stars"></i>Varaukset<points>1 p.</points></task-title>
+  <task-title num="5.6"><i class="jyu-star"></i>Varaukset<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-6-varaukset/handout.md}}
@@ -67,7 +67,7 @@
 </task>
 
 <task>
-  <task-title num="5.7"><i class="bi bi-stars"></i>Hajautustaulu<points>1 p.</points></task-title>
+  <task-title num="5.7"><i class="jyu-star"></i>Hajautustaulu<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-7-hajautustaulu/handout.md}}
@@ -97,7 +97,7 @@
 </task>
 
 <task>
-  <task-title num="5.10"><i class="bi bi-stars"></i>Sulut<points>1 p.</points></task-title>
+  <task-title num="5.10"><i class="jyu-star"></i>Sulut<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-10-sulut/handout.md}}
@@ -117,7 +117,7 @@
 </task>
 
 <task>
-  <task-title num="5.12"><i class="bi bi-stars"></i>Puun summa pinolla.<points>1 p.</points></task-title>
+  <task-title num="5.12"><i class="jyu-star"></i>Puun summa pinolla.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-12-puun-summa-pinolla/handout.md}}

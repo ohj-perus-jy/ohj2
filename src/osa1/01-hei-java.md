@@ -234,7 +234,7 @@ Tee seuraavasti:
     kuten aaltosulut, kaarisulut ja puolipiste löytyvät.
 
 <details closed>
-<summary><i class="bi bi-stars jyu-gold"></i> Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
+<summary><i class="jyu-star"></i> Bonus: IDEAn täydennysominaisuuksien käyttäminen</summary>
 
 IDEA tarjoaa erilaisia aikaa säästäviä täydennysominaisuuksia, joiden käyttöä on
 hyvä harjoitella.
@@ -473,7 +473,7 @@ Myös `.jar`-tiedostot voidaan suorittaa `java`-komennolla.
 > hoitaa lähdekooditiedostojen kääntämisen automaattisesti ja tehokkaasti.
 
 <details closed>
-<summary><i class="bi bi-stars jyu-gold"></i> Bonus: <code>jshell</code>-tulkkiohjelma</summary>
+<summary><i class="jyu-star"></i> Bonus: <code>jshell</code>-tulkkiohjelma</summary>
 
 Vaikka Java lasketaan käännettäväksi kieleksi, toisinaan voi olla hyödyllistä
 kokeilla Java-ohjelmien kirjoittamista interaktiivisesti ilman jatkuvaa

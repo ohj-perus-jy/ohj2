@@ -227,7 +227,7 @@ Rajoite puolestaan johtuu Javan tavasta toteuttaa viitetietotyyppejä.
 Mainittakoon, että Java-kieltä kehitetään jatkuvasti, ja on hyvin mahdollista,
 että lähitulevaisuudessa tämä rajoite jää pois.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: Miksi tyyppiparametrit eivät voi olla perustietotyyppejä?</summary>
+<details><summary><i class="jyu-star"></i>Valinnaista lisätietoa: Miksi tyyppiparametrit eivät voi olla perustietotyyppejä?</summary>
 
 Java käyttää mekanismia nimeltä *type erasure*, jonka voisi vapaasti suomentaa
 "tyyppien poistamiseksi". Tämä tarkoittaa, että käännettäessä Java-koodi
@@ -374,7 +374,7 @@ rakenteeseen vai vain yksittäiseen toimintaan. Metodi luokan sisällä voi
 edelleen olla geneerinen, kunhan se käyttää omaa, eri nimistä tyyppiparametria
 eikä sekoitu luokan tyyppiparametriin.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: 
+<details><summary><i class="jyu-star"></i>Valinnaista lisätietoa: 
 Java ei voi kaikissa tilanteissa päätellä tyyppiä yksikäsitteisesti
 </summary>
 
@@ -642,7 +642,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title num="4.10"><i class="bi bi-stars"></i>Iso kontti.<points>1 p.</points></task-title>
+  <task-title num="4.10"><i class="jyu-star"></i>Iso kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-10-iso-kontti/handout.md}}
@@ -652,7 +652,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title num="4.11"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
+  <task-title num="4.11"><i class="jyu-star"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-11-tyyppirajoitukset-1/handout.md}}
@@ -662,7 +662,7 @@ for (Number n : luvut) {
 </task>
 
 <task>
-  <task-title num="4.12"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
+  <task-title num="4.12"><i class="jyu-star"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-12-tyyppirajoitukset-2/handout.md}}

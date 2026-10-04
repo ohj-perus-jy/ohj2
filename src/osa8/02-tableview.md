@@ -283,7 +283,7 @@ public void initialize(URL url, ResourceBundle resourceBundle) {
 ```
 
 <details>
-<summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: 
+<summary><i class="jyu-star"></i>Valinnaista lisätietoa: 
 (1) Tehdasmetodi eli factory method -malli. 
 (2) "Luo ensin, konfiguroi sitten".</summary>
 
@@ -755,7 +755,7 @@ muuttaa lajitellun `tehtavatLajiteltu`-listan. Puolestaan muutos
 erillistä toimintaa. Tässäkin siis mallin muokkaus ja näkymän päivitys ovat vain
 löyhästi kytkettyjä toisiinsa *observable*-rakenteiden avustuksella.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Painikkeen klikkaamisen estäminen jos tehtävää ei valittu</summary>
+<details><summary><i class="jyu-star"></i>Bonus: Painikkeen klikkaamisen estäminen jos tehtävää ei valittu</summary>
 
 Nyt "Poista tehtävä" -painike on aika klikattavissa vaikka tehtävää ei ole
 valittu.
@@ -787,7 +787,7 @@ TODO: Bindings-luokka ja bind-metodi
 
 </details>
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Painikkeen ilmestyminen vain, jos tehtävää on valittu</summary>
+<details><summary><i class="jyu-star"></i>Bonus: Painikkeen ilmestyminen vain, jos tehtävää on valittu</summary>
 
 Toinen vaihtoehto olisi, että "Poista tehtävä" -painike näkyisi vain, jos
 taulukossa on valittuna jokin tehtävä. Tällöin painikkeen näkyvyyttä voisi

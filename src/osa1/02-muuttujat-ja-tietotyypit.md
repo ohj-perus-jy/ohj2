@@ -232,7 +232,7 @@ varmistaa, että muuttujan tai funktion parametrin arvona ei ole null-viite.
 Varmistus voidaan tehdä esimerkiksi ehtorakenteella, jotka esitetään seuraavassa
 alaluvussa.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
+<details><summary><i class="jyu-star"></i> Valinnaista lisätietoa: Miksi viitetietotyyppejä on olemassa?</summary>
 
 On useita syitä sille, miksi nämä kaksi eri kategoriaa tietotyypeille on
 olemassa.

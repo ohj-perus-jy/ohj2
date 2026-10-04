@@ -662,7 +662,7 @@ public class Main {
 
 
 <task>
-  <task-title num="3.10"><i class="bi bi-stars"></i>Viestipalvelu.<points>1 p.</points></task-title>
+  <task-title num="3.10"><i class="jyu-star"></i>Viestipalvelu.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-10-viestipalvelu/handout.md}}

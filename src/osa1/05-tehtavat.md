@@ -68,7 +68,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title num="1.7"><i class="bi bi-stars"></i>Numerolaskuri<points>1 p.</points></task-title>
+<task-title num="1.7"><i class="jyu-star"></i>Numerolaskuri<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-7-numerolaskuri/handout.md}}
@@ -78,7 +78,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title num="1.8"><i class="bi bi-stars"></i>Puuttuva luku<points>1 p.</points></task-title>
+<task-title num="1.8"><i class="jyu-star"></i>Puuttuva luku<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-8-puuttuva-luku/handout.md}}
@@ -88,7 +88,7 @@ Ennen kuin aloitat tehtävien tekemisen, on syytä tutustua [opintojakson eettis
 </task>
 
 <task>
-<task-title num="1.9"><i class="bi bi-stars"></i>Alkuluvut<points>1 p.</points></task-title>
+<task-title num="1.9"><i class="jyu-star"></i>Alkuluvut<points>1 p.</points></task-title>
 <handout>
 
 {{#include ../exercises/1-9-alkuluvut/handout.md}}

@@ -39,7 +39,7 @@ Yli kahden hengen ryhmiä ei sallita.
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
 joka täyttää vaatimukset. Näet kunkin aiheen tarkemmat vaatimukset klikkaamalla.
 
-Bonus-merkinnällä (<i class="bi bi-stars jyu-gold"></i>) olevia vaatimuksia ei
+Bonus-merkinnällä (<i class="jyu-star"></i>) olevia vaatimuksia ei
 ole pakko toteuttaa. 
 
 <details><summary>
@@ -63,13 +63,13 @@ Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan.
  * Käyttäjä voi muokata tapahtumia ja kategorioita.
  * Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan.
  * Kategorian poistaminen poistaa kyseisen kategorian kaikista tapahtumista, mutta tapahtumia ei poisteta. 
- * <i class="bi bi-stars jyu-gold"></i> Kulukategoria voi olla *pakollinen*, mikä tarkoittaa välttämätöntä
+ * <i class="jyu-star"></i> Kulukategoria voi olla *pakollinen*, mikä tarkoittaa välttämätöntä
    menoa, kuten vuokra tai sähkölasku. 
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä voi valita useita kategorioita
+ * <i class="jyu-star"></i> Käyttäjä voi valita useita kategorioita
    filtteriin. Käytä esimerkiksi ControlsFX:n `CheckComboBox`-komponenttia
    (<https://controlsfx.github.io/features/checkcombobox/>).
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kuvaajan, jossa esitetään kaikki tapahtumat kuukausittain.
- * <i class="bi bi-stars jyu-gold"></i> Käyttäjä näkee kategorioittain aikasarjan kuluista.
+ * <i class="jyu-star"></i> Käyttäjä näkee kuvaajan, jossa esitetään kaikki tapahtumat kuukausittain.
+ * <i class="jyu-star"></i> Käyttäjä näkee kategorioittain aikasarjan kuluista.
 
 Voit hyötyä ainakin seuraavista komponenteista: 
 
@@ -174,7 +174,7 @@ Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostostapahtumi
    tarvitse muuttaa ostotapahtuman jälkeen. Tässä kannattanee tehdä niin, että
    ostotapahtuman yhteydessä tuotteen hinta kiinnitetään ostotapahtuman
    tietoihin, jolloin tuotteen muokkaaminen ei vaikuta vanhoihin ostotapahtumiin.
- * <i class="bi bi-stars jyu-gold"></i> Rivialennus tai ostostapahtumakohtainen alennus
+ * <i class="jyu-star"></i> Rivialennus tai ostostapahtumakohtainen alennus
 
 ```plantuml
 @startuml
@@ -210,7 +210,7 @@ Ostostapahtuma "1" --> "1..*" Ostosrivi : sisältää
 Kun käyttöliittymässä tehdään ostotapahtuma
 
  * Käyttäjä valitsee ostettavan tuotteen alasvetovalikosta, ja syöttää ostettavan määrän.
- * <i class="bi bi-stars jyu-gold"></i> käyttäjä voi hakupalkin avulla hakea tuotteita nimellä. Tarvitset
+ * <i class="jyu-star"></i> käyttäjä voi hakupalkin avulla hakea tuotteita nimellä. Tarvitset
    mahdollisesti ControlFX:ää tähän.
  * Tarvitset taulukon, joka näyttää ostotapahtuman tämän hetkisen tilanteen.
    Taulukossa pitää näkyä tuotteen tunniste, nimi, tuotteen hinta, määrä ja
@@ -338,7 +338,7 @@ Valmis sovellus voisi näyttää vaikkapa tältä.
 
 ![taloyhtiö](images/taloyhtio.png)
 
-<details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
+<details><summary><i class="jyu-star"></i> Bonus: Lisää ominaisuuksia</summary>
 
 Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
 Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
@@ -468,7 +468,7 @@ Korttipakka "1" -- "1..*" Kortti : sisältää
 Korttipakkakokoelma "1" -- "1..*" Korttipakka : sisältää
 ```
 
-<details><summary><i class="bi bi-stars jyu-gold"></i> Bonus: Lisää ominaisuuksia</summary>
+<details><summary><i class="jyu-star"></i> Bonus: Lisää ominaisuuksia</summary>
 
 Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
 Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne

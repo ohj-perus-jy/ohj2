@@ -359,7 +359,7 @@ Virtapohjaisessa käsittely on varsin näppärää, kun käsittely on suhteellis
 yksinkertaista ja lineaarisesti etenevää. Virtapohjainen käsittely voi kuitenkin
 merkittävästi hankaloittaa esimerkiksi debuggaamista, joka on hyvä tiedostaa. 
 
-<details><summary><i class="bi bi-stars jyu-gold"></i> Valinnaista lisätietoa: Stream-käsittelyn haasteista tarkemmin</summary>
+<details><summary><i class="jyu-star"></i> Valinnaista lisätietoa: Stream-käsittelyn haasteista tarkemmin</summary>
 
  * kertakäyttöisyys: Stream-olion voi käyttää vain kerran, minkä jälkeen se on
    suljettava. Jos haluat käsitellä samaa dataa uudestaan, sinun täytyy luoda
@@ -646,7 +646,7 @@ aiemmin määritetty perinteinen luokka.
 </task>
 
 <task>
-  <task-title num="6.11"><i class="bi bi-stars"></i>CSV -> JSON.<points>1 p.</points></task-title>
+  <task-title num="6.11"><i class="jyu-star"></i>CSV -> JSON.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-11-csv-json/handout.md}}
@@ -656,7 +656,7 @@ aiemmin määritetty perinteinen luokka.
 </task>
 
 <task>
-  <task-title num="6.12"><i class="bi bi-stars"></i>Parempi laskukone<points>1 p.</points></task-title>
+  <task-title num="6.12"><i class="jyu-star"></i>Parempi laskukone<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-12-laskin/handout.md}}

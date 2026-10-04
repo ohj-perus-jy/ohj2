@@ -572,7 +572,7 @@ Ehkä hieman hämäävästi `final`-avainsanaa voidaan käyttää myös muuttuji
 ## Tehtävät {#tehtavat}
 
 <task>
-  <task-title num="3.4"><i class="bi bi-stars"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
+  <task-title num="3.4"><i class="jyu-star"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-4-verkkokauppa-4/handout.md}}

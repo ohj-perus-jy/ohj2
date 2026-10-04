@@ -107,7 +107,7 @@ Tallenna muutokset (**File** <i class="bi bi-chevron-right"></i> **Save**)
 ja kokeile vielä käynnistää sovellus IDEA:ssa. Huomaat, että sovellukseen
 ilmestyi syöttökenttä, johon voi kirjoittaa tekstiä.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Missä käyttöliittymä on määritelty?</summary>
+<details><summary><i class="jyu-star"></i>Bonus: Missä käyttöliittymä on määritelty?</summary>
 
 Avaa IDEA:ssa `resources`-kansiossa oleva `main.fxml`.
 Tiedoston pitäisi näyttää nyt suunnilleen seuraavalta:

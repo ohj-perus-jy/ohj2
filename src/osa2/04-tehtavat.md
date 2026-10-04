@@ -87,7 +87,7 @@
 </task>
 
 <task>
-  <task-title num="2.9"><i class="bi bi-stars"></i>Sähköverkko<points>1 p.</points></task-title>
+  <task-title num="2.9"><i class="jyu-star"></i>Sähköverkko<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-9-sahkoverkko/handout.md}}
@@ -97,7 +97,7 @@
 </task>
 
 <task>
-  <task-title num="2.10"><i class="bi bi-stars"></i>Varaukset<points>1 p.</points></task-title>
+  <task-title num="2.10"><i class="jyu-star"></i>Varaukset<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/2-10-varaukset/handout.md}}

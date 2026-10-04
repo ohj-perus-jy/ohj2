@@ -443,7 +443,7 @@ liittyvä käsittely. Koodi seuraa suoraan jälkijärjestyksen määritelmää, 
 ilman rekursiivisia metodikutsuja.
 
 <task>
-  <task-title num="5.12"><i class="bi bi-stars"></i>Puun summa pinolla.<points>1 p.</points></task-title>
+  <task-title num="5.12"><i class="jyu-star"></i>Puun summa pinolla.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-12-puun-summa-pinolla/handout.md}}

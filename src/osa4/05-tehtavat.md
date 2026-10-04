@@ -39,7 +39,7 @@
 
 
 <task>
-  <task-title num="4.4"><i class="bi bi-stars"></i>Kotityörobotti.<points>1 p.</points></task-title>
+  <task-title num="4.4"><i class="jyu-star"></i>Kotityörobotti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-4-kotityorobotti/handout.md}}
@@ -101,7 +101,7 @@
 </task>
 
 <task>
-  <task-title num="4.10"><i class="bi bi-stars"></i>Iso kontti.<points>1 p.</points></task-title>
+  <task-title num="4.10"><i class="jyu-star"></i>Iso kontti.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-10-iso-kontti/handout.md}}
@@ -111,7 +111,7 @@
 </task>
 
 <task>
-  <task-title num="4.11"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
+  <task-title num="4.11"><i class="jyu-star"></i>Tyyppirajoitukset, osa 1.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-11-tyyppirajoitukset-1/handout.md}}
@@ -121,7 +121,7 @@
 </task>
 
 <task>
-  <task-title num="4.12"><i class="bi bi-stars"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
+  <task-title num="4.12"><i class="jyu-star"></i>Tyyppirajoitukset, osa 2.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/4-12-tyyppirajoitukset-2/handout.md}}

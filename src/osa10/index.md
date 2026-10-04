@@ -115,7 +115,7 @@ Kuten osassa 9, suosittelemme tässäkin vaiheessa näyttämään harjoitustyön
 vaiheen ohjaajalle. 
 
 <task>
-  <task-title num="10.4"><i class="bi bi-stars"></i>Vaiheen näyttäminen ohjaajalle.<points>1 p.</points></task-title>
+  <task-title num="10.4"><i class="jyu-star"></i>Vaiheen näyttäminen ohjaajalle.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/10-4-ht-8/handout.md}}

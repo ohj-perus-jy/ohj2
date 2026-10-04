@@ -531,7 +531,7 @@ kuitenkin erittäin nopeaa ja tapahtuu vakioajassa *O(1)*.
 </task>
 
 <task>
-  <task-title num="5.10"><i class="bi bi-stars"></i>Sulut<points>1 p.</points></task-title>
+  <task-title num="5.10"><i class="jyu-star"></i>Sulut<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/5-10-sulut/handout.md}}
