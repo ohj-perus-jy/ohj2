@@ -343,7 +343,7 @@ merkit `/**` ja painaa <kbd>Enter</kbd>.
 
 <video src="images/intellij-docstring.mp4" controls></video>
 
-<details closed><summary><i class="bi bi-stars jyu-gold"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
+<details closed><summary><i class="jyu-star"></i> Bonus: miltä Javan dokumentaatio näyttää? </summary>
 
 Oletetaan nyt, että tallennat yllä olevan tiedostoon `Summa.java` ja ajat sen
 jälkeen komennon `javadoc Summa.java`. Nyt voit avata luodun `index.html`

@@ -134,7 +134,7 @@ tehtävän vaatimuksia.
 </task>
 
 <task>
-    <task-title num="11.8"><i class="bi bi-stars"></i>Bonus: Näytä vaihe ohjaajalle.<points>1 p.</points></task-title>
+    <task-title num="11.8"><i class="jyu-star"></i>Bonus: Näytä vaihe ohjaajalle.<points>1 p.</points></task-title>
 
 <handout>
 

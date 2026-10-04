@@ -153,7 +153,7 @@ public interface NumeroFunktio {
 ```
 
 <details>
-<summary><i class="bi bi-stars jyu-gold"></i> Bonus: Miten funktioviite toimii?</summary>
+<summary><i class="jyu-star"></i> Bonus: Miten funktioviite toimii?</summary>
 
 Saatat miettiä, miten funktio voi yhtäkkiä "muuttua" olioksi. Javassa kyseessä
 on oikeastaan tekninen temppu. Ennen funktioviitteitä sama asia Javassa tehtiin

@@ -171,7 +171,7 @@ lisaaUusiTehtavaPainike.setOnAction(event -> {
 });
 ```
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Fokuksen automaattinen asettaminen tapahtuman lopuksi </summary>
+<details><summary><i class="jyu-star"></i>Bonus: Fokuksen automaattinen asettaminen tapahtuman lopuksi </summary>
 
 Nyt hieman ärsyttävästi joudumme asettamaan fokuksen kahteen kohtaan.
 

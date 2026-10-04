@@ -69,7 +69,7 @@ tallentamiseen. Emme kuitenkaan merkitse attribuutteja `final`-määreellä, jot
 Jackson-kirjasto osaa asettaa arvoja attribuutteihin. Lisäämme vielä
 oletusmuodostajan, jota Jackson käyttää olioiden alustamiseen.
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Valinnaista lisätietoa: Tehtävä on tietue </summary>
+<details><summary><i class="jyu-star"></i>Valinnaista lisätietoa: Tehtävä on tietue </summary>
 
 Jos luokan attribuutteja ei ole tarkoitettu muokattavaksi (eli
 kaikki attribuutit ovat `final`), luokka voidaan kirjoittaa tiiviimmässä muodossa
@@ -163,7 +163,7 @@ for (Node node : tekemattomat.getChildren()) {
 
 </details>
 
-<details><summary><i class="bi bi-stars jyu-gold"></i>Bonus: Mitä jos säiliössä on muitakin kuin CheckBox-komponentteja?</summary>
+<details><summary><i class="jyu-star"></i>Bonus: Mitä jos säiliössä on muitakin kuin CheckBox-komponentteja?</summary>
 
 Tässä tapauksessa jätimme tyyppitarkistuksen pois, koska tiesimme, että
 `VBox`-säiliöt sisältävät vain valintaruutuja. Jos sen sijaan `VBox` sisältäisi

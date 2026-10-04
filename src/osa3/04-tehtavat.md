@@ -36,7 +36,7 @@
 </task>
 
 <task>
-  <task-title num="3.4"><i class="bi bi-stars"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
+  <task-title num="3.4"><i class="jyu-star"></i>Luokkahierarkia, osa 4.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-4-verkkokauppa-4/handout.md}}
@@ -98,7 +98,7 @@
 
 
 <task>
-  <task-title num="3.10"><i class="bi bi-stars"></i>Viestipalvelu.<points>1 p.</points></task-title>
+  <task-title num="3.10"><i class="jyu-star"></i>Viestipalvelu.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/3-10-viestipalvelu/handout.md}}

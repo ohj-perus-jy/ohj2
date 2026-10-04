@@ -260,7 +260,7 @@ puske muutokset etävarastoon.
 
 
 <task>
-  <task-title num="9.4"><i class="bi bi-stars"></i>Näyttäminen ohjaajalle.<points>1 p.</points></task-title>
+  <task-title num="9.4"><i class="jyu-star"></i>Näyttäminen ohjaajalle.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/9-4-ht-4/handout.md}}

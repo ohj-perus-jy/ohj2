@@ -106,7 +106,7 @@
 </task>
 
 <task>
-  <task-title num="6.11"><i class="bi bi-stars"></i>CSV -> JSON.<points>1 p.</points></task-title>
+  <task-title num="6.11"><i class="jyu-star"></i>CSV -> JSON.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-11-csv-json/handout.md}}
@@ -116,7 +116,7 @@
 </task>
 
 <task>
-  <task-title num="6.12"><i class="bi bi-stars"></i>Parempi laskukone<points>1 p.</points></task-title>
+  <task-title num="6.12"><i class="jyu-star"></i>Parempi laskukone<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/6-12-laskin/handout.md}}

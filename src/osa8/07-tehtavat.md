@@ -62,7 +62,7 @@
 </task>
 
 <task>
-  <task-title num="8.7"><i class="bi bi-stars"></i>Todo-sovellus, vaihe 11.<points>1 p.</points></task-title>
+  <task-title num="8.7"><i class="jyu-star"></i>Todo-sovellus, vaihe 11.<points>1 p.</points></task-title>
   <handout>
 
 {{#include ../exercises/8-7-todo-11/handout.md}}
