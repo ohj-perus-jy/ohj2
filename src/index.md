@@ -104,7 +104,7 @@ mihin ohjausryhmään olet ilmoittautunut.
 <details><summary>Teams-kanavalle liittyminen: Jyväskylän yliopiston tutkinto-opiskelijat</summary>
 
 1. Kirjaudu yliopiston tunnuksellasi Microsoft Teamsiin osoitteessa
-    <https://teams.microsoft.com>. Käyttäjätunnus on muotoa
+    <https://teams.cloud.microsoft>. Käyttäjätunnus on muotoa
     `käyttäjätunnus@jyu.fi` (esim. `mameikal@jyu.fi`). Tunnuksen muoto
     `student.jyu.fi` ei käy. Tunnuksen toimiminen vaatii, että olet hyväksynyt
     Office 365 -palvelut OMA-palvelussa (<https://sso.jyu.fi>).
