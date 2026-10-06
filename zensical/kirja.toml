@@ -1,6 +1,9 @@
 # Kirjan asetukset työkaluille (tyokalut/convert.py); avaimet: tyokalut/README.md.
 nimi = "ohj2"
 
+# Kuvan klikkaus avaa sen täysikokoisena (kokeilu, ks. tyokalut/README.md).
+kuvasuurennus = true
+
 # Sisällytetyn tehtävänannon kuvapolku ratkeaa sisällyttävän sivun mukaan ja
 # osuu ohi. Sama virhe on mdBookin käännöksessä: korjataan ../src:ssä.
 [testit]
