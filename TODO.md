@@ -16,7 +16,7 @@ Zensicalin omaan ja työkalujen avoimet asiat: `zensical/tyokalut/YHTENAISTYS.md
       Esimerkiksi "jotta esimerkin voi ajaa kirjassa".
 - [ ] `src/mdbook-plantuml-img/` (17 SVG) on mdBookin PlantUML-liitännäisen
       tuloste. Mikään ei viittaa siihen, mutta se julkaistaan. Kaaviot ovat
-      nyt `zensical/cache/plantuml/`:ssa. Poista.
+      nyt mermaidina `zensical/cache/mermaid/`:ssa. Poista.
 
 ## Julkaisu
 

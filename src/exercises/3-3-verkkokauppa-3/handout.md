@@ -80,40 +80,39 @@ vastaavat tiedot UML-kaaviosta.
 
 <br />
 
-```plantuml
-@startuml
+```mermaid
+classDiagram
 class Tuote {
     #String nimi
     #double hinta
-    +Tuote(String nimi, double hinta)
-    +void tulostaTiedot()
+    +Tuote(nimi: String, hinta: double)
+    +tulostaTiedot() void
 }
 class Elektroniikka {
     -int takuuKuukausina
-    +Elektroniikka(String nimi, double hinta, int takuuKuukausina)
-    +int takuutaJaljella(int kuukausiaKulunut)
+    +Elektroniikka(nimi: String, hinta: double, takuuKuukausina: int)
+    +takuutaJaljella(kuukausiaKulunut: int) int
 }
 class Ruoka {
     -String parastaEnnen
-    +Ruoka(String nimi, double hinta, String parastaEnnen)
-    +void syo()
+    +Ruoka(nimi: String, hinta: double, parastaEnnen: String)
+    +syo() void
 }
 class Puhelin {
     -String kayttojarjestelma
     -boolean onko5G
-    +Puhelin(String nimi, double hinta, int takuuKuukausina, String kayttojarjestelma, boolean onko5G)
-    +void soita(String numero)
-    +void tulostaPuhelimenTiedot(int kuukausiaKulunut)
+    +Puhelin(nimi: String, hinta: double, takuuKuukausina: int, kayttojarjestelma: String, onko5G: boolean)
+    +soita(numero: String) void
+    +tulostaPuhelimenTiedot(kuukausiaKulunut: int) void
 }
 class Pakaste {
     -int lampotilaSuositus
-    +Pakaste(String nimi, double hinta, String parastaEnnen, int lampotilaSuositus)
-    -void sulata(int minuutit)
-    +void sulataJaNauti(int minuutit)
+    +Pakaste(nimi: String, hinta: double, parastaEnnen: String, lampotilaSuositus: int)
+    -sulata(minuutit: int) void
+    +sulataJaNauti(minuutit: int) void
 }
 Tuote <|-- Elektroniikka
 Tuote <|-- Ruoka
 Elektroniikka <|-- Puhelin
-Ruoka <|-- Pakaste 
-@enduml
+Ruoka <|-- Pakaste
 ```

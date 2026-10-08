@@ -52,39 +52,30 @@ Lähdemme aluksi liikkeelle yksinkertaisesta esimerkistä, jossa voi vain vaihta
 
 Luokkakaaviomme voisi näyttää seuraavanlaiselta. 
 
-```plantuml
-@startuml
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Laite {
-    +vaihdaTilaa(): void
+    +vaihdaTilaa() void
 }
 class Valo {
-    -kirkkaus: int
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -int kirkkaus
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 class Turvakamera {
-    -tallennusPaalla: boolean
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -boolean tallennusPaalla
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 class Kahvinkeitin {
-    -kiehumassa: boolean
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -boolean kiehumassa
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 
 Laite <|-- Valo
 Laite <|-- Turvakamera
 Laite <|-- Kahvinkeitin
-@enduml
 ```
 
 ```java
@@ -267,39 +258,31 @@ java: Laite is abstract; cannot be instantiated
 
 Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi A-kirjaimella, ja sen metodit on merkitty abstrakteiksi metodeiksi. UML-notaatiossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla.
 
-```plantuml
-@startuml
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
-abstract class Laite {
-    +vaihdaTilaa(): void {abstract}
+```mermaid
+classDiagram
+class Laite {
+    <<abstract>>
+    +vaihdaTilaa()* void
 }
 class Valo {
-    -kirkkaus: int
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -int kirkkaus
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 class Turvakamera {
-    -tallennusPaalla: boolean
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -boolean tallennusPaalla
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 class Kahvinkeitin {
-    -kiehumassa: boolean
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -boolean kiehumassa
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 
 Laite <|-- Valo
 Laite <|-- Turvakamera
 Laite <|-- Kahvinkeitin
-@enduml
 ```
 
 Abstraktin luokan "vastakohtana" voidaan pitää konkreettista luokkaa, josta voi luoda ilmentymiä. Esimerkiksi `Valo`, `Turvakamera` ja `Kahvinkeitin` ovat konkreettisia luokkia, koska niistä voi luoda ilmentymiä.

@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 622.2 352" width="622.2" height="352" style="--bg:#FFFFFF;--fg:#27272A">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Keittiolaite" data-to="Leivanpaahdin" data-type="inheritance" data-marker-at="from" points="504.90000000000003,164 504.90000000000003,174 396.93333333333334,174 396.93333333333334,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tyokalu" data-to="Sirkkeli" data-type="inheritance" data-marker-at="from" points="133.8,164 133.8,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Leivanpaahdin" data-type="realization" data-marker-at="from" points="347.6,164 347.59999999999997,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Sirkkeli" data-type="realization" data-marker-at="from" points="307.6,164 307.6,174 183.13333333333333,174 183.13333333333333,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<g class="class-node" data-id="Verkkovirtalaite" data-label="Verkkovirtalaite" data-annotation="interface">
+  <rect x="267.6" y="80" width="120" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="267.6" y="80" width="120" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="327.6" y="92" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;interface&gt;&gt;</text>
+  <text x="327.6" y="110" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Verkkovirtalaite</text>
+  <line x1="267.6" y1="128" x2="387.6" y2="128" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="267.6" y1="136" x2="387.6" y2="136" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="275.6" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan></text>
+</g>
+<g class="class-node" data-id="Keittiolaite" data-label="Keittiolaite" data-annotation="abstract">
+  <rect x="427.6" y="60" width="154.6" height="104" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="427.6" y="60" width="154.6" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="504.90000000000003" y="72" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="504.90000000000003" y="90" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Keittiolaite</text>
+  <line x1="427.6" y1="108" x2="582.2" y2="108" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="435.6" y="122" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lammittava</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <line x1="427.6" y1="136" x2="582.2" y2="136" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="435.6" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">puhdista()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* void</tspan></text>
+</g>
+<g class="class-node" data-id="Tyokalu" data-label="Tyokalu" data-annotation="abstract">
+  <rect x="40" y="40" width="187.6" height="124" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="187.6" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.8" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="133.8" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tyokalu</text>
+  <line x1="40" y1="88" x2="227.6" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="102" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kayttotunnit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <line x1="40" y1="116" x2="227.6" y2="116" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="130" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kayta(tunnit: int)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="48" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">huolla()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* boolean</tspan></text>
+</g>
+<g class="class-node" data-id="Leivanpaahdin" data-label="Leivanpaahdin">
+  <rect x="298.26666666666665" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="298.26666666666665" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="372.26666666666665" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Leivanpaahdin</text>
+  <line x1="298.26666666666665" y1="256" x2="446.26666666666665" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="298.26666666666665" y1="264" x2="446.26666666666665" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="306.26666666666665" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="306.26666666666665" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">puhdista()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+</g>
+<g class="class-node" data-id="Sirkkeli" data-label="Sirkkeli">
+  <rect x="84.46666666666667" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="84.46666666666667" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="158.46666666666667" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Sirkkeli</text>
+  <line x1="84.46666666666667" y1="256" x2="232.46666666666667" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="84.46666666666667" y1="264" x2="232.46666666666667" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="92.46666666666667" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="92.46666666666667" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">huolla()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+</g>
+
+
+
+
+</svg>

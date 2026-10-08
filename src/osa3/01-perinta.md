@@ -117,24 +117,14 @@ Kirjallisuudessa käytetään joskus yliluokka- ja aliluokka-termeistä myös ni
 
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija` ja `Opettaja` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo
 class Opiskelija
 class Opettaja
 
 Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
-@enduml
 ``` 
 
 Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa
@@ -348,38 +338,28 @@ ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi. Tietojen
 merkitseminen kaavioon mahdollistaa rakenteiden kuvailemisen ilman, että
 tarvitsee sanallisesti kuvailla kaikkia yksityiskohtia.
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo {
-    - nimi : String
-    + Henkilo(nimi : String)
-    + getNimi() : String
+    -String nimi
+    +Henkilo(nimi: String)
+    +getNimi() String
 }
 class Opiskelija {
-    - kaynnissaOlevatKurssit : ArrayList<String>
-    + Opiskelija(nimi : String)
-    + ilmoittauduKurssille(kurssi : String) : void
-    + naytaKurssit() : void
+    -ArrayList~String~ kaynnissaOlevatKurssit
+    +Opiskelija(nimi: String)
+    +ilmoittauduKurssille(kurssi: String) void
+    +naytaKurssit() void
 }
 class Opettaja {
-    - opetettavatKurssit : ArrayList<String>
-    + Opettaja(nimi : String)
-    + lisaaKurssi(kurssi : String) : void
-    + naytaOpetettavatKurssit() : void
+    -ArrayList~String~ opetettavatKurssit
+    +Opettaja(nimi: String)
+    +lisaaKurssi(kurssi: String) void
+    +naytaOpetettavatKurssit() void
 }
 
 Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
-@enduml
 ``` 
 
 Luokkahierarkia voi olla enemmänkin kuin kaksi tasoa syvä. Meillä voisi olla
@@ -395,49 +375,40 @@ attribuutit ja metodit mukaan. Tekstit menevät jo aika pieneksi, joten saat
 halutessasi kuvan auki uuteen välilehteen klikkaamalla sitä oikealla (tai
 Ctrl+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo {
-    - nimi : String
-    + Henkilo(nimi : String)
-    + getNimi() : String
+    -String nimi
+    +Henkilo(nimi: String)
+    +getNimi() String
 }
 class Opiskelija {
-    - kaynnissaOlevatKurssit : ArrayList<String>
-    + Opiskelija(nimi : String)
-    + ilmoittauduKurssille(kurssi : String) : void
-    + naytaKurssit() : void
+    -ArrayList~String~ kaynnissaOlevatKurssit
+    +Opiskelija(nimi: String)
+    +ilmoittauduKurssille(kurssi: String) void
+    +naytaKurssit() void
 }
 class Opettaja {
-    - opetettavatKurssit : ArrayList<String>
-    + Opettaja(nimi : String)
-    + lisaaKurssi(kurssi : String) : void
-    + naytaOpetettavatKurssit() : void
+    -ArrayList~String~ opetettavatKurssit
+    +Opettaja(nimi: String)
+    +lisaaKurssi(kurssi: String) void
+    +naytaOpetettavatKurssit() void
 }
 class Sihteeri {
-    + Sihteeri(nimi : String)
-    + kirjaaSuoritus(opiskelija : Opiskelija, kurssi : String, pisteet : int) : void
+    +Sihteeri(nimi: String)
+    +kirjaaSuoritus(opiskelija: Opiskelija, kurssi: String, pisteet: int) void
 }
 class TutkintoOpiskelija {
-    - tutkintoOhjelma : String
-    + TutkintoOpiskelija(nimi : String, tutkintoOhjelma : String)
-    + naytaTutkintoOhjelma() : String
+    -String tutkintoOhjelma
+    +TutkintoOpiskelija(nimi: String, tutkintoOhjelma: String)
+    +naytaTutkintoOhjelma() String
 }
 
 class AvoinOpiskelija {
-    - maksujaMaksamatta : double
-    + AvoinOpiskelija(nimi : String)
-    + maksa(eur : double) : void
-    + ostaOpintoOikeus(String kurssi, double hinta) : boolean
+    -double maksujaMaksamatta
+    +AvoinOpiskelija(nimi: String)
+    +maksa(eur: double) void
+    +ostaOpintoOikeus(kurssi: String, hinta: double) boolean
 }
 
 Henkilo <|-- Opiskelija
@@ -445,8 +416,6 @@ Henkilo <|-- Opettaja
 Henkilo <|-- Sihteeri
 Opiskelija <|-- TutkintoOpiskelija
 Opiskelija <|-- AvoinOpiskelija
-
-@enduml
 ``` 
 
 Koska nuoli `TutkintoOpiskelija`-luokasta osoittaa `Opiskelija`-luokkaan ja
