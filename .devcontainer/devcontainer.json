@@ -3,15 +3,17 @@
 	"image": "mcr.microsoft.com/devcontainers/python:3.11-bookworm",
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/github-cli:1": {},
 		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
 		"ghcr.io/anthropics/devcontainer-features/claude-code:1.0": {},
 		// Rust, jolla convert.py asentaa svgbob_cli:n bob-kaavioita varten.
 		"ghcr.io/devcontainers/features/rust:1": {}
 	},
 
-	// WSL:n ~/.claude liitetään, jotta kirjautuminen on yhteinen kaikille konteille.
+	// WSL:n ~/.claude ja ~/.config/gh liitetään, jotta kirjautumiset ovat yhteisiä kaikille konteille.
 	"mounts": [
-		"source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"
+		"source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind",
+		"source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind"
 	],
 
 	// 8001 = zensical/run.sh
