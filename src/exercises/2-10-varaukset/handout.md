@@ -5,7 +5,7 @@ varausta ei luoda.
 
 Lisää myös tarkistukset, jotka estävät virheellisten varausten luomisen. 
 Varauksen keston täytyy olla vähintään 1 tunti ja alkuajankohdan täytyy olla 
-välillä 0-23.
+välillä 0–23.
 
 Virhetilanteet voi tässä tehtävässä käsitellä tulostamalla virheilmoituksen.
 

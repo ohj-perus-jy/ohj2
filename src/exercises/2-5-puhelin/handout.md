@@ -1,5 +1,5 @@
 Tee luokka `Puhelin`, jolla on attribuutit `merkki` (merkkijono) ja `akunVaraus`
-(kokonaisluku, joka kuvaa akun varausta prosentteina väliltä 0-100). Lisää
+(kokonaisluku, joka kuvaa akun varausta prosentteina väliltä 0–100). Lisää
 luokkaan seuraavat metodit:
 
  * `lahetaViesti(String henkilo, String viesti)`: tulostaa viestin muodossa

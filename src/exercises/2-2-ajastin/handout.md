@@ -6,7 +6,7 @@ parametrina ajastimeen lisättävät minuutit ja sekunnit. Lisää myös metodi
 `annaMerkkijono`, joka antaa ajastimen minuutit ja sekunnit merkkijonona.
 
 Minuutteja voi olla kuinka monta tahansa, mutta sekuntien täytyy olla välillä
-0-59. Jos sekunnit ylittävät rajan, muutetaan ne minuuteiksi. Sekunnit voi
+0–59. Jos sekunnit ylittävät rajan, muutetaan ne minuuteiksi. Sekunnit voi
 muuttaa minuuteiksi + sekunneiksi esimerkiksi näin:
 
 ```java

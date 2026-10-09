@@ -537,8 +537,8 @@ Sana `static` voi olla hieman harhaanjohtava; *staattisuus* ei tässä tarkoita,
 että nämä luokan jäsenet ovat pysyviä tai muuttumattomia. Käytämme kuitenkin
 tässä materiaalissa sanaa staattinen kuvaamaan luokan jäseniä. 
 
-Siinä missä attribuutit ja metodit liittyvät olioon -- olion attribuutit ja
-metodit pääsevät olion tilaan käsiksi -- luokan attribuutti ei ole osa minkään
+Siinä missä attribuutit ja metodit liittyvät olioon — olion attribuutit ja
+metodit pääsevät olion tilaan käsiksi — luokan attribuutti ei ole osa minkään
 olion tilaa ja sillä on vain yksi arvo, joka on jaettu kaikkien luokan olioiden
 kesken. Jos yksi olio muuttaa oman luokkansa attribuutin arvoa, muutos näkyy
 kaikissa saman luokan olioissa. 
@@ -792,7 +792,7 @@ class Henkilo {
 Tarkastellaan lopuksi olioiden elinkaaren loppua, eli niiden tuhoutumista. Kun
 olioon ei enää ole yhtään viitettä, se merkitään "roskaksi", jonka Javan
 automaattinen roskienkeräys (engl. *garbage collection*) voi aikanaan poistaa
-muistista vapauttaen sitä varten varten varatun tilan.
+muistista vapauttaen sitä varten varatun tilan.
 
 ```java
 // FILE: main.java
@@ -839,7 +839,7 @@ class Henkilo {
 Emme tällä kurssilla perehdy kovin syvällisesti Javan automaattiseen
 roskienkeräykseen tai muistin hallintaan. Tämän kurssin kannalta riittää, että
 tiedämme milloin olio muuttuu roskaksi ja tuhoutuu. Jos haluat tutustua
-aiheeseen hieman tarkemmin, voit aloittaa lukemalla täältä
+aiheeseen hieman tarkemmin, voit aloittaa lukemalla
 [täältä](https://www.geeksforgeeks.org/java/jvm-heap-area/) lisää kekomuistista
 ja sen varaamisesta sekä
 [täältä](https://www.geeksforgeeks.org/java/garbage-collection-in-java/) Javan
