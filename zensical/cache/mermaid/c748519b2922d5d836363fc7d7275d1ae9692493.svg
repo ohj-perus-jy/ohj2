@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Kayttoesine" data-to="Imuri" data-type="realization" data-marker-at="from" points="476.8999999999999,124 476.8999999999999,134 796.8999999999999,134 796.8999999999999,184" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Kayttoesine" data-to="Kastelukannu" data-type="realization" data-marker-at="from" points="476.8999999999999,124 476.8999999999999,134 153.6,134 153.6,184" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Kayttoesine" data-to="Imuri" data-type="realization" data-marker-at="from" points="476.8999999999999,124 476.8999999999999,144 796.8999999999999,144 796.8999999999999,184" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Kayttoesine" data-to="Kastelukannu" data-type="realization" data-marker-at="from" points="476.8999999999999,124 476.8999999999999,144 153.6,144 153.6,184" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
 <polyline class="class-relationship" data-from="Kayttoesine" data-to="Robotti" data-type="realization" data-marker-at="from" points="476.8999999999999,124 476.8999999999999,184" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Robotti" data-label="Robotti">
   <rect x="307.19999999999993" y="184" width="339.4" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

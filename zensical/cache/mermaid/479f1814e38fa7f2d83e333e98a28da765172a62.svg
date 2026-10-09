@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Tuote" data-to="Elektroniikka" data-type="inheritance" data-marker-at="from" points="729.3999999999999,168 729.3999999999999,178 391.19999999999993,178 391.19999999999993,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Tuote" data-to="Ruoka" data-type="inheritance" data-marker-at="from" points="729.3999999999999,168 729.3999999999999,178 1067.6,178 1067.6,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tuote" data-to="Elektroniikka" data-type="inheritance" data-marker-at="from" points="729.3999999999999,168 729.3999999999999,188 391.19999999999993,188 391.19999999999993,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tuote" data-to="Ruoka" data-type="inheritance" data-marker-at="from" points="729.3999999999999,168 729.3999999999999,188 1067.6,188 1067.6,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <polyline class="class-relationship" data-from="Elektroniikka" data-to="Puhelin" data-type="inheritance" data-marker-at="from" points="391.19999999999993,336 391.2,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <polyline class="class-relationship" data-from="Ruoka" data-to="Pakaste" data-type="inheritance" data-marker-at="from" points="1067.6,336 1067.6,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Tuote" data-label="Tuote">

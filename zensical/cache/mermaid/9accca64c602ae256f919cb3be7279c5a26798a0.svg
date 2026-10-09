@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Tuote" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="167.38333333333335,128 167.38333333333335,138 107.4,138 107.4,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
-<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Ostostapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="258.51666666666665,128 258.51666666666665,138 318.5,138 318.5,278.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Tuote" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="167.38333333333335,128 167.38333333333335,148 107.4,148 107.4,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Ostostapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="258.51666666666665,128 258.51666666666665,148 318.5,148 318.5,278.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
 <polyline class="class-relationship" data-from="Ostostapahtuma" data-to="Ostosrivi" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="318.5,366.3 318.5,516.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
 <g class="class-node" data-id="Tuote" data-label="Tuote">
   <rect x="40" y="268.3" width="134.8" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

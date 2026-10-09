@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Laite" data-to="Valo" data-type="inheritance" data-marker-at="from" points="361.4,144 361.4,154 284.3666666666667,154 284.3666666666667,204" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Saadettava" data-to="Valo" data-type="realization" data-marker-at="from" points="140.39999999999998,144 140.39999999999998,154 217.43333333333334,154 217.43333333333334,204" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Valo" data-type="inheritance" data-marker-at="from" points="361.4,144 361.4,164 284.3666666666667,164 284.3666666666667,204" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Saadettava" data-to="Valo" data-type="realization" data-marker-at="from" points="140.39999999999998,144 140.39999999999998,164 217.43333333333334,164 217.43333333333334,204" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Saadettava" data-label="Saadettava" data-annotation="interface">
   <rect x="40" y="60" width="200.79999999999998" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="40" y="60" width="200.79999999999998" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />

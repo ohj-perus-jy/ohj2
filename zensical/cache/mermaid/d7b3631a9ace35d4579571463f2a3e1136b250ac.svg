@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Soitin" data-to="Kitara" data-type="inheritance" data-marker-at="from" points="180,108 180,118 100,118 100,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Soitin" data-to="Piano" data-type="inheritance" data-marker-at="from" points="180,108 180,118 260,118 260,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Soitin" data-to="Kitara" data-type="inheritance" data-marker-at="from" points="180,108 180,128 100,128 100,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Soitin" data-to="Piano" data-type="inheritance" data-marker-at="from" points="180,108 180,128 260,128 260,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Soitin" data-label="Soitin">
   <rect x="120" y="40" width="120" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="120" y="40" width="120" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
