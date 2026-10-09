@@ -35,8 +35,8 @@
   </marker>
 </defs>
 <polyline class="class-relationship" data-from="Laite" data-to="Valo" data-type="inheritance" data-marker-at="from" points="321.8,108 321.79999999999995,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Laite" data-to="Turvakamera" data-type="inheritance" data-marker-at="from" points="360.45,108 360.45,118 536.2,118 536.2,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Laite" data-to="Kahvinkeitin" data-type="inheritance" data-marker-at="from" points="283.15,108 283.15,118 120.6,118 120.6,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Turvakamera" data-type="inheritance" data-marker-at="from" points="321.8,108 321.8,118 536.2,118 536.2,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Kahvinkeitin" data-type="inheritance" data-marker-at="from" points="321.8,108 321.8,118 120.6,118 120.6,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Laite" data-label="Laite">
   <rect x="244.5" y="40" width="154.6" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="244.5" y="40" width="154.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />

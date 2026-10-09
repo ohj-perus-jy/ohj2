@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="330.1833333333333,148 330.1833333333333,158 193.2,158 193.2,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="386.1166666666666,148 386.1166666666666,158 523.0999999999999,158 523.0999999999999,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="358.15,148 358.15,158 193.2,158 193.2,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="358.15,148 358.15,158 523.0999999999999,158 523.0999999999999,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Henkilo" data-label="Henkilo">
   <rect x="274.25" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="274.25" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
