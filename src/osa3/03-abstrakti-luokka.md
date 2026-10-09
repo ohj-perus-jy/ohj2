@@ -256,7 +256,7 @@ Laite laite = new Laite();
 java: Laite is abstract; cannot be instantiated
 ```
 
-Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi A-kirjaimella, ja sen metodit on merkitty abstrakteiksi metodeiksi. UML-notaatiossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla.
+Luokkakaaviona kuvio näyttää samalta kuin ennen, mutta nyt `Laite`-luokka on merkitty abstraktiksi luokaksi nimen yläpuolella olevalla merkinnällä `<<abstract>>`, ja sen metodi `vaihdaTilaa()` on merkitty abstraktiksi kursiivilla. UML-notaatiossa abstrakti luokka ja abstraktit metodit merkitään kursiivilla; luokan kohdalla kaaviossa käytetään kursiivin sijaan tuota merkintää.
 
 ```mermaid
 classDiagram

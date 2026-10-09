@@ -127,10 +127,10 @@ Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
 ``` 
 
-Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa
-perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä
-oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified
-Modelling Language*). 
+Laatikko tarkoittaa luokkaa. Ylöspäin osoittava nuoli, jonka kärki on ontto
+kolmio, tarkoittaa perintää, eli aliluokka (nuolen tyvessä) perii yliluokan
+(nuolen kärjessä). Yllä oleva kuvio on tehty mukaillen niin sanottua
+UML-kuvauskieltä (engl. *Unified Modelling Language*). 
 
 ## Muodostajat ja super-avainsana
 
@@ -333,8 +333,9 @@ merkitään luokan nimen alle, ja metodit, myös muodostajat, vastaavasti ihan
 alimmaiseksi. Perittyjä attribuutteja metodeja, kuten tässä attribuutti `nimi`
 ja metodi `getNimi()`, ei yleensä merkitä kaavioon, paitsi jos ne
 ylikirjoitetaan aliluokassa&mdash;tästä lisää [Osassa 3.2](02-polymorfismi.md).
-Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi,
-ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi. Tietojen
+Plusmerkki (`+`) nimen edessä tarkoittaa, että kyseessä on julkinen (public)
+attribuutti/metodi, ja miinusmerkki (`-`), että kyseessä on yksityinen
+(private) attribuutti/metodi. Tietojen
 merkitseminen kaavioon mahdollistaa rakenteiden kuvailemisen ilman, että
 tarvitsee sanallisesti kuvailla kaikkia yksityiskohtia.
 
@@ -371,9 +372,8 @@ opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyisi
 suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
 
 Luokkahierarkia näyttäisi nyt seuraavalta. Merkitään tähänkin kuvioon
-attribuutit ja metodit mukaan. Tekstit menevät jo aika pieneksi, joten saat
-halutessasi kuvan auki uuteen välilehteen klikkaamalla sitä oikealla (tai
-Ctrl+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
+attribuutit ja metodit mukaan. Kaavio on jo aika leveä, joten saat
+halutessasi sen suuremmaksi klikkaamalla sitä. 
 
 ```mermaid
 classDiagram

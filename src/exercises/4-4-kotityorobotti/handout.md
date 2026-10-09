@@ -1,8 +1,8 @@
 Tee `Robotti`, joka osaa suorittaa erilaisia kotitöitä, kuten imurointia ja
 kukkien kastelua. 
 
-Toteuta tehtävä oheisen UML-kaavion mukaisesti. Katkoviiva, jossa on musta
-nuoli, tarkoittaa, että `Robotti`-luokka käyttää `Kayttoesine`-rajapintaa:
+Toteuta tehtävä oheisen UML-kaavion mukaisesti. Katkoviiva, jossa on avoin
+nuolenkärki, tarkoittaa, että `Robotti`-luokka käyttää `Kayttoesine`-rajapintaa:
 `Robotti`-luokka sisältää attribuutin, joka on tyyppiä `Kayttoesine`.
 
 ```mermaid
@@ -35,9 +35,9 @@ class Kastelukannu {
     +taytaVesi() void
 }
 
+Robotti ..> Kayttoesine
 Kayttoesine <|.. Imuri
 Kayttoesine <|.. Kastelukannu
-Kayttoesine <|.. Robotti
 ```
 
 <details><summary>Kuvaus sanallisessa muodossa</summary>

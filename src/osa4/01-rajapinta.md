@@ -130,10 +130,11 @@ public abstract class Laite {
 // FILE_END
 ```
 
-Luokkakaaviona esimerkkimme näyttäisi tältä. I-kirjain ilmaisee, että kyseessä
-on rajapinta. Abstraktin luokan tapaan rajapinta on merkitty kursiivilla.
-Rajapinnan toteuttaminen esitetään katkoviivalla, jossa on avoin nuoli kohti
-rajapintaa.
+Luokkakaaviona esimerkkimme näyttäisi tältä. Merkintä `<<interface>>` luokan
+nimen yläpuolella ilmaisee, että kyseessä on rajapinta, ja `<<abstract>>`
+vastaavasti, että luokka on abstrakti. Rajapinnan toteuttaminen esitetään
+katkoviivalla, jonka päässä on perinnän tapaan ontto kolmio rajapinnan
+puolella.
 
 ```mermaid
 classDiagram
@@ -144,8 +145,8 @@ class Saadettava {
 
 class Laite {
     <<abstract>>
-    +vaihdaTilaa() void
-    +raportoiTila() void
+    +vaihdaTilaa()* void
+    +raportoiTila()* void
 }
 
 class Valo {
