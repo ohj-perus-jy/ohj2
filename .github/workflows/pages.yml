@@ -28,8 +28,8 @@ concurrency:
 
 jobs:
   # Sama rakennus kummallekin haaralle. convert.py tarvitsee vain
-  # standardikirjaston; kaaviot (cache/svgbob/, cache/plantuml/) ovat
-  # versionhallinnassa, joten svgbobia tai PlantUML-palvelinta ei tarvita.
+  # standardikirjaston; kaaviot (cache/mermaid/, cache/svgbob/) ovat
+  # versionhallinnassa, joten Nodea tai svgbobia ei tarvita.
   # --strict kaataa ajon, jos jokin kaavio puuttuu välimuistista: ilman sitä
   # sivu julkaistaisiin kaavio koodilohkona.
   # Ääneenluvun leikkeet ovat erillisessä repossa (kirja.toml: [puhe] repo),

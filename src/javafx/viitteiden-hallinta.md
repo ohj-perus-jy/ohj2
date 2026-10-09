@@ -7,9 +7,8 @@ tietoja tai toimintoja.
 
 Oletetaan, että meillä on seuraava tietomalli.
 
-```plantuml
-@startuml
-
+```mermaid
+classDiagram
 class Tehtava {
     -String nimi
     -String kuvaus
@@ -20,8 +19,7 @@ class Kategoria {
     -String nimi
 }
 
-Tehtava ..> Kategoria 
-@enduml
+Tehtava ..> Kategoria
 ```
 
 Sovelluksessa riippuvuus voisi näyttää esimerkiksi seuraavalta.

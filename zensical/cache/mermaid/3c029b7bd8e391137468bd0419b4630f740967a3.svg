@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442.4 436.3" width="442.4" height="436.3" style="--bg:#FFFFFF;--fg:#27272A">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Seuranta" data-to="Kategoria" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="186.63333333333333,128 186.63333333333333,148 120.6,148 120.6,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="Seuranta" data-to="Tapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="255.76666666666665,128 255.76666666666665,148 321.79999999999995,148 321.79999999999995,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<g class="class-node" data-id="Kategoria" data-label="Kategoria">
+  <rect x="40" y="268.3" width="161.2" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="268.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="120.6" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Kategoria</text>
+  <line x1="40" y1="300.3" x2="201.2" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="314.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">valttamaton</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Boolean</tspan></text>
+  <text x="48" y="334.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="40" y1="348.3" x2="201.2" y2="348.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="Tapahtuma" data-label="Tapahtuma">
+  <rect x="241.2" y="268.3" width="161.2" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="241.2" y="268.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="321.79999999999995" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tapahtuma</text>
+  <line x1="241.2" y1="300.3" x2="402.4" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="249.2" y="314.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="249.2" y="334.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">summa</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="249.2" y="354.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">pvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDate</tspan></text>
+  <text x="249.2" y="374.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoria</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Kategoria</tspan></text>
+  <line x1="241.2" y1="388.3" x2="402.4" y2="388.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<g class="class-node" data-id="Seuranta" data-label="Seuranta">
+  <rect x="117.5" y="40" width="207.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="117.5" y="40" width="207.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="221.2" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Seuranta</text>
+  <line x1="117.5" y1="72" x2="324.9" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="125.5" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoriat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Kategoria~</tspan></text>
+  <text x="125.5" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tapahtumat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Tapahtuma~</tspan></text>
+  <line x1="117.5" y1="120" x2="324.9" y2="120" stroke="var(--_node-stroke)" stroke-width="0.75" />
+</g>
+<text x="95.36099999999999" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="172.63333333333333" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="106.6" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="348.03899999999993" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="241.76666666666665" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="307.79999999999995" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>

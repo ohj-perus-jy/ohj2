@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1257.3999999999999 564" width="1257.3999999999999" height="564" style="--bg:#FFFFFF;--fg:#27272A">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  .mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', ui-monospace, monospace; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="750.7999999999998,148 750.8,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="750.7999999999998,148 750.7999999999998,168 1080.6999999999998,168 1080.6999999999998,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Sihteeri" data-type="inheritance" data-marker-at="from" points="750.7999999999998,148 750.7999999999998,168 298.79999999999995,168 298.79999999999995,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Opiskelija" data-to="TutkintoOpiskelija" data-type="inheritance" data-marker-at="from" points="750.8,336 750.8,356 529.7499999999998,356 529.7499999999998,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Opiskelija" data-to="AvoinOpiskelija" data-type="inheritance" data-marker-at="from" points="750.8,336 750.8,356 971.8499999999999,356 971.8499999999998,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<g class="class-node" data-id="Henkilo" data-label="Henkilo">
+  <rect x="666.8999999999999" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="666.8999999999999" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="750.7999999999998" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Henkilo</text>
+  <line x1="666.8999999999999" y1="72" x2="834.6999999999998" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="674.8999999999999" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="666.8999999999999" y1="100" x2="834.6999999999998" y2="100" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="674.8999999999999" y="114" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Henkilo(nimi: String)</tspan></text>
+  <text x="674.8999999999999" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getNimi()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="Opiskelija" data-label="Opiskelija">
+  <rect x="597.5999999999999" y="208" width="306.4" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="597.5999999999999" y="208" width="306.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="750.8" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Opiskelija</text>
+  <line x1="597.5999999999999" y1="240" x2="903.9999999999999" y2="240" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="605.5999999999999" y="254" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kaynnissaOlevatKurssit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">ArrayList~String~</tspan></text>
+  <line x1="597.5999999999999" y1="268" x2="903.9999999999999" y2="268" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="605.5999999999999" y="282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Opiskelija(nimi: String)</tspan></text>
+  <text x="605.5999999999999" y="302" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">ilmoittauduKurssille(kurssi: String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="605.5999999999999" y="322" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">naytaKurssit()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+</g>
+<g class="class-node" data-id="Opettaja" data-label="Opettaja">
+  <rect x="943.9999999999999" y="208" width="273.4" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="943.9999999999999" y="208" width="273.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="1080.6999999999998" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Opettaja</text>
+  <line x1="943.9999999999999" y1="240" x2="1217.3999999999999" y2="240" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="951.9999999999999" y="254" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">opetettavatKurssit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">ArrayList~String~</tspan></text>
+  <line x1="943.9999999999999" y1="268" x2="1217.3999999999999" y2="268" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="951.9999999999999" y="282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Opettaja(nimi: String)</tspan></text>
+  <text x="951.9999999999999" y="302" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">lisaaKurssi(kurssi: String)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="951.9999999999999" y="322" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">naytaOpetettavatKurssit()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+</g>
+<g class="class-node" data-id="Sihteeri" data-label="Sihteeri">
+  <rect x="40" y="208" width="517.5999999999999" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="208" width="517.5999999999999" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="298.79999999999995" y="224" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Sihteeri</text>
+  <line x1="40" y1="240" x2="557.5999999999999" y2="240" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="40" y1="248" x2="557.5999999999999" y2="248" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="262" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Sihteeri(nimi: String)</tspan></text>
+  <text x="48" y="282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kirjaaSuoritus(opiskelija: Opiskelija, kurssi: String, pisteet: int)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+</g>
+<g class="class-node" data-id="TutkintoOpiskelija" data-label="TutkintoOpiskelija">
+  <rect x="327.04999999999984" y="396" width="405.4" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="327.04999999999984" y="396" width="405.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="529.7499999999998" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">TutkintoOpiskelija</text>
+  <line x1="327.04999999999984" y1="428" x2="732.4499999999998" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="335.04999999999984" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tutkintoOhjelma</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="327.04999999999984" y1="456" x2="732.4499999999998" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="335.04999999999984" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">TutkintoOpiskelija(nimi: String, tutkintoOhjelma: String)</tspan></text>
+  <text x="335.04999999999984" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">naytaTutkintoOhjelma()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="AvoinOpiskelija" data-label="AvoinOpiskelija">
+  <rect x="772.4499999999998" y="396" width="398.8" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="772.4499999999998" y="396" width="398.8" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="971.8499999999998" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">AvoinOpiskelija</text>
+  <line x1="772.4499999999998" y1="428" x2="1171.2499999999998" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="780.4499999999998" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">maksujaMaksamatta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="772.4499999999998" y1="456" x2="1171.2499999999998" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="780.4499999999998" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">AvoinOpiskelija(nimi: String)</tspan></text>
+  <text x="780.4499999999998" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">maksa(eur: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="780.4499999999998" y="510" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">ostaOpintoOikeus(kurssi: String, hinta: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+</g>
+
+
+
+
+
+</svg>

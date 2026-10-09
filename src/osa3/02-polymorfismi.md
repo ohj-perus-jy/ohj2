@@ -129,30 +129,20 @@ public class Piano extends Soitin {
 
 Esimerkin luokkien UML-kaavio näyttää seuraavalta.
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Soitin {
-    + soita() : void
+    +soita() void
 }
 class Kitara {
-    + soita() : void
+    +soita() void
 }
 class Piano {
-    + soita() : void
+    +soita() void
 }
 
 Soitin <|-- Kitara
 Soitin <|-- Piano
-@enduml
 ```
 
 `Kitara`- ja `Piano`-luokissa on kaaviossa oma `soita()`-metodi, koska ne
@@ -289,8 +279,8 @@ class C extends B {
 
 Tämän esimerkin UML-kaavio näyttäisi seuraavalta.
 
-```plantuml
-@startuml
+```mermaid
+classDiagram
 class A {
   +hei()
   +moikka()
@@ -308,7 +298,6 @@ class C {
 
 A <|-- B
 B <|-- C
-@enduml
 ```
 
 

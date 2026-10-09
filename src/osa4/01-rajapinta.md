@@ -130,32 +130,34 @@ public abstract class Laite {
 // FILE_END
 ```
 
-Luokkakaaviona esimerkkimme näyttäisi tältä. I-kirjain ilmaisee, että kyseessä
-on rajapinta. Abstraktin luokan tapaan rajapinta on merkitty kursiivilla.
-Rajapinnan toteuttaminen esitetään katkoviivalla, jossa on avoin nuoli kohti
-rajapintaa.
+Luokkakaaviona esimerkkimme näyttäisi tältä. Merkintä `<<interface>>` luokan
+nimen yläpuolella ilmaisee, että kyseessä on rajapinta, ja `<<abstract>>`
+vastaavasti, että luokka on abstrakti. Rajapinnan toteuttaminen esitetään
+katkoviivalla, jonka päässä on perinnän tapaan ontto kolmio rajapinnan
+puolella.
 
-```plantuml
-@startuml
-interface Saadettava {
-    +asetaArvo(arvo: int): void
+```mermaid
+classDiagram
+class Saadettava {
+    <<interface>>
+    +asetaArvo(arvo: int) void
 }
 
-abstract class Laite {
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+class Laite {
+    <<abstract>>
+    +vaihdaTilaa()* void
+    +raportoiTila()* void
 }
 
 class Valo {
-    -kirkkaus: int
-    +asetaArvo(arvo: int): void
-    +vaihdaTilaa(): void
-    +raportoiTila(): void
+    -int kirkkaus
+    +asetaArvo(arvo: int) void
+    +vaihdaTilaa() void
+    +raportoiTila() void
 }
 
 Laite <|-- Valo
 Saadettava <|.. Valo
-@enduml
 ```
 
 ## Usean rajapinnan toteuttaminen

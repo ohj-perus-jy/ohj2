@@ -1,46 +1,43 @@
 Tee `Robotti`, joka osaa suorittaa erilaisia kotitöitä, kuten imurointia ja
 kukkien kastelua. 
 
-Toteuta tehtävä oheisen UML-kaavion mukaisesti. Katkoviiva, jossa on musta
-nuoli, tarkoittaa, että `Robotti`-luokka käyttää `Kayttoesine`-rajapintaa:
+Toteuta tehtävä oheisen UML-kaavion mukaisesti. Katkoviiva, jossa on avoin
+nuolenkärki, tarkoittaa, että `Robotti`-luokka käyttää `Kayttoesine`-rajapintaa:
 `Robotti`-luokka sisältää attribuutin, joka on tyyppiä `Kayttoesine`.
 
-```plantuml
-@startuml
+```mermaid
+classDiagram
 class Robotti {
     -Kayttoesine kayttoesine
     +Robotti()
-    +void vaihdaKayttoEsine(Kayttoesine uusiEsine)
-    +void teeTyota(String kohde)
+    +vaihdaKayttoEsine(uusiEsine: Kayttoesine) void
+    +teeTyota(kohde: String) void
 }
 
-interface Kayttoesine {
-    +boolean kayta(String kohde)
+class Kayttoesine {
+    <<interface>>
+    +kayta(kohde: String) boolean
 }
 
 class Imuri {
-    -roskanMaara : int
-    -KAPASITEETTI : int = 100
+    -int roskanMaara
+    -int KAPASITEETTI = 100
     +Imuri()
-    +boolean kayta(String kohde)
-    +void tyhjennaSailio()
+    +kayta(kohde: String) boolean
+    +tyhjennaSailio() void
 }
-
 
 class Kastelukannu {
-    -vedenMaara : int
-    -kielletytKohteet : List<String>
+    -int vedenMaara
+    -List~String~ kielletytKohteet
     +Kastelukannu()
-    +boolean kayta(String kohde)
-    +void taytaVesi()
+    +kayta(kohde: String) boolean
+    +taytaVesi() void
 }
 
-
+Robotti ..> Kayttoesine
 Kayttoesine <|.. Imuri
 Kayttoesine <|.. Kastelukannu
-Kayttoesine <|.. Robotti
-
-@enduml
 ```
 
 <details><summary>Kuvaus sanallisessa muodossa</summary>

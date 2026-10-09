@@ -242,26 +242,11 @@ rakenne voitaisiin mallintaa seuraavasti:
 
 ```mermaid
 flowchart TD
-    Stage["
-        Stage
-        (Pääikkuna)
-    "]
-    Scene["
-        Scene
-        (Näkymä)
-    "]
-    VBox["
-        VBox
-        (Node)
-    "]
-    Label["
-        Label
-        text: Hello JavaFX
-    "]
-    Button["
-        Button
-        text: Click Me!
-    "]
+    Stage["Stage<br>(Pääikkuna)"]
+    Scene["Scene<br>(Näkymä)"]
+    VBox["VBox<br>(Node)"]
+    Label["Label<br>text: Hello JavaFX"]
+    Button["Button<br>text: Click Me!"]
 
     Stage --- Scene
     Scene --- VBox

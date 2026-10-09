@@ -117,30 +117,20 @@ Kirjallisuudessa käytetään joskus yliluokka- ja aliluokka-termeistä myös ni
 
 Periytymistä voidaan kuvata alla olevan tapaisella kuviolla. Tässä `Henkilo` on yliluokka (superclass) ja `Opiskelija` ja `Opettaja` ovat aliluokkia (subclasses), jotka perivät `Henkilo`-luokan ominaisuudet ja metodit.
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo
 class Opiskelija
 class Opettaja
 
 Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
-@enduml
 ``` 
 
-Iso C-kirjain tarkoittaa, että kyseessä on luokka. Nuoli ylöspäin tarkoittaa
-perintää, eli aliluokka (nuolen tyvessä) perii yliluokan (nuolen kärjessä). Yllä
-oleva kuvio on tehty mukaillen niin sanottua UML-kuvauskieltä (engl. *Unified
-Modelling Language*). 
+Laatikko tarkoittaa luokkaa. Ylöspäin osoittava nuoli, jonka kärki on ontto
+kolmio, tarkoittaa perintää, eli aliluokka (nuolen tyvessä) perii yliluokan
+(nuolen kärjessä). Yllä oleva kuvio on tehty mukaillen niin sanottua
+UML-kuvauskieltä (engl. *Unified Modelling Language*). 
 
 ## Muodostajat ja super-avainsana
 
@@ -343,43 +333,34 @@ merkitään luokan nimen alle, ja metodit, myös muodostajat, vastaavasti ihan
 alimmaiseksi. Perittyjä attribuutteja metodeja, kuten tässä attribuutti `nimi`
 ja metodi `getNimi()`, ei yleensä merkitä kaavioon, paitsi jos ne
 ylikirjoitetaan aliluokassa&mdash;tästä lisää [Osassa 3.2](02-polymorfismi.md).
-Vihreä pallo tarkoittaa, että kyseessä on julkinen (public) attribuutti/metodi,
-ja punainen neliö, että kyseessä on yksityinen attribuutti/metodi. Tietojen
+Plusmerkki (`+`) nimen edessä tarkoittaa, että kyseessä on julkinen (public)
+attribuutti/metodi, ja miinusmerkki (`-`), että kyseessä on yksityinen
+(private) attribuutti/metodi. Tietojen
 merkitseminen kaavioon mahdollistaa rakenteiden kuvailemisen ilman, että
 tarvitsee sanallisesti kuvailla kaikkia yksityiskohtia.
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo {
-    - nimi : String
-    + Henkilo(nimi : String)
-    + getNimi() : String
+    -String nimi
+    +Henkilo(nimi: String)
+    +getNimi() String
 }
 class Opiskelija {
-    - kaynnissaOlevatKurssit : ArrayList<String>
-    + Opiskelija(nimi : String)
-    + ilmoittauduKurssille(kurssi : String) : void
-    + naytaKurssit() : void
+    -ArrayList~String~ kaynnissaOlevatKurssit
+    +Opiskelija(nimi: String)
+    +ilmoittauduKurssille(kurssi: String) void
+    +naytaKurssit() void
 }
 class Opettaja {
-    - opetettavatKurssit : ArrayList<String>
-    + Opettaja(nimi : String)
-    + lisaaKurssi(kurssi : String) : void
-    + naytaOpetettavatKurssit() : void
+    -ArrayList~String~ opetettavatKurssit
+    +Opettaja(nimi: String)
+    +lisaaKurssi(kurssi: String) void
+    +naytaOpetettavatKurssit() void
 }
 
 Henkilo <|-- Opiskelija
 Henkilo <|-- Opettaja
-@enduml
 ``` 
 
 Luokkahierarkia voi olla enemmänkin kuin kaksi tasoa syvä. Meillä voisi olla
@@ -391,53 +372,43 @@ opiskelijalla ei ole tutkinto-ohjelmaa. Toisaalta Avoimen opiskelijan täytyisi
 suorittaa maksu ennen kuin hän voi saada opintopisteitä. 
 
 Luokkahierarkia näyttäisi nyt seuraavalta. Merkitään tähänkin kuvioon
-attribuutit ja metodit mukaan. Tekstit menevät jo aika pieneksi, joten saat
-halutessasi kuvan auki uuteen välilehteen klikkaamalla sitä oikealla (tai
-Ctrl+klikkaamalla macOS:ssa) ja avaamalla kuvan uuteen välilehteen. 
+attribuutit ja metodit mukaan. Kaavio on jo aika leveä, joten saat
+halutessasi sen suuremmaksi klikkaamalla sitä. 
 
-```plantuml
-@startuml
-' --- Style: square corners, no compartments, theme-safe colors ---
-hide empty members
-skinparam class {
-    RoundCorner        0
-    BorderColor        #888888
-    BackgroundColor    transparent
-}
-skinparam arrowColor   #888888
-
+```mermaid
+classDiagram
 class Henkilo {
-    - nimi : String
-    + Henkilo(nimi : String)
-    + getNimi() : String
+    -String nimi
+    +Henkilo(nimi: String)
+    +getNimi() String
 }
 class Opiskelija {
-    - kaynnissaOlevatKurssit : ArrayList<String>
-    + Opiskelija(nimi : String)
-    + ilmoittauduKurssille(kurssi : String) : void
-    + naytaKurssit() : void
+    -ArrayList~String~ kaynnissaOlevatKurssit
+    +Opiskelija(nimi: String)
+    +ilmoittauduKurssille(kurssi: String) void
+    +naytaKurssit() void
 }
 class Opettaja {
-    - opetettavatKurssit : ArrayList<String>
-    + Opettaja(nimi : String)
-    + lisaaKurssi(kurssi : String) : void
-    + naytaOpetettavatKurssit() : void
+    -ArrayList~String~ opetettavatKurssit
+    +Opettaja(nimi: String)
+    +lisaaKurssi(kurssi: String) void
+    +naytaOpetettavatKurssit() void
 }
 class Sihteeri {
-    + Sihteeri(nimi : String)
-    + kirjaaSuoritus(opiskelija : Opiskelija, kurssi : String, pisteet : int) : void
+    +Sihteeri(nimi: String)
+    +kirjaaSuoritus(opiskelija: Opiskelija, kurssi: String, pisteet: int) void
 }
 class TutkintoOpiskelija {
-    - tutkintoOhjelma : String
-    + TutkintoOpiskelija(nimi : String, tutkintoOhjelma : String)
-    + naytaTutkintoOhjelma() : String
+    -String tutkintoOhjelma
+    +TutkintoOpiskelija(nimi: String, tutkintoOhjelma: String)
+    +naytaTutkintoOhjelma() String
 }
 
 class AvoinOpiskelija {
-    - maksujaMaksamatta : double
-    + AvoinOpiskelija(nimi : String)
-    + maksa(eur : double) : void
-    + ostaOpintoOikeus(String kurssi, double hinta) : boolean
+    -double maksujaMaksamatta
+    +AvoinOpiskelija(nimi: String)
+    +maksa(eur: double) void
+    +ostaOpintoOikeus(kurssi: String, hinta: double) boolean
 }
 
 Henkilo <|-- Opiskelija
@@ -445,8 +416,6 @@ Henkilo <|-- Opettaja
 Henkilo <|-- Sihteeri
 Opiskelija <|-- TutkintoOpiskelija
 Opiskelija <|-- AvoinOpiskelija
-
-@enduml
 ``` 
 
 Koska nuoli `TutkintoOpiskelija`-luokasta osoittaa `Opiskelija`-luokkaan ja

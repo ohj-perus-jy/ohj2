@@ -54,8 +54,9 @@ huomauttaa, jos `tyokalut/` on eri versiossa kuin haara odottaa.
   Sivustovalikkoa (`extra.sites`) ei ole, joten kurssin nimi on pelkkä linkki
   etusivulle. Teema, tyylit ja skriptit tulevat työkalujen
   `mkdocs-pohja.yml`:stä generoidun `nav.yml`:n kautta.
-- `cache/plantuml/`: luokkakaaviot, jotka `convert.py` hakee
-  PlantUML-palvelimelta (plantuml.com).
+- `cache/mermaid/`: mermaid-kaaviot (luokkakaaviot ym.), jotka `convert.py`
+  piirtää beautiful-mermaidilla (Node-paketti `tyokalut/mermaid/`, jonka
+  `convert.py` asentaa npm:llä; devcontainerin kuvassa Node on valmiina).
 - `cache/svgbob/`: bob-kaaviot (svgbob_cli 0.7.6, jonka `convert.py` asentaa
   cargolla; devcontainerin kuvassa Rust on valmiina).
 

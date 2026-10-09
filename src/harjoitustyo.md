@@ -82,30 +82,27 @@ Voit hyötyä ainakin seuraavista komponenteista:
 
 Tietomalli voi näyttää esimerkiksi seuraavalta.
 
-```plantuml
-@startuml
+```mermaid
+classDiagram
 class Kategoria {
-  - Boolean valttamaton
-  - String nimi
+  -Boolean valttamaton
+  -String nimi
 }
 
 class Tapahtuma {
-  - String nimi
-  - double summa
-  - LocalDate pvm
-  - Kategoria kategoria
+  -String nimi
+  -double summa
+  -LocalDate pvm
+  -Kategoria kategoria
 }
 
-
 class Seuranta {
-  - List<Kategoria> kategoriat
-  - List<Tapahtuma> tapahtumat
+  -List~Kategoria~ kategoriat
+  -List~Tapahtuma~ tapahtumat
 }
 
 Seuranta "1" --> "1..*" Kategoria : sisältää
 Seuranta "1" --> "1..*" Tapahtuma : sisältää
-
-@enduml
 ```
 
 Tällaisessa mallissa tieto siitä onko tapahtuma kulu vai meno voidaan ilmaista
@@ -176,35 +173,32 @@ Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostostapahtumi
    tietoihin, jolloin tuotteen muokkaaminen ei vaikuta vanhoihin ostotapahtumiin.
  * <i class="jyu-star"></i> Rivialennus tai ostostapahtumakohtainen alennus
 
-```plantuml
-@startuml
-
+```mermaid
+classDiagram
 class Tuote {
-    - String tunniste
-    - String nimi
-    - double hinta
+    -String tunniste
+    -String nimi
+    -double hinta
 }
 
 class Ostosrivi {
-    - String tuotteenTunniste
-    - int maara
+    -String tuotteenTunniste
+    -int maara
 }
 
 class Ostostapahtuma {
-    - LocalDateTime aika
-    - List<Ostosrivi> ostosrivit
+    -LocalDateTime aika
+    -List~Ostosrivi~ ostosrivit
 }
 
 class OstostapahtumaHallinta {
-    - List<Tuote> tuotteet
-    - List<Ostostapahtuma> ostostapahtumat
+    -List~Tuote~ tuotteet
+    -List~Ostostapahtuma~ ostostapahtumat
 }
 
 OstostapahtumaHallinta "1" --> "1..*" Tuote : sisältää
 OstostapahtumaHallinta "1" --> "1..*" Ostostapahtuma : sisältää
 Ostostapahtuma "1" --> "1..*" Ostosrivi : sisältää
-
-@enduml
 ```
 
 Kun käyttöliittymässä tehdään ostotapahtuma
@@ -253,31 +247,30 @@ Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Kirja` ja
 
 Esimerkki siitä, miltä JSON voisi näyttää. 
 
-```plantuml
-@startuml
-left to right direction
+```mermaid
+classDiagram
+direction LR
 
 class Lainaus {
-  - String lainaajaNimi
-  - LocalDateTime lainattuPvm
-  - LocalDateTime palautusPvm
-  - LocalDateTime palautettuPvm
+  -String lainaajaNimi
+  -LocalDateTime lainattuPvm
+  -LocalDateTime palautusPvm
+  -LocalDateTime palautettuPvm
 }
 
 class Kirja {
-  - String nimi
-  - String tekija
-  - String isbn
-  - List<Lainaus> lainaukset
+  -String nimi
+  -String tekija
+  -String isbn
+  -List~Lainaus~ lainaukset
 }
 
 class Kirjasto {
-  - List<Kirja> kirjat
+  -List~Kirja~ kirjat
 }
 
 Kirjasto "1" --> "1..*" Kirja : sisältää
 Kirja "1" --> "1..*" Lainaus : tehdään
-@enduml
 ``` 
 
 
@@ -309,29 +302,28 @@ Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Asunto` ja
 `Yhtio`-luokka. Tietomalli näyttää seuraavalta:
 
 
-```plantuml
-@startuml
-left to right direction
+```mermaid
+classDiagram
+direction LR
 
 class Asukas {
-  - String nimi
-  - String email
-  - int syntymavuosi
+  -String nimi
+  -String email
+  -int syntymavuosi
 }
 
 class Asunto {
-  - String tunniste
-  - List<Asukas> asukkaat
+  -String tunniste
+  -List~Asukas~ asukkaat
 }
 
 class Yhtio {
-  - String nimi
-  - List<Asunto> asunnot
+  -String nimi
+  -List~Asunto~ asunnot
 }
 
 Yhtio "1" --> "1..*" Asunto : sisältää
 Asunto "1" --> "1..*" Asukas : asuu
-@enduml
 ``` 
 
 Valmis sovellus voisi näyttää vaikkapa tältä. 
@@ -376,34 +368,35 @@ noudattaen](#tekniset-vaatimukset-ja-arviointi).
 
 Voit hyötyä seuraavista tietomalleista.
 
-```plantuml
-@startuml
+```mermaid
+classDiagram
 class Asukas {
-  - String nimi
-  - String email
-  - int syntymavuosi
+  -String nimi
+  -String email
+  -int syntymavuosi
 }
 
-enum LamminVaiKylma {
-  LAMMIN,
+class LamminVaiKylma {
+  <<enumeration>>
+  LAMMIN
   KYLMA
 }
 
 class Vesimittarilukema {
-  - LocalDate pvm
-  - LamminVaiKylma lamminVaiKylma
-  - double lukema
+  -LocalDate pvm
+  -LamminVaiKylma lamminVaiKylma
+  -double lukema
 }
 
 class Asunto {
-  - int numero
-  - List<Asukas> asukkaat
-  - List<Vesimittarilukema> vesimittarilukemat
+  -int numero
+  -List~Asukas~ asukkaat
+  -List~Vesimittarilukema~ vesimittarilukemat
 }
 
 class Yhtio {
-  - String nimi
-  - List<Asunto> asunnot
+  -String nimi
+  -List~Asunto~ asunnot
 }
 ```
 </details>
@@ -445,23 +438,23 @@ Sovellus sisältää kaksi oleellista tietomallin kohdetta: `Kortti` ja
 `Korttipakka`. Lisäksi tietomallissa on kaikkia korttipakkoja hallinnoiva
 `Korttipakkakokoelma`-luokka. Tietomalli näyttää siten seuraavalta:
 
-```plantuml
-@startuml
-left to right direction
+```mermaid
+classDiagram
+direction LR
 
 class Korttipakkakokoelma {
-  - List<Korttipakka> pakat
+  -List~Korttipakka~ pakat
 }
 
 class Kortti {
-  - String termi
-  - String selitys
+  -String termi
+  -String selitys
 }
 
 class Korttipakka {
-  - String otsikko
-  - String kuvaus
-  - List<Kortti> kortit
+  -String otsikko
+  -String kuvaus
+  -List~Kortti~ kortit
 }
 
 Korttipakka "1" -- "1..*" Kortti : sisältää

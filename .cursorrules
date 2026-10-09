@@ -66,7 +66,7 @@
   - `<handout>` containing `{{#include ...}}`.
   - `<task-link>` to TIM.
 - **Visuals:**
-  - Diagrams: ` ```plantuml `, ` ```mermaid ` or ` ```bob `. After a new or changed diagram, run `./zensical/run.sh build` and commit `zensical/cache/`.
+  - Diagrams: ` ```mermaid ` (class diagrams in `classDiagram` syntax) or ` ```bob `; PlantUML is no longer used. After a new or changed diagram, run `./zensical/run.sh build` and commit `zensical/cache/`.
   - Multimedia: `<video src="..." controls></video>` or `<asciinema src="..." ...></asciinema>`.
   - Images: `![alt](path)` or `<img>` tag for size control.
 

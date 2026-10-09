@@ -177,38 +177,40 @@ implements Verkkovirtalaite {
 
 Luokkahierarkia näyttäisi seuraavanlaiselta.
 
-```plantuml
-@startuml
-interface Verkkovirtalaite {
+```mermaid
+classDiagram
+class Verkkovirtalaite {
+    <<interface>>
     +kytkeVirta()
 }
 
-abstract class Keittiolaite {
-    -lammittava : boolean
-    +puhdista() : void {abstract}
+class Keittiolaite {
+    <<abstract>>
+    -boolean lammittava
+    +puhdista()* void
 }
 
-abstract class Tyokalu {
-    -kayttotunnit : int
-    +kayta(tunnit : int) : void
-    +huolla() : boolean {abstract}
+class Tyokalu {
+    <<abstract>>
+    -int kayttotunnit
+    +kayta(tunnit: int) void
+    +huolla()* boolean
 }
 
 class Leivanpaahdin {
-    +kytkeVirta() : void
-    +puhdista() : void
+    +kytkeVirta() void
+    +puhdista() void
 }
 
 class Sirkkeli {
-    +kytkeVirta() : void
-    +huolla() : boolean
+    +kytkeVirta() void
+    +huolla() boolean
 }
 
 Keittiolaite <|-- Leivanpaahdin
 Tyokalu <|-- Sirkkeli
 Verkkovirtalaite <|.. Leivanpaahdin
 Verkkovirtalaite <|.. Sirkkeli
-@enduml
 ```
 
 Tämä on tärkein kohta ymmärryksen kannalta: Pistorasia on luokka, joka
