@@ -244,16 +244,17 @@ rakenne voitaisiin mallintaa seuraavasti:
 flowchart TD
     Stage["Stage<br>(Pääikkuna)"]
     Scene["Scene<br>(Näkymä)"]
+
+    subgraph "UI-komponentit (Node)"
     VBox["VBox<br>(Node)"]
     Label["Label<br>text: Hello JavaFX"]
     Button["Button<br>text: Click Me!"]
-
-    Stage --- Scene
-    Scene --- VBox
-    subgraph "UI-komponentit (Node)"
     VBox --- Label
     VBox --- Button
     end
+
+    Stage --- Scene
+    Scene --- VBox
 ```
 
 
