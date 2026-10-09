@@ -34,15 +34,15 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Soitin" data-to="Kitara" data-type="inheritance" data-marker-at="from" points="100,108 100,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Soitin" data-to="Piano" data-type="inheritance" data-marker-at="from" points="140,108 140,118 260,118 260,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Soitin" data-to="Kitara" data-type="inheritance" data-marker-at="from" points="160,108 160,118 100,118 100,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Soitin" data-to="Piano" data-type="inheritance" data-marker-at="from" points="200,108 200,118 260,118 260,168" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Soitin" data-label="Soitin">
-  <rect x="60" y="40" width="120" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="60" y="40" width="120" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="120" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Soitin</text>
-  <line x1="60" y1="72" x2="180" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <line x1="60" y1="80" x2="180" y2="80" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="68" y="94" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">soita()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <rect x="120" y="40" width="120" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="120" y="40" width="120" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="180" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Soitin</text>
+  <line x1="120" y1="72" x2="240" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="120" y1="80" x2="240" y2="80" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="128" y="94" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">soita()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
 </g>
 <g class="class-node" data-id="Kitara" data-label="Kitara">
   <rect x="40" y="168" width="120" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

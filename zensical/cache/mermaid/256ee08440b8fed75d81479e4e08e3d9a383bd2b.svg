@@ -34,8 +34,8 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Seuranta" data-to="Kategoria" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="120.6,128 120.6,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
-<polyline class="class-relationship" data-from="Seuranta" data-to="Tapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="189.73333333333332,128 189.73333333333332,138 321.79999999999995,138 321.79999999999995,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="Seuranta" data-to="Kategoria" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="186.63333333333333,128 186.63333333333333,138 120.6,138 120.6,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
+<polyline class="class-relationship" data-from="Seuranta" data-to="Tapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="255.76666666666665,128 255.76666666666665,138 321.79999999999995,138 321.79999999999995,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#cls-arrow)" />
 <g class="class-node" data-id="Kategoria" data-label="Kategoria">
   <rect x="40" y="268.3" width="161.2" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="40" y="268.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
@@ -57,18 +57,18 @@
   <line x1="241.2" y1="388.3" x2="402.4" y2="388.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
 </g>
 <g class="class-node" data-id="Seuranta" data-label="Seuranta">
-  <rect x="51.46666666666667" y="40" width="207.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="51.46666666666667" y="40" width="207.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="155.16666666666669" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Seuranta</text>
-  <line x1="51.46666666666667" y1="72" x2="258.8666666666667" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="59.46666666666667" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoriat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Kategoria~</tspan></text>
-  <text x="59.46666666666667" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tapahtumat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Tapahtuma~</tspan></text>
-  <line x1="51.46666666666667" y1="120" x2="258.8666666666667" y2="120" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <rect x="117.5" y="40" width="207.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="117.5" y="40" width="207.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="221.2" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Seuranta</text>
+  <line x1="117.5" y1="72" x2="324.9" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="125.5" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoriat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Kategoria~</tspan></text>
+  <text x="125.5" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tapahtumat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List~Tapahtuma~</tspan></text>
+  <line x1="117.5" y1="120" x2="324.9" y2="120" stroke="var(--_node-stroke)" stroke-width="0.75" />
 </g>
 <text x="95.36099999999999" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
-<text x="106.6" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="172.63333333333333" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
 <text x="106.6" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
 <text x="348.03899999999993" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
-<text x="175.73333333333332" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="241.76666666666665" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
 <text x="307.79999999999995" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
 </svg>

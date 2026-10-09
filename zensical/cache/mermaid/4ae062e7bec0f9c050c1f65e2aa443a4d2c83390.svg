@@ -34,17 +34,17 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Laite" data-to="Valo" data-type="inheritance" data-marker-at="from" points="162.54999999999998,124 162.54999999999998,144 321.79999999999995,144 321.79999999999995,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Laite" data-to="Turvakamera" data-type="inheritance" data-marker-at="from" points="204.5,124 204.5,134 536.2,134 536.2,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Laite" data-to="Kahvinkeitin" data-type="inheritance" data-marker-at="from" points="120.6,124 120.6,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Valo" data-type="inheritance" data-marker-at="from" points="321.79999999999995,124 321.79999999999995,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Turvakamera" data-type="inheritance" data-marker-at="from" points="363.75,124 363.75,134 536.2,134 536.2,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Laite" data-to="Kahvinkeitin" data-type="inheritance" data-marker-at="from" points="279.84999999999997,124 279.84999999999997,134 120.6,134 120.6,184" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Laite" data-label="Laite" data-annotation="abstract">
-  <rect x="78.65" y="40" width="167.79999999999998" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="78.65" y="40" width="167.79999999999998" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="162.55" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
-  <text x="162.55" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Laite</text>
-  <line x1="78.65" y1="88" x2="246.45" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <line x1="78.65" y1="96" x2="246.45" y2="96" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="86.65" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">vaihdaTilaa()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* void</tspan></text>
+  <rect x="237.89999999999998" y="40" width="167.79999999999998" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="237.89999999999998" y="40" width="167.79999999999998" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="321.79999999999995" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="321.79999999999995" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Laite</text>
+  <line x1="237.89999999999998" y1="88" x2="405.69999999999993" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="237.89999999999998" y1="96" x2="405.69999999999993" y2="96" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="245.89999999999998" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">vaihdaTilaa()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* void</tspan></text>
 </g>
 <g class="class-node" data-id="Valo" data-label="Valo">
   <rect x="241.2" y="184" width="161.2" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

@@ -34,10 +34,10 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Keittiolaite" data-to="Leivanpaahdin" data-type="inheritance" data-marker-at="from" points="504.90000000000003,164 504.90000000000003,174 396.93333333333334,174 396.93333333333334,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Tyokalu" data-to="Sirkkeli" data-type="inheritance" data-marker-at="from" points="133.8,164 133.8,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Leivanpaahdin" data-type="realization" data-marker-at="from" points="347.6,164 347.59999999999997,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Sirkkeli" data-type="realization" data-marker-at="from" points="307.6,164 307.6,174 183.13333333333333,174 183.13333333333333,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Keittiolaite" data-to="Leivanpaahdin" data-type="inheritance" data-marker-at="from" points="504.90000000000003,164 504.90000000000003,174 450.9166666666667,174 450.9166666666667,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tyokalu" data-to="Sirkkeli" data-type="inheritance" data-marker-at="from" points="133.8,164 133.8,174 196.03333333333333,174 196.03333333333333,224" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Leivanpaahdin" data-type="realization" data-marker-at="from" points="347.6,164 347.6,174 401.5833333333333,174 401.5833333333333,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Verkkovirtalaite" data-to="Sirkkeli" data-type="realization" data-marker-at="from" points="307.6,164 307.6,174 245.36666666666667,174 245.36666666666667,224" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="6 4" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Verkkovirtalaite" data-label="Verkkovirtalaite" data-annotation="interface">
   <rect x="267.6" y="80" width="120" height="84" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
   <rect x="267.6" y="80" width="120" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
@@ -69,22 +69,22 @@
   <text x="48" y="150" class="mono" dy="0.35em" font-size="11" font-weight="400" font-style="italic"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">huolla()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">* boolean</tspan></text>
 </g>
 <g class="class-node" data-id="Leivanpaahdin" data-label="Leivanpaahdin">
-  <rect x="298.26666666666665" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="298.26666666666665" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="372.26666666666665" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Leivanpaahdin</text>
-  <line x1="298.26666666666665" y1="256" x2="446.26666666666665" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <line x1="298.26666666666665" y1="264" x2="446.26666666666665" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="306.26666666666665" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
-  <text x="306.26666666666665" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">puhdista()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <rect x="352.25" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="352.25" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="426.25" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Leivanpaahdin</text>
+  <line x1="352.25" y1="256" x2="500.25" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="352.25" y1="264" x2="500.25" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="360.25" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="360.25" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">puhdista()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
 </g>
 <g class="class-node" data-id="Sirkkeli" data-label="Sirkkeli">
-  <rect x="84.46666666666667" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="84.46666666666667" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="158.46666666666667" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Sirkkeli</text>
-  <line x1="84.46666666666667" y1="256" x2="232.46666666666667" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <line x1="84.46666666666667" y1="264" x2="232.46666666666667" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="92.46666666666667" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
-  <text x="92.46666666666667" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">huolla()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <rect x="146.7" y="224" width="148" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="146.7" y="224" width="148" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="220.7" y="240" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Sirkkeli</text>
+  <line x1="146.7" y1="256" x2="294.7" y2="256" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="146.7" y1="264" x2="294.7" y2="264" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="154.7" y="278" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kytkeVirta()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="154.7" y="298" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">huolla()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
 </g>
 
 

@@ -34,20 +34,20 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Tuote" data-to="Elektroniikka" data-type="inheritance" data-marker-at="from" points="391.19999999999993,168 391.19999999999993,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Tuote" data-to="Ruoka" data-type="inheritance" data-marker-at="from" points="475.7333333333333,168 475.7333333333333,178 1067.6,178 1067.6,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tuote" data-to="Elektroniikka" data-type="inheritance" data-marker-at="from" points="687.1333333333332,168 687.1333333333332,178 391.19999999999993,178 391.19999999999993,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Tuote" data-to="Ruoka" data-type="inheritance" data-marker-at="from" points="771.6666666666665,168 771.6666666666665,178 1067.6,178 1067.6,228" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <polyline class="class-relationship" data-from="Elektroniikka" data-to="Puhelin" data-type="inheritance" data-marker-at="from" points="391.19999999999993,336 391.2,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <polyline class="class-relationship" data-from="Ruoka" data-to="Pakaste" data-type="inheritance" data-marker-at="from" points="1067.6,336 1067.6,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Tuote" data-label="Tuote">
-  <rect x="306.66666666666663" y="40" width="253.6" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="306.66666666666663" y="40" width="253.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="433.46666666666664" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tuote</text>
-  <line x1="306.66666666666663" y1="72" x2="560.2666666666667" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="314.66666666666663" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
-  <text x="314.66666666666663" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">hinta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
-  <line x1="306.66666666666663" y1="120" x2="560.2666666666667" y2="120" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="314.66666666666663" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Tuote(nimi: String, hinta: double)</tspan></text>
-  <text x="314.66666666666663" y="154" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">tulostaTiedot()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <rect x="602.5999999999999" y="40" width="253.6" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="602.5999999999999" y="40" width="253.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="729.3999999999999" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tuote</text>
+  <line x1="602.5999999999999" y1="72" x2="856.1999999999999" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="610.5999999999999" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="610.5999999999999" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)"># </tspan><tspan fill="var(--_text-sec)">hinta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="602.5999999999999" y1="120" x2="856.1999999999999" y2="120" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="610.5999999999999" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Tuote(nimi: String, hinta: double)</tspan></text>
+  <text x="610.5999999999999" y="154" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">tulostaTiedot()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
 </g>
 <g class="class-node" data-id="Elektroniikka" data-label="Elektroniikka">
   <rect x="165.39999999999998" y="228" width="451.59999999999997" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

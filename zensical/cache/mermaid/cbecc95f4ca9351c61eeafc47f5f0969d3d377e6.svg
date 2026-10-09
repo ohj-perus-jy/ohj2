@@ -34,17 +34,17 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="193.2,148 193.2,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="249.13333333333333,148 249.13333333333333,158 523.0999999999999,158 523.0999999999999,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="330.1833333333333,148 330.1833333333333,158 193.2,158 193.2,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="386.1166666666666,148 386.1166666666666,158 523.0999999999999,158 523.0999999999999,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Henkilo" data-label="Henkilo">
-  <rect x="137.26666666666665" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="137.26666666666665" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="221.16666666666663" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Henkilo</text>
-  <line x1="137.26666666666665" y1="72" x2="305.0666666666666" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="145.26666666666665" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
-  <line x1="137.26666666666665" y1="100" x2="305.0666666666666" y2="100" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="145.26666666666665" y="114" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Henkilo(nimi: String)</tspan></text>
-  <text x="145.26666666666665" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getNimi()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <rect x="274.25" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="274.25" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="358.15" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Henkilo</text>
+  <line x1="274.25" y1="72" x2="442.04999999999995" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="282.25" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="274.25" y1="100" x2="442.04999999999995" y2="100" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="282.25" y="114" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Henkilo(nimi: String)</tspan></text>
+  <text x="282.25" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getNimi()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
 </g>
 <g class="class-node" data-id="Opiskelija" data-label="Opiskelija">
   <rect x="40" y="208" width="306.4" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />

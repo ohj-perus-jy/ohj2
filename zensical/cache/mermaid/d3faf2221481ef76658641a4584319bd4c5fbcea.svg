@@ -34,20 +34,20 @@
     <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
   </marker>
 </defs>
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="1038.75,148 1038.75,168 750.8,168 750.8,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="1080.6999999999998,148 1080.6999999999998,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Henkilo" data-to="Sihteeri" data-type="inheritance" data-marker-at="from" points="996.8,148 996.7999999999998,158 298.79999999999995,158 298.79999999999995,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Opiskelija" data-to="TutkintoOpiskelija" data-type="inheritance" data-marker-at="from" points="699.7333333333332,336 699.7333333333332,346 359.76666666666654,346 359.7666666666666,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
-<polyline class="class-relationship" data-from="Opiskelija" data-to="AvoinOpiskelija" data-type="inheritance" data-marker-at="from" points="801.8666666666666,336 801.8666666666666,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opiskelija" data-type="inheritance" data-marker-at="from" points="750.7999999999998,148 750.8,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Opettaja" data-type="inheritance" data-marker-at="from" points="792.7499999999999,148 792.7499999999999,158 1080.6999999999998,158 1080.6999999999998,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Henkilo" data-to="Sihteeri" data-type="inheritance" data-marker-at="from" points="708.8499999999999,148 708.8499999999999,158 298.79999999999995,158 298.79999999999995,208" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Opiskelija" data-to="TutkintoOpiskelija" data-type="inheritance" data-marker-at="from" points="699.7333333333332,336 699.7333333333332,346 529.75,346 529.75,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
+<polyline class="class-relationship" data-from="Opiskelija" data-to="AvoinOpiskelija" data-type="inheritance" data-marker-at="from" points="801.8666666666666,336 801.8666666666666,346 971.8499999999999,346 971.8499999999998,396" fill="none" stroke="var(--_line)" stroke-width="1" marker-start="url(#cls-inherit)" />
 <g class="class-node" data-id="Henkilo" data-label="Henkilo">
-  <rect x="954.8499999999999" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="954.8499999999999" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="1038.75" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Henkilo</text>
-  <line x1="954.8499999999999" y1="72" x2="1122.6499999999999" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="962.8499999999999" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
-  <line x1="954.8499999999999" y1="100" x2="1122.6499999999999" y2="100" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="962.8499999999999" y="114" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Henkilo(nimi: String)</tspan></text>
-  <text x="962.8499999999999" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getNimi()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <rect x="666.8999999999999" y="40" width="167.79999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="666.8999999999999" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="750.7999999999998" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Henkilo</text>
+  <line x1="666.8999999999999" y1="72" x2="834.6999999999998" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="674.8999999999999" y="86" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="666.8999999999999" y1="100" x2="834.6999999999998" y2="100" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="674.8999999999999" y="114" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">Henkilo(nimi: String)</tspan></text>
+  <text x="674.8999999999999" y="134" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">getNimi()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
 </g>
 <g class="class-node" data-id="Opiskelija" data-label="Opiskelija">
   <rect x="597.5999999999999" y="208" width="306.4" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
@@ -81,25 +81,25 @@
   <text x="48" y="282" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">kirjaaSuoritus(opiskelija: Opiskelija, kurssi: String, pisteet: int)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
 </g>
 <g class="class-node" data-id="TutkintoOpiskelija" data-label="TutkintoOpiskelija">
-  <rect x="157.0666666666666" y="396" width="405.4" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="157.0666666666666" y="396" width="405.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="359.7666666666666" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">TutkintoOpiskelija</text>
-  <line x1="157.0666666666666" y1="428" x2="562.4666666666666" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="165.0666666666666" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tutkintoOhjelma</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
-  <line x1="157.0666666666666" y1="456" x2="562.4666666666666" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="165.0666666666666" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">TutkintoOpiskelija(nimi: String, tutkintoOhjelma: String)</tspan></text>
-  <text x="165.0666666666666" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">naytaTutkintoOhjelma()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <rect x="327.04999999999995" y="396" width="405.4" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="327.04999999999995" y="396" width="405.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="529.75" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">TutkintoOpiskelija</text>
+  <line x1="327.04999999999995" y1="428" x2="732.4499999999999" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="335.04999999999995" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tutkintoOhjelma</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <line x1="327.04999999999995" y1="456" x2="732.4499999999999" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="335.04999999999995" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">TutkintoOpiskelija(nimi: String, tutkintoOhjelma: String)</tspan></text>
+  <text x="335.04999999999995" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">naytaTutkintoOhjelma()</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
 </g>
 <g class="class-node" data-id="AvoinOpiskelija" data-label="AvoinOpiskelija">
-  <rect x="602.4666666666666" y="396" width="398.8" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <rect x="602.4666666666666" y="396" width="398.8" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
-  <text x="801.8666666666666" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">AvoinOpiskelija</text>
-  <line x1="602.4666666666666" y1="428" x2="1001.2666666666667" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="610.4666666666666" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">maksujaMaksamatta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
-  <line x1="602.4666666666666" y1="456" x2="1001.2666666666667" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
-  <text x="610.4666666666666" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">AvoinOpiskelija(nimi: String)</tspan></text>
-  <text x="610.4666666666666" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">maksa(eur: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
-  <text x="610.4666666666666" y="510" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">ostaOpintoOikeus(kurssi: String, hinta: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
+  <rect x="772.4499999999998" y="396" width="398.8" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="772.4499999999998" y="396" width="398.8" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="971.8499999999998" y="412" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">AvoinOpiskelija</text>
+  <line x1="772.4499999999998" y1="428" x2="1171.2499999999998" y2="428" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="780.4499999999998" y="442" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">maksujaMaksamatta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <line x1="772.4499999999998" y1="456" x2="1171.2499999999998" y2="456" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="780.4499999999998" y="470" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">AvoinOpiskelija(nimi: String)</tspan></text>
+  <text x="780.4499999999998" y="490" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">maksa(eur: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">void</tspan></text>
+  <text x="780.4499999999998" y="510" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">+ </tspan><tspan fill="var(--_text-sec)">ostaOpintoOikeus(kurssi: String, hinta: double)</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">boolean</tspan></text>
 </g>
 
 
