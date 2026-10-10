@@ -34,9 +34,9 @@ kuvaillaan olion rakenne.
 Olioiden tehtävä on olla vastuussa oman vastuualueensa toiminnallisuuksista. 
 Olioiden välinen yhteistoiminta ja kommunikointi metodikutsujen kautta on 
 olio-ohjelmoinnissa keskeisessä osassa. Joissain ohjelmointikielissä tätä 
-saatetaan kutsutaan viestinvälitykseksi.
+saatetaan kutsua viestinvälitykseksi.
 
-Minimaalinen, olioita hyödyntävä ohjelma voisi näyttää esimeriksi tältä:
+Minimaalinen, olioita hyödyntävä ohjelma voisi näyttää esimerkiksi tältä:
 
 ```java
 class Kissa {
@@ -67,7 +67,7 @@ Esimerkissä määritellään ensin `Kissa`-luokka ja luodaan sitten pääohjelm
 sen pohjalta olioita, jotka sisältävät attribuuttina merkkijonon `nimi` sekä
 kaksi metodia. Olion nimeä voidaan muuttaa kutsumalla sen `setNimi`-metodia ja
 se voidaan pyytää vastaavasti `getNimi`-metodilla. Molemmilla olioilla on oma
-tilansa - eli oma nimi. Yhden olion tila ei vaikuta toisen olion tilaan. 
+tilansa — eli oma nimi. Yhden olion tila ei vaikuta toisen olion tilaan. 
 
 Tästä yksinkertaisesta esimerkistä näemme, kuinka data voidaan ryhmitellä
 olioiden sisälle. Tässä tapauksessa olion ainoa attribuutti `nimi` on suoraan

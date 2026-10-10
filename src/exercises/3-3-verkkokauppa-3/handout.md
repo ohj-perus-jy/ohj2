@@ -1,7 +1,3 @@
-EDIT 30.1.2026: UML-kaavio korjattu vastaamaan tehtävänantoa
-
-EDIT 29.1.2026: UML päivitetty vastaamaan tehtävänantoa
-
 Laajenna aiemmin tekemääsi verkkokaupan luokkahierarkiaa alla olevan UML-kaavion
 mukaisesti. Saat kuvan suuremmaksi klikkaamalla sitä.
 

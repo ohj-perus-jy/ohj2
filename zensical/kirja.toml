@@ -12,5 +12,6 @@ rikkinaiset_kuvat = ["osa4/images/adventure.png"]
 [puhe]
 sivut = [
     "osa1/02-muuttujat-ja-tietotyypit.md",
+    "osa2/02-luokka-ja-olio.md",
 ]
 repo = "https://github.com/ohj-perus-jy/ohj2-puhe.git"

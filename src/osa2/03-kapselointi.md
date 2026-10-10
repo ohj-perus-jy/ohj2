@@ -4,7 +4,7 @@
 >
 > - Tiedät, mitä näkyvyysmääreet kuten `public` ja `private` tarkoittavat.
 > - Ymmärrät, että metodit ovat olioiden pääasiallinen tapa viestiä.
-> - Ymmärrät kapseloinnin periaateet ja hyödyt, ja miten olion sisäinen toteutus
+> - Ymmärrät kapseloinnin periaatteet ja hyödyt, ja miten olion sisäinen toteutus
 >   eroaa sen ulkoisesta käytöstä. 
 > - Osaat toteuttaa ohjelman, jossa oliot toimivat yhdessä niin, että ne
 >   eivät ole riippuvaisia toistensa sisäisestä toteutuksesta.
@@ -33,7 +33,7 @@ eri näkyvyysmääreiden vaikutuksista; Oletus-rivi viittaa
 Ensimmäinen sarake ("luokka") ilmaisee, onko luokan oliolla itsellään pääsy
 määritellyn näkyvyystason jäseneen. Kuten näet, oliolla on aina pääsy omiin
 jäseniinsä. Toinen sarake ("pakkaus") ilmaisee, onko muilla samassa pakkauksessa
-olevilla oliolla pääsy jäseneen. Kolmas sarake ("aliluokka") ilmaisee, onko
+olevilla olioilla pääsy jäseneen. Kolmas sarake ("aliluokka") ilmaisee, onko
 luokasta perityillä aliluokan olioilla, jotka sijaitsevat pakkauksen
 ulkopuolella, pääsy jäseneen. Neljäs sarake ilmaisee, onko millä tahansa oliolla
 pääsy jäseneen. 
@@ -47,7 +47,7 @@ tahalliset tai tahattomat väärinkäytökset luokan jäseniin. Erityisesti julk
 attribuuttien kohdalla tulisi pohtia tarkkaan, onko niille todella tarvetta,
 sillä ne altistavat luokan sisäisen tilan suoraan ulkopuolisille. Tällä
 opintojaksolla pyrimme suunnittelemaan ohjelmat niin, ettei julkisia
-attribuutteja -- poislukien vakiot -- tarvita.
+attribuutteja — poislukien vakiot — tarvita.
 
 > [!HUOMAUTUS]
 > Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia
@@ -265,7 +265,7 @@ tarvitse tietää. Tällaisten toteutusyksityiskohtien piilottamisen tavoite on
 helpottaa ohjelmoijan työtä; kun luokan toteutusyksityiskohdat ovat piilotettuja
 ja tilaa käsitellään vain julkisen rajapinnan kautta, luokan sisäiseen
 toimintaan voidaan helpommin tehdä muutoksia niin, että luokan käyttäjä ei edes
-huomaa niiden tapahtuneen. Tämä on yksi kapseloinnin suurimmista höydyistä. 
+huomaa niiden tapahtuneen. Tämä on yksi kapseloinnin suurimmista hyödyistä. 
 
 Lisätään `Auto`-luokalle muutama metodi yksinkertaista julkista rajapintaa
 varten. Piilotetaan myös attribuutit, että emme voi muuttaa auton tilaa enää
@@ -355,7 +355,7 @@ class Rengas {
 // FILE_END
 ```
 
-Piilotimme `Auto`-luokan attribuutit `private`-näkyvyymääritteellä ja auton
+Piilotimme `Auto`-luokan attribuutit `private`-näkyvyysmääreellä ja auton
 tilaa käsitellään nyt yksinkertaisten saantimetodien avulla. Siirsimme myös
 tulostamisen luokan vastuulle. Meidän tulisi tehdä vielä samanlaiset muutokset
 `Moottori` ja `Rengas` -luokille, jotta voimme käyttää niiden julkisia
@@ -510,7 +510,7 @@ yhteistyötä. Nyt kun olemme myös oppineet kapseloinnin periaatteista, voimme
 käyttää niitä organisoimaan ohjelmakoodia fiksummin. 
 
 Oliot voivat toimia yhdessä eri tavoin. Oliot voivat esimerkiksi sisältää toisia 
-olioita - tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu 
+olioita — tai tarkemmin ilmaistuna viitteitä toisiin olioihin. Kun olio koostuu 
 olioista, joista jokainen tuo oman toiminnallisuutensa, tätä kutsutaan usein
 *kompositioksi*. Oliot voivat kutsua toistensa metodeja ja näin delegoida tehtäviä
 toiselle oliolle, jolle tehtävän vastuu kuuluu, tai kommunikoida esimerkiksi
