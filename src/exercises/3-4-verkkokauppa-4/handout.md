@@ -1,11 +1,3 @@
-EDIT 29.1.2026: Kiitos palautteestanne. Poistin selityksen puhelimen tietojen
-tulostamisesta. Tämän tehtävän tavoitteena on harjoitella `toString()`-metodin
-ylikirjoittamista. Jos vielä on epäselvyyksiä, niin älkää epäröikö laittaa
-palauteboksiin kommenttia tai sähköpostia.
-
-EDIT 29.1.2026: Luokan `SahkoAuto` nimi muutettu `Sahkoauto`-muotoon, kuten
-TIMissäkin oli.
-
 Luokissa `Tuote`, `Elektroniikka` ja `Puhelin` ylikirjoita metodi `toString()`,
 jossa kutsut ensimmäisenä yliluokan `toString()`-metodia, ja sen jälkeen yhdistä
 merkkijonoon luokan omista attribuuteista tietoja.
