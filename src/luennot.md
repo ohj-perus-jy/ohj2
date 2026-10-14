@@ -16,17 +16,3 @@ Luentonauhoitteet julkaistaan YouTubessa ja Moniviestimessä.
 | Luento 8: JavaFX, osa 2                  | ma 2.3.2026 klo 14.15  | [Ag Auditorio 3](https://navi.jyu.fi/space/m119006) | [YouTube (T8.1-T8.2)](https://youtube.com/live/2yU6bnUK3KY?feature=share), [Moniviestin (T8.1-T8.2)](https://moniviestin.jyu.fi/fi/ohjelmat/tiep111-ohjelmointi-2-kevat-2026/luento-8-osa-1), [YouTube (T8.2-T8.8)](https://youtu.be/IT5RDo1qtR8), [Moniviestin (T8.2-T8.8)](https://moniviestin.jyu.fi/fi/ohjelmat/tiep111-ohjelmointi-2-kevat-2026/luento-8-osa-2) |                                                                                                                                                                                                               |
 | Luento 9: Harjoitustyö, vaihe 1          | ma 9.3.2026 klo 14.15  | [Ag Auditorio 3](https://navi.jyu.fi/space/m119006) | [YouTube](https://youtube.com/live/CbdLhRUMBWk?feature=share), [Moniviestin](https://moniviestin.jyu.fi/fi/ohjelmat/tiep111-ohjelmointi-2-kevat-2026/luento-9)                                                                                                                                                                                                       |                                                                                                                                                                                                               |
 
-## Kyselytunnit
-
-Kyselytunti järjestetään joka viikko luentojen jälkeen klo 16.00–17.00 alkaen
-maanantaista 19.1.2026. Kyselytunteja pidetään viimeiseen luentoon asti.
-
-Kyselytunnilla vastuuopettajat päivystävät luentosalissa ja opintojakson
-Teams-kanavalla ja vastaavat opiskelijoiden kysymyksiin. Tilaisuus on
-luonteeltaan vapaamuotoinen, eli ennalta määrättyä ohjelmaa ei ole, eikä
-tilaisuutta nauhoiteta. Voit tulla paikalle kysyäksesi mieltäsi askarruttavista
-asioista liittyen luentoihin, harjoitustehtäviin tai harjoitustyöhön.
-Kyselytunti ei ole kuitenkaan tarkoitettu harjoitustyön hyväksymiseen tai
-harjoitustehtävien pistekorjauksiin. Näissä kysymyksissä ota yhteyttä opettajiin
-sähköpostitse. 
-
