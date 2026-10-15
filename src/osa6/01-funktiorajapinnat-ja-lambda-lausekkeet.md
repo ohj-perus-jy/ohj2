@@ -1,14 +1,14 @@
 # Funktiorajapinnat ja lambdalausekkeet
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät funktionaalisen rajapinnan käsitteen
-> - Osaat käyttää lambdalausekkeita ja funktioviitteitä funktiorajapintojen
->   toteuttamiseen
-> - Tunnet Javan yleisimmät valmiit funktiorajapinnat (esim. `Function`,
->   `Consumer`)
-> - Osaat määrittää olioille vaihtoehtoisia järjestyksiä `Comparator`-rajapinnan
->   ja lambdalausekkeiden avulla
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät funktionaalisen rajapinnan käsitteen
+    - Osaat käyttää lambdalausekkeita ja funktioviitteitä funktiorajapintojen
+      toteuttamiseen
+    - Tunnet Javan yleisimmät valmiit funktiorajapinnat (esim. `Function`,
+      `Consumer`)
+    - Osaat määrittää olioille vaihtoehtoisia järjestyksiä `Comparator`-rajapinnan
+      ja lambdalausekkeiden avulla
 
 *Funktionaalinen rajapinta* (engl. *functional interface*) on rajapinta, joka
 sisältää vain yhden pakollisen metodin. Sen tarkoituksena on edustaa yksittäistä

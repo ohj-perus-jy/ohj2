@@ -1,7 +1,8 @@
 # JavaFX perusteet
 
-> [!Osaamistavoitteet]
-> - Ymmärrät JavaFX-sovelluksen rakenteen
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät JavaFX-sovelluksen rakenteen
 
 Olemme tähän saakka tehneet komentorivisovelluksia ja lähinnä tulostaneet
 tekstiä ruudulle. Graafinen käyttöliittymä (GUI) on kuitenkin monille ohjelmille

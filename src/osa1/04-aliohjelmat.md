@@ -1,11 +1,11 @@
 # Aliohjelmat
 
-> [!Osaamistavoitteet]
->
-> - Osaat määritellä aliohjelman 
-> - Osaat käsitellä tietoa aliohjelmien avulla
-> - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron aliohjelmaa kutsuttaessa
-> - Osaat dokumentoida aliohjelman
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat määritellä aliohjelman 
+    - Osaat käsitellä tietoa aliohjelmien avulla
+    - Ymmärrät Javan perustietotyyppien ja viitetyyppien eron aliohjelmaa kutsuttaessa
+    - Osaat dokumentoida aliohjelman
 
 Aliohjelma on ohjelman osa, joka suorittaa tietyn tehtävän. Aliohjelmat
 helpottavat ohjelman jäsentämistä, sillä niiden avulla ohjelma voidaan jakaa
@@ -357,22 +357,22 @@ Näyttääkö tutulta? Vertaa esimerkiksi [Javan dokumentaatioon IO-luokasta](ht
 
 </details>
 
-> [!Vinkki]
->
-> Kannattaa vilkaista materiaalissa linkattuihin Javan virallisiin
-> dokumentaatioihin! Linkin tunnistaa tekstissä olevasta "JavaDoc"-tekstiä
-> sisältävästä linkistä.
->
-> Varaudu kuitenkin siihen, että dokumentaation lukeminen on haastavaa ennen
-> kuin siihen tottuu! Virallinen dokumentaatio myös sisältää usein paljon
-> termejä ja syntaksia, joita ei ole vielä käsitelty ja on vaikea ymmärtää.
-> Tästä ei tarvitse olla huolissaan ja kaikki mitä kurssilla tarvitsee osata
-> käydään läpi näissä kurssimateriaaleissa ellei erikseen toisin mainita.
->
-> Dokumentaation lukutaito on kuitenkin tärkeä taito ohjelmoijalle, joten
-> kannattaa pyrkiä totuttelemaan siihen pikkuhiljaa — myös tekoälyn aikana sillä
-> ne eivät välttämättä anna viimeisintä tai edes onnistu toistamaan
-> dokumentaation kertomaa totuudenmukaisesti. Jos oppii luottamaan pelkästään
-> tekoälyyn, siinä vaiheessa kun asiat menee vaikeiksi tulee ongelmia. Tekoäly
-> (erityisesti generatiivinen), toimii nimittäin parhaiten kun ongelmat ovat
-> yleisiä ja tunnettuja eivätkä vaadi suurta asiantuntemusta tai tarkkaa silmää.
+!!! tip "Vinkki"
+
+    Kannattaa vilkaista materiaalissa linkattuihin Javan virallisiin
+    dokumentaatioihin! Linkin tunnistaa tekstissä olevasta "JavaDoc"-tekstiä
+    sisältävästä linkistä.
+
+    Varaudu kuitenkin siihen, että dokumentaation lukeminen on haastavaa ennen
+    kuin siihen tottuu! Virallinen dokumentaatio myös sisältää usein paljon
+    termejä ja syntaksia, joita ei ole vielä käsitelty ja on vaikea ymmärtää.
+    Tästä ei tarvitse olla huolissaan ja kaikki mitä kurssilla tarvitsee osata
+    käydään läpi näissä kurssimateriaaleissa ellei erikseen toisin mainita.
+
+    Dokumentaation lukutaito on kuitenkin tärkeä taito ohjelmoijalle, joten
+    kannattaa pyrkiä totuttelemaan siihen pikkuhiljaa — myös tekoälyn aikana sillä
+    ne eivät välttämättä anna viimeisintä tai edes onnistu toistamaan
+    dokumentaation kertomaa totuudenmukaisesti. Jos oppii luottamaan pelkästään
+    tekoälyyn, siinä vaiheessa kun asiat menee vaikeiksi tulee ongelmia. Tekoäly
+    (erityisesti generatiivinen), toimii nimittäin parhaiten kun ongelmat ovat
+    yleisiä ja tunnettuja eivätkä vaadi suurta asiantuntemusta tai tarkkaa silmää.

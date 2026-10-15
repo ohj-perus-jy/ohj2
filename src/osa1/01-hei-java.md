@@ -1,11 +1,11 @@
 # Hei, Java!
 
-> [!Osaamistavoitteet]
->
-> - Tutustut Java-kielen perusteisiin
-> - Tiedät, miten Java-ohjelma käännetään ja ajetaan
-> - Tiedät, mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta
-> - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille
+!!! abstract "Osaamistavoitteet"
+
+    - Tutustut Java-kielen perusteisiin
+    - Tiedät, miten Java-ohjelma käännetään ja ajetaan
+    - Tiedät, mikä on (J)VM ja miten kääntäminen eroaa tulkkauksesta
+    - Tunnet Java-kielen vastineita yleisimmille I/O-operaatioille
 
 Ohjelmointi 2 -kurssilla käytämme Java-ohjelmointikieltä. Java on
 yleiskäyttöinen olio-ohjelmointia tukeva kieli, joka on tarkoitettu alustasta
@@ -72,10 +72,10 @@ mielessä:
   
 ## Opas: Java-ohjelmien kääntäminen ja ajaminen
 
-> [!TÄRKEÄÄ]
->
-> Tässä osiossa tarvitset opintojakson työkaluja. Käy ensin asentamassa kaikki
-> työkalut [Työkaluohjeesta](../tyokalut.md).
+!!! tip "Tärkeää"
+
+    Tässä osiossa tarvitset opintojakson työkaluja. Käy ensin asentamassa kaikki
+    työkalut [Työkaluohjeesta](../tyokalut.md).
 
 Vaikka monet yllä olevan tapaiset pienet ohjelmat voidaan periaatteessa tehdä
 nettiselaimessa, on ohjelmia kehittäessä varsin käytännöllistä käyttää erillistä kehitysympäristöä. 
@@ -322,23 +322,23 @@ Tee seuraavasti:
    erillisiä ajokonfiguraatioita projektin ajamiselle, testaamiselle ja
    kääntämiselle.
 
-> [!VINKKI]
->
-> **Tutustu yleisimpiin pikanäppäinkomentoihin**
->
-> Näppäinkomennot nopeuttavat kehitysympäristön käyttöä, ja pienellä
-> harjoittelulla ohjelmointi voi sujua kokonaan hiirtä käyttämättä.
-> Näppäinkomennot riippuvat käyttöjärjestelmästä ja valituista näppäinasetuksista.
-> IDEA kuitenkin näyttää näppäinkomennot valikoissa sekä vihjeteksteissä,
-> mikä helpottaa komentojen oppimista.
->
-> <img src="images/intellij-shortcut-helper.png" width="500">
->
-> Voit myös muokata näppäinkomentoja asetuksista kohdassa **File** <i class="bi
-> bi-chevron-right"></i> **Settings** <i class="bi bi-chevron-right"></i>
-> **Keymap**. Voit myös ladata muiden kehitysympäristöjen, kuten Visual Studio
-> Coden, näppäinasetuksia laajennoskaupasta kohdassa **File** <i class="bi
-> bi-chevron-right"></i> **Plugins**.
+!!! tip "Vinkki"
+
+    **Tutustu yleisimpiin pikanäppäinkomentoihin**
+
+    Näppäinkomennot nopeuttavat kehitysympäristön käyttöä, ja pienellä
+    harjoittelulla ohjelmointi voi sujua kokonaan hiirtä käyttämättä.
+    Näppäinkomennot riippuvat käyttöjärjestelmästä ja valituista näppäinasetuksista.
+    IDEA kuitenkin näyttää näppäinkomennot valikoissa sekä vihjeteksteissä,
+    mikä helpottaa komentojen oppimista.
+
+    <img src="images/intellij-shortcut-helper.png" width="500">
+
+    Voit myös muokata näppäinkomentoja asetuksista kohdassa **File** <i class="bi
+    bi-chevron-right"></i> **Settings** <i class="bi bi-chevron-right"></i>
+    **Keymap**. Voit myös ladata muiden kehitysympäristöjen, kuten Visual Studio
+    Coden, näppäinasetuksia laajennoskaupasta kohdassa **File** <i class="bi
+    bi-chevron-right"></i> **Plugins**.
 
 ## Kääntäminen ja ajaminen komentoriviltä
 
@@ -463,14 +463,14 @@ pystyy kääntämään useita lähdekooditiedostoja yhteen `.jar`-tiedostoon, jo
 voidaan pakata kaikki ohjelman ajamiseen tarvittavat tiedostot.
 Myös `.jar`-tiedostot voidaan suorittaa `java`-komennolla.
 
-> [!VINKKI]
->
-> Alkaen Javan versiosta 11 `java`-komento osaa myös automaattisesti kääntää 
-> ja suorittaa `.java`-lähdekooditiedostot ilman erillistä `javac`-kääntäjän
-> ajamista.
->
-> Lisäksi tässä materiaalissa käytämme pääosin IDEA-kehitysympäristöä, joka
-> hoitaa lähdekooditiedostojen kääntämisen automaattisesti ja tehokkaasti.
+!!! tip "Vinkki"
+
+    Alkaen Javan versiosta 11 `java`-komento osaa myös automaattisesti kääntää 
+    ja suorittaa `.java`-lähdekooditiedostot ilman erillistä `javac`-kääntäjän
+    ajamista.
+
+    Lisäksi tässä materiaalissa käytämme pääosin IDEA-kehitysympäristöä, joka
+    hoitaa lähdekooditiedostojen kääntämisen automaattisesti ja tehokkaasti.
 
 <details closed>
 <summary><i class="jyu-star"></i> Bonus: <code>jshell</code>-tulkkiohjelma</summary>

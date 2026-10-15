@@ -1,11 +1,11 @@
 # Polymorfismi
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät polymorfismin perusajatuksen 
-> - Osaat korvata yliluokan metodin aliluokassa sekä estää korvaamisen `final`-avainsanalla
-> - Osaat kirjoittaa pienen ohjelman, jossa hyödynnetään polymorfismia
-> - Tunnistat Object-luokan korvattavia metodeja, kuten `toString()`
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät polymorfismin perusajatuksen 
+    - Osaat korvata yliluokan metodin aliluokassa sekä estää korvaamisen `final`-avainsanalla
+    - Osaat kirjoittaa pienen ohjelman, jossa hyödynnetään polymorfismia
+    - Tunnistat Object-luokan korvattavia metodeja, kuten `toString()`
 
 ![Bändi](images/band.png)
 
@@ -30,9 +30,10 @@ rumpusetti.soitaRumpuja();
 
 Tämä lähestymistapa ei ole laajennettavissa. Jos yrittäisimme käsitellä soittimia yhtenäisenä joukkona, esimerkiksi listana, joutuisimme tekemään hankalia ja virheherkkiä tyyppitarkastuksia vain saadaksemme selville, mitä soittometodia kutsua. Ratkaisu tähän on löytää yhteinen nimittäjä kaikille soittimille. Sekä kitara että piano ovat loppujen lopuksi Soittimia. Luodaan yliluokka `Soitin`, joka sisältää toiminnon, jonka jokaisen soittimen pitäisi pystyä tekemään: `soita()`.
 
-> [!HUOMAUTUS]
-> Soitin-luokka määritellään tässä tavallisena luokkana, mutta se voisi olla myös abstrakti luokka, ja se olisikin tässä tapauksessa luontevaa. 
-> Koska abstrakti luokka käsitellään vasta osassa [3.3 Abstraktit luokat](03-abstrakti-luokka.md), määrittelemme Soittimen tässä tavallisena luokkana.
+!!! note "Huomautus"
+
+    Soitin-luokka määritellään tässä tavallisena luokkana, mutta se voisi olla myös abstrakti luokka, ja se olisikin tässä tapauksessa luontevaa. 
+    Koska abstrakti luokka käsitellään vasta osassa [3.3 Abstraktit luokat](03-abstrakti-luokka.md), määrittelemme Soittimen tässä tavallisena luokkana.
 
 ```java,ignore
 public class Soitin {

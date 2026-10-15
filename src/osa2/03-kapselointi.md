@@ -1,13 +1,13 @@
 # Kapselointi
 
-> [!Osaamistavoitteet]
->
-> - Tiedät, mitä näkyvyysmääreet kuten `public` ja `private` tarkoittavat.
-> - Ymmärrät, että metodit ovat olioiden pääasiallinen tapa viestiä.
-> - Ymmärrät kapseloinnin periaatteet ja hyödyt, ja miten olion sisäinen toteutus
->   eroaa sen ulkoisesta käytöstä. 
-> - Osaat toteuttaa ohjelman, jossa oliot toimivat yhdessä niin, että ne
->   eivät ole riippuvaisia toistensa sisäisestä toteutuksesta.
+!!! abstract "Osaamistavoitteet"
+
+    - Tiedät, mitä näkyvyysmääreet kuten `public` ja `private` tarkoittavat.
+    - Ymmärrät, että metodit ovat olioiden pääasiallinen tapa viestiä.
+    - Ymmärrät kapseloinnin periaatteet ja hyödyt, ja miten olion sisäinen toteutus
+      eroaa sen ulkoisesta käytöstä. 
+    - Osaat toteuttaa ohjelman, jossa oliot toimivat yhdessä niin, että ne
+      eivät ole riippuvaisia toistensa sisäisestä toteutuksesta.
 
 ![Autoa ajetaan, vaikka emme tiedä miten moottori toimii](images/auto.png)
 
@@ -49,10 +49,11 @@ sillä ne altistavat luokan sisäisen tilan suoraan ulkopuolisille. Tällä
 opintojaksolla pyrimme suunnittelemaan ohjelmat niin, ettei julkisia
 attribuutteja — poislukien vakiot — tarvita.
 
-> [!HUOMAUTUS]
-> Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia
-> attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti,
-> mutta sitä ei suositella tuotantokoodissa. 
+!!! note "Huomautus"
+
+    Tässä materiaalissa saatetaan hetkittäin käyttää esimerkinomaisesti julkisia
+    attribuutteja. Tämä voi auttaa havainnollistamaan joitakin kohtia tiiviisti,
+    mutta sitä ei suositella tuotantokoodissa. 
 
 Attribuutille tai metodille voi antaa näkyvyysmääreen lisäämällä sen
 esittelyriville. Luokalle voidaan myös asettaa näkyvyysmääre. 

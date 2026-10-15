@@ -1,9 +1,9 @@
 # Rekursio
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät miten rekursio toimii
-> - Ymmärrät, miten rekursiota voidaan mallintaa pinon avulla
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät miten rekursio toimii
+    - Ymmärrät, miten rekursiota voidaan mallintaa pinon avulla
 
 Rekursio tarkoittaa ongelman määrittelemistä itsensä avulla niin, että ongelma
 muodostuu pienemmistä osista, jotka ovat rakenteeltaan samanlaisia kuin

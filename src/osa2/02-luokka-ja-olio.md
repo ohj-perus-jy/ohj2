@@ -1,12 +1,12 @@
 # Luokka ja olio
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät luokan ja olion suhteen, ja miten luokka toimii mallina olioiden luomisessa.
-> - Osaat määritellä oman luokan ja sen jäsenet, eli attribuutit, metodit ja konstruktorit.
-> - Ymmärrät olioiden elinkaaren ja osaat käyttää olioita ohjelman osina.
-> - Ymmärrät, miten `this`-viite toimii olion metodeissa.
-> - Tiedät, mitä `static`-määrite merkitsee luokan jäsenten osalta.
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät luokan ja olion suhteen, ja miten luokka toimii mallina olioiden luomisessa.
+    - Osaat määritellä oman luokan ja sen jäsenet, eli attribuutit, metodit ja konstruktorit.
+    - Ymmärrät olioiden elinkaaren ja osaat käyttää olioita ohjelman osina.
+    - Ymmärrät, miten `this`-viite toimii olion metodeissa.
+    - Tiedät, mitä `static`-määrite merkitsee luokan jäsenten osalta.
 
 ## Luokka
 
@@ -52,14 +52,15 @@ void main() {
 }
 ```
 
-> [!HUOMAUTUS]
-> Viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka
-> voi osoittaa olioon. Viitemuuttujan ei kuitenkaan ole pakko viitata mihinkään,
-> jolloin sen arvo on `null`. Olio on vastaavasti mahdollista luoda ilman siihen
-> viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei
-> päästä käsiksi ja se merkitään automaattisesti roskaksi. Useampi viitemuuttuja
-> voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon
-> kerrallaan. 
+!!! note "Huomautus"
+
+    Viitemuuttuja ja olio ovat kaksi eri asiaa. Viitemuuttuja on kuin nuoli, joka
+    voi osoittaa olioon. Viitemuuttujan ei kuitenkaan ole pakko viitata mihinkään,
+    jolloin sen arvo on `null`. Olio on vastaavasti mahdollista luoda ilman siihen
+    viittaavaa muuttujaa, mutta jos olioon osoittavia viitteitä ei ole, siihen ei
+    päästä käsiksi ja se merkitään automaattisesti roskaksi. Useampi viitemuuttuja
+    voi viitata samaan olioon, mutta viitemuuttuja voi osoittaa vain yhteen olioon
+    kerrallaan. 
 
 ## Attribuutit
 
@@ -96,13 +97,14 @@ olemassa koko olion eliniän ajan ja näkyvät kaikille muille jäsenille luokan
 sisällä. Ne *voidaan* asettaa näkyväksi myös olion ulkopuolelta, joskin tämä on
 yleisesti ottaen huono idea. Palaamme näkyvyysmääreisiin myöhemmin tässä osassa.
 
-> [!HUOMAUTUS]
-> Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se
-> peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos
-> attribuutilla ja paikallisella muuttujalla on sama nimi, käytetään
-> lausekkeissa ensisijaisesti lokaalia muuttujaa. Tässäkin tilanteessa olion
-> metodeista voi yhä päästä käsiksi sen attribuuttiin käyttämällä
-> `this`-viitettä, johon palaamme hyvin pian.
+!!! note "Huomautus"
+
+    Paikallisella muuttujalla voi olla sama nimi kuin attribuutilla, jolloin se
+    peittää attribuutin. Tätä kutsutaan varjostamiseksi (engl. *shadowing*). Jos
+    attribuutilla ja paikallisella muuttujalla on sama nimi, käytetään
+    lausekkeissa ensisijaisesti lokaalia muuttujaa. Tässäkin tilanteessa olion
+    metodeista voi yhä päästä käsiksi sen attribuuttiin käyttämällä
+    `this`-viitettä, johon palaamme hyvin pian.
 
 Attribuutille voidaan luokassa antaa oletusarvo, jolloin luokasta luodut oliot
 saavat sen myös oman attribuuttinsa alkuarvoksi. Jos attribuutilla ei ole

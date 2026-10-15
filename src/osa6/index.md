@@ -1,12 +1,12 @@
 # Hyödyllisiä menetelmiä Javassa
 
-> [!Osaamistavoitteet]
->
-> - Hyödynnät lambdalausekkeita ja funktioviitteitä koodin tiivistämisessä.
-> - Käsittelet kokoelmia deklaratiivisesti Stream API:n avulla.
-> - Hallitset virhetilanteita poikkeusten (Exception) avulla.
-> - Käytät Maven-projektinhallintatyökalua ja ulkoisia kirjastoja.
-> - Luet ja kirjoitat tietoa tiedostoihin.
+!!! abstract "Osaamistavoitteet"
+
+    - Hyödynnät lambdalausekkeita ja funktioviitteitä koodin tiivistämisessä.
+    - Käsittelet kokoelmia deklaratiivisesti Stream API:n avulla.
+    - Hallitset virhetilanteita poikkeusten (Exception) avulla.
+    - Käytät Maven-projektinhallintatyökalua ja ulkoisia kirjastoja.
+    - Luet ja kirjoitat tietoa tiedostoihin.
 
 Olemme tähän mennessä oppineet Javan perussyntaksin, olio-ohjelmoinnin ja
 tavallisimmat tietorakenteet. Tässä osassa opimme 

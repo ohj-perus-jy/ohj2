@@ -1,12 +1,12 @@
 # Hakurakenteet
 
-> [!Osaamistavoitteet]
->
-> - Tunnet Java-kielen yleisimmät valmiit tietorakenteet: `Map` ja sen toteutukset `HashMap`, `LinkedHashMap` ja `TreeMap`.
-> - Osaat käyttää em. tietorakenteita.
-> - Ymmärrät em. tietorakenteiden keskeisimmät operaatiot ja tunnistat niiden
->   aikavaativuudet.
-> - Ymmärrät, miksi oliot tarvitsevat `hashCode`-metodin.
+!!! abstract "Osaamistavoitteet"
+
+    - Tunnet Java-kielen yleisimmät valmiit tietorakenteet: `Map` ja sen toteutukset `HashMap`, `LinkedHashMap` ja `TreeMap`.
+    - Osaat käyttää em. tietorakenteita.
+    - Ymmärrät em. tietorakenteiden keskeisimmät operaatiot ja tunnistat niiden
+      aikavaativuudet.
+    - Ymmärrät, miksi oliot tarvitsevat `hashCode`-metodin.
 
 Kuvitellaan tilanne, jossa ylläpidämme laajaa opiskelijarekisteriä. Haluamme
 tallentaa kunkin opiskelijan numeron ja nimen siten, että voimme 
@@ -49,11 +49,12 @@ tahansa tyyppinen olio. Avaimet ovat aina uniikkeja; yksi avain voi esiintyä
 hakurakenteessa vain kerran ja se osoittaa vain yhteen arvoon kerrallaan. Arvot
 sen sijaan eivät ole uniikkeja. 
 
-> [!HUOMAUTUS]
-> Javassa sekä avaimet että arvot ovat aina olioita. Ne eivät 
-> voi olla primitiivityyppejä, kuten `int` tai `double`, vaan tähän 
-> tarkoitukseen on käytettävä vastaavia kääreluokkia, kuten `Integer` tai
-> `Double`. 
+!!! note "Huomautus"
+
+    Javassa sekä avaimet että arvot ovat aina olioita. Ne eivät 
+    voi olla primitiivityyppejä, kuten `int` tai `double`, vaan tähän 
+    tarkoitukseen on käytettävä vastaavia kääreluokkia, kuten `Integer` tai
+    `Double`. 
 
 ## Map
 
@@ -257,14 +258,15 @@ laskutoimituksella. Huonoimmassa tapauksessa kaikki alkiot päätyvät samaan
 indeksiin, jolloin oikean alkion löytämiseksi joudutaan käymään koko
 tietorakenne läpi, minkä vuoksi pahin tapaus on $O(n)$.
 
-> [!HUOMAUTUS]
-> Aikavaativuuksia käsitellään perusteellisemmin [Algoritmit 1
-> -opintojaksolla](https://opinto-opas.jyu.fi/2025/fi/opintojakso/itka201/); tässä vain sivuamme niitä.
-> Tämän opintojakson osalta riittää ymmärtää, että $O(1)$ tarkoittaa, että
-> operaatio onnistuu vakioajassa, eli se ei riipu tietorakenteen koosta. $O(n)$
-> tarkoittaa, että operaation vaatima aika kasvaa samassa suhteessa
-> tietorakenteen kokoon. Jos esimerkiksi tietorakenteessa on 1000 alkiota,
-> $O(n)$-operaatio vaatisi 1000 kertaa enemmän aikaa kuin $O(1)$-operaatio.
+!!! note "Huomautus"
+
+    Aikavaativuuksia käsitellään perusteellisemmin [Algoritmit 1
+    -opintojaksolla](https://opinto-opas.jyu.fi/2025/fi/opintojakso/itka201/); tässä vain sivuamme niitä.
+    Tämän opintojakson osalta riittää ymmärtää, että $O(1)$ tarkoittaa, että
+    operaatio onnistuu vakioajassa, eli se ei riipu tietorakenteen koosta. $O(n)$
+    tarkoittaa, että operaation vaatima aika kasvaa samassa suhteessa
+    tietorakenteen kokoon. Jos esimerkiksi tietorakenteessa on 1000 alkiota,
+    $O(n)$-operaatio vaatisi 1000 kertaa enemmän aikaa kuin $O(1)$-operaatio.
 
 Jotta hajautustaulu pysyisi nopeana ($O(1)$), törmäykset on minimoitava. Tähän
 vaikuttaa täyttöaste (engl. *load factor*). Jos taulukon kapasiteetti on liian

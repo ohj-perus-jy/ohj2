@@ -1,11 +1,11 @@
 # Muuttujat ja tietotyypit
 
-> [!Osaamistavoitteet]
->
-> - Muistat, mitä ovat muuttujat ja vakiot
-> - Muistat, mitä ovat merkkijonot ja listat
-> - Tunnet Javan alkeistietotyypit
-> - Tunnet, miten merkkijonoja, taulukoita ja listoja käytetään Javassa
+!!! abstract "Osaamistavoitteet"
+
+    - Muistat, mitä ovat muuttujat ja vakiot
+    - Muistat, mitä ovat merkkijonot ja listat
+    - Tunnet Javan alkeistietotyypit
+    - Tunnet, miten merkkijonoja, taulukoita ja listoja käytetään Javassa
 
 Ohjelmat käsittelevät muistiin tallennettua tietoa. Korkean tason kielissä, kuten
 Javassa käytetään selkokielisiä nimiä viitattaessa muistiin tallennettuun tietoon. Tällaista nimeä, joka viittaa muistissa
@@ -751,50 +751,50 @@ sanoen, `ArrayList<Integer>` on sallittu, kun taas `ArrayList<int>` ei ole.
 Puolestaan `ArrayList<String>` on sallittu, koska merkkijono on
 viitetietotyyppi.
 
-> [!HUOMAUTUS]
->
-> Javan *koodauskäytänteisiin* kuuluu, että lista*muuttujien* tyyppinä käytetään
-> `List<T>`, kun taas muuttujien arvojen alustuksessa käytetään
-> tarkempaa tyyppiä, kuten `ArrayList<T>`.
->
-> Toisin sanoen, vaikka alla oleva on sallittu
->
-> ```java
->
-> 
-> //-void main() {
-> ArrayList<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
-> //-IO.println("nimet = " + nimet);
-> //-}
-> ```
->
-> **koodauskäytänteiden** mukaisesti on yleisempää esittää muuttuja seuraavasti:
->
-> ```java
->
-> 
-> //-void main() {
-> List<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
-> //-IO.println("nimet = " + nimet);
-> //-}
-> ```
->
-> Lisäksi, jos alkioiden tyyppi on muuttujan määrittelyrivin perusteella selvä,
-> alkioiden tyyppi saatetaan usein jättää pois listan alustuksesta:
->
-> ```java
-> //-void main() {
-> // Kääntäjä päättelee, että ArrayList<> = ArrayList<String> 
-> // muuttujan tyypin perusteella
-> List<String> nimet = new ArrayList<>(List.of("Matti", "Teppo"));
-> //-IO.println("nimet = " + nimet);
-> //-}
-> ```
->
-> Palaamme tarkemmin `List<T>` ja `ArrayList<T>` -tyyppien välisiin eroihin
-> [osassa 5](../osa5/index.md). Voit tässä vaiheessa kuitenkin miettiä,
-> että `List<T>` on yleinen tyyppi listoille, kun taas `ArrayList<T>` on
-> (eräs) Javan tarjoama tapa esittää lista.
+!!! note "Huomautus"
+
+    Javan *koodauskäytänteisiin* kuuluu, että lista*muuttujien* tyyppinä käytetään
+    `List<T>`, kun taas muuttujien arvojen alustuksessa käytetään
+    tarkempaa tyyppiä, kuten `ArrayList<T>`.
+
+    Toisin sanoen, vaikka alla oleva on sallittu
+
+    ```java
+
+
+    //-void main() {
+    ArrayList<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
+    //-IO.println("nimet = " + nimet);
+    //-}
+    ```
+
+    **koodauskäytänteiden** mukaisesti on yleisempää esittää muuttuja seuraavasti:
+
+    ```java
+
+
+    //-void main() {
+    List<String> nimet = new ArrayList<String>(List.of("Matti", "Teppo"));
+    //-IO.println("nimet = " + nimet);
+    //-}
+    ```
+
+    Lisäksi, jos alkioiden tyyppi on muuttujan määrittelyrivin perusteella selvä,
+    alkioiden tyyppi saatetaan usein jättää pois listan alustuksesta:
+
+    ```java
+    //-void main() {
+    // Kääntäjä päättelee, että ArrayList<> = ArrayList<String> 
+    // muuttujan tyypin perusteella
+    List<String> nimet = new ArrayList<>(List.of("Matti", "Teppo"));
+    //-IO.println("nimet = " + nimet);
+    //-}
+    ```
+
+    Palaamme tarkemmin `List<T>` ja `ArrayList<T>` -tyyppien välisiin eroihin
+    [osassa 5](../osa5/index.md). Voit tässä vaiheessa kuitenkin miettiä,
+    että `List<T>` on yleinen tyyppi listoille, kun taas `ArrayList<T>` on
+    (eräs) Javan tarjoama tapa esittää lista.
 
 Katsotaan vielä listojen eräitä hyödyllisiä metodeja.
 

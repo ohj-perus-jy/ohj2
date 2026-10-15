@@ -1,9 +1,10 @@
 # Perintä ja rajapinnat olioiden yhteistyössä
 
-> [!Osaamistavoitteet]
-> - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
->   riippuvuuden välttämiseksi 
-> - Tunnistaa milloin perintää kannattaa käyttää, ja milloin koostaminen on parempi vaihtoehto. ("Composition over inheritance")
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat hyödyntää rajapintoja ja abstrakteja luokkia luokkien välisen
+      riippuvuuden välttämiseksi 
+    - Tunnistaa milloin perintää kannattaa käyttää, ja milloin koostaminen on parempi vaihtoehto. ("Composition over inheritance")
 
 ![alt text](images/interfaces.png)
 

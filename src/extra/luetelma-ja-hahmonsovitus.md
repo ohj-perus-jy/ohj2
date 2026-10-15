@@ -1,16 +1,16 @@
 # Luetelma ja hahmonsovitus
 
-> [!TODO]
->
-> Tämä luku voisi olla jossain myöhemmässä osassa tai muuten jättää ekstraksi.
->
-> Enumit voinee ainakin mainita asiana jossain kohti "vaihtoehtona"
-> booleaneille.
+!!! info "Todo"
 
-> [!Osaamistavoitteet]
->
-> - Tiedät mikä on luetelma tyyppinä ja ymmärrät sen hyödyt
-> - Tiedät mitä on hahmonsovitus ja milloin sitä kannattaa käyttää
+    Tämä luku voisi olla jossain myöhemmässä osassa tai muuten jättää ekstraksi.
+
+    Enumit voinee ainakin mainita asiana jossain kohti "vaihtoehtona"
+    booleaneille.
+
+!!! abstract "Osaamistavoitteet"
+
+    - Tiedät mikä on luetelma tyyppinä ja ymmärrät sen hyödyt
+    - Tiedät mitä on hahmonsovitus ja milloin sitä kannattaa käyttää
 
 
 ## Luetelma rajatuille joukoille
@@ -130,10 +130,11 @@ class Kerailykortti {
 // FILE_END
 ```
 
-> [!TÄRKEÄÄ]
-> **Invariantti.** Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1–5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
->
-> Invarianttien ymmärtäminen (mitä oletamme koodistamme todeksi?) ja varmistaminen on tärkeä osa ohjelmiston suunnittelua ja toteutusta. Mikäli emme ole hyvin perillä siitä, mitä oletuksia koodistamme voimme tehdä, on vaarallisen helppoa kirjoittaa koodia, joka pettää tosipaikan tullen.
+!!! tip "Tärkeää"
+
+    **Invariantti.** Tietojenkäsittelytieteessä on olemassa hieno termi ohjelman tai sen osan ominaisuuksille, jotka ovat _tosia_ eli paikkansapitäviä ohjelman jonkin suoritusvaiheen tai koko suorituksen ajan: _invariantti_ (suora käännös: ei muuttuva). Esimerkiksi ajatus siitä, että kortin arvoluokka on aina välillä 1–5, on invariantti jos ja vain jos tämä ajatus on ohjelmassa (varmasti) totta koko ohjelman suorituksen ajan.
+
+    Invarianttien ymmärtäminen (mitä oletamme koodistamme todeksi?) ja varmistaminen on tärkeä osa ohjelmiston suunnittelua ja toteutusta. Mikäli emme ole hyvin perillä siitä, mitä oletuksia koodistamme voimme tehdä, on vaarallisen helppoa kirjoittaa koodia, joka pettää tosipaikan tullen.
 
 Pelkkä numero ei myöskään ole erityisen kuvaava tunniste, kun numerolla on muukin merkitys kuin numero itse. Mikäli joku lukee koodia, jossa luodaan kortti arvoluokalla 1 tai 3, ei ole heti selvää, mitä tämä tarkoittaa vaan tähän tarvitaan selitys muualta — kumpi on harvinaisempi, 1 vai 3?
 
@@ -207,9 +208,9 @@ void main() {
 
 Kun katsomme vielä ylläolevan esimerkin `main.java`-tiedostoa, huomaamme miten saamme luetelman vakion käyttöön kirjoittamalla esimerkiksi `Arvoluokka.PERUS`, eli luetelman nimen ja halutun vakion nimen pisteellä erotettuna. Koodista tulee näin hieman pidempää, mutta samalla selkeämpää ja erityisesti turvallisempaa kehittää; kääntäjä pystyy paremmin ilmoittamaan milloin koodissa yritetään tehdä jotain muuta kuin mihin ohjelma on suunniteltu.
 
-> [!Huomautus]
->
-> - Lyhyt maininta luetelmasta ja compareTo-metodista johonkin väliin
+!!! note "Huomautus"
+
+    - Lyhyt maininta luetelmasta ja compareTo-metodista johonkin väliin
 
 <task>
   <task-title num="4.5">Oma luetelma.<points>0.25 p.</points></task-title>
@@ -547,8 +548,9 @@ void main() {
 }
 ```
 
-> [!todo]
-> Alla oleva erikoisuus lisäinfoksi?
+!!! info "Todo"
+
+    Alla oleva erikoisuus lisäinfoksi?
 
 Yllä olevassa esimerkissä olemme eriyttäneet karkausvuoden tarkistuksen omaan `onKarkausvuosi`-funktioon, jota käytämme `helmikuunPaivat`-funktiossa. Voisimme kuitenkin kirjoittaa karkausvuoden tarkistuksen suoraan `switch`-lausekkeeseen, kuten alla olevassa esimerkissä:
 
@@ -576,8 +578,9 @@ void main() {
 
 Tässä syntaksissa erikoisuutena on `yield`-avainsanan käyttö tutun `return`:n sijaan. Javassa `yield`-avainsanaa käytetään palauttamaan arvo `switch`-lausekkeen haarasta, kun kyseinen haara on määritelty aaltosulkeiden sisällä. Tämä mahdollistaa palautettavan lausekkeen jakamisen useampaan lauseeseen, ja voimme käyttää muun muassa apumuuttujia luettavuuden parantamiseksi.
 
-> [!Vinkki]
-> Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
+!!! tip "Vinkki"
+
+    Sen lisäksi, että switch:n käyttö voi auttaa parantamaan koodin luettavuutta ja kehittäjäkokemusta verrattuna vastaavan toiminnallisuuden toteuttamiseen `if-else`-rakenteellla, switch on myös huomattavasti tehokkaampi vaihtoehto. Siinä missä kääntäjä käy `if-else`-tyylisiä rakenteita yksi kerrallaan läpi, kunnes sopiva haara löytyy, `switch`-lausekkeen tapauksessa kääntäjä voi luoda ennalta tiedossa olevien _kattavien_ haarojen perusteella _hakutaulun_ (engl. _lookup table_). Hakutaulun — näistä lisää osiossa TODO ja algoritmikurssilla — avulla sopiva haara voidaan hakea arvon (tai sille lasketun paikan) perustella suoraan muistista sen enempää vertailematta eri vaihtoehtoja.
 
 <task>
   <task-title num="4.7">Hahmonsovitus<points>0.25 p.</points></task-title>

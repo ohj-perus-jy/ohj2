@@ -1,18 +1,18 @@
 # JavaFX osa 2, MVC
 
-> [!Osaamistavoitteet]
->
-> - Osaat erottaa datan, sovelluslogiikan ja käyttöliittymän toisistaan
->   JavaFX-projektissa.
-> - Osaat käyttää JavaFX:n `Observable`-rajapintaan perustuvia tyyppejä niin,
->   että käyttöliittymä päivittyy automaattisesti datan mukana.
-> - Osaat esittää tehtävädatan `TableView`-komponentissa ja hyödyntää
->   databindingia.
-> - Osaat tehdä tehtävien muokkausnäkymän, jossa on validointi ja
->   priorisointitieto.
-> - Osaat kirjoittaa yksikkötestejä Todo-sovelluksen mallille ja
->   sovelluslogiikalle.
-> - Tutoriaalin toisen vaiheen palautus TIMiin.
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat erottaa datan, sovelluslogiikan ja käyttöliittymän toisistaan
+      JavaFX-projektissa.
+    - Osaat käyttää JavaFX:n `Observable`-rajapintaan perustuvia tyyppejä niin,
+      että käyttöliittymä päivittyy automaattisesti datan mukana.
+    - Osaat esittää tehtävädatan `TableView`-komponentissa ja hyödyntää
+      databindingia.
+    - Osaat tehdä tehtävien muokkausnäkymän, jossa on validointi ja
+      priorisointitieto.
+    - Osaat kirjoittaa yksikkötestejä Todo-sovelluksen mallille ja
+      sovelluslogiikalle.
+    - Tutoriaalin toisen vaiheen palautus TIMiin.
 
 Osassa 7 teimme toimivan Todo-sovelluksen, jossa tehtävät mallinnettiin pitkälti
 käyttöliittymäkomponenteilla (`CheckBox`) ja tallennettiin JSON-tiedostoon.

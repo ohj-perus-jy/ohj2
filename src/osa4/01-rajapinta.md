@@ -1,11 +1,12 @@
 # Rajapinta
 
-> [!Osaamistavoitteet]
-> - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
-> - Osaat määritellä ja käyttää rajapintoja Javassa.
-> - Osaat käyttää rajapintaa aliohjelman parametrina ja muuttujan tyyppinä.
-> - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
-> - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhden luokan
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät, mitä rajapinta (interface) tarkoittaa olio-ohjelmoinnissa.
+    - Osaat määritellä ja käyttää rajapintoja Javassa.
+    - Osaat käyttää rajapintaa aliohjelman parametrina ja muuttujan tyyppinä.
+    - Ymmärrät, milloin kannattaa käyttää rajapintaa perinnän sijaan.
+    - Ymmärrät, että luokka voi toteuttaa monta rajapintaa, mutta periä vain yhden luokan
 
 *Rajapinta* toimii sitovana sopimuksena: Se määrittelee, mitä metodeja luokan on
 tarjottava, ottamatta kantaa siihen, miten ne on teknisesti toteutettu. Toisin

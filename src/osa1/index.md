@@ -1,8 +1,9 @@
 # Java-kielen perusteet
 
-> [!Osaamistavoitteet]
-> - Tutustut Java-kielen perussyntaksiin, muuttujiin, ja ohjausrakenteisiin.
-> - Opit kirjoittamaan yksinkertaisia Java-ohjelmia ja ymmärrät miten koodia käännetään ja suoritetaan.
+!!! abstract "Osaamistavoitteet"
+
+    - Tutustut Java-kielen perussyntaksiin, muuttujiin, ja ohjausrakenteisiin.
+    - Opit kirjoittamaan yksinkertaisia Java-ohjelmia ja ymmärrät miten koodia käännetään ja suoritetaan.
 
 ## Materiaalin käytöstä
 

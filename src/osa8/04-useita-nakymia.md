@@ -454,21 +454,21 @@ public void setTehtava(Tehtava tehtava) {
 }
 ```
 
-> [!HUOMAUTUS]
->
-> Tässäkin voisimme käyttää datan sidontaa ja sitoa kenttien arvojen
-> ominaisuudet tehtäväolion ominaisuuksiin seuraavasti:
->
-> ```java,ignore
-> // Sitoo otsikkokentän tekstin tehtävän otsikko-attribuuttiin
-> otsikkoKentta.textProperty().bindBidirectional(tehtava.otsikkoProperty());
-> ```
->
-> Jos tekisimme näin, jokainen näppäimen painallus muuttaisi tehtävän
-> otsikon välittömästi taustalla.
-> Sen sijaan haluamme tässä antaa käyttäjälle mahdollisuuden peruuttaa muutokset
-> Peruuta-painikkeen painalluksella. Siksi datan sidonnan sijaan
-> kopioimme arvot tehtävästä kenttiin ja kentistä tehtäviin käsin.
+!!! note "Huomautus"
+
+    Tässäkin voisimme käyttää datan sidontaa ja sitoa kenttien arvojen
+    ominaisuudet tehtäväolion ominaisuuksiin seuraavasti:
+
+    ```java,ignore
+    // Sitoo otsikkokentän tekstin tehtävän otsikko-attribuuttiin
+    otsikkoKentta.textProperty().bindBidirectional(tehtava.otsikkoProperty());
+    ```
+
+    Jos tekisimme näin, jokainen näppäimen painallus muuttaisi tehtävän
+    otsikon välittömästi taustalla.
+    Sen sijaan haluamme tässä antaa käyttäjälle mahdollisuuden peruuttaa muutokset
+    Peruuta-painikkeen painalluksella. Siksi datan sidonnan sijaan
+    kopioimme arvot tehtävästä kenttiin ja kentistä tehtäviin käsin.
 
 Palataan `MainController`-luokan `avaaTehtavanMuokkaus()`-metodiin. 
 Nyt ennen ikkunan luomista voimme hakea `TehtavaEditController`-luokasta luotu

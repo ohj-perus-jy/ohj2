@@ -1,10 +1,10 @@
 # Kokoelmat
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät, mitä kokoelma tarkoittaa ja miksi niitä käytetään ohjelmoinnissa.
-> - Ymmärrät Javan kokoelmakehyksen (*Collections Framework*) perusrakenteen.
-> - Tunnet Javan `Collection`-rajapinnan metodit ja osaat käyttää niitä ohjelmassa.
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät, mitä kokoelma tarkoittaa ja miksi niitä käytetään ohjelmoinnissa.
+    - Ymmärrät Javan kokoelmakehyksen (*Collections Framework*) perusrakenteen.
+    - Tunnet Javan `Collection`-rajapinnan metodit ja osaat käyttää niitä ohjelmassa.
 
 Ohjelmoinnin ytimessä on usein tiedon koostaminen järkeviksi kokonaisuuksiksi.
 Olemme aiemmin käyttäneet taulukoita ja listoja samantyyppisten arvojen, kuten
