@@ -1,8 +1,7 @@
 # Harjoitustyö
 
 [Opintojaksoon kuuluu harjoitustyö](./suorittaminen.md), jossa toteutat
-graafisen Java-käyttöliittymäsovelluksen käyttäen JavaFX-kirjastoa. Löydät alta
-harjoitustyön tarkat arvioitavat vaatimukset.
+graafisen Java-käyttöliittymäsovelluksen käyttäen JavaFX-kirjastoa. 
 
 Voit tehdä harjoitustyön joko valmiin vaatimusmäärittelyn perusteella tai keksiä
 oman aiheen. Löydät kaikki aiheiden kuvaukset ja vaatimukset alla.
@@ -11,16 +10,16 @@ Harjoitustyö toteutetaan vaiheittain osissa 9–12. Jokainen osa sisältää oh
 joiden tarkoituksena on auttaa sinua etenemään, mutta voit toteuttaa vaatimukset
 myös muulla tavoin, kunhan ne täyttyvät.
 
-Suosittelemme, että ennen harjoitustyön tekemistä tutustut ja teet osissa 7-8
-tehdyn Todo-sovelluksen. Saat siitä merkittävästi apua harjoitustyön toteutukseen.
+Suosittelemme, että ennen harjoitustyön tekemistä teet osien 7-8
+Todo-sovelluksen. Saat siitä merkittävästi apua harjoitustyön toteutukseen.
 
-**Näytä lopullinen, kaikkia vaatimuksia täyttävä harjoitustyösi kurssin
+**Näytä lopullinen, kaikki vaatimukset täyttävä harjoitustyösi kurssin
 tuntiopettajalle ennen osan 12 palautusta etä- tai lähiohjauksessa.** Kun
-tuntiopettaja on hyväksynyt työsi, hän tekee siitä merkinnän TIMissä.
+tuntiopettaja on hyväksynyt työsi, hän tekee merkinnän TIMiin.
 
 ## Parityöt
 
-Harjoitustyön voi tehdä yksin tai parin kanssa. Sovelluksessa tulee olla
+Parityönä tehtävässä sovelluksessa tulee olla
 vähintään kolme mallinnettavaa kohdetta (yksilötöissä kaksi; vaatimus 1.1), sekä
 kolme näkymää (yksilötöissä kaksi; vaatimus 4.1). Muut vaatimukset ovat samat
 kuin yksilötyössäkin.
@@ -37,7 +36,7 @@ Yli kahden hengen ryhmiä ei sallita.
 ## Aihe
 
 Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
-joka täyttää vaatimukset. Näet kunkin aiheen tarkemmat vaatimukset klikkaamalla.
+joka täyttää vaatimukset. 
 
 Bonus-merkinnällä (<i class="jyu-star"></i>) olevia vaatimuksia ei
 ole pakko toteuttaa. 
