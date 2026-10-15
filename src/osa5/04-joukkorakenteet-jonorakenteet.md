@@ -1,11 +1,11 @@
 # Joukko- ja jonorakenteet
 
-> [!Osaamistavoitteet]
->
-> - Tunnet Java-kielen yleisimmät valmiit tietorakenteet: `Set`, `Queue`, `Deque` ja niiden toteutukset `HashSet` ja `ArrayDeque`.
-> - Osaat käyttää ym. tietorakenteita.
-> - Ymmärrät ym. tietorakenteiden keskeisimmät operaatiot ja niiden aikakompleksisuudet. 
-> - Ymmärrät, miksi oliot tarvitsevat `hashCode`-metodin.
+!!! abstract "Osaamistavoitteet"
+
+    - Tunnet Java-kielen yleisimmät valmiit tietorakenteet: `Set`, `Queue`, `Deque` ja niiden toteutukset `HashSet` ja `ArrayDeque`.
+    - Osaat käyttää ym. tietorakenteita.
+    - Ymmärrät ym. tietorakenteiden keskeisimmät operaatiot ja niiden aikakompleksisuudet. 
+    - Ymmärrät, miksi oliot tarvitsevat `hashCode`-metodin.
 
 ## Joukkorakenteet
 
@@ -237,11 +237,12 @@ Tekstiin tehdyt muutokset lisätään aina pinon päällimmäiseksi ja
 kumoamistoiminnon seurauksena ohjelma ottaa viimeisimmän muutoksen pinon päältä
 ja kumoaa sen.
 
-> [!HUOMAUTUS]
-> Poikkeuksellisesti Java **ei** tarjoa `Stack`-rajapintaa pinon
-> toteuttamista varten. Javan historiasta johtuen `Stack` on luokka, 
-> jonka käyttöä ei enää suositella. Pinon toteuttamiseen käytetään nykyään 
-> kaksipäistä jonoa, eli `Deque`-rajapinnan toteuttavaa `ArrayDeque`-luokkaa.
+!!! note "Huomautus"
+
+    Poikkeuksellisesti Java **ei** tarjoa `Stack`-rajapintaa pinon
+    toteuttamista varten. Javan historiasta johtuen `Stack` on luokka, 
+    jonka käyttöä ei enää suositella. Pinon toteuttamiseen käytetään nykyään 
+    kaksipäistä jonoa, eli `Deque`-rajapinnan toteuttavaa `ArrayDeque`-luokkaa.
 
 Pinon perusoperaatiot ovat `push`, `pop` ja `peek`. Javan `Deque` sisältää nämä 
 metodit, joten käytämme niitä.

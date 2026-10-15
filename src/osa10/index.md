@@ -52,10 +52,11 @@ bi-arrow-right"></i> Controller class. Nimi tulee valita niin, että se on sama
 kuin näkymän nimi, perään lisättynä "Controller"-sana. Esimerkiksi
 `SyotaTehtava.fxml`-näkymälle sopisi `SyotaTehtavaController`-kontrolleriluokka.
 
-> [!TÄRKEÄÄ]
-> Kontrolleriluokan nimi tulee antaa nimi kokonaisuudessaan pakkauksen kanssa,
-> esimerkiksi `fi.jyu.ohj2.anlakane.todo.SyotaTehtavaController`. Jos annat
-> pelkän luokan nimen, kuten `SyotaTehtavaController`, IDE ei löydä luokkaa.
+!!! tip "Tärkeää"
+
+    Kontrolleriluokan nimi tulee antaa nimi kokonaisuudessaan pakkauksen kanssa,
+    esimerkiksi `fi.jyu.ohj2.anlakane.todo.SyotaTehtavaController`. Jos annat
+    pelkän luokan nimen, kuten `SyotaTehtavaController`, IDE ei löydä luokkaa.
 
 <task>
   <task-title num="10.1">Näkymät SceneBuilderissa.<points>1 p.</points></task-title>

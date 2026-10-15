@@ -21,12 +21,12 @@ ensimmäinen ja toinen kerros). Jos sinulla on oma tietokone, suosittelemme
 vahvasti, että asennat ohjelmat myös siihen. Erityisesti harjoitustyön tekeminen
 on helpompaa, kun kaikki tarvittavat ohjelmat on myös omalla tietokoneella.
 
-> [!TÄRKEÄÄ]
->
-> Tämän sivun ohjeet vaativat komentorivin käyttöä. Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
->
-> - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
-> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
+!!! tip "Tärkeää"
+
+    Tämän sivun ohjeet vaativat komentorivin käyttöä. Voit tarvittaessa kerrata komentorivin perusteita seuraavista linkeistä:
+
+    - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
+    - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
 
 
 Kurssilla virallisesti tuettuja käyttöjärjestelmiä ovat Windows, macOS ja Linux.

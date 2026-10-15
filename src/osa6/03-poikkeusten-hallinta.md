@@ -1,16 +1,16 @@
 # Poikkeusten hallinta
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät, mikä poikkeus on ja miten se eroaa ohjelman normaalista
->   käskynkulusta.
-> - Tiedät eron tarkastettujen (checked) ja tarkastamattomien (unchecked)
->   poikkeusten välillä.
-> - Osaat käsitellä poikkeuksia `try-catch-finally` -rakenteella.
-> - Osaat heittää poikkeuksia (`throw`) ja ilmoittaa niistä metodin
->   määrittelyssä (`throws`).
-> - Ymmärrät poikkeusten hyödyt koodin luettavuuden ja virhehallinnan kannalta.
-> - Osaat luoda omia poikkeusluokkia.
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät, mikä poikkeus on ja miten se eroaa ohjelman normaalista
+      käskynkulusta.
+    - Tiedät eron tarkastettujen (checked) ja tarkastamattomien (unchecked)
+      poikkeusten välillä.
+    - Osaat käsitellä poikkeuksia `try-catch-finally` -rakenteella.
+    - Osaat heittää poikkeuksia (`throw`) ja ilmoittaa niistä metodin
+      määrittelyssä (`throws`).
+    - Ymmärrät poikkeusten hyödyt koodin luettavuuden ja virhehallinnan kannalta.
+    - Osaat luoda omia poikkeusluokkia.
 
 *Poikkeus* (engl. *exception*; lyhennetty muoto ilmauksesta *exceptional
 event*), on tilanne, joka syntyy ohjelman suorituksen aikana ja keskeyttää

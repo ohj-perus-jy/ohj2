@@ -1,52 +1,55 @@
 
 ## Listaluvusta
 
-> [!WIP]
-> - Otetaan pohjaa seuraavista lähteistä
->    - <https://docs.oracle.com/javase/tutorial/collections/>
->    - <https://dev.java/learn/api/collections-framework/>
->    - <https://www.cs.helsinki.fi/u/ahslaaks/kkkk.pdf>
+!!! danger "WIP"
 
-> [!Osaamistavoitteet]
->
-> TODO: Pitäisikö olla sen sijaan ohjattu tehtävä?
-> TAI: Voisi tehdä Full Stack Moocin tavoin ohjatusti ja sitten
->      tehtävänä on tehdä LinkedList tai HashMap.
-> Vrt. myös [HY](https://java-programming.mooc.fi/part-12/2-arraylist-and-hashtable)
-> 
+    - Otetaan pohjaa seuraavista lähteistä
+       - <https://docs.oracle.com/javase/tutorial/collections/>
+       - <https://dev.java/learn/api/collections-framework/>
+       - <https://www.cs.helsinki.fi/u/ahslaaks/kkkk.pdf>
+
+!!! abstract "Osaamistavoitteet"
+
+    TODO: Pitäisikö olla sen sijaan ohjattu tehtävä?
+    TAI: Voisi tehdä Full Stack Moocin tavoin ohjatusti ja sitten
+         tehtävänä on tehdä LinkedList tai HashMap.
+    Vrt. myös [HY](https://java-programming.mooc.fi/part-12/2-arraylist-and-hashtable)
 
 
-> [!WIP]
-> Tehdään esimerkkien kautta
-> - Tehdään `Lista<T>`-luokka ja sille attribuutiksi taulukko
-> - Katsotaan, mitkä ovat olennaisimmat listan toiminnan kannalta olevat metodit ja toteutetaan ne järjestyksessä
->     - `get(index)` -> suoraan
->     - `size()` -> suoraan
->     - `isEmpty()` -> tehtävänä
->     - `set(index, element)` -> suoraan
->     - `contains(object)` -> tehtävänä
->     - `indexOf(object)` -> tehtävänä
->     - `iterator()` -> suoraan tai tehtävänä
+!!! danger "WIP"
+
+    Tehdään esimerkkien kautta
+    - Tehdään `Lista<T>`-luokka ja sille attribuutiksi taulukko
+    - Katsotaan, mitkä ovat olennaisimmat listan toiminnan kannalta olevat metodit ja toteutetaan ne järjestyksessä
+        - `get(index)` -> suoraan
+        - `size()` -> suoraan
+        - `isEmpty()` -> tehtävänä
+        - `set(index, element)` -> suoraan
+        - `contains(object)` -> tehtävänä
+        - `indexOf(object)` -> tehtävänä
+        - `iterator()` -> suoraan tai tehtävänä
 
 
 
 ## Vanhaa tekstiä...
 
-> [!WIP]
-> Tehdään esimerkkien kautta
-> - Toteutetaan järjestyksessä
->     - `add(e)` -> yllä olevan kuvauksen kautta
->     - `remove(e)` -> yllä olevan kuvauksen kautta
->     - `remove(index)` -> tehtävänä
->     - `size()`, `isEmpty()` ja muiden aiempien metodien päivitys -> tehtävänä
+!!! danger "WIP"
+
+    Tehdään esimerkkien kautta
+    - Toteutetaan järjestyksessä
+        - `add(e)` -> yllä olevan kuvauksen kautta
+        - `remove(e)` -> yllä olevan kuvauksen kautta
+        - `remove(index)` -> tehtävänä
+        - `size()`, `isEmpty()` ja muiden aiempien metodien päivitys -> tehtävänä
 
 - Lopuksi huomioita
   - Toteutus ei vielä lopullinen, sillä `List`-rajapinta paljon laajempi
 
-> [!WIP]
-> Mahdollinen ajatus bonus- tai guru-tason tehtäväksi: toteuta itse tehtyyn listaan
-> loput `Collection<T>`-rajapinnan pakolliset metodit, jotta itse tehtyä listaa voi käyttää kokoelmana.
->  - `contains`, `containsAll`, `equals`, `hashCode`, `isEmpty`, `iterator`, `size`, `toArray`
+!!! danger "WIP"
+
+    Mahdollinen ajatus bonus- tai guru-tason tehtäväksi: toteuta itse tehtyyn listaan
+    loput `Collection<T>`-rajapinnan pakolliset metodit, jotta itse tehtyä listaa voi käyttää kokoelmana.
+     - `contains`, `containsAll`, `equals`, `hashCode`, `isEmpty`, `iterator`, `size`, `toArray`
 
 ## Listan toteutuksia
 

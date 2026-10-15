@@ -276,22 +276,22 @@ Kokeile nyt ajaa sovellus ja lisätä pari uutta tehtävää. Joka kerta, kun li
 uuden tehtävän, tehtävät tallentuvat `tehtavat.json`-tiedostoon. Näet tiedoston
 IDEAssa sen jälkeen, kun suljet sovelluksen.
 
-> [!HUOMAUTUS]
-> 
-> Tässä välissä on hyvä lisätä `.gitignore`-tiedostoon rivi `tehtavat.json`,
-> koska tuota tiedostoa ei haluta versionhallintaan. Tallennuksen jälkeen
-> lisää `.gitignore`-komento Gitiin ja tee uusi commit:
->
-> ```
-> git add .gitignore
-> ```
-> ```
-> git commit -m "Lisätty tehtavat.json .gitignoreen"
-> ```
-> 
-> Jos lisäsit jo `tehtavat.json`-tiedoston versionhallintaan, poista se ensin
-> komennolla `git rm --cached tehtavat.json`, tee commit, ja muuta vasta sen
-> jälkeen `.gitignore`-tiedostoa.
+!!! note "Huomautus"
+
+    Tässä välissä on hyvä lisätä `.gitignore`-tiedostoon rivi `tehtavat.json`,
+    koska tuota tiedostoa ei haluta versionhallintaan. Tallennuksen jälkeen
+    lisää `.gitignore`-komento Gitiin ja tee uusi commit:
+
+    ```
+    git add .gitignore
+    ```
+    ```
+    git commit -m "Lisätty tehtavat.json .gitignoreen"
+    ```
+
+    Jos lisäsit jo `tehtavat.json`-tiedoston versionhallintaan, poista se ensin
+    komennolla `git rm --cached tehtavat.json`, tee commit, ja muuta vasta sen
+    jälkeen `.gitignore`-tiedostoa.
 
 Luonnollisesti myös tehdyt tehtävät tulee tallentaa. Jotta koodia ei tarvitse
 toistaa, tehdään yllä olevasta koodista uusi metodi, `haeTehtavat(VBox vbox)`, joka palauttaa VBox-parametrin lapsikomponenttien perusteella listan

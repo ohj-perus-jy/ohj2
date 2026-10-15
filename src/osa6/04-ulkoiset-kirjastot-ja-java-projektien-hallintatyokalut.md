@@ -1,15 +1,15 @@
 # Ulkoiset kirjastot ja Java-projektien hallintatyökalut
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät, miksi rakennustyökaluja (kuten Maven tai Gradle) tarvitaan
->   modernissa ohjelmistokehityksessä.
-> - Tunnet Maven-projektin perusrakenteen ja `pom.xml`-tiedoston merkityksen.
-> - Osaat etsiä ja lisätä ulkoisia riippuvuuksia projektiisi.
-> - Ymmärrät Javan pakkausrakenteen (`package`) merkityksen koodin
->   organisoinnissa ja nimikonfliktien estämisessä.
-> - Osaat hyödyntää `import`-lauseita eri pakkauksissa sijaitsevien luokkien
->   käyttämiseen.
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät, miksi rakennustyökaluja (kuten Maven tai Gradle) tarvitaan
+      modernissa ohjelmistokehityksessä.
+    - Tunnet Maven-projektin perusrakenteen ja `pom.xml`-tiedoston merkityksen.
+    - Osaat etsiä ja lisätä ulkoisia riippuvuuksia projektiisi.
+    - Ymmärrät Javan pakkausrakenteen (`package`) merkityksen koodin
+      organisoinnissa ja nimikonfliktien estämisessä.
+    - Osaat hyödyntää `import`-lauseita eri pakkauksissa sijaitsevien luokkien
+      käyttämiseen.
 
 Oletetaan, että haluat tehdä Java-ohjelman, joka hakee tietoa verkosta
 HTTP-kutsulla. Löydät netistä seuraavan esimerkkikoodin. 

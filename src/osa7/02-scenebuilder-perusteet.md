@@ -1,14 +1,15 @@
 # SceneBuilder
 
-> [!Osaamistavoitteet]
-> - Osaat käyttää SceneBuilder-työkalua JavaFX-käyttöliittymien luomiseen
-> - Osaat yhdistää FXML-tiedoston ja kontrolleriluokan
+!!! abstract "Osaamistavoitteet"
 
-> [!TÄRKEÄÄ]
->
-> Tästä luvusta alkaen tarvitset SceneBuilder-työkalun.
-> 
-> Asenna työkalu seuraamalla [kurssin työkaluohjeita](../tyokalut.md#scenebuilder).
+    - Osaat käyttää SceneBuilder-työkalua JavaFX-käyttöliittymien luomiseen
+    - Osaat yhdistää FXML-tiedoston ja kontrolleriluokan
+
+!!! tip "Tärkeää"
+
+    Tästä luvusta alkaen tarvitset SceneBuilder-työkalun.
+
+    Asenna työkalu seuraamalla [kurssin työkaluohjeita](../tyokalut.md#scenebuilder).
 
 SceneBuilder on visuaalinen työkalu, joka helpottaa JavaFX-käyttöliittymien
 luomista. Se tarjoaa drag-and-drop-käyttöliittymän, jonka avulla voit luoda ja
@@ -196,10 +197,11 @@ Korjaa mahdolliset import-määreiden puute lisäämällä `import`-määreet
 
 <video src="images/intellij-component-imports.mp4" controls></video>
 
-> [!TÄRKEÄÄ]
-> Muuttujan nimen on oltava täsmälleen sama kuin SceneBuilderissä määritellyn
-> *fx:id*-arvon. JavaFX yhdistää komponentit ja attribuutit toisiinsa käyttäen
-> tunnistetta. Jos tunnisteet eivät täsmää, JavaFX ei osaa yhdistää niitä.
+!!! tip "Tärkeää"
+
+    Muuttujan nimen on oltava täsmälleen sama kuin SceneBuilderissä määritellyn
+    *fx:id*-arvon. JavaFX yhdistää komponentit ja attribuutit toisiinsa käyttäen
+    tunnistetta. Jos tunnisteet eivät täsmää, JavaFX ei osaa yhdistää niitä.
 
 Kokeile kääntää ja ajaa ohjelma uudestaan. Ohjelman pitäisi toimia kuten
 ennenkin.

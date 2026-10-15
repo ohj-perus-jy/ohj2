@@ -1,16 +1,16 @@
 # Kokoelmien käsittely: Stream API
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät deklaratiivisen ja imperatiivisen ohjelmoinnin eron kokoelmien
->   käsittelyssä
-> - Tunnet Stream API:n keskeiset käsitteet (väli- ja lopetusoperaatiot)
-> - Osaat käyttää striimejä kokoelmien suodattamiseen, muuntamiseen ja
->   lajitteluun
-> - Osaat hyödyntää `Optional`-tyyppiä mahdollisesti puuttuvien arvojen
->   käsittelyssä
-> - Tunnet perustietotyypeille tarkoitetut striimit, kuten `IntStream` ja
->   `DoubleStream`
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät deklaratiivisen ja imperatiivisen ohjelmoinnin eron kokoelmien
+      käsittelyssä
+    - Tunnet Stream API:n keskeiset käsitteet (väli- ja lopetusoperaatiot)
+    - Osaat käyttää striimejä kokoelmien suodattamiseen, muuntamiseen ja
+      lajitteluun
+    - Osaat hyödyntää `Optional`-tyyppiä mahdollisesti puuttuvien arvojen
+      käsittelyssä
+    - Tunnet perustietotyypeille tarkoitetut striimit, kuten `IntStream` ja
+      `DoubleStream`
 
 
 Olemme toistaiseksi käyttäneet silmukoita kokoelmien käsittelyyn. Jos haluamme

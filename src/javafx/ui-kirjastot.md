@@ -1,18 +1,18 @@
 # UI-kirjastojen käyttäminen
 
-> [!TÄRKEÄÄ]
->
-> Tällä kurssilla on sallittua käyttää ulkoisia kirjastoja omassa
-> harjoitustyössä, mutta omalla vastuulla. 
-> 
-> Ota huomioon, että ulkoisille kirjastoille on tarjolla
-> vaihtelevasti ohjeita, ja pahimmillaan voit joutua selvittämään kirjaston
-> toimintaa suoraan sen lähdekoodista.
-> Lisäksi ulkoiset kirjastot voivat sisältää bugeja ja ongelmia, joiden
-> selvittäminen voi viedä aikaa pois itse harjoitustyön tekemisestä.
-> 
-> Kurssin opettajat ja tuntiopettajat tarjoavat tukea
-> vain JavaFX-kirjastossa valmiiksi oleviin komponentteihin ja toimintoihin.
+!!! tip "Tärkeää"
+
+    Tällä kurssilla on sallittua käyttää ulkoisia kirjastoja omassa
+    harjoitustyössä, mutta omalla vastuulla. 
+
+    Ota huomioon, että ulkoisille kirjastoille on tarjolla
+    vaihtelevasti ohjeita, ja pahimmillaan voit joutua selvittämään kirjaston
+    toimintaa suoraan sen lähdekoodista.
+    Lisäksi ulkoiset kirjastot voivat sisältää bugeja ja ongelmia, joiden
+    selvittäminen voi viedä aikaa pois itse harjoitustyön tekemisestä.
+
+    Kurssin opettajat ja tuntiopettajat tarjoavat tukea
+    vain JavaFX-kirjastossa valmiiksi oleviin komponentteihin ja toimintoihin.
 
 JavaFX:lle on olemassa lukuisia lisäkirjastoja, jotka voivat helpottaa
 kehitystä. Saatat hyötyä esimerkiksi seuraavista kirjastoista:

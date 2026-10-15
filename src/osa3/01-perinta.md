@@ -1,10 +1,10 @@
 # Perintä
 
-> [!Osaamistavoitteet]
->
-> - Ymmärrät perinnän käsitteen olio-ohjelmoinnissa ja osaat periä luokkia Javassa
-> - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan
-> - Ymmärrät, että kaikki Javan luokat perivät `Object`-luokan
+!!! abstract "Osaamistavoitteet"
+
+    - Ymmärrät perinnän käsitteen olio-ohjelmoinnissa ja osaat periä luokkia Javassa
+    - Osaat luoda yksinkertaisen luokkahierarkian, jossa luokka perii toisen luokan
+    - Ymmärrät, että kaikki Javan luokat perivät `Object`-luokan
 
 *Perintä* tarkoittaa mekanismia, jossa luokka sisällyttää itseensä toisen luokan ominaisuudet (attribuutit) ja toiminnallisuudet (metodit). Tämä mahdollistaa koodin uudelleenkäytön ja luokkien välisen hierarkian luomisen. 
 
@@ -29,21 +29,23 @@ Lähdetään kuitenkin aluksi liikkeelle pienesti. Alla on `Opiskelija`- ja
 `Opettaja`-luokat, joihin olemme tehneet pari attribuuttia ja metodia. Tutki
 näitä luokkia.  
 
-> [!VAROITUS] 
-> Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit,
-> tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta,
-> sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi
-> lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään
-> ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei
-> ole välttämättä tarpeen. 
+!!! warning "Varoitus"
 
-> [!VAROITUS] 
-> Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän
-> syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti
-> nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista
-> `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku
-> 2.3](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin
-> edetessä.
+    Useista alla olevista esimerkeistä puuttuu dokumentaatiokommentit,
+    tai kommentit voivat olla osittain puutteellisia. Tämä on tietoinen valinta,
+    sillä niiden lisääminen pidentäisi esimerkkikoodia, ja siten hankaloittaisi
+    lukemista. Tässä materiaalissa koodia "dokumentoidaan" ja sitä selitetään
+    ympäröivällä tekstillä, joten tämän materiaalin esitystavassa dokumentaatio ei
+    ole välttämättä tarpeen. 
+
+!!! warning "Varoitus"
+
+    Alla oleva esimerkki on tarkoitettu havainnollistamaan perinnän
+    syntaksia, eikä siitä syystä noudata (vielä) parhaita käytäntöjä. Erityisesti
+    nimen asettaminen sellaisenaan attribuutin arvoksi käyttämällä julkista
+    `setNimi`-metodia rikkoo tiedon piilottamisen periaatetta (ks. [Luku
+    2.3](../osa2/03-kapselointi.md)). Korjaamme tämän asian kuitenkin esimerkin
+    edetessä.
 
 ```java
 // FILE: Opiskelija.java  

@@ -1,10 +1,10 @@
 # Ohjausrakenteet ja perustietorakenteet
 
-> [!Osaamistavoitteet]
->
-> - Ehtolauseet (`if`, `switch`)
-> - Toistolauseet (`for`, `while`, `do-while`), ja listatyyppiset tietorakenteet
-> - Tiedostat, että Javassa merkkijonoja verrataan `equals`-aliohjelmalla eikä `==`-operaattorilla
+!!! abstract "Osaamistavoitteet"
+
+    - Ehtolauseet (`if`, `switch`)
+    - Toistolauseet (`for`, `while`, `do-while`), ja listatyyppiset tietorakenteet
+    - Tiedostat, että Javassa merkkijonoja verrataan `equals`-aliohjelmalla eikä `==`-operaattorilla
 
 Ohjelmointi on harvoin pelkkää koodirivien suorittamista peräkkäin. Jotta
 ohjelmista saadaan hyödyllisiä, niiden täytyy pystyä tekemään päätöksiä,
@@ -39,11 +39,12 @@ operaattoreita yhdistämään ehtoja.
 
  * `!` (EI / NOT): Kääntää totuusarvon päinvastaiseksi (tosi muuttuu epätodeksi).
 
-> [!VAROITUS] 
-> Älä sekoita toisiinsa sijoitusoperaattoria `=` ja
-> vertailuoperaattoria `==`.
->  * `if (x = 5)` yrittää asettaa x:n arvoksi 5 (virhe)
->  * `if (x == 5)` kysyy, onko x:n arvo 5 (oikein)
+!!! warning "Varoitus"
+
+    Älä sekoita toisiinsa sijoitusoperaattoria `=` ja
+    vertailuoperaattoria `==`.
+     * `if (x = 5)` yrittää asettaa x:n arvoksi 5 (virhe)
+     * `if (x == 5)` kysyy, onko x:n arvo 5 (oikein)
 
 ## Viitetietotyyppisten muuttujien vertailu
 

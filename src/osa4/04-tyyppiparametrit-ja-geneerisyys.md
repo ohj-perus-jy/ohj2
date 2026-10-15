@@ -1,9 +1,9 @@
 # Tyyppiparametrit ja geneerisyys
 
-> [!Osaamistavoitteet]
->
-> - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli
->   geneerisiä luokkia ja metodeja
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat hyödyntää tyyppiparametreja toteuttaaksesi yleiskäyttöisiä eli
+      geneerisiä luokkia ja metodeja
 
 Olet oppinut aiemmissa ohjelmointiopinnoissasi, että parametrit mahdollistavat
 toiston vähentämisen yleistämällä ohjelman toimintaa erilaisille arvoille.
@@ -264,10 +264,11 @@ tyyppiparametreja määritellään luokille tai rajapinnoille. Olemmekin jo
 käyttäneet kurssilla tyyppiparametreja valmiissa luokissa, kuten `ArrayList<T>`.
 lista itsessään on yleinen, mutta sen sisältämä tyyppi täsmennetään.
 
-> [!TODO]
-> DZ: Joku yksinkertainen esimerkki? Vaikkapa Osassa 1 oleva salasanatehtävä,
-> mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
-> luokaksi `Pari<T, U>`.
+!!! info "Todo"
+
+    DZ: Joku yksinkertainen esimerkki? Vaikkapa Osassa 1 oleva salasanatehtävä,
+    mutta se palauttaisi `Tulos(boolean oikein, String virhe)`. Se refaktoroidaan
+    luokaksi `Pari<T, U>`.
 
 Geneerinen luokka on erityisen perusteltu silloin, kun luokka säilyttää jonkin
 tyyppisiä arvoja ja useat metodit liittyvät samaan tyyppiparametriin.

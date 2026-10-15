@@ -1,9 +1,10 @@
 # Osan kaikki tehtävät
 
-> [!HUOMAUTUS]
-> Jos palautat tehtävät ennen osan takarajaa (ks. [toteutuksesi takarajat](../index.md#uutiset)), voit saada DL-BONUS-pisteitä
-> harjoitustehtäviin. Lue DL-BONUS-pisteistä lisää
-> [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
+!!! note "Huomautus"
+
+    Jos palautat tehtävät ennen osan takarajaa (ks. [toteutuksesi takarajat](../index.md#uutiset)), voit saada DL-BONUS-pisteitä
+    harjoitustehtäviin. Lue DL-BONUS-pisteistä lisää
+    [suorittaminen-sivulta](../suorittaminen.md#suoritustapa-1).
 
 <task>
   <task-title num="2.1">Kello<points>1 p.</points></task-title>

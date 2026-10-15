@@ -1,9 +1,9 @@
 # Abstrakti luokka
 
-> [!Osaamistavoitteet]
-> 
-> - Osaat tehdä abstraktin luokan ja abstrakteja metodeja Javassa.
-> - Ymmärrät abstraktin luokan ja abstraktin metodin käsitteet ja niiden hyödyt olio-ohjelmoinnissa.
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat tehdä abstraktin luokan ja abstrakteja metodeja Javassa.
+    - Ymmärrät abstraktin luokan ja abstraktin metodin käsitteet ja niiden hyödyt olio-ohjelmoinnissa.
 
 ![Abstraktin luokan ajatusta voidaan havainnollistaa tuoleilla: Puutuoli, keinutuoli ja työtuoli ovat kaikki tuoleja, jotka erikoistavat "istuin"-käsitettä.](images/abstract-class2.png)
 
@@ -41,8 +41,9 @@ java: Muoto is abstract; cannot be instantiated
 
 *Abstrakti luokka* (engl. *abstract class*) on luokka, jonka avulla tällainen käsitteen piirre voidaan tehdä selväksi koodin tasolla luokkahierarkiassa. Abstraktista luokasta ei voi luoda suoria ilmentymiä, vaan se toimii ainoastaan pohjana muille luokille, jotka perivät sen. Abstrakti luokka voi sisältää sekä *abstrakteja metodeja* (ts. joilla ei ole toteutusta), että *konkreettisia metodeja* (ts. joilla on toteutus). Perivän luokan tulee sitten toteuttaa nuo abstraktit metodit, *ellei* perivä luokka ole myös abstrakti.
   
-> [!HUOMAUTUS]
-> Tässä kohtaa voi pysähtyä hetkeksi miettimään tarvitaanko [edellisen osan](02-polymorfismi.md) henkilötietojärjestelmässä laisinkaan henkilö-olioita, vai ovatko kaikki henkilöt jotain muutakin kuin henkilöitä, kuten opiskelijoita tai opettajia.
+!!! note "Huomautus"
+
+    Tässä kohtaa voi pysähtyä hetkeksi miettimään tarvitaanko [edellisen osan](02-polymorfismi.md) henkilötietojärjestelmässä laisinkaan henkilö-olioita, vai ovatko kaikki henkilöt jotain muutakin kuin henkilöitä, kuten opiskelijoita tai opettajia.
 
 ## Esimerkki: Älykoti {#alykoti}
 

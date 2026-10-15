@@ -1,12 +1,12 @@
 # Kohti olio-ohjelmointia
 
-> [!Osaamistavoitteet]
->
-> - Otat askeleen proseduraalisen ohjelmoinnin *data ja funktio*
->   -ajattelumallista kohti olio-ohjelmoinnin *tila ja metodi* -ajattelumallia.
-> - Ymmärrät olion käsitteen; tieto ja toiminnallisuus yhdessä paketissa.
-> - Ymmärrät, miten käsitteiden mallintaminen olioina voi helpottaa ohjelman
->   rakentamista.
+!!! abstract "Osaamistavoitteet"
+
+    - Otat askeleen proseduraalisen ohjelmoinnin *data ja funktio*
+      -ajattelumallista kohti olio-ohjelmoinnin *tila ja metodi* -ajattelumallia.
+    - Ymmärrät olion käsitteen; tieto ja toiminnallisuus yhdessä paketissa.
+    - Ymmärrät, miten käsitteiden mallintaminen olioina voi helpottaa ohjelman
+      rakentamista.
 
 Tähän mennessä olemme tehneet enimmäkseen ohjelmia, joissa dataa tallennetaan
 ohjelman muuttujiin ja käsitellään funktioiden avulla. Tällaista

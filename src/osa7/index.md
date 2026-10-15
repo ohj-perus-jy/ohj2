@@ -1,12 +1,13 @@
 # JavaFX osa 1, SceneBuilder
 
-> [!Osaamistavoitteet]
-> - Osaat tehdä JavaFX-projektin
-> - Ymmärrät käyttöliittymän luomisen periaatteet SceneBuilderia käyttäen
-> - Osaat tehdä lomakkeen, jossa kysytään käyttäjältä tietoa, tallennetaan tieto
->   (in-memory), ja esitetään syötetty tieto käyttäjälle käyttöliittymässä.
-> - Osaat luoda projektillesi paikallisen Git-varaston sopivilla asetuksilla, ja
->   tehdä varastoon committeja
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat tehdä JavaFX-projektin
+    - Ymmärrät käyttöliittymän luomisen periaatteet SceneBuilderia käyttäen
+    - Osaat tehdä lomakkeen, jossa kysytään käyttäjältä tietoa, tallennetaan tieto
+      (in-memory), ja esitetään syötetty tieto käyttäjälle käyttöliittymässä.
+    - Osaat luoda projektillesi paikallisen Git-varaston sopivilla asetuksilla, ja
+      tehdä varastoon committeja
 
 
 Olemme tähän mennessä toteuttaneet ohjelmia, jotka toimivat tekstipohjaisessa

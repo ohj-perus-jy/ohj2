@@ -1,14 +1,14 @@
 # Tiedostojen käsittely
 
-> [!Osaamistavoitteet]
->
-> - Osaat lukea ja kirjoittaa tekstitiedostoja Javan `Files`-luokan avulla.
-> - Osaat käyttää `Scanner`-luokkaa tiedon lukemiseen ja parsimiseen
->   tiedostosta.
-> - Osaat käsitellä tiedostoja riveittäin hyödyntäen Stream-rajapintaa.
-> - Tunnet JSON-tiedostomuodon perusteet.
-> - Osaat käyttää Jackson-kirjastoa JSON-datan lukemiseen ja kirjoittamiseen.
-> - Ymmärrät, miten Javan `record`-tietueet soveltuvat datan mallintamiseen.
+!!! abstract "Osaamistavoitteet"
+
+    - Osaat lukea ja kirjoittaa tekstitiedostoja Javan `Files`-luokan avulla.
+    - Osaat käyttää `Scanner`-luokkaa tiedon lukemiseen ja parsimiseen
+      tiedostosta.
+    - Osaat käsitellä tiedostoja riveittäin hyödyntäen Stream-rajapintaa.
+    - Tunnet JSON-tiedostomuodon perusteet.
+    - Osaat käyttää Jackson-kirjastoa JSON-datan lukemiseen ja kirjoittamiseen.
+    - Ymmärrät, miten Javan `record`-tietueet soveltuvat datan mallintamiseen.
 
 Tiedoston käsittelyssä on aina sama peruskaari: avaat resurssin, luet tai
 kirjoitat dataa tietyssä muodossa, ja suljet resurssin. Java tarjoaa tähän

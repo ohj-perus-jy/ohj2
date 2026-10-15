@@ -1,20 +1,20 @@
 # Versionhallinta
 
-> [!TÄRKEÄÄ]
-> 
-> Tämä luku olettaa, että olet käyttänyt Git-versiohallintaa aikaisemman.
-> Jos et ole aiemmin käyttänyt Gitiä tai kaipaat kertausta, lue aluksi
-> Ohjelmointi 1 -kurssin materiaalin
-> [Git-osio](https://ohjelmointi1.it.jyu.fi/git/). Emme tässä vaiheessa
-> tarvitse vielä etävarastoa, joten voit ohittaa GitLab-etävarastoa käsittelevän
-> kohdan. 
->
-> Vastaavasti Git-komentorivityökalun käyttö olettaa, että sinulla on kokemusta 
-> komentorivityökalujen käytöstä. Mikäli kaipaat kertausta, tutustu
-> Ohjelmointi 1 -kurssin komentorivimateriaaliin:
->
-> - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
-> - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
+!!! tip "Tärkeää"
+
+    Tämä luku olettaa, että olet käyttänyt Git-versiohallintaa aikaisemman.
+    Jos et ole aiemmin käyttänyt Gitiä tai kaipaat kertausta, lue aluksi
+    Ohjelmointi 1 -kurssin materiaalin
+    [Git-osio](https://ohjelmointi1.it.jyu.fi/git/). Emme tässä vaiheessa
+    tarvitse vielä etävarastoa, joten voit ohittaa GitLab-etävarastoa käsittelevän
+    kohdan. 
+
+    Vastaavasti Git-komentorivityökalun käyttö olettaa, että sinulla on kokemusta 
+    komentorivityökalujen käytöstä. Mikäli kaipaat kertausta, tutustu
+    Ohjelmointi 1 -kurssin komentorivimateriaaliin:
+
+    - [OpenCS: Johdatus komentorivin käyttöön](https://opencs.it.jyu.fi/cli-intro/)
+    - [Ohjelmointi 1: Pikakurssi komentorivin käyttöön](https://ohjelmointi1.it.jyu.fi/tyokalut/#pikakurssi-komentorivin-kayttoon)
 
 Tässä vaiheessa on hyvä hetki aloittaa versionhallinta. Käytämme
 Git-versionhallintaa, joka on laajasti käytetty työkalu ohjelmistokehityksessä.
