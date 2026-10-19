@@ -1,6 +1,8 @@
 # Kirjan asetukset työkaluille (tyokalut/convert.py); avaimet: tyokalut/README.md.
 nimi = "ohj2"
 
+ei_sivuja = ["*/huomiot.md", "*/jemma.md"]
+
 # Kuvan klikkaus avaa sen täysikokoisena (kokeilu, ks. tyokalut/README.md).
 kuvasuurennus = true
 
@@ -13,5 +15,6 @@ rikkinaiset_kuvat = ["osa4/images/adventure.png"]
 sivut = [
     "osa1/02-muuttujat-ja-tietotyypit.md",
     "osa2/02-luokka-ja-olio.md",
+    "osa5/*",
 ]
 repo = "https://github.com/ohj-perus-jy/ohj2-puhe.git"
