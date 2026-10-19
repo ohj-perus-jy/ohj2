@@ -80,8 +80,7 @@ IO.println(marjat);
 //-}
 ```
 
-`Collection` ei tee oletuksia sen sisältämien alkioiden järjestyksestä tai
-sisällöstä. Varsin lukuisa joukko Javan valmiita kokoelmia toteuttavat
+Varsin lukuisa joukko Javan valmiita kokoelmia toteuttavat
 `Collection`-rajapinnan. Tutustumme seuraavaksi mitä `Collection`-rajapinnan
 toteuttavalla kokoelmalla voi tehdä.
 
@@ -165,7 +164,7 @@ IO.println("Onko marjakokoelma tyhjä: " + marjat.isEmpty());
 
 ## Alkioiden läpikäynti
 
-`Collection`-rajapinta perii `Iterable`-rajapinnan, joten kokoelman alkioita voi
+`Collection`-rajapinta perii `Iterable`-rajapinnan, joka tarkoittaa, että kokoelman voi
 käydä läpi `for each`-silmukalla.
 
 ```java
