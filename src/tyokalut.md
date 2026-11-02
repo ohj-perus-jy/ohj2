@@ -420,12 +420,10 @@ Valmis!
 1. Avaa jakelusi pääteohjelma.
 2. Asenna IntelliJ IDEA. Asennustapa vaihtelee jakelun mukaan:
 
-    - Arch: Asenna [`intellij-idea-community-edition`](https://archlinux.org/packages/extra/x86_64/intellij-idea-community-edition/)-pakkaus.
-      Pakkauksen nimessä on yhä vanha *Community Edition* -nimi, mutta se sisältää
-      nykyisen yhtenäisen IntelliJ IDEAn.
+    - Arch: Asenna [`intellij-idea-oss`](https://archlinux.org/packages/extra/x86_64/intellij-idea-oss/)-pakkaus.      
 
       ```bash
-      sudo pacman -S intellij-idea-community-edition
+      sudo pacman -S intellij-idea-oss
       ```
 
     - Muut jakelut: Suosittelemme asentamaan [IDEA-snapin](https://snapcraft.io/intellij-idea) käyttäen `snap`-pakkaustenhallintaa:
@@ -434,6 +432,8 @@ Valmis!
         sudo snap install intellij-idea --classic
         ```
         
+        Jos kohtaat snap-asennuksessa ongelmia (esim. merkittävää hidastumista), [katso nämä ohjeet](https://www.jetbrains.com/help/idea/installation-guide.html#snap).
+
         Vaihtoehtoisesti voit asentaa IntelliJ:n käsin seuraamalla [virallisia asennusohjeita](https://www.jetbrains.com/help/idea/installation-guide.html#standalone_linux)
 
 3. Tarkista, että IntelliJ IDEA toimii. Käynnistä JetBrains IntelliJ IDEA (joko sovellusvalikosta tai `idea`-komennolla).
