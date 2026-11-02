@@ -269,8 +269,7 @@ Vielä sananen `change`-parametrista, joka näyttää hieman monimutkaiselta.
 `Change` on geneerinen olio, joka sisältää tietoa listassa kulloinkin
 tapahtuneesta muutoksesta. `Change`-oliota käytetään
 `ListChangeListener`-rajapinnan `onChanged`-metodissa; tuon metodin esittelyrivi
-on `void onChanged(Change<?
-extends E> c);`. Nyt meillä `E` on `String`, joten
+on `void onChanged(Change<? extends E> c);`. Nyt meillä `E` on `String`, joten
 täydellinen tyyppi on `ListChangeListener.Change<? extends String>`. Syy tälle
 syntaksille on siinä, että listat ovat geneerisiä, ja tällä tavalla erilaisia
 listamuutoksia (lisäys, poisto, korvaus, jne.) voidaan käsitellä samalla
