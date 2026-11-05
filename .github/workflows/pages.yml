@@ -19,6 +19,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write   # ajon artefaktien poisto
 
 # Yksi julkaisu kerrallaan; jonossa olevia ei peruta, jotta tuotantojulkaisu
 # valmistuu aina.
@@ -93,3 +94,17 @@ jobs:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v5
+      # Artefakteja tarvitaan vain tässä jobissa. Poistetaan heti, jotta ne eivät
+      # kerrytä orgin tallennuskiintiötä (500 MB/kk Free-orgilla, tuntikertymä).
+      - name: Poista ajon artefaktit
+        if: always()
+        uses: actions/github-script@v9
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { data } = await github.rest.actions.listWorkflowRunArtifacts({
+              owner, repo, run_id: context.runId, per_page: 100 });
+            for (const a of data.artifacts) {
+              await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
+              core.info(`poistettu ${a.name} (${Math.round(a.size_in_bytes / 1048576)} MB)`);
+            }
