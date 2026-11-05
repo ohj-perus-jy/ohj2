@@ -7,8 +7,9 @@
 # Pages-sivusto on yksi kokonaisuus: osittainen julkaisu pyyhkisi toisen.
 # Kaikki tapahtuu yhdessä jobissa, jotta buildin tulosta ei tarvitse siirtää
 # jobien välillä upload-artifactilla: välivaiheen artefaktit kuluttivat orgin
-# artefaktikiintiön (90 päivän säilytys × 2 × ~130 MB per push). Ainoa
-# artefakti on Pages-paketti, joka vanhenee vuorokaudessa.
+# artefaktikiintiön (90 päivän säilytys × 2 × ~130 MB per push). Valmis
+# sivusto pushataan gh-pages-haaraan, josta Pages julkaisee sen (Settings →
+# Pages → Deploy from a branch). Actions-artefakteja ei synny lainkaan.
 # Tämän tiedoston on oltava sama `main`issa ja `dev`:ssä; `main`-push ajaa
 # `main`in version. mdBook-julkaisu päättyi ja sen tiedostot poistettiin
 # 2026-09-20.
@@ -20,9 +21,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write   # gh-pages-haaran push
 
 # Yksi julkaisu kerrallaan; jonossa olevia ei peruta, jotta tuotantojulkaisu
 # valmistuu aina.
@@ -39,9 +38,6 @@ jobs:
   # jonka tyokalut/puhe.py täyttää; --strict kaatuu myös, jos se puuttuu.
   deploy:
     runs-on: vellu2-vps
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -88,8 +84,15 @@ jobs:
           cp -a main/zensical/site/. _site/
           cp -a dev/zensical/site/. _site/dev/
           du -sh _site _site/dev
-      - uses: actions/upload-pages-artifact@v5
-        with:
-          path: _site
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      # Haara kirjoitetaan joka kerta uusiksi (yksi commit), jotta repo ei kasva.
+      # .nojekyll: Pages ei aja Jekylliä, vaan tarjoilee tiedostot sellaisenaan.
+      - name: Julkaise gh-pages-haaraan
+        working-directory: _site
+        run: |
+          touch .nojekyll
+          git init -q -b gh-pages
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add -A
+          git commit -q -m "Julkaisu ${{ github.sha }} (${{ github.ref_name }})"
+          git push -q -f "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages
