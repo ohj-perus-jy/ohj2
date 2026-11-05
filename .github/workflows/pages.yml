@@ -90,6 +90,9 @@ jobs:
         working-directory: _site
         run: |
           touch .nojekyll
+          # Oma verkkotunnus: Pages lukee sen haaran CNAME-tiedostosta, ja
+          # ilman sitä asetus katoaa joka julkaisussa.
+          echo ohjelmointi2.it.jyu.fi > CNAME
           git init -q -b gh-pages
           git config user.name github-actions
           git config user.email github-actions@github.com
