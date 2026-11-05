@@ -43,7 +43,7 @@ jobs:
           - ref: dev
             artifact: site-dev
     name: zensical (${{ matrix.ref }})
-    runs-on: ubuntu-latest
+    runs-on: vellu2-vps
     steps:
       - uses: actions/checkout@v7
         with:
@@ -74,7 +74,7 @@ jobs:
 
   deploy:
     needs: zensical
-    runs-on: ubuntu-latest
+    runs-on: vellu2-vps
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
