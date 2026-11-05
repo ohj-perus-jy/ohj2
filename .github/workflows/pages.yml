@@ -1,10 +1,14 @@
-# Julkaisee GitHub Pagesiin kaksi Zensical-sivustoa samasta artefaktista:
+# Julkaisee GitHub Pagesiin kaksi Zensical-sivustoa yhtenä kokonaisuutena:
 #
 #   /      `main`-haarasta (tuotanto)
 #   /dev/  `dev`-haarasta (esikatselu)
 #
 # Molemmat rakennetaan jokaisella pushilla kumpaan tahansa haaraan, koska
 # Pages-sivusto on yksi kokonaisuus: osittainen julkaisu pyyhkisi toisen.
+# Kaikki tapahtuu yhdessä jobissa, jotta buildin tulosta ei tarvitse siirtää
+# jobien välillä upload-artifactilla: välivaiheen artefaktit kuluttivat orgin
+# artefaktikiintiön (90 päivän säilytys × 2 × ~130 MB per push). Ainoa
+# artefakti on Pages-paketti, joka vanhenee vuorokaudessa.
 # Tämän tiedoston on oltava sama `main`issa ja `dev`:ssä; `main`-push ajaa
 # `main`in version. mdBook-julkaisu päättyi ja sen tiedostot poistettiin
 # 2026-09-20.
@@ -19,7 +23,6 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  actions: write   # ajon artefaktien poisto
 
 # Yksi julkaisu kerrallaan; jonossa olevia ei peruta, jotta tuotantojulkaisu
 # valmistuu aina.
@@ -28,83 +31,65 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Sama rakennus kummallekin haaralle. convert.py tarvitsee vain
-  # standardikirjaston; kaaviot (cache/mermaid/, cache/svgbob/) ovat
-  # versionhallinnassa, joten Nodea tai svgbobia ei tarvita.
+  # convert.py tarvitsee vain standardikirjaston; kaaviot (cache/mermaid/,
+  # cache/svgbob/) ovat versionhallinnassa, joten Nodea tai svgbobia ei tarvita.
   # --strict kaataa ajon, jos jokin kaavio puuttuu välimuistista: ilman sitä
   # sivu julkaistaisiin kaavio koodilohkona.
   # Ääneenluvun leikkeet ovat erillisessä repossa (kirja.toml: [puhe] repo),
   # jonka tyokalut/puhe.py täyttää; --strict kaatuu myös, jos se puuttuu.
-  zensical:
-    strategy:
-      matrix:
-        include:
-          - ref: main
-            artifact: site
-          - ref: dev
-            artifact: site-dev
-    name: zensical (${{ matrix.ref }})
-    runs-on: vellu2-vps
-    steps:
-      - uses: actions/checkout@v7
-        with:
-          ref: ${{ matrix.ref }}
-          # Työkalut: zensical/tyokalut (kirjatyokalut-repo).
-          submodules: true
-      - uses: actions/checkout@v7
-        with:
-          repository: ohj-perus-jy/ohj2-puhe
-          path: zensical/puhe
-          fetch-depth: 1
-      - uses: actions/setup-python@v7
-        with:
-          python-version: "3.11"
-          cache: pip
-          cache-dependency-path: zensical/tyokalut/requirements.txt
-      - name: Install Zensical
-        run: pip install -r zensical/tyokalut/requirements.txt
-      - name: Convert and build
-        working-directory: zensical
-        run: |
-          python3 tyokalut/convert.py --strict
-          zensical build
-      - uses: actions/upload-artifact@v7
-        with:
-          name: ${{ matrix.artifact }}
-          path: zensical/site
-          retention-days: 5
-
   deploy:
-    needs: zensical
     runs-on: vellu2-vps
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/download-artifact@v8
+      - uses: actions/checkout@v7
         with:
-          name: site
-          path: _site
-      - uses: actions/download-artifact@v8
+          ref: main
+          path: main
+          # Työkalut: zensical/tyokalut (kirjatyokalut-repo).
+          submodules: true
+      - uses: actions/checkout@v7
         with:
-          name: site-dev
-          path: _site/dev
+          ref: dev
+          path: dev
+          submodules: true
+      - uses: actions/checkout@v7
+        with:
+          repository: ohj-perus-jy/ohj2-puhe
+          path: main/zensical/puhe
+          fetch-depth: 1
+      - name: Puheleikkeet myös dev-haaralle
+        run: cp -a main/zensical/puhe dev/zensical/puhe
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            main/zensical/tyokalut/requirements.txt
+            dev/zensical/tyokalut/requirements.txt
+      - name: Install Zensical
+        run: |
+          pip install -r main/zensical/tyokalut/requirements.txt
+          pip install -r dev/zensical/tyokalut/requirements.txt
+      - name: Convert and build (main)
+        working-directory: main/zensical
+        run: |
+          python3 tyokalut/convert.py --strict
+          zensical build
+      - name: Convert and build (dev)
+        working-directory: dev/zensical
+        run: |
+          python3 tyokalut/convert.py --strict
+          zensical build
+      - name: Kokoa sivusto
+        run: |
+          mkdir -p _site/dev
+          cp -a main/zensical/site/. _site/
+          cp -a dev/zensical/site/. _site/dev/
+          du -sh _site _site/dev
       - uses: actions/upload-pages-artifact@v5
         with:
           path: _site
       - id: deployment
         uses: actions/deploy-pages@v5
-      # Artefakteja tarvitaan vain tässä jobissa. Poistetaan heti, jotta ne eivät
-      # kerrytä orgin tallennuskiintiötä (500 MB/kk Free-orgilla, tuntikertymä).
-      - name: Poista ajon artefaktit
-        if: always()
-        uses: actions/github-script@v9
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const { data } = await github.rest.actions.listWorkflowRunArtifacts({
-              owner, repo, run_id: context.runId, per_page: 100 });
-            for (const a of data.artifacts) {
-              await github.rest.actions.deleteArtifact({ owner, repo, artifact_id: a.id });
-              core.info(`poistettu ${a.name} (${Math.round(a.size_in_bytes / 1048576)} MB)`);
-            }
