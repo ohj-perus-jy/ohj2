@@ -78,8 +78,11 @@ jobs:
         run: |
           python3 tyokalut/convert.py --strict
           zensical build
+      # Työhakemisto säilyy runnerilla ajojen välillä: tyhjennetään edellisen
+      # ajon _site, jotta vanhat sivut ja .git eivät jää paikalleen.
       - name: Kokoa sivusto
         run: |
+          rm -rf _site
           mkdir -p _site/dev
           cp -a main/zensical/site/. _site/
           cp -a dev/zensical/site/. _site/dev/
