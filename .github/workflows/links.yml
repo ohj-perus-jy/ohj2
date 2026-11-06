@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   lychee:
-    runs-on: vellu2-vps
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:

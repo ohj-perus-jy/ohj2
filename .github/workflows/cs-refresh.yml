@@ -7,7 +7,7 @@ on:
 
 jobs:
   make-curl-request:
-    runs-on: vellu2-vps
+    runs-on: ubuntu-latest
     steps:
       - name: Execute Curl Call
         # -f to catch errors and -sS to keep logs clean but show errors
