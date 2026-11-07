@@ -1,0 +1,3559 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ohjelmointi2.it.jyu.fi/osa7/01-javafx-perusteet/">
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../02-scenebuilder-perusteet/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.0">
+    
+    
+      
+        <title>7.1 JavaFX perusteet - Ohjelmointi 2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/fonts.css">
+    
+      <link rel="stylesheet" href="../../assets/css/paletti.css">
+    
+      <link rel="stylesheet" href="../../assets/css/typography.css">
+    
+      <link rel="stylesheet" href="../../assets/css/fontmenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/layout.css">
+    
+      <link rel="stylesheet" href="../../assets/css/sitemenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/search.css">
+    
+      <link rel="stylesheet" href="../../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tasks.css">
+    
+      <link rel="stylesheet" href="../../assets/css/icons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tables.css">
+    
+      <link rel="stylesheet" href="../../assets/css/code.css">
+    
+      <link rel="stylesheet" href="../../assets/css/requirements.css">
+    
+      <link rel="stylesheet" href="../../assets/css/diagrams.css">
+    
+      <link rel="stylesheet" href="../../assets/css/codebuttons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/playground.css">
+    
+      <link rel="stylesheet" href="../../assets/css/highlights.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hidelines.css">
+    
+      <link rel="stylesheet" href="../../assets/css/copy.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hints.css">
+    
+      <link rel="stylesheet" href="../../assets/css/print.css">
+    
+      <link rel="stylesheet" href="../../assets/css/walkthrough.css">
+    
+      <link rel="stylesheet" href="../../assets/css/puhe.css">
+    
+      <link rel="stylesheet" href="../../assets/css/visa.css">
+    
+      <link rel="stylesheet" href="../../assets/css/glightbox.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <link rel="preload" href="../../assets/fonts/source-serif-4/normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Hyppää sisältöön
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste"><button type="button" class="md-header__button md-icon jyu-rail-button" id="jyu-rail-button"
+            title="Piilota valikko" aria-label="Piilota valikko"
+            aria-expanded="true" aria-controls="jyu-rail" aria-keyshortcuts="b">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <script>try{if(localStorage.getItem("jyu-rail")==="hidden")document.documentElement.setAttribute("data-jyu-rail","hidden")}catch(e){}</script>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigaatio</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
+          <span class="md-ellipsis"><a href="../..">Ohjelmointi 2</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7.1 JavaFX perusteet
+            
+          </span>
+        </div>
+      </div>
+    </div><button type="button" class="md-header__button md-icon jyu-puhe-button" hidden
+            title="Kuuntele sivu" aria-label="Kuuntele sivu" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-volume-2" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298zM16 9a5 5 0 0 1 0 6M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+    </button>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Haku</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Haku">
+  <button type="button" class="md-search__button" title="Haku (Ctrl+K)">
+    Haku
+  </button>
+</div><script>if(/^Mac/.test(document.documentElement.dataset.platform))document.querySelectorAll(".md-search__button").forEach(b=>b.title=b.title.replace("Ctrl+K","⌘K"))</script>
+      
+    <div class="md-header__option jyu-font" data-md-component="jyu-font" data-steps="90 100 110 120 135 150 175">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipäteksti: Serif, 100 %" aria-label="Leipäteksti: Serif, 100 %"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="jyu-font-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-type" viewBox="0 0 24 24"><path d="M12 4v16M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6"/></svg>
+        <span class="jyu-font__chevron"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="jyu-font__panel" id="jyu-font-panel" role="dialog" aria-label="Leipäteksti" hidden>
+        <div class="jyu-font__size" role="group" aria-labelledby="jyu-font-size-label">
+          <span class="jyu-font__size-label" id="jyu-font-size-label">Tekstin koko</span>
+          <button type="button" class="jyu-font__step" data-step="-1" aria-label="Pienennä tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="jyu-font__reset" title="Palauta 100 %" aria-label="Palauta 100 %" aria-disabled="true"><span aria-live="polite">100 %</span></button>
+          <button type="button" class="jyu-font__step" data-step="1" aria-label="Suurenna tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+          </button>
+        </div>
+        <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin">
+          <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Source Serif 4</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+            <span class="jyu-font__kind">sans-serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Literata</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+        </ul>
+      </div>
+    </div><script>try{var b=document.body,f=localStorage.getItem("jyu-font"),k=localStorage.getItem("jyu-text-size");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))b.setAttribute("data-jyu-font",f);if(k&&document.querySelector(".jyu-font").dataset.steps.split(" ").indexOf(k)>=0)b.style.setProperty("--jyu-text-scale",k/100)}catch(e){}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda tummaan teemaan"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Vaihda tummaan teemaan" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda vaaleaan teemaan"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Vaihda vaaleaan teemaan" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    <a href="../../tulosta/" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg>
+    </a>
+    <div class="md-header__source">
+      
+        
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ohjelmointi 2" class="md-nav__button md-logo" aria-label="Ohjelmointi 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    Ohjelmointi 2
+  </label>
+  
+    <div class="md-nav__source">
+      
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Aloitus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../suorittaminen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Suorittaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Työkalut ja asentaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../harjoitustyo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tentti/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tentti
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tentti
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tentti/tenttiohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tenttiohjeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ukk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usein kysyttyä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../luennot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Luennot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/koti" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Eteneminen (TIM)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1 Java-kielen perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  1 Java-kielen perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/01-hei-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.1 Hei, Java!
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/02-muuttujat-ja-tietotyypit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.2 Muuttujat ja tietotyypit
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/03-ohjausrakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.3 Ohjausrakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/04-aliohjelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.4 Aliohjelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2 Olio-ohjelmoinnin perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2 Olio-ohjelmoinnin perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/01-kohti-olio-ohjelmointia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1 Kohti olio-ohjelmointia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/02-luokka-ja-olio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.2 Luokka ja olio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/03-kapselointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.3 Kapselointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3 Perintä, polymorfismi
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3 Perintä, polymorfismi
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/01-perinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1 Perintä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/02-polymorfismi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2 Polymorfismi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/03-abstrakti-luokka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3 Abstrakti luokka
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4 Rajapinta, geneeriset luokat
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4 Rajapinta, geneeriset luokat
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/01-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1 Rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/02-vertailurajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.2 Vertailurajapinnat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/03-perinta-ja-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.3 Perintä ja rajapinta olioiden yhteistyössä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/04-tyyppiparametrit-ja-geneerisyys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.4 Tyyppiparametrit ja geneerisyys
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5 Tietorakenteita ja algoritmeja
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_13">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5 Tietorakenteita ja algoritmeja
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/01-kokoelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1 Kokoelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/02-listarakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/03-hakurakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.3 Hakurakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/04-joukkorakenteet-jonorakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/05-rekursio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.5 Rekursio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa5/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa6/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_14">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/01-funktiorajapinnat-ja-lambda-lausekkeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1 Funktiorajapinnat ja lambda-lausekkeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/02-kokoelmien-kasittely-stream-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2 Kokoelmien käsittely: Stream API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/03-poikkeusten-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.3 Poikkeusten hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.4 Ulkoiset kirjastot ja Java-projektien hallintatyökalut
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/05-tiedostojen-kasittely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.5 Tiedostojen käsittely
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7 JavaFX osa 1, SceneBuilder
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_15">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  7 JavaFX osa 1, SceneBuilder
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutoriaali-todo-sovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tutoriaali: Todo-sovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ensimmainen-javafx-sovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Ensimmäinen JavaFX-sovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javafx-sovelluksen-rakenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        JavaFX-sovelluksen rakenne
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaFX-sovelluksen rakenne">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#javafx-sovelluksen-kaynnistys-ja-ydinluokat" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        JavaFX-sovelluksen käynnistys ja ydinluokat
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-scenebuilder-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.2 SceneBuilder-perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-versionhallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.3 Versionhallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-sovelluslogiikka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.4 Sovelluslogiikka ja käyttöliittymä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-tehtavien-lukeminen-tallennus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.5 Tehtävien tallennus tiedostoon
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-scenebuilder-asettelu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.6 Komponenttien asettelu
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8 JavaFX osa 2, MVC
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_16" id="__nav_16_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_16">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  8 JavaFX osa 2, MVC
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/01-malli-ja-observable-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.1 Observable-rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/02-tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.2 TableView ja databinding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/03-mvc-arkkitehtuuri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.3 MVC-arkkitehtuuri
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/04-useita-nakymia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.4 Tehtävien muokkaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/05-yksikkotestaus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.5 Yksikkötestaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/06-versionhallinnan-etakaytto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.6 Koodin julkaiseminen etävarastopalvelussa
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9 Harjoitustyö, vaihe 1
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10 Harjoitustyö, vaihe 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11 Harjoitustyö, vaihe 3
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12 Harjoitustyön palautus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../javafx/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13 JavaFX-ohjeita
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_21" id="__nav_21_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_21">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  13 JavaFX-ohjeita
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/nakymat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.1 Näkymät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.2 TableView
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/ui-kirjastot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.3 Ulkoiset UI-kirjastot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/observable-bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.4 Johdettujen Observable-arvojen laskeminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/validointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.5 Validointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/viitteiden-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.6 Viitteiden hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tutoriaali-todo-sovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tutoriaali: Todo-sovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ensimmainen-javafx-sovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Ensimmäinen JavaFX-sovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#javafx-sovelluksen-rakenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        JavaFX-sovelluksen rakenne
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="JavaFX-sovelluksen rakenne">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#javafx-sovelluksen-kaynnistys-ja-ydinluokat" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        JavaFX-sovelluksen käynnistys ja ydinluokat
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="javafx-perusteet">JavaFX perusteet<a class="headerlink" href="#javafx-perusteet" title="Pysyvä linkki tähän otsikkoon">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title">Osaamistavoitteet</p>
+<ul>
+<li>Ymmärrät JavaFX-sovelluksen rakenteen</li>
+</ul>
+</div>
+<p>Olemme tähän saakka tehneet komentorivisovelluksia ja lähinnä tulostaneet
+tekstiä ruudulle. Graafinen käyttöliittymä (GUI) on kuitenkin monille ohjelmille
+olennainen osa. Graafisen käyttöliittymän avulla käyttäjä näkee painikkeita,
+valikoita ja kuvia sen sijaan, että hänen pitäisi opetella kirjoittamaan
+komentoja oikeassa muodossa. </p>
+<p>Java-kielelle on useita kirjastoja graafisten käyttöliittymien toteuttamiseen,
+mutta JavaFX on niistä ehkäpä nykyaikaisin ja monipuolisin. JavaFX käsittelee
+käyttöliittymää puumaisena rakenteena. Jokainen ikkunan osa, kuten painike,
+teksti tai ryhmittelyelementti on "solmu" (<em>Node</em>), joka kuuluu johonkin
+suurempaan kokonaisuuteen. Tämä tekee monimutkaistenkin näkymien hallinnasta
+loogista.</p>
+<p>Ulkoasu ja logiikka erotetaan JavaFX:ssä toisistaan. Ulkoasun määritellään
+käyttämällä <strong>FXML</strong>-kieltä, mikä on XML-pohjainen tiedostomuoto. Toiminnallinen
+logiikka kirjoitetaan tavallisena Java-koodina. Tämä muistuttaa tapaa, jolla
+web-kehityksessä erotetaan HTML (rakenne) ja JavaScript (toiminta).</p>
+<p>JavaFX:ssä on oma toteutus CSS:stä (Cascading Style Sheets), joka tukee osaa CSS
+2.1:n ominaisuuksista, ja joitain CSS 3:n ominaisuuksia. Tämän avulla
+käyttöliittymäelementtien tyylittelyjä voidaan tietyssä määrin toteuttaa
+web-kehityksestä tutulla tavalla. CSS-tuki on kuitenkin kohtalaisen rajallista,
+eikä esimerkiksi float-, position- tai flexbox-ominaisuuksia tueta. Joihinkin
+ominaisuuksiin löytyy joko JavaFX:n omat vastineensa, kuten flexboxin
+tapauksessa VBox/HBox. Myös kehittäjäyhteisö tuottaa jatkuvasti avoimen
+lähdekoodin kirjastoja, jotka tuovat joitain CSS:stä tuttuja ominaisuuksia
+JavaFX:ään.</p>
+<h2 id="tutoriaali-todo-sovellus">Tutoriaali: Todo-sovellus<a class="headerlink" href="#tutoriaali-todo-sovellus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Osien 7 ja 8 aikana rakennamme yksinkertaisen Todo-sovelluksen. Tähän osioon
+kuuluu tehtäviä, joissa opit tekemään saman sovelluksen omatoimisesti. Nämä osat
+antavat sinulle tarvittavan ymmärryksen JavaFX:stä, jotta voit luoda oman
+harjoitustyön osien 9-11 aikana. </p>
+<p>Osassa 7 teemme sovellukseen seuraavat ominaisuudet:</p>
+<ul>
+<li>Käyttäjä voi lisätä uuden tehtävän</li>
+<li>Käyttäjä näkee listan kaikista tehtävistä</li>
+<li>Käyttäjä voi merkitä tehtävän tehdyksi</li>
+<li>Käyttäjä voi poistaa tehtävän</li>
+<li>Käyttäjä voi palauttaa tehdyn tehtävän takaisin tekemättömäksi</li>
+<li>Tehtävät tallennetaan tiedostoon, jotta ne säilyvät sovelluksen sulkemisen jälkeen</li>
+<li>Tehtävät haetaan tiedostosta sovelluksen käynnistyessä</li>
+</ul>
+<p>Tämän osan lopuksi sovelluksemme toimii seuraavasti:</p>
+<video src="../images/todo-app-final-product.mp4" controls></video>
+
+<p>Kuten aiemminkin, tämänkin osan tehtävistä täytyy tehdä vähintään 50%.
+Erityisesti osissa 7 ja 8 kuitenkin suosittelemme tekemään kaikki tehtävät
+jotta harjoitustyön tekeminen olisi helpompaa. Bonustehtävät jäävät kuitenkin
+edelleen vapaavalintaisiksi. </p>
+<h2 id="ensimmainen-javafx-sovellus">Ensimmäinen JavaFX-sovellus<a class="headerlink" href="#ensimmainen-javafx-sovellus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Tehdään nyt IDEAssa uusi JavaFX-projekti. Avaa IDEA ja valitse File <span class="jyu-path">›</span> New <span class="jyu-path">›</span> Project. Avautuu
+tuttu <em>New Project</em> -näkymä:</p>
+<p><a class="glightbox" href="../images/intellij-new-project.png" data-type="image"><img width="600" src="../images/intellij-new-project.png"></a></p>
+<p>Aiemmissa osissa olemme luoneet tyhjiä projekteja, johon lisäsimme koodia
+ja riippuvuuksia. JavaFX vaatii kuitenkin useita riippuvuuksia, asetuksia
+ja alustuskoodia, joita olisi vaivallollista lisätä käsin aina, kun halutaan
+tehdä uusi sovellus.</p>
+<p>Maven-projektille voidaan määritellä valmis pohja, eli ns. <em>Maven-arkkityyppi</em>
+(engl. Maven Archetype). Pohja sisältää esimerkiksi valmiin rakenteen
+projektille, koodia ja valmiiksi määritellyt riippuvuudet. Maven-arkkityyppejä
+on hyvin monenlaisia erilaisiin käyttötarkoituksiin. Olemme tehneet tälle
+opintojaksolle oman pohjan ja käytämme sitä jatkossa.</p>
+<p>Valitse vasemmasta laidasta <strong>Maven Archetype</strong> jolloin saat seuraavat asetukset
+näkyviin:</p>
+<p><a class="glightbox" href="../images/intellij-new-project-maven-archetype.png" data-type="image"><img width="600" src="../images/intellij-new-project-maven-archetype.png"></a></p>
+<p>Täytetään lomake meidän projektitiedoilla:</p>
+<ul>
+<li><strong>Name</strong>: <code>TodoFx</code></li>
+<li><strong>Location</strong>: Valitse jokin kansio, johon haluat luoda projektin. Voit
+  kirjoittaa kansion polun käsin tai käyttää kansionvalitsinta <span class="twemoji" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 18H4V8h16m0-2h-8l-2-2H4c-1.11 0-2 .89-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2"/></svg></span>-ikonista</li>
+<li><strong>Create Git repository</strong>: Jätä tyhjäksi. Luomme uuden Git-varaston itse myöhemmin.</li>
+<li><strong>JDK</strong>: Valitse jokin Java 25 -vaihtoehto. Oletusarvo on yleensä hyvä.
+  Tarvittaessa voit ladata JDK:n seuraamalla <a href="../../tyokalut/#jdk">työkalujen asennusohjeita</a>.</li>
+<li><strong>Catalog</strong>: <code>Maven Central</code></li>
+<li><strong>Archetype</strong>: <code>io.github.ohj-perus-jy:javafx-fxml-template</code></li>
+<li><strong>Version</strong>: Valitse uusin versio, jos se näkyy. Jos ei, kirjoita kenttään
+  käsin <code>1.0.1</code>.</li>
+<li><strong>Additional properties</strong>: Jätä muokkaamatta. Projektipohjan oletusarvot
+  riittävät tähän tarkoitukseen.</li>
+<li><strong>Additional settings</strong> (Klikkaa otsikosta jos sen alla olevia asetuksia ei näy):</li>
+<li><strong>GroupId</strong>: Julkinen, yksilöllinen tunniste sovellukselle. Javassa yleinen
+    käytäntö on kirjoittaa tunniste muodossa <code>&lt;oma verkkosivun osoite
+    käänteisesti&gt;.&lt;sovelluksen tunniste&gt;</code>. Tässä materiaalissa voit käyttää
+    tunnisteena <code>fi.jyu.ohj2.nimesi.todo</code>, missä <code>nimesi</code> on etunimesi tai
+    käyttäjätunnuksesi ilman erikoismerkkejä.</li>
+<li><strong>ArtifactId</strong>: Tämä täsmää projektin <strong>Name</strong>-kentän kanssa</li>
+<li><strong>Version</strong>: <code>0.1</code></li>
+</ul>
+<p>Tietojen täyttämisen jälkeen lomakkeen tulisi siten näyttää seuraavalta:</p>
+<p><a class="glightbox" href="../images/intellij-new-project-maven-archetype-filled.png" data-type="image"><img src="../images/intellij-new-project-maven-archetype-filled.png"></a></p>
+<p>Paina sen jälkeen <em>Create</em>. Tämä luo projektin ja lataa Maven-arkkityypin
+riippuvuudet. Tämä saattaa kestää hetken, joten odota rauhassa. Lopuksi
+<em>Run</em>-paneelissa pitäisi lukea <code>BUILD SUCCESS</code>-teksti onnistumisen merkiksi:</p>
+<p><a class="glightbox" href="../images/intellij-archetype-done.png" data-type="image"><img src="../images/intellij-archetype-done.png"></a></p>
+<p>Kokeillaan vielä käynnistää sovellus.
+Avaa projektiselaimessa <code>src/main/java/&lt;pakkauksen nimi&gt;</code>-kansiossa
+oleva <code>Main</code>-luokka ja klikkaa <code>main</code>-pääohjelman vieressä olevaa
+ajopainiketta (<span class="twemoji" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7z"/></svg></span>) ja valitse <em>Run</em>:</p>
+<p><a class="glightbox" href="../images/intellij-run-javafx.png" data-type="image"><img src="../images/intellij-run-javafx.png" width="600"></a></p>
+<p>Tämä käynnistää sovelluksen, jossa sinun pitäisi nyt nähdä yksi klikattava
+painike: </p>
+<p><a class="glightbox" href="../images/javafx-hello-start.png" data-type="image"><img src="../images/javafx-hello-start.png"></a></p>
+<p>Lisäksi tämä luo ajokonfiguraation, jolloin voit käynnistää projektin
+yläpalkin ajopainikkeella.</p>
+<h2 id="javafx-sovelluksen-rakenne">JavaFX-sovelluksen rakenne<a class="headerlink" href="#javafx-sovelluksen-rakenne" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Projektia ajaessa saatoit jo huomata, että JavaFX-projekti sisältää valmiiksi
+muutaman tiedoston:</p>
+<div class="svgbob">
+<svg xmlns="http://www.w3.org/2000/svg" width="344" height="192" class="svgbob">
+  <style>.svgbob line, .svgbob path, .svgbob circle, .svgbob rect, .svgbob polygon {
+  stroke: var(--md-default-fg-color);
+  stroke-width: 2;
+  stroke-opacity: 1;
+  fill-opacity: 1;
+  stroke-linecap: round;
+  stroke-linejoin: miter;
+}
+.svgbob text {
+  white-space: pre;
+  fill: var(--md-default-fg-color);
+  font-family: var(--md-code-font-family);
+  font-size: 14px;
+}
+.svgbob rect.backdrop {
+  stroke: none;
+  fill: transparent;
+}
+.svgbob .broken {
+  stroke-dasharray: 8;
+}
+.svgbob .filled {
+  fill: var(--md-default-fg-color);
+}
+.svgbob .bg_filled {
+  fill: transparent;
+  stroke-width: 1;
+}
+.svgbob .nofill {
+  fill: transparent;
+}
+.svgbob .end_marked_arrow {
+  marker-end: url(#bob1-arrow);
+}
+.svgbob .start_marked_arrow {
+  marker-start: url(#bob1-arrow);
+}
+.svgbob .end_marked_diamond {
+  marker-end: url(#bob1-diamond);
+}
+.svgbob .start_marked_diamond {
+  marker-start: url(#bob1-diamond);
+}
+.svgbob .end_marked_circle {
+  marker-end: url(#bob1-circle);
+}
+.svgbob .start_marked_circle {
+  marker-start: url(#bob1-circle);
+}
+.svgbob .end_marked_open_circle {
+  marker-end: url(#bob1-open_circle);
+}
+.svgbob .start_marked_open_circle {
+  marker-start: url(#bob1-open_circle);
+}
+.svgbob .end_marked_big_open_circle {
+  marker-end: url(#bob1-big_open_circle);
+}
+.svgbob .start_marked_big_open_circle {
+  marker-start: url(#bob1-big_open_circle);
+}
+</style>
+  <defs>
+    <marker id="bob1-arrow" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,0 0,4 4,2 0,0"></polygon>
+    </marker>
+    <marker id="bob1-diamond" viewBox="-2 -2 8 8" refX="4" refY="2" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <polygon points="0,2 2,0 4,2 2,4 0,2"></polygon>
+    </marker>
+    <marker id="bob1-circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="filled"></circle>
+    </marker>
+    <marker id="bob1-open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="2" class="bg_filled"></circle>
+    </marker>
+    <marker id="bob1-big_open_circle" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <circle cx="4" cy="4" r="3" class="bg_filled"></circle>
+    </marker>
+  </defs>
+  <rect class="backdrop" x="0" y="0" width="344" height="192"></rect>
+  <text x="2" y="12" >🗎</text>
+  <text x="2" y="28" >🖿</text>
+  <text x="18" y="12" >pom.xml</text>
+  <text x="18" y="28" >src</text>
+  <text x="114" y="76" >🖿</text>
+  <text x="106" y="156" >🖿</text>
+  <text x="138" y="172" >🗎</text>
+  <text x="330" y="76" >⠀</text>
+  <text x="154" y="172" >main.fxml</text>
+  <text x="130" y="76" >fi/jyu/ohj2/nimesi/todo</text>
+  <text x="122" y="156" >fi/jyu/ohj2/nimesi/todo</text>
+  <g>
+    <line x1="20" y1="32" x2="20" y2="40" class="solid"></line>
+    <line x1="20" y1="40" x2="40" y2="40" class="solid"></line>
+  </g>
+  <g>
+    <text x="42" y="44">🖿</text>
+    <text x="58" y="44">main</text>
+  </g>
+  <g>
+    <line x1="52" y1="48" x2="52" y2="136" class="solid"></line>
+    <line x1="52" y1="56" x2="72" y2="56" class="solid"></line>
+    <line x1="52" y1="136" x2="72" y2="136" class="solid"></line>
+  </g>
+  <g>
+    <text x="74" y="60">🖿</text>
+    <text x="90" y="60">java</text>
+  </g>
+  <g>
+    <line x1="92" y1="64" x2="92" y2="72" class="solid"></line>
+    <line x1="92" y1="72" x2="112" y2="72" class="solid"></line>
+  </g>
+  <g>
+    <line x1="124" y1="80" x2="124" y2="120" class="solid"></line>
+    <line x1="124" y1="88" x2="144" y2="88" class="solid"></line>
+    <line x1="124" y1="104" x2="144" y2="104" class="solid"></line>
+    <line x1="124" y1="120" x2="144" y2="120" class="solid"></line>
+  </g>
+  <g>
+    <text x="146" y="92">🗎</text>
+    <text x="162" y="92">App.java</text>
+  </g>
+  <g>
+    <text x="146" y="108">🗎</text>
+    <text x="162" y="108">MainController.java</text>
+  </g>
+  <g>
+    <text x="146" y="124">🗎</text>
+    <text x="162" y="124">Main.java</text>
+  </g>
+  <g>
+    <text x="74" y="140">🖿</text>
+    <text x="90" y="140">resources</text>
+  </g>
+  <g>
+    <line x1="84" y1="144" x2="84" y2="152" class="solid"></line>
+    <line x1="84" y1="152" x2="104" y2="152" class="solid"></line>
+  </g>
+  <g>
+    <line x1="116" y1="160" x2="116" y2="168" class="solid"></line>
+    <line x1="116" y1="168" x2="136" y2="168" class="solid"></line>
+  </g>
+</svg>
+</div>
+
+<ul>
+<li><code>pom.xml</code> on Maven-projektin konfiguraatiotiedosto.</li>
+<li><code>fi/jyu/ohj2/nimesi/todo</code> vastaa äsken asettamaasi <em>GroupId</em>-arvoa ja on
+    projektin pääpakkaus. Java-kooditiedostot sijaitsevat tässä kansiossa.</li>
+<li><code>App.java</code>, <code>MainController.java</code> ja <code>Main.java</code> ovat JavaFX-sovellukseen liittyviä Java-luokkia.</li>
+<li><code>main.fxml</code> on JavaFX-sovelluksen käyttöliittymään liittyvä tiedosto. </li>
+</ul>
+<p>JavaFX-sovellus koostuu yleensä kolmesta pääkomponentista: pääluokka, ulkoasu ja
+kontrolleriluokka. </p>
+<p><strong>Pääluokka</strong> on Java-luokka, joka toimii JavaFX-sovelluksen käynnistyspisteenä.
+Esimerkissämme se on <code>App.java</code>, jota kutsutaan <code>Main.java</code>-tiedostossa olevasta
+perinteisestä <code>main()</code>-pääohjelmasta. Pääluokka perii <code>Application</code>-luokan ja
+määrittelee, miten sovellus luo ja näyttää ikkunan. Pääluokka on vastuussa
+sovelluksen elinkaaren hallinnasta.</p>
+<p><strong>Käyttöliittymän näkymä</strong> määritellään niin kutsutussa FXML-tiedostossa, joka on XML-pohjainen
+kuvaus käyttöliittymästä. Esimerkissämme se löytyy <code>resources</code>-kansiosta nimeltä
+<code>main.fxml</code>. FXML-tiedosto määrittelee tekstimuodossa, millaisia komponentteja
+eli käyttöliittymäosia ikkunassa on ja miten ne on järjestetty. Pienessä
+projektissa FXML-tiedostoja on yleensä nolla tai yksi, mutta suuremmissa projekteissa
+niitä voi olla useita. Jos esimerkiksi sovelluksella on useita eri näkymiä,
+kuten pääikkuna, asetukset ja itse pääkäyttöliittymä, ja jokaiselle näkymälle
+voidaan luoda oma FXML-tiedosto.</p>
+<p><strong>Kontrolleriluokka</strong> on Java-luokka, joka sisältää logiikan käyttöliittymän
+komponenttien käsittelyyn. Kontrolleriluokka ja sitä vastaava
+FXML-näkymätiedosto ovat kytköksessä toisiinsa. Esimerkiksi projektissamme
+oleva <code>MainController.java</code> on kontrolleri näkymälle <code>main.fxml</code>.
+Kontrolleriluokassa määritellään, miten sovellus reagoi
+käyttöliittymän syötteisiin ja tapahtumiin.
+Toisin sanoen, sillä aikaan kun FXML-tiedosto määrittelee käyttöliittymän,
+kontrolleriluokka tekee käyttöliittymästä vuorovaikutteisen.</p>
+<h3 id="javafx-sovelluksen-kaynnistys-ja-ydinluokat">JavaFX-sovelluksen käynnistys ja ydinluokat<a class="headerlink" href="#javafx-sovelluksen-kaynnistys-ja-ydinluokat" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Tutustutaan hieman <code>App.java</code>-pääluokan rakenteeseen tarkemmin:</p>
+<div class="language-java ignore highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">App</span><span class="w"> </span><span class="kd">extends</span><span class="w"> </span><span class="n">Application</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="nd">@Override</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">start</span><span class="p">(</span><span class="n">Stage</span><span class="w"> </span><span class="n">stage</span><span class="p">)</span><span class="w"> </span><span class="kd">throws</span><span class="w"> </span><span class="n">IOException</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="cm">/* 1 */</span><span class="w"> </span><span class="n">FXMLLoader</span><span class="w"> </span><span class="n">loader</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">FXMLLoader</span><span class="p">(</span><span class="n">getClass</span><span class="p">().</span><span class="na">getResource</span><span class="p">(</span><span class="s">"main.fxml"</span><span class="p">));</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="cm">/* 1 */</span><span class="w"> </span><span class="n">Scene</span><span class="w"> </span><span class="n">scene</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Scene</span><span class="p">(</span><span class="n">loader</span><span class="p">.</span><span class="na">load</span><span class="p">());</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">    </span><span class="cm">/* 2 */</span><span class="w"> </span><span class="n">stage</span><span class="p">.</span><span class="na">setScene</span><span class="p">(</span><span class="n">scene</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">    </span><span class="cm">/* 3 */</span><span class="w"> </span><span class="n">stage</span><span class="p">.</span><span class="na">setTitle</span><span class="p">(</span><span class="s">"MyApp"</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">    </span><span class="cm">/* 4 */</span><span class="w"> </span><span class="n">stage</span><span class="p">.</span><span class="na">show</span><span class="p">();</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>JavaFX-sovelluksen pääluokka perii <code>Application</code>-luokan, joka vastaa sovelluksen
+alustamisesta ja ikkunan luomisesta käyttöjärjestelmätasolla.
+JavaFX-kirjasto kutsuu <code>start()</code>-metodin, kun käyttöliittymälle on luotu ikkuna.</p>
+<p><code>start()</code>-metodin parametrina välittyy <code>Stage</code>-olio, joka vastaa sovellukselle
+luotua ikkunaa. <code>start()</code>-metodin vastuulla on yleensä suorittaa seuraavat
+neljä päävaihetta (ks. numerot kommenteissa):</p>
+<ol>
+<li>
+<p><strong>Näkymän alustaminen:</strong> aivan alkuun käyttöliittymän ensisijainen näkymä
+   alustetaan luomalla <code>Scene</code>-olio. <code>Scene</code> on kokoelma käyttöliittymässä
+   olevia komponentteja, eli ns. <em>näkymäolio</em>. Tässä projektipohjassa komponentit ladataan
+   <code>main.fxml</code>-tiedostosta käyttäen <code>FXMLLoader</code>-apuluokkaa, joka alustaa
+   näkymässä olevia komponentteja. Komponentteja voitaisiin luoda myös
+   manuaalisesti alustamalla komponenttiolioita.</p>
+</li>
+<li>
+<p><strong>Näkymän asettaminen ikkunaan:</strong> <code>stage.setScene()</code>-metodilla voidaan
+   asettaa luotu <code>Scene</code>-olio ja siinä olevat komponentit näkyviin ikkunaan.
+   Huomaa, että samassa ikkunassa (<code>Stage</code>) voi olla vain yksi näkymä (<code>Scene</code>)
+   kerrallaan, mutta näkymä voidaan vaihtaa milloin tahansa. Tällä tavoin
+   voidaan esimerkiksi toteuttaa erilaisia näkymiä samaan sovellukseen (esim.
+   sisäänkirjautumisnäkymä, sovellusnäkymä, jne.)</p>
+</li>
+<li>
+<p><strong>Ikkunan asetusten muuttaminen:</strong> <code>Stage</code>-olio sisältää lukuisia metodeja,
+   jolla sovelluksen ikkunan toimintaa voidaan muuttaa. Yleinen toiminto on
+   esimerkiksi <code>setTitle()</code>-metodi, jolla voi muuttaa ikkunan otsikon.</p>
+</li>
+<li>
+<p><strong>Ikkunan näyttäminen:</strong> Aivan alussa sovelluksen ikkuna on piilossa
+   käyttäjältä, jotta vältytään käyttöliittymän "välkkymiseltä". <code>Stage</code>-olion
+   <code>show()</code>-metodi asettaa ikkunan näkyväksi, jolloin käyttäjä voi alkaa
+   vuorovaikuttaa käyttöliittymän kanssa. Ikkuna laitetaan näkyväksi yleensä
+   aivan viimeisenä, kun sovellus on täysin alustettu.</p>
+</li>
+</ol>
+<p>JavaFX:ssä kaikki käyttöliittymäosat perivät <code>Node</code>-luokan. <code>Node</code> eli ns.
+<em>solmu</em> vastaa käyttöliittymän yksittäistä komponenttia, kuten painiketta tai
+tekstiä. <code>Node</code>-oliot ovat rekursiivisia, eli solmu voi sisältää muita solmuja.
+JavaFX-käyttöliittymä muodostaakin puurakenteen, jossa komponentit
+sisältävät muita komponentteja. Esimerkiksi projektipohjan esimerkkisovelluksen
+rakenne voitaisiin mallintaa seuraavasti:</p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 409.891">
+<a class="glightbox" href="#mm1-kaavio" data-type="inline" data-width="min(95vw, 820px)" data-height="auto">
+<svg id="mm1-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 409.891 505.20000000000005" width="409.891" height="505.20000000000005">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm1-arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="mm1-arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="mm1-UIkomponentit_Node" data-label="UI-komponentit (Node)">
+  <rect x="40" y="249.60000000000002" width="329.891" height="215.60000000000002" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="249.60000000000002" width="329.891" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="263.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">UI-komponentit (Node)</text>
+</g>
+<polyline class="edge" data-from="Stage" data-to="Scene" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="211.79975000000002,93.80000000000001 211.79975000000002,141.8" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="Scene" data-to="VBox" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="211.79975000000002,195.60000000000002 211.79975000000002,293.6" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="VBox" data-to="Label" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="211.79975000000002,347.40000000000003 211.79975000000002,371.40000000000003 130.327,371.40000000000003 130.327,395.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" />
+<polyline class="edge" data-from="VBox" data-to="Button" data-style="solid" data-arrow-start="false" data-arrow-end="false" points="211.79975000000002,347.40000000000003 211.79975000000002,371.40000000000003 293.2725,371.40000000000003 293.2725,395.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" />
+<g class="node" data-id="mm1-Stage" data-label="Stage
+(Pääikkuna)" data-shape="rectangle">
+  <rect x="155.25675" y="40" width="113.086" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="211.79975000000002" y="66.9" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="211.79975000000002" dy="-3.9000000000000012">Stage</tspan><tspan x="211.79975000000002" dy="16.900000000000002">(Pääikkuna)</tspan></text>
+</g>
+<g class="node" data-id="mm1-Scene" data-label="Scene
+(Näkymä)" data-shape="rectangle">
+  <rect x="163.40775000000002" y="141.8" width="96.78399999999999" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="211.79975000000002" y="168.70000000000002" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="211.79975000000002" dy="-3.9000000000000012">Scene</tspan><tspan x="211.79975000000002" dy="16.900000000000002">(Näkymä)</tspan></text>
+</g>
+<g class="node" data-id="mm1-VBox" data-label="VBox
+(Node)" data-shape="rectangle">
+  <rect x="171.55875" y="293.6" width="80.482" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="211.79975000000002" y="320.5" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="211.79975000000002" dy="-3.9000000000000012">VBox</tspan><tspan x="211.79975000000002" dy="16.900000000000002">(Node)</tspan></text>
+</g>
+<g class="node" data-id="mm1-Label" data-label="Label
+text: Hello JavaFX" data-shape="rectangle">
+  <rect x="56" y="395.40000000000003" width="148.654" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="130.327" y="422.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="130.327" dy="-3.9000000000000012">Label</tspan><tspan x="130.327" dy="16.900000000000002">text: Hello JavaFX</tspan></text>
+</g>
+<g class="node" data-id="mm1-Button" data-label="Button
+text: Click Me!" data-shape="rectangle">
+  <rect x="232.654" y="395.40000000000003" width="121.23700000000001" height="53.800000000000004" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="293.2725" y="422.3" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)"><tspan x="293.2725" dy="-3.9000000000000012">Button</tspan><tspan x="293.2725" dy="16.900000000000002">text: Click Me!</tspan></text>
+</g>
+</svg>
+</a>
+</div>
+
+<div class="task">
+<div class="task-head"><span class="task-num">7.1</span><span class="task-name">Todo-sovellus, vaihe 1</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p>Palauta tässä osan 7.1 perusteella luotu projekti.</p>
+<p>Kertaus tämän osan vaiheista:</p>
+<ul>
+<li>Tee <code>io.github.ohj-perus-jy:javafx-fxml-template</code>-archetypen pohjalta
+JavaFX-projekti. </li>
+<li>Käynnistä ohjelma, ja varmista, että saat JavaFX-sovelluksen ikkunan näkyviin.</li>
+</ul>
+<p>Palauta projektisi tiedostot.</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa7/tehtava1">Tee tehtävä TIMissä</a></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          <script>var allowed=["GitHub","GitLab (JY)","Linux","Windows","macOS"];var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script><script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Alatunniste" >
+        
+          
+          <a href="../" class="md-footer__link md-footer__link--prev" aria-label="Edellinen: 7 JavaFX osa 1, SceneBuilder">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Edellinen
+              </span>
+              <div class="md-ellipsis">
+                7 JavaFX osa 1, SceneBuilder
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../02-scenebuilder-perusteet/" class="md-footer__link md-footer__link--next" aria-label="Seuraava: 7.2 SceneBuilder-perusteet">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Seuraava
+              </span>
+              <div class="md-ellipsis">
+                7.2 SceneBuilder-perusteet
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi" rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen">CC BY-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+
+
+
+
+  
+  
+  
+  
+
+<div class="jyu-footer-links">
+    <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/osa7/01-javafx-perusteet.md" class="md-copyright md-copyright--link" rel="edit" title="Muokkaa tätä sivua GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+      Muokkaa
+    </a>
+    <a href="https://github.com/ohj-perus-jy/ohj2/commits/main/src/osa7/01-javafx-perusteet.md" class="md-copyright md-copyright--link" title="Sivun muutokset GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+      Muutoshistoria
+    </a>
+  <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&amp;url=osa7/01-javafx-perusteet.md" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg>
+    Ilmoita ongelma
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.indexes","navigation.footer","content.tabs.link","content.footnote.tooltips","content.tooltips","toc.follow","content.code.copy"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Kopioitu leikepöydälle","clipboard.copy":"Kopioi leikepöydälle","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 lisää tällä sivulla","search.result.more.other":"# lisää tällä sivulla","search.result.none":"Ei täsmääviä dokumentteja","search.result.one":"1 täsmäävä dokumentti","search.result.other":"# täsmäävää dokumenttia","search.result.placeholder":"Kirjoita aloittaaksesi haun","search.result.term.missing":"Puuttuu","select.version":"Valitse versio"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/js/tooltips.js"></script>
+      
+        <script src="../../assets/js/nav-scroll.js"></script>
+      
+        <script src="../../assets/js/rail.js"></script>
+      
+        <script src="../../assets/js/toc.js"></script>
+      
+        <script src="../../assets/js/print.js"></script>
+      
+        <script src="../../assets/js/fontmenu.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/js/sitemenu.js"></script>
+      
+        <script src="../../assets/js/search.js"></script>
+      
+        <script src="../../assets/js/playground.js"></script>
+      
+        <script src="../../assets/js/hidelines.js"></script>
+      
+        <script src="../../assets/js/highlights.js"></script>
+      
+        <script src="../../assets/js/copy.js"></script>
+      
+        <script src="../../assets/js/hints.js"></script>
+      
+        <script src="../../assets/js/asciinema.js"></script>
+      
+        <script src="../../assets/js/walkthrough.js"></script>
+      
+        <script src="../../assets/js/visa.js"></script>
+      
+        <script src="../../assets/js/puhe.js"></script>
+      
+        <script src="../../assets/js/glightbox.min.js"></script>
+      
+    
+  </body>
+</html>

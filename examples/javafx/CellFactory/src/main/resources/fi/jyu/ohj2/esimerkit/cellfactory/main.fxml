@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fi.jyu.ohj2.esimerkit.cellfactory.MainController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <CheckBox fx:id="suodataCheckBox" mnemonicParsing="false" onAction="#paivitaSuodatus" text="Suodata" />
+      <ComboBox fx:id="valitseKategoriaComboBox" prefWidth="150.0" />
+      <TableView fx:id="tehtavatTableView" prefHeight="200.0" prefWidth="400.0" />
+      <CheckBox fx:id="naytaMyosPoistetutCheckBox" mnemonicParsing="false" text="Näytä myös poistetut" />
+   </children>
+</VBox>

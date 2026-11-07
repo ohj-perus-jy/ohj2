@@ -1,0 +1,24 @@
+/* Harjoitustyön vaatimusnumerot 1.1, 1.2, ... eikä 1., 2., ... kuten kirjassa.
+ * harjoitustyo.md:ssä vaatimukset ovat <div class="req">-lohkoissa
+ * <div class="ht-reqs">:n sisällä, ja kohtiin viitataan numerolla muualta,
+ * joten joka lohkossa alusta alkava numerointi osoittaisi väärään kohtaan.
+ * Numero on tyyli eikä tekstiä, jotta lista pysyy <ol>:nä myös
+ * ruudunlukijalle. */
+.md-typeset .ht-reqs {
+  counter-reset: req;
+}
+
+.md-typeset .ht-reqs .req {
+  counter-increment: req;
+}
+
+/* Tilaa numerolle: teeman sisennys on mitoitettu yhdelle merkille. Lista
+ * rajataan suoraksi lapseksi (> ol), jottei alalista saisi samaa numerointia. */
+.md-typeset .ht-reqs .req > ol {
+  padding-inline-start: 1.5em;
+}
+
+.md-typeset .ht-reqs .req > ol > li::marker {
+  content: counter(req) "." counter(list-item) " ";
+  font-weight: 700;
+}

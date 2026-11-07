@@ -1,0 +1,4398 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ohjelmointi2.it.jyu.fi/harjoitustyo/">
+      
+      
+      
+        <link rel="prev" href="../tyokalut/">
+      
+      
+        <link rel="next" href="../tentti/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.0">
+    
+    
+      
+        <title>Harjoitustyö - Ohjelmointi 2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../assets/css/fonts.css">
+    
+      <link rel="stylesheet" href="../assets/css/paletti.css">
+    
+      <link rel="stylesheet" href="../assets/css/typography.css">
+    
+      <link rel="stylesheet" href="../assets/css/fontmenu.css">
+    
+      <link rel="stylesheet" href="../assets/css/layout.css">
+    
+      <link rel="stylesheet" href="../assets/css/sitemenu.css">
+    
+      <link rel="stylesheet" href="../assets/css/search.css">
+    
+      <link rel="stylesheet" href="../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../assets/css/tasks.css">
+    
+      <link rel="stylesheet" href="../assets/css/icons.css">
+    
+      <link rel="stylesheet" href="../assets/css/tables.css">
+    
+      <link rel="stylesheet" href="../assets/css/code.css">
+    
+      <link rel="stylesheet" href="../assets/css/requirements.css">
+    
+      <link rel="stylesheet" href="../assets/css/diagrams.css">
+    
+      <link rel="stylesheet" href="../assets/css/codebuttons.css">
+    
+      <link rel="stylesheet" href="../assets/css/playground.css">
+    
+      <link rel="stylesheet" href="../assets/css/highlights.css">
+    
+      <link rel="stylesheet" href="../assets/css/hidelines.css">
+    
+      <link rel="stylesheet" href="../assets/css/copy.css">
+    
+      <link rel="stylesheet" href="../assets/css/hints.css">
+    
+      <link rel="stylesheet" href="../assets/css/print.css">
+    
+      <link rel="stylesheet" href="../assets/css/walkthrough.css">
+    
+      <link rel="stylesheet" href="../assets/css/puhe.css">
+    
+      <link rel="stylesheet" href="../assets/css/visa.css">
+    
+      <link rel="stylesheet" href="../assets/css/glightbox.min.css">
+    
+    <script>__md_scope=new URL("..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <link rel="preload" href="../assets/fonts/source-serif-4/normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Hyppää sisältöön
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste"><button type="button" class="md-header__button md-icon jyu-rail-button" id="jyu-rail-button"
+            title="Piilota valikko" aria-label="Piilota valikko"
+            aria-expanded="true" aria-controls="jyu-rail" aria-keyshortcuts="b">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <script>try{if(localStorage.getItem("jyu-rail")==="hidden")document.documentElement.setAttribute("data-jyu-rail","hidden")}catch(e){}</script>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigaatio</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
+          <span class="md-ellipsis"><a href="./..">Ohjelmointi 2</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Harjoitustyö
+            
+          </span>
+        </div>
+      </div>
+    </div><button type="button" class="md-header__button md-icon jyu-puhe-button" hidden
+            title="Kuuntele sivu" aria-label="Kuuntele sivu" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-volume-2" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298zM16 9a5 5 0 0 1 0 6M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+    </button>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Haku</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Haku">
+  <button type="button" class="md-search__button" title="Haku (Ctrl+K)">
+    Haku
+  </button>
+</div><script>if(/^Mac/.test(document.documentElement.dataset.platform))document.querySelectorAll(".md-search__button").forEach(b=>b.title=b.title.replace("Ctrl+K","⌘K"))</script>
+      
+    <div class="md-header__option jyu-font" data-md-component="jyu-font" data-steps="90 100 110 120 135 150 175">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipäteksti: Serif, 100 %" aria-label="Leipäteksti: Serif, 100 %"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="jyu-font-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-type" viewBox="0 0 24 24"><path d="M12 4v16M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6"/></svg>
+        <span class="jyu-font__chevron"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="jyu-font__panel" id="jyu-font-panel" role="dialog" aria-label="Leipäteksti" hidden>
+        <div class="jyu-font__size" role="group" aria-labelledby="jyu-font-size-label">
+          <span class="jyu-font__size-label" id="jyu-font-size-label">Tekstin koko</span>
+          <button type="button" class="jyu-font__step" data-step="-1" aria-label="Pienennä tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="jyu-font__reset" title="Palauta 100 %" aria-label="Palauta 100 %" aria-disabled="true"><span aria-live="polite">100 %</span></button>
+          <button type="button" class="jyu-font__step" data-step="1" aria-label="Suurenna tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+          </button>
+        </div>
+        <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin">
+          <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Source Serif 4</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+            <span class="jyu-font__kind">sans-serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Literata</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+        </ul>
+      </div>
+    </div><script>try{var b=document.body,f=localStorage.getItem("jyu-font"),k=localStorage.getItem("jyu-text-size");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))b.setAttribute("data-jyu-font",f);if(k&&document.querySelector(".jyu-font").dataset.steps.split(" ").indexOf(k)>=0)b.style.setProperty("--jyu-text-scale",k/100)}catch(e){}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda tummaan teemaan"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Vaihda tummaan teemaan" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda vaaleaan teemaan"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Vaihda vaaleaan teemaan" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    <a href="../tulosta/" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg>
+    </a>
+    <div class="md-header__source">
+      
+        
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="Ohjelmointi 2" class="md-nav__button md-logo" aria-label="Ohjelmointi 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    Ohjelmointi 2
+  </label>
+  
+    <div class="md-nav__source">
+      
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Aloitus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../suorittaminen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Suorittaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Työkalut ja asentaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parityot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parityöt
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aihe" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Aihe
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aihe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kulujen-seuranta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kulujen seuranta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kassa" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kassa
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirjasto" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kirjasto
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taloyhtion-hallinta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Taloyhtiön hallinta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#muistikorttisovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Muistikorttisovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oma-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Oma idea
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tekniset-vaatimukset-ja-arviointi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tekniset vaatimukset ja arviointi
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tekniset vaatimukset ja arviointi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-1-tietomalli" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 1: Tietomalli
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-2-perustoiminnallisuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 2: Perustoiminnallisuus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-3-tallennus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 3: Tallennus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-4-kayttoliittyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 4: Käyttöliittymä
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-5-arkkitehtuuri-ja-vastuunjako" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 5: Arkkitehtuuri ja vastuunjako
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-6-testaus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 6: Testaus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-7-versiohallinta-ja-projektinhallinta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 7: Versiohallinta ja projektinhallinta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-8-koodin-laatu" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 8: Koodin laatu
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../tentti/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tentti
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tentti
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tentti/tenttiohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tenttiohjeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ukk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usein kysyttyä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../luennot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Luennot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/koti" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Eteneminen (TIM)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1 Java-kielen perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  1 Java-kielen perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa1/01-hei-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.1 Hei, Java!
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa1/02-muuttujat-ja-tietotyypit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.2 Muuttujat ja tietotyypit
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa1/03-ohjausrakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.3 Ohjausrakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa1/04-aliohjelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.4 Aliohjelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa1/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2 Olio-ohjelmoinnin perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2 Olio-ohjelmoinnin perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa2/01-kohti-olio-ohjelmointia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1 Kohti olio-ohjelmointia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa2/02-luokka-ja-olio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.2 Luokka ja olio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa2/03-kapselointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.3 Kapselointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa2/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3 Perintä, polymorfismi
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3 Perintä, polymorfismi
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa3/01-perinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1 Perintä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa3/02-polymorfismi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2 Polymorfismi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa3/03-abstrakti-luokka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3 Abstrakti luokka
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa3/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4 Rajapinta, geneeriset luokat
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4 Rajapinta, geneeriset luokat
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa4/01-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1 Rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa4/02-vertailurajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.2 Vertailurajapinnat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa4/03-perinta-ja-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.3 Perintä ja rajapinta olioiden yhteistyössä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa4/04-tyyppiparametrit-ja-geneerisyys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.4 Tyyppiparametrit ja geneerisyys
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa4/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5 Tietorakenteita ja algoritmeja
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_13">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5 Tietorakenteita ja algoritmeja
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/01-kokoelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1 Kokoelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/02-listarakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/03-hakurakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.3 Hakurakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/04-joukkorakenteet-jonorakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/05-rekursio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.5 Rekursio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa5/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa6/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_14">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/01-funktiorajapinnat-ja-lambda-lausekkeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1 Funktiorajapinnat ja lambda-lausekkeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/02-kokoelmien-kasittely-stream-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2 Kokoelmien käsittely: Stream API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/03-poikkeusten-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.3 Poikkeusten hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.4 Ulkoiset kirjastot ja Java-projektien hallintatyökalut
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/05-tiedostojen-kasittely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.5 Tiedostojen käsittely
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa6/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7 JavaFX osa 1, SceneBuilder
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_15">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  7 JavaFX osa 1, SceneBuilder
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/01-javafx-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/02-scenebuilder-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.2 SceneBuilder-perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/03-versionhallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.3 Versionhallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/04-sovelluslogiikka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.4 Sovelluslogiikka ja käyttöliittymä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/05-tehtavien-lukeminen-tallennus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.5 Tehtävien tallennus tiedostoon
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/06-scenebuilder-asettelu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.6 Komponenttien asettelu
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa7/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../osa8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8 JavaFX osa 2, MVC
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_16" id="__nav_16_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_16">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  8 JavaFX osa 2, MVC
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/01-malli-ja-observable-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.1 Observable-rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/02-tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.2 TableView ja databinding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/03-mvc-arkkitehtuuri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.3 MVC-arkkitehtuuri
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/04-useita-nakymia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.4 Tehtävien muokkaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/05-yksikkotestaus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.5 Yksikkötestaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/06-versionhallinnan-etakaytto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.6 Koodin julkaiseminen etävarastopalvelussa
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa8/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9 Harjoitustyö, vaihe 1
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10 Harjoitustyö, vaihe 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11 Harjoitustyö, vaihe 3
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../osa12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12 Harjoitustyön palautus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../javafx/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13 JavaFX-ohjeita
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_21" id="__nav_21_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_21">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  13 JavaFX-ohjeita
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/nakymat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.1 Näkymät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.2 TableView
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/ui-kirjastot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.3 Ulkoiset UI-kirjastot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/observable-bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.4 Johdettujen Observable-arvojen laskeminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/validointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.5 Validointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../javafx/viitteiden-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.6 Viitteiden hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#parityot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Parityöt
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aihe" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Aihe
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Aihe">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#kulujen-seuranta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kulujen seuranta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kassa" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kassa
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kirjasto" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kirjasto
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#taloyhtion-hallinta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Taloyhtiön hallinta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#muistikorttisovellus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Muistikorttisovellus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#oma-idea" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Oma idea
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tekniset-vaatimukset-ja-arviointi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tekniset vaatimukset ja arviointi
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tekniset vaatimukset ja arviointi">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-1-tietomalli" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 1: Tietomalli
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-2-perustoiminnallisuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 2: Perustoiminnallisuus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-3-tallennus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 3: Tallennus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-4-kayttoliittyma" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 4: Käyttöliittymä
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-5-arkkitehtuuri-ja-vastuunjako" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 5: Arkkitehtuuri ja vastuunjako
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-6-testaus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 6: Testaus
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-7-versiohallinta-ja-projektinhallinta" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 7: Versiohallinta ja projektinhallinta
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vaatimus-8-koodin-laatu" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Vaatimus 8: Koodin laatu
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="harjoitustyo">Harjoitustyö<a class="headerlink" href="#harjoitustyo" title="Pysyvä linkki tähän otsikkoon">&para;</a></h1>
+<p><a href=".././suorittaminen/">Opintojaksoon kuuluu harjoitustyö</a>, jossa toteutat
+graafisen Java-käyttöliittymäsovelluksen käyttäen JavaFX-kirjastoa. </p>
+<p>Voit tehdä harjoitustyön joko valmiin vaatimusmäärittelyn perusteella tai keksiä
+oman aiheen. Löydät kaikki aiheiden kuvaukset ja vaatimukset alla.</p>
+<p>Harjoitustyö toteutetaan vaiheittain osissa 9–12. Jokainen osa sisältää ohjeita,
+joiden tarkoituksena on auttaa sinua etenemään, mutta voit toteuttaa vaatimukset
+myös muulla tavoin, kunhan ne täyttyvät.</p>
+<p>Suosittelemme, että ennen harjoitustyön tekemistä teet osien 7-8
+Todo-sovelluksen. Saat siitä merkittävästi apua harjoitustyön toteutukseen.</p>
+<p><strong>Näytä lopullinen, kaikki vaatimukset täyttävä harjoitustyösi kurssin
+tuntiopettajalle ennen osan 12 palautusta etä- tai lähiohjauksessa.</strong> Kun
+tuntiopettaja on hyväksynyt työsi, hän tekee merkinnän TIMiin.</p>
+<h2 id="parityot">Parityöt<a class="headerlink" href="#parityot" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Parityönä tehtävässä sovelluksessa tulee olla
+vähintään kolme mallinnettavaa kohdetta (yksilötöissä kaksi; vaatimus 1.1), sekä
+kolme näkymää (yksilötöissä kaksi; vaatimus 4.1). Muut vaatimukset ovat samat
+kuin yksilötyössäkin.</p>
+<p>Parityössä kummankin tulee osallistua mahdollisimman tasapuolisesti työn
+edistämiseen. Harjoitustyön palauttamisen yhteydessä kummankin tekijän tulee
+pystyä osoittamaan ohjaajalle, että pystyy itse toteuttamaan harjoitustyön
+vaatimukset. Ei voi siis olla esimerkiksi niin, että toinen tekijä keskittyy
+yhteen osa-alueeseen, esimerkiksi käyttöliittymään, ja toinen tekijä hoitaa
+koodin ja tietomallin toteutuksen. </p>
+<p>Yli kahden hengen ryhmiä ei sallita. </p>
+<h2 id="aihe">Aihe<a class="headerlink" href="#aihe" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Voit valita valmiin aiheen alla olevista vaihtoehdoista, tai keksiä oman aiheen,
+joka täyttää vaatimukset. </p>
+<p>Bonus-merkinnällä (<span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span>) olevia vaatimuksia ei
+ole pakko toteuttaa. </p>
+<details>
+<summary>
+<h3 id="kulujen-seuranta">Kulujen seuranta<a class="headerlink" href="#kulujen-seuranta" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Tässä sovelluksessa käyttäjä voi seurata omia kulujaan ja menojaan. </p>
+</summary>
+<p><strong>Toiminnalliset vaatimukset</strong></p>
+<ul>
+<li>Käyttäjä voi syöttää tuloja ja menoja ("tapahtuma").</li>
+<li>Käyttäjä näkee kaikki tapahtumat taulukossa, jossa on ainakin tapahtuman nimi,
+   summa ja päivämäärä. </li>
+<li>Käyttäjä voi määrittää kulukategorioita. </li>
+<li>Käyttäjä voi määrittää, mihin kategoriaan kulu kuuluu. Tuloilla ei tarvitse
+   välttämättä olla kategoriaa.</li>
+<li>Käyttäjä näkee tietyn kategorian tapahtumat</li>
+<li>Käyttäjä voi katsoa tapahtumat tietyltä aikaväliltä (kaksi päivämäärää).</li>
+<li>Käyttäjä voi muokata tapahtumia ja kategorioita.</li>
+<li>Kategorian nimen vaihtaminen siirtää kaikki kyseiseen kategoriaan liittyvät tapahtumat uuteen kategoriaan.</li>
+<li>Kategorian poistaminen poistaa kyseisen kategorian kaikista tapahtumista, mutta tapahtumia ei poisteta. </li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Kulukategoria voi olla <em>pakollinen</em>, mikä tarkoittaa välttämätöntä
+   menoa, kuten vuokra tai sähkölasku. </li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Käyttäjä voi valita useita kategorioita
+   filtteriin. Käytä esimerkiksi ControlsFX:n <code>CheckComboBox</code>-komponenttia
+   (<a href="https://controlsfx.github.io/features/checkcombobox/">https://controlsfx.github.io/features/checkcombobox/</a>).</li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Käyttäjä näkee kuvaajan, jossa esitetään kaikki tapahtumat kuukausittain.</li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Käyttäjä näkee kategorioittain aikasarjan kuluista.</li>
+</ul>
+<p>Voit hyötyä ainakin seuraavista komponenteista: </p>
+<ul>
+<li>DatePicker päivämäärän valitsemiseen.</li>
+<li>CheckBox ja ComboBox kategorian valitsemiseen ja suodattamiseen.</li>
+<li>TableView-komponenttiin FilteredList, joka tuottaa suodatetun näkymän. Lue
+   ohjeet <a href=".././javafx/tableview/#filteredlist">FilteredListin käyttöön</a>.</li>
+</ul>
+<p><strong>Sovelluksen tietomalli</strong></p>
+<p>Tietomalli voi näyttää esimerkiksi seuraavalta.</p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 442.4">
+<a class="glightbox" href="#mm1-kaavio" data-type="inline" data-width="min(95vw, 885px)" data-height="auto">
+<svg id="mm1-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 442.4 436.3" width="442.4" height="436.3">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm1-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm1-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm1-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm1-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Seuranta" data-to="Kategoria" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="186.63333333333333,128 186.63333333333333,148 120.6,148 120.6,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm1-cls-arrow)" />
+<polyline class="class-relationship" data-from="Seuranta" data-to="Tapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="255.76666666666665,128 255.76666666666665,148 321.79999999999995,148 321.79999999999995,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm1-cls-arrow)" />
+<g class="class-node" data-id="mm1-Kategoria" data-label="Kategoria">
+  <rect x="40" y="268.3" width="161.2" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="268.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="120.6" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Kategoria</text>
+  <line x1="40" y1="300.3" x2="201.2" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">valttamaton</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Boolean</tspan></text>
+  <text x="48" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="mm1-Tapahtuma" data-label="Tapahtuma">
+  <rect x="241.2" y="268.3" width="161.2" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="241.2" y="268.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="321.79999999999995" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tapahtuma</text>
+  <line x1="241.2" y1="300.3" x2="402.4" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="249.2" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="249.2" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">summa</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+  <text x="249.2" y="358.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">pvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDate</tspan></text>
+  <text x="249.2" y="378.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoria</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">Kategoria</tspan></text>
+</g>
+<g class="class-node" data-id="mm1-Seuranta" data-label="Seuranta">
+  <rect x="117.5" y="40" width="207.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="117.5" y="40" width="207.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="221.2" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Seuranta</text>
+  <line x1="117.5" y1="72" x2="324.9" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="125.5" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kategoriat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Kategoria&gt;</tspan></text>
+  <text x="125.5" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tapahtumat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Tapahtuma&gt;</tspan></text>
+</g>
+<text x="95.36099999999999" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="172.63333333333333" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="106.6" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="348.03899999999993" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="241.76666666666665" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="307.79999999999995" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>
+</a>
+</div>
+<p>Tällaisessa mallissa tieto siitä onko tapahtuma kulu vai meno voidaan ilmaista
+summan positiivisuudella tai negatiivisuudella. Toinen vaihtoehto olisi tehdä
+<code>TuloVaiMeno</code>-enum, ja lisätä <code>Tapahtuma</code>-luokkaan <code>TuloVaiMeno tuloVaiMeno</code>
+-attribuutti. Kannattaa ehkä aloittaa ilman enumia, ja lisätä se myöhemmin, jos
+tuntuu, että siitä on hyötyä.</p>
+<details>
+<summary>Valmiit kulukategoriat</summary>
+<p>Voit antaa sovelluksessa valmiiksi vaikkapa nämä <a href="https://www.martat.fi/omat-rahat/taloudenhallinnan-perustaidot/talouden-suunnittelu/">Marttojen
+budjettioppaan</a>
+mukaiset kulukategoriat. Toki voit keksiä myös omasi tai antaa käyttäjälle vapauden luoda omat kategoriansa.</p>
+<ul>
+<li>Ruoka kotona</li>
+<li>Ravintolat</li>
+<li>Vuokra ja vastike</li>
+<li>Vesi</li>
+<li>Sähkö</li>
+<li>Muu asuminen</li>
+<li>Vaatteet</li>
+<li>Terveys</li>
+<li>Auto</li>
+<li>Julkinen liikenne</li>
+<li>Muu matkustus</li>
+<li>Suoratoistot</li>
+<li>Päivähoito</li>
+<li>Vakuutukset</li>
+<li>Kodin hankinnat</li>
+<li>Vapaa-aika</li>
+<li>Lahjat, lahjoitukset</li>
+<li>Säästäminen</li>
+<li>Lainanhoito ja korot</li>
+<li>Muut menot</li>
+</ul>
+</details>
+<p>Valmis sovellus voisi näyttää vaikkapa tältä. Ei haittaa, vaikka oma
+käyttöliittymäsi ei näyttäisi samanlaiselta -- tärkeintä on, että sovelluksesi täyttää vaatimukset, ei se, miltä se näyttää.</p>
+<p><a class="glightbox" data-type="image" href="../images/menotjatulot.png"><img alt="alt text" src="../images/menotjatulot.png" /></a></p>
+</details>
+<details>
+<summary>
+<h3 id="kassa">Kassa<a class="headerlink" href="#kassa" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Tässä sovelluksessa käyttäjä voi hallita tuotteita ja tehdä ostostapahtumia.</p>
+</summary>
+<ul>
+<li>Käyttäjä voi syöttää tuotteita. Tuotteella on tunniste, nimi, hinta. </li>
+<li>Käyttäjä näkee kaikki tuotteet taulukossa</li>
+<li>Käyttäjä voi tehdä ostostapahtumia, joissa hän syöttää ostettavan tuotteen ja
+   ostettavan määrän. </li>
+<li>Ostostapahtuman yhteydessä kunkin rivin kohdalla näytetään yksikköhinta ja
+   rivin loppuhinta (yksikköhinta * määrä) ostostapahtuman yhteydessä. Tarvitset
+   sarakkeen, joka laskee kertolaskun tuotteiden hinnasta ja ostettavasta
+   määrästä. </li>
+<li>Näytetään ostosten loppuhinta. </li>
+<li>Sovelluksessa voi olla eri näkymät tuotteille (yksi TableView) tai sekä
+   tuotelista että ostostapahtumalista samassa näkymässä (kaksi TableViewia
+   samassa Scenessä). </li>
+<li>Tuotteita ja ostorivejä pitää pystyä muokkaamaan, mutta ostostapahtumia ei
+   tarvitse muuttaa ostotapahtuman jälkeen. Tässä kannattanee tehdä niin, että
+   ostotapahtuman yhteydessä tuotteen hinta kiinnitetään ostotapahtuman
+   tietoihin, jolloin tuotteen muokkaaminen ei vaikuta vanhoihin ostotapahtumiin.</li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Rivialennus tai ostostapahtumakohtainen alennus</li>
+</ul>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 462.2">
+<a class="glightbox" href="#mm2-kaavio" data-type="inline" data-width="min(95vw, 924px)" data-height="auto">
+<svg id="mm2-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 462.20000000000005 644.6" width="462.20000000000005" height="644.6">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm2-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm2-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm2-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm2-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Tuote" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="167.38333333333335,128 167.38333333333335,148 107.4,148 107.4,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm2-cls-arrow)" />
+<polyline class="class-relationship" data-from="OstostapahtumaHallinta" data-to="Ostostapahtuma" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="258.51666666666665,128 258.51666666666665,148 318.5,148 318.5,278.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm2-cls-arrow)" />
+<polyline class="class-relationship" data-from="Ostostapahtuma" data-to="Ostosrivi" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="318.5,366.3 318.5,516.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm2-cls-arrow)" />
+<g class="class-node" data-id="mm2-Tuote" data-label="Tuote">
+  <rect x="40" y="268.3" width="134.8" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="268.3" width="134.8" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="107.4" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Tuote</text>
+  <line x1="40" y1="300.3" x2="174.8" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tunniste</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="358.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">hinta</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+</g>
+<g class="class-node" data-id="mm2-Ostosrivi" data-label="Ostosrivi">
+  <rect x="224.70000000000002" y="516.6" width="187.6" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="224.70000000000002" y="516.6" width="187.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="318.5" y="532.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Ostosrivi</text>
+  <line x1="224.70000000000002" y1="548.6" x2="412.3" y2="548.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="232.70000000000002" y="566.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tuotteenTunniste</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="232.70000000000002" y="586.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">maara</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+</g>
+<g class="class-node" data-id="mm2-Ostostapahtuma" data-label="Ostostapahtuma">
+  <rect x="214.8" y="278.3" width="207.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="214.8" y="278.3" width="207.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="318.5" y="294.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Ostostapahtuma</text>
+  <line x1="214.8" y1="310.3" x2="422.20000000000005" y2="310.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="222.8" y="328.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">aika</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDateTime</tspan></text>
+  <text x="222.8" y="348.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">ostosrivit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Ostosrivi&gt;</tspan></text>
+</g>
+<g class="class-node" data-id="mm2-OstostapahtumaHallinta" data-label="OstostapahtumaHallinta">
+  <rect x="76.25000000000003" y="40" width="273.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="76.25000000000003" y="40" width="273.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="212.95000000000002" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">OstostapahtumaHallinta</text>
+  <line x1="76.25000000000003" y1="72" x2="349.65" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="84.25000000000003" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tuotteet</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Tuote&gt;</tspan></text>
+  <text x="84.25000000000003" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">ostostapahtumat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Ostostapahtuma&gt;</tspan></text>
+</g>
+<text x="82.16100000000002" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="153.38333333333335" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="93.4" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="344.739" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="244.51666666666665" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="304.5" y="264.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="293.261" y="438.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="304.5" y="380.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="304.5" y="502.6" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>
+</a>
+</div>
+<p>Kun käyttöliittymässä tehdään ostotapahtuma</p>
+<ul>
+<li>Käyttäjä valitsee ostettavan tuotteen alasvetovalikosta, ja syöttää ostettavan määrän.</li>
+<li><span class="twemoji jyu-bonus" role="img" aria-label="Bonus"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> käyttäjä voi hakupalkin avulla hakea tuotteita nimellä. Tarvitset
+   mahdollisesti ControlFX:ää tähän.</li>
+<li>Tarvitset taulukon, joka näyttää ostotapahtuman tämän hetkisen tilanteen.
+   Taulukossa pitää näkyä tuotteen tunniste, nimi, tuotteen hinta, määrä ja
+   rivihinta.</li>
+<li>Koska Ostorivi-luokassa ei ole viittausta Tuote-olioon, pitää Tuotteen tiedot
+   hakea tuotteen tunnisteen avulla apumetodia käyttäen. Tämä onnistuu
+   Bindings-luokan avulla. </li>
+</ul>
+</details>
+<details>
+<summary>
+<h3 id="kirjasto">Kirjasto<a class="headerlink" href="#kirjasto" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Sovellus kirjaston kirjojen ja lainojen hallintaan.
+Kirjaston hoitaja voi hallita kirjojen tietoja ja lainatilannetta, sekä tutkia
+kirjojen lainahistoriaa.</p>
+</summary>
+<p><strong>Toiminnalliset vaatimukset</strong></p>
+<ul>
+<li>Käyttäjä voi syöttää kirjoja ja niiden tietoja. </li>
+<li>Käyttäjä näkee kaikki kirjat taulukossa, jossa on ainakin kirjan nimi, tekijä,
+ ISBN-tunniste ja lainatilanne. Käyttäjä voi myös helposti nähdä, kuinka monta
+ kertaa jokaista kirjaa on lainattu.</li>
+<li>Käyttäjä voi lainata kirjoja henkilölle ja merkata lainaukset palautetuksi.</li>
+<li>Käyttäjä voi katsoa kirjojen lainaushistoriaa. </li>
+<li>Jokainen kirja voi olla samaan aikaan lainassa vain yhdellä lainaajalla.
+  Samaa kirjaa voi lainata, jos se on parhaillaan lainassa.</li>
+<li>Käyttäjä voi helposti nähdä, mitkä kirjat ovat lainassa. Käyttäjä voi lisäksi
+  helposti nähdä, minkä kirjojen lainausten palautuspäivämäärä on mennyt jo ohi
+  (eli ns. myöhästyneet palautukset).</li>
+</ul>
+<p><strong>Sovelluksen tietomalli</strong></p>
+<p>Sovellus sisältää kaksi oleellista tietomallin kohdetta: <code>Kirja</code> ja
+<code>Lainaus</code>. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
+<code>Kirjasto</code>-luokka. Tietomalli näyttää seuraavalta:</p>
+<p>Esimerkki siitä, miltä JSON voisi näyttää. </p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 294">
+<a class="glightbox" href="#mm3-kaavio" data-type="inline" data-width="min(95vw, 588px)" data-height="auto">
+<svg id="mm3-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 294 684.6" width="294" height="684.6">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm3-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm3-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm3-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm3-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Kirjasto" data-to="Kirja" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="147,108 147,248.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm3-cls-arrow)" />
+<polyline class="class-relationship" data-from="Kirja" data-to="Lainaus" data-type="association" data-marker-at="to" data-label="tehdään" data-from-cardinality="1" data-to-cardinality="1..*" points="147,376.3 147,516.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm3-cls-arrow)" />
+<g class="class-node" data-id="mm3-Lainaus" data-label="Lainaus">
+  <rect x="40" y="516.6" width="214" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="516.6" width="214" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="147" y="532.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Lainaus</text>
+  <line x1="40" y1="548.6" x2="254" y2="548.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="566.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lainaajaNimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="586.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lainattuPvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDateTime</tspan></text>
+  <text x="48" y="606.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">palautusPvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDateTime</tspan></text>
+  <text x="48" y="626.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">palautettuPvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDateTime</tspan></text>
+</g>
+<g class="class-node" data-id="mm3-Kirja" data-label="Kirja">
+  <rect x="49.900000000000006" y="248.3" width="194.2" height="128" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="49.900000000000006" y="248.3" width="194.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="147" y="264.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Kirja</text>
+  <line x1="49.900000000000006" y1="280.3" x2="244.1" y2="280.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="57.900000000000006" y="298.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="57.900000000000006" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tekija</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="57.900000000000006" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">isbn</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="57.900000000000006" y="358.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lainaukset</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Lainaus&gt;</tspan></text>
+</g>
+<g class="class-node" data-id="mm3-Kirjasto" data-label="Kirjasto">
+  <rect x="69.7" y="40" width="154.6" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="69.7" y="40" width="154.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="147" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Kirjasto</text>
+  <line x1="69.7" y1="72" x2="224.3" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="77.7" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kirjat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Kirja&gt;</tspan></text>
+</g>
+<text x="121.761" y="170.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="133" y="122" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="133" y="234.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="121.167" y="438.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">tehdään</text>
+<text x="133" y="390.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="133" y="502.6" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>
+</a>
+</div>
+</details>
+<details>
+<summary>
+<h3 id="taloyhtion-hallinta">Taloyhtiön hallinta<a class="headerlink" href="#taloyhtion-hallinta" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Taloyhtiön hallintasovelluksessa taloyhtiön isännöitsijä voi hallita taloyhtiön
+tietoja, kuten asuntoja, asukkaita ja taloyhtiön tapahtumia. </p>
+</summary>
+<p><strong>Toiminnalliset vaatimukset</strong></p>
+<ul>
+<li>Käyttäjä voi syöttää asuntoja ja niiden tietoja. </li>
+<li>Käyttäjä näkee kaikki asunnot taulukossa, jossa on asunnon
+   numero ja asukkaiden lukumäärä</li>
+<li>Käyttäjä voi lisätä ja poistaa asukkaita asuntoon.</li>
+<li>Käyttäjä näkee asunnon asukkaat taulukossa, jossa on ainakin asukkaiden
+   nimet, sähköpostiosoitteet ja syntymävuodet.</li>
+</ul>
+<p><strong>Sovelluksen tietomalli</strong></p>
+<p>Sovellus sisältää kaksi oleellista tietomallin kohdetta: <code>Asunto</code> ja
+<code>Asukas</code>. Lisäksi tietomallissa on kaikkia asuntoja hallinnoiva
+<code>Yhtio</code>-luokka. Tietomalli näyttää seuraavalta:</p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 254.4">
+<a class="glightbox" href="#mm4-kaavio" data-type="inline" data-width="min(95vw, 509px)" data-height="auto">
+<svg id="mm4-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 254.4 644.6" width="254.4" height="644.6">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm4-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm4-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm4-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm4-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Yhtio" data-to="Asunto" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="127.2,128 127.2,268.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm4-cls-arrow)" />
+<polyline class="class-relationship" data-from="Asunto" data-to="Asukas" data-type="association" data-marker-at="to" data-label="asuu" data-from-cardinality="1" data-to-cardinality="1..*" points="127.2,356.3 127.2,496.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm4-cls-arrow)" />
+<g class="class-node" data-id="mm4-Asukas" data-label="Asukas">
+  <rect x="56.500000000000014" y="496.6" width="141.39999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="56.500000000000014" y="496.6" width="141.39999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="127.2" y="512.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Asukas</text>
+  <line x1="56.500000000000014" y1="528.6" x2="197.89999999999998" y2="528.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="64.50000000000001" y="546.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="64.50000000000001" y="566.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">email</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="64.50000000000001" y="586.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">syntymavuosi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+</g>
+<g class="class-node" data-id="mm4-Asunto" data-label="Asunto">
+  <rect x="40" y="268.3" width="174.4" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="268.3" width="174.4" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="127.2" y="284.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Asunto</text>
+  <line x1="40" y1="300.3" x2="214.4" y2="300.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">tunniste</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="48" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">asukkaat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Asukas&gt;</tspan></text>
+</g>
+<g class="class-node" data-id="mm4-Yhtio" data-label="Yhtio">
+  <rect x="43.30000000000001" y="40" width="167.79999999999998" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="43.30000000000001" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="127.2" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Yhtio</text>
+  <line x1="43.30000000000001" y1="72" x2="211.1" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="51.30000000000001" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="51.30000000000001" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">asunnot</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Asunto&gt;</tspan></text>
+</g>
+<text x="101.96100000000001" y="190.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="113.2" y="142" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="113.2" y="254.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="108.495" y="418.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">asuu</text>
+<text x="113.2" y="370.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="113.2" y="482.6" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>
+</a>
+</div>
+<p>Valmis sovellus voisi näyttää vaikkapa tältä. </p>
+<p><a class="glightbox" data-type="image" href="../images/taloyhtio.png"><img alt="taloyhtiö" src="../images/taloyhtio.png" /></a></p>
+<details>
+<summary><span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Bonus: Lisää ominaisuuksia</summary>
+<p>Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
+Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
+haluamallasi tavalla. Mikäli kuitenkin
+lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa <a href="#tekniset-vaatimukset-ja-arviointi">harjoitustyön vaatimuksia
+noudattaen</a>.</p>
+<p><strong>Isännöitsijän ja asukkaan näkymät</strong></p>
+<ul>
+<li>Sovelluksessa on kaksi tilaa: Isännöitsijän näkymä ja asukkaan näkymä.</li>
+<li>Sovelluksen aloitusnäytössä käyttäjä valitsee, haluaako hän käyttää isännöitsijän vai asukkaan näkymää.
+  Jos valitaan asukkaan näkymä, käyttäjän tulee valita asukas, jona hän
+  "kirjautuu" näkymään.</li>
+<li>Isännöitsijä voi hallita asuntojen tietoja, asukkaita ja taloyhtiön tapahtumia (kuten perusversiossakin)</li>
+<li>Asukkaan näkymässä käyttäjä näkee sen asunnon tiedot, johon hän kuuluu. Asukas ei
+  voi muokata asunnon perustietoja.</li>
+<li>Asukkaan näkymässä käyttäjä voi antaa palautetta isännöitsijälle.</li>
+<li>Isännöitsijänäkymässä käyttäjä näkee palautteet taulukossa, jossa on ainakin palautteen tekijän nimi, päivämäärä ja palautteen sisältö.</li>
+</ul>
+<p><strong>Vesimittarilukemien kirjaus</strong></p>
+<ul>
+<li>Asukasnäkymässä asukas voi syöttää asunnolle vesimittarilukemia. Vesimittarilukema sisältää
+   lukeman, päivämäärän ja sen, onko lukema otettu kylmästä vai lämpimästä
+   vedestä.</li>
+<li>Asukas näkee asuntonsa vesimittarilukemat taulukossa</li>
+</ul>
+<p><strong>Vesilaskun luominen</strong></p>
+<ul>
+<li>Isännöitsijä voi syöttää taloyhtiölle lämpimän ja kylmän veden hinnat ja niiden
+  alkamispäivät.</li>
+<li>Käyttäjä voi luoda asunnolle vesilaskun. Vesilasku sisältää kahden
+  viimeisimmän kylmän ja lämpimän veden lukeman erotuksen. Riittää, että
+  vesilasku näyttää laskukauden (alku- ja loppupvm), kulutetun kylmän ja
+  lämpimän veden määrän, sekä vesilaskun loppusumman (kylmä ja lämmin vesi eroteltuina).</li>
+</ul>
+<p>Voit hyötyä seuraavista tietomalleista.</p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 549.2">
+<a class="glightbox" href="#mm5-kaavio" data-type="inline" data-width="min(95vw, 1098px)" data-height="auto">
+<svg id="mm5-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 549.1999999999999 444" width="549.1999999999999" height="444">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm5-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm5-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm5-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm5-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<g class="class-node" data-id="mm5-Asukas" data-label="Asukas">
+  <rect x="367.79999999999995" y="40" width="141.39999999999998" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="367.79999999999995" y="40" width="141.39999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="438.49999999999994" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Asukas</text>
+  <line x1="367.79999999999995" y1="72" x2="509.19999999999993" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="375.79999999999995" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="375.79999999999995" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">email</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="375.79999999999995" y="130" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">syntymavuosi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+</g>
+<g class="class-node" data-id="mm5-LamminVaiKylma" data-label="LamminVaiKylma" data-annotation="enumeration">
+  <rect x="40" y="40" width="120" height="104" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="120" height="48" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="100" y="52" text-anchor="middle" dy="0.35em" font-size="10" font-weight="500" font-style="italic" fill="var(--_text-muted)">&lt;&lt;enumeration&gt;&gt;</text>
+  <text x="100" y="70" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">LamminVaiKylma</text>
+  <line x1="40" y1="88" x2="160" y2="88" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="106" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">LAMMIN</tspan></text>
+  <text x="48" y="126" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-sec)">KYLMA</tspan></text>
+</g>
+<g class="class-node" data-id="mm5-Vesimittarilukema" data-label="Vesimittarilukema">
+  <rect x="40" y="168" width="227.2" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="168" width="227.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="153.6" y="184" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Vesimittarilukema</text>
+  <line x1="40" y1="200" x2="267.2" y2="200" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="218" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">pvm</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LocalDate</tspan></text>
+  <text x="48" y="238" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lamminVaiKylma</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">LamminVaiKylma</tspan></text>
+  <text x="48" y="258" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">lukema</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">double</tspan></text>
+</g>
+<g class="class-node" data-id="mm5-Asunto" data-label="Asunto">
+  <rect x="40" y="296" width="313" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="296" width="313" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="196.5" y="312" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Asunto</text>
+  <line x1="40" y1="328" x2="353" y2="328" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="346" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">numero</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">int</tspan></text>
+  <text x="48" y="366" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">asukkaat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Asukas&gt;</tspan></text>
+  <text x="48" y="386" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">vesimittarilukemat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Vesimittarilukema&gt;</tspan></text>
+</g>
+<g class="class-node" data-id="mm5-Yhtio" data-label="Yhtio">
+  <rect x="180" y="40" width="167.79999999999998" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="180" y="40" width="167.79999999999998" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="263.9" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Yhtio</text>
+  <line x1="180" y1="72" x2="347.79999999999995" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="188" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">nimi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="188" y="110" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">asunnot</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Asunto&gt;</tspan></text>
+</g>
+</svg>
+</a>
+</div>
+</details>
+</details>
+<!-- DZ: Tuo ei toimi vielä, sillä vaatii JRE:n asennusta tai osassa 1 olevan PATH-kikan käyttäminen  -->
+<!-- Voit halutessasi tutkia valmista sovellusta
+[täällä](https://github.com/ohj-perus-jy/malliharkat/blob/main/Taloyhtio-1.0.jar).
+Lataa tiedosto. Selain varoittaa, että sovellus ei ole turvallinen, mutta voit
+hyväksyä sen silti. Käynnistä sovellus komennolla `java -jar Taloyhtio-1.0.jar`.  -->
+
+<details>
+<summary>
+<h3 id="muistikorttisovellus">Muistikorttisovellus<a class="headerlink" href="#muistikorttisovellus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Sovellus, jolla voi luoda ja hallita muistikortteja (vrt. <a href="https://fi.wikipedia.org/wiki/Anki_(ohjelma)">Anki</a>).
+Käyttäjä voi luoda muistikortteja, jotka sisältävät termin ja siihen liittyvän
+selityksen. Samaan aiheeseen kuuluvia muistikortteja kerätään korttipakkoihin,
+joita voi harjoitella sovelluksessa.</p>
+</summary>
+<p><strong>Toiminnalliset vaatimukset</strong></p>
+<ul>
+<li>Käyttäjä voi luoda korttipakkoja, jotka sisältävät kortteja. Korttipakalla on
+  nimi ja valinnainen kuvaus.</li>
+<li>Käyttäjä voi lisätä kortteja korttipakkaan. Kortilla on termi ja termin selitys.</li>
+<li>Käyttäjä voi selata ja muokata lisättyjä korttipakkoja.</li>
+<li>Käyttäjä voi harjoitella korttipakan kortteja ns. harjoitustilassa. Harjoitustilassa käyttäjälle näytetään yhden korttipakan kortin termi. Käyttäjä voi katsoa kortin
+  selityksen (eli ns. "kääntää kortin").
+  Käyttäjä voi sen jälkeen siirtyä seuraavaan korttiin tai edelliseen korttiin.</li>
+<li>Harjoitustilassa kortit näytetään aina satunnaisessa järjestyksessä.</li>
+<li>Käyttäjä voi muokata ja poistaa korttipakkoja tai sen kortteja.</li>
+</ul>
+<p><strong>Sovelluksen tietomalli</strong></p>
+<p>Sovellus sisältää kaksi oleellista tietomallin kohdetta: <code>Kortti</code> ja
+<code>Korttipakka</code>. Lisäksi tietomallissa on kaikkia korttipakkoja hallinnoiva
+<code>Korttipakkakokoelma</code>-luokka. Tietomalli näyttää siten seuraavalta:</p>
+<div class="jyu-mermaid" style="--jyu-mermaid-width: 267.6">
+<a class="glightbox" href="#mm6-kaavio" data-type="inline" data-width="min(95vw, 535px)" data-height="auto">
+<svg id="mm6-kaavio" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 267.6 624.6" width="267.6" height="624.6">
+<style>
+  text { font-family: var(--md-text-font-family); }
+  .mono { font-family: var(--md-code-font-family); }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="mm6-cls-inherit" markerWidth="12" markerHeight="10" refX="12" refY="5" orient="auto-start-reverse">
+    <polygon points="0 0, 12 5, 0 10" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm6-cls-composition" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="1" />
+  </marker>
+  <marker id="mm6-cls-aggregation" markerWidth="12" markerHeight="10" refX="0" refY="5" orient="auto-start-reverse">
+    <polygon points="6 0, 12 5, 6 10, 0 5" fill="var(--bg)" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+  <marker id="mm6-cls-arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto-start-reverse">
+    <polyline points="0 0, 8 3, 0 6" fill="none" stroke="var(--_arrow)" stroke-width="1.5" />
+  </marker>
+</defs>
+<polyline class="class-relationship" data-from="Korttipakka" data-to="Kortti" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="133.8,356.3 133.8,496.6" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm6-cls-arrow)" />
+<polyline class="class-relationship" data-from="Korttipakkakokoelma" data-to="Korttipakka" data-type="association" data-marker-at="to" data-label="sisältää" data-from-cardinality="1" data-to-cardinality="1..*" points="133.8,108 133.8,248.3" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#mm6-cls-arrow)" />
+<g class="class-node" data-id="mm6-Korttipakkakokoelma" data-label="Korttipakkakokoelma">
+  <rect x="40" y="40" width="187.6" height="68" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="40" width="187.6" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.8" y="56" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Korttipakkakokoelma</text>
+  <line x1="40" y1="72" x2="227.6" y2="72" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="48" y="90" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">pakat</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Korttipakka&gt;</tspan></text>
+</g>
+<g class="class-node" data-id="mm6-Kortti" data-label="Kortti">
+  <rect x="69.7" y="496.6" width="128.2" height="88" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="69.7" y="496.6" width="128.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.8" y="512.6" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Kortti</text>
+  <line x1="69.7" y1="528.6" x2="197.89999999999998" y2="528.6" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="77.7" y="546.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">termi</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="77.7" y="566.6" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">selitys</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+</g>
+<g class="class-node" data-id="mm6-Korttipakka" data-label="Korttipakka">
+  <rect x="53.2" y="248.3" width="161.2" height="108" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="53.2" y="248.3" width="161.2" height="32" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="133.8" y="264.3" text-anchor="middle" font-size="13" font-weight="700" fill="var(--_text)" dy="4.55">Korttipakka</text>
+  <line x1="53.2" y1="280.3" x2="214.39999999999998" y2="280.3" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="61.2" y="298.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">otsikko</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="61.2" y="318.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kuvaus</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">String</tspan></text>
+  <text x="61.2" y="338.3" class="mono" dy="0.35em" font-size="11" font-weight="400"><tspan fill="var(--_text-faint)">- </tspan><tspan fill="var(--_text-sec)">kortit</tspan><tspan fill="var(--_text-faint)">: </tspan><tspan fill="var(--_text-muted)">List&lt;Kortti&gt;</tspan></text>
+</g>
+<text x="108.561" y="418.45" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="119.80000000000001" y="370.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="119.80000000000001" y="482.6" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+<text x="108.561" y="170.15" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">sisältää</text>
+<text x="119.80000000000001" y="122" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1</text>
+<text x="119.80000000000001" y="234.3" font-size="11" text-anchor="middle" font-weight="400" fill="var(--_text-muted)" dy="3.8499999999999996">1..*</text>
+</svg>
+</a>
+</div>
+<details>
+<summary><span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Bonus: Lisää ominaisuuksia</summary>
+<p>Voit halutessasi lisätä sovellukseen myös alla olevia ominaisuuksia.
+Lisäominaisuudet eivät vaikuta harjoitustyön hyväksyntään, ja voit toteuttaa ne
+haluamallasi tavalla. Mikäli kuitenkin
+lisäät ylimääräisiä ominaisuuksia, tulee ne toteuttaa <a href="#tekniset-vaatimukset-ja-arviointi">harjoitustyön vaatimuksia
+noudattaen</a>.</p>
+<p><strong>Pelitilastot</strong></p>
+<ul>
+<li>Lisää kortteille katselukertojen lukumäärän. Aina, kun käyttäjä paljastaa
+  kortin selityksen harjoitustilassa, kortin katselukerta kasvaa yhdellä.</li>
+<li>Korttien katselukerrat näytetään korttipakan muokkausnäkymässä korttitaulukossa.</li>
+<li>Lisää korttipakalle harjoituskertojen lukumäärän. Aina, kun käyttäjä avaa
+  harjoitustilan ja harjoittelee jokaisen kortin kerran, kasvatetaan
+  harjoituskertojen lukumäärää.</li>
+<li>Korttipakan harjoituskerrat näytetään päänäkymässä omana sarakkeena.</li>
+</ul>
+<p><strong>Tenttitila</strong></p>
+<ul>
+<li>Lisää korttipakoille tenttitila. Tenttitilassa käyttäjälle näytetään yhden
+  kortin termi ja kolme mahdollista selitystä monivalintakysymyksenä. Käyttäjän
+  tulee valita oikea termiä vastaava selitys. Käyttäjä saa palautteena oikean
+  vastauksen, minkä jälkeen näytetään seuraava monivalintakysymys.</li>
+<li>Tenttitilan tulee toimia yhtä hyvin niin kolmen kortin kuin usean sadan
+  kortin pakalla. </li>
+<li>Tenttitilaan pääsee vain, jos pakassa on vähintään kolme korttia.</li>
+<li>Voit hyötyä mm.
+  <a href="https://jenkov.com/tutorials/javafx/radiobutton.html">RadioButton ja
+  ToggleGroup</a>
+  -komponenteista.</li>
+</ul>
+</details>
+</details>
+<!-- DZ: Keväällä 2026 tämä voisi kuulua "Jokin muu oma idea" -aiheeseen.  -->
+<!-- ### Bonus: Todo-sovelluksen laajentaminen
+
+Laajenna osissa 7 ja 8 tehtyä Todo-sovellusta...
+
+<details markdown="1"><summary>Ominaisuudet</summary>
+  * Käyttäjä voi merkitä tehtävän tärkeäksi, jolloin se näkyy listassa erottuvalla tavalla.
+</details> -->
+
+<details>
+<summary>
+<h3 id="oma-idea">Oma idea<a class="headerlink" href="#oma-idea" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p>Oma vapaavalinnainen JavaFX-käyttöliittymäsovellus, joka täyttää opintojakson 
+harjoitustyön vaatimukset.
+Halutessasi voit myös laajentaa osissa 7 ja 8 työstettyä Todo-sovellusta.</p>
+</summary>
+<p>Jos valitset oman aiheen, sinun on kirjoitettava alustava
+harjoitustyösuunnitelma, jossa ilmenevät sovelluksen oleelliset toiminnalliset
+vaatimukset sekä sovelluksessa käytettävä tietomalli. Voit ottaa mallia
+suunnitelman laajuudesta yllä olevista harjoitustyöaiheista.</p>
+<p>Suunnitelma tulee hyväksyttää tuntiopettajalla ennen kuin aloitat toteutuksen.</p>
+<p>Suunnitelmaa kirjoittaessasi pohdi myös, millä tavoin täyttää <a href="#tekniset-vaatimukset-ja-arviointi">harjoitustyön
+yleiset vaatimukset</a>. 
+Tuntiopettaja voi pyytää täydennyksiä suunnitelmaan, jos työn laajuus
+ei vastaa harjoitustyön vaatimuksia.</p>
+<p>Jos päätät laajentaa osan 7 ja 8 Todo-sovellusta, harjoitustyön vaatimukset
+koskevat sinun tekemää laajennosta. Esimerkiksi vaatimus 1.1 (Sovelluksessa on
+vähintään kaksi kohdealueen mallinnettavaa asiaa) tarkoittaisi, että sinun tulee
+määrittää kaksi uutta mallinnettavaa asiaa nykyisen <code>Tehtava</code>-mallin lisäksi.
+Puolestaan vaatimus 4.1 tarkoittaa, että käyttöliittymään on lisättävä kaksi
+uutta lisänäkymää tai laajentaa nykyiset näkymät merkittävästi siten, että
+laajennos voisi tulkita omaksi näkymäksi. </p>
+</details>
+<h2 id="tekniset-vaatimukset-ja-arviointi">Tekniset vaatimukset ja arviointi<a class="headerlink" href="#tekniset-vaatimukset-ja-arviointi" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p>Alla olevia vaatimuksia käytetään harjoitustyön arvioinnissa. Harjoitustyö
+arvioidaan asteikolla hylätty/hyväksytty. Hylätyn harjoitustyön voi täydentää
+tuntiopettajan antaman palautteen perusteella.</p>
+<p>Lähtökohtaisesti työn on täytettävä kaikki alla olevat vaatimukset. Yksittäisten
+vaatimusten kohdalla voidaan joustaa, mikäli työ on muilta osin tavanomaista
+laajempi tai ansiokkaampi, tai jos työn aihe sitä vaatii. Tuntiopettaja tekee
+lopullisen arvion työn hyväksymisestä tapauskohtaisesti.</p>
+<div class="ht-reqs">
+<div class="req">
+<h3 id="vaatimus-1-tietomalli">Vaatimus 1: Tietomalli<a class="headerlink" href="#vaatimus-1-tietomalli" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Sovelluksessa on vähintään kaksi kohdealueen mallinnettavaa asiaa.</strong></p>
+<p>Se voi olla esimerkiksi tehtävä, tapahtuma, kirja, asiakas, treeni, peli,
+resepti tai vastaava. Jokaisella mallinnettavalla oliolla on omia kohdealueen
+kannalta merkittäviä attribuutteja tai ominaisuuksia. Osien 7–8
+mallisovelluksessa oli yksi mallinnettava asia: <code>Tehtava</code>. Puolestaan
+muistikorttisovelluksessa ne voisivat olla <code>Kortti</code> ja <code>Korttipakka</code>. Kulujen
+hallintasovelluksessa taas sopivat mallinnettavat asiat olisivat <code>Tapahtuma</code> ja
+<code>Kategoria</code>.</p>
+</li>
+<li>
+<p><strong>Jokaisella kohdealuetta mallinnettavalla asialla on oltava vähintään yksi kohdealueen kannalta oleellinen ja asialle ominainen attribuutti.</strong></p>
+<p>Osien 7–8
+mallisovelluksessa <code>Tehtava</code>-luokka sisälsi attribuutit <code>tehty</code>, <code>otsikko</code>,
+<code>kuvaus</code> ja <code>prioriteetti</code>.</p>
+<p>Huomaa, että <em>attribuutti, jonka ainoa tarkoitus on viitata toiseen malliin tai
+jonka arvo on johdettavissa jonkun toisen attribuutin arvosta</em> ei lasketa tähän
+vaatimukseen mukaan. Esimerkiksi osan 7–8 mallisovelluksen
+<code>Tehtavakokoelma</code>-luokka sisältää ainoana attribuuttina <code>tehtavat</code>-kokoelman,
+joka on vain kokoelma viitteitä tehtäviin, ja siten sitä ei laskettaisi tähän
+vaatimukseen mukaan. Sen sijaan muistikorttisovelluksessa <code>Korttipakka</code> sisältää
+korttikokoelman lisäksi korttipakan otsikon ja kuvauksen, jotka lasketaan
+sovelluksen kannalta oleellisiksi ja korttipakalle ominaisiksi.</p>
+</li>
+<li>
+<p><strong>Sovelluksen dataa ei mallinneta käyttöliittymäkomponenteilla, vaan omilla malliluokilla.</strong></p>
+</li>
+<li>
+<p><strong>Sovelluksessa käytetään JavaFX:n havaittavia (observable) rakenteita
+silloin, kun ne liittyvät käyttöliittymän ja datan kytkemiseen.</strong></p>
+<p>Vähintään keskeisen tietokokoelman tulee olla <code>ObservableList</code> tai vastaava.</p>
+</li>
+<li>
+<p><strong>Datan esittämiseen käyttöliittymässä käytetään tarkoituksenmukaista komponenttia.</strong></p>
+<p>Jos työssä on useita samantyyppisiä olioita, <code>TableView</code> on yleensä luonteva
+ratkaisu.</p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-2-perustoiminnallisuus">Vaatimus 2: Perustoiminnallisuus<a class="headerlink" href="#vaatimus-2-perustoiminnallisuus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Kullekin mallinnetulle oliolle on toteutettava CRUD-toiminnallisuus käyttöliittymässä.</strong></p>
+<p>Käyttäjä voi luoda (<em>Create</em>), lukea (<em>Read</em>), päivittää (<em>Update</em>) ja poistaa
+(<em>Delete</em>) olioita käyttöliittymän kautta. Esimerkiksi osan 7–8
+mallisovelluksessa käyttäjä voi luoda tehtäviä painikkeella, lukea ne
+<code>TableView</code>-komponentista, muokata tehtäviä erillisessä näkymässä ja poistaa ne
+poistopainikkeella.</p>
+</li>
+<li>
+<p><strong>Käyttäjän ei saa antaa lisätä ilmeisen virheellistä tietoa.</strong></p>
+<p>Esimerkiksi tyhjää nimeä tai pakollisen kentän puuttumista ei tule sallia.
+Validointi on toteutettava joko mallissa tai käyttöliittymässä.</p>
+</li>
+<li>
+<p><strong>Käyttöliittymän tila vastaa aina mallin tilaa ja päinvastoin.</strong></p>
+<p>Tietoa päivitettäessä tai poistettaessa malliin tai käyttöliittymään ei saa
+jäädä väärää tietoa. Olion poistaminen mallista poistaa sen välittömästi myös
+näkyvistä.</p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-3-tallennus">Vaatimus 3: Tallennus<a class="headerlink" href="#vaatimus-3-tallennus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Sovelluksen tiedot tallennetaan tiedostoon.</strong></p>
+<p>Tiedot säilyvät ohjelman sulkemisen jälkeen. Tallennus voi tapahtua
+automaattisesti tai erillisenä "Tallenna"-toimintona.</p>
+</li>
+<li>
+<p><strong>Tallennetut tiedot ladataan takaisin ohjelman käynnistyessä</strong></p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-4-kayttoliittyma">Vaatimus 4: Käyttöliittymä<a class="headerlink" href="#vaatimus-4-kayttoliittyma" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Sovelluksessa on graafinen käyttöliittymä, jossa on vähintään kaksi näkymää.</strong></p>
+<p>Näkymät voivat olla esimerkiksi päänäkymä (listaus) ja muokkausnäkymä (dialogi).</p>
+</li>
+<li>
+<p><strong>Käyttöliittymä on jäsennelty ja käyttökelpoinen.</strong></p>
+<p>Syöttökentät, painikkeet, nimiöt ja listaukset on aseteltu loogisesti, eivätkä
+ne ole sattumanvaraisia.</p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-5-arkkitehtuuri-ja-vastuunjako">Vaatimus 5: Arkkitehtuuri ja vastuunjako<a class="headerlink" href="#vaatimus-5-arkkitehtuuri-ja-vastuunjako" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Sovelluksen rakenne noudattaa MVC-mallia (Model-View-Controller).</strong></p>
+<p>Pääasia on, että tietomalli, käyttöliittymä ja niitä yhteen kytkevä ohjainlogiikka on erotettu
+toisistaan.</p>
+</li>
+<li>
+<p><strong>Sovelluksen data ja tallennuslogiikka on erotettu ohjainluokasta.</strong></p>
+<p>Käyttöliittymän ohjain ei saa sisältää kaikkea sovelluksen dataa ja
+tallennuslogiikkaa.</p>
+</li>
+<li>
+<p><strong>Tiedon lataus ja tallennus on erotettu omaksi vastuualueekseen.</strong></p>
+<p>Käytännössä talletukselle ja lataukselle on vähintään oma metodi, joka on sijoitettu
+ohjainlogiikan ulkopuolelle. </p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-6-testaus">Vaatimus 6: Testaus<a class="headerlink" href="#vaatimus-6-testaus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Sovelluksen keskeiselle mallille tai sovelluslogiikalle on kirjoitettu yksikkötestejä.</strong></p>
+<p>Testeissä on varmistettava, että keskeiset metodit (kuten lisääminen ja
+poistaminen) muokkaavat tietomallin tilaa odotetusti.</p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-7-versiohallinta-ja-projektinhallinta">Vaatimus 7: Versiohallinta ja projektinhallinta<a class="headerlink" href="#vaatimus-7-versiohallinta-ja-projektinhallinta" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Työlle on luotu julkinen Git-etävarasto (esim. GitLab tai GitHub).</strong></p>
+</li>
+<li>
+<p><strong>Projektissa on <code>.gitignore</code>-tiedosto ja <code>README.md</code>.</strong></p>
+<p>README-tiedostossa kerrotaan lyhyesti, mikä sovellus on kyseessä ja miten se
+toimii.</p>
+</li>
+<li>
+<p><strong>Git-commitit on nimetty kuvaavasti.</strong></p>
+<p>Commiteista käy ilmi, mitä muutoksia kukin niistä sisältää.</p>
+</li>
+<li>
+<p><strong>Työtä on edistetty iteratiivisesti tallentaen iteraatioiden tulokset omina committeina.</strong></p>
+<p>Etävarastossa ei saa olla vain yhtä "valmis sovellus" -committia, vaan
+kehityshistorian tulee näkyä.</p>
+</li>
+</ol>
+</div>
+<div class="req">
+<h3 id="vaatimus-8-koodin-laatu">Vaatimus 8: Koodin laatu<a class="headerlink" href="#vaatimus-8-koodin-laatu" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<ol>
+<li>
+<p><strong>IntelliJ IDEAssa ei saa näkyä mitään virheitä tai varoituksia Java-lähdekoodissa.</strong></p>
+<p>Käännösvirheet ja varoitukset tarkistetaan käyttäen IDEAn Java-kielen
+oletusasetuksia. IDEA merkitsee varoitukset keltaisella ja virheet
+punaisella. Jos on <em>perusteltu</em> syy sallia jokin varoitus, siitä on
+mainittava koodissa SuppressWarnings-kommentilla ja lyhyellä perustelulla,
+miksi kyseinen varoitus on sallittu. </p>
+<p>Kielen tarkistukseen liittyvät varoitukset (vihreällä) sallitaan.
+Vastaavasti <code>.fxml</code>-tiedostossa olevia virhemerkintöjä sallitaan.</p>
+<p>Voit ajaa virheentarkistuksen kaikille tiedostoille kerralla käyttäen <a href="https://www.jetbrains.com/help/idea/running-inspections.html#run-all-inspections">Run all
+inspections
+-toimintoa</a>.</p>
+<p>Huomaa, että monille varoituksille ja virheille IntelliJ IDEA tarjoaa valmiita
+korjauksia, jotka saa näkyviin klikkaamalla varoituksen yhteydessä näkyvästä
+toimintopainikkeesta (<span class="twemoji" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11h3v2h-3zM1 11h3v2H1zM13 1v3h-2V1zM4.92 3.5l2.13 2.14-1.42 1.41L3.5 4.93zm12.03 2.13 2.12-2.13 1.43 1.43-2.13 2.12zM12 6a6 6 0 0 1 6 6c0 2.22-1.21 4.16-3 5.2V19a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1.8c-1.79-1.04-3-2.98-3-5.2a6 6 0 0 1 6-6m2 15v1a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-1zm-3-3h2v-2.13c1.73-.44 3-2.01 3-3.87a4 4 0 0 0-4-4 4 4 0 0 0-4 4c0 1.86 1.27 3.43 3 3.87z"/></svg></span>).</p>
+</li>
+<li>
+<p><strong>Kaikkien <code>.java</code>-lähdekooditiedostojen tulee olla muotoiltu yhtenäisellä tyylillä.</strong></p>
+<p>Käytä IDEA:n <a href="https://www.jetbrains.com/help/idea/reformat-and-rearrange-code.html#reformat_module_directory">Reformat code
+-ominaisuutta</a>
+käyttäen sen kaikkia korjauksia (<em>Optimize imports</em>, <em>Rearrange entries</em>,
+<em>Cleanup code</em>).</p>
+</li>
+<li>
+<p><strong>Julkisuusmääreet ovat eksplisiittisesti määritelty jokaiselle luokalle, attribuutille ja metodeille hyviä kapselointiperiaatteita noudattaen.</strong></p>
+<p>Attribuutit ovat lähtökohtaisesti merkitty <code>private</code>-määreellä. Metodien kohdalla
+julkisuusmääreen tulee sopia metodin tarkoitukseen: muiden olioiden
+käytettäväksi tarkoitetut metodit ovat <code>public</code>, kun taas luokan omat apumetodit
+ovat <code>private</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          <script>var allowed=["GitHub","GitLab (JY)","Linux","Windows","macOS"];var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script><script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Alatunniste" >
+        
+          
+          <a href="../tyokalut/" class="md-footer__link md-footer__link--prev" aria-label="Edellinen: Työkalut ja asentaminen">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Edellinen
+              </span>
+              <div class="md-ellipsis">
+                Työkalut ja asentaminen
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../tentti/" class="md-footer__link md-footer__link--next" aria-label="Seuraava: Tentti">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Seuraava
+              </span>
+              <div class="md-ellipsis">
+                Tentti
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi" rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen">CC BY-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+
+
+
+
+  
+  
+  
+  
+
+<div class="jyu-footer-links">
+    <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/harjoitustyo.md" class="md-copyright md-copyright--link" rel="edit" title="Muokkaa tätä sivua GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+      Muokkaa
+    </a>
+    <a href="https://github.com/ohj-perus-jy/ohj2/commits/main/src/harjoitustyo.md" class="md-copyright md-copyright--link" title="Sivun muutokset GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+      Muutoshistoria
+    </a>
+  <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&amp;url=harjoitustyo.md" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg>
+    Ilmoita ongelma
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["navigation.indexes","navigation.footer","content.tabs.link","content.footnote.tooltips","content.tooltips","toc.follow","content.code.copy"],"redirect":null,"search":"../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Kopioitu leikepöydälle","clipboard.copy":"Kopioi leikepöydälle","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 lisää tällä sivulla","search.result.more.other":"# lisää tällä sivulla","search.result.none":"Ei täsmääviä dokumentteja","search.result.one":"1 täsmäävä dokumentti","search.result.other":"# täsmäävää dokumenttia","search.result.placeholder":"Kirjoita aloittaaksesi haun","search.result.term.missing":"Puuttuu","select.version":"Valitse versio"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../assets/js/tooltips.js"></script>
+      
+        <script src="../assets/js/nav-scroll.js"></script>
+      
+        <script src="../assets/js/rail.js"></script>
+      
+        <script src="../assets/js/toc.js"></script>
+      
+        <script src="../assets/js/print.js"></script>
+      
+        <script src="../assets/js/fontmenu.js"></script>
+      
+        <script src="../assets/js/theme.js"></script>
+      
+        <script src="../assets/js/sitemenu.js"></script>
+      
+        <script src="../assets/js/search.js"></script>
+      
+        <script src="../assets/js/playground.js"></script>
+      
+        <script src="../assets/js/hidelines.js"></script>
+      
+        <script src="../assets/js/highlights.js"></script>
+      
+        <script src="../assets/js/copy.js"></script>
+      
+        <script src="../assets/js/hints.js"></script>
+      
+        <script src="../assets/js/asciinema.js"></script>
+      
+        <script src="../assets/js/walkthrough.js"></script>
+      
+        <script src="../assets/js/visa.js"></script>
+      
+        <script src="../assets/js/puhe.js"></script>
+      
+        <script src="../assets/js/glightbox.min.js"></script>
+      
+    
+  </body>
+</html>

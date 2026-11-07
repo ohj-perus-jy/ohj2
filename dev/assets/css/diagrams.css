@@ -1,0 +1,102 @@
+/* Kaaviot: PlantUML-luokkakaaviot tummassa teemassa ja svgbob-ASCII-kaavioiden
+ * vieritys kapealla näytöllä. */
+
+/* PlantUML piirtää SVG:hen valkoisen taustan eikä väreissä ole tummaa
+ * varianttia. Invertointi tekisi kaaviosta eri kuvan kuin kirjassa, joten
+ * valkoisesta tehdään tarkoituksellinen kortti: sama valkoinen kuvan
+ * ympärille ja pyöristetyt kulmat. Vaaleassa teemassa sääntö ei näy. */
+.md-typeset img.uml {
+  background-color: #fff;
+  padding: .4rem;
+  border-radius: .2rem;
+}
+
+
+/* ASCII-kaaviot (```bob) upotetaan SVG:nä (convert.py: SVGBOB_FENCE_RE).
+ * SVG:llä on kiinteä leveys eikä viewBoxia, joten se ei skaalaudu: leveä
+ * kaavio vierii omassa laatikossaan kuten teeman taulukot. Värit tulevat
+ * kaavion omasta <style>-lohkosta teeman muuttujilla. Marginaali on sama
+ * kuin kappaleella, koska kääre on divi, jolle teema ei anna välistystä. */
+.md-typeset .svgbob {
+  margin: 1em 0;
+  overflow-x: auto;
+}
+
+/* Teeman max-width: 100% on kirjoitettu skaalautuville kuville; ilman
+ * viewBoxia se ei pienennä piirrosta vaan leikkaa reunan yli menevän osan. */
+.md-typeset .svgbob > svg {
+  max-width: none;
+}
+
+/* svgbob sijoittaa jokaisen sanan ja ä:n/ö:n jälkeisen palan 8 px:n ruutuihin.
+ * JetBrains Monon merkki on 0,6 em eli 14 px:n koossa 8,4 px, jolloin palat
+ * menevät päällekkäin; tällä koolla merkki on tasan ruudun levyinen. */
+.md-typeset .svgbob text {
+  font-size: calc(8px / .6);
+}
+
+
+/* Mermaid-kaaviot (```mermaid) upotetaan SVG:nä (convert.py: convert_mermaid,
+ * piirtäjä mermaid/render.mjs). beautiful-mermaid johtaa kaikki värinsä
+ * kahdesta muuttujasta, --bg ja --fg, jotka tässä sidotaan teemaan: tumma
+ * teema vaihtuu ilman uudelleenpiirtoa. Piirtäjän omat värit riisutaan
+ * SVG:stä (mermaid_clean), koska attribuutti voittaisi tämän säännön.
+ * Kirjasimet tulevat kaavion omasta <style>-lohkosta teeman muuttujilla.
+ * SVG:llä on viewBox: kapealla näytöllä se kutistuu (teeman max-width: 100%),
+ * ja height: auto pitää mittasuhteen. */
+.md-typeset .jyu-mermaid {
+  margin: 1em 0;
+}
+
+/* Kaavion koko: piirtäjän tekstit ovat kiinteitä (luokan nimi 13, jäsenet ja
+ * viivojen tekstit 11 viewBox-yksikköä) eikä niihin ole asetusta, ja SVG:n
+ * omalla leveydellä yksikkö on pikseli, jolloin nimi on 79 % leipätekstistä.
+ * Leveys em-yksikössä skaalaa koko kaavion niin, että 13 yksikköä on 1 em:
+ * nimi on leipätekstin kokoinen ja jäsenet 11/13 em kuten teeman koodi
+ * (.85em). Lukijan tekstikoko (typography.css) seuraa mukana. viewBoxin
+ * leveys tulee kääreen muuttujaan convert.py:stä (MERMAID_WIDTH_VAR). */
+.md-typeset .jyu-mermaid[style*="--jyu-mermaid-width"] svg {
+  width: calc(var(--jyu-mermaid-width) / 13 * 1em);
+}
+
+/* Kuvasuurennus (convert.py: mermaid_zoom) käärii SVG:n linkkiin, ja
+ * GLightbox kloonaa sen sivun loppuun omaan diaansa (.gslide-inline), johon
+ * .md-typeset ei osu. */
+.md-typeset .jyu-mermaid svg,
+.gslide-inline > svg {
+  --bg: var(--md-default-bg-color);
+  --fg: var(--md-default-fg-color);
+  height: auto;
+}
+
+/* Tekstin kontrasti: piirtäjä sekoittaa tekstivärit --fg:stä taustaan, ja sen
+ * omilla suhteilla (60/40/25 %) tyypin sekä +/- ja :-merkkien kontrasti jää
+ * 1,6–3:een. 85/70/60 % antaa molemmissa teemoissa vähintään 4,5:1 (WCAG AA)
+ * ja säilyttää porrastuksen jäsen > tyyppi ja nuolen teksti > merkit.
+ * Muuttujat ovat piirtäjän sisäisiä (1.1.3): julkinen --muted tekisi jäsenestä
+ * ja tyypistä samanvärisiä, eikä merkeille ole julkista muuttujaa. */
+.md-typeset .jyu-mermaid svg,
+.gslide-inline > svg {
+  --_text-sec: color-mix(in srgb, var(--fg) 85%, var(--bg));
+  --_text-muted: color-mix(in srgb, var(--fg) 70%, var(--bg));
+  --_text-faint: color-mix(in srgb, var(--fg) 60%, var(--bg));
+}
+
+/* Suurennettu kaavio: GLightboxin valkoinen dia teeman taustaksi. Leveys
+ * tulee linkin data-widthistä; korkea kaavio kutistuu dian enimmäiskorkeuteen
+ * (GLightbox: 95vh, kapealla näytöllä 100vh − 40 px) eikä vieri. */
+.gslide-inline:has(> svg) {
+  background-color: var(--md-default-bg-color);
+}
+
+.gslide-inline > svg {
+  width: 100%;
+  max-height: min(95vh, 100vh - 40px);
+}
+
+/* Nuolenpäät ovat piirtäjän oletuksella 1,5 px:n viivaa eli ohuempia kuin
+ * viivat; sama paksuus kuin luokan reunalla. */
+.md-typeset .jyu-mermaid marker polyline,
+.md-typeset .jyu-mermaid marker polygon {
+  stroke-width: 2;
+}

@@ -1,0 +1,3992 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ohjelmointi2.it.jyu.fi/osa5/04-joukkorakenteet-jonorakenteet/">
+      
+      
+      
+        <link rel="prev" href="../03-hakurakenteet/">
+      
+      
+        <link rel="next" href="../05-rekursio/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.0">
+    
+    
+      
+        <title>5.4 Joukko- ja jonorakenteet - Ohjelmointi 2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/fonts.css">
+    
+      <link rel="stylesheet" href="../../assets/css/paletti.css">
+    
+      <link rel="stylesheet" href="../../assets/css/typography.css">
+    
+      <link rel="stylesheet" href="../../assets/css/fontmenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/layout.css">
+    
+      <link rel="stylesheet" href="../../assets/css/sitemenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/search.css">
+    
+      <link rel="stylesheet" href="../../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tasks.css">
+    
+      <link rel="stylesheet" href="../../assets/css/icons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tables.css">
+    
+      <link rel="stylesheet" href="../../assets/css/code.css">
+    
+      <link rel="stylesheet" href="../../assets/css/requirements.css">
+    
+      <link rel="stylesheet" href="../../assets/css/diagrams.css">
+    
+      <link rel="stylesheet" href="../../assets/css/codebuttons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/playground.css">
+    
+      <link rel="stylesheet" href="../../assets/css/highlights.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hidelines.css">
+    
+      <link rel="stylesheet" href="../../assets/css/copy.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hints.css">
+    
+      <link rel="stylesheet" href="../../assets/css/print.css">
+    
+      <link rel="stylesheet" href="../../assets/css/walkthrough.css">
+    
+      <link rel="stylesheet" href="../../assets/css/puhe.css">
+    
+      <link rel="stylesheet" href="../../assets/css/visa.css">
+    
+      <link rel="stylesheet" href="../../assets/css/glightbox.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <link rel="preload" href="../../assets/fonts/source-serif-4/normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Hyppää sisältöön
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste"><button type="button" class="md-header__button md-icon jyu-rail-button" id="jyu-rail-button"
+            title="Piilota valikko" aria-label="Piilota valikko"
+            aria-expanded="true" aria-controls="jyu-rail" aria-keyshortcuts="b">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <script>try{if(localStorage.getItem("jyu-rail")==="hidden")document.documentElement.setAttribute("data-jyu-rail","hidden")}catch(e){}</script>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigaatio</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
+          <span class="md-ellipsis"><a href="../..">Ohjelmointi 2</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.4 Joukko- ja jonorakenteet
+            
+          </span>
+        </div>
+      </div>
+    </div><button type="button" class="md-header__button md-icon jyu-puhe-button" hidden
+            title="Kuuntele sivu" aria-label="Kuuntele sivu" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-volume-2" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298zM16 9a5 5 0 0 1 0 6M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+    </button>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Haku</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Haku">
+  <button type="button" class="md-search__button" title="Haku (Ctrl+K)">
+    Haku
+  </button>
+</div><script>if(/^Mac/.test(document.documentElement.dataset.platform))document.querySelectorAll(".md-search__button").forEach(b=>b.title=b.title.replace("Ctrl+K","⌘K"))</script>
+      
+    <div class="md-header__option jyu-font" data-md-component="jyu-font" data-steps="90 100 110 120 135 150 175">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipäteksti: Serif, 100 %" aria-label="Leipäteksti: Serif, 100 %"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="jyu-font-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-type" viewBox="0 0 24 24"><path d="M12 4v16M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6"/></svg>
+        <span class="jyu-font__chevron"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="jyu-font__panel" id="jyu-font-panel" role="dialog" aria-label="Leipäteksti" hidden>
+        <div class="jyu-font__size" role="group" aria-labelledby="jyu-font-size-label">
+          <span class="jyu-font__size-label" id="jyu-font-size-label">Tekstin koko</span>
+          <button type="button" class="jyu-font__step" data-step="-1" aria-label="Pienennä tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="jyu-font__reset" title="Palauta 100 %" aria-label="Palauta 100 %" aria-disabled="true"><span aria-live="polite">100 %</span></button>
+          <button type="button" class="jyu-font__step" data-step="1" aria-label="Suurenna tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+          </button>
+        </div>
+        <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin">
+          <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Source Serif 4</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+            <span class="jyu-font__kind">sans-serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Literata</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+        </ul>
+      </div>
+    </div><script>try{var b=document.body,f=localStorage.getItem("jyu-font"),k=localStorage.getItem("jyu-text-size");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))b.setAttribute("data-jyu-font",f);if(k&&document.querySelector(".jyu-font").dataset.steps.split(" ").indexOf(k)>=0)b.style.setProperty("--jyu-text-scale",k/100)}catch(e){}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda tummaan teemaan"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Vaihda tummaan teemaan" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda vaaleaan teemaan"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Vaihda vaaleaan teemaan" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    <a href="../../tulosta/" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg>
+    </a>
+    <div class="md-header__source">
+      
+        
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ohjelmointi 2" class="md-nav__button md-logo" aria-label="Ohjelmointi 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    Ohjelmointi 2
+  </label>
+  
+    <div class="md-nav__source">
+      
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Aloitus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../suorittaminen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Suorittaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Työkalut ja asentaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../harjoitustyo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tentti/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tentti
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tentti
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tentti/tenttiohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tenttiohjeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ukk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usein kysyttyä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../luennot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Luennot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/koti" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Eteneminen (TIM)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1 Java-kielen perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  1 Java-kielen perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/01-hei-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.1 Hei, Java!
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/02-muuttujat-ja-tietotyypit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.2 Muuttujat ja tietotyypit
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/03-ohjausrakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.3 Ohjausrakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/04-aliohjelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.4 Aliohjelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2 Olio-ohjelmoinnin perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2 Olio-ohjelmoinnin perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/01-kohti-olio-ohjelmointia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1 Kohti olio-ohjelmointia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/02-luokka-ja-olio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.2 Luokka ja olio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/03-kapselointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.3 Kapselointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3 Perintä, polymorfismi
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3 Perintä, polymorfismi
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/01-perinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1 Perintä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/02-polymorfismi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2 Polymorfismi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/03-abstrakti-luokka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3 Abstrakti luokka
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4 Rajapinta, geneeriset luokat
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4 Rajapinta, geneeriset luokat
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/01-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1 Rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/02-vertailurajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.2 Vertailurajapinnat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/03-perinta-ja-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.3 Perintä ja rajapinta olioiden yhteistyössä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/04-tyyppiparametrit-ja-geneerisyys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.4 Tyyppiparametrit ja geneerisyys
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5 Tietorakenteita ja algoritmeja
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_13">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5 Tietorakenteita ja algoritmeja
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-kokoelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1 Kokoelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-listarakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-hakurakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.3 Hakurakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#joukkorakenteet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Joukkorakenteet
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Set
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alkion-lisaaminen-ja-poistaminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion lisääminen ja poistaminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkion-etsiminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion etsiminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkioiden-maara-ja-lapikayminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden määrä ja läpikäyminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alkioiden-jarjestys" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden järjestys
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jonot-ja-pinot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Jonot ja pinot
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pino" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pino
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Jono
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaksipainen-jono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kaksipäinen jono
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kaksipäinen jono">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alkion-lisaaminen-ja-poistaminen_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion lisääminen ja poistaminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkioiden-lapikayminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden läpikäyminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prioriteettijono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Prioriteettijono
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tehtavat" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tehtävät
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-rekursio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.5 Rekursio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa6/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_14">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/01-funktiorajapinnat-ja-lambda-lausekkeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1 Funktiorajapinnat ja lambda-lausekkeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/02-kokoelmien-kasittely-stream-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2 Kokoelmien käsittely: Stream API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/03-poikkeusten-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.3 Poikkeusten hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.4 Ulkoiset kirjastot ja Java-projektien hallintatyökalut
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/05-tiedostojen-kasittely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.5 Tiedostojen käsittely
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7 JavaFX osa 1, SceneBuilder
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_15">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  7 JavaFX osa 1, SceneBuilder
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/01-javafx-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/02-scenebuilder-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.2 SceneBuilder-perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/03-versionhallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.3 Versionhallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/04-sovelluslogiikka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.4 Sovelluslogiikka ja käyttöliittymä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/05-tehtavien-lukeminen-tallennus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.5 Tehtävien tallennus tiedostoon
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/06-scenebuilder-asettelu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.6 Komponenttien asettelu
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8 JavaFX osa 2, MVC
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_16" id="__nav_16_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_16">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  8 JavaFX osa 2, MVC
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/01-malli-ja-observable-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.1 Observable-rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/02-tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.2 TableView ja databinding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/03-mvc-arkkitehtuuri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.3 MVC-arkkitehtuuri
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/04-useita-nakymia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.4 Tehtävien muokkaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/05-yksikkotestaus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.5 Yksikkötestaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/06-versionhallinnan-etakaytto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.6 Koodin julkaiseminen etävarastopalvelussa
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9 Harjoitustyö, vaihe 1
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10 Harjoitustyö, vaihe 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11 Harjoitustyö, vaihe 3
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12 Harjoitustyön palautus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../javafx/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13 JavaFX-ohjeita
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_21" id="__nav_21_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_21">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  13 JavaFX-ohjeita
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/nakymat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.1 Näkymät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.2 TableView
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/ui-kirjastot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.3 Ulkoiset UI-kirjastot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/observable-bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.4 Johdettujen Observable-arvojen laskeminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/validointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.5 Validointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/viitteiden-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.6 Viitteiden hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#joukkorakenteet" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Joukkorakenteet
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Set
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Set">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alkion-lisaaminen-ja-poistaminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion lisääminen ja poistaminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkion-etsiminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion etsiminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkioiden-maara-ja-lapikayminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden määrä ja läpikäyminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alkioiden-jarjestys" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden järjestys
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jonot-ja-pinot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Jonot ja pinot
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pino" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Pino
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#jono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Jono
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#kaksipainen-jono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Kaksipäinen jono
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Kaksipäinen jono">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#alkion-lisaaminen-ja-poistaminen_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkion lisääminen ja poistaminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#alkioiden-lapikayminen" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Alkioiden läpikäyminen
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prioriteettijono" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Prioriteettijono
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tehtavat" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Tehtävät
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 data-puhe="d490d52d886a8bdb" id="joukko-ja-jonorakenteet">Joukko- ja jonorakenteet<a class="headerlink" href="#joukko-ja-jonorakenteet" title="Pysyvä linkki tähän otsikkoon">&para;</a></h1>
+<div class="admonition abstract">
+<p class="admonition-title"><span class=jyu-puhe data-puhe=341136936e97177a></span>Osaamistavoitteet</p>
+<ul>
+<li><span class=jyu-puhe data-puhe=f35ec569e907f978></span>Tunnet Java-kielen yleisimmät valmiit tietorakenteet: <code>Set</code>, <code>Queue</code>, <code>Deque</code> ja niiden toteutukset <code>HashSet</code> ja <code>ArrayDeque</code>.</li>
+<li><span class=jyu-puhe data-puhe=57066999dc736fdb></span>Osaat käyttää ym. tietorakenteita.</li>
+<li><span class=jyu-puhe data-puhe=5b046e43659f0e10></span>Ymmärrät ym. tietorakenteiden keskeisimmät operaatiot ja niiden aikakompleksisuudet. </li>
+<li><span class=jyu-puhe data-puhe=1261eeb52a5c9404></span>Ymmärrät, miksi oliot tarvitsevat <code>hashCode</code>-metodin.</li>
+</ul>
+</div>
+<h2 data-puhe="371eddfacc7d4769" id="joukkorakenteet">Joukkorakenteet<a class="headerlink" href="#joukkorakenteet" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=80b101c7b86ff632></span>Joukot ovat kokoelmia, joiden kaikki alkiot ovat uniikkeja. Jos joukkoon
+yritetään lisätä jonkin alkion duplikaatti, sen tila ei muutu millään tavalla.
+Tämä ominaisuus tekee joukoista hyödyllisiä tietorakenteita, kun haluamme
+varmistaa, että samaa tietoa ei löydy tietorakenteesta montaa kertaa.</p>
+<p><span class=jyu-puhe data-puhe=8dd526d54f9a4846></span>Voisimme käyttää joukkoa esimerkiksi sähköpostilistan vastaanottajien
+sähköpostiosoitteiden tallentamiseen. Tämä takaa, että yksi sähköpostiosoite voi
+esiintyä vastaanottajien listassa korkeintaan yhden kerran, jolloin yhteen
+sähköpostiosoitteeseen ei lähetetä koskaan saman viestin kopioita. 
+Tietorakennetta käytetään usein myös matemaattisten joukkojen ja niiden 
+operaatioiden mallintamiseen.</p>
+<h2 data-puhe="edcd2f378ad8bca9" id="set">Set<a class="headerlink" href="#set" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=4e15791387eed19e></span>Javan kokoelmakehys sisältää rajapinnan <code>Set</code>, joka määrittelee perussäännöt
+kaikille joukkorakenteille. <code>Set</code> periytyy <code>Collection</code>-rajapinnasta, joten
+kaikki joukot toteuttavat myös sen lupaamat toiminnallisuudet. Voimme tämän
+vuoksi esimerkiksi iteroida joukkoja helposti listojen tavoin.</p>
+<p><span class=jyu-puhe data-puhe=d7959883db6bb3d8></span>Javassa yleisimmin käytetty joukon toteutus on <code>HashSet</code>, joka perustuu nimensä
+mukaisesti hajautustauluun. Sisäisesti <code>HashSet</code>-käyttää alkioiden 
+tallentamiseen <code>HashMap</code>-tietorakennetta, johon se tallentaa joukon alkiot 
+avaimina. Hajautustaulutoteutuksen vuoksi erityisesti alkion lisääminen,
+poistaminen ja hakeminen tietorakenteesta onnistuvat nopeasti vakioajassa. 
+Hajautustaulu on kuitenkin tavallista taulukkoa monimutkaisempi tietorakenne, joten 
+tietorakenteen läpikäyminen on taulukkoon perustuvaa <code>ArrayList</code>-luokkaa hieman
+hitaampaa, mikä voi olla huomattavissa alkioiden määrän kasvaessa hyvin suureksi.</p>
+<p><span class=jyu-puhe data-puhe=d56687b522607c4d></span><code>Collection</code> ja <code>Map</code> -rajapintojen tapaan <code>Set</code>-rajapinta tai sen toteuttava 
+luokka <code>HashSet</code> eivät takaa alkioiden olevan missään tietyssä järjestyksessä,
+mutta tätä tarkoitusta varten on olemassa myös järjestyksen säilyttäviä
+joukkorakenteita.</p>
+<p><span class=jyu-puhe data-puhe=b5e965eb5995e680></span>Katsotaan nyt, kuinka <code>HashSet</code>-tietorakenteen käyttö onnistuu <code>Set</code>-rajapinnan
+kautta.</p>
+<h3 data-puhe="1c77e2df1507e148" id="alkion-lisaaminen-ja-poistaminen">Alkion lisääminen ja poistaminen<a class="headerlink" href="#alkion-lisaaminen-ja-poistaminen" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p><span class=jyu-puhe data-puhe=71c26b8d916ee082></span>Alkioiden lisääminen ja poistaminen <code>HashSet</code>-rakenteeseen onnistuu kokoelmista
+tuttuun tapaan. Lisääminen tapahtuu <code>add</code>-metodilla ja poistaminen taas tehdään 
+<code>remove</code>-metodilla. Molemmat metodit palauttavat totuusarvon <code>true</code>, jos joukko
+<em>muuttui</em> operaation seurauksena, eli jos operaatio oikeasti lisää tai poistaa
+alkion.</p>
+<p><span class=jyu-puhe data-puhe=7d4323e7caa6360b></span>Alkion lisääminen ja poistaminen tapahtuvat <code>HashSet</code>-tietorakenteessa 
+hajautustaulun vuoksi keskimäärin vakioajassa <em>O(1)</em>.</p>
+<div class="language-java highlight" data-hidden="1 14" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nimet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1">// Alkioiden lisääminen.</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">);</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Maija"</span><span class="p">);</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1">// Lisääminen palauttaa false, koska alkio on jo joukossa.</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">));</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="c1">// Alkion poistaminen.</span>
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">nimet</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">"Maija"</span><span class="p">));</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">nimet</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">"Maija"</span><span class="p">));</span><span class="w"> </span><span class="c1">// Palauttaa false, koska alkiota ei ole.</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 data-puhe="fef929b9036be65d" id="alkion-etsiminen">Alkion etsiminen<a class="headerlink" href="#alkion-etsiminen" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p><span class=jyu-puhe data-puhe=820cfdfdb38765dc></span>Tietyn alkion löytäminen joukosta onnistuu helposti <code>contains</code>-metodilla, joka
+palauttaa totuusarvon sen perusteella löytyykö alkio joukosta. </p>
+<p><span class=jyu-puhe data-puhe=8488cbb0f5da549d></span><code>HashSet</code>-tietorakenteen ei hajautustaulun vuoksi tarvitse käydä koko
+tietorakennetta läpi, joten etsiminen on myös keskimäärin vakioaikainen 
+operaatio.</p>
+<div class="language-java highlight" data-hidden="1 9" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nimet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">);</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Maija"</span><span class="p">);</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nimet</span><span class="p">.</span><span class="na">contains</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Matti löytyi joukosta!"</span><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<h3 data-puhe="60c5cefd87be3e07" id="alkioiden-maara-ja-lapikayminen">Alkioiden määrä ja läpikäyminen<a class="headerlink" href="#alkioiden-maara-ja-lapikayminen" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p><span class=jyu-puhe data-puhe=790990f91ce99f8a></span><code>Set</code> periytyy <code>Collection</code>-rajapinnasta, joten voimme käyttää kokoelmista
+tuttuja metodeja <code>size</code> ja <code>isEmpty</code> alkioiden lukumäärän tarkastelemiseen. 
+<code>Iterable</code>-rajapinnan ansiosta voimme myös iteroida joukkoja helpommin 
+<code>for each</code> -silmukan avulla. </p>
+<p><span class=jyu-puhe data-puhe=a37c69fb30d8c752></span>Kaikkien alkioiden läpikäynnin aikavaativuus on myös joukoilla <em>O(n)</em></p>
+<div class="language-java highlight" data-hidden="1 13" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">Set</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nimet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">HashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">);</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">nimet</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Maija"</span><span class="p">);</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">nimi</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">nimet</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">    </span><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">nimi</span><span class="p">);</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="p">}</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">();</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Joukossa on "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nimet</span><span class="p">.</span><span class="na">size</span><span class="p">()</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" alkiota."</span><span class="p">);</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Onko tyhjä: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">nimet</span><span class="p">.</span><span class="na">isEmpty</span><span class="p">());</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 data-puhe="ed58fed08764bd0d" id="alkioiden-jarjestys">Alkioiden järjestys<a class="headerlink" href="#alkioiden-jarjestys" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=b02e54eceb89be9c></span><code>HashSet</code> ei säilytä alkioiden järjestystä millään tavalla, mutta
+hakurakenteiden tapaan myös joukoille on olemassa tietorakenteita, jotka
+säilyttävät joko alkioiden lisäysjärjestyksen tai niiden luonnollisen
+järjestyksen.</p>
+<p><span class=jyu-puhe data-puhe=145220304b5a3833></span><code>LinkedHashSet</code> periytyy <code>HashSet</code>-luokasta ja ylläpitää <code>LinkedHashMap</code>-luokan
+tapaan sisäistä linkitettyä listaa, joka säilyttää alkiot niiden
+lisäysjärjestyksessä. <code>LinkedHashSet</code>-rakenteen perusoperaatiot ovat edelleen 
+keskimääräiseltä aikavaativuudeltaan <em>O(1)</em>, mutta tietorakenne vaatii hieman 
+enemmän muistia linkitetyn listan ylläpitämisen vuoksi.</p>
+<div class="language-java highlight" data-hidden="1 9" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">LinkedHashSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">linked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">LinkedHashSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">linked</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Joni Virtanen"</span><span class="p">);</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">linked</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Maija Meikäläinen"</span><span class="p">);</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">linked</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti Korhonen"</span><span class="p">);</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1">// LinkedHashSet säilyttää alkioiden lisäysjärjestyksen.</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">linked</span><span class="p">);</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=54576527bc6de4fd></span><code>TreeSet</code> toteuttaa <code>SortedSet</code>- ja <code>NavigableSet</code>-rajapinnat ja säilyttää
+alkiot vastaavasti <code>TreeMap</code>-luokan tapaan niiden luonnollisessa järjestyksessä.
+Se ei periydy <code>HashSet</code>-tietorakenteesta, sillä se käyttää alkioiden 
+tallentamiseen hajautustaulun sijaan tasapainotettua puuta, jonka
+perusoperaatiota ovat hieman hitaampia. Alkioiden lisääminen, poistaminen ja
+hakeminen ovat aikavaativuudeltaan keskimäärin <em>O(log n)</em>.</p>
+<div class="language-java highlight" data-hidden="1 9" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">TreeSet</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Joni Virtanen"</span><span class="p">);</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Maija Meikäläinen"</span><span class="p">);</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti Korhonen"</span><span class="p">);</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="c1">// TreeSet lajittelee alkiot automaattisesti luonnolliseen järjestykseen.</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=ae4666988bf44f0c></span><code>SortedSet</code> ja <code>NavigableSet</code> -rajapinnat tarjoavat omat hyödylliset metodinsa 
+järjestetyn joukon hallinnoimiseen. Toiminnot ovat hyvin samankaltaisia 
+hakurakenteiden <code>SortedMap</code> ja <code>NavigableMap</code> -rajapintojen kanssa.</p>
+<div class="language-java highlight" data-hidden="1 22" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1">// Alkiot ovat suuruusjärjestyksessä.</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tree</span><span class="p">);</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="c1">// Tulostetaan pienin ja suurin alkio.</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Pienin alkio: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="na">first</span><span class="p">());</span><span class="w"> </span><span class="c1">// 1</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="s">"Suurin alkio: "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="na">last</span><span class="p">());</span><span class="w">  </span><span class="c1">// 5</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1">// Tulostetaan annettua lukua lähin pienemi ja suurempi alkio.</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tree</span><span class="p">.</span><span class="na">lower</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span><span class="w"> </span><span class="c1">// 2</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tree</span><span class="p">.</span><span class="na">higher</span><span class="p">(</span><span class="mi">3</span><span class="p">));</span><span class="w"> </span><span class="c1">// 4</span>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="c1">// Palauttaa koko tietorakenteen käänteisessä järjestyksessä.</span>
+</span><span id="__span-5-21"><a id="__codelineno-5-21" name="__codelineno-5-21" href="#__codelineno-5-21"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">tree</span><span class="p">.</span><span class="na">descendingSet</span><span class="p">());</span><span class="w"> </span>
+</span><span id="__span-5-22"><a id="__codelineno-5-22" name="__codelineno-5-22" href="#__codelineno-5-22"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=95ff65d9d898ee07></span><code>NavigableSet</code> mahdollistaa myös alijoukkojen muodostamisen <code>subSet</code>-metodilla.</p>
+<div class="language-java highlight" data-hidden="1 13" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">NavigableSet</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">tree</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">TreeSet</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">tree</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1">// Muodostetaan uusi joukko alkioista, jotka ovat 3-5 välillä.</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">// Parametrien true-arvot kertovat, että myös 3 ja 5 otetaan mukaan joukkoon.</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">Set</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">alijoukko</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tree</span><span class="p">.</span><span class="na">subSet</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">,</span><span class="w"> </span><span class="kc">true</span><span class="p">);</span>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">alijoukko</span><span class="p">);</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 data-puhe="f1b7a6535531e679" id="jonot-ja-pinot">Jonot ja pinot<a class="headerlink" href="#jonot-ja-pinot" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=ac83f216f5db18ec></span>Jonot ja pinot ovat listojen kaltaisia lineaarisia tietorakenteita. Nämä 
+tietorakenteet ovat hyödyllisiä tilanteissa, joissa haluamme tarkastella 
+erityisesti tietorakenteen alussa ja lopussa sijaitsevia alkioita. Jonot ja
+pinot ovat käytännössä listoja, joissa alkioiden lisäys-, poisto- ja
+hakuoperaatiot rajoittuvat tietorakenteen päätyihin, mutta näiden 
+tietorakenteiden <em>käsitteet</em> ovat erittäin hyödyllisiä tietojenkäsittelyssä ja
+niitä käytetäänkin tietojärjestelmissä hyvin usein.</p>
+<p><span class=jyu-puhe data-puhe=77a7284a76231706></span>Jonon lisäksi on myös olemassa kaksipäinen jono, joka yhdistää jonon ja pinon 
+toiminnallisuudet ja sallii siten lisäys- ja poisto-operaatiot tietorakenteen
+molempiin päätyihin. Javassa kaksipäinen jono sisältää myös monia
+muita hyödyllisiä toiminnallisuuksia ja sitä itse asiassa käytetään Javassa sekä
+jonon että pinon toteuttamiseen.</p>
+<h2 data-puhe="13ef4192804ff6d4" id="pino">Pino<a class="headerlink" href="#pino" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=72f9abe5c56e0e4b></span>Pino eli <em>stack</em> on tietorakenne, joka toimii <em>viimeisenä sisään, ensimmäisenä ulos</em> (engl.
+<em>last in, first out</em>) -periaatteen mukaisesti. Alkioita voidaan lisätä vain 
+pinon alkuun ja poistaminen kohdistuu aina ensimmäiseen alkioon.</p>
+<p><span class=jyu-puhe data-puhe=1274eda6b4ad9600></span>Esimerkiksi tekstinkäsittelyohjelman <em>kumoa</em>-toiminto toimii kuin pino.
+Tekstiin tehdyt muutokset lisätään aina pinon päällimmäiseksi ja
+kumoamistoiminnon seurauksena ohjelma ottaa viimeisimmän muutoksen pinon päältä
+ja kumoaa sen.</p>
+<div class="admonition note">
+<p class="admonition-title"><span class=jyu-puhe data-puhe=f7cd500d4070ff52></span>Huomautus</p>
+<p><span class=jyu-puhe data-puhe=a7b8dfbc74027720></span>Poikkeuksellisesti Java <strong>ei</strong> tarjoa <code>Stack</code>-rajapintaa pinon
+toteuttamista varten. Javan historiasta johtuen <code>Stack</code> on luokka, 
+jonka käyttöä ei enää suositella. Pinon toteuttamiseen käytetään nykyään 
+kaksipäistä jonoa, eli <code>Deque</code>-rajapinnan toteuttavaa <code>ArrayDeque</code>-luokkaa.</p>
+</div>
+<p><span class=jyu-puhe data-puhe=ddcb914285cbb0f6></span>Pinon perusoperaatiot ovat <code>push</code>, <code>pop</code> ja <code>peek</code>. Javan <code>Deque</code> sisältää nämä 
+metodit, joten käytämme niitä.</p>
+<div class="language-java highlight" data-hidden="1 21" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">Deque</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">pino</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">// Lisää alkioita pinoon. Ei palauta mitään.</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">pino</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">"A"</span><span class="p">);</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">pino</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">"B"</span><span class="p">);</span><span class="w"> </span>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">pino</span><span class="p">.</span><span class="na">push</span><span class="p">(</span><span class="s">"C"</span><span class="p">);</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1">// Huomaa, että viimeisimpänä lisätty alkio tulostuu ensimmäisenä.</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pino</span><span class="p">);</span>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c1">// Palauttaa alkion "C", mutta ei poista sitä pinosta.</span>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1">// Palauttaa null, jos pinossa ei ole yhtään alkiota.</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pino</span><span class="p">.</span><span class="na">peek</span><span class="p">());</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1">// Palauttaa alkion "C" ja poistaa sen pinosta.</span>
+</span><span id="__span-7-17"><a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1">// Aiheuttaisi poikkeuksen, jos pinossa ei ole yhtään alkiota.</span>
+</span><span id="__span-7-18"><a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pino</span><span class="p">.</span><span class="na">pop</span><span class="p">());</span>
+</span><span id="__span-7-19"><a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a>
+</span><span id="__span-7-20"><a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">pino</span><span class="p">);</span>
+</span><span id="__span-7-21"><a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=a378e79ee4243d14></span>Huomaa, että <code>push</code> ja <code>pop</code> ovat <code>Deque</code>-rajapinnan metodien <code>addFirst</code> ja
+<code>removeFirst</code> synonyymejä, ja ne aiheuttavat virhetilanteessa ohjelman
+pysäyttävän poikkeuksen: tyhjälle pinolle kutsuttu <code>pop</code> keskeyttää ohjelman
+sen sijaan, että palauttaisi <code>null</code>-arvon. Koska <code>push</code> ja <code>pop</code> ovat pinon
+vakiintuneet perusoperaatiot, käytämme niitä silti pinon yhteydessä ja
+tarkistamme tarvittaessa <code>isEmpty</code>-metodilla, ettei pino ole tyhjä ennen
+<code>pop</code>-kutsua. <code>peek</code> sen sijaan palauttaa tyhjästä pinosta <code>null</code>-arvon.</p>
+<h2 data-puhe="b53f8f969517ddc7" id="jono">Jono<a class="headerlink" href="#jono" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=feee29f694f790b9></span>Jono eli <em>queue</em> toimii <em>ensimmäisenä sisään, ensimmäisenä ulos</em> 
+(engl. <em>first in, first out</em>) -periaatteen mukaisesti. Ensimmäisenä lisätty
+alkio otetaan myös ensimmäiseksi pois.</p>
+<p><span class=jyu-puhe data-puhe=ebc5a8000a603771></span>Jonot toimivat kuten nimen perusteella voisi odottaa. Verkkoreitittimet ovat 
+yksi hyvä esimerkki jonorakenteen käytöstä; ne tallentavat lähetettävät 
+paketit jonoon, josta ne lähetetään eteenpäin samassa järjestyksessä, kuin ne 
+lisättiin.</p>
+<p><span class=jyu-puhe data-puhe=02e370551890ab7e></span>Javan <code>Queue</code>-rajapinta määrittelee jonorakenteiden yleiset toiminnallisuudet. 
+Se laajentaa <code>Collection</code>-rajapintaa ja sisältää metodit, joilla alkioita
+voidaan lisätä jonon loppuun ja poistaa tai tarkastella sen alusta.</p>
+<p><span class=jyu-puhe data-puhe=b3f7fe4e064d2c32></span><code>Queue</code>-rajapinta sisältää näistä kolmesta perustoiminnosta kahdet eri versiot,
+jotka käsittelevät virheet eri tavalla. Metodit <code>add</code>, <code>remove</code> ja <code>element</code> 
+aiheuttavat virhetilanteissa ohjelman pysäyttävän poikkeuksen, kun taas <code>offer</code>,
+<code>poll</code> ja <code>peek</code> palauttavat näissä tilanteissa eri arvon. Käsittelemme 
+poikkeuksia myöhemmin tällä kurssilla, joten tässä vaiheessa voimme keskittyä 
+käyttämään <code>offer</code>, <code>poll</code> ja <code>peek</code> -metodeja, jotka toimivat ihan yhtä hyvin.</p>
+<p><span class=jyu-puhe data-puhe=bf43d698e34fe3f8></span><code>ArrayDeque</code>-luokka toteuttaa <code>Queue</code>-rajapinnan, joten se sisältää kaikki sen
+tarvitsemat metodit. Käytämme siis sitä toteuttamaan jonon.</p>
+<div class="language-java highlight" data-hidden="1 20" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="n">Queue</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">jono</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1">// Lisätään alkioita jonon loppuun. </span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1">// 'offer' palauttaa true, jos alkion lisääminen onnistuu ja false, jos ei.</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="n">jono</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="s">"A"</span><span class="p">);</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">jono</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="s">"B"</span><span class="p">);</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">jono</span><span class="p">);</span><span class="w"> </span><span class="c1">// [A, B]</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>
+</span><span id="__span-8-11"><a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="c1">// Katsotaan ensimmäistä alkiota poistamatta sitä jonosta.</span>
+</span><span id="__span-8-12"><a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c1">// 'peek' palauttaa null, jos jonossa ei ole alkioita.</span>
+</span><span id="__span-8-13"><a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">jono</span><span class="p">.</span><span class="na">peek</span><span class="p">());</span><span class="w"> </span><span class="c1">// "A"</span>
+</span><span id="__span-8-14"><a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+</span><span id="__span-8-15"><a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1">// Poistetaan alkioita jonon alusta. Palauttaa alkion.</span>
+</span><span id="__span-8-16"><a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="c1">// 'poll' palauttaa null, jos jonossa ei ole alkioita.</span>
+</span><span id="__span-8-17"><a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">jono</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// "A"</span>
+</span><span id="__span-8-18"><a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">jono</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// "B"</span>
+</span><span id="__span-8-19"><a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">jono</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// null</span>
+</span><span id="__span-8-20"><a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 data-puhe="698060df770b2daf" id="kaksipainen-jono">Kaksipäinen jono<a class="headerlink" href="#kaksipainen-jono" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=82e7f7581ed431b3></span>Kaksipäinen jono tunnetaan nimellä <em>deque</em>, joka on lyhenne tietorakenteen
+englanninkielisestä nimestä <em>double ended queue</em>. Voisimme käyttää tätä
+tietorakennetta mallintamaan esimerkiksi jonoa, jonka alkuun voisi joissain
+tapauksissa lisätä alkion esimerkiksi sen tärkeyden mukaan.</p>
+<p><span class=jyu-puhe data-puhe=a0ccb423307ab7e1></span><code>Deque</code>-rajapinta määrittelee kaikki kaksipäisten jonojen tarvitsemat
+toiminnallisuudet. Käytännössä tämä tarkoittaa sitä, että se lupaa kaikki
+jonon ja pinon tarvitsemat metodit sekä muutamia muita hyödyllisiä
+toiminnallisuuksia, kuten mahdollisuuden alkioiden läpikäymiseen käänteisessä
+järjestyksessä. Näytämme alempana, miten pinon ja jonon metodit vastaavat
+kaksipäisen jonon omia metodeja.</p>
+<p><span class=jyu-puhe data-puhe=2e05bdd6ee518642></span><code>Deque</code>-rajapinnan yleisimmin käytetty toteutusluokka on <code>ArrayDeque</code>, joka
+nimensä mukaisesti käyttää taulukkoa sisäisenä tietorakenteenaan.
+<code>Deque</code>-toteuttaa <code>Collection</code>-rajapinnan, joten kaikki kokoelmista tutut
+metodit, kuten <code>size</code>, <code>isEmpty</code> ja <code>contains</code> ovat myös käytettävissä.</p>
+<h3 data-puhe="1c77e2df1507e148" id="alkion-lisaaminen-ja-poistaminen_1">Alkion lisääminen ja poistaminen<a class="headerlink" href="#alkion-lisaaminen-ja-poistaminen_1" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p><span class=jyu-puhe data-puhe=344f291475037bc3></span>Myös <code>Deque</code> määrittelee kaksi eri tapaa lisätä ja poistaa alkioita: metodit, 
+jotka heittävät poikkeuksen epäonnistuessaan, ja metodit, jotka palauttavat
+näissä tilanteissa <code>null</code> tai <code>false</code>. </p>
+<p><span class=jyu-puhe data-puhe=4572760faa55f2a3></span>Alkioita voidaan lisätä alkuun metodeilla <code>addFirst</code> ja <code>offerFirst</code> tai 
+loppuun metodeilla <code>addLast</code> ja <code>offerLast</code>. Käytetään toistaiseksi
+<code>offerFirst</code> ja <code>offerLast</code>-metodeja, sillä ne eivät aiheuta poikkeuksia 
+epäonnistuessaan. </p>
+<div class="language-java highlight" data-hidden="1 12" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">luvut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1">// 'offerFirst' lisää alkion jonon alkuun, 'offerLast' lisää alkion jonon loppuun.</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c1">// Molemmat palauttavat false, jos lisääminen epäonnistuu.</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2]</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerLast</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span><span class="w"> </span><span class="c1">// [2, 3]</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span><span class="w"> </span><span class="c1">// [1, 2, 3]</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=c444e4b8ae0ea74a></span>Poistaminen onnistuu vastaavasti kummastakin päästä. Metodit <code>removeFirst</code> ja
+<code>removeLast</code> poistavat alkion tai heittävät poikkeuksen, jos jono on tyhjä.
+Sen sijaan <code>pollFirst</code> ja <code>pollLast</code> palauttavat <code>null</code>-arvon, jos
+poistettavaa ei löydy, joten voimme toistaiseksi käyttää ensisijaisesti näitä.</p>
+<p><span class=jyu-puhe data-puhe=dab1f1110509062e></span>Lisäksi voimme kurkata alkioita poistamatta niitä
+käyttämällä <code>peekFirst</code> tai <code>peekLast</code> -metodeja.</p>
+<div class="language-java highlight" data-hidden="1 19" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">luvut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span><span class="w"> </span><span class="c1">// Tulostaa [1, 2, 3]</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c1">// Kurkistetaan ensin ensimmäistä ja viimeistä arvoa.</span>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">peekFirst</span><span class="p">());</span><span class="w"> </span><span class="c1">// Tulostaa 1</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">peekLast</span><span class="p">());</span><span class="w"> </span><span class="c1">// Tulostaa 3</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="c1">// Poistetaan ensimmäinen ja viimeinen arvo. Poistaminen palauttaa alkion, </span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="c1">// jos poistaminen onnistuu. Muussa tapauksessa null.</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="n">luvut</span><span class="p">.</span><span class="na">pollFirst</span><span class="p">();</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="n">luvut</span><span class="p">.</span><span class="na">pollLast</span><span class="p">();</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span><span class="w"> </span><span class="c1">// Tulostaa [2]</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=59bfc059eb5f2bcc></span>Myös jonon yhteydessä esitellyt <code>offer</code>, <code>poll</code> ja <code>peek</code> toimivat
+kaksipäisellä jonolla, sillä ne ovat päätykohtaisten metodien synonyymejä:</p>
+<table>
+<thead>
+<tr>
+<th><span class=jyu-puhe data-puhe=30511932f1b407fc></span>Jonon metodi</th>
+<th>Kaksipäisen jonon metodi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>offer(e)</code></td>
+<td><code>offerLast(e)</code></td>
+</tr>
+<tr>
+<td><code>poll()</code></td>
+<td><code>pollFirst()</code></td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td><code>peekFirst()</code></td>
+</tr>
+</tbody>
+</table>
+<p><span class=jyu-puhe data-puhe=788df7b13b15f619></span><code>offer</code> lisää alkion siis jonon loppuun, ja <code>poll</code> ja <code>peek</code> kohdistuvat sen
+alkuun — aivan kuten jonolta voi odottaakin.</p>
+<p><span class=jyu-puhe data-puhe=6d0a6a5a17ee96fc></span>Sama pätee pinon yhteydessä esiteltyihin <code>push</code>- ja <code>pop</code>-metodeihin.
+Kaksipäisen jonon tapauksessa ne kohdistuvat molemmat sen alkuun:</p>
+<table>
+<thead>
+<tr>
+<th><span class=jyu-puhe data-puhe=30511932f1b407fc></span>Pinon metodi</th>
+<th>Kaksipäisen jonon metodi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>push(e)</code></td>
+<td><code>addFirst(e)</code></td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td><code>removeFirst()</code></td>
+</tr>
+<tr>
+<td><code>peek()</code></td>
+<td><code>peekFirst()</code></td>
+</tr>
+</tbody>
+</table>
+<p><span class=jyu-puhe data-puhe=4e9598f83edb283a></span><code>push</code> ja <code>pop</code> käyttävät samaa päätä, koska pino toimii <em>viimeisenä sisään,
+ensimmäisenä ulos</em> -periaatteen mukaisesti: viimeksi lisätty alkio poistetaan
+ensimmäisenä. Jos <code>push</code> lisäisi alkuun ja <code>pop</code> poistaisi lopusta, rakenne
+toimisikin <em>ensimmäisenä sisään, ensimmäisenä ulos</em> -periaatteen mukaisesti eli
+jonona. Javassa pinon päädyksi on valittu kaksipäisen jonon alku, joten
+poistaminen ja kurkistaminen kohdistuvat aina alkuun riippumatta siitä,
+käytetäänkö rakennetta pinona vai jonona. Vain lisäyspää vaihtuu: jono lisää
+loppuun ja pino alkuun. Siksi pinon ja jonon <code>peek</code> ovat sama metodi. Huomaa,
+että <code>pop</code> on <code>removeFirst</code>-metodin synonyymi ja heittää tyhjällä rakenteella
+poikkeuksen, toisin kuin <code>pollFirst</code>.</p>
+<p><span class=jyu-puhe data-puhe=c668cf1d2e470ef6></span>Sekä lisääminen että poistaminen molemmista päistä tapahtuu vakioajassa <em>O(1)</em>, 
+sillä <code>ArrayDeque</code> on toteutettu kehämäisenä taulukkona, jossa pään ja hännän 
+sijaintia seurataan indekseillä. Taulukon alkioita ei siis tarvitse lisäyksen
+tai poiston yhteydessä käydä läpi tai siirrellä.</p>
+<p><span class=jyu-puhe data-puhe=85bc89746b636557></span><code>ArrayDeque</code> tarjoaa myös <code>Collection</code>-rajapinnan metodin <code>remove</code>, jolla 
+voidaan poistaa parametrina annettu alkio mistä tahansa kohdasta. Se toimii 
+samalla tavalla kuin listasta poistaminen; käymällä koko listan läpi alkiota 
+etsiessään.</p>
+<h3 data-puhe="24b129f3564c0ba2" id="alkioiden-lapikayminen">Alkioiden läpikäyminen<a class="headerlink" href="#alkioiden-lapikayminen" title="Pysyvä linkki tähän otsikkoon">&para;</a></h3>
+<p><span class=jyu-puhe data-puhe=a18ca4ca0deece48></span><code>ArrayDeque</code> toteuttaa <code>Iterable</code>-rajapinnan, joten voimme iteroida sen 
+<code>for each</code> -silmukalla. Lisäksi sen metodi <code>descendingIterator</code> palauttaa
+iteraattorin, jonka avulla tietorakenne voidaan käydä läpi käänteisessä
+järjestyksessä. Alkioiden läpikäynnin aikavaativuus on <em>O(n)</em>, mikä on sama 
+kuin tavallisella listalla.</p>
+<div class="language-java highlight" data-hidden="1 17" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="n">Deque</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">luvut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayDeque</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offerFirst</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1">// Tavallinen läpikäynti.</span>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">Integer</span><span class="w"> </span><span class="n">luku</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">luvut</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">    </span><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luku</span><span class="p">);</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="p">}</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>
+</span><span id="__span-11-12"><a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a><span class="c1">// Käänteinen läpikäynti.</span>
+</span><span id="__span-11-13"><a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a><span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">it</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">luvut</span><span class="p">.</span><span class="na">descendingIterator</span><span class="p">();</span>
+</span><span id="__span-11-14"><a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">hasNext</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-15"><a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a><span class="w">    </span><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">it</span><span class="p">.</span><span class="na">next</span><span class="p">());</span>
+</span><span id="__span-11-16"><a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a><span class="p">}</span>
+</span><span id="__span-11-17"><a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 data-puhe="2d9ce3599eab2879" id="prioriteettijono">Prioriteettijono<a class="headerlink" href="#prioriteettijono" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=7ad54cf8a3e0a061></span>Prioriteettijono eli <em>priority queue</em> on jonon erikoistapaus, jonka toteutus 
+on Javassa <code>PriorityQueue</code>-luokka. Tavallinen jono säilyttää alkiot niiden
+lisäysjärjestyksessä, mutta prioriteettijono pitää huolen, että luonnollisessa
+järjestyksessä <em>pienin</em> alkio tulee aina ensimmäisenä, kun pyydämme siltä
+ensimmäistä alkiota.</p>
+<div class="language-java highlight" data-hidden="1 20" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="n">PriorityQueue</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">luvut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">PriorityQueue</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="n">luvut</span><span class="p">.</span><span class="na">offer</span><span class="p">(</span><span class="mi">4</span><span class="p">);</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="c1">// Huomaa, että tulostaessa tietorakenteen kaikki alkiot ne</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1">// eivät ole luonnollisessa järjestyksessä.</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">);</span>
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1">// Prioriteettijono antaa aina "tärkeimmän" eli pienimmän alkion, kun</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a><span class="c1">// piidämme siltä seuraavaa alkiota.</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// 1</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// 2</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// 3</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// 4</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">luvut</span><span class="p">.</span><span class="na">poll</span><span class="p">());</span><span class="w"> </span><span class="c1">// 5</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=1d89e56443308117></span><code>PriorityQueue</code>-luokan operaatioiden aikavaativuus poikkeaa perusjonoista, koska 
+rakenne perustuu sisäisesti kekoon (engl. <em>heap</em>). Alkion lisäämisen ja 
+poistamisen aikavaativuus on <em>O(log n)</em>. Pienimmän alkion pyytäminen on 
+kuitenkin erittäin nopeaa ja tapahtuu vakioajassa <em>O(1)</em>.</p>
+<h2 data-puhe="b699f89d14b4fe5d" id="tehtavat">Tehtävät<a class="headerlink" href="#tehtavat" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<div class="task">
+<div class="task-head" data-puhe="455ade02802465ab"><span class="task-num">5.8</span><span class="task-name">Joukot</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=d04aeb17ad495e00></span>Saat tehtävässä kaksi duplikaatteja sisältävää listaa luvuista.</p>
+<p><span class=jyu-puhe data-puhe=d44775c33ef4482d></span>Muodosta näistä luvuista seuraavat joukot:</p>
+<ul>
+<li>
+<p><span class=jyu-puhe data-puhe=4e35892432168845></span><strong>Yhdiste</strong>: Sisältää kaikki luvut, jotka kuuluvat joko ensimmäiseen joukkoon, toiseen joukkoon tai molempiin.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=6283696a2610bc7a></span><strong>Leikkaus</strong>: Sisältää vain ne luvut, jotka löytyvät molemmista joukoista samanaikaisesti.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=44c2feb42cf32a69></span><strong>Erotus</strong>: Sisältää ne luvut, jotka kuuluvat ensimmäiseen joukkoon, mutta eivät kuulu toiseen joukkoon.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=330e28295858f393></span><strong>Symmetrinen erotus</strong>: Sisältää ne luvut, jotka kuuluvat vain jompaankumpaan joukkoon, mutta eivät molempiin.</p>
+</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=d5d987ec8f529001></span>Joukot eivät saa sisältää duplikaatteja.</p>
+<p><span class=jyu-puhe data-puhe=625adc0b524be0d5></span>Joukkojen muodostaminen onnistuu 
+<a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html">Set-rajapinnan</a> 
+määrittelemien metodien avulla niin, että tietorakenteita ei tarvitse selata 
+läpi silmukoiden avulla.</p>
+<p><span class=jyu-puhe data-puhe=8723096cba659a2d></span>Valmis pääohjelma sisältää esimerkit, mitä näiden joukkojen pitäisi sisältää. </p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava8">Tee tehtävä TIMissä</a></div>
+</div>
+<div class="task">
+<div class="task-head" data-puhe="c996c36d25ed64aa"><span class="task-num">5.9</span><span class="task-name">Tehtävälista</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=0e6f4fefbcca65ef></span>Tee luokka <code>Tehtavalista</code>, joka toimii todo-listana. Tehtävät voivat olla
+yksinkertaisia merkkijonoja.</p>
+<p><span class=jyu-puhe data-puhe=4565b68a0d71febd></span>Tehtävälista pitää kirjaa sekä tekemättömistä että tehdyistä tehtävistä.
+Tehtävät suoritetaan siinä järjestyksessä, missä ne ovat tehtävälistaan lisätty.
+Poikkeustapauksia varten tulee olla mahdollista lisätä kiireellisiä tehtäviä
+heti tehtävälistan alkuun. </p>
+<p><span class=jyu-puhe data-puhe=dfbc68aee9bb99b3></span>Ohjelmassa pitää olla myös mahdollisuus kumota tehtävän merkitseminen 
+suoritetuksi siltä varalta, että tehtävän merkitsee vahingossa tehdyksi liian 
+aikaisin. Kumoaminen palauttaa suoritetuksi merkityn tehtävän takaisin 
+tehtävälistan alkuun.</p>
+<p><span class=jyu-puhe data-puhe=176302be063ef946></span>Lisää luokkaan seuraavat metodit:</p>
+<ul>
+<li>
+<p><span class=jyu-puhe data-puhe=2764d96fda332500></span><code>lisaaTehtava</code>, joka lisää tehtävän tehtävälistaan. Uusi tehtävä menee
+  tehtävälistan viimeiseksi.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=17bd330f0efe8e35></span><code>lisaaTarkeaTehtava</code>, joka lisää kiireellisen tehtävän tehtävälistaan.
+  Kiireellinen tehtävä menee aina tehtävälistan ensimmäiseksi.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=efb7e59352aa8c33></span><code>merkitseTehdyksi</code>, joka merkitsee seuraavana tehtävälistalla olevan tehtävän
+  suoritetuksi.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=57a30fe8f8642080></span><code>kumoaTehty</code>, joka palauttaa viimeksi tehdyn tehtävän suoritettujen
+  tehtävienlistalta takaisin tehtävälistan alkuun.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=dbfcf3a27613b622></span><code>tulosta</code>, joka tulostaa tekemättömät ja tehdyt tehtävät omina
+  listoinaan. Tulostusmuoto ei ole hirveän tärkeä, kunhan tulosteesta näkee
+  selvästi eri listat.</p>
+</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=32e741dbdb25d1e7></span>Voit testata luokan toimintaa valmiin pääohjelman avulla.</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava9">Tee tehtävä TIMissä</a></div>
+</div>
+<div class="task">
+<div class="task-head" data-puhe="58e56bdd8f810a6e"><span class="task-num">5.10</span><span class="task-name">Sulut <span class="task-bonus"><span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span>Bonus</span></span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=6fc3959e02762af5></span>Kirjoita aliohjelma, joka tarkistaa merkkijonon sisältämien sulkujen
+oikeellisuuden. Aliohjelman tulee tunnistaa, sulkeutuvatko kaikki sulut oikeassa
+järjestyksessä ja onko jokaisella alkavalla sululla vastaava lopettava pari.</p>
+<p><span class=jyu-puhe data-puhe=ea58b886c7e524e4></span>Tuetut sulkutyypit ovat kaarisulut <code>( )</code>, hakasulut <code>[ ]</code> ja aaltosulut <code>{ }</code>. </p>
+<p><span class=jyu-puhe data-puhe=f355f968cdcfdaec></span>Toimintalogiikka ja säännöt:</p>
+<ul>
+<li><span class=jyu-puhe data-puhe=5243c21b6a364067></span><strong>Sisäkkäisyys:</strong> Sulut voivat olla sisäkkäin (esim. <code>([]))</code>, mutta ne eivät saa
+   mennä ristiin. Esimerkiksi <code>([)]</code> on virheellinen, koska sulut menevät
+   ristiin.</li>
+<li><span class=jyu-puhe data-puhe=d691805abcb42996></span><strong>Järjestys:</strong> Sulun on aina alettava ennen kuin se sulkeutuu.</li>
+<li><span class=jyu-puhe data-puhe=8634d864684ecf2f></span><strong>Muut merkit</strong> kuten kirjaimet tai numerot tulee jättää huomiotta.</li>
+<li><span class=jyu-puhe data-puhe=c7b3671dc0d399f2></span><strong>Tyhjä merkkijono</strong> katsotaan oikeelliseksi, ja siinä on 0 paria.</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=e115b32c880d72bf></span>Paluuarvo:</p>
+<ul>
+<li><span class=jyu-puhe data-puhe=8349ff20804e828f></span>Jos sulutus on kunnossa, palauta löydettyjen sulkuparien lukumäärä (kokonaisluku).</li>
+<li><span class=jyu-puhe data-puhe=1cfb4f6e27344c32></span>Jos sulutus on virheellinen (yksikin pari puuttuu tai järjestys on väärä), palauta luku -1.</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=b06807273001d9b9></span>Esimerkit:</p>
+<table>
+<thead>
+<tr>
+<th><span class=jyu-puhe data-puhe=30511932f1b407fc></span>Merkkijono</th>
+<th>Tulos</th>
+<th>Selite</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>""</td>
+<td>0</td>
+<td>Tyhjä syöte on validi, 0 paria.</td>
+</tr>
+<tr>
+<td>"()"</td>
+<td>1</td>
+<td>Yksi ehjä pari.</td>
+</tr>
+<tr>
+<td>"(())"</td>
+<td>2</td>
+<td>Kaksi sisäkkäistä paria.</td>
+</tr>
+<tr>
+<td>"([{}])"</td>
+<td>3</td>
+<td>Kolme sisäkkäistä paria.</td>
+</tr>
+<tr>
+<td>"()[]{}"</td>
+<td>3</td>
+<td>Kolme vierekkäistä paria.</td>
+</tr>
+<tr>
+<td>"a(b)c"</td>
+<td>1</td>
+<td>Kirjaimet sivuutetaan, yksi pari.</td>
+</tr>
+<tr>
+<td>"("</td>
+<td>-1</td>
+<td>Sulkeva pari puuttuu.</td>
+</tr>
+<tr>
+<td>"(()"</td>
+<td>-1</td>
+<td>Yksi sulkeva pari puuttuu.</td>
+</tr>
+<tr>
+<td>"()}"</td>
+<td>-1</td>
+<td>Ylimääräinen sulkeva sulku.</td>
+</tr>
+<tr>
+<td>")("</td>
+<td>-1</td>
+<td>Väärä järjestys (alkava sulku puuttuu alussa).</td>
+</tr>
+<tr>
+<td>"([)]"</td>
+<td>-1</td>
+<td>Sulut menevät ristiin (virheellinen sisäkkäisyys).</td>
+</tr>
+</tbody>
+</table>
+<p><span class=jyu-puhe data-puhe=fb6678e2cd98e66c></span>Aliohjelma tulee toteuttaa niin, että <em>jos</em> sulkuihin lisättäisin uusia
+sulkutyyppejä, niin varsinaisessa logiikassa ei tarvitsisi tehdä muutoksia.
+Esimerkiksi merkkijonon <code>a&lt;(b)&gt;c</code> käsittelemiseen tulisi vain lisätä tuki
+kulmasuluille <code>&lt; &gt;</code>, mutta muuten logiikka pysyisi samana (lue: ei ylimääräisiä
+<code>if</code>-lauseita).</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava10">Tee tehtävä TIMissä</a></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          <script>var allowed=["GitHub","GitLab (JY)","Linux","Windows","macOS"];var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script><script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Alatunniste" >
+        
+          
+          <a href="../03-hakurakenteet/" class="md-footer__link md-footer__link--prev" aria-label="Edellinen: 5.3 Hakurakenteet">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Edellinen
+              </span>
+              <div class="md-ellipsis">
+                5.3 Hakurakenteet
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../05-rekursio/" class="md-footer__link md-footer__link--next" aria-label="Seuraava: 5.5 Rekursio">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Seuraava
+              </span>
+              <div class="md-ellipsis">
+                5.5 Rekursio
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi" rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen">CC BY-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+
+
+
+
+  
+  
+  
+  
+
+<div class="jyu-footer-links">
+    <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/osa5/04-joukkorakenteet-jonorakenteet.md" class="md-copyright md-copyright--link" rel="edit" title="Muokkaa tätä sivua GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+      Muokkaa
+    </a>
+    <a href="https://github.com/ohj-perus-jy/ohj2/commits/main/src/osa5/04-joukkorakenteet-jonorakenteet.md" class="md-copyright md-copyright--link" title="Sivun muutokset GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+      Muutoshistoria
+    </a>
+  <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&amp;url=osa5/04-joukkorakenteet-jonorakenteet.md" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg>
+    Ilmoita ongelma
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.indexes","navigation.footer","content.tabs.link","content.footnote.tooltips","content.tooltips","toc.follow","content.code.copy"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Kopioitu leikepöydälle","clipboard.copy":"Kopioi leikepöydälle","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 lisää tällä sivulla","search.result.more.other":"# lisää tällä sivulla","search.result.none":"Ei täsmääviä dokumentteja","search.result.one":"1 täsmäävä dokumentti","search.result.other":"# täsmäävää dokumenttia","search.result.placeholder":"Kirjoita aloittaaksesi haun","search.result.term.missing":"Puuttuu","select.version":"Valitse versio"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/js/tooltips.js"></script>
+      
+        <script src="../../assets/js/nav-scroll.js"></script>
+      
+        <script src="../../assets/js/rail.js"></script>
+      
+        <script src="../../assets/js/toc.js"></script>
+      
+        <script src="../../assets/js/print.js"></script>
+      
+        <script src="../../assets/js/fontmenu.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/js/sitemenu.js"></script>
+      
+        <script src="../../assets/js/search.js"></script>
+      
+        <script src="../../assets/js/playground.js"></script>
+      
+        <script src="../../assets/js/hidelines.js"></script>
+      
+        <script src="../../assets/js/highlights.js"></script>
+      
+        <script src="../../assets/js/copy.js"></script>
+      
+        <script src="../../assets/js/hints.js"></script>
+      
+        <script src="../../assets/js/asciinema.js"></script>
+      
+        <script src="../../assets/js/walkthrough.js"></script>
+      
+        <script src="../../assets/js/visa.js"></script>
+      
+        <script src="../../assets/js/puhe.js"></script>
+      
+        <script src="../../assets/js/glightbox.min.js"></script>
+      
+    
+  </body>
+</html>

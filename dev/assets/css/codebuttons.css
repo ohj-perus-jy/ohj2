@@ -1,0 +1,132 @@
+/* Koodilohkon nappirivi: ajonappi ja silmä kohotettuina laattoina.
+ * Teema piirtää napit paljaina kuvakkeina, jotka erottuvat vasta hoverilla;
+ * kopiointinapille se riittää, mutta kirjan omia toimintoja lukija ei osaa
+ * etsiä hoverin takaa, eikä kosketusnäytöllä hoveria ole. Tiedosto on oma,
+ * koska se koskee koko riviä: playground.css ja hidelines.css antavat vain
+ * kuvakkeen, tämä napin. */
+
+:root {
+  /* Pinta on molemmissa teemoissa lohkoa vaaleampi pintaporras; syvyys
+   * tulee pinnasta ja hiusviivasta, ei varjosta. */
+  --jyu-code-button-bg: #fbfaf8;
+}
+
+[data-md-color-scheme="slate"] {
+  --jyu-code-button-bg: hsl(var(--md-hue) 12% 22%);
+}
+
+/* Nappirivin oma tausta pois: nappien pinnat erottavat ne koodista jo, ja
+ * kaksi sisäkkäistä laatikkoa on yksi liikaa. Teema antaa taustan myös
+ * hoverilla. */
+.md-code__nav,
+:hover > .md-code__nav {
+  background-color: transparent;
+}
+
+/* Pitkä ensimmäinen rivi kulkisi nappien alta ja näkyisi niiden väleistä ja
+ * reunoilta. Rivin päälle tulee lohkon värinen pinta, joka ulottuu lohkon
+ * ylä- ja oikeaan reunaan ja jonka vasen reuna häivytetään: teksti katoaa
+ * nappien alle eikä katkea. Pinta on lohkon värinen, joten sitä ei näe, kun
+ * sen alla ei ole tekstiä. Korkeus on koodin yläreunus ja yksi rivi; ne ovat
+ * koodin kirjasinkoossa, joka on teemassa 0.8533 kertaa nappirivin
+ * kirjasinkoko. Pidempi pinta leikkaisi toisen rivin kirjainten yläreunan.
+ * Reunus ja rivi ovat eri kerrokset, koska korostetun rivin kohta on
+ * korostuksen värinen (highlights.css). */
+.md-code__nav::before {
+  position: absolute;
+  top: -0.25em;
+  right: -0.25em;
+  left: -1em;
+  z-index: -1;
+  height: calc((0.8203125em + 1.5em) * 0.8533333);
+  content: "";
+  background:
+    linear-gradient(to right, transparent, var(--md-code-bg-color) 1em)
+      top / 100% calc(0.8203125em * 0.8533333) no-repeat,
+    linear-gradient(
+      to right,
+      transparent,
+      var(--jyu-code-panel-color, var(--md-code-bg-color)) 1em
+    ) bottom / 100% calc(1.5em * 0.8533333) no-repeat;
+  border-top-right-radius: 0.4rem;
+}
+
+/* Pinnan alle jäävä rivin loppu tulee näkyviin vierittämällä, kun koodin
+ * perään on varattu pinnan levyinen tila: oikea reuna, nappien reunus, napit
+ * väleineen ja häivytys. Nappien leveys on nappirivin kirjasinkoossa, joten ne
+ * muunnetaan koodin kirjasinkokoon. Korostettu rivi (highlights.css) ulottuu
+ * reunukseen muuttujan kautta. Paperilla nappeja ei ole. */
+.md-typeset pre:has(> .md-code__nav) {
+  --jyu-code-buttons: 1;
+}
+
+.md-typeset pre:has(> .md-code__nav > .md-code__button:nth-of-type(2)) {
+  --jyu-code-buttons: 2;
+}
+
+.md-typeset pre:has(> .md-code__nav > .md-code__button:nth-of-type(3)) {
+  --jyu-code-buttons: 3;
+}
+
+/* Eniten: kopiointi, ajo, silmä ja muokattavan lohkon peruutus. */
+.md-typeset pre:has(> .md-code__nav > .md-code__button:nth-of-type(4)) {
+  --jyu-code-buttons: 4;
+}
+
+@media screen {
+  .md-typeset pre:has(> .md-code__nav) > code {
+    --jyu-code-padding-right: calc(
+      (1.25em + var(--jyu-code-buttons) * 1.75em) / 0.8533333 +
+      (var(--jyu-code-buttons) + 1) * 0.2rem
+    );
+    padding-right: var(--jyu-code-padding-right);
+  }
+}
+
+/* Teeman 1.5em:ssä kuvake liimautuisi reunukseen; 1.75em antaa väljyyttä ja
+ * kasvattaa kosketuskohdetta. */
+.md-code__button {
+  width: 1.75em;
+  height: 1.75em;
+  color: var(--md-default-fg-color--light);
+  background-color: var(--jyu-code-button-bg);
+  border: 0.05rem solid var(--jyu-rule);
+  /* 4 px: lohkon 8 px:n pyöristys miinus täyte, vähintään 4. */
+  border-radius: 0.2rem;
+  transition:
+    color var(--jyu-fast),
+    background-color var(--jyu-fast),
+    border-color var(--jyu-fast),
+    transform var(--jyu-fast);
+}
+
+/* Hover: pinta tummenee ja reuna saa aksentin; nappi ei nouse eikä saa
+ * varjoa, koska siirtyvä nappi kosketusnäytöllä ja näppäimistöllä on
+ * pelkkä välähdys. Painallus painaa hieman alas. */
+.md-code__button:not(:disabled):hover,
+.md-code__button:not(:disabled).focus-visible {
+  color: var(--md-accent-fg-color);
+  background-color: var(--jyu-raised);
+  border-color: var(--md-accent-fg-color);
+}
+
+.md-code__button:not(:disabled):active {
+  transform: scale(0.97);
+  transition-duration: 0.05s;
+}
+
+.md-code__button[aria-pressed="true"] {
+  color: var(--md-accent-fg-color);
+  background-color: color-mix(in srgb, var(--md-accent-fg-color) 12%, var(--jyu-code-button-bg));
+  border-color: var(--md-accent-fg-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .md-code__button {
+    transition: color var(--jyu-fast), background-color var(--jyu-fast), border-color var(--jyu-fast);
+  }
+
+  .md-code__button:not(:disabled):active {
+    transform: none;
+  }
+}
