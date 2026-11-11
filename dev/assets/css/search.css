@@ -1,0 +1,114 @@
+/* Hakuikkuna: tekstikoot teeman rem-portaina ja suodatinpaneeli piiloon.
+ * Otsikko, kenttä ja ote kerrotaan leipätekstin perustasolla
+ * (--jyu-text-base, typography.css), jotta ne pysyvät vähintään
+ * leipätekstin kokoisina; mukautettu ominaisuus periytyy shadow DOMiin.
+ * Metatiedot (määrä, polku) ovat valikon kokoluokkaa eivätkä kasva.
+ * Ikkuna on shadow DOM:issa, johon assets/js/search.js liittää tämän
+ * tiedoston; :host-etuliite pitää säännöt poissa sivulta. Luokkanimet ovat
+ * Zensicalin 0.0.70 (UI 0.0.37) minifioimia (bundle.js); tests/test_search.py
+ * kertoo, jos ne vaihtuvat.
+ *   .r juuri (dialog)  .l tausta  .e ikkuna  .w kenttärivi  .s kenttä
+ *   .t suodatinpaneeli  .f tulosten määrä (role=status)  .h tuloslista
+ *   .o tulos (linkki)  .B valittu tulos  .x otsikko  .n polku  .p ote
+ *   .a nappi (kenttärivin ja oma sulkunappi .jyu-close, search.js)
+ * Lisää tuloksia latautuu listaa vieritettäessä; erillistä lisäriviä ei ole. */
+
+:host .r {
+  --space-1: 0.2rem; /* Zensical: 4 px */
+  --font-size: calc(0.8rem * var(--jyu-text-base, 1));
+}
+
+/* 36 rem = Zensicalin 720 px perusmitassa (1 rem = 20 px). */
+@media (min-width: 741px) {
+  :host .e {
+    width: 36rem;
+  }
+}
+
+/* Kapealla näytöllä Zensical venyttää ikkunan koko ruutuun ilman kulmien
+ * pyöristystä, jolloin se ei näytä ikkunalta vaan sivulta. Reunus ympärille
+ * (0,8 rem = 16 px, Zensicalin --space-3) ja kulmat takaisin; juuri (.r) on
+ * näkyvän ruudun korkuinen (Zensical: -webkit-fill-available kosketusnäytöllä),
+ * joten prosentit ovat siitä. */
+@media (max-width: 740px) {
+  :host .e {
+    width: calc(100% - 1.6rem);
+    height: calc(100% - 1.6rem);
+    border-radius: 0.8rem;
+  }
+}
+
+:host .s input,
+:host .x {
+  font-size: calc(0.8rem * var(--jyu-text-base, 1));
+}
+
+:host .p {
+  font-size: calc(0.7rem * var(--jyu-text-base, 1));
+}
+
+:host .f,
+:host .n {
+  font-size: 0.64rem;
+}
+
+:host .x code,
+:host .p code {
+  font-size: 0.85em;
+}
+
+/* Ikkuna irti taustasta. Zensicalin ikkuna on sivun pohjan väriä 70 %:n
+ * peitolla ja sumennuksella, verho saman sävyn tummempaa astetta 54 %:lla
+ * ja reunaviiva tekstin väriä 7 %:lla: tummassa teemassa ikkuna, verho ja
+ * sivu sulautuvat yhdeksi tummaksi pinnaksi, vaaleassa yhdeksi valkoiseksi.
+ * Ikkuna läpinäkymätön ja sivua vaaleampi (--jyu-dialog-bg, layout.css),
+ * reunaviiva kirjan rajaviivojen sävyä ja varjo teeman vahvin; verho
+ * tummentaa sivun kummassakin teemassa, jotta ikkuna on sivun vaalein pinta.
+ * Muuttujat periytyvät bodyltä shadow DOMiin. */
+:host .e {
+  background-color: var(--jyu-dialog-bg, var(--md-default-bg-color));
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-color: var(--jyu-rule);
+  box-shadow: var(--md-shadow-z3);
+}
+
+:host .l {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+
+:host .w {
+  border-bottom-color: var(--jyu-rule);
+}
+
+/* Valitun tuloksen, hiiren alla olevan tuloksen ja nappien korostus sekä
+ * koodin tausta tuloksissa: Zensicalin sävy (tummassa 33 34 38, vaaleassa
+ * 240) on vaaleampaa ikkunaa tummempi ja katoaa, vaaleassa vain hiukan
+ * valkoista tummempi. Tekstin väriä läpikuultavana, kuten sivun koodilla
+ * (code.css), jotta se erottuu kummassakin teemassa; koodi hieman
+ * vahvempana, jotta se näkyy myös korostetulla rivillä. */
+:host .o::before,
+:host .a::before {
+  background-color: color-mix(in srgb, var(--md-default-fg-color) 10%, transparent);
+}
+
+:host .x code,
+:host .p code {
+  background-color: color-mix(in srgb, var(--md-default-fg-color) 14%, transparent);
+}
+
+/* Suodatinpaneeli ("Filters / Tags") ja sen painike (kentän jälkeinen; rivin
+ * viimeinen on oma sulkunappi) pois: materiaalissa ei ole tageja, joten
+ * paneeli on aina tyhjä. */
+:host .t,
+:host .w > .s + button {
+  display: none;
+}
+
+/* Nuolinäppäimillä liikuttaessa vain valittu tulos on korostettu, ei hiiren
+ * alla oleva (search.js asettaa attribuutin ja poistaa sen hiiren liikkuessa).
+ * Arvot ovat Zensicalin korostamattoman tuloksen. */
+:host([data-jyu-keys]) .o:not(.B):hover::before {
+  opacity: 0;
+  transform: scale(0.9);
+}

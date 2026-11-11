@@ -1,0 +1,60 @@
+/* Opastusnuolet koodilohkon nappeihin (assets/js/hints.js): korostusvärinen
+ * nuoli napin alla keinuu kevyesti ylös-alas, ja hiuksenhieno heittovarjo
+ * nostaa sen pinnasta. Nuoli on napin lapsi ja tulee nappirivin
+ * ulkopuolelle, joten rivi ja nappi eivät saa leikata sitä. Se jää lohkon
+ * sisään nappirivin alle, jonne koodin ensimmäinen rivi ei ulotu
+ * (codebuttons.css: padding-right), eikä vie tilaa lohkon ympäriltä.
+ * Osoittimelle läpinäkyvä, ettei se peitä nappia tai koodia. */
+
+.md-code__nav:has(> .md-code__button > .jyu-hint),
+.md-code__button:has(> .jyu-hint) {
+  overflow: visible;
+}
+
+.md-code__button:has(> .jyu-hint) {
+  position: relative;
+}
+
+.jyu-hint {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 1.2rem;
+  height: 1.4rem;
+  margin-top: 0.25rem;
+  margin-left: -0.6rem;
+  pointer-events: none;
+  color: var(--md-accent-fg-color);
+  animation: jyu-hint 1.2s ease-in-out infinite;
+}
+
+.jyu-hint > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0.07rem 0.07rem #00000059);
+}
+
+@keyframes jyu-hint {
+  0%,
+  100% {
+    transform: translateY(0.3rem);
+  }
+
+  50% {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jyu-hint {
+    animation: none;
+    transform: translateY(0.15rem);
+  }
+}
+
+@media print {
+  .jyu-hint {
+    display: none;
+  }
+}

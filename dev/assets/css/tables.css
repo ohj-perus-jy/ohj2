@@ -1,0 +1,95 @@
+/* Taulukot: keskitys, otsikkorivin väri ja vuororivit, kuten mdBookissa.
+ * Zensical piirtää taulukon harmaana ristikkona vasempaan laitaan, ja
+ * aineiston taulukot ovat enimmäkseen kapeita. Sävy tulee
+ * --md-typeset-a-color -muuttujasta (sama kuin linkeissä ja tasks.css:ssä),
+ * koska se on ainoa teeman väri, joka on oikea kummassakin teemassa; samalla
+ * väri seuraa paletin vaihtoa. Sävyt ovat läpinäkyviä color-mixejä, jotta
+ * sama arvo toimii molemmilla taustoilla. */
+
+/* Keskitys kuuluu teeman JS:llä lisäämälle kääreelle (.md-typeset__table),
+ * ei taululle: kääre on teemassa inline-block eli sisältönsä levyinen.
+ * fit-content pitää leveyden samana mutta tekee automarginaalit tehokkaiksi.
+ * Ylärajaa ei aseteta; leveän taulun vierityksen hoitaa ulompi scrollwrap. */
+.md-typeset__table {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* Sama taululle itselleen: tulostussivun (assets/js/print.js) luvut kootaan
+ * kääreen tekevän skriptin jälkeen, joten siellä käärettä ei ole. */
+.md-typeset table:not([class]) {
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+/* Kääreen sisällä taulukko pysyy tauluna. Teeman oma sääntö tähän on
+ * tarkkuudeltaan yllä olevaa heikompi, joten se on toistettava. */
+.md-typeset__table table:not([class]) {
+  display: table;
+  width: 100%;
+  margin: 0;
+}
+
+/* Teksti leipätekstin kokoiseksi (teema pienentää sen .64rem:iin) ja
+ * valikoiden kirjasimeen, kuten otsikot typography.css:ssä. Lukijan
+ * kirjasinvalinta (fontmenu.js) koskee vain leipätekstiä, ei taulukoita. */
+.md-typeset table:not([class]) {
+  font-family: var(--md-text-font-family);
+  font-size: inherit;
+}
+
+/* Solujen täyte pikseleinä ennalleen: teeman em-täyte kasvaisi tekstin
+ * mukana, levittäisi taulukot palstan levyisiksi ja rivittäisi soluja.
+ * Riviväli tiiviimmäksi, koska leipätekstin 1.8 hajottaa rivittyvän solun.
+ * :is(th, td) on tarkkuudeltaan sama kuin teeman th- ja td-säännöt. */
+.md-typeset table:not([class]) :is(th, td) {
+  padding: .6rem .8rem;
+  line-height: 1.5;
+}
+
+/* Sävyt. Tummassa teemassa sama peitto näyttää laimeammalta, joten
+ * otsikkorivi ja hover ovat siellä vahvempia. */
+.md-typeset table:not([class]) {
+  --tbl-head-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+  --tbl-head-rule: color-mix(in srgb, var(--md-typeset-a-color) 50%, transparent);
+  --tbl-zebra-bg: color-mix(in srgb, var(--md-default-fg-color) 4%, transparent);
+  --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 8%, transparent);
+}
+
+/* Tumman teeman reunaviivat vahvemmiksi: teeman 12 % valkoista katoaa
+ * heikolla näytöllä. Muuttuja asetetaan tauluun, joten ylikirjoitus ei vuoda
+ * muualle. Vaaleassa teeman oma arvo riittää. */
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) {
+  --md-typeset-table-color: hsla(var(--md-hue), 15%, 90%, 0.38);
+  --tbl-head-bg: color-mix(in srgb, var(--md-typeset-a-color) 20%, transparent);
+  --tbl-hover-bg: color-mix(in srgb, var(--md-typeset-a-color) 12%, transparent);
+}
+
+/* Väri thead-ryhmään eikä soluihin, jotta se jatkuu solujen välistä. */
+.md-typeset table:not([class]) thead {
+  background-color: var(--tbl-head-bg);
+}
+
+/* Otsikon ja sisällön raja. Teema piirtää väliviivat solujen ylälaitaan,
+ * joten ensimmäisen sisältörivin viiva pois - muuten tulisi kaksi viivaa. */
+.md-typeset table:not([class]) thead th {
+  border-bottom: .1rem solid var(--tbl-head-rule);
+}
+
+.md-typeset table:not([class]) tbody tr:first-child td {
+  border-top: none;
+}
+
+.md-typeset table:not([class]) tbody tr:nth-child(2n) {
+  background-color: var(--tbl-zebra-bg);
+}
+
+/* Hover korostusvärin sävyllä, jotta se erottuu raidasta, ja teeman
+ * laatikkovarjo pois, koska se katkaisee raidan rivin ylälaidassa.
+ * Vuororivin jälkeen: tarkkuus on sama, ja raita voittaisi muuten. */
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: var(--tbl-hover-bg);
+  box-shadow: none;
+}

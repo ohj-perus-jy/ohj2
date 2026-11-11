@@ -1,0 +1,221 @@
+/* Leipätekstin kirjasin, koko ja tekstin väri. */
+
+/* Leipäteksti on Source Serif 4 kuten mdBookissa. Ei theme.font.text, koska se
+ * vaihtaisi myös valikon, yläpalkin ja otsikot; kohteena vain artikkeli
+ * (.md-content__inner). Kirjasintiedostot ja @font-face-säännöt ovat
+ * fonts.css:ssä (sivuston oma assets/fonts/, ei Google Fonts), samoin teeman
+ * oma Source Sans 3. Selain lataa vaihtoehtoisen kirjasimen tiedoston vasta
+ * kun sitä käytetään. */
+
+.md-content__inner {
+  font-family: "Source Serif 4", "Source Serif Pro", Georgia, serif;
+  /* Kumoaa modern-teeman tiivistyksen (.md-typeset: -0.01em). Otsikoiden
+   * omat arvot jäävät voimaan. */
+  letter-spacing: normal;
+  /* Teeman 1.8 on serifille 16,5 px:ssä liian ilmava: rivit eivät pysy
+   * yhdessä, eikä kappaleväli (1 em) erotu rivivälistä. */
+  line-height: 1.6;
+}
+
+/* Lukijan valitsema kirjasin (yläpalkin valikko, fontmenu.js). Oletus on
+ * "ei attribuuttia". Tulostussivu seuraa mukana, koska luvut liitetään samaan
+ * elementtiin. Ei kokokorjausta: pieni ero x-korkeuksissa on hyväksytty. */
+body[data-jyu-font="atkinson"] .md-content__inner {
+  font-family: "Atkinson Hyperlegible Next", "Source Sans 3", Helvetica, Arial, sans-serif;
+}
+
+body[data-jyu-font="literata"] .md-content__inner {
+  font-family: "Literata", "Source Serif 4", Georgia, serif;
+}
+
+/* Sisällön tekstikoko. Perustaso on teeman koko × --jyu-text-base: teeman
+ * .75rem (15 px puhelimessa ja tavallisella näytöllä) oli etenkin
+ * puhelimessa pieni, joten entinen 110 % on uusi 100 %. Lukijan valitsema
+ * koko (sama valikko) on --jyu-text-scale bodyssä, oletus 1. Teeman .75rem
+ * kerrotaan molemmilla, joten em-mitoitetut otsikot, koodi, taulukot ja
+ * laatikot seuraavat; teeman rem-koot sisällön sisällä kerrotaan erikseen.
+ * Valikot, yläpalkki, vihjeet ja vaiheittaisen ohjeen säätimet pysyvät
+ * ennallaan, samoin tehtäväkortin numero, jonka sarake on rem-levyinen
+ * (tasks.css). Vain ruudulle: paperilla teeman print-koko. */
+:root {
+  --jyu-text-base: 1.1;
+}
+
+@media screen {
+  .md-content__inner {
+    font-size: calc(0.75rem * var(--jyu-text-base) * var(--jyu-text-scale, 1));
+  }
+
+  .md-typeset .footnote {
+    font-size: calc(0.64rem * var(--jyu-text-base) * var(--jyu-text-scale, 1));
+  }
+
+  .md-typeset .tabbed-labels > label {
+    font-size: calc(0.7rem * var(--jyu-text-base) * var(--jyu-text-scale, 1));
+  }
+}
+
+/* Otsikot pysyvät teeman kirjasimessa (Source Sans 3). Teema ei aseta niille
+ * font-familyä, joten ilman tätä ne perisivät serifin. Laatikoiden otsikot
+ * ja summary ovat otsikoita, sisältö leipätekstiä. */
+.md-content__inner :is(h1, h2, h3, h4, h5, h6, .admonition-title, summary) {
+  font-family: var(--md-text-font-family);
+}
+
+/* Otsikon jälkeen väli on otsikon oma (alla), ei kappaleen ylämarginaali.
+ * Vain tässä: kappaleen yleinen ylämarginaali jää, koska välilehden,
+ * laatikon ja kortin ensimmäinen kappale saa välinsä siitä. */
+.md-typeset :is(h1, h2, h3, h4, h5, h6) + p {
+  margin-top: 0;
+}
+
+/* Otsikot. Teeman h1 (1.875em) on vain 1,25 × h2, joten sivun otsikko ei
+ * erotu väliotsikoista; 2.25em tekee suhteesta 1,5. Väliotsikoilla
+ * enemmän tilaa ylle ja vähemmän alle, jotta otsikko kuuluu seuraavaan
+ * tekstiin eikä leiju kappaleiden välissä. Rivikorkeus tiukempi kuin
+ * leipätekstin, koska otsikko rivittyy harvoin ja isona 1.4 hajoaa.
+ * Painot 600 ja 500 teeman 700:n sijaan: hierarkia tulee koosta, ja
+ * Source Sans 3:n 700 on serifin vieressä raskas. Negatiivinen välistys
+ * vain h1:llä (37 px); pienemmässä koossa se ahtaa kirjaimet. */
+.md-typeset h1 {
+  margin: .1em 0 .8em;
+  font-size: 2.25em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -.02em;
+}
+
+.md-typeset h2 {
+  margin: 2em 0 .55em;
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.md-typeset h3 {
+  margin: 1.8em 0 .5em;
+  font-size: 1.2em;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+}
+
+.md-typeset h2 + h3 {
+  margin-top: 1em;
+}
+
+/* Listat: kohtien väli puoleen teeman .5em:stä, jotta lista on yksi ryhmä
+ * eikä jono kappaleita; listan oma yläväli pienempi, jotta se liittyy
+ * edeltävään lauseeseen ("…seuraavat asiat:"). */
+.md-typeset :is(ul, ol) {
+  margin: .75em 0 1em;
+}
+
+.md-typeset :is(ul, ol) li {
+  margin-bottom: .25em;
+}
+
+.md-typeset :is(ul, ol) li > p {
+  margin: .25em 0;
+}
+
+.md-typeset :is(ul, ol) li :is(ul, ol) {
+  margin: .25em 0 .5em;
+}
+
+/* Puhelin: reunat .8rem -> 1rem (16 -> 20 px), sivun otsikko pienempi,
+ * koska 2.25em (37 px) rivittyy kapealla kolmelle riville. Raja on teeman
+ * puhelinraja. */
+@media screen and (max-width: 44.984375em) {
+  .md-content__inner {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  /* Teeman välilehtirivi olettaa .8rem:n reunat (marginaali -.8rem,
+   * max-width 100vw), joten 1rem:n reunoilla rivi on 8 px palstaa leveämpi
+   * ja venyttää puhelimen asetteluikkunan sivua leveämmäksi. Samat mitat
+   * 1rem:nä, myös vieritysnuolille. Valitsimet teeman mukaan ([dir=ltr]
+   * tarkkuuden vuoksi; kirjat ovat vasemmalta oikealle). */
+  .md-content__inner > .tabbed-set .tabbed-labels {
+    margin: 0 -1rem;
+    scroll-padding-inline-start: 1rem;
+  }
+
+  [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels {
+    padding-left: 1rem;
+  }
+
+  [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels::after {
+    padding-right: 1rem;
+  }
+
+  [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels ~ .tabbed-control--prev {
+    padding-left: 1rem;
+    margin-left: -1rem;
+  }
+
+  [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels ~ .tabbed-control--next {
+    padding-right: 1rem;
+    margin-right: -1rem;
+  }
+
+  .md-typeset h1 {
+    font-size: 1.7em;
+  }
+
+  .md-typeset h2 {
+    font-size: 1.35em;
+  }
+}
+
+/* Tekstin värit ovat paletti.css:ssä (--md-default-fg-color ja --light). */
+
+/* Päävalikon linkit 500: Source Sans 3 jää 14 px:ssä 400:lla haaleaksi.
+ * :not jättää pois sisällysluettelon (kapealla näytöllä samassa valikossa)
+ * ja valitun rivin, jonka seuraava sääntö nostaa 600:aan. */
+.md-nav--primary
+  .md-nav__link:not(.md-nav--secondary .md-nav__link, .md-nav__link--active) {
+  font-weight: 500;
+}
+
+/* Valittu rivi 600 molemmissa valikoissa: teeman 500 ei erotu, kun muutkin
+ * rivit ovat 500, ja väri yksin lukee "linkki", ei "tässä olet". 700 oli
+ * kolmas korostus pinnan ja värin päälle (layout.css). */
+.md-nav__item .md-nav__link--active {
+  font-weight: 600;
+}
+
+/* Yläpalkin kurssin nimi 600 teeman 700:n sijaan, kuten otsikot. */
+.md-header__topic .md-ellipsis {
+  font-weight: 600;
+}
+
+/* Sisällysluettelon otsikko on nimilappu, ei otsikko: 500 ja toissijainen
+ * väri, jotta luettelon kohdat erottuvat siitä eikä se kilpaile sivun
+ * otsikon kanssa. */
+.md-sidebar--secondary .md-nav__title {
+  font-weight: 500;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Tooltipit lähemmäs leipätekstin kokoa (.75rem): teeman title-tooltip
+ * (role=tooltip, mm. <abbr title>) on .55rem ja alaviitteen ponnahdus
+ * (role=dialog) .64rem, mikä on selitystekstille liian pientä. */
+[role="tooltip"] > .md-tooltip2__inner,
+[role="dialog"] > .md-tooltip2__inner {
+  font-size: 0.7rem;
+}
+
+/* Tummassa teemassa tooltipin tausta on sama kuin sivun, ja varjo katoaa
+ * mustaan. Tausta koodilohkon sävyyn: muuttuja vaihdetaan .md-tooltip2:ssa,
+ * jotta sisältö, nuoli ja alaviiteikkunan liukuvärit vaihtuvat yhdessä.
+ * Reuna samalla värillä kuin teeman nuolen reunaviiva. */
+[data-md-color-scheme="slate"] .md-tooltip2 {
+  --md-default-bg-color: var(--md-code-bg-color);
+}
+
+[data-md-color-scheme="slate"] .md-tooltip2__inner {
+  border: 0.05rem solid var(--md-default-fg-color--lightest);
+}

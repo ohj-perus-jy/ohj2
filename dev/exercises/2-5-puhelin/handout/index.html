@@ -1,0 +1,2959 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ohjelmointi2.it.jyu.fi/exercises/2-5-puhelin/handout/">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.1">
+    
+    
+      
+        <title>Handout - Ohjelmointi 2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../../assets/stylesheets/modern/main.ebb7f775.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/css/fonts.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/paletti.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/typography.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/fontmenu.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/layout.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/sitemenu.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/search.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/tasks.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/icons.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/tables.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/code.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/requirements.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/diagrams.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/codebuttons.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/playground.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/highlights.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/hidelines.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/copy.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/hints.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/print.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/walkthrough.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/puhe.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/visa.css">
+    
+      <link rel="stylesheet" href="../../../assets/css/glightbox.min.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <link rel="preload" href="../../../assets/fonts/source-serif-4/normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Hyppää sisältöön
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste"><button type="button" class="md-header__button md-icon jyu-rail-button" id="jyu-rail-button"
+            title="Piilota valikko" aria-label="Piilota valikko"
+            aria-expanded="true" aria-controls="jyu-rail" aria-keyshortcuts="b">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <script>try{if(localStorage.getItem("jyu-rail")==="hidden")document.documentElement.setAttribute("data-jyu-rail","hidden")}catch(e){}</script>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigaatio</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
+          <span class="md-ellipsis"><a href="../../..">Ohjelmointi 2</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Handout
+            
+          </span>
+        </div>
+      </div>
+    </div><button type="button" class="md-header__button md-icon jyu-puhe-button" hidden
+            title="Kuuntele sivu" aria-label="Kuuntele sivu" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-volume-2" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298zM16 9a5 5 0 0 1 0 6M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+    </button>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Haku</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Haku">
+  <button type="button" class="md-search__button" title="Haku (Ctrl+K)">
+    Haku
+  </button>
+</div><script>if(/^Mac/.test(document.documentElement.dataset.platform))document.querySelectorAll(".md-search__button").forEach(b=>b.title=b.title.replace("Ctrl+K","⌘K"))</script>
+      
+    <div class="md-header__option jyu-font" data-md-component="jyu-font" data-steps="90 100 110 120 135 150 175">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipäteksti: Serif, 100 %" aria-label="Leipäteksti: Serif, 100 %"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="jyu-font-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-type" viewBox="0 0 24 24"><path d="M12 4v16M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6"/></svg>
+        <span class="jyu-font__chevron"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="jyu-font__panel" id="jyu-font-panel" role="dialog" aria-label="Leipäteksti" hidden>
+        <div class="jyu-font__size" role="group" aria-labelledby="jyu-font-size-label">
+          <span class="jyu-font__size-label" id="jyu-font-size-label">Tekstin koko</span>
+          <button type="button" class="jyu-font__step" data-step="-1" aria-label="Pienennä tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="jyu-font__reset" title="Palauta 100 %" aria-label="Palauta 100 %" aria-disabled="true"><span aria-live="polite">100 %</span></button>
+          <button type="button" class="jyu-font__step" data-step="1" aria-label="Suurenna tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+          </button>
+        </div>
+        <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin">
+          <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Source Serif 4</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+            <span class="jyu-font__kind">sans-serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Literata</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+        </ul>
+      </div>
+    </div><script>try{var b=document.body,f=localStorage.getItem("jyu-font"),k=localStorage.getItem("jyu-text-size");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))b.setAttribute("data-jyu-font",f);if(k&&document.querySelector(".jyu-font").dataset.steps.split(" ").indexOf(k)>=0)b.style.setProperty("--jyu-text-scale",k/100)}catch(e){}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda tummaan teemaan"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Vaihda tummaan teemaan" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda vaaleaan teemaan"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Vaihda vaaleaan teemaan" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    <a href="../../../tulosta/" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg>
+    </a>
+    <div class="md-header__source">
+      
+        
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Ohjelmointi 2" class="md-nav__button md-logo" aria-label="Ohjelmointi 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    Ohjelmointi 2
+  </label>
+  
+    <div class="md-nav__source">
+      
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Aloitus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../suorittaminen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Suorittaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Työkalut ja asentaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../harjoitustyo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../tentti/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tentti
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tentti
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../tentti/tenttiohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tenttiohjeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ukk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usein kysyttyä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../luennot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Luennot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/koti" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Eteneminen (TIM)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1 Java-kielen perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  1 Java-kielen perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa1/01-hei-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.1 Hei, Java!
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa1/02-muuttujat-ja-tietotyypit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.2 Muuttujat ja tietotyypit
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa1/03-ohjausrakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.3 Ohjausrakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa1/04-aliohjelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.4 Aliohjelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa1/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2 Olio-ohjelmoinnin perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2 Olio-ohjelmoinnin perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa2/01-kohti-olio-ohjelmointia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1 Kohti olio-ohjelmointia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa2/02-luokka-ja-olio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.2 Luokka ja olio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa2/03-kapselointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.3 Kapselointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa2/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3 Perintä, polymorfismi
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3 Perintä, polymorfismi
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa3/01-perinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1 Perintä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa3/02-polymorfismi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2 Polymorfismi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa3/03-abstrakti-luokka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3 Abstrakti luokka
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa3/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4 Rajapinta, geneeriset luokat
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4 Rajapinta, geneeriset luokat
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa4/01-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1 Rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa4/02-vertailurajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.2 Vertailurajapinnat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa4/03-perinta-ja-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.3 Perintä ja rajapinta olioiden yhteistyössä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa4/04-tyyppiparametrit-ja-geneerisyys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.4 Tyyppiparametrit ja geneerisyys
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa4/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa5/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5 Tietorakenteita ja algoritmeja
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_13">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5 Tietorakenteita ja algoritmeja
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/01-kokoelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1 Kokoelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/02-listarakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/03-hakurakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.3 Hakurakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/04-joukkorakenteet-jonorakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/05-rekursio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.5 Rekursio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa5/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa6/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_14">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/01-funktiorajapinnat-ja-lambda-lausekkeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1 Funktiorajapinnat ja lambda-lausekkeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/02-kokoelmien-kasittely-stream-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2 Kokoelmien käsittely: Stream API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/03-poikkeusten-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.3 Poikkeusten hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.4 Ulkoiset kirjastot ja Java-projektien hallintatyökalut
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/05-tiedostojen-kasittely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.5 Tiedostojen käsittely
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa6/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7 JavaFX osa 1, SceneBuilder
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_15">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  7 JavaFX osa 1, SceneBuilder
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/01-javafx-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/02-scenebuilder-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.2 SceneBuilder-perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/03-versionhallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.3 Versionhallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/04-sovelluslogiikka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.4 Sovelluslogiikka ja käyttöliittymä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/05-tehtavien-lukeminen-tallennus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.5 Tehtävien tallennus tiedostoon
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/06-scenebuilder-asettelu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.6 Komponenttien asettelu
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa7/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../osa8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8 JavaFX osa 2, MVC
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_16" id="__nav_16_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_16">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  8 JavaFX osa 2, MVC
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/01-malli-ja-observable-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.1 Observable-rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/02-tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.2 TableView ja databinding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/03-mvc-arkkitehtuuri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.3 MVC-arkkitehtuuri
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/04-useita-nakymia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.4 Tehtävien muokkaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/05-yksikkotestaus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.5 Yksikkötestaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/06-versionhallinnan-etakaytto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.6 Koodin julkaiseminen etävarastopalvelussa
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa8/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9 Harjoitustyö, vaihe 1
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10 Harjoitustyö, vaihe 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11 Harjoitustyö, vaihe 3
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../osa12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12 Harjoitustyön palautus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../../javafx/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13 JavaFX-ohjeita
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_21" id="__nav_21_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_21">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  13 JavaFX-ohjeita
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/nakymat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.1 Näkymät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.2 TableView
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/ui-kirjastot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.3 Ulkoiset UI-kirjastot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/observable-bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.4 Johdettujen Observable-arvojen laskeminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/validointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.5 Validointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../javafx/viitteiden-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.6 Viitteiden hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+  <h1>Handout</h1>
+
+<p>Tee luokka <code>Puhelin</code>, jolla on attribuutit <code>merkki</code> (merkkijono) ja <code>akunVaraus</code>
+(kokonaisluku, joka kuvaa akun varausta prosentteina väliltä 0–100). Lisää
+luokkaan seuraavat metodit:</p>
+<ul>
+<li><code>lahetaViesti(String henkilo, String viesti)</code>: tulostaa viestin muodossa
+   <code>Lähetetään viesti henkilölle &lt;henkilo&gt;: &lt;viesti&gt;</code>. Viestin lähettäminen
+   vähentää akkua 5 prosenttiyksikköä. </li>
+<li><code>soita(String henkilo, int minuutit)</code>: tulostaa viestin muodossa
+   <code>Soitetaan puhelu henkilölle &lt;henkilo&gt;, kesto: &lt;minuutit&gt; minuuttia</code>.
+   Soittaminen vähentää akkua 1 prosenttiyksikköä per minuutti.</li>
+<li><code>lataa(int prosentteja)</code>: lisää akun varausta annetun määrän, mutta akun
+   varaus ei voi ylittää 100 prosenttia.</li>
+<li><code>tulostaTiedot()</code>: tulostaa puhelimen merkin ja akun varauksen muodossa
+   <code>Puhelimen &lt;merkki&gt; akun varaus on &lt;akku&gt;%</code>.</li>
+</ul>
+<p>Korvaa kulmasulkeissa olevat kohdat sopivilla attribuuttien / parametrien
+arvoilla.</p>
+<p>Akun varaus ei voi mennä alle 0%.</p>
+<p>Jos akun varaus on 0%, viestiä ei voida lähettää eikä voi soittaa "Akku tyhjä.
+Viestiä ei voida lähettää / ei voi soittaa.".</p>
+<p>Testaa sovellustasi luomalla <code>Puhelin</code>-olio, lähettämällä viesti, soittamalla
+puhelu, lataamalla akkua ja tulostamalla puhelimen tiedot.</p>
+<details>
+<summary>Valinnainen lisätehtävä: Jos akku loppuu kesken</summary>
+<p>Muokkaa <code>lahetaViesti</code>- ja <code>soita</code>-metodeja siten, että jos akun varaus ei riitä
+koko viestin lähettämiseen tai puhelun soittamiseen, niin lähetetään/soitetaan
+niin kauan kuin akku riittää. Jos akku loppuu kesken puhelun / viestin, tulosta
+kauanko puhelu onnistui / kuinka paljon viestistä saatiin lähetettyä ennen akun
+loppumista. Esimerkiksi "Akku tyhjä. Sait lähetettyä 60% viestistä." tai "Akku
+loppui 3 minuutin jälkeen.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          <script>var allowed=["GitHub","GitLab (JY)","Linux","Windows","macOS"];var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script><script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi" rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen">CC BY-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+
+
+
+
+  
+  
+  
+  
+
+<div class="jyu-footer-links">
+    <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/exercises/2-5-puhelin/handout.md" class="md-copyright md-copyright--link" rel="edit" title="Muokkaa tätä sivua GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+      Muokkaa
+    </a>
+    <a href="https://github.com/ohj-perus-jy/ohj2/commits/main/src/exercises/2-5-puhelin/handout.md" class="md-copyright md-copyright--link" title="Sivun muutokset GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+      Muutoshistoria
+    </a>
+  <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&amp;url=exercises/2-5-puhelin/handout.md" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg>
+    Ilmoita ongelma
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../../..","features":["navigation.indexes","navigation.footer","content.tabs.link","content.footnote.tooltips","content.tooltips","toc.follow","content.code.copy"],"redirect":null,"search":"../../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Kopioitu leikepöydälle","clipboard.copy":"Kopioi leikepöydälle","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 lisää tällä sivulla","search.result.more.other":"# lisää tällä sivulla","search.result.none":"Ei täsmääviä dokumentteja","search.result.one":"1 täsmäävä dokumentti","search.result.other":"# täsmäävää dokumenttia","search.result.placeholder":"Kirjoita aloittaaksesi haun","search.result.term.missing":"Puuttuu","select.version":"Valitse versio"},"version":null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.3cb411a8.min.js"></script>
+      
+        <script src="../../../assets/js/tooltips.js"></script>
+      
+        <script src="../../../assets/js/nav-scroll.js"></script>
+      
+        <script src="../../../assets/js/rail.js"></script>
+      
+        <script src="../../../assets/js/toc.js"></script>
+      
+        <script src="../../../assets/js/print.js"></script>
+      
+        <script src="../../../assets/js/fontmenu.js"></script>
+      
+        <script src="../../../assets/js/theme.js"></script>
+      
+        <script src="../../../assets/js/sitemenu.js"></script>
+      
+        <script src="../../../assets/js/search.js"></script>
+      
+        <script src="../../../assets/js/playground.js"></script>
+      
+        <script src="../../../assets/js/hidelines.js"></script>
+      
+        <script src="../../../assets/js/highlights.js"></script>
+      
+        <script src="../../../assets/js/copy.js"></script>
+      
+        <script src="../../../assets/js/hints.js"></script>
+      
+        <script src="../../../assets/js/asciinema.js"></script>
+      
+        <script src="../../../assets/js/walkthrough.js"></script>
+      
+        <script src="../../../assets/js/visa.js"></script>
+      
+        <script src="../../../assets/js/puhe.js"></script>
+      
+        <script src="../../../assets/js/glightbox.min.js"></script>
+      
+    
+  </body>
+</html>

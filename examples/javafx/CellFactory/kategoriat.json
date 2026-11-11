@@ -1,0 +1,5 @@
+[
+  {"nimi": "Tärkeä", "poistettu": false},
+  {"nimi": "Vähemmän tärkeä", "poistettu": true},
+  {"nimi": "Ei-tärkeä", "poistettu": false}
+]

@@ -1,0 +1,135 @@
+/* Paletti: kirjojen värit yhdessä paikassa, vaalea ja tumma teema.
+ *
+ * Suunta: painettu oppikirja ja ohjelmoijan editori. Kehys on
+ * neutraali ja taittuu lämpimään kuin paperi, ja siinä on yksi aksentti,
+ * muste. Rikas väri on vain sisällössä: koodilohkon syntaksivärit,
+ * vaiheittaisen ohjeen kohtaukset ja laatikoiden tyyppivärit.
+ *
+ * Teeman omat muuttujat (--md-*) asetetaan tässä, jotta teeman komponentit
+ * (haku, välilehdet, kohdistusrenkaat, linkit) seuraavat ilman
+ * erillissääntöjä; omat muuttujat (--jyu-*) ovat muiden tiedostojen
+ * käytössä. Tyypilliset käyttöpaikat on mainittu muuttujan kohdalla.
+ * Vaalealla tarvitaan myös [data-md-color-scheme=default], koska teema
+ * määrittelee arvot bodylle ja pelkkä :root häviäisi niille.
+ *
+ * Kontrastit (WCAG): muste tekstinä valkoisella 7,8:1 ja kiskolla 7,1:1,
+ * valkoinen teksti musteella 7,8:1; tumma muste tekstinä sivulla 8,7:1 ja
+ * tumma teksti sillä 8,7:1. Toissijainen teksti 7,1:1, vaimea 4,7:1.
+ * Ennen tätä tiedostoa värit olivat Zensicalin oletukset: primary
+ * #4051b5, accent #526cfe, tummassa linkki #5488e8, ja kisko viileä
+ * #f4f5f7; tumman teeman pinnat olivat 20 %:n kylläisyydellä, jolloin
+ * tausta luki sinisenä. */
+
+:root,
+[data-md-color-scheme="default"] {
+  /* Aksentti: muste. Linkit, valittu valikkorivi, tehtävänumero ja
+   * TIM-nappi (tasks.css), kohdistusrenkaat, haun korostus. Kaikki kolme
+   * teeman muuttujaa samaan väriin: teema käyttää primarya mm. laatikon
+   * otsikossa ja accentia hoverissa, eikä kehyksessä ole toista sinistä. */
+  --md-primary-fg-color: #1f4fa0;
+  --md-accent-fg-color: #1f4fa0;
+  --md-accent-fg-color--transparent: #1f4fa01a;
+  --md-typeset-a-color: #1f4fa0;
+
+  /* Tekstiroolit: ensisijainen jyrkempi kuin teeman .87, toissijainen
+   * (--light: sisällysluettelon otsikko, kuvakkeet, tekijät) lämpimään
+   * taittuva harmaa. Teema johtaa --lighter- ja --lightest-sävyt tästä. */
+  --md-default-fg-color: #000000eb;
+  --md-default-fg-color--light: #5c5955;
+
+  /* Koodilohkon tausta: kehyksen neutraalissa, ei teeman #f5f5f5. */
+  --md-code-bg-color: #f6f5f2;
+
+  /* Kiskon tausta ja alatunnisteen kaista: sivun pohjasta poikkeavat
+   * pinnat, jotta valikko ja alatunniste erottuvat pintana eikä vain
+   * reunaviivalla. Lämpimään taittuvat, kaista kiskoa tummempi. */
+  --jyu-rail-bg: #f4f3f0;
+  --jyu-footer-bg: #eae8e3;
+
+  /* Korotettu pinta: valittu valikkorivi, koodinapit, visan vaihtoehdon
+   * hover. Pintaporras kiskosta ja sivusta, ei aksentin peitto. */
+  --jyu-raised: #eceae6;
+
+  /* Rajaviivojen sävy: tekstin väri 20 %:n peittona. Teeman
+   * --md-default-fg-color--lightest on viivana liian haalea, eikä sitä voi
+   * nostaa, koska se on myös himmeimpien täyttöjen väri. Kokeiltu 10 %
+   * (2.11.2026): laatikon ja koodinappien reunat katosivat, ja
+   * hakuikkunan reuna (tests/test_search.py) vaatii vähintään 20 %.
+   * Käytössä layout.css:ssä, tasks.css:ssä, admonitions.css:ssä,
+   * codebuttons.css:ssä ja print.css:ssä. */
+  --jyu-rule: #00000033;
+
+  /* Levyn reunat (kiskon oikea reuna, tekstipalstan ja alatunnisteen oikea
+   * reuna) ovat läpinäkymättömät: sama sävy kuin --jyu-rule kiskon taustan
+   * päällä, mutta alustasta riippumaton, koska viivat piirretään eri
+   * pintojen päälle (layout.css: .md-container). Pidettävä --jyu-rulen ja
+   * --jyu-rail-bg:n mukana. */
+  --jyu-edge: color-mix(in srgb, #f4f3f0, #000 20%);
+
+  /* Hakuikkunan pinta (search.css): vaaleassa sivun pohja, joka erottuu
+   * tummennetusta verhosta; tummassa sivua vaaleampi. */
+  --jyu-dialog-bg: var(--md-default-bg-color);
+
+  /* Musteella täytetty nappi (TIM-nappi tasks.css, esityksen Seuraava ja
+   * nykyinen luku walkthrough.css): tekstin väri ja hoverin täyttö. Hover
+   * ei voi olla aksentti, koska se on sama muste; täyttö siirtyy poispäin
+   * sivun taustasta eli tummenee vaaleassa ja vaalenee tummassa. Tekstin
+   * väri on tummassa lähes musta, koska valkoinen ei yllä vaaleammalla
+   * musteella pienen tekstin kontrastiin. */
+  --jyu-ink-fg: #fff;
+  --jyu-ink-hover: color-mix(in srgb, var(--md-accent-fg-color) 85%, black);
+}
+
+/* Tumma teema: sama sävy (teeman --md-hue 225°), kylläisyys 12 %. Teeman
+ * oma tausta on hsl(232 15% 21%), joka on koodilohkon vieressä haalea ja
+ * sininen; tässä sivu, kisko ja koodi ovat saman sävyn portaita 8, 10 ja
+ * 16 %. --md-default-bg-colorin kolme peittoa ovat teeman omia muuttujia
+ * (mm. yläpalkin sumennus), ja koodin kaksi peittoa nappirivin tausta
+ * (.md-code__nav), joka kelluu lohkon päällä; 16 % on arvo, jolla teeman
+ * --lightillä piirtämät kommentit ja operaattorit pysyvät WCAG AA:n yli.
+ * Toinen valitsin on tarkkuuden takia: teema antaa bodylle aina
+ * data-md-color-primary="indigo", vaikka kirja ei väriä aseta, ja sen
+ * palette.css asettaa linkkivärin tummassa kahden attribuutin valitsimella
+ * [data-md-color-scheme=slate][data-md-color-primary=indigo] (#5488e8).
+ * Pelkkä scheme-valitsin häviäisi sille, ja tumman teeman linkit,
+ * sisällysluettelon valittu rivi ja TIM-nappi jäisivät teeman siniseen;
+ * päävalikon valittu rivi (accent) vaihtuisi, ja sävyt olisivat eri. */
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="slate"][data-md-color-primary] {
+  --md-primary-fg-color: #8fb3ff;
+  --md-accent-fg-color: #8fb3ff;
+  --md-accent-fg-color--transparent: #8fb3ff1a;
+  --md-typeset-a-color: #8fb3ff;
+
+  --md-default-fg-color: #e1e1e1;
+  --md-default-fg-color--light: #a6a39c;
+
+  --md-default-bg-color: hsl(var(--md-hue) 12% 10%);
+  --md-default-bg-color--light: hsl(var(--md-hue) 12% 10% / 0.54);
+  --md-default-bg-color--lighter: hsl(var(--md-hue) 12% 10% / 0.26);
+  --md-default-bg-color--lightest: hsl(var(--md-hue) 12% 10% / 0.07);
+
+  --md-code-bg-color: hsl(var(--md-hue) 12% 16%);
+  --md-code-bg-color--light: hsl(var(--md-hue) 12% 16% / 0.9);
+  --md-code-bg-color--lighter: hsl(var(--md-hue) 12% 16% / 0.54);
+
+  --jyu-rail-bg: hsl(var(--md-hue) 12% 8%);
+  --jyu-footer-bg: hsl(var(--md-hue) 12% 13%);
+  --jyu-raised: hsl(var(--md-hue) 12% 15%);
+  --jyu-rule: hsl(var(--md-hue) 15% 90% / 0.2);
+  --jyu-edge: color-mix(in srgb, hsl(var(--md-hue) 12% 8%), hsl(var(--md-hue) 15% 90%) 20%);
+  --jyu-dialog-bg: hsl(var(--md-hue) 12% 14%);
+  --jyu-ink-fg: #13151b;
+  --jyu-ink-hover: color-mix(in srgb, var(--md-accent-fg-color) 85%, white);
+}
+
+/* Liike: yksi käyrä ja kolme kestoa kaikkiin tiedostoihin. Lyhyt on
+ * palaute (hover, painallus), keskipitkä avautuva valikko tai vihje, pitkä
+ * kiskon liuku ja sisääntulo. prefers-reduced-motion käsitellään
+ * käyttöpaikassa, koska osa siirtymistä on silloin kokonaan pois. */
+:root {
+  --jyu-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --jyu-fast: 0.15s;
+  --jyu-mid: 0.2s;
+  --jyu-slow: 0.3s;
+}

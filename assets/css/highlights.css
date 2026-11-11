@@ -1,0 +1,126 @@
+/* Korostetut rivit (vihreä, keltainen, punainen); rivit merkitsee
+ * assets/js/highlights.js. mdBookin peittovärejä ei kopioida, koska
+ * Zensicalin syntaksivärit ovat koodin taustaa vasten tasan WCAG AA:n
+ * rajalla eikä korostus saa pudottaa niitä. Vasempaan reunaan tulee lisäksi
+ * täysivärinen palkki kuten teeman omassa korostuksessa, koska sävy yksin ei
+ * erotu puna-vihersokealle.
+ *
+ * Tummassa teemassa korostus on koodin taustaa vaaleampi, koska taustan
+ * kirkkaudessa keltainen näyttäisi ruskealta ja vihreä ja punainen lähes
+ * mustilta. Vaaleassa kirkkaus riippuu sävystä, koska näytön keltainen on
+ * luonnostaan kirkas ja punainen tumma: keltainen on taustaa vaaleampi,
+ * jottei se sulaudu harmaaseen, vihreä ja punainen tummempia, koska taustan
+ * kirkkaudessa punainen olisi lähes valkoinen. Kun korostus vie kontrastia,
+ * rivin teksti tummennetaan tai vaalennetaan (alempana). */
+
+:root {
+  --jyu-hl-green: hsl(130, 75%, 90%);
+  --jyu-hl-green-edge: hsl(130, 60%, 32%);
+  --jyu-hl-yellow: hsl(57, 100%, 80%);
+  --jyu-hl-yellow-edge: hsl(45, 90%, 33%);
+  --jyu-hl-red: hsl(5, 100%, 92%);
+  --jyu-hl-red-edge: hsl(5, 70%, 50%);
+}
+
+/* Tummassa teemassa kaikki kolme yhtä kirkkaina, jolloin yksi tekstin
+ * vaalennus (alempana) sopii kaikille. Vihreän ja punaisen kylläisyys on
+ * 45 %, koska kylläisempinä ne pomppasivat harmaansinisestä teemasta;
+ * vaaleus on nostettu niin, että kirkkaus pysyi ennallaan. */
+[data-md-color-scheme="slate"] {
+  --jyu-hl-green: hsl(129, 45%, 18.5%);
+  --jyu-hl-green-edge: hsl(130, 55%, 50%);
+  --jyu-hl-yellow: hsl(48, 74%, 16%);
+  --jyu-hl-yellow-edge: hsl(48, 90%, 50%);
+  --jyu-hl-red: hsl(7, 45%, 26.4%);
+  --jyu-hl-red-edge: hsl(5, 90%, 68%);
+}
+
+/* Rivin muoto on teeman oma (.highlight .hll): lohko, joka ulottuu koodin
+ * sisennyksen (1.25em) verran reunasta reunaan. Leveys on lisä: <code>
+ * vierittää itse, joten lohkotason lapsi jäisi näkyvän leveyden mittaiseksi
+ * ja pitkän rivin korostus katkeaisi. min-widthissä on rivin oma sisennys
+ * mukana, koska laatikkomalli on border-box. Oikea reunus on nappirivin
+ * lohkossa leveämpi (codebuttons.css). */
+.md-typeset .highlight .hl-line {
+  display: block;
+  width: max-content;
+  min-width: calc(100% + 1.25em + var(--jyu-code-padding-right, 1.25em));
+  padding: 0 var(--jyu-code-padding-right, 1.25em) 0 1.25em;
+  margin: 0 calc(-1 * var(--jyu-code-padding-right, 1.25em)) 0 -1.25em;
+}
+
+.md-typeset .highlight .hl-green {
+  background-color: var(--jyu-hl-green);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-green-edge);
+}
+
+.md-typeset .highlight .hl-yellow {
+  background-color: var(--jyu-hl-yellow);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-yellow-edge);
+}
+
+.md-typeset .highlight .hl-red {
+  background-color: var(--jyu-hl-red);
+  box-shadow: inset 2px 0 0 var(--jyu-hl-red-edge);
+}
+
+/* Vaaleassa vihreällä ja punaisella rivillä teeman syntaksivärit 12 %
+ * tummempina, jotta ne ovat korostusta vasten vähintään yhtä kontrastisia
+ * kuin koodin taustaa vasten (4,5:1). Arvot ovat teeman vaalean teeman
+ * värit (Zensicalin main.css): muuttujaa ei voi tummentaa sen omasta
+ * arvosta, koska se viittaisi itseensä. Nimet, kommentit ja välimerkit
+ * ovat valmiiksi tummia. */
+[data-md-color-scheme="default"] .md-typeset .highlight :is(.hl-green, .hl-red) {
+  --md-code-hl-number-color: color-mix(in srgb, #d52a2a 88%, black);
+  --md-code-hl-special-color: color-mix(in srgb, #db1457 88%, black);
+  --md-code-hl-function-color: color-mix(in srgb, #a846b9 88%, black);
+  --md-code-hl-constant-color: color-mix(in srgb, #6e59d9 88%, black);
+  --md-code-hl-keyword-color: color-mix(in srgb, #3f6ec6 88%, black);
+  --md-code-hl-string-color: color-mix(in srgb, #1c7d4d 88%, black);
+}
+
+/* Tummassa korostetulla rivillä teksti vaaleampana, jotta se on yhtä
+ * kontrastista kuin muualla koodissa: syntaksivärit 35 % kohti valkoista,
+ * nimet ja muu teksti teeman 80 %:n sijaan 90 %, ja kommentit ja välimerkit
+ * 62 %:n sijaan 72 % peittävinä (typography.css). Värit ovat teeman tumman
+ * teeman arvot (Zensicalin palette.css), samasta syystä kuin yllä. */
+[data-md-color-scheme="slate"] .md-typeset .highlight .hl-line {
+  --md-code-hl-number-color: color-mix(in srgb, #e6695b 65%, white);
+  --md-code-hl-special-color: color-mix(in srgb, #f06090 65%, white);
+  --md-code-hl-function-color: color-mix(in srgb, #c973d9 65%, white);
+  --md-code-hl-constant-color: color-mix(in srgb, #9383e2 65%, white);
+  --md-code-hl-keyword-color: color-mix(in srgb, #6791e0 65%, white);
+  --md-code-hl-string-color: color-mix(in srgb, #2fb170 65%, white);
+  --md-code-hl-name-color: hsla(var(--md-hue), 20%, 90%, 1);
+  --md-code-hl-operator-color: hsla(var(--md-hue), 15%, 90%, 0.72);
+  --md-code-hl-punctuation-color: hsla(var(--md-hue), 15%, 90%, 0.72);
+  --md-code-hl-comment-color: hsla(var(--md-hue), 15%, 90%, 0.72);
+  --md-code-hl-generic-color: hsla(var(--md-hue), 15%, 90%, 0.72);
+  --md-code-hl-variable-color: hsla(var(--md-hue), 15%, 90%, 0.72);
+  color: hsla(var(--md-hue), 20%, 90%, 1);
+}
+
+/* Nappirivin alla oleva pinta (codebuttons.css) peittää ensimmäisen näkyvän
+ * rivin lopun; korostetulla rivillä pinta on korostuksen värinen, ettei
+ * korostus katkea nappien kohdalla. Ensimmäinen näkyvä rivi on piilorivien
+ * ollessa piilossa ensimmäinen piilottamaton. */
+.md-typeset pre:has(> code.hide-boring > :nth-child(1 of :not(.boring)).hl-green),
+.md-typeset pre:has(> code:not(.hide-boring) > :first-child.hl-green) {
+  --jyu-code-panel-color: var(--jyu-hl-green);
+}
+
+.md-typeset pre:has(> code.hide-boring > :nth-child(1 of :not(.boring)).hl-yellow),
+.md-typeset pre:has(> code:not(.hide-boring) > :first-child.hl-yellow) {
+  --jyu-code-panel-color: var(--jyu-hl-yellow);
+}
+
+.md-typeset pre:has(> code.hide-boring > :nth-child(1 of :not(.boring)).hl-red),
+.md-typeset pre:has(> code:not(.hide-boring) > :first-child.hl-red) {
+  --jyu-code-panel-color: var(--jyu-hl-red);
+}
+
+/* Kopioitaessa teema piilottaa rivien rakenteen (data-md-copying), jottei
+ * lohkotason rivi lisäisi leikepöydälle rivinvaihtoja; sama korostetulle. */
+.md-typeset .highlight code[data-md-copying] .hl-line {
+  display: contents;
+}
