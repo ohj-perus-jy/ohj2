@@ -1,0 +1,1074 @@
+Java
+python
+JAVA
+CSharp
+  java  
+
+  Java
+PYTHON
+CSHARP
+KOTLIN
+scala
+GROOVY
+  Rust
+Go  
+javascript
+typescript
+  Ruby
+  Perl
+swift
+  Dart
+Haskell  
+ERLANG
+ELIXIR
+Clojure  
+Lua
+R
+MATLAB
+Fortran  
+cobol
+PASCAL
+Assembly
+SQL
+  HTML
+CSS
+react
+Angular  
+Vue
+SVELTE
+SPRING
+  Hibernate
+DOCKER
+kubernetes
+maven
+GRADLE
+Git
+linux
+Windows  
+macos
+  JSON
+XML
+CSV
+STREAM
+Scanner  
+  File
+  Path
+queue
+stack
+Set
+Map
+  List
+array
+binarytree
+graph
+  Algorithm
+Pattern  
+java
+Python  
+CSharp  
+Kotlin  
+SCALA
+Groovy  
+rust
+Go
+JAVASCRIPT
+TYPESCRIPT
+ruby
+perl
+SWIFT
+dart
+Haskell
+Erlang  
+Elixir  
+Clojure
+  Lua
+R  
+Matlab  
+Fortran
+COBOL
+Pascal  
+  Assembly
+  SQL
+html
+  CSS
+REACT
+Angular
+  Vue
+Svelte  
+Spring  
+hibernate
+Docker  
+KUBERNETES
+MAVEN
+Gradle  
+  Git
+LINUX
+Windows
+MACOS
+json
+  XML
+  CSV
+Stream  
+Scanner
+file
+path
+QUEUE
+STACK
+  Set
+  Map
+list
+ARRAY
+BINARYTREE
+GRAPH
+algorithm
+Pattern
+JAVA
+Python
+CSharp
+Kotlin
+Scala  
+Groovy
+RUST
+  Go
+JavaScript  
+TypeScript  
+RUBY
+PERL
+Swift  
+DART
+  Haskell
+Erlang
+Elixir
+  Clojure
+lua
+R
+Matlab
+  Fortran
+Cobol  
+Pascal
+assembly
+sql
+HTML
+css
+React  
+  Angular
+vue
+Svelte
+Spring
+HIBERNATE
+Docker
+Kubernetes  
+Maven  
+Gradle
+git
+Linux  
+  Windows
+MacOS  
+JSON
+xml
+csv
+Stream
+  Scanner
+FILE
+PATH
+Queue  
+Stack  
+set
+map
+LIST
+Array  
+BinaryTree  
+Graph  
+ALGORITHM
+  Pattern
+
+Java  
+  Python
+  CSharp
+  Kotlin
+Scala
+  Groovy
+Rust  
+go
+JavaScript
+TypeScript
+Ruby  
+Perl  
+Swift
+Dart  
+haskell
+  Erlang
+  Elixir
+clojure
+LUA
+  R
+  Matlab
+fortran
+Cobol
+  Pascal
+ASSEMBLY
+SQL
+HTML  
+CSS
+React
+angular
+VUE
+  Svelte
+  Spring
+Hibernate  
+  Docker
+Kubernetes
+Maven
+  Gradle
+GIT
+Linux
+windows
+MacOS
+JSON  
+XML
+CSV
+  Stream
+scanner
+File  
+Path  
+Queue
+Stack
+SET
+MAP
+List  
+Array
+BinaryTree
+Graph
+Algorithm  
+pattern
+Java
+python
+csharp
+kotlin
+  Scala
+groovy
+Rust
+GO
+  JavaScript
+  TypeScript
+Ruby
+Perl
+  Swift
+Dart
+HASKELL
+erlang
+elixir
+CLOJURE
+Lua  
+r
+matlab
+FORTRAN
+  Cobol
+pascal
+Assembly  
+SQL  
+HTML
+CSS  
+  React
+ANGULAR
+Vue  
+svelte
+spring
+Hibernate
+docker
+  Kubernetes
+  Maven
+gradle
+Git  
+  Linux
+WINDOWS
+  MacOS
+JSON
+XML  
+CSV  
+stream
+SCANNER
+File
+Path
+  Queue
+  Stack
+Set  
+Map  
+List
+  Array
+  BinaryTree
+  Graph
+Algorithm
+PATTERN
+  Java
+PYTHON
+CSHARP
+KOTLIN
+scala
+GROOVY
+  Rust
+Go  
+javascript
+typescript
+  Ruby
+  Perl
+swift
+  Dart
+Haskell  
+ERLANG
+ELIXIR
+Clojure  
+Lua
+R
+MATLAB
+Fortran  
+cobol
+PASCAL
+Assembly
+SQL
+  HTML
+CSS
+react
+Angular  
+Vue
+SVELTE
+SPRING
+  Hibernate
+DOCKER
+kubernetes
+maven
+GRADLE
+Git
+linux
+Windows  
+macos
+  JSON
+XML
+CSV
+STREAM
+Scanner  
+  File
+  Path
+queue
+stack
+Set
+Map
+  List
+array
+binarytree
+graph
+  Algorithm
+Pattern  
+
+java
+Python  
+CSharp  
+Kotlin  
+SCALA
+Groovy  
+rust
+Go
+JAVASCRIPT
+TYPESCRIPT
+ruby
+perl
+SWIFT
+dart
+Haskell
+Erlang  
+Elixir  
+Clojure
+  Lua
+R  
+Matlab  
+Fortran
+COBOL
+Pascal  
+  Assembly
+  SQL
+html
+  CSS
+REACT
+Angular
+  Vue
+Svelte  
+Spring  
+hibernate
+Docker  
+KUBERNETES
+MAVEN
+Gradle  
+  Git
+LINUX
+Windows
+MACOS
+json
+  XML
+  CSV
+Stream  
+Scanner
+file
+path
+QUEUE
+STACK
+  Set
+  Map
+list
+ARRAY
+BINARYTREE
+GRAPH
+algorithm
+Pattern
+JAVA
+Python
+CSharp
+Kotlin
+Scala  
+Groovy
+RUST
+  Go
+JavaScript  
+TypeScript  
+RUBY
+PERL
+Swift  
+DART
+  Haskell
+Erlang
+Elixir
+  Clojure
+lua
+R
+Matlab
+  Fortran
+Cobol  
+Pascal
+assembly
+sql
+HTML
+css
+React  
+  Angular
+vue
+Svelte
+Spring
+HIBERNATE
+Docker
+Kubernetes  
+Maven  
+Gradle
+git
+Linux  
+  Windows
+MacOS  
+JSON
+xml
+csv
+Stream
+  Scanner
+FILE
+PATH
+Queue  
+Stack  
+set
+map
+LIST
+Array  
+BinaryTree  
+Graph  
+ALGORITHM
+  Pattern
+Java  
+  Python
+  CSharp
+  Kotlin
+Scala
+  Groovy
+Rust  
+go
+JavaScript
+TypeScript
+Ruby  
+Perl  
+Swift
+Dart  
+haskell
+  Erlang
+  Elixir
+clojure
+LUA
+  R
+  Matlab
+fortran
+Cobol
+  Pascal
+ASSEMBLY
+SQL
+HTML  
+CSS
+React
+angular
+VUE
+  Svelte
+  Spring
+Hibernate  
+  Docker
+Kubernetes
+Maven
+  Gradle
+GIT
+Linux
+windows
+MacOS
+JSON  
+XML
+CSV
+  Stream
+scanner
+File  
+Path  
+Queue
+Stack
+SET
+MAP
+List  
+Array
+BinaryTree
+Graph
+Algorithm  
+pattern
+
+Java
+python
+csharp
+kotlin
+  Scala
+groovy
+Rust
+GO
+  JavaScript
+  TypeScript
+Ruby
+Perl
+  Swift
+Dart
+HASKELL
+erlang
+elixir
+CLOJURE
+Lua  
+r
+matlab
+FORTRAN
+  Cobol
+pascal
+Assembly  
+SQL  
+HTML
+CSS  
+  React
+ANGULAR
+Vue  
+svelte
+spring
+Hibernate
+docker
+  Kubernetes
+  Maven
+gradle
+Git  
+  Linux
+WINDOWS
+  MacOS
+JSON
+XML  
+CSV  
+stream
+SCANNER
+File
+Path
+  Queue
+  Stack
+Set  
+Map  
+List
+  Array
+  BinaryTree
+  Graph
+Algorithm
+PATTERN
+  Java
+PYTHON
+CSHARP
+KOTLIN
+scala
+GROOVY
+  Rust
+Go  
+javascript
+typescript
+  Ruby
+  Perl
+swift
+  Dart
+Haskell  
+ERLANG
+ELIXIR
+Clojure  
+Lua
+R
+MATLAB
+Fortran  
+cobol
+PASCAL
+Assembly
+SQL
+  HTML
+CSS
+react
+Angular  
+Vue
+SVELTE
+SPRING
+  Hibernate
+DOCKER
+kubernetes
+maven
+GRADLE
+Git
+linux
+Windows  
+macos
+  JSON
+XML
+CSV
+STREAM
+Scanner  
+  File
+  Path
+queue
+stack
+Set
+Map
+  List
+array
+binarytree
+graph
+  Algorithm
+Pattern  
+java
+Python  
+CSharp  
+Kotlin  
+SCALA
+Groovy  
+rust
+Go
+JAVASCRIPT
+TYPESCRIPT
+ruby
+perl
+SWIFT
+dart
+Haskell
+Erlang  
+Elixir  
+Clojure
+  Lua
+R  
+Matlab  
+Fortran
+COBOL
+Pascal  
+  Assembly
+  SQL
+html
+  CSS
+REACT
+Angular
+  Vue
+Svelte  
+Spring  
+hibernate
+Docker  
+KUBERNETES
+MAVEN
+Gradle  
+  Git
+LINUX
+Windows
+MACOS
+json
+  XML
+  CSV
+Stream  
+Scanner
+file
+path
+QUEUE
+STACK
+  Set
+  Map
+list
+ARRAY
+BINARYTREE
+GRAPH
+algorithm
+Pattern
+
+JAVA
+Python
+CSharp
+Kotlin
+Scala  
+Groovy
+RUST
+  Go
+JavaScript  
+TypeScript  
+RUBY
+PERL
+Swift  
+DART
+  Haskell
+Erlang
+Elixir
+  Clojure
+lua
+R
+Matlab
+  Fortran
+Cobol  
+Pascal
+assembly
+sql
+HTML
+css
+React  
+  Angular
+vue
+Svelte
+Spring
+HIBERNATE
+Docker
+Kubernetes  
+Maven  
+Gradle
+git
+Linux  
+  Windows
+MacOS  
+JSON
+xml
+csv
+Stream
+  Scanner
+FILE
+PATH
+Queue  
+Stack  
+set
+map
+LIST
+Array  
+BinaryTree  
+Graph  
+ALGORITHM
+  Pattern
+Java  
+  Python
+  CSharp
+  Kotlin
+Scala
+  Groovy
+Rust  
+go
+JavaScript
+TypeScript
+Ruby  
+Perl  
+Swift
+Dart  
+haskell
+  Erlang
+  Elixir
+clojure
+LUA
+  R
+  Matlab
+fortran
+Cobol
+  Pascal
+ASSEMBLY
+SQL
+HTML  
+CSS
+React
+angular
+VUE
+  Svelte
+  Spring
+Hibernate  
+  Docker
+Kubernetes
+Maven
+  Gradle
+GIT
+Linux
+windows
+MacOS
+JSON  
+XML
+CSV
+  Stream
+scanner
+File  
+Path  
+Queue
+Stack
+SET
+MAP
+List  
+Array
+BinaryTree
+Graph
+Algorithm  
+pattern
+Java
+python
+csharp
+kotlin
+  Scala
+groovy
+Rust
+GO
+  JavaScript
+  TypeScript
+Ruby
+Perl
+  Swift
+Dart
+HASKELL
+erlang
+elixir
+CLOJURE
+Lua  
+r
+matlab
+FORTRAN
+  Cobol
+pascal
+Assembly  
+SQL  
+HTML
+CSS  
+  React
+ANGULAR
+Vue  
+svelte
+spring
+Hibernate
+docker
+  Kubernetes
+  Maven
+gradle
+Git  
+  Linux
+WINDOWS
+  MacOS
+JSON
+XML  
+CSV  
+stream
+SCANNER
+File
+Path
+  Queue
+  Stack
+Set  
+Map  
+List
+  Array
+  BinaryTree
+  Graph
+Algorithm
+PATTERN
+
+  Java
+PYTHON
+CSHARP
+KOTLIN
+scala
+GROOVY
+  Rust
+Go  
+javascript
+typescript
+  Ruby
+  Perl
+swift
+  Dart
+Haskell  
+ERLANG
+ELIXIR
+Clojure  
+Lua
+R
+MATLAB
+Fortran  
+cobol
+PASCAL
+Assembly
+SQL
+  HTML
+CSS
+react
+Angular  
+Vue
+SVELTE
+SPRING
+  Hibernate
+DOCKER
+kubernetes
+maven
+GRADLE
+Git
+linux
+Windows  
+macos
+  JSON
+XML
+CSV
+STREAM
+Scanner  
+  File
+  Path
+queue
+stack
+Set
+Map
+  List
+array
+binarytree
+graph
+  Algorithm
+Pattern  
+java
+Python  
+CSharp  
+Kotlin  
+SCALA
+Groovy  
+rust
+Go
+JAVASCRIPT
+TYPESCRIPT
+ruby
+perl
+SWIFT
+dart
+Haskell
+Erlang  
+Elixir  
+Clojure
+  Lua
+R  
+Matlab  
+Fortran
+COBOL
+Pascal  
+  Assembly
+  SQL
+html
+  CSS
+REACT
+Angular
+  Vue
+Svelte  
+Spring  
+hibernate
+Docker  
+KUBERNETES
+MAVEN
+Gradle  
+  Git
+LINUX
+Windows
+MACOS
+json
+  XML
+  CSV
+Stream  
+Scanner
+file
+path
+QUEUE
+STACK
+  Set
+  Map
+list
+ARRAY
+BINARYTREE
+GRAPH
+algorithm
+Pattern
+JAVA
+Python
+CSharp
+Kotlin
+Scala  
+Groovy
+RUST
+  Go
+JavaScript  
+TypeScript  
+RUBY
+PERL
+Swift  
+DART
+  Haskell
+Erlang
+Elixir
+  Clojure
+lua
+R
+Matlab
+  Fortran
+Cobol  
+Pascal
+assembly
+sql
+HTML
+css
+React  
+  Angular
+vue
+Svelte
+Spring
+HIBERNATE
+Docker
+Kubernetes  
+Maven  
+Gradle
+git
+Linux  
+  Windows
+MacOS  
+JSON
+xml
+csv
+Stream
+  Scanner
+FILE
+PATH
+Queue  
+Stack  
+set
+map
+LIST
+Array  
+BinaryTree  
+Graph  
+ALGORITHM
+  Pattern
+

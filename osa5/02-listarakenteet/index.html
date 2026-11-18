@@ -1,0 +1,3546 @@
+
+<!doctype html>
+<html lang="fi" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://ohjelmointi2.it.jyu.fi/osa5/02-listarakenteet/">
+      
+      
+      
+        <link rel="prev" href="../01-kokoelmat/">
+      
+      
+        <link rel="next" href="../03-hakurakenteet/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.1.1">
+    
+    
+      
+        <title>5.2 Listarakenteet - Ohjelmointi 2</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.ebb7f775.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/css/fonts.css">
+    
+      <link rel="stylesheet" href="../../assets/css/paletti.css">
+    
+      <link rel="stylesheet" href="../../assets/css/typography.css">
+    
+      <link rel="stylesheet" href="../../assets/css/fontmenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/layout.css">
+    
+      <link rel="stylesheet" href="../../assets/css/sitemenu.css">
+    
+      <link rel="stylesheet" href="../../assets/css/search.css">
+    
+      <link rel="stylesheet" href="../../assets/css/admonitions.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tasks.css">
+    
+      <link rel="stylesheet" href="../../assets/css/icons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/tables.css">
+    
+      <link rel="stylesheet" href="../../assets/css/code.css">
+    
+      <link rel="stylesheet" href="../../assets/css/requirements.css">
+    
+      <link rel="stylesheet" href="../../assets/css/diagrams.css">
+    
+      <link rel="stylesheet" href="../../assets/css/codebuttons.css">
+    
+      <link rel="stylesheet" href="../../assets/css/playground.css">
+    
+      <link rel="stylesheet" href="../../assets/css/highlights.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hidelines.css">
+    
+      <link rel="stylesheet" href="../../assets/css/copy.css">
+    
+      <link rel="stylesheet" href="../../assets/css/hints.css">
+    
+      <link rel="stylesheet" href="../../assets/css/print.css">
+    
+      <link rel="stylesheet" href="../../assets/css/walkthrough.css">
+    
+      <link rel="stylesheet" href="../../assets/css/puhe.css">
+    
+      <link rel="stylesheet" href="../../assets/css/visa.css">
+    
+      <link rel="stylesheet" href="../../assets/css/glightbox.min.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  <link rel="preload" href="../../assets/fonts/source-serif-4/normal.woff2" as="font" type="font/woff2" crossorigin>
+
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        Hyppää sisältöön
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Ylätunniste"><button type="button" class="md-header__button md-icon jyu-rail-button" id="jyu-rail-button"
+            title="Piilota valikko" aria-label="Piilota valikko"
+            aria-expanded="true" aria-controls="jyu-rail" aria-keyshortcuts="b">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-panel-left" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M9 3v18"/></svg>
+    </button>
+    <script>try{if(localStorage.getItem("jyu-rail")==="hidden")document.documentElement.setAttribute("data-jyu-rail","hidden")}catch(e){}</script>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">Navigaatio</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        
+        <div class="md-header__topic jyu-sites" data-md-component="jyu-sites">
+          <span class="md-ellipsis"><a href="../..">Ohjelmointi 2</a>
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5.2 Listarakenteet
+            
+          </span>
+        </div>
+      </div>
+    </div><button type="button" class="md-header__button md-icon jyu-puhe-button" hidden
+            title="Kuuntele sivu" aria-label="Kuuntele sivu" aria-pressed="false">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-volume-2" viewBox="0 0 24 24"><path d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298zM16 9a5 5 0 0 1 0 6M19.364 18.364a9 9 0 0 0 0-12.728"/></svg>
+    </button>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">Haku</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Haku">
+  <button type="button" class="md-search__button" title="Haku (Ctrl+K)">
+    Haku
+  </button>
+</div><script>if(/^Mac/.test(document.documentElement.dataset.platform))document.querySelectorAll(".md-search__button").forEach(b=>b.title=b.title.replace("Ctrl+K","⌘K"))</script>
+      
+    <div class="md-header__option jyu-font" data-md-component="jyu-font" data-steps="90 100 110 120 135 150 175">
+      <button type="button" class="jyu-font__button" id="jyu-font-button"
+              title="Leipäteksti: Serif, 100 %" aria-label="Leipäteksti: Serif, 100 %"
+              aria-haspopup="dialog" aria-expanded="false" aria-controls="jyu-font-panel">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-type" viewBox="0 0 24 24"><path d="M12 4v16M4 7V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2M9 20h6"/></svg>
+        <span class="jyu-font__chevron"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></span>
+      </button>
+      <div class="jyu-font__panel" id="jyu-font-panel" role="dialog" aria-label="Leipäteksti" hidden>
+        <div class="jyu-font__size" role="group" aria-labelledby="jyu-font-size-label">
+          <span class="jyu-font__size-label" id="jyu-font-size-label">Tekstin koko</span>
+          <button type="button" class="jyu-font__step" data-step="-1" aria-label="Pienennä tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></svg>
+          </button>
+          <button type="button" class="jyu-font__reset" title="Palauta 100 %" aria-label="Palauta 100 %" aria-disabled="true"><span aria-live="polite">100 %</span></button>
+          <button type="button" class="jyu-font__step" data-step="1" aria-label="Suurenna tekstiä">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></svg>
+          </button>
+        </div>
+        <ul class="jyu-font__list" id="jyu-font-list" role="listbox" aria-label="Leipätekstin kirjasin">
+          <li class="jyu-font__item" role="option" aria-selected="true" tabindex="-1" data-font="" data-short="Serif">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Source Serif 4</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="atkinson" data-short="Atkinson">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Atkinson Hyperlegible Next</span>
+            <span class="jyu-font__kind">sans-serif</span>
+          </li>
+          <li class="jyu-font__item" role="option" aria-selected="false" tabindex="-1" data-font="literata" data-short="Literata">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            <span class="jyu-font__name">Literata</span>
+            <span class="jyu-font__kind">serif</span>
+          </li>
+        </ul>
+      </div>
+    </div><script>try{var b=document.body,f=localStorage.getItem("jyu-font"),k=localStorage.getItem("jyu-text-size");if(f&&document.querySelector('.jyu-font__item[data-font="'+f+'"]'))b.setAttribute("data-jyu-font",f);if(k&&document.querySelector(".jyu-font").dataset.steps.split(" ").indexOf(k)>=0)b.style.setProperty("--jyu-text-scale",k/100)}catch(e){}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda tummaan teemaan"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Vaihda tummaan teemaan" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Vaihda vaaleaan teemaan"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Vaihda vaaleaan teemaan" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    <a href="../../tulosta/" title="Tulosta koko kirja" aria-label="Tulosta koko kirja" class="md-header__button md-icon jyu-print-button">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-printer" viewBox="0 0 24 24"><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6"/><rect width="12" height="8" x="6" y="14" rx="1"/></svg>
+    </a>
+    <div class="md-header__source">
+      
+        
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigaatio" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Ohjelmointi 2" class="md-nav__button md-logo" aria-label="Ohjelmointi 2" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    Ohjelmointi 2
+  </label>
+  
+    <div class="md-nav__source">
+      
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Aloitus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../suorittaminen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Suorittaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Työkalut ja asentaminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../harjoitustyo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Harjoitustyö
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../tentti/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tentti
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_5" id="__nav_5_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  Tentti
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tentti/tenttiohjeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Tenttiohjeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../ukk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Usein kysyttyä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../luennot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Luennot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/koti" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Eteneminen (TIM)
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa1/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1 Java-kielen perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_9" id="__nav_9_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_9">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  1 Java-kielen perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/01-hei-java/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.1 Hei, Java!
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/02-muuttujat-ja-tietotyypit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.2 Muuttujat ja tietotyypit
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/03-ohjausrakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.3 Ohjausrakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/04-aliohjelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.4 Aliohjelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa1/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  1.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa2/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2 Olio-ohjelmoinnin perusteet
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_10" id="__nav_10_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_10">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  2 Olio-ohjelmoinnin perusteet
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/01-kohti-olio-ohjelmointia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.1 Kohti olio-ohjelmointia
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/02-luokka-ja-olio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.2 Luokka ja olio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/03-kapselointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.3 Kapselointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa2/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  2.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_11" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa3/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3 Perintä, polymorfismi
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_11" id="__nav_11_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_11_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_11">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  3 Perintä, polymorfismi
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/01-perinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.1 Perintä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/02-polymorfismi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.2 Polymorfismi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/03-abstrakti-luokka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.3 Abstrakti luokka
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa3/04-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  3.4 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_12" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa4/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4 Rajapinta, geneeriset luokat
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_12" id="__nav_12_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_12_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_12">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  4 Rajapinta, geneeriset luokat
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/01-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.1 Rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/02-vertailurajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.2 Vertailurajapinnat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/03-perinta-ja-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.3 Perintä ja rajapinta olioiden yhteistyössä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/04-tyyppiparametrit-ja-geneerisyys/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.4 Tyyppiparametrit ja geneerisyys
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa4/05-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  4.5 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_13" checked>
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5 Tietorakenteita ja algoritmeja
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_13" id="__nav_13_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_13_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_13">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  5 Tietorakenteita ja algoritmeja
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-kokoelmat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.1 Kokoelmat
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.2 Listarakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#oma-listarakenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Oma listarakenne
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listan-perustoiminnot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Listan perustoiminnot
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynaamisuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dynaamisuus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equals-metodi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Equals-metodi
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashcode-metodi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        HashCode-metodi
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poistaminen-alkion-perusteella" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Poistaminen alkion perusteella
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-hakurakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.3 Hakurakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-joukkorakenteet-jonorakenteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.4 Joukko- ja jonorakenteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-rekursio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.5 Rekursio
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  5.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_14" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa6/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_14" id="__nav_14_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_14_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_14">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  6 Hyödyllisiä menetelmiä Javassa
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/01-funktiorajapinnat-ja-lambda-lausekkeet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.1 Funktiorajapinnat ja lambda-lausekkeet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/02-kokoelmien-kasittely-stream-api/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.2 Kokoelmien käsittely: Stream API
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/03-poikkeusten-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.3 Poikkeusten hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/04-ulkoiset-kirjastot-ja-java-projektien-hallintatyokalut/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.4 Ulkoiset kirjastot ja Java-projektien hallintatyökalut
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/05-tiedostojen-kasittely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.5 Tiedostojen käsittely
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa6/06-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  6.6 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_15" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa7/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7 JavaFX osa 1, SceneBuilder
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_15" id="__nav_15_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_15_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_15">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  7 JavaFX osa 1, SceneBuilder
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/01-javafx-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.1 JavaFX perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/02-scenebuilder-perusteet/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.2 SceneBuilder-perusteet
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/03-versionhallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.3 Versionhallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/04-sovelluslogiikka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.4 Sovelluslogiikka ja käyttöliittymä
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/05-tehtavien-lukeminen-tallennus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.5 Tehtävien tallennus tiedostoon
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/06-scenebuilder-asettelu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.6 Komponenttien asettelu
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa7/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  7.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_16" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../osa8/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8 JavaFX osa 2, MVC
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_16" id="__nav_16_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_16_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_16">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  8 JavaFX osa 2, MVC
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/01-malli-ja-observable-rajapinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.1 Observable-rajapinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/02-tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.2 TableView ja databinding
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/03-mvc-arkkitehtuuri/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.3 MVC-arkkitehtuuri
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/04-useita-nakymia/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.4 Tehtävien muokkaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/05-yksikkotestaus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.5 Yksikkötestaus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/06-versionhallinnan-etakaytto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.6 Koodin julkaiseminen etävarastopalvelussa
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa8/07-tehtavat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  8.7 Osan kaikki tehtävät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa9/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  9 Harjoitustyö, vaihe 1
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa10/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  10 Harjoitustyö, vaihe 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa11/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  11 Harjoitustyö, vaihe 3
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../osa12/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  12 Harjoitustyön palautus
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+          
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_21" >
+        
+          
+          <div class="md-nav__link md-nav__container">
+            <a href="../../javafx/" class="md-nav__link ">
+              
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13 JavaFX-ohjeita
+
+    
+  </span>
+  
+  
+
+            </a>
+            
+              
+              <label class="md-nav__link " for="__nav_21" id="__nav_21_label" tabindex="0">
+                <span class="md-nav__icon md-icon"></span>
+              </label>
+            
+          </div>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_21_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_21">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  13 JavaFX-ohjeita
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/nakymat/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.1 Näkymät
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/tableview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.2 TableView
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/ui-kirjastot/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.3 Ulkoiset UI-kirjastot
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/observable-bindings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.4 Johdettujen Observable-arvojen laskeminen
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/validointi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.5 Validointi
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../javafx/viitteiden-hallinta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  13.6 Viitteiden hallinta
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="Sisällysluettelo">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Sisällysluettelo
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#oma-listarakenne" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Oma listarakenne
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#listan-perustoiminnot" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Listan perustoiminnot
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynaamisuus" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Dynaamisuus
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#equals-metodi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Equals-metodi
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hashcode-metodi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        HashCode-metodi
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#poistaminen-alkion-perusteella" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        Poistaminen alkion perusteella
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 data-puhe="9bebc22bc3b177da" id="listarakenteet">Listarakenteet<a class="headerlink" href="#listarakenteet" title="Pysyvä linkki tähän otsikkoon">&para;</a></h1>
+<p><span class=jyu-puhe data-puhe=6e9b50817b9d174f></span><code>List</code>-rajapinta kuvaa kokoelmaa, jossa alkiot ovat tietyssä järjestyksessä ja
+niihin voidaan viitata indeksin avulla. Tämä vastaa monella tapaa taulukkoa,
+mutta tarjoaa huomattavasti joustavamman rajapinnan. Sivuhuomautus: Oikeampaa
+olisi sanoa, että kyseessä on <code>List&lt;E&gt;</code>-rajapinta, jossa <code>E</code> on listan alkioiden
+(<em>element</em>) tyyppi, mutta tässä yhteydessä jätämme geneerisyyden mainitsematta,
+jotta kirjoitusasu pysyy yksinkertaisena. </p>
+<p><span class=jyu-puhe data-puhe=1b843993a90f00c6></span>Kuvitellaan, että ohjelma tallentaa opiskelijoiden nimet siinä järjestyksessä
+kuin he ovat ilmoittautuneet kurssille. Tässä tilanteessa järjestyksellä on
+merkitystä, ja sama nimi voi esiintyä useammin kuin kerran, koska kahdella eri
+henkilöllä voi olla sama nimi. </p>
+<div class="language-java highlight" data-hidden="1 8" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">opiskelijat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Aino"</span><span class="p">);</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Ville"</span><span class="p">);</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Aino"</span><span class="p">);</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">opiskelijat</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">1</span><span class="p">));</span><span class="w"> </span><span class="c1">// Ville</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=9a5e3d31c44bafab></span>Listan käyttäminen tuntuu luontevalta, koska ajattelet tietoa nimenomaan jonona:
+ensimmäinen, toinen, kolmas. <code>ArrayList</code> on tässä yleisin valinta, koska se
+mahdollistaa nopean pääsyn alkioihin indeksin avulla. Tässä vaiheessa kurssia
+voit ajatella, että <code>List</code> tarkoittaa käytännössä <code>ArrayList</code>‑luokkaa, ellei ole
+erityistä syytä käyttää muuta toteutusta.</p>
+<p><span class=jyu-puhe data-puhe=a4c7e9374bdc343a></span>Listan alkioiden suhteellinen järjestys säilyy, vaikka välistä poistetaan
+alkioita. Kun yksi alkio poistetaan, sitä seuraavat alkiot siirtyvät
+automaattisesti yhden askeleen eteenpäin.</p>
+<div class="language-java highlight" data-hidden="1 8" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">List</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">opiskelijat</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Aino"</span><span class="p">);</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Ville"</span><span class="p">);</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Aino"</span><span class="p">);</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">opiskelijat</span><span class="p">.</span><span class="na">remove</span><span class="p">(</span><span class="s">"Ville"</span><span class="p">);</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="n">IO</span><span class="p">.</span><span class="na">println</span><span class="p">(</span><span class="n">opiskelijat</span><span class="p">);</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=ba4fc1e445b42ba7></span>Jokaisella alkiolla on listassa aina tietty paikka eli indeksi, ja tämän vuoksi
+lista käydään läpi aina samassa järjestyksessä. Tämä tekee listasta sopivan
+tilanteisiin, joissa järjestyksellä on merkitystä, järjestystä halutaan muokata
+tai säilyttää, tai sama alkio saa esiintyä useita kertoja.</p>
+<h2 data-puhe="e2ba54464fb47cf3" id="oma-listarakenne">Oma listarakenne<a class="headerlink" href="#oma-listarakenne" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=81e259f7de5af88c></span>Seuraavaksi rakennetaan itse yksinkertainen dynaaminen listarakenne taulukon
+päälle. Tämän tarkoituksena on havainnollistaa, miten <code>ArrayList</code> toimii
+sisäisesti perusperiaatteiden tasolla. Toteutus ei ole täydellinen eikä kata
+koko <code>List</code>‑rajapintaa, mutta riittää ymmärtämään keskeiset ideat.</p>
+<p><span class=jyu-puhe data-puhe=7583f9c3002d37ba></span>Aloitetaan luomalla oma luokka <code>Lista&lt;T&gt;</code>, joka sisältää taulukon alkioiden
+tallentamista varten. Alla oleva koodi on annettu valmiiksi.</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Lista</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">T</span><span class="o">[]</span><span class="w"> </span><span class="n">alkiot</span><span class="p">;</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">koko</span><span class="p">;</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nd">@SuppressWarnings</span><span class="p">(</span><span class="s">"unchecked"</span><span class="p">)</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kd">public</span><span class="w"> </span><span class="nf">Lista</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">kapasiteetti</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="k">this</span><span class="p">.</span><span class="na">alkiot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">T</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">kapasiteetti</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">koko</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=acefd9e934310334></span>Tämän seurauksena <code>alkiot</code>-taulukko alustuu niin, että se sisältää
+<code>kapasiteetti</code>-parametrin verran <code>null</code>-arvoja. </p>
+<p><span class=jyu-puhe data-puhe=145c660c39e0f26a></span>Tässä välissä on tarpeen selittää, miksi <code>@SuppressWarnings("unchecked")</code>
+tarvitaan. Javassa ei voi suoraan luoda geneeristä <code>T</code>-tyyppistä taulukkoa.
+Tyyppiparametri <code>T</code> on olemassa vain käännösaikana. Ajonaikaisesti Java ei
+tiedä, mikä <code>T</code> oikeasti on. Tätä kutsutaan tyyppien häviämiseksi (type
+erasure). Taulukot sen sijaan ovat ajonaikaisesti tyyppitietoisia; kun luot
+taulukon, JVM tietää tarkasti, minkä tyyppisiä alkioita siihen saa tallentaa.
+Tästä syntyy ristiriita: Java ei pysty luomaan taulukkoa tyypistä <code>T</code>, koska
+<code>T</code>:n todellinen tyyppi ei ole ajonaikaisesti tiedossa. Siksi tämä ei ole
+sallittua:</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">new</span><span class="w"> </span><span class="n">T</span><span class="o">[</span><span class="mi">10</span><span class="o">]</span><span class="p">;</span><span class="w"> </span><span class="c1">// käännösvirhe </span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=3b018fda480bbde8></span>Ainoa tapa kiertää rajoitus on luoda taulukko yleisimmästä mahdollisesta
+viitetyypistä eli <code>Object</code>:sta ja pakottaa se tyyppimuunnoksella geneeriseksi.</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">(</span><span class="n">T</span><span class="o">[]</span><span class="p">)</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Object</span><span class="o">[</span><span class="n">kapasiteetti</span><span class="o">]</span><span class="p">;</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=0ef01167a767be2f></span>Kääntäjä tietää, että tämä muunnos ei ole täysin turvallinen. Se ei pysty
+varmistamaan, että taulukkoon ei koskaan päädy väärän tyyppisiä alkioita. Varoituksen ohittava annotaatio
+<code>@SuppressWarnings("unchecked")</code> ei tee koodista turvallisempaa eikä
+vaarallisempaa. Se ainoastaan kertoo kääntäjälle, että tiedostat tämän
+rajoituksen ja hyväksyt sen. Ilman annotaatiota ohjelma toimii täsmälleen
+samalla tavalla, mutta kääntäjä tulostaa varoituksen.</p>
+<details>
+<summary data-puhe="725c9a7cf9eba70b"><span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span> Valinnaista lisätietoa: Missä tilanteessa tyyppimuunnos voisi aiheuttaa ongelmia?</summary>
+<p><span class=jyu-puhe data-puhe=2580cdee3948e245></span>Oletetaan, että luot <code>Lista&lt;String&gt;</code>-olion. Tällöin <code>T</code> on <code>String</code>. Sisäisesti
+taustalla luotu taulukko alkioiden säilyttämistä varten on kuitenkin <code>Object[]</code>.
+Niin kauan kuin listaa käytetään oikein, ongelmaa ei synny. Mutta Java sallii
+tämän: </p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">Lista</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">nimet</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Lista</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span><span class="w"> </span><span class="c1">// Lista, jossa T on String, pituus 10</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="n">Object</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nimet</span><span class="p">;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">Lista</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="w"> </span><span class="n">luvut</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Lista</span><span class="o">&lt;</span><span class="n">Integer</span><span class="o">&gt;</span><span class="p">)</span><span class="w"> </span><span class="n">o</span><span class="p">;</span><span class="w"> </span><span class="c1">// unchecked cast</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=70ba2e0f2d70b9ac></span>Kääntäjä varoittaa, mutta sallii koodin. Nyt molemmat viitteet osoittavat samaan
+listaan.</p>
+<p><span class=jyu-puhe data-puhe=8e383fdf79b67c69></span>Seuraavaksi lisätään listaan alkioita käyttäen <code>luvut</code>-viitettä:</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">luvut</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="mi">42</span><span class="p">);</span><span class="w"> </span><span class="c1">// oletetaan että add-metodi on toteutettu</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=3226f48c950094d9></span>Tämä onnistuu ajonaikaisesti, koska taulukko on oikeasti <code>Object[]</code> ja <code>Integer</code> on
+<code>Object</code>. JVM ei havaitse mitään virhettä tässä vaiheessa. Ongelmia syntyy, kun
+yrität hakea alkiota listasta:</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">String</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nimet</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span><span class="w"> </span><span class="c1">// ClassCastException</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=b13af02253274ab3></span>Tässä vaiheessa JVM yrittää muuntaa alkion <code>String</code>-tyyppiseksi, koska lista on
+<code>Lista&lt;String&gt;</code>. Koska alkio on kuitenkin <code>Integer</code>, syntyy <code>ClassCastException</code>.
+Tämä on se tarkka syy, miksi kääntäjä varoittaa unchecked-muunnoksesta. Se ei
+pysty todistamaan, että listan sisäinen tyyppisopimus säilyy ehjänä kaikissa
+tilanteissa. On tärkeää huomata, että ongelma ei johdu listan käytöstä sinänsä,
+vaan siitä, että geneerisen luokan tyyppitietoa kierretään eksplisiittisellä
+tyyppimuunnoksella. Valmiit Javan kokoelmat ovat samassa tilanteessa, mutta
+niiden rajapinnat ja toteutukset on suunniteltu niin, että tällaisia rikkomuksia
+ei käytännössä tapahdu normaalissa käytössä.</p>
+</details>
+<h2 data-puhe="a60e2f3047239401" id="listan-perustoiminnot">Listan perustoiminnot<a class="headerlink" href="#listan-perustoiminnot" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=09c4fe2ee20fa83c></span>Ensimmäisenä toteutetaan metodi <code>add(element)</code>, joka lisää alkion listan
+loppuun. Emme vielä murehdi sitä, mitä tapahtuu, jos taulukko on täynnä. Jos taulukossa
+on tilaa, lisääminen on yksinkertaista: asetetaan alkio taulukon seuraavaan vapaaseen
+kohtaan ja kasvatetaan kokoa yhdellä. Jos taulukko on täynnä, palataan vain
+<code>return</code>-lauseella tekemättä mitään -- korjataan tämä myöhemmin.</p>
+<p><span class=jyu-puhe data-puhe=504564c5398b81e3></span>Koska emme voi vielä lukea alkioita listasta, emme voi ohjelmallisesti tarkistaa,
+että lisäys onnistui. Voimme kuitenkin käyttää debuggeria. Kutsutaan 
+<code>add</code>-metodia pääohjelmasta ja asetetaan sen jälkeen keskeytyskohta.</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kt">void</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="n">Lista</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span><span class="w"> </span><span class="n">lista</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">Lista</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="n">lista</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Aino"</span><span class="p">);</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="n">lista</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Ville"</span><span class="p">);</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="n">lista</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="s">"Matti"</span><span class="p">);</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="c1">// Aseta keskeytyskohta loppusulun kohdalle</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=57d9e357d8e077df></span>Käynnistä IDEAn debuggeri. Avaa alhaalla aukeavassa näkymässä Threads and
+variables -välilehti. Jos tätä ei näy, valitse ylävalikosta View <span class="jyu-path">›</span> Tool Windows <span class="jyu-path">›</span> Debug.
+Nyt sinun pitäisi nähdä <code>lista</code>-olion tiedot. Avaa <code>lista</code>-olion
+<code>alkiot</code>-taulukko. Sen pitäisi sisältää lisätyt nimet alusta alkaen. IDEA ei
+näytä <code>null</code>-arvoja taulukon lopussa oletuksena. Jos haluat, saat ne esille
+klikkaamalla <code>alkiot</code>-taulukon kohdalla hiiren oikeaa painiketta, valitse
+"Customize data view", ja poista valinta kohdasta "Hide null elements". </p>
+<div class="task">
+<div class="task-head" data-puhe="4111d2fd94231998"><span class="task-num">5.1</span><span class="task-name">Listaan lisääminen.</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=c9b0f41a26fe8cd6></span>Luo luokka <code>Lista</code>. Määrittele sen sisälle taulukko (array), jossa säilytät
+listan alkiota, sekä kokonaislukumuuttuja, joka pitää kirjaa listan nykyisestä
+alkiomäärästä. Toteuta metodit</p>
+<ul>
+<li><span class=jyu-puhe data-puhe=db53546cf98b01e1></span><code>add(T element)</code>: lisää alkion listan loppuun.</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=e757e9bb8ae60d1a></span>Tietorakenteen kokoa ei tarvitse tässä vaiheessa kasvattaa, eli taulukko voi
+tulla täyteen. Tutki debuggerin avulla, että alkio on lisätty oikein. Älä
+toteuta vielä <code>get</code>- tai <code>toString</code>-metodeja; tarkastele listan tilaa nimen
+omaan debuggerin avulla. </p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava1">Tee tehtävä TIMissä</a></div>
+</div>
+<p><span class=jyu-puhe data-puhe=1a24725722d1345c></span>Tehdään seuraavaksi metodi <code>get(int index)</code>, joka palauttaa listan tietyn indeksin
+alkion, sekä metodi <code>set(int index, T element)</code>, joka asettaa tietyn alkion tiettyyn
+indeksiin. </p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kd">public</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">get</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">koko</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IndexOutOfBoundsException</span><span class="p">(</span><span class="s">"Indeksi "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" ei ole välillä 0.."</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">koko</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">alkiot</span><span class="o">[</span><span class="n">index</span><span class="o">]</span><span class="p">;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">}</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="kd">public</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="nf">set</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">index</span><span class="p">,</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">element</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">index</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">koko</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="n">IndexOutOfBoundsException</span><span class="p">(</span><span class="s">"Indeksi "</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">index</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="s">" ei ole välillä 0.."</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="p">(</span><span class="n">koko</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">));</span>
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">  </span><span class="n">alkiot</span><span class="o">[</span><span class="n">index</span><span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">element</span><span class="p">;</span>
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=a9db51c37e8fef6c></span>Käsittelemme poikkeuksia tarkemmin vasta myöhemmin, mutta tässä yhteydessä on
+tarpeen mainita, mitä <code>throw new...</code>-rivi tarkoittaa. Listan indeksit alkavat
+nollasta ja jatkuvat aina <code>koko - 1</code>:een asti. Jos yrität hakea alkiota
+indeksillä, joka on pienempi kuin nolla tai suurempi tai yhtä suuri kuin <code>koko</code>,
+kyseinen indeksi on listan ulkopuolella. Tämä on yleinen käytäntö Javan
+kokoelmissa, ja varmasti sinulle myös tuttu aivan ohjelmoinnin alkeista asti.
+Nyt pääsemme itse heittämään kyseisen poikkeuksen!</p>
+<h2 data-puhe="bde80054f451d180" id="dynaamisuus">Dynaamisuus<a class="headerlink" href="#dynaamisuus" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=e986237cec9b2c3c></span>Vaikka Javassa <code>List</code>-rajapinta ei periaatteessa vaadi dynaamisuutta, eli
+alkioiden lisäämistä ja poistamista, niin käytännössä listojen odotetaan tukevan
+sitä. Tämä tarkoittaa, että listan koko voi muuttua ajon aikana. Tämä on
+merkittävä ero taulukkoon verrattuna, jossa koko on kiinteä. </p>
+<p><span class=jyu-puhe data-puhe=b4f8ce96b001a668></span>Listan dynaamisuuden toteuttaminen taulukon päälle vaatii hieman lisälogiikkaa.
+Jos taulukossa on tilaa, ts. koko on pienempi kuin taulukon pituus, niin uuden
+alkion lisääminen on helppoa: asetetaan alkio taulukon seuraavaan vapaaseen
+kohtaan ja kasvatetaan kokoa yhdellä. Jos taulukko on täynnä, yleinen käytäntö
+on, että luodaan uusi, yleensä kaksinkertainen, taulukko, kopioidaan vanhan
+taulukon alkiot uuteen taulukkoon, ja sitten lisätään uusi alkio uuteen
+taulukkoon. Tämä prosessi varmistaa, että lista voi kasvaa tarpeen mukaan.</p>
+<div class="task">
+<div class="task-head" data-puhe="5aef02cd37787d67"><span class="task-num">5.2</span><span class="task-name">Dynaaminen lista, osa 1.</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=6a7ec6584d318b1e></span>Muokkaa <code>add</code>-metodia siten, että se lisää alkion listan loppuun, ja
+tarvittaessa luo uuden isomman taulukon (1,5x tai 2x kokoisen) ja kopioi vanhan
+taulukon alkiot uuteen taulukkoon. Muista huolehtia myös listan koosta
+asianmukaisesti.</p>
+<p><span class=jyu-puhe data-puhe=0b49dbfaca5bba4d></span>Toteuta myös <code>size()</code>-metodi, joka palauttaa listan nykyisen alkiomäärän.</p>
+<p><span class=jyu-puhe data-puhe=39eed4207b0299a9></span>Käytä <code>get</code>- ja <code>size</code>-metodeja apuna testataksesi, että <code>add</code>-metodi toimii
+oikein myös kun taulukko on täynnä ja uusi taulukko on luotu.</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava2">Tee tehtävä TIMissä</a></div>
+</div>
+<p><span class=jyu-puhe data-puhe=2f07e464e9be1ebc></span>Alkioiden poistaminen listasta on hieman monimutkaisempaa, koska poistettu alkio
+jätetään tyhjäksi paikaksi taulukkoon. Yksi vaihtoehto olisi jättää kohta
+<code>null</code>-arvoksi. Tämä aiheuttaisi kuitenkin ongelmia, alkioiden järjestys ja
+indeksi eivät enää täsmäisi. </p>
+<p><span class=jyu-puhe data-puhe=4de17fea74129bfc></span>Toinen vaihtoehto olisi kopioida kaikki alkiot paitsi poistettu uuteen
+taulukkoon. Tämä olisi melko tehotonta, koska jokainen poisto vaatisi koko
+taulukon kopioimisen.</p>
+<p><span class=jyu-puhe data-puhe=0bb4c98324e612da></span>Yleensä poistaminen toteutetaan siten, että poistettua alkiota seuraavat alkiot
+siirretään yhden askeleen taaksepäin. Näin lista pysyy ehyenä, eikä uutta
+taulukkoa tarvita. </p>
+<div class="task">
+<div class="task-head" data-puhe="5271621c81bd55a2"><span class="task-num">5.3</span><span class="task-name">Dynaaminen lista, osa 2.</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=989362c875f64b0e></span>Toteuta <code>remove(int index)</code>-metodi, joka poistaa listasta alkion halutusta
+indeksistä. Metodin tulee palauttaa poistettu alkio. </p>
+<ul>
+<li><span class=jyu-puhe data-puhe=eb332d3cab49c47a></span>Poistettua alkiota seuraavat alkiot siirtyvät vasemmalle, jotta taulukkoon ei
+   jää "aukkoja".</li>
+<li><span class=jyu-puhe data-puhe=420b9ae7f2d73701></span>Taulukkoon ei saa jäädä ylimääräisiä sisältöjä poistamisen jälkeen. </li>
+<li><span class=jyu-puhe data-puhe=90f7b9e51a02f5a6></span>Muista päivittää listan koko asianmukaisesti. </li>
+</ul>
+<p><span class=jyu-puhe data-puhe=4815e123915a7fb9></span>Tarkista debuggerissa ja/tai <code>get</code>- ja <code>size</code>-metodeilla, että poisto on
+onnistunut oikein.</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava3">Tee tehtävä TIMissä</a></div>
+</div>
+<p><span class=jyu-puhe data-puhe=f05f2b464b005f75></span>Poistaminen voi tapahtua myös alkion yhtäsuuruuden perusteella. Tällöin
+etsitään ensimmäinen alkio, joka on yhtä suuri kuin annettu alkio, ja poistetaan
+se.</p>
+<p><span class=jyu-puhe data-puhe=36df148b3e9bf9ae></span>Jotta <code>remove(T element)</code>-metodi toimisi oikein, on tärkeää käyttää
+<code>equals</code>-metodia yhtäsuuruuden tarkistamiseen. Tämä varmistaa, että vertailu
+toimii oikein myös silloin, kun listassa on geneerisiä tyyppejä. Toteutetaan
+tämä metodi seuraavaksi. Olemme tähän asti laittaneet listan alkioiksi lähinnä
+lukuja ja merkkijonoja, mutta käyttäessämme geneeristä <code>T</code>-tyyppiä, metodi
+toimii kaikilla olioilla, jotka toteuttavat <code>equals</code>-metodin. </p>
+<h2 data-puhe="56fbbb3646f74d7c" id="equals-metodi">Equals-metodi<a class="headerlink" href="#equals-metodi" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=d641da25fbbc79e6></span>Otetaan tässä yhteydessä pieni tangentti <code>equals</code>- ja <code>hashCode</code>-metodeista,
+koska niiden oikea käyttö on olennaista kokoelmien kanssa työskennellessä.
+Aloitetaan <code>equals</code>-metodista. </p>
+<p><span class=jyu-puhe data-puhe=b45d94e8980c39e3></span>Javassa <code>==</code>-operaattori toimii luotettavana sisällön vertailuna vain
+primitiivityyppien kanssa. Tämä on tietysti aivan hyvä tapa vertailla vaikkapa
+lukuja tai <code>String</code>-merkkijonoja. Olioviitteiden osalta <code>==</code>-operaattori
+vertailee viitteitä. Esimerkiksi <code>Integer a = new Integer(42);</code> ja <code>Integer b =
+new Integer(42);</code> eivät ole <code>a == b</code>, vaikka niiden sisällöt ovatkin samat.</p>
+<p><span class=jyu-puhe data-puhe=238fcd7e57e98649></span><code>equals</code>-metodin tarkoitus on vertailla olioiden <em>sisältöä</em> eli sitä, ovatko ne
+samat sovelluksen näkökulmasta.</p>
+<p><span class=jyu-puhe data-puhe=27e2869b5aac5c5c></span>Kaikki luokat perivät <code>equals</code>-metodin luokasta <code>Object</code>. Oletustoteutus
+<code>Object.equals</code> käyttäytyy kuten <code>==</code>, eli se vertailee viitteitä. Siksi
+sisältövertailu vaatii usein oman <code>equals</code>-toteutuksen.</p>
+<p><span class=jyu-puhe data-puhe=91d54bbe665cfd6c></span><code>equals</code>-metodilla on selkeä sopimus, jota pitää noudattaa:
+- Refleksiivisyys: <code>x.equals(x)</code> on aina <code>true</code>.
+- Symmetrisyys: jos <code>x.equals(y)</code> on <code>true</code>, niin <code>y.equals(x)</code> on <code>true</code>.
+- Transitiivisuus: jos <code>x.equals(y)</code> ja <code>y.equals(z)</code>, niin <code>x.equals(z)</code>.
+- Johdonmukaisuus: useat kutsut samalla datalla antavat saman tuloksen.
+- <code>x.equals(null)</code> on aina <code>false</code>.</p>
+<p><span class=jyu-puhe data-puhe=d13978c1fc1a2c8e></span>Tyypillinen <code>equals</code>-toteutus etenee seuraavasti:
+1. Jos viitteet ovat samat, palauta <code>true</code>.
+2. Jos toinen on <code>null</code> tai tyyppi ei täsmää, palauta <code>false</code>.
+3. Muunna tyyppi ja vertaile niitä kenttiä, jotka määrittelevät "saman".</p>
+<p><span class=jyu-puhe data-puhe=cae230fd7b1ce931></span>Esimerkki luokasta, joka vertailee henkilön nimeä ja opiskelijanumeroa. Vain
+siinä tilanteessa että molemmat kentät ovat yhtä suuret, olioiden katsotaan
+olevan yhtä suuret.</p>
+<div class="language-java highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kd">public</span><span class="w"> </span><span class="kd">class</span> <span class="nc">Opiskelija</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">nimi</span><span class="p">;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="w">  </span><span class="kd">private</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">opiskelijanumero</span><span class="p">;</span>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="nf">Opiskelija</span><span class="p">(</span><span class="n">String</span><span class="w"> </span><span class="n">nimi</span><span class="p">,</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">opiskelijanumero</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">nimi</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nimi</span><span class="p">;</span>
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="w">    </span><span class="k">this</span><span class="p">.</span><span class="na">opiskelijanumero</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">opiskelijanumero</span><span class="p">;</span>
+</span><span id="__span-10-8"><a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-9"><a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>
+</span><span id="__span-10-10"><a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="w">  </span><span class="nd">@Override</span>
+</span><span id="__span-10-11"><a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="w">  </span><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">equals</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">toinen</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-12"><a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="k">this</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">toinen</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-13"><a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">true</span><span class="p">;</span>
+</span><span id="__span-10-14"><a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-15"><a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">toinen</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="kc">null</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">getClass</span><span class="p">()</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="n">toinen</span><span class="p">.</span><span class="na">getClass</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-10-16"><a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a><span class="w">      </span><span class="k">return</span><span class="w"> </span><span class="kc">false</span><span class="p">;</span>
+</span><span id="__span-10-17"><a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-10-18"><a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="c1">// Tämä tyyppimuunnos on nyt turvallinen</span>
+</span><span id="__span-10-19"><a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a><span class="w">    </span><span class="n">Opiskelija</span><span class="w"> </span><span class="n">toinenOpiskelija</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Opiskelija</span><span class="p">)</span><span class="w"> </span><span class="n">toinen</span><span class="p">;</span>
+</span><span id="__span-10-20"><a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">opiskelijanumero</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">toinenOpiskelija</span><span class="p">.</span><span class="na">opiskelijanumero</span><span class="p">)</span>
+</span><span id="__span-10-21"><a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a><span class="w">        </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="k">this</span><span class="p">.</span><span class="na">nimi</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">toinenOpiskelija</span><span class="p">.</span><span class="na">nimi</span><span class="p">);</span>
+</span><span id="__span-10-22"><a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-10-23"><a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><span class=jyu-puhe data-puhe=38da790ae3fed946></span>Jos opiskelijanumero tai nimi voi olla <code>null</code>, käytä <code>Objects.equals(a, b)</code>,
+joka toimii <em>null-turvallisesti</em>. </p>
+<div class="language-java highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">java.util.Objects</span><span class="p">;</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nd">@Override</span>
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="kd">public</span><span class="w"> </span><span class="kt">boolean</span><span class="w"> </span><span class="nf">equals</span><span class="p">(</span><span class="n">Object</span><span class="w"> </span><span class="n">toinen</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+</span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="w">  </span><span class="c1">// ...</span>
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>
+</span><span id="__span-11-8"><a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">  </span><span class="n">Opiskelija</span><span class="w"> </span><span class="n">toinenOpiskelija</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">Opiskelija</span><span class="p">)</span><span class="w"> </span><span class="n">toinen</span><span class="p">;</span>
+</span><span id="__span-11-9"><a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">opiskelijanumero</span><span class="p">,</span><span class="w"> </span><span class="n">toinenOpiskelija</span><span class="p">.</span><span class="na">opiskelijanumero</span><span class="p">)</span>
+</span><span id="__span-11-10"><a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="w">      </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">nimi</span><span class="p">,</span><span class="w"> </span><span class="n">toinenOpiskelija</span><span class="p">.</span><span class="na">nimi</span><span class="p">);</span>
+</span><span id="__span-11-11"><a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<h2 data-puhe="8ae5eaf307b8f356" id="hashcode-metodi">HashCode-metodi<a class="headerlink" href="#hashcode-metodi" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=d0bf6b169bc621e7></span>Kun luokka toteuttaa <code>equals</code>-metodin, on ehdottoman tärkeää toteuttaa myös
+<code>hashCode</code>-metodi. Nämä kaksi kulkevat käsi kädessä, ja toisen unohtaminen
+johtaa vaikeasti jäljitettäviin virheisiin. Jotta ymmärrämme miksi, on
+sukellettava hetkeksi hajautustaulujen (kuten <code>HashSet</code> ja <code>HashMap</code>)
+toimintaperiaatteeseen.</p>
+<p><span class=jyu-puhe data-puhe=b005a3d53a3ffb4a></span><strong>Miten hajautus toimii?</strong> Kuvittele kirjasto, jossa on tuhansia kirjoja. Jos haluat
+löytää tietyn kirjan, et käy jokaista kirjaa läpi yksi kerrallaan alusta loppuun
+(kuten lista tekisi). Sen sijaan katsot kirjastojärjestelmästä hyllyluokan
+(esim. 800–899). Javassa <code>hashCode</code> toimii kuten tämä hyllyluokka:</p>
+<ol>
+<li><span class=jyu-puhe data-puhe=d87817a548babdc1></span>Lokerointi: <code>hashCode</code>-metodi tiivistää olion tiedot yhdeksi
+    kokonaisluvuksi, jota kutsutaan <em>hajautusarvoksi</em>. Kokoelma käyttää tätä
+lukua päättääkseen, mihin lokeroon olio tallennetaan.</li>
+<li><span class=jyu-puhe data-puhe=9b081c5b3e845a41></span>Nopeus: Kun etsit oliota kokoelmasta, Java laskee etsittävän olion
+hajautusarvon ja hyppää suoraan oikeaan lokeroon.</li>
+<li><span class=jyu-puhe data-puhe=07e4f510a2832050></span>Tarkistus: Lopuksi Java käy läpi vain kyseisessä lokerossa olevat oliot
+käyttäen <code>equals</code>-metodia varmistaakseen, onko etsitty olio todella siellä.</li>
+</ol>
+<p><span class=jyu-puhe data-puhe=c79574ebbf9ce0d5></span>Javan kokoelmat luottavat sokeasti siihen, että jos <code>equals</code> sanoo, että kaksi
+oliota ovat samat, niiden hajautusarvojen on oltava samat. </p>
+<ul>
+<li>
+<p><span class=jyu-puhe data-puhe=be738a74eb67455f></span>Pakollinen suunta: <code>x.equals(y) == true</code> <span class="arithmatex">\(\rightarrow\)</span> <code>x.hashCode() == y.hashCode()</code>.</p>
+</li>
+<li>
+<p><span class=jyu-puhe data-puhe=ddcbce51952d562a></span>Ei-pakollinen suunta: Vaikka hajautusarvot olisivat samat, oliot voivat olla
+eri sisältöisiä, jolloin syntyy niin sanottu <em>törmäys</em>. Tämä tarkoittaa, että ne
+vain päätyvät samaan lokeroon, mutta <code>equals</code> erottelee ne kuitenkin toisistaan.</p>
+</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=e27cd425957731fd></span><strong>Toteutus:</strong> Helpoin ja turvallisin tapa toteuttaa <code>hashCode</code> on käyttää Javan
+valmista apumetodia <code>Objects.hash</code>. On erittäin tärkeää, että <code>hashCode</code>-arvon
+laskennassa käytetään tismalleen samoja kenttiä kuin <code>equals</code>-metodissa. Jos
+<code>equals</code> vertailee nimeä ja opiskelijanumeroa, <code>hashCode</code> ei voi jättää toista
+pois.</p>
+<div class="language-java ignore highlight" data-puhe="3a4117f04635e2c6"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nd">@Override</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="kd">public</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="nf">hashCode</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="w">    </span><span class="c1">// Luodaan tunnusluku (hash) samoista kentistä kuin equals-vertailussa</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">Objects</span><span class="p">.</span><span class="na">hash</span><span class="p">(</span><span class="n">nimi</span><span class="p">,</span><span class="w"> </span><span class="n">opiskelijanumero</span><span class="p">);</span>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="p">}</span>
+</span></code></pre></div>
+<details>
+<summary data-puhe="2a023793f2713f72"><span class="twemoji jyu-bonus" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m19 1-1.26 2.75L15 5l2.74 1.26L19 9l1.25-2.74L23 5l-2.75-1.25M9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12l-5.5-2.5M19 15l-1.26 2.74L15 19l2.74 1.25L19 23l1.25-2.75L23 19l-2.75-1.26"/></svg></span>Valinnaista lisätietoa: Älä muuta avaimia!</summary>
+<p><span class=jyu-puhe data-puhe=73bd9155353fbaa6></span>Hajauttavien rakenteiden kanssa on yksi vaaranpaikka: olioiden muuttaminen.</p>
+<p><span class=jyu-puhe data-puhe=e92e2883301e788d></span>Jos lisäät olion <code>HashSet</code>-kokoelmaan ja sen jälkeen muutat olion kenttiä (esim.
+opiskelijanumeroa), olion laskennallinen <code>hashCode</code> muuttuu. Olio on kuitenkin
+edelleen alkuperäisen hajautusarvon mukaisessa lokerossa. Kun yrität etsiä sitä
+uudella arvolla, Java katsoo uuteen lokeroon eikä löydä mitään.</p>
+<p><span class=jyu-puhe data-puhe=e7f8cb5774972f6e></span>Nyrkkisääntö: Jos käytät oliota <code>HashMap</code>-avaimena tai <code>HashSet</code>-jäsenenä, pyri
+pitämään kyseinen olio muuttumattomana.</p>
+<p><span class=jyu-puhe data-puhe=cf112eca4cb301bb></span>Vinkki: Jos käytät Javan uudempia record-tietueita, sinun ei tarvitse huolehtia
+tästä. Java generoi automaattisesti oikeaoppiset <code>equals</code>- ja
+<code>hashCode</code>-metodit, jotka ottavat huomioon kaikki tietueen kentät.</p>
+</details>
+<p><span class=jyu-puhe data-puhe=fdc6868294261a3d></span>Vaikka juuri oman dynaamisen listan rakentelussa sinun ei tarvitsekaan itse
+toteuttaa <code>equals</code>- tai <code>hashCode</code>-metodeja, on jatkon kannalta tärkeää ymmärtää
+näiden metodien merkitys kokoelmien, kuten <code>HashSet</code> ja <code>HashMap</code>, taustalla. </p>
+<h2 data-puhe="dfa233213a8d3fb0" id="poistaminen-alkion-perusteella">Poistaminen alkion perusteella<a class="headerlink" href="#poistaminen-alkion-perusteella" title="Pysyvä linkki tähän otsikkoon">&para;</a></h2>
+<p><span class=jyu-puhe data-puhe=2080c0dbb235d890></span>Kuten edellä opimme, poistaminen alkion perusteella edellyttää, että listan
+alkioiden tyypillä on toimiva <code>equals</code>-metodi. Tämän jälkeen poistaminen voidaan
+tehdä luotettavasti käymällä lista läpi ja vertaamalla jokaista alkiota
+haluttuun alkioon <code>equals</code>-metodilla. </p>
+<p><span class=jyu-puhe data-puhe=20f5cec89779cdea></span>Jos listassa voi olla useita samanlaisia alkioita, tämä toteutus poistaa vain
+ensimmäisen; muiden poistaminen vaatii uuden läpikäynnin.</p>
+<div class="task">
+<div class="task-head" data-puhe="217eb2a1be511c9a"><span class="task-num">5.4</span><span class="task-name">Dynaaminen lista, osa 3.</span><span class="task-points">1 p.</span></div>
+<div class="task-handout">
+<p><span class=jyu-puhe data-puhe=8540564036ce6b46></span>Jatka <code>Lista</code>-luokkaa toteuttamalla <code>remove(T element)</code>-metodi, joka poistaa
+ensimmäisen esiintymän annetusta alkiosta. </p>
+<ul>
+<li><span class=jyu-puhe data-puhe=9f0fcdc4a31587a3></span>Jos alkio löytyy ja poistetaan, palauta <code>true</code>.</li>
+<li><span class=jyu-puhe data-puhe=857a7866eed704f9></span>Jos alkiota ei löydy, lista pysyy ennallaan ja palautetaan <code>false</code>.</li>
+</ul>
+<p><span class=jyu-puhe data-puhe=408c4e99f96684d5></span>Vinkki: Voit käyttää jo toteuttamaasi <code>remove(int index)</code>-metodia apuna; älä
+kopioi siirto-logiikkaa tähän metodiin.</p>
+</div>
+<div class="task-link"><a href="https://tim.jyu.fi/view/kurssit/tie/tiep111/tehtavat/osa5/tehtava4">Tee tehtävä TIMissä</a></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          <script>var allowed=["GitHub","GitLab (JY)","Linux","Windows","macOS"];var tabs=(__md_get("__tabs")||[]).filter(function(t){return allowed.indexOf(t)>=0});if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script><script>for(var set of document.querySelectorAll(".tabbed-set")){var labels=[].slice.call(set.querySelectorAll(".tabbed-labels label"));if(labels.some(function(l){return allowed.indexOf(l.innerText.trim())>=0}))continue;for(var input of set.querySelectorAll(":scope > input"))input.addEventListener("change",function(){var label=document.querySelector('label[for="'+this.id+'"]');if(label)label.setAttribute("data-md-switching","")})}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Alatunniste" >
+        
+          
+          <a href="../01-kokoelmat/" class="md-footer__link md-footer__link--prev" aria-label="Edellinen: 5.1 Kokoelmat">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Edellinen
+              </span>
+              <div class="md-ellipsis">
+                5.1 Kokoelmat
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-hakurakenteet/" class="md-footer__link md-footer__link--next" aria-label="Seuraava: 5.3 Hakurakenteet">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Seuraava
+              </span>
+              <div class="md-ellipsis">
+                5.3 Hakurakenteet
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Ohjelmointi 2 -oppimateriaali &copy; 2025 Denis Zhidkikh, Sami Sarsa, Antti-Jussi Lakanen, Rauli Ruokokoski, Karri Sormunen &middot; <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fi" rel="license" title="Creative Commons Nimeä-JaaSamoin 4.0 Kansainvälinen">CC BY-SA 4.0</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+
+
+
+
+  
+  
+  
+  
+
+<div class="jyu-footer-links">
+    <a href="https://github.com/ohj-perus-jy/ohj2/edit/main/src/osa5/02-listarakenteet.md" class="md-copyright md-copyright--link" rel="edit" title="Muokkaa tätä sivua GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.87 1.52 2.34 1.07 2.91.83.09-.65.35-1.09.63-1.34-2.22-.25-4.55-1.11-4.55-4.92 0-1.11.38-2 1.03-2.71-.1-.25-.45-1.29.1-2.64 0 0 .84-.27 2.75 1.02.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02.55 1.35.2 2.39.1 2.64.65.71 1.03 1.6 1.03 2.71 0 3.82-2.34 4.66-4.57 4.91.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2"/></svg>
+      Muokkaa
+    </a>
+    <a href="https://github.com/ohj-perus-jy/ohj2/commits/main/src/osa5/02-listarakenteet.md" class="md-copyright md-copyright--link" title="Sivun muutokset GitHubissa">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5M12 7v5l4 2"/></svg>
+      Muutoshistoria
+    </a>
+  <a href="https://github.com/ohj-perus-jy/ohj2/issues/new?template=ilmoita-ongelmasta.yml&amp;url=osa5/02-listarakenteet.md" class="md-copyright md-copyright--link" title="Avaa issue GitHubissa">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-flag" viewBox="0 0 24 24"><path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 7.333 2q2 0 3.067-.8A1 1 0 0 1 20 4v10a1 1 0 0 1-.4.8A6 6 0 0 1 16 16c-3 0-5-2-8-2a6 6 0 0 0-4 1.528"/></svg>
+    Ilmoita ongelma
+  </a>
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["navigation.indexes","navigation.footer","content.tabs.link","content.footnote.tooltips","content.tooltips","toc.follow","content.code.copy"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"Kopioitu leikepöydälle","clipboard.copy":"Kopioi leikepöydälle","clipboard.error":"Could not copy to clipboard","search.result.more.one":"1 lisää tällä sivulla","search.result.more.other":"# lisää tällä sivulla","search.result.none":"Ei täsmääviä dokumentteja","search.result.one":"1 täsmäävä dokumentti","search.result.other":"# täsmäävää dokumenttia","search.result.placeholder":"Kirjoita aloittaaksesi haun","search.result.term.missing":"Puuttuu","select.version":"Valitse versio"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.3cb411a8.min.js"></script>
+      
+        <script src="../../assets/js/tooltips.js"></script>
+      
+        <script src="../../assets/js/nav-scroll.js"></script>
+      
+        <script src="../../assets/js/rail.js"></script>
+      
+        <script src="../../assets/js/toc.js"></script>
+      
+        <script src="../../assets/js/print.js"></script>
+      
+        <script src="../../assets/js/fontmenu.js"></script>
+      
+        <script src="../../assets/js/theme.js"></script>
+      
+        <script src="../../assets/js/sitemenu.js"></script>
+      
+        <script src="../../assets/js/search.js"></script>
+      
+        <script src="../../assets/js/playground.js"></script>
+      
+        <script src="../../assets/js/hidelines.js"></script>
+      
+        <script src="../../assets/js/highlights.js"></script>
+      
+        <script src="../../assets/js/copy.js"></script>
+      
+        <script src="../../assets/js/hints.js"></script>
+      
+        <script src="../../assets/js/asciinema.js"></script>
+      
+        <script src="../../assets/js/walkthrough.js"></script>
+      
+        <script src="../../assets/js/visa.js"></script>
+      
+        <script src="../../assets/js/puhe.js"></script>
+      
+        <script src="../../assets/js/glightbox.min.js"></script>
+      
+    
+  </body>
+</html>

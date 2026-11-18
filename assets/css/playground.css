@@ -1,0 +1,75 @@
+/* Ajonapin kuvake, odotustila ja tuloste; toiminta: assets/js/playground.js.
+ * Nappi on teeman oma koodilohkon nappi ja tuloste tavallinen koodilohko,
+ * joten paikka, koko, värit ja reunat tulevat teemasta. */
+
+:root {
+  /* Teeman napit piirtävät kuvakkeen mask-imagella, joten tämä on samassa
+   * muodossa: yksivärinen SVG, jonka värin nappi antaa. */
+  --jyu-run-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5.14v14l11-7z"/></svg>');
+  --jyu-reset-icon: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 3a9 9 0 0 0-9 9H1l3.89 3.89.07.14L9 12H6a7 7 0 0 1 7-7 7 7 0 0 1 7 7 7 7 0 0 1-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42A8.954 8.954 0 0 0 13 21a9 9 0 0 0 9-9 9 9 0 0 0-9-9m-1 5v5l4.25 2.52.77-1.28-3.52-2.09V8z"/></svg>');
+}
+
+.md-code__button[data-md-type="run"]::after {
+  -webkit-mask-image: var(--jyu-run-icon);
+  mask-image: var(--jyu-run-icon);
+}
+
+/* Muokattavan lohkon (editable) "Peruuta muutokset"; poissa käytöstä, kunnes
+ * koodia on muutettu. */
+.md-code__button[data-md-type="reset"]::after {
+  -webkit-mask-image: var(--jyu-reset-icon);
+  mask-image: var(--jyu-reset-icon);
+}
+
+/* Muokattavan koodin tunnistaa tekstikohdistimesta ja kohdistettuna kehyksestä.
+ * Kehys sisäpuolelle, koska pre leikkaa ulkopuolisen (overflow). */
+.md-typeset code[contenteditable] {
+  cursor: text;
+}
+
+.md-typeset code[contenteditable]:focus {
+  outline: none;
+  box-shadow: inset 0 0 0 0.1rem var(--md-accent-fg-color);
+}
+
+/* Ajon ajaksi nappi on poissa käytöstä, jottei samaa ohjelmaa lähetetä
+ * kahdesti. Väri on palautettava erikseen: teeman .md-code__button:hover
+ * värittää kuvakkeen aksentilla myös disabled-napissa, koska selain antaa
+ * :hoverin sillekin. */
+.md-code__button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.md-code__button:disabled:hover {
+  color: var(--md-default-fg-color--light);
+}
+
+/* Kuten mdBookin .result-no-output: tyhjä tuloste on tulos siinä missä
+ * muutkin, kursiivi erottaa sen ohjelman omasta tekstistä. */
+.jyu-result-no-output {
+  font-style: italic;
+}
+
+/* Jypelin kuvatuloste (playground.js: showImages) tulosteen alla. Lohkona,
+ * jottei kuvan alle jää tekstirivin rakoa, ja kulmat kuten teeman
+ * koodilohkoissa (.md-typeset pre > code: .4rem). Leveyden rajaa teema
+ * (.md-typeset img: max-width: 100 %), kuten mdBookin .content img. */
+.jyu-result-image {
+  display: block;
+  border-radius: 0.4rem;
+}
+
+/* Pelkkä kuva ilman tekstiä: tekstilaatikko pois. hidden-attribuutti ei
+ * riittäisi, koska teeman .md-typeset pre antaa display: flow-root. */
+.jyu-result-image-only > pre {
+  display: none;
+}
+
+/* Paperille jää tuloste muttei nappiriviä; teemalla ei ole sille sääntöä,
+ * koska rivi syntyy vain ruudulla. */
+@media print {
+  .md-code__nav {
+    display: none;
+  }
+}

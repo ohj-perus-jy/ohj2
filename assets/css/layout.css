@@ -1,0 +1,1035 @@
+/* Työpöytäasettelu: valikko kiinteänä kiskona vasemmassa reunassa, kuten
+ * mdBookissa, ja leveällä näytöllä kisko, teksti ja sisällysluettelo
+ * keskitettyinä yhdessä (--jyu-side). Zensicalin oletusvalikko on
+ * position: sticky, joten se liikkuu sisällön mukana ensimmäiset
+ * vierityspikselit ja pysähtyy nytkähtäen, ja katkeaa terävästi
+ * sumennettuun yläpalkkiin; kiskossa ei ole mitään, mikä liikkuisi tai
+ * katkeaisi. Vain työpöydällä eli 1180 px:stä (73,75em) alkaen,
+ * jotta 11 tuuman iPad vaakatasossa mahtuu; teeman oma raja on 1220 px.
+ * Kapeammilla näytöillä valikko on Zensicalin oma laatikko (drawer), josta
+ * muutetaan vain avausnuolen suunta ja vierityspalkin pituus (ks. alempana). */
+
+:root {
+  /* Rako kiskon ja ruudukon (.md-main__inner) väliin. Tekstin etäisyys
+   * kiskosta on tämä plus palstan vasen marginaali, ks. --jyu-margin. */
+  --jyu-gap: 0.8rem;
+
+  /* Tekstipalstan etäisyys levyn reunaviivoista, sama kummallakin
+   * puolella: vasemmalla kiskon reunasta, oikealla sisällysluettelon
+   * sarakkeen reunasta. Vasemmalla siitä on --jyu-gap ruudukon rakoa ja
+   * loput palstan marginaalia, oikealla kaikki marginaalia (ks.
+   * .md-content__inner alempana). Teeman omat marginaalit ovat 1,2rem,
+   * joten raon kanssa vasen rako oli 2,0rem ja oikea 1,2rem; palstan
+   * leveys on sama kuin teemalla. */
+  --jyu-margin: 1.6rem;
+
+  /* Alatunnisteen täyte levyn reunoista: nuolet ja tekijät ulottuvat
+   * tekstin yli yhtä paljon kuin teemassa, jonka palstan marginaali on
+   * 1,2rem ja alatunnisteen täyte 0,2rem. */
+  --jyu-footer-pad: calc(var(--jyu-margin) - 1.2rem);
+
+  /* Kiskon leveys: 15rem kuten mdBookissa, ja leveämmällä näytöllä siitä
+   * kourusta, joka jää ruudukon (61rem) ja vierityspalkin yli, enintään
+   * 16rem; tekstipalstasta ei lähde pikseliäkään. */
+  --jyu-rail: clamp(15rem, 100vw - 62rem - var(--jyu-gap), 16rem);
+
+  /* Kiskon etäisyys ikkunan vasemmasta reunasta. Kun kisko, rako ja
+   * ruudukko (61rem) mahtuvat ja tilaa jää yli, ne keskitetään yhdessä:
+   * ylimääräinen tila jakautuu tasan vasemmalle ja oikealle eikä jää
+   * valikon ja tekstin väliin. Muuten nolla eli kisko reunassa. 50 %
+   * lasketaan käyttöpaikassa: kiinteälle kiskolle ikkunasta, muille sivun
+   * levyisestä isännästä, kummastakin ilman vierityspalkkia. */
+  --jyu-side: max(0px, 50% - (var(--jyu-rail) + var(--jyu-gap) + 61rem) / 2);
+
+  /* Sisällysluettelon sarakkeen leveys: kopio teeman .md-sidebar-leveydestä
+   * (12.1rem), koska levyn oikea reuna ja alatunnisteen leveys lasketaan
+   * siitä. Jos teema muuttaa mittaa, tämä on päivitettävä käsin. Nolla, kun
+   * sivu piilottaa luettelon (hide: toc, esim. tulosta.md), ks. alempana. */
+  --jyu-toc: 12.1rem;
+
+  /* Levyn oikea reuna: sisällysluettelon sarakkeen vasen reuna, mitattuna
+   * sivun levyisen isännän vasemmasta reunasta (100 % = isännän leveys).
+   * Tästä lasketaan levyn liukuväri ja alatunnisteen oikea marginaali. */
+  --jyu-levy-right: calc(100% - var(--jyu-side) - var(--jyu-toc));
+
+  /* Kiskon vierityspalkin väri hiiren ollessa valikon päällä, ks. alempana. */
+  --jyu-rail-scrollbar: color-mix(in srgb, var(--md-accent-fg-color) 80%, white);
+
+  /* Reunaviivojen paksuus. Viivat ovat liukuväriraitoja (ks. .md-container
+   * alempana) ja niiden sijainnit pyöristetään 4 px:n ruudukkoon, jotta
+   * raita alkaa kokonaisesta laitepikselistä Windowsin skaalauksilla
+   * 125, 150, 175 ja 200 % (4 px on niillä 5, 6, 7 ja 8 laitepikseliä).
+   * Raita kattaa ne pikselit, joiden keskipiste on sen sisällä: 0,9 px on
+   * 100–150 %:lla 0,9–1,35 laitepikseliä eli yksi pikseli ja 175–200 %:lla
+   * 1,575–1,8 eli kaksi, eikä koskaan kaksi haaleaa. Ei tasan 1px, koska
+   * 150 %:lla raja osuisi tasan toisen pikselin keskipisteeseen ja Chrome
+   * lukisi sen mukaan tai ei pyöristysvirheen mukaan. */
+  --jyu-hair: 0.9px;
+}
+
+/* Kiskon leveys sekä kiskon ja levyn reunan sijainnit 4 px:n ruudukkoon
+ * (ks. --jyu-hair), alaspäin, jotta kisko ei levene eikä levy ulotu
+ * luettelon alle. Keskitys siirtyy enintään 4 px ja tekstipalsta on
+ * 61rem ± muutaman pikselin, mitä ei huomaa. round() on Chromessa
+ * 125:stä, Firefoxissa 118:sta ja Safarissa 15.4:stä; vanhemmissa
+ * selaimissa sijainnit jäävät pyöristämättä ja viivat voivat olla kahden
+ * pikselin levyiset. Prosentti pyöristyksen sisällä ratkeaa vasta
+ * käyttöpaikassa, joten sama muuttuja antaa saman tuloksen .md-containerin
+ * taustassa, pääsisällön täytteessä ja alatunnisteen marginaalissa. */
+@supports (width: round(50% + 1px, 4px)) {
+  :root {
+    --jyu-rail: round(down, clamp(15rem, 100vw - 62rem - var(--jyu-gap), 16rem), 4px);
+    --jyu-side: round(down, max(0px, 50% - (var(--jyu-rail) + var(--jyu-gap) + 61rem) / 2), 4px);
+    --jyu-levy-right: round(down, 100% - var(--jyu-side) - var(--jyu-toc), 4px);
+  }
+}
+
+/* Levyn vasen reuna ja valikon piilotus (header.html: painike,
+ * assets/js/rail.js).
+ *
+ * --jyu-levy-left on levyn vasen reuna eli kiskon oikea reuna, josta sisältö
+ * ja alatunniste alkavat. Piilotetulla valikolla se on kiskon paikka: levy
+ * levenee kiskon päälle, ja koska --jyu-rail ja siitä laskettu --jyu-side
+ * eivät muutu, sisällysluettelo, levyn oikea reuna ja yläpalkki pysyvät
+ * paikallaan eikä sivu kapene. --jyu-levy-edge ja --jyu-levy-hair ovat
+ * kiskon reunaviivan paikka ja leveys levyn liukuvärissä (.md-container
+ * alempana): piilotettuna viivaa ei ole, ja levyn vasemmalla puolella on
+ * kiskon pinnan (--jyu-left-bg) sijaan sivun pohjaa ikkunan reunaan asti.
+ *
+ * Rekisteröinti (@property) tekee muuttujista animoitavia: tilan vaihtuessa
+ * ne liukuvat (transition työpöydän säännöissä), ja täyte, alatunnisteen
+ * marginaali ja liukuväri lasketaan niistä joka kehyksellä, vaikka
+ * liukuväriä itseään selain ei animoi. Rekisteröity muuttuja lasketaan
+ * määrittelypaikassaan, joten muuttujat ovat bodyllä eivätkä :rootissa:
+ * teeman tumma paletti ([data-md-color-scheme]) on bodyllä, eikä sen
+ * kiskon väri näkyisi :rootiin. Selain, joka ei tunne @propertya, vaihtaa
+ * tilan kerralla. Kisko itse piilotetaan työpöydän säännöissä. */
+@property --jyu-levy-left {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --jyu-levy-edge {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --jyu-levy-hair {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --jyu-left-bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: transparent;
+}
+
+/* Alatunnisteen vasen reuna: kiskon reunaviivan jälkeen, piilotettuna levyn
+ * reunassa. Jatke (--jyu-footer-ext) on, kuinka paljon alatunnisteen viiva
+ * ja kaista jatkuvat sen reunasta vasemmalle: piilotettuna ikkunan reunaan
+ * asti (.md-footer alempana). */
+@property --jyu-footer-left {
+  syntax: "<length-percentage>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+@property --jyu-footer-ext {
+  syntax: "<length>";
+  inherits: true;
+  initial-value: 0px;
+}
+
+body {
+  --jyu-levy-left: calc(var(--jyu-side) + var(--jyu-rail));
+  --jyu-levy-edge: var(--jyu-levy-left);
+  --jyu-levy-hair: var(--jyu-hair);
+  --jyu-left-bg: var(--jyu-rail-bg);
+  --jyu-footer-left: calc(var(--jyu-levy-left) + var(--jyu-hair));
+  --jyu-footer-ext: 0px;
+}
+
+:root[data-jyu-rail="hidden"] body {
+  --jyu-levy-left: var(--jyu-side);
+  --jyu-levy-edge: 0px;
+  --jyu-levy-hair: 0px;
+  --jyu-left-bg: var(--md-default-bg-color);
+  --jyu-footer-left: var(--jyu-side);
+  --jyu-footer-ext: 100vw;
+}
+
+/* Tumman teeman pohja teeman 5 %:sta 10,5 %:n kirkkauteen ja sinertävämmäksi,
+ * jotta kisko (8 %) mahtuu sen alle ja sisältöalue on sivun vaalein pinta
+ * koodilohkoa (code.css: 18 %) lukuun ottamatta. Teeman --light, --lighter
+ * ja --lightest ovat saman värin läpinäkyviä asteita (yläpalkin sumennettu
+ * tausta, alatunniste), joten ne siirretään mukana. */
+[data-md-color-scheme="slate"] {
+  --jyu-rail-scrollbar: color-mix(in srgb, var(--md-accent-fg-color) 80%, black);
+}
+
+/* Sama tausta kapean näytön valikkolaatikolle. Teeman sääntö on
+ * max-width-lohkossa samalla tarkkuudella, joten myöhemmin ladattu voittaa;
+ * leveällä näytöllä kiskon oma sääntö (alempana) asettaa saman arvon. */
+.md-sidebar--primary {
+  background-color: var(--jyu-rail-bg);
+}
+
+.md-footer-meta {
+  background-color: var(--jyu-footer-bg);
+}
+
+/* Kirjakuvake kapean näytön valikkolaatikon otsikkorivillä teeman
+ * linkkivärillä (vaaleassa indigo, tummassa sen vaalennus), ei tekstin
+ * värillä. Yläpalkissa kuvaketta ei ole (header.html). */
+.md-nav__button.md-logo {
+  color: var(--md-typeset-a-color);
+}
+
+/* Päävalikon piilotuspainike (header.html, assets/js/rail.js) vain
+ * työpöydällä eli kiskon leveyksillä (alempana); kapealla näytöllä valikko
+ * on laatikko, jonka teeman hampurilainen avaa. Kaksi luokkaa ohittaa teeman
+ * .md-header__button:not([hidden]). */
+.md-header__button.jyu-rail-button {
+  display: none;
+}
+
+/* Teeman omat hiusviivat samaan sävyyn; yläpalkin alareuna on se viiva, jonka
+ * jatkoksi kiskon reuna ja valikon erotin on tehty. Geometria on kopio teeman
+ * säännöstä, koska pelkkää väriä ei voi vaihtaa erikseen: jos teema muuttaa
+ * mittoja, nämä on päivitettävä käsin. */
+.md-header--shadow {
+  box-shadow: 0 0.05rem 0 var(--jyu-rule);
+}
+
+.md-footer {
+  border-top: 0.05rem solid var(--jyu-rule);
+}
+
+/* Edellinen/seuraava-linkkien hover korostaa kuten muualla sivustolla
+ * (sisällysluettelo, leipätekstin linkit): otsikko ja nuoli musteen
+ * väriin. Teeman oletus haalistaa koko linkin 70 %:iin, mikä lukee "ei
+ * käytössä" ja vie jo 70 %:ssa olevan apusanan puoleen. Kesto ja käyrä
+ * paletista. */
+.md-footer__link,
+.md-footer__link:is(:hover, :focus) {
+  opacity: 1;
+  transition: none;
+}
+
+.md-footer__link .md-ellipsis,
+.md-footer__link .md-footer__button {
+  transition: color var(--jyu-fast) var(--jyu-ease);
+}
+
+.md-footer__link:is(:hover, :focus) .md-ellipsis,
+.md-footer__link:is(:hover, :focus) .md-footer__button {
+  color: var(--md-accent-fg-color);
+}
+
+.md-typeset hr {
+  border-bottom: 0.05rem solid var(--jyu-rule);
+}
+
+.md-typeset .tabbed-labels {
+  box-shadow: 0 -0.05rem var(--jyu-rule) inset;
+}
+
+/* Aktiivisen välilehden osoitin paksummaksi: teeman 1.5px ei erotu yllä
+ * olevan viivan rinnalla. .js-etuliite on pakollinen, muuten sääntö häviää
+ * teeman .js .md-typeset .tabbed-labels:before -säännölle tarkkuudessa. */
+.js .md-typeset .tabbed-labels::before {
+  height: 2px;
+}
+
+/* Sisällysluettelo ylös .md-main__inner-marginaalin verran, ettei se liiku
+ * vierityksen alussa. Marginaalia ei poisteta: teema laskee siitä
+ * sisällysluettelon korostuksen. */
+.md-sidebar--secondary {
+  margin-top: -1.5rem;
+}
+
+/* Terminaalisoittimen kerrokset (asciinema-player.css: aloituspeite 10,
+ * ohjauspalkki 30) omaan pinoamiskontekstiinsa. Muuten ne piirtyvät yläpalkin
+ * (4) ja sen valikoiden päälle, kun soitin vierii palkin alle. Soitin
+ * tekstipalstan levyiseksi; muuten se kutistuu nauhoituksen levyiseksi.
+ * Tässä eikä soittimen tyylissä, koska se on kolmannen osapuolen tiedosto
+ * (asciinema-player 3.17.0 sellaisenaan). */
+.ap-player {
+  isolation: isolate;
+  width: 100%;
+}
+
+/* Terminaalin kirjasin koodilohkon kokoiseksi (code.css: .875em), mutta
+ * enintään niin suureksi, että 80 merkin terminaali (48em tekstiä ja .75em
+ * reunat) mahtuu palstaan: soitin leikkaa leveämmän terminaalin oikean
+ * reunan, ja nauhoitusten pisimmät rivit ovat lähes 80 merkkiä. Alaraja on
+ * entinen kiinteä 12px; kapealla näytöllä leikkautuu silloin kuten ennenkin.
+ * Koko seuraa fonttivalikkoa, kunnes palsta tulee vastaan. Tarkkuus
+ * soittimen div.ap-wrapper div.ap-player -sääntöä (15px) suurempi. */
+asciinema div.ap-wrapper {
+  container-type: inline-size;
+}
+
+asciinema div.ap-wrapper div.ap-player {
+  font-size: clamp(12px, 100cqi / 49.5, .875em);
+}
+
+/* Repo-linkin tyhjät kääreet pois. Linkki on tyhjennetty mallista
+ * (overrides/partials/source.html), mutta teema piirtää kääreet, koska
+ * repo_url on asetettu muokkauslinkkiä varten; yläpalkissa tyhjä kääre
+ * jättäisi haun roikkumaan keskelle. :not(:has(*)) eikä suora display: none,
+ * jotta sääntö purkautuu itsestään, jos mallin ylikirjoitus poistetaan. */
+.md-header__source:not(:has(*)),
+.md-nav__source:not(:has(*)) {
+  display: none;
+}
+
+/* Kurssin nimi yläpalkissa on linkki etusivulle (overrides/partials/
+ * header.html). Selaimen oletusväri ja alleviivaus pois; osoittimen alla
+ * linkki saa taustan yhdessä sivustovalikon nuolen kanssa (sitemenu.css). */
+.md-header__title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Teemanvaihtimen kohdistusrengas näkyvään labeliin. Teema piirtää sen
+ * kohdistetun radionapin seuraavalle labelille, mutta näyttää labelin
+ * hidden-attribuutilla eikä valinnalla, ja kun yhtään nappia ei ole valittu,
+ * Tab kohdistaa ensimmäiseen: tummassa teemassa sen label on piilossa, eikä
+ * rengasta näkynyt. Vihje näppäimistöllä: tooltips.js. */
+[data-md-component="palette"]:has(.md-option:focus-visible) label:not([hidden]) {
+  outline-style: auto;
+  outline-color: var(--md-accent-fg-color);
+}
+
+/* Hakupainike pelkkänä suurennuslasina kuten viereiset kuvakkeet, ilman
+ * teeman kenttää: nimi ja Ctrl+K ovat vihjeessä (overrides/partials/
+ * search.html). Mitat ja hover teeman .md-header__buttonista: 1 rem kuvake,
+ * 0,4 rem täyte, 0,2 rem marginaali ja himmennys. Nimi jää napin tekstiksi
+ * ruudunlukijalle, font-size: 0 vain piilottaa sen. Alle 60 em:n teema
+ * näyttää napin sijaan oman kuvakkeensa (header.html: label).
+ * .md-search-etuliite ohittaa teeman [dir]- ja :focus-säännöt. */
+.md-search .md-search__button {
+  width: 1.8rem;
+  height: 1.8rem;
+  margin: 0 0.2rem;
+  padding: 0;
+  font-size: 0;
+  background-color: transparent;
+  outline-color: var(--md-accent-fg-color);
+  transition: opacity var(--jyu-fast);
+}
+
+.md-search .md-search__button:hover {
+  opacity: 0.7;
+}
+
+/* Kuvake keskelle; teema asemoi sen kentän vasempaan reunaan. */
+.md-search .md-search__button::before {
+  inset: 0;
+  margin: auto;
+}
+
+.md-search .md-search__button::after {
+  display: none;
+}
+
+/* Kun teema on vaihtanut nimen tilalle sivun otsikon, läpinäkyvä nimi olisi
+ * yhä näppäimistöllä kohdistettavissa; visibility ottaa sen kierrosta pois.
+ * Viive on teeman oman opacity-siirtymän kesto. Sama sivustovalikon
+ * painikkeelle ja linkeille. Työpöydällä vaihtoa ei tehdä (alempana), joten
+ * sääntö on rajattu sen ulkopuolelle eikä jätä sinne omaa transitioniaan. */
+@media screen and (max-width: 73.7344em) {
+  .md-header__title--active .md-header__topic :is(a, button) {
+    visibility: hidden;
+    transition: visibility 0s 0.15s;
+  }
+}
+
+/* Alatunnisteen linkit oikeassa reunassa (overrides/partials/copyright.html)
+ * lainaavat teeman .md-copyright-luokkaa; tässä niistä tehdään kuvakkeelliset
+ * rivit ja perutaan width: 100%, joka venyttäisi ne omalle riville kapealla
+ * näytöllä. Väli linkkien väliin tulee .md-copyrightin sivumarginaaleista,
+ * joten gapia ei ole. */
+.jyu-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.md-copyright--link {
+  display: inline-flex;
+  gap: 0.3rem;
+  align-items: center;
+  width: auto;
+  white-space: nowrap;
+}
+
+.md-copyright--link svg {
+  width: 0.8rem;
+  height: 0.8rem;
+  fill: currentcolor;
+}
+
+/* Lucide-kuvakkeet (muutoshistoria, ongelmailmoitus) ovat viivapiirroksia:
+ * täyttö pois, muuten viivat tukkeutuvat. GitHub-merkki on Materialin
+ * sarjasta, koska Lucidessa ei ole tuotemerkkejä, ja se on täytetty. */
+.md-copyright--link svg.lucide {
+  fill: none;
+}
+
+/* Valittu valikkorivi: korotettu pinta ja musteen värinen teksti. Teema
+ * antaa riville aksentin 10 %:n peiton, teksti on aksentin värinen ja
+ * typography.css nostaa painon: kolme korostusta samalle riville. Pinta
+ * samasta neutraalista luiskasta kuin kisko (paletti.css) jättää värin
+ * tekstille. Koskee myös kapean näytön laatikkoa. */
+.md-nav__link--active,
+.md-nav__item--active > .md-nav__link {
+  background-color: var(--jyu-raised);
+}
+
+/* Erotin yleisten sivujen ja kirjan lukujen väliin. mdBookissa SUMMARY.md:n
+ * ---erottimet piirtyvät valikkoon; Zensicalin navigaatiossa niitä ei ole
+ * (convert.py: build_nav ohittaa ne). Viiva on sama kuin kiskon reuna ja
+ * yläpalkin alareuna, ja se ripustetaan ryhmän viimeiseen kohtaan eli
+ * TIM-linkkiin, koska vain absoluuttinen osoite on sama joka sivulla:
+ * sisäiset osoitteet muuttuvat sivun syvyyden mukaan. Jos TIM-linkki poistuu,
+ * viiva katoaa eikä siirry väärään väliin. Pystyvälit ovat epäsymmetriset,
+ * koska listan kohtien oma väli tulee viivan alapuolelle. */
+.md-nav--primary > .md-nav__list > .md-nav__item:has(
+    a[href^="https://tim.jyu.fi"])::after {
+  display: block;
+  height: 1px;
+  margin: 0.7rem 0 0.5rem;
+  background-color: var(--jyu-rule);
+  content: "";
+}
+
+/* Avausnuoli alas (suljettu) ja ylös (avattu) kaikilla leveyksillä. Teeman
+ * oletus on oikealle ja avattuna alas, mutta alaluvut aukeavat saman listan
+ * sisään niin kiskossa kuin kapean näytön laatikossakin, joten nuoli osoittaa
+ * siihen suuntaan, johon lista liikkuu. Kulmat lähtevät chevron-rightistä.
+ * --indeterminate on tila, jonka Zensical antaa avoinna olevalle luvulle
+ * sivun latautuessa. */
+.md-sidebar--primary .md-nav__item--nested .md-nav__icon:after {
+  transform: rotate(90deg);
+}
+
+.md-sidebar--primary
+  .md-nav__item--nested
+  .md-nav__toggle:checked
+  ~ .md-nav__link
+  .md-nav__icon:after,
+.md-sidebar--primary
+  .md-nav__item--nested
+  .md-toggle--indeterminate
+  ~ .md-nav__link
+  .md-nav__icon:after {
+  transform: rotate(-90deg);
+}
+
+/* Valikon ja sisällysluettelon rivien väri ja tausta vaihtuvat osoittimen
+ * alla kerralla kuten yläpalkin painikkeissa (fontmenu.css); teeman 0,25 s:n
+ * häivytys pois. Nuolen kääntö ja alalukujen avautuminen jäävät. */
+.md-nav__link {
+  transition: none;
+}
+
+/* Laatikon vierityspalkki pyöristettyjen kulmien väliin: raitaa lyhennetään
+ * säteen verran. Onnistuu vain webkit-palkilla, jonka Chromium piirtää vasta,
+ * kun teeman scrollbar-width ja -color on palautettu; Firefoxiin ei vaikuta.
+ * Vain hiirellä: kosketusnäytöllä webkit-palkki jäisi pysyvästi näkyviin. */
+@media screen and (max-width: 73.7344em) and (hover: hover) {
+  @supports selector(::-webkit-scrollbar) {
+    .md-sidebar--primary .md-sidebar__scrollwrap {
+      scrollbar-width: auto;
+      scrollbar-color: auto;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar {
+      width: 0.5rem;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-track {
+      margin-block: 0.8rem;
+    }
+
+    .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+      background-color: var(--md-default-fg-color--lighter);
+      background-clip: padding-box;
+      border: 0.1rem solid transparent;
+      border-radius: 0.25rem;
+    }
+
+    .md-sidebar--primary
+      .md-sidebar__scrollwrap:hover::-webkit-scrollbar-thumb {
+      background-color: var(--md-accent-fg-color);
+    }
+  }
+}
+
+@media screen and (min-width: 73.75em) {
+
+  /* 1. Kisko: kiinteä, koko korkeus ja oma tausta; leveällä
+   *    näytöllä irti reunasta (--jyu-side). Yläosaan jää yläpalkin
+   *    korkeuden verran tilaa kurssin nimelle. !important, koska
+   *    Zensicalin JavaScript kirjoittaa sivupalkille inline-tyylit (top ja
+   *    vieritysalueen korkeus) olettaen sen olevan yläpalkin alla.
+   *    Korkeus tulee reunoista (top ja bottom), ei 100vh:sta: iOS Safarissa
+   *    vh on suuren näkymän korkeus eli työkalupalkki pienennettynä, joten
+   *    sivun ollessa ylhäällä 100vh-korkuisen kiskon alapää ja valikon
+   *    viimeiset kohdat jäisivät palkin alle (iPad vaakatasossa). Kiinteä
+   *    elementti, jolla on top ja bottom, seuraa näkyvää aluetta. height:
+   *    auto, koska teema antaa sivupalkille korkeuden 0 leveällä näytöllä.
+   *    align-self: auto, koska teeman flex-start mitoittaisi reunojen väliin
+   *    sijoitetun kiskon sisällön mukaan eikä venyttäisi sitä: sivupalkki on
+   *    flex-säiliön (.md-main__inner) lapsi, ja absoluuttisesti sijoitetun
+   *    lapsen koko reunojen välissä riippuu align-selfistä. */
+  .md-sidebar--primary {
+    position: fixed;
+    top: 0 !important;
+    bottom: 0;
+    left: var(--jyu-side);
+    width: var(--jyu-rail);
+    height: auto;
+    align-self: auto;
+    padding: 2.4rem 0 0;
+    background-color: var(--jyu-rail-bg);
+    /* Ei reunaviivaa: kiskon reuna on .md-containerin taustan raita heti
+     * kiskon oikealla puolella (ks. alempana). */
+    z-index: 3;
+    /* Piilotus liu'uttaa kiskon ruudun ulkopuolelle (alla). Kesto ja käyrä
+     * teeman laatikosta. Läpinäkymättömänä eikä häipyen: levyn reuna ja
+     * teksti liikkuvat samaan aikaan kiskon alla, ja häipyvän kiskon läpi
+     * ne näkyivät leikkauksina. visibility ilman viivettä: sen välivaiheet
+     * ovat "visible", joten kisko näkyy liu'un loppuun ja heti palatessaan. */
+    transition: left var(--jyu-slow), visibility var(--jyu-slow);
+    transition-timing-function: var(--jyu-ease);
+  }
+
+  /* Piilotettu valikko (ks. @property ylempänä): kisko liukuu kokonaan
+   * ikkunan vasemman reunan taakse ja painike näkyy. Kiskon oikea reuna
+   * kulkee liu'un ajan tasan levyn reunan (--jyu-levy-edge) kanssa, koska
+   * kummankin matka on sama (kiskon leveys plus levyn ulkopuolinen reuna)
+   * samalla käyrällä, joten kisko peittää levenevän tekstin alleen.
+   * visibility eikä display, jotta liuku on mahdollinen ja kiskolla on
+   * mitat (rail.js vierittää sen). Vain tässä, jotta kapealla näytöllä
+   * tallennettu piilotus ei vie laatikkoa. */
+  :root[data-jyu-rail="hidden"] .md-sidebar--primary {
+    left: calc(-1 * var(--jyu-rail));
+    visibility: hidden;
+  }
+
+  /* Levyn reunan muuttujat liukuvat kiskon tahdissa (ks. @property
+   * ylempänä). */
+  body {
+    transition: --jyu-levy-left var(--jyu-slow), --jyu-levy-edge var(--jyu-slow),
+      --jyu-levy-hair var(--jyu-slow), --jyu-left-bg var(--jyu-slow),
+      --jyu-footer-left var(--jyu-slow), --jyu-footer-ext var(--jyu-slow);
+    transition-timing-function: var(--jyu-ease);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body,
+    .md-sidebar--primary {
+      transition: none;
+    }
+  }
+
+  /* Levossa himmeä ja osoittimen alla tai kohdistettuna täysi, toisin
+   * kuin teeman muut painikkeet (täysi, hover 0,7): kytkin on kurssin
+   * nimen vieressä eikä saa kilpailla sen kanssa. */
+  .md-header__button.jyu-rail-button {
+    display: inline-block;
+    opacity: 0.6;
+  }
+
+  .md-header__button.jyu-rail-button:is(:hover, :focus-visible) {
+    opacity: 1;
+  }
+
+  /* Vieritysalue kiskon sisäkorkeuden (täytteen alapuolinen osa) korkuinen. */
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    height: 100% !important;
+    margin: 0;
+    overflow-y: auto;
+  }
+
+  /* Valikko kiskon levyiseksi. Teema pitää sivupalkin sisällön 11,5rem
+   * levyisenä (padding-right: calc(100% - 11.5rem)), jolloin leveämpi kisko
+   * kasvattaisi vain kourua vierityspalkin vieressä; palautetaan teeman
+   * oma 0,6rem kouru. */
+  .md-sidebar--primary .md-sidebar__inner {
+    padding-right: 0.6rem;
+  }
+
+  /* Vierityspalkki näkyviin vasta kun hiiri on kiskon päällä tai valikossa
+   * liikutaan näppäimistöllä; Zensical piirtää sen aina. Vain väri vaihtuu,
+   * joten valikko ei nytkähdä. Molemmat tavat tarvitaan: osa selaimista
+   * tottelee scrollbar-coloria, osa vain ::-webkit-scrollbar-thumbia.
+   * Lepoväri on sama väri nolla-alfalla eikä transparent, koska muuten
+   * häivytys välähtäisi mustan kautta. Transition lepotilan säännössä
+   * koskee molempia suuntia. */
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    scrollbar-color: rgb(from var(--jyu-rail-scrollbar) r g b / 0) transparent;
+    transition: scrollbar-color var(--jyu-fast);
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    transition: background-color var(--jyu-fast);
+  }
+
+  /* :focus-visible eikä teeman :focus-within: linkin klikkaus jättää
+   * fokuksen valikkoon, jolloin palkki jäisi näkyviin pysyvästi. Väri on
+   * teeman korostusväri 20 % taustan suuntaan vaimennettuna, koska Chromium
+   * korostaa palkin itse hiiren alla vetämällä väriä kohti keskiharmaata:
+   * täydellä korostusvärillä tumman teeman palkki haalistuisi hiiren alla.
+   * Webkit-säännöt jäävät teeman kaksivaiheisiksi varalle selaimille, jotka
+   * eivät tottele scrollbar-coloria. */
+  .md-sidebar--primary:hover .md-sidebar__scrollwrap,
+  .md-sidebar--primary .md-sidebar__scrollwrap:has(:focus-visible) {
+    scrollbar-color: var(--jyu-rail-scrollbar) transparent;
+  }
+
+  .md-sidebar--primary:hover .md-sidebar__scrollwrap::-webkit-scrollbar-thumb,
+  .md-sidebar--primary
+    .md-sidebar__scrollwrap:has(:focus-visible)::-webkit-scrollbar-thumb {
+    background-color: var(--md-default-fg-color--lighter);
+  }
+
+  .md-sidebar--primary
+    .md-sidebar__scrollwrap::-webkit-scrollbar-thumb:hover {
+    background-color: var(--md-accent-fg-color);
+  }
+
+  /* Ilmaa listan päihin: ensimmäinen kohta irti kurssin nimestä, viimeinen
+   * irti ruudun alareunasta. Padding listalla eikä vieritysalueella, koska
+   * listan täyte kasvattaa vieritettävää korkeutta kaikissa selaimissa.
+   * Alhaalla 1,6rem, koska iPadilla kisko päättyy laitteen reunaan ja 1rem
+   * tuntui liian ahtaalta. */
+  .md-sidebar--primary .md-nav--primary > .md-nav__list {
+    padding-top: 0.4rem;
+    padding-bottom: 1.6rem;
+  }
+
+  /* Yhdistävä viiva avatun luvun alalukujen vasemmalle puolelle, jotta
+   * listasta näkee, mihin lukuun ne kuuluvat. Listalle eikä kohdille, jotta
+   * viiva jatkuu kohtien välisten rakojen yli. margin-left on yläluvun
+   * linkin marginaali + täyte eli tasan sen tekstin alku. */
+  .md-sidebar--primary .md-nav__item--nested > .md-nav > .md-nav__list {
+    margin-left: 1rem;
+    border-left: 1px solid var(--jyu-rule);
+  }
+
+  /* Erotinviiva kiskon sisällön koko leveydelle: .md-sidebar__inner jättää
+   * 0,6rem kourun vierityspalkille, jonka sisäpuolelle viiva muuten
+   * päättyisi, eri kohtaan kuin yläpalkin alareuna. */
+  .md-nav--primary > .md-nav__list > .md-nav__item:has(
+      a[href^="https://tim.jyu.fi"])::after {
+    margin-right: -0.6rem;
+  }
+
+  /* 2. Muu sisältö alkaa kiskon oikealta puolelta. Padding .md-mainille eikä
+   *    marginaali ruudukolle, jotta ruudukon automaattinen keskitys säilyy.
+   *    Alatunniste tarvitsee saman erikseen, koska se on .md-mainin sisar
+   *    eikä lapsi; ilman sitä "Edellinen"-linkki jäisi kiskon alle. Kiskon
+   *    päälle --jyu-gap, jotta vasen rako on yhtä leveä kuin oikea.
+   *    Leveällä näytöllä --jyu-side kummallekin puolelle, jolloin
+   *    ruudukolle jää tasan sen oma leveys ja se asettuu kiskon viereen.
+   *    Alatunniste on vain tekstipalstan levyinen: oikealla marginaaliin
+   *    tulee myös sisällysluettelon sarake, jolloin nuolirivi ja sävytetty
+   *    kaista päättyvät levyn reunaan eivätkä jatku luettelon alle.
+   *    Oikea täyte lasketaan levyn pyöristetystä reunasta (--jyu-levy-right)
+   *    eikä --jyu-sidesta, jotta luettelon sarake alkaa tasan reunaviivasta;
+   *    ilman pyöristystä mitat ovat samat. Ruudukko täyttää täytteiden
+   *    välin kokonaan (max-width pois), jotta se ei keskity pyöristyksen
+   *    jäännökseen ja siirrä rakoa kiskon ja tekstin välissä. */
+  /* Lyhyt sivu: ei omaa vähimmäiskorkeutta. Teeman body on flex-sarake
+   * (min-height 100 %), ja .md-container ja .md-main venyvät (flex-grow),
+   * joten alatunniste on ikkunan alareunassa jo sellaisenaan. 100vh
+   * säiliölle työntäisi sivua yläpalkin verran yli, koska yläpalkki
+   * (sticky, vuossa) on säiliön sisar eikä lapsi. */
+  .md-main {
+    padding-right: calc(100% - var(--jyu-levy-right) - var(--jyu-toc));
+    padding-left: calc(var(--jyu-levy-left) + var(--jyu-gap));
+  }
+
+  .md-main__inner {
+    max-width: none;
+  }
+
+  /* Tekstipalsta --jyu-margin:n päähän levyn kummastakin reunasta. Teeman
+   * omat marginaalit (1,2rem, vasen 1220 px:stä ja oikea sisällysluettelon
+   * kanssa) kumotaan samoilla valitsimilla, jotta tarkkuus riittää; ilman
+   * luetteloa (hide: toc) oikean marginaalin asettaa ensimmäinen. */
+  [dir=ltr] .md-sidebar--primary:not([hidden]) ~ .md-content > .md-content__inner,
+  [dir=ltr] .md-sidebar--secondary:not([hidden]) ~ .md-content > .md-content__inner {
+    margin-right: var(--jyu-margin);
+    margin-left: calc(var(--jyu-margin) - var(--jyu-gap));
+  }
+
+  /* Sivun pohja (levy) ja sen reunaviivat yhtenä liukuvärinä pääsisällön
+   * ja alatunnisteen yhteisellä isännällä, jotta levy ja viivat jatkuvat
+   * yläpalkista alatunnisteen pohjaan myös lyhyellä sivulla: pääsisältö
+   * venyy ikkunan korkuiseksi, mutta sen tekstipalsta ei. Levy on kiskon
+   * ja tekstipalstan alueella; luettelon sarake ja levyn ulkopuolinen
+   * reuna (--jyu-side) ovat kiskon väriset. Kisko (kiinteä) peittää oman
+   * osuutensa. Viivat ovat raidat heti kiskon oikealla puolella ja levyn
+   * oikeassa reunassa, luettelon sarakkeen ensimmäisessä pikselissä.
+   *
+   * Raita eikä reunaviiva tai varjo, koska Chrome pehmentää laatikon
+   * reunan ja varjon reunan (antialiasointi): murtoskaalauksella (125 %)
+   * 1 px:n viiva on 1,25 laitepikseliä ja piirtyy yhdeksi täydeksi ja
+   * yhdeksi haaleaksi pikseliksi, murtosijainnissa kahdeksi haaleaksi.
+   * Liukuvärin terävä raja sen sijaan näytteistetään pikselin keskeltä:
+   * jokainen pikseli on joko viivan tai pinnan värinen. Sijainnit
+   * pyöristetään ruudukkoon (ks. --jyu-hair), jotta raitojen leveys on
+   * sama. Ei background-size/position, koska niissä --jyu-siden 50 %
+   * laskettaisiin eri mitasta (alue miinus kuva); pysäytysprosentit ovat
+   * elementin leveydestä kuten täytteenkin. Väri on läpinäkymätön
+   * --jyu-edge, koska vasen raita on levyn ja oikea kiskon värin päällä. */
+  .md-container {
+    background-image: linear-gradient(
+      to right,
+      var(--jyu-left-bg) var(--jyu-levy-edge),
+      var(--jyu-edge) var(--jyu-levy-edge)
+        calc(var(--jyu-levy-edge) + var(--jyu-levy-hair)),
+      var(--md-default-bg-color) calc(var(--jyu-levy-edge) + var(--jyu-levy-hair))
+        var(--jyu-levy-right),
+      var(--jyu-edge) var(--jyu-levy-right) calc(var(--jyu-levy-right) + var(--jyu-hair)),
+      var(--jyu-rail-bg) calc(var(--jyu-levy-right) + var(--jyu-hair))
+    );
+  }
+
+  /* Sisällysluettelon sticky-otsikko peittää alleen vierivät kohdat teeman
+   * sivun pohjavärillä, joka olisi nyt vaalea laatikko kiskon värisellä
+   * sarakkeella. */
+  .md-sidebar--secondary .md-nav__title {
+    background-color: var(--jyu-rail-bg);
+  }
+
+  /* Kun sivu piilottaa sisällysluettelon (hide: toc), levy ja alatunniste
+   * ulottuvat ruudukon oikeaan reunaan. .md-container, jotta sama arvo
+   * pätee sekä pääsisältöön että sen sisareen alatunnisteeseen. */
+  .md-container:has(.md-sidebar--secondary[hidden]) {
+    --jyu-toc: 0px;
+  }
+
+  body {
+    background-color: var(--jyu-rail-bg);
+  }
+
+  /* Marginaalit levyn reunaviivoista (samat pyöristetyt mitat kuin
+   * liukuvärissä), jotta alatunnisteen omat taustat päättyvät tasan
+   * viivoihin eivätkä peitä niitä tai jätä rakoa: vasemmalla kiskon ja
+   * sen reunaviivan jälkeen, oikealla levyn reunaviivaan. Kisko (kiinteä)
+   * peittäisi alatunnisteen alkupään muutenkin, mutta viiva on kiskon
+   * ulkopuolella ja jäisi alatunnisteen taustan alle. */
+  .md-footer {
+    position: relative; /* jatkeiden isäntä (alla) */
+    margin-right: calc(100% - var(--jyu-levy-right));
+    margin-left: var(--jyu-footer-left);
+    /* Sisältö levyn reunoista täytteen (--jyu-footer-pad) verran: vasemmalla
+     * kiskon reunaviivan jälkeen täyte miinus viiva, piilotettuna koko täyte.
+     * Prosentit (--jyu-side) vain alatunnisteen omassa marginaalissa, jonka
+     * isäntä on sivun levyinen; täytteessä ne supistuvat pois. */
+    padding-right: var(--jyu-footer-pad);
+    padding-left: calc(var(--jyu-levy-left) + var(--jyu-footer-pad) - var(--jyu-footer-left));
+  }
+
+  /* Piilotetulla valikolla alatunnisteen viiva jatkuu sen reunasta ikkunan
+   * reunaan (--jyu-footer-ext). Viivan paikka ja paksuus teeman
+   * border-topista (.md-footer ylempänä). */
+  .md-footer::before {
+    position: absolute;
+    top: -0.05rem;
+    right: 100%;
+    width: var(--jyu-footer-ext);
+    height: 0.05rem;
+    background-color: var(--jyu-rule);
+    content: "";
+  }
+
+  /* Alatunnisteen sävytetty kaista (.md-footer-meta) kiinni alatunnisteen
+   * reunoihin: yllä oleva täyte jättäisi reunan ja kaistan väliin loven sivun
+   * taustaa. Kaista jatketaan kummallekin puolelle täytteen verran,
+   * piilotetulla valikolla vasemmalla ikkunan reunaan asti. Leveys ilman
+   * prosentteja (ks. yllä), joten jatke päättyy tasan reunaan eikä peitä
+   * kiskon reunaviivaa. */
+  .md-footer-meta {
+    position: relative;
+  }
+
+  .md-footer-meta::before,
+  .md-footer-meta::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: var(--jyu-footer-bg);
+    content: "";
+  }
+
+  .md-footer-meta::before {
+    right: 100%;
+    width: calc(var(--jyu-footer-pad) - var(--jyu-hair) + var(--jyu-footer-ext));
+  }
+
+  .md-footer-meta::after {
+    left: 100%;
+    width: var(--jyu-footer-pad);
+  }
+
+  /* Alatunnisteen ruudukot täyttävät levyn kuten sisällön ruudukko
+   * (.md-main__inner yllä), jotta nuolirivi ja tekijät pysyvät tekstin
+   * reunassa myös, kun levy on piilotetulla valikolla ruudukkoa leveämpi;
+   * teeman 61rem:n enimmäisleveys keskittäisi ne. */
+  .md-footer__inner,
+  .md-footer-meta__inner {
+    max-width: none;
+  }
+
+  /* 3. Yläpalkin rivi reunasta reunaan, jotta logo ja kurssin nimi
+   *    asettuvat kiskon päälle. Leveällä näytöllä rivi siirtyy kiskon
+   *    mukana: vasemmalla teeman 0,4rem kiskon reunasta, ja oikealla
+   *    viimeinen painike (tulostus) marginaaleineen päättyy
+   *    sisällysluettelon tekstin kohdalle (sen 0,6rem:n sisennys).
+   *    max() pitää kapeammalla 1,2rem:n välin vierityspalkkiin. */
+  .md-header__inner {
+    max-width: none;
+    margin: 0;
+    padding-right: max(1.2rem, 100% - var(--jyu-levy-right) - var(--jyu-toc) + 0.6rem);
+    padding-left: calc(var(--jyu-side) + 0.4rem);
+  }
+
+  /* Yläpalkin alareunan viiva samana läpinäkymättömänä raitana kuin levyn
+   * reunat, yläpalkin viimeiselle riville sen sumennetun taustan päälle.
+   * Teeman varjo (ks. .md-header--shadow ylempänä) piirtyisi läpikuultavana
+   * levyn ensimmäiselle riville pystyviivojen päälle, jolloin risteyskohta
+   * olisi tummempi (tummassa teemassa vaaleampi) kuin viivat; ja varjon
+   * reuna pehmenee murtoskaalauksella kuten reunaviivan (ks. .md-container).
+   * Yläpalkin korkeus (2.4rem = 48 px) on 4 px:n ruudukossa. */
+  .md-header--shadow {
+    box-shadow: none;
+  }
+
+  .md-header--shadow::before {
+    background-image: linear-gradient(
+      to top, var(--jyu-edge) var(--jyu-hair), transparent var(--jyu-hair));
+  }
+
+  /* Kiskon otsikko on kurssin nimi, ei sivun otsikko: Zensical vaihtaa ne
+   * keskenään vieritettäessä, mikä kiskon päällä olisi hämmentävää. */
+  .md-header__topic + .md-header__topic {
+    display: none;
+  }
+
+  .md-header__title--active .md-header__topic {
+    z-index: 0;
+    pointer-events: auto;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 4. Sumennettu tausta vain kiskon oikealle puolelle. Kiskon kohdalla
+   *    yläpalkki on läpinäkyvä, jolloin kiskon oma tausta näkyy sen läpi
+   *    eikä sisältö vuoda kurssin nimen taakse. */
+  .md-header {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
+  .md-header::before {
+    position: absolute;
+    /* Ikkunan reunasta reunaan, myös kiskon ja levyn ulkopuolisen reunan
+     * päällä: yläpalkki on yksi yhtenäinen kaista, jonka alta kisko alkaa. */
+    inset: 0;
+    z-index: -1;
+    background-color: var(--md-default-bg-color--light);
+    backdrop-filter: blur(0.4rem);
+    -webkit-backdrop-filter: blur(0.4rem);
+    content: "";
+  }
+}
+
+/* Sisällysluettelon nappi kapean näytön alakulmassa kirjasinvalikon painikkeen
+ * näköiseksi (fontmenu.css): himmeä täyttö, täysi tekstiväri ja osoittimen
+ * alla tai avattuna --jyu-rule. Teeman nappi on pelkkää läpikuultavaa
+ * taustaväriä, joten tummassa teemassa se ei erottunut sivusta. Täyttö on
+ * kuvana teeman sumennetun taustan päällä, kuten kirjasinpainike yläpalkin
+ * päällä; muuten teksti näkyisi napin läpi. Teeman korostusvärinen hover ja
+ * värien häivytys pois kuten kirjasinvalikossa. Teema näyttää napin vain
+ * alle 960 px:n leveydellä, joten sääntöjä ei rajata. */
+.md-sidebar--secondary .md-sidebar-button {
+  color: var(--md-default-fg-color);
+  background-image: linear-gradient(var(--md-default-fg-color--lightest) 0 0);
+  transition: transform var(--jyu-fast) var(--jyu-ease), opacity var(--jyu-fast);
+}
+
+.md-sidebar--secondary .md-sidebar-button:is(:focus, :hover),
+#__toc:checked ~ .md-sidebar-button__wrapper .md-sidebar-button {
+  color: var(--md-default-fg-color);
+  background-color: var(--md-default-bg-color--light);
+  background-image: linear-gradient(var(--jyu-rule) 0 0);
+}
+
+/* Tummassa teemassa z2-varjo on musta eikä erotu taustasta; reunaviiva kuten
+ * kirjasinvalikon paneelissa. Myös napista avautuvalle laatikolle, joka on
+ * laatikko vain kapealla näytöllä. */
+@media screen and (max-width: 59.9844em) {
+  [data-md-color-scheme="slate"] .md-sidebar--secondary
+    :is(.md-sidebar-button, .md-sidebar__inner) {
+    box-shadow: var(--md-shadow-z2), 0 0 0 0.05rem var(--jyu-rule);
+  }
+}
+
+/* Sisällysluettelo sivupalkkina eli 960 px:stä alkaen. Teema piirtää sen oman
+ * vierityspalkin aina, ja kun luettelo ulottuu ikkunan oikeaan reunaan, palkki
+ * on heti selaimen palkin vieressä: kaksi palkkia rinnakkain. Palkki näkyy
+ * nyt kuten kiskossa vain osoittimen ollessa luettelon päällä tai
+ * näppäimistöllä liikuttaessa (perustelut kiskon säännöissä yllä).
+ * Luettelo seuraa lukukohtaa itse (mkdocs-pohja.yml: toc.follow), joten
+ * vieritystä tarvitaan harvoin. Häivytys kertoo, että listaa on lisää:
+ * yläreunassa sticky-otsikon alla, kun listaa on vieritetty, ja alareunassa,
+ * kun listaa on alempana (assets/js/toc.js asettaa attribuutit ja otsikon
+ * korkeuden). Ilman skriptiä maski ei peitä mitään. */
+@media screen and (min-width: 60em) {
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    scrollbar-color: rgb(from var(--jyu-rail-scrollbar) r g b / 0) transparent;
+    transition: scrollbar-color var(--jyu-fast);
+    mask-image: linear-gradient(
+      to bottom,
+      #000 var(--jyu-toc-title, 0px),
+      rgb(0 0 0 / var(--jyu-toc-above, 1)) var(--jyu-toc-title, 0px),
+      #000 calc(var(--jyu-toc-title, 0px) + 1.5rem),
+      #000 calc(100% - var(--jyu-toc-below, 0px)),
+      rgb(0 0 0 / var(--jyu-toc-end, 1)) 100%
+    );
+  }
+
+  .md-sidebar--secondary .md-sidebar__scrollwrap[data-jyu-above] {
+    --jyu-toc-above: 0;
+  }
+
+  .md-sidebar--secondary .md-sidebar__scrollwrap[data-jyu-below] {
+    --jyu-toc-below: 2.5rem;
+    --jyu-toc-end: 0;
+  }
+
+  /* Vieritetyssä päässä rulla ei jatka sivun vierittämistä, jottei
+   * luettelon ja sivun vieritys sekoitu. Vain kun lista vierii: Chromium
+   * ei ketjuta rullaa sivulle edes mahtuvasta listasta, jos contain on
+   * päällä, jolloin sivu ei vierisi luettelon päältä lainkaan. */
+  .md-sidebar--secondary .md-sidebar__scrollwrap:is([data-jyu-above], [data-jyu-below]) {
+    overscroll-behavior: contain;
+  }
+
+  .md-sidebar--secondary .md-sidebar__scrollwrap::-webkit-scrollbar-thumb {
+    background-color: transparent;
+    transition: background-color var(--jyu-fast);
+  }
+
+  .md-sidebar--secondary:hover .md-sidebar__scrollwrap,
+  .md-sidebar--secondary .md-sidebar__scrollwrap:has(:focus-visible) {
+    scrollbar-color: var(--jyu-rail-scrollbar) transparent;
+  }
+
+  .md-sidebar--secondary:hover .md-sidebar__scrollwrap::-webkit-scrollbar-thumb,
+  .md-sidebar--secondary
+    .md-sidebar__scrollwrap:has(:focus-visible)::-webkit-scrollbar-thumb {
+    background-color: var(--md-default-fg-color--lighter);
+  }
+
+  .md-sidebar--secondary
+    .md-sidebar__scrollwrap::-webkit-scrollbar-thumb:hover {
+    background-color: var(--md-accent-fg-color);
+  }
+}
+
+/* Luettelo seuraa lukukohtaa pehmeästi. Teema pyytää pehmeää vieritystä vasta,
+ * kun sivun vieritys on ollut 250 ms tauolla; vierittäessä se jättää tavan
+ * selaimen oletukseksi, jolloin luettelo hyppi. Oletus tulee tästä. */
+@media screen and (min-width: 60em) and (prefers-reduced-motion: no-preference) {
+  .md-sidebar--secondary .md-sidebar__scrollwrap {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Suljetun <details>-laatikon otsikot ilman omaa laatikkoa. Ne eivät näy
+ * muutenkaan, mutta Chromium antaa suljetun laatikon sisällölle sijainnin,
+ * joka voi olla kaukana laatikon alapuolella. Teema lukee sisällysluettelon
+ * kohtien paikat otsikoiden offsetTopista ja käyttää laatikottomalle otsikolle
+ * (0) lähimmän näkyvän vanhemman eli laatikon paikkaa; ilman tätä kohta
+ * merkittiin ohitetuksi vasta paljon laatikon jälkeen. Kun laatikko avataan,
+ * sivun korkeus muuttuu ja teema laskee paikat uudelleen.
+ *
+ * display: contents eikä none: Chromium hakee Ctrl+F:llä myös suljetun
+ * laatikon sisällöstä ja avaa laatikon osuman kohdalla, mutta vain tekstistä,
+ * jolla on asettelu. display: none pudotti otsikon haun piiristä, vaikka
+ * laatikon muu teksti löytyi (issue #5). contents jättää otsikon tekstin
+ * asetelluksi laatikon sisältöön, ja otsikolla itsellään ei ole paikkaa. */
+details:not([open]) :is(h1, h2, h3, h4, h5, h6):not(summary *) {
+  display: contents;
+}
+
+/* Teema pitää valikon laatikkona 1220 px:iin asti, joten välillä 1180–1219 px
+ * sen laatikkosäännöt kumotaan ja sen työpöytäsäännöt tuodaan tänne. Kopioita
+ * teeman säännöistä: päivitä, jos teema muuttaa niitä. Kisko on kapeampi,
+ * jotta sisällysluettelon viereen jää ~65 merkin tekstipalsta. */
+@media screen and (min-width: 73.75em) and (max-width: 76.2344em) {
+  :root {
+    --jyu-rail: 13rem;
+  }
+
+  .md-header__button[for=__drawer],
+  .md-nav .md-nav__title[for=__drawer],
+  .md-overlay {
+    display: none;
+  }
+
+  .md-nav--primary {
+    margin: 0.1rem 0;
+  }
+
+  [dir=ltr] .md-sidebar--primary {
+    left: 0;
+  }
+
+  /* Ei transition: none, koska kiskolla on nyt oma häivytys (ylempänä),
+   * joka ohittaa teeman laatikon siirtymän. */
+  .md-sidebar--primary {
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transform: none;
+  }
+
+  .md-sidebar--primary .md-sidebar__scrollwrap {
+    position: static;
+  }
+}
+
+/* Teeman vaihdon häivytys (assets/js/theme.js: näkymäsiirtymä). Selaimen
+ * oletus 0,25 s on hätäinen koko sivun värinvaihdolle. Vähemmän liikettä
+ * pyytävälle siirtymää ei käynnistetä (theme.js). Siirtymän aikana muut
+ * CSS-siirtymät ovat pois: uusi näkymä on siirtymässä elävä, joten sen on
+ * oltava heti lopputilassa. Muuten bodyn rekisteröidyt muuttujat (kiskon
+ * liuku ylempänä; kiskon vasemman puolen väri --jyu-left-bg vaihtuu teeman
+ * mukana) ja teeman värisiirtymät (linkit, napit) liukuisivat omaan
+ * tahtiinsa häivytyksen alla. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.35s;
+}
+
+:root:active-view-transition *,
+:root:active-view-transition *::before,
+:root:active-view-transition *::after {
+  transition: none !important;
+}

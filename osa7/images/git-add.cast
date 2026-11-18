@@ -1,0 +1,13 @@
+{"version":3,"term":{"cols":80,"rows":24,"type":"xterm-kitty","version":"kitty(0.45.0)","theme":{"fg":"#e2e2e9","bg":"#121318","palette":"#4c4c4c:#ffb4ab:#e2e2e9:#aca98a:#b0c6ff:#ffb4ab:#e2e2e9:#f0f0f0:#e2e2e9:#c49ea0:#9ec49f:#c4c19e:#a39ec4:#c49ec4:#9ec3c4:#e7e7e7"}},"timestamp":1771662155,"idle_time_limit":1.0,"command":"env PS1=\"\\$ \" bash --norc --noprofile","env":{"SHELL":"/bin/bash"}}
+[0.004, "o", "\u001b[?2004h$ "]
+[1.811, "o", "g"]
+[0.250, "o", "i"]
+[0.317, "o", "t"]
+[0.331, "o", " "]
+[0.314, "o", "a"]
+[0.348, "o", "d"]
+[0.207, "o", "d"]
+[0.217, "o", " "]
+[0.314, "o", "."]
+[0.494, "o", "\r\n\u001b[?2004l\r"]
+[0.004, "o", "\u001b[?2004h$ "]
