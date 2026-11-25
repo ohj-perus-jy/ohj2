@@ -450,7 +450,7 @@ Lisää `pom.xml`-tiedostoon Jackson-riippuvuus:
 <dependency>
     <groupId>tools.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
-    <version>3.0.4</version>
+    <version>3.3.0</version>
 </dependency>
 ```
 
@@ -481,7 +481,7 @@ public class LueJson {
                     IO.println(h.nimi() + " (" + h.ika() + "), " + h.kaupunki())
             );
         } catch (JacksonException je) {
-            IO.println("JSONin lukeminen epäonnistui: " + e.getMessage());
+            IO.println("JSONin lukeminen epäonnistui: " + je.getMessage());
         }
     }
 }
@@ -537,15 +537,17 @@ public class Henkilo {
 
 Tiedoston lukeminen voi epäonnistua, joten `readValue()`-metodi on syytä kääriä
 `try-catch`-rakenteeseen. Jackson-kirjasto heittää
-`JacksonException`-poikkeuksen, mikä on `IOException`-poikkeuksen aliluokka.
+`JacksonException`-poikkeuksen, joka on `RuntimeException`-luokan aliluokka eli
+[tarkastamaton poikkeus](03-poikkeusten-hallinta.md). Kääntäjä ei siis vaadi sen
+käsittelyä, mutta ilman käsittelyä ohjelma kaatuu, jos lukeminen epäonnistuu.
 
 **JSONin kirjoittaminen tiedostoon** on aavistuksen lukemista helpompaa.
 Kirjoittaminen tapahtuu `writeValue()`-metodilla, joka ottaa tiedoston ja
 tallennettavan olion, ja muuntaa sen JSON-muotoon. Tässä on mahdollista, että
  1. kansion luominen epäonnistuu; `createDirectories` heittää
     `IOException`-poikkeuksen, tai 
- 2. JSON-tiedoston lukeminen epäonnistuu, jos tiedosto ei löydy, JSON on
-virheellistä tai tyyppimuunnos epäonnistuu; `writeValue` heittää
+ 2. JSON-tiedoston kirjoittaminen epäonnistuu, jos tiedostoon ei voi kirjoittaa
+tai olion muuntaminen JSON-muotoon epäonnistuu; `writeValue` heittää
 `JacksonException`-poikkeuksen. 
 
 Kumpikin näistä poikkeuksista tulee käsitellä erikseen. 
