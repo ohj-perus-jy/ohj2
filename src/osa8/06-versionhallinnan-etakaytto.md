@@ -29,6 +29,9 @@ Valitse käytettävä etävarastopalvelu:
 
 1. Kirjaudu sisään [Jyväskylän yliopiston GitLab-palveluun](https://gitlab.jyu.fi/) yliopiston
    tunnuksilla. Kirjoita tunnus muodossa `tunnus` **ilman** `@jyu.fi`-päätettä.
+   Kirjautuminen vaatii monivaiheisen tunnistautumisen (MFA), esimerkiksi
+   Microsoft Authenticator -sovelluksen. Ota se esille valmiiksi ja lue
+   tarvittaessa [JY:n ohje monivaiheisesta tunnistautumisesta](https://www.jyu.fi/fi/yliopistopalvelut/digipalvelut/palvelut/tietoturva/monivaiheinen-tunnistautuminen-jyvaskylan-yliopistossa).
 2. Paina oikeassa yläpalkissa olevaa `+`-painiketta ja valitse **New project/repository**:
 
     <img src="images/gitlab-new-repo.png">
@@ -138,12 +141,30 @@ Sana `origin` on Git-maailmassa vakiintunut nimitys projektin pääasialliselle 
 
 Voimme nyt lähettää koodin etävarastoon.
 Ennen koodin lähettämistä meidän tulee vielä selvittää etävaraston käyttäjätunnus ja
-salasana. Nämä riippuvat palvelusta.
+luoda *pääsyavain* (engl. *personal access token*), jota käytetään salasanan
+sijaan. Kumpikaan palvelu ei hyväksy lähetyksessä tavallista salasanaa.
 
 ### [GitLab (JY)](#tab/gitlab)
 
 Etävarastoon lähettämisen yhteydessä käyttäjätunnus on aina yliopiston tunnus
-ilman `@jyu.fi`-päätettä. Salasanana toimii yliopiston salasana.
+ilman `@jyu.fi`-päätettä. Salasanaksi **ei kelpaa** yliopiston salasana, vaan
+sen sijaan on luotava erillinen pääsyavain:
+
+1. Kirjaudu [GitLabiin](https://gitlab.jyu.fi/) ja valitse oikeasta yläkulmasta
+   oman kuvakkeesi alta *Preferences*.
+2. Valitse vasemmasta valikosta *Access* › *Personal access tokens*.
+3. Avaa **Generate token** -valikko ja valitse **Legacy token**.
+4. Täytä lomake seuraavasti:
+
+    - **Token name**: Anna nimi, josta tunnistat koneen, vaikkapa `ohj2-kotikone`.
+    - **Expiration date**: Valitse päivä noin vuoden päähän. Oletuksena
+      pääsyavain vanhenee jo kuukauden kuluttua.
+    - **Select scopes**: Valitse `read_repository` ja `write_repository`.
+
+5. Paina lopuksi **Generate token** lomakkeen lopussa.
+6. Kopioi pääsyavain leikepöydälle kentän vieressä olevalla
+   kopiointipainikkeella. GitLab näyttää avaimen vain tämän kerran, joten pidä
+   sivu auki, kunnes ensimmäinen lähetys on onnistunut.
 
 ***
 
@@ -166,12 +187,24 @@ erillinen pääsyavain (engl. Personal Access Token, PAT):
       olevat alavalinnat on valittu.
 
 4. Paina lopuksi **Generate token** sivun alapuolella.
-5. Pääsyavain näkyy vihreässä kentässä. Tämä avain toimii jatkossa salasanana
-   aina, kun koodia lähetetään GitHubiin. Laita tämä koodi talteen.
+5. Pääsyavain näkyy vihreässä kentässä. Kopioi se leikepöydälle. GitHub näyttää
+   avaimen vain tämän kerran, joten pidä sivu auki, kunnes ensimmäinen lähetys
+   on onnistunut.
 
 ***
 
-Kun tunnus ja salasana on tiedossa, projektin voi lähettää ensimmäistä kertaa
+Pääsyavainta ei tarvitse tallentaa minnekään: Windowsissa ja macOS:ssä Git
+muistaa sen tällä koneella ensimmäisen lähetyksen jälkeen. Jos hävität avaimen
+tai teet töitä myös toisella koneella, luo uusi avain samalla tavalla. Jos kone
+katoaa, poista sen avain palvelun avainlistasta; muiden koneiden avaimet
+toimivat edelleen.
+
+!!! warning "Varoitus"
+
+    Pääsyavain on kuin salasana. Älä kirjoita sitä tekstitiedostoon, koodiin
+    tai viestiin.
+
+Kun tunnus ja pääsyavain on tiedossa, projektin voi lähettää ensimmäistä kertaa
 etävarastoon käyttäen `git push` -komentoa:
 
 <asciinema src="images/git-push-first.cast" rows="15" poster="npt:15"></asciinema>
@@ -184,9 +217,22 @@ Tämä komento tekee kaksi asiaa:
    parametreja lähettää koodia aina `origin`-etävarastoon.
 
 Huomaa, että ensimmäisen koodin lähettämisen, eli ns. push-komennon yhteydessä,
-Git-työkalu voi kysyä tunnusta ja salasanaa. Tunnus- ja salasanadialogi eroaa
-käyttöjärjestelmästä toiseen, mutta periaate on sama: anna yllä olevien ohjeiden
-mukainen tunnus ja salasana.
+Git-työkalu kysyy tunnusta ja salasanaa. Anna yllä olevien ohjeiden mukainen
+tunnus ja salasanan paikalle pääsyavain. Kysely eroaa käyttöjärjestelmästä
+toiseen:
+
+- **Windows**: Git Credential Manager avaa kirjautumisikkunan. Valitse
+  **Token** ja kirjoita käyttäjätunnuksesi. Pääsyavainta ei kirjoiteta vaan
+  liitetään: napsauta **Personal access token** -kenttää hiiren oikealla
+  painikkeella ja valitse **Paste** (tai paina <kbd>Ctrl</kbd> + <kbd>V</kbd>).
+  Kenttään tulee pelkkiä pisteitä.
+- **macOS**: kirjautumisikkunaa ei ole. Pääte kysyy ensin `Username`, johon
+  kirjoitat käyttäjätunnuksesi, ja sitten `Password`, johon liität
+  pääsyavaimen (<kbd>Cmd</kbd> + <kbd>V</kbd> ja <kbd>Enter</kbd>). Liitetty
+  avain ei näy ruudulla.
+
+Jos lähetys päättyy virheeseen `Access denied` tai `Authentication failed`,
+olet todennäköisesti antanut tavallisen salasanan pääsyavaimen sijaan.
 
 ## Jatkossa
 
