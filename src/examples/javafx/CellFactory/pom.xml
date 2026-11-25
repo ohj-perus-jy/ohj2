@@ -2,10 +2,10 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>fi.jyu.ohj2.esimerkit.filteredlist</groupId>
-  <artifactId>FilteredList</artifactId>
+  <groupId>fi.jyu.ohj2.esimerkit.cellfactory</groupId>
+  <artifactId>CellFactory</artifactId>
   <version>1.0</version>
-  <name>FilteredList</name>
+  <name>CellFactory</name>
   <description>A JavaFX archetype for a non-modular FXML project.</description>
   <url>https://github.com/user/javafx-fxml-template</url>
 
@@ -33,7 +33,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <javafx.plugin.version>0.0.8</javafx.plugin.version>
     <javaVersion>25</javaVersion>
-    <main.class>fi.jyu.ohj2.esimerkit.filteredlist.Main</main.class>
+    <main.class>fi.jyu.ohj2.esimerkit.cellfactory.Main</main.class>
     <jpackage.type>APP_IMAGE</jpackage.type>
   </properties>
 
