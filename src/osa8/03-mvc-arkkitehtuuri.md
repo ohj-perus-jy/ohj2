@@ -244,7 +244,15 @@ public class Tehtavakokoelma {
 ```
 
 Huomaa, miten kaikki säännöt ("otsikko ei saa olla tyhjä", "päivitä tiedosto kun
-lisätään tai ominaisuus muuttuu") asuvat nyt täällä malliluokassa!
+lisätään tai ominaisuus muuttuu") asuvat nyt täällä malliluokassa. 
+Tallennuksessa on kaksi eri kysymystä: miten tiedot kirjoitetaan (JSON-tiedostoon)
+ja milloin ne kirjoitetaan. Kumpikin on nyt mallissa. Tärkeämpi näistä on jälkimmäinen:
+malli tallentaa itse aina, kun sen tila muuttuu, joten kontrollerin ei tarvitse
+muistaa kutsua `tallenna()`-metodia jokaisen muutoksen jälkeen. Kontrollerissa ei siksi
+ole yhtään `tallenna()`-kutsua.
+
+Tiedostonkäsittelyn yksityiskohdat siirretään myöhemmin (luku 8.5) omaan luokkaansa.
+Silloinkin päätös tallentamisesta pysyy mallissa.
 
 ## Kontrollerin uusi rooli
 
