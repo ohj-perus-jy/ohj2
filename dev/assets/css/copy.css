@@ -1,0 +1,59 @@
+/* Kopiointinapin kuittaus nappirivin vasemmalla puolella; toiminta:
+ * assets/js/copy.js. Ulkoasu on teeman oman ilmoituksen (.md-dialog):
+ * aksenttivärinen pilleri, mutta napin korkuinen ja leipätekstin kirjasimella,
+ * koska rivi on koodilohkossa, jonka kirjasin on koodin. */
+
+/* Rivin ulkopuolella nappien vasemmalla: piilotettunakin kuittaus veisi rivissä
+ * tilaa, ja rivin alle piirretty pinta (codebuttons.css) levenisi pysyvästi.
+ * Ylä- ja alareuna ovat rivin reunuksen päässä, joten automaattiset marginaalit
+ * keskittävät kuittauksen nappien korkeudelle. */
+.jyu-copied {
+  position: absolute;
+  top: 0.2rem;
+  right: 100%;
+  bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  height: 1.75em;
+  padding: 0 0.6rem;
+  margin: auto 0.2rem auto 0;
+  font-family: var(--md-text-font-family);
+  font-size: 0.64rem;
+  line-height: 1;
+  color: var(--md-default-bg-color);
+  white-space: nowrap;
+  pointer-events: none;
+  background-color: var(--md-accent-fg-color);
+  border-radius: 1em;
+  box-shadow: var(--jyu-code-button-shadow);
+
+  /* Piilotettuna myös visibility, ettei kuittaus ole ruudunlukijalle olemassa;
+   * se vaihtuu vasta häivytyksen jälkeen, jotta häivytys näkyy. */
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity var(--jyu-mid), visibility 0s var(--jyu-mid);
+}
+
+.jyu-copied--shown {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity var(--jyu-mid), visibility 0s;
+}
+
+/* Tummassa teemassa teeman --md-default-bg-color on tumma; aksentin päälle
+ * valkoinen. */
+[data-md-color-scheme="slate"] .jyu-copied {
+  color: #fff;
+}
+
+/* Komentorivilohkon kehote (copy.js: markPrompts) ei tartu hiirellä
+ * maalattuun tekstiin. Pelkällä user-selectillä Chromium ja Firefox eivät
+ * aloita maalausta lainkaan, jos hiiren painaa kehotteen päällä eli rivin
+ * alussa; pointer-events: none päästää painalluksen riville, ja maalaus
+ * alkaa komennon alusta. Testattu Chromiumissa, Firefoxissa ja WebKitissä
+ * (tests/test_copy.py). */
+.jyu-prompt {
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}

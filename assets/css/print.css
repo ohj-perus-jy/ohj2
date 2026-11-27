@@ -1,0 +1,87 @@
+/* Tulostus: koko kirja yhdeksi PDF:ksi ja yksittäinen luku siistinä.
+ * Zensicalin oma tulostustyyli on yksi rivi, joten ilman tätä paperille
+ * tulisivat yläpalkki, valikko ja alatunniste. Sisällön kokoaa
+ * assets/js/print.js; rungon kirjoittaa convert.py. */
+
+/* Lukujen erotin: luvut ovat peräkkäin samassa säiliössä, joten raja on oma
+ * elementtinsä. Ruudulla viiva, paperilla sivunvaihto. */
+.jyu-print-break {
+  margin: 2.4rem 0;
+  border-top: 1px solid var(--jyu-rule);
+}
+
+/* Yläpalkin tulostuspainike pois puhelimesta: satojen sivujen PDF:ää ei
+ * tehdä sieltä, ja palkin tila on vähissä. Raja on teeman puhelinraja;
+ * kaksi luokkaa ohittaa teeman .md-header__button:not([hidden]). */
+@media screen and (max-width: 44.984375em) {
+  .md-header__button.jyu-print-button {
+    display: none;
+  }
+}
+
+@media print {
+
+  /* Zensical piirtää nämä paperillekin, joten ne piilotetaan erikseen. */
+  .md-header,
+  .md-sidebar,
+  .md-footer,
+  .md-top,
+  .md-dialog,
+  .md-skip {
+    display: none;
+  }
+
+  /* Sisältö koko paperin leveydelle; reunukset tulevat tulostusasetuksista. */
+  .md-grid {
+    max-width: none;
+    margin: 0;
+  }
+
+  /* Ohjeteksti ja kokoamisen tilarivi kuuluvat ruudulle, eivät kirjaan. */
+  #jyu-print-intro {
+    display: none;
+  }
+
+  /* Jokainen luku omalta sivultaan. Erottimia on vain lukujen välissä, joten
+   * alkuun ei tule tyhjää sivua. */
+  .jyu-print-break {
+    margin: 0;
+    border-top: 0;
+    break-before: page;
+  }
+
+  /* Sivunvaihdot pois otsikon jälkeen ja koodin, taulukon ja kuvan keskeltä.
+   * Koodille myös rivitys: paperilla ei ole vaakavieritystä, joten
+   * rivittämätön koodi jäisi pois sivulta. */
+  .md-typeset h1,
+  .md-typeset h2,
+  .md-typeset h3,
+  .md-typeset h4,
+  .md-typeset h5,
+  .md-typeset h6 {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+
+  .md-typeset pre,
+  .md-typeset code {
+    white-space: pre-wrap;
+    break-inside: avoid;
+  }
+
+  .md-typeset table,
+  .md-typeset figure,
+  .md-typeset img {
+    break-inside: avoid;
+  }
+
+  /* Kuva ei yli sivun korkeuden, jottei se työnnä eteensä tyhjää sivua. */
+  .md-typeset img {
+    max-height: 22cm;
+  }
+
+  /* Pykälämerkki (¶) olisi paperilla joka otsikon perässä turha. */
+  .md-typeset .headerlink {
+    display: none;
+  }
+}

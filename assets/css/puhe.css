@@ -1,0 +1,121 @@
+/* Koko sivun ääneenluku: soitinpalkki ruudun alareunassa ja luettavan lohkon
+ * korostus. Toiminta: assets/js/puhe.js, kaiutin yläpalkissa
+ * (overrides/partials/header.html). */
+
+/* Palkki keskellä alareunaa, sisällön levyinen enintään. Teeman värit, jotta
+ * vaalea ja tumma teema toimivat. */
+.jyu-puhe-bar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 4;
+  display: flex;
+  gap: 0.2rem;
+  align-items: center;
+  max-width: 34rem;
+  padding: 0.3rem 0.5rem;
+  margin: 0 auto 0.6rem;
+  font-size: 0.7rem;
+  color: var(--md-default-fg-color);
+  background-color: var(--md-default-bg-color);
+  border: 0.05rem solid var(--jyu-rule);
+  border-radius: 0.4rem;
+  box-shadow: var(--md-shadow-z2);
+}
+
+.jyu-puhe-bar[hidden] {
+  display: none;
+}
+
+/* Puhelimessa reunasta reunaan, jottei palkki peitä tekstiä turhaan kapeana. */
+@media screen and (max-width: 44.984375em) {
+  .jyu-puhe-bar {
+    margin: 0;
+    border-width: 0.05rem 0 0;
+    border-radius: 0;
+  }
+}
+
+.jyu-puhe-bar button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+
+.jyu-puhe-bar button:hover,
+.jyu-puhe-bar button:focus-visible {
+  color: var(--md-accent-fg-color);
+  background-color: var(--md-accent-fg-color--transparent);
+}
+
+.jyu-puhe-bar svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+/* Toisto/tauko erottuu muista. */
+.jyu-puhe-bar .jyu-puhe-play {
+  color: var(--md-primary-bg-color);
+  background-color: var(--md-primary-fg-color);
+}
+
+.jyu-puhe-bar .jyu-puhe-play:hover,
+.jyu-puhe-bar .jyu-puhe-play:focus-visible {
+  color: var(--md-primary-bg-color);
+  background-color: var(--md-accent-fg-color);
+}
+
+/* Nopeus tekstinä ("1,25×"); kiinteä leveys, jottei palkki hypi. */
+.jyu-puhe-bar .jyu-puhe-speed {
+  width: 3rem;
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+  border-radius: 1.1rem;
+}
+
+.jyu-puhe-count,
+.jyu-puhe-status {
+  padding: 0 0.4rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--md-default-fg-color--light);
+  white-space: nowrap;
+}
+
+/* Rasti oikeaan reunaan. */
+.jyu-puhe-bar .jyu-puhe-close {
+  margin-left: auto;
+}
+
+/* Palkki ei peitä sivun loppua. */
+body.jyu-puhe-auki {
+  padding-bottom: 4rem;
+}
+
+/* Luettava lohko: teeman korostusväri (==merkintä==), joka seuraa teemaa.
+ * Hiiri lohkon päällä kertoo, että klikkaus lukee siitä. */
+.jyu-puhe-nyt {
+  background-color: var(--md-typeset-mark-color);
+  border-radius: 0.1rem;
+  box-shadow: 0 0 0 0.2rem var(--md-typeset-mark-color);
+}
+
+body.jyu-puhe-auki .md-typeset :is(p, li, dt, dd, h1, h2, h3, h4, h5, h6, table,
+    .admonition-title, .jyu-puhe-irto):hover {
+  cursor: pointer;
+}
+
+@media print {
+  .jyu-puhe-bar,
+  .md-header__button.jyu-puhe-button {
+    display: none;
+  }
+}

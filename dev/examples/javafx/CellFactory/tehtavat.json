@@ -1,0 +1,22 @@
+[
+  {
+     "otsikko": "Herää",
+     "kategoria": "Tärkeä"
+  },
+  {
+    "otsikko": "Mene kouluun",
+    "kategoria": "Tärkeä"
+  },
+  {
+    "otsikko": "Syö",
+    "kategoria": "Tärkeä"
+  },
+  {
+    "otsikko": "Pelaa Fortniteä",
+    "kategoria": "Ei-tärkeä"
+  },
+  {
+    "otsikko": "Mene nukkumaan",
+    "kategoria": "Vähemmän tärkeä"
+  }
+]
